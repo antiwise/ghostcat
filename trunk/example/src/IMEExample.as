@@ -1,0 +1,50 @@
+package
+{
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFieldType;
+	
+	import org.ghostcat.manager.RootManager;
+	import org.ghostcat.skin.code.ArowSkin;
+	import org.ghostcat.text.IME;
+	import org.ghostcat.ui.controls.GText;
+	import org.ghostcat.util.Geom;
+	import org.ghostcat.util.Util;
+	
+	[SWF(width="500",height="400")]
+	[Frame(factoryClass="org.ghostcat.ui.RootLoader")]
+	public class IMEExample extends Sprite
+	{
+		[Embed(source = "pinyin.txt",mimeType="application/octet-stream")]
+		public var pinyin:Class;
+		public var ime:IME;
+		
+		public var textInput1:TextField;
+		public var textInput2:TextField;
+		public function IMEExample()
+		{
+			addEventListener(Event.ADDED_TO_STAGE,init);
+		}
+		private function init(event:Event):void
+		{
+			RootManager.register(this,1,1);
+			
+			textInput1 = Util.createObject(TextField,{type:TextFieldType.INPUT,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
+			addChild(textInput1);
+			Geom.centerIn(textInput1,stage);
+			textInput2 = Util.createObject(TextField,{type:TextFieldType.INPUT,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
+			addChild(textInput2);
+			
+			var skin:GText = new GText(new ArowSkin());
+			skin.adjustSize = true;
+			skin.mouseEnabled = skin.mouseChildren = false;
+			addChild(skin);
+			
+			ime = new IME(new pinyin().toString(),skin);
+			ime.register(textInput1);
+			ime.register(textInput2);
+		}
+	}
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" pageTitle="GhostCatTool" currentState="start">
+	<s:states>
+		<s:State name="start"/>
+		<s:State name="text"/>
+		<s:State name="swf"/>
+	</s:states>
+	<s:Panel width="100%" height="100%" title="GhostCatTool">
+		<s:Button id="loadBN" x="10" y="10" click="loadBN_clickHandler(event)" label="载入"/>
+		<s:Button id="saveBN" x="87" y="10" click="saveBN_clickHandler(event)" label="保存" includeIn="text"/>
+		<s:CheckBox id="compress" includeIn="text" label="压缩" toolTip="是否采用Z-file方式压缩文件" x="173" y="10"/>
+		<s:TextArea id="textArea" includeIn="text" left="10" top="40" bottom="10" right="10" editable="true"/>
+	</s:Panel>
+
+	<fx:Script>
+		<![CDATA[
+			import org.ghostcat.text.CharSet;
+			private var file:FileReference = new FileReference()
+			protected function loadBN_clickHandler(event:MouseEvent):void
+			{
+				file.addEventListener(Event.SELECT,selectFileHandler);
+				file.browse();
+			}
+			
+			protected function selectFileHandler(event:Event):void
+			{
+				file.removeEventListener(Event.COMPLETE,loadCompleteHandler);
+				file.addEventListener(Event.COMPLETE,loadCompleteHandler);
+				file.load();
+			}
+			
+			protected function loadCompleteHandler(event:Event):void
+			{
+				file.removeEventListener(Event.COMPLETE,loadCompleteHandler);
+				
+				if (file.type.toUpperCase() == "SWF")
+				{
+					currentState = "swf";
+				}
+				else
+				{
+					currentState = "text";
+					
+					var fileData:ByteArray = file.data;
+					compress.selected = false;
+					try
+					{
+						fileData.uncompress();
+						compress.selected = true;
+					}
+					catch (e:Error)
+					{
+					}
+					textArea.text = CharSet.readTextFromByteArray(fileData).replace(/\r\n/g,"\n");
+				}
+			}
+
+
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(textArea.text);
+				if (compress.selected)
+					bytes.compress();
+				var saveFile:FileReference = new FileReference();
+				saveFile.save(bytes,file.name);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Style source="GhostCatTool.css"/>
+</s:Application>
