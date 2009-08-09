@@ -1,4 +1,4 @@
-package org.ghostcat.display.loader
+package org.ghostcat.util
 {
 	import flash.display.Loader;
 	import flash.events.Event;

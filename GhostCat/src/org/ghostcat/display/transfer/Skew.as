@@ -1,11 +1,10 @@
-﻿package org.ghostcat.display
+﻿package org.ghostcat.display.transfer
 {
-	import flash.display.BitmapData;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
-	public class Skew extends Sprite
+	public class Skew extends GTransfer
 	{
 		private var _w:Number;
 		private var _h:Number;
@@ -21,18 +20,23 @@
 		private var _vsLen:Number;
 		private var _dotList:Array;
 		private var _pieceList:Array;
-		private var _imageBitmap:BitmapData;
 		
-		public function Skew(image:BitmapData, vP:Number, hP:Number)
+		public function Skew(target:DisplayObject, vP:Number, hP:Number)
 		{
-			_imageBitmap = image;
 			_vP = vP > 20 || vP <0 ? 2 : vP;
 			_hP = hP > 20 || hP <0 ? 2 : hP;
-			_w = _imageBitmap.width;
-			_h = _imageBitmap.height;
-			init();
+			super(target);
 		}
-		private function init():void {
+		protected override function render():void
+		{
+			var rect: Rectangle = _target.getBounds(_target);
+			var m:Matrix = new Matrix();
+			m.translate(-rect.x, -rect.y);
+			bitmapData.fillRect(bitmapData.rect,0);
+			bitmapData.draw(_target,m);
+			
+			_w = bitmapData.width;
+			_h = bitmapData.height;
 			_dotList = [];
 			_pieceList = [];
 			var ix:Number;
@@ -66,7 +70,7 @@
 					_pieceList.push([_dotList[iy+(ix+1)*(_hP+2)+1], _dotList[iy+(ix+1)*(_hP+2)], _dotList[iy+ix*(_hP+2)+1]]);
 				}
 			}
-			render();
+			renderTransform();
 			//渲染
 		}
 		public function setTransform(x0:Number, y0:Number, x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number):void
@@ -88,10 +92,10 @@
 				point.sx = bx+gx*((x1+gy*(dx21))-bx);
 				point.sy = by+gx*((y1+gy*(dy21))-by);
 			}
-			render();
+			renderTransform();
 		}
 		
-		private function render():void
+		protected function renderTransform():void
 		{
 			var t:Number;
 			var p0:Object;
@@ -134,7 +138,7 @@
 				_sMat.ty = y0;
 				_tMat.invert();
 				_tMat.concat(_sMat);
-				graphics.beginBitmapFill(_imageBitmap, _tMat, false, false);
+				graphics.beginBitmapFill(bitmapData, _tMat, false, false);
 				graphics.moveTo(x0, y0);
 				graphics.lineTo(x1, y1);
 				graphics.lineTo(x2, y2);
@@ -142,4 +146,11 @@
 			}
 		}
 	}
+}
+import flash.geom.Point;
+
+class Dot
+{
+	public var normal:Point;
+	public var current:Point;
 }

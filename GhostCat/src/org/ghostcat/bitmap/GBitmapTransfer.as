@@ -73,7 +73,7 @@ package org.ghostcat.bitmap
 		public function updateTargetResize():void
 		{
 			createBitmapData();
-			updateDisplayList();
+			invalidateDisplayList();
 		}
                 
 		/**

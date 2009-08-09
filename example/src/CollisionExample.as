@@ -5,9 +5,7 @@ package
 	import flash.events.Event;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
-	
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.GTransfer;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	
@@ -49,14 +47,6 @@ package
 			addChild(point);
 		
 			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
-			
-			var re:GTransfer = new GTransfer(b);
-			re.refreshInterval = 100;
-			stage.addChild(re);
-			
-//			var re:Trapezium = new Trapezium(b);
-//			re.refreshInterval = 100;
-//			stage.addChild(re);
 		}
 		
 		public function enterFrameHandler(event:Event):void

@@ -18,7 +18,6 @@
     <classEntry path="org.ghostcat.bitmap.GBitmap"/>
     <classEntry path="org.ghostcat.bitmap.GBitmapTransfer"/>
     <classEntry path="org.ghostcat.bitmap.Reflector"/>
-    <classEntry path="org.ghostcat.bitmap.Trapezium"/>
     <classEntry path="org.ghostcat.community.CommunityManager"/>
     <classEntry path="org.ghostcat.community.DisplayCommunityManager"/>
     <classEntry path="org.ghostcat.community.command.CollideCommand"/>
@@ -38,11 +37,8 @@
     <classEntry path="org.ghostcat.display.GBase"/>
     <classEntry path="org.ghostcat.display.GNoScale"/>
     <classEntry path="org.ghostcat.display.GRepeater"/>
-    <classEntry path="org.ghostcat.display.GTransfer"/>
     <classEntry path="org.ghostcat.display.IData"/>
     <classEntry path="org.ghostcat.display.IGBase"/>
-    <classEntry path="org.ghostcat.display.MiniMap"/>
-    <classEntry path="org.ghostcat.display.Skew"/>
     <classEntry path="org.ghostcat.display.graphics.ControlRect"/>
     <classEntry path="org.ghostcat.display.graphics.DragPoint"/>
     <classEntry path="org.ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -51,12 +47,14 @@
     <classEntry path="org.ghostcat.display.graphics.LinkLine"/>
     <classEntry path="org.ghostcat.display.graphics.SelectRect"/>
     <classEntry path="org.ghostcat.display.loader.AssetLoader"/>
-    <classEntry path="org.ghostcat.display.loader.LoadHelper"/>
     <classEntry path="org.ghostcat.display.loader.StreamLoader"/>
     <classEntry path="org.ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClipBase"/>
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
+    <classEntry path="org.ghostcat.display.transfer.GTransfer"/>
+    <classEntry path="org.ghostcat.display.transfer.MiniMap"/>
+    <classEntry path="org.ghostcat.display.transfer.Skew"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
     <classEntry path="org.ghostcat.events.DragEvent"/>
     <classEntry path="org.ghostcat.events.GEvent"/>
@@ -171,6 +169,7 @@
     <classEntry path="org.ghostcat.util.Guid"/>
     <classEntry path="org.ghostcat.util.Handler"/>
     <classEntry path="org.ghostcat.util.HashMap"/>
+    <classEntry path="org.ghostcat.util.LoadHelper"/>
     <classEntry path="org.ghostcat.util.MathUtil"/>
     <classEntry path="org.ghostcat.util.RandomUtil"/>
     <classEntry path="org.ghostcat.util.ReflectUtil"/>
@@ -192,6 +191,7 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
+    <classEntry path="org.ghostcat.filter.TrapeziumFilterProxy"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

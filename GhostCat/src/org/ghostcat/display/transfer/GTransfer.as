@@ -1,4 +1,4 @@
-package org.ghostcat.display
+package org.ghostcat.display.transfer
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -8,6 +8,8 @@ package org.ghostcat.display
 	import org.ghostcat.events.GEvent;
 	import org.ghostcat.events.MoveEvent;
 	import org.ghostcat.events.ResizeEvent;
+	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.GNoScale;
 
 	
 	/**
@@ -68,11 +70,11 @@ package org.ghostcat.display
 		public function updateTargetResize():void
 		{
 			createBitmapData();
-			updateDisplayList();
+			invalidateDisplayList();
 		}
                 
 		/**
-		 * 创建位图 
+		 * 根据目标创建位图 
 		 * 
 		 */
 		protected function createBitmapData():void

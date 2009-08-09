@@ -1,6 +1,7 @@
 package org.ghostcat.parse.graphics
 {
 	import flash.display.Graphics;
+	import flash.geom.Point;
 	
 	import org.ghostcat.parse.DisplayParse;
 	
@@ -16,7 +17,7 @@ package org.ghostcat.parse.graphics
 		public var points:Array;
 		/**
 		 * 
-		 * @param para	每个参数都是数组，长度2的是直线，长度4的是曲线。
+		 * @param para	每个参数都是数组，内容可以是一个点（折线），也可以是包含两个点的数组（曲线）。
 		 * 
 		 */
 		public function GraphicsPath(points:Array)
@@ -26,14 +27,22 @@ package org.ghostcat.parse.graphics
 		
 		protected override function parseGraphics(target:Graphics) : void
 		{
-			target.moveTo(points[0][0],points[0][1]);
+			var p:Point = points[0] as Point;
+			var p2:Point;
+			target.moveTo(p.x,p.y);
 			for (var i:int = 1;i<points.length;i++)
 			{
-				var p:Array = points[i];
-				if (p.length == 2)
-					target.lineTo(p[0],p[1]);
-				else if (p.length == 4)
-					target.curveTo(p[0],p[1],p[2],p[3]);
+				if (points[i] is Point)
+				{
+					p = points[i];
+					target.lineTo(p.x,p.y);
+				}
+				else if (points[i] is Array)
+				{
+					p = points[i][0];
+					p2 = points[i][1];
+					target.curveTo(p.x,p.y,p2.x,p2.y);
+				}
 			}
 		}	
 	}
