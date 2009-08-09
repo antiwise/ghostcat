@@ -1,4 +1,4 @@
-package org.ghostcat.display
+package org.ghostcat.display.transfer
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -6,13 +6,10 @@ package org.ghostcat.display
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import flash.utils.Timer;
 	
 	import org.ghostcat.util.Geom;
-	import org.ghostcat.display.GNoScale;
 
 	/**
 	 * 缩略图显示
@@ -20,7 +17,7 @@ package org.ghostcat.display
 	 * @author flashyiyi
 	 * 
 	 */
-	public class MiniMap extends GNoScale
+	public class MiniMap extends GTransfer
 	{
 		private var bitmap:Bitmap;
 		
@@ -28,48 +25,23 @@ package org.ghostcat.display
 		
 		private var matrix:Matrix;
 		
-		private var _target:DisplayObject;
-		
 		public function MiniMap(width:Number,height:Number,target:DisplayObject = null)
 		{
-			super();
+			super(target);
 			
 			this.width = width;
 			this.height = height;
 			
-			var bitmapData:BitmapData = new BitmapData(width,height);
-			bitmap = new Bitmap(bitmapData);
+			bitmap = new Bitmap();
 			addChild(bitmap);
 			
 			scrollShape = new Shape();
 			addChild(scrollShape);
-			
-			this.target = target;
-		}
-
-		/**
-		 * 渲染目标
-		 * 
-		 * @return 
-		 * 
-		 */
-		public function get target():DisplayObject
-		{
-			return _target;
-		}
-
-		public function set target(v:DisplayObject):void
-		{
-			_target = v;
-			if (v)
-				invalidateDisplayList();
 		}
 
 		protected override function init():void
 		{
 			super.init();
-			
-			removeEventListener(Event.ADDED_TO_STAGE,init);
 			
 			invalidateDisplayList()
 			scrollShapeRenfer();
@@ -81,16 +53,28 @@ package org.ghostcat.display
 		
 		public override function updateSize() : void
 		{
+			if (bitmap.bitmapData)
+				bitmap.bitmapData.dispose();
+				
 			bitmap.bitmapData = new BitmapData(width,height);
 			super.updateSize();
 		} 
 		
-		public override function updateDisplayList() : void
+		protected override function createBitmapData() : void
 		{
-			matrix=new Matrix();
-			
-			if (!bitmap)
+			//取消原来根据目标修改位图大小的操作。位图大小将由updateSize控制
+		}
+		
+		protected override function render() : void
+		{
+			if (!bitmap.bitmapData)
 				updateSize();
+				
+			var rect:Rectangle = _target.getBounds(_target);
+			
+			matrix=new Matrix();
+			matrix.translate(-rect.x,-rect.y);//将坐标调整到0,0
+			
 			bitmap.bitmapData.fillRect(new Rectangle(0,0,width,height),0x00FFFFFF);
 			var scale:Number;
 			if (target.width/target.height>this.width/this.height)
@@ -98,20 +82,18 @@ package org.ghostcat.display
 				//以宽度为准
 				scale = this.width/target.width;
 				matrix.scale(scale,scale);
-				matrix.ty = (this.height-target.height*scale)/2;
+				matrix.ty += (this.height-target.height*scale)/2;
 			}
 			else
 			{
 				//以高度为准
 				scale = this.height/target.height;
 				matrix.scale(scale,scale);
-				matrix.tx = (this.width-target.width*scale)/2;
+				matrix.tx += (this.width-target.width*scale)/2;
 			};
 			drawContext(target,matrix);
 			
 			scrollShapeRenfer();
-			
-			super.updateDisplayList();
 		}
 		
 		/**
@@ -139,7 +121,7 @@ package org.ghostcat.display
 				//以场景为框
 				localRect = Geom.localRectToContent(new Rectangle(0,0,stage.stageWidth,stage.stageHeight),target.parent,target);
 			
-			localRect = localRect.intersection(target.getRect(target));
+			localRect = localRect.intersection(new Rectangle(0,0,target.width,target.height));
 			
 			drawScrollShape(localRect);
 			
@@ -203,6 +185,8 @@ package org.ghostcat.display
 			}
 			target.x=cWidth / 2 - (bitmap.mouseX - matrix.tx) / matrix.a * target.scaleX;
 			target.y=cHeight / 2 - (bitmap.mouseY - matrix.ty) / matrix.d * target.scaleY;
+			
+			scrollShapeRenfer();
 		};
 		
 		private function _resizeEvt(event:Event):void

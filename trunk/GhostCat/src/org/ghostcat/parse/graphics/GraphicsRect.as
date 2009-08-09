@@ -123,38 +123,60 @@ package org.ghostcat.parse.graphics
 			// 右下角
 			var a:Number = bottomRightRadius * ak;
 			var s:Number = bottomRightRadius * sk;
-			paths.push([xw, yh - bottomRightRadius],[xw, yh - s, xw - a, yh - a],[xw - s, yh, xw - bottomRightRadius, yh]);
+			graphics.moveTo(xw, yh - bottomRightRadius);
+			graphics.curveTo(xw, yh - s, xw - a, yh - a);
+			graphics.curveTo(xw - s, yh, xw - bottomRightRadius, yh);
 			
 			if (direct == 0)
-				paths.push([arowFrom.x + pw,yh],[arowTo.x,arowTo.y],[arowFrom.x - pw,yh]);
+			{
+				graphics.lineTo(arowFrom.x + pw,yh);
+				graphics.lineTo(arowTo.x,arowTo.y);
+				graphics.lineTo(arowFrom.x - pw,yh);
+			}
 			
 			// 左下角
 			a = bottomLeftRadius * ak;
 			s = bottomLeftRadius * sk;
-			paths.push([x + bottomLeftRadius, yh],[x + s, yh, x + a, yh - a],[x, yh - s, x, yh - bottomLeftRadius]);
+			graphics.lineTo(x + bottomLeftRadius, yh);
+			graphics.curveTo(x + s, yh, x + a, yh - a);
+			graphics.curveTo(x, yh - s, x, yh - bottomLeftRadius);
 			
 			if (direct == 1)
-				paths.push([x,arowFrom.y + pw],[arowTo.x,arowTo.y],[x,arowFrom.y - pw]);
+			{
+				graphics.lineTo(x,arowFrom.y + pw);
+				graphics.lineTo(arowTo.x,arowTo.y);
+				graphics.lineTo(x,arowFrom.y - pw);
+			}
 			
 			// 左上角
 			a = topLeftRadius * ak;
 			s = topLeftRadius * sk;
-			paths.push([x, y + topLeftRadius],[x, y + s, x + a, y + a],[x + s, y, x + topLeftRadius, y]);
+			graphics.lineTo(x, y + topLeftRadius);
+			graphics.curveTo(x, y + s, x + a, y + a);
+			graphics.curveTo(x + s, y, x + topLeftRadius, y);
 			
 			if (direct == 2)
-				paths.push([arowFrom.x - pw,y],[arowTo.x,arowTo.y],[arowFrom.x + pw,y]);
+			{
+				graphics.lineTo(arowFrom.x - pw,y);
+				graphics.lineTo(arowTo.x,arowTo.y);
+				graphics.lineTo(arowFrom.x + pw,y);
+			}
 			
 			// 右上角
 			a = topRightRadius * ak;
 			s = topRightRadius * sk;
-			paths.push([xw - topRightRadius, y],[xw - s, y, xw - a, y + a],[xw, y + s, xw, y + topRightRadius]);
+			graphics.lineTo(xw - topRightRadius, y);
+			graphics.curveTo(xw - s, y, xw - a, y + a);
+			graphics.curveTo(xw, y + s, xw, y + topRightRadius);
 			
 			if (direct == 3)
-				paths.push([xw,arowFrom.y - pw],[arowTo.x,arowTo.y],[xw,arowFrom.y + pw]);
+			{
+				graphics.lineTo(xw,arowFrom.y - pw);
+				graphics.lineTo(arowTo.x,arowTo.y);
+				graphics.lineTo(xw,arowFrom.y + pw);
+			}
 			
-			paths.push([xw, yh - bottomRightRadius]);
-			
-			new GraphicsPath(paths).parse(graphics);
+			graphics.lineTo(xw, yh - bottomRightRadius);
 		}
 	}
 }

@@ -8,7 +8,7 @@ package org.ghostcat.ui.controls
 	
 	import org.ghostcat.core.ClassFactory;
 	import org.ghostcat.skin.code.ProgressSkin;
-	import org.ghostcat.display.loader.LoadHelper;
+	import org.ghostcat.util.LoadHelper;
 	
 	/**
 	 * 加载进度条
