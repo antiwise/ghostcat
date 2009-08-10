@@ -192,6 +192,7 @@
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.filter.TrapeziumFilterProxy"/>
+    <classEntry path="org.ghostcat.filter.RollFilterProxy"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
