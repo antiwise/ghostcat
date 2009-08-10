@@ -31,7 +31,7 @@ package org.ghostcat.display.graphics
 		 * @param point	由外部引入坐标对象，位置的更改将会应用到此对象上
 		 * 
 		 */
-		public function DragPoint(skin:DisplayObject=null,replace:Boolean=true,point:Point=null) : void
+		public function DragPoint(point:Point=null,skin:DisplayObject=null,replace:Boolean=true) : void
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
@@ -39,7 +39,10 @@ package org.ghostcat.display.graphics
 			super(skin, replace);
 			
 			if (point)
-				this.point = point;
+			{
+				x = point.x;
+				y = point.y;
+			}
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
 			

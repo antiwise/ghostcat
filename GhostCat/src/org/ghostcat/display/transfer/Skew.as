@@ -2,31 +2,157 @@
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import org.ghostcat.util.CallLater;
 
+	/**
+	 * 任意变形
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Skew extends GTransfer
 	{
-		private var _w:Number;
-		private var _h:Number;
-		private var _sMat:Matrix;
-		private var _tMat:Matrix;
-		private var _xMin:Number;
-		private var _xMax:Number;
-		private var _yMin:Number;
-		private var _yMax:Number;
-		private var _hP:Number;
-		private var _vP:Number;
-		private var _hsLen:Number;
-		private var _vsLen:Number;
-		private var _dotList:Array;
-		private var _pieceList:Array;
+		private var w:Number;
+		private var h:Number;
 		
-		public function Skew(target:DisplayObject, vP:Number, hP:Number)
+		private var dotList:Array;
+		private var pieceList:Array;
+		
+		public var hP:Number;
+		public var vP:Number;
+		
+		private var _topLeft:Point;
+		private var _topRight:Point;
+		private var _bottomLeft:Point;
+		private var _bottomRight:Point;
+		
+		/**
+		 * 
+		 * @param target	目标
+		 * @param vP	横向精度
+		 * @param hP	纵向精度
+		 * 
+		 */
+		public function Skew(target:DisplayObject, vP:Number = 4, hP:Number = 4)
 		{
-			_vP = vP > 20 || vP <0 ? 2 : vP;
-			_hP = hP > 20 || hP <0 ? 2 : hP;
+			this.vP = vP;
+			this.hP = hP;
 			super(target);
 		}
+		
+		public override function set target(value:DisplayObject) : void
+		{
+			super.target = value;
+			var rect: Rectangle = _target.getBounds(_target);
+			
+			_topLeft = new Point(rect.left,rect.top)
+			_topRight = new Point(rect.right,rect.top)
+			_bottomLeft = new Point(rect.left,rect.bottom)
+			_bottomRight = new Point(rect.right,rect.bottom)
+		}
+		
+		/**
+		 * 右下控制点
+		 * @return 
+		 * 
+		 */
+		public function get bottomRight():Point
+		{
+			return _bottomRight;
+		}
+
+		public function set bottomRight(v:Point):void
+		{
+			_bottomRight = v;
+			invalidateTransform()
+		}
+
+		/**
+		 * 左下控制点
+		 * @return 
+		 * 
+		 */
+		public function get bottomLeft():Point
+		{
+			return _bottomLeft;
+		}
+
+		public function set bottomLeft(v:Point):void
+		{
+			_bottomLeft = v;
+			invalidateTransform()
+		}
+
+		/**
+		 * 右上控制点
+		 * @return 
+		 * 
+		 */
+		public function get topRight():Point
+		{
+			return _topRight;
+		}
+
+		public function set topRight(v:Point):void
+		{
+			_topRight = v;
+			invalidateTransform()
+		}
+
+		/**
+		 * 左上控制点
+		 * @return 
+		 * 
+		 */
+		public function get topLeft():Point
+		{
+			return _topLeft;
+		}
+
+		public function set topLeft(v:Point):void
+		{
+			_topLeft = v;
+			invalidateTransform()
+		}
+
+		protected override function createBitmapData():void
+		{
+			super.createBitmapData();
+			
+			w = bitmapData.width;
+			h = bitmapData.height;
+			
+			dotList = [];
+			pieceList = [];
+			
+			var _hsLen:Number = w/(hP+1);//纵向每块的高
+			var _vsLen:Number = h/(vP+1);//横向每块的宽（根据精度来分割三角形）
+			
+			var i:Number;
+			var j:Number;
+			
+			for (i=0; i<vP+2; i++)
+			{
+				//分割的顶点集合
+				for (j=0; j<hP+2; j++)
+				{
+					dotList.push(new Dot(i*_hsLen, j*_vsLen));
+				}
+			}
+			for (i=0; i<vP+1; i++)
+			{
+				//分割成的三角形的顶点集合
+				for (j=0; j<hP+1; j++)
+				{
+					pieceList.push([dotList[j+i*(hP+2)], dotList[j+i*(hP+2)+1], dotList[j+(i+1)*(hP+2)]],
+									[dotList[j+(i+1)*(hP+2)+1], dotList[j+(i+1)*(hP+2)], dotList[j+i*(hP+2)+1]]);
+				}
+			}
+		}
+		
 		protected override function render():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
@@ -35,116 +161,72 @@
 			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.draw(_target,m);
 			
-			_w = bitmapData.width;
-			_h = bitmapData.height;
-			_dotList = [];
-			_pieceList = [];
-			var ix:Number;
-			var iy:Number;
-			var w2:Number = _w/2;
-			var h2:Number = _h/2;
-			_xMin = _yMin=0;
-			_xMax = _w;
-			_yMax = _h;
-			_hsLen = _w/(_hP+1);
-			//纵向每块的高
-			_vsLen = _h/(_vP+1);
-			//横向每块的宽（根据精度来分割三角形）
-			var x:Number, y:Number;
-			for (ix=0; ix<_vP+2; ix++)
-			{
-				//分割的顶点集合
-				for (iy=0; iy<_hP+2; iy++)
-				{
-					x = ix*_hsLen;
-					y = iy*_vsLen;
-					_dotList.push({x:x, y:y, sx:x, sy:y});
-				}
-			}
-			for (ix=0; ix<_vP+1; ix++)
-			{
-				//分割成的三角形的顶点集合
-				for (iy=0; iy<_hP+1; iy++)
-				{
-					_pieceList.push([_dotList[iy+ix*(_hP+2)], _dotList[iy+ix*(_hP+2)+1], _dotList[iy+(ix+1)*(_hP+2)]]);
-					_pieceList.push([_dotList[iy+(ix+1)*(_hP+2)+1], _dotList[iy+(ix+1)*(_hP+2)], _dotList[iy+ix*(_hP+2)+1]]);
-				}
-			}
 			renderTransform();
-			//渲染
 		}
-		public function setTransform(x0:Number, y0:Number, x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number):void
+		
+		/**
+		 * 更新变形
+		 * 
+		 */
+		public function invalidateTransform():void
 		{
-			if (!_dotList)
+			CallLater.callLater(setTransform,[_topLeft,_topRight,_bottomLeft,_bottomRight],true);
+		}
+		
+		/**
+		 * 设置变形控制点
+		 * 
+		 * @param topL
+		 * @param topR
+		 * @param bottomL
+		 * @param bottomR
+		 * 
+		 */
+		public function setTransform(topL:Point, topR:Point, bottomL:Point, bottomR:Point):void
+		{
+			_topLeft = topL;
+			_topRight = topR;
+			_bottomLeft = bottomL;
+			_bottomRight = bottomR;
+ 			
+			if (!dotList)
 				render();
 			
-			var w:Number = _w;
-			var h:Number = _h;
-			var dx30:Number = x3-x0;
-			var dy30:Number = y3-y0;
-			var dx21:Number = x2-x1;
-			var dy21:Number = y2-y1;
-			var l:Number = _dotList.length;
-			while (--l>-1)
+			var leftV:Point = bottomL.subtract(topL);
+			var rightV:Point = bottomR.subtract(topR);
+			
+			for (var i:int = dotList.length - 1;i>=0;i--)
 			{
-				var point:Object = _dotList[l];
-				var gx:Number = (point.x-_xMin)/w;
-				var gy:Number = (point.y-_yMin)/h;
-				var bx:Number = x0+gy*(dx30);
-				var by:Number = y0+gy*(dy30);
-				point.sx = bx+gx*((x1+gy*(dx21))-bx);
-				point.sy = by+gx*((y1+gy*(dy21))-by);
+				var point:Dot = dotList[i];
+				var gx:Number = point.x / w;
+				var gy:Number = point.y / h;
+				var bx:Number = topL.x + gy * leftV.x;
+				var by:Number = topL.y + gy * leftV.y;
+				point.sx = bx + gx * (topR.x + gy * rightV.x - bx);
+				point.sy = by + gx * (topR.y + gy * rightV.y - by);
 			}
 			renderTransform();
 		}
 		
-		protected function renderTransform():void
+		private function renderTransform():void
 		{
-			var t:Number;
-			var p0:Object;
-			var p1:Object;
-			var p2:Object;
-			var a:Array;
 			graphics.clear();
-			_sMat = new Matrix();
-			_tMat = new Matrix();
-			var l:Number = _pieceList.length;
-			while (--l>-1)
+			for (var i:int = pieceList.length - 1;i>=0;i--)
 			{
-				a = _pieceList[l];
-				p0 = a[0];
-				p1 = a[1];
-				p2 = a[2];
-				var x0:Number = p0.sx;
-				var y0:Number = p0.sy;
-				var x1:Number = p1.sx;
-				var y1:Number = p1.sy;
-				var x2:Number = p2.sx;
-				var y2:Number = p2.sy;
-				var u0:Number = p0.x;
-				var v0:Number = p0.y;
-				var u1:Number = p1.x;
-				var v1:Number = p1.y;
-				var u2:Number = p2.x;
-				var v2:Number = p2.y;
-				_tMat.tx = u0;
-				_tMat.ty = v0;
-				_tMat.a = (u1-u0)/_w;
-				_tMat.b = (v1-v0)/_w;
-				_tMat.c = (u2-u0)/_h;
-				_tMat.d = (v2-v0)/_h;
-				_sMat.a = (x1-x0)/_w;
-				_sMat.b = (y1-y0)/_w;
-				_sMat.c = (x2-x0)/_h;
-				_sMat.d = (y2-y0)/_h;
-				_sMat.tx = x0;
-				_sMat.ty = y0;
+				var a:Array = pieceList[i];
+				var p0:Dot = a[0];
+				var p1:Dot = a[1];
+				var p2:Dot = a[2];
+				
+				var _tMat:Matrix = new Matrix((p1.x - p0.x)/w,(p1.y - p0.y)/w,(p2.x - p0.x)/h,(p2.y - p0.y)/h, p0.x, p0.y);
+				var _sMat:Matrix = new Matrix((p1.sx - p0.sx)/w,(p1.sy - p0.sy)/w,(p2.sx - p0.sx)/h,(p2.sy - p0.sy)/h, p0.sx, p0.sy);
 				_tMat.invert();
 				_tMat.concat(_sMat);
+				
 				graphics.beginBitmapFill(bitmapData, _tMat, false, false);
-				graphics.moveTo(x0, y0);
-				graphics.lineTo(x1, y1);
-				graphics.lineTo(x2, y2);
+				graphics.moveTo(p0.sx, p0.sy);
+				graphics.lineTo(p1.sx, p1.sy);
+				graphics.lineTo(p2.sx, p2.sy);
 				graphics.endFill();
 			}
 		}
@@ -154,6 +236,14 @@ import flash.geom.Point;
 
 class Dot
 {
-	public var normal:Point;
-	public var current:Point;
+	public var x:Number;
+	public var y:Number;
+	public var sx:Number;
+	public var sy:Number;
+	
+	public function Dot(x:Number,y:Number)
+	{
+		this.sx = this.x = x;
+		this.sy = this.y = y;
+	}
 }

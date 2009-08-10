@@ -1,23 +1,38 @@
 package 
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Point;
 	
-	import org.ghostcat.bitmap.Reflector;
+	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.display.transfer.Skew;
 	
 	[SWF(width="300",height="300")]
 	public class SkewExample extends Sprite
 	{
-		public var p:Sprite;
 		public var f:Skew;
+		public var p1:DragPoint = new DragPoint(new Point(50,10));
+		public var p2:DragPoint = new DragPoint(new Point(150,50));
+		public var p3:DragPoint = new DragPoint(new Point(40,240));
+		public var p4:DragPoint = new DragPoint(new Point(260,150));
 		public function SkewExample()
 		{
-			var p:Sprite = new TestRepeater();
-			addChild(p);
-			f = new Skew(p,5,5);
+			f = new Skew(new TestCollision(),10,10);
 			addChild(f);
 			
-			f.setTransform(0,0,5,5,10,10,20,20);
+			addChild(p1);
+			addChild(p2);
+			addChild(p3);
+			addChild(p4);
+			
+			f.setTransform(p1.point,p2.point,p3.point,p4.point);
+			
+			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+		}
+		
+		private function enterFrameHandler(event:Event):void
+		{
+			f.invalidateTransform();
 		}
 	}
 }
