@@ -3,11 +3,19 @@ package org.ghostcat.filter
 	import flash.display.BitmapData;
 	import flash.display.BitmapDataChannel;
 	import flash.filters.DisplacementMapFilter;
+	import flash.filters.DisplacementMapFilterMode;
 	import flash.geom.Point;
 	
 	import org.ghostcat.debug.Debug;
 	import org.ghostcat.util.CallLater;
+	import org.ghostcat.util.MathUtil;
 	
+	/**
+	 * 梯形翻转滤镜
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TrapeziumFilterProxy extends FilterProxy
 	{
 		public static const H:int = 0;
@@ -15,7 +23,6 @@ package org.ghostcat.filter
 		
 		private var _type:int = 0;
 		private var _rotation:Number = 0;
-		private var _maxScale:Number = 0.5;
 		
 		public var mask:BitmapData;
 		public function TrapeziumFilterProxy(type:int)
@@ -24,17 +31,6 @@ package org.ghostcat.filter
 			this.type = type;
 		}
 		
-		public function get maxScale():Number
-		{
-			return _maxScale;
-		}
-
-		public function set maxScale(v:Number):void
-		{
-			_maxScale = v;
-			CallLater.callLater(update,null,true);
-		}
-
 		public function get rotation():Number
 		{
 			return _rotation;
@@ -72,13 +68,13 @@ package org.ghostcat.filter
 			switch (type)
 			{
 				case H:
-					changeFilter(createHFilter(mask,rotation,maxScale));
+					changeFilter(createHFilter(mask,rotation));
 					break;
 				case V:
-					changeFilter(createVFilter(mask,rotation,maxScale));
+					changeFilter(createVFilter(mask,rotation));
 					break;
 				default:
-					Debug.error("不允许的取值");
+					Debug.error("不允许的取值")
 					break;
 			}
 		}
@@ -94,10 +90,10 @@ package org.ghostcat.filter
 			switch (type)
 			{
 				case H:
-					mask = createMask(owner.width,owner.height);
+					mask = createHMask(owner.width,owner.height);
 					break;
 				case V:
-					mask = createMask(owner.width,owner.height);
+					mask = createVMask(owner.width,owner.height);
 					break;
 				default:
 					Debug.error("不允许的取值")
@@ -106,22 +102,62 @@ package org.ghostcat.filter
 		}
 		
 		
-		public static function createMask(width:Number,height:Number):BitmapData
+		public static function createHMask(width:Number,height:Number):BitmapData
 		{
-			var data:BitmapData = new BitmapData(width,height);
+			var w:Number = Math.ceil(width);
+			var h:Number = Math.ceil(height);
+			var data:BitmapData = new BitmapData(w * 2,h * 2,false);
+			var hw:Number = w/2;
+			var hh:Number = h/2;
+			var dc:Number = 0x80 / hw / hh;
+			for (var i:int = 0;i < w * 2;i++)
+			{
+				for (var j:int = 0;j < h * 2;j++)
+				{
+					var g:int = MathUtil.limitIn(0x80 - (hw - (i - hw)) * (hh - (j - hh)) * dc, 0, 0xFF);
+					var r:int = MathUtil.limitIn(0xFF * (i - hw) / w, 0, 0xFF);
+					data.setPixel(i,j,r << 16 | g << 8);
+				}
+			}
+			
 			return data;
 		}
 		
-		public static function createHFilter(bitmapData:BitmapData, rotation:Number, maxScale:Number):DisplacementMapFilter
+		public static function createVMask(width:Number,height:Number):BitmapData
 		{
-			var deep:Number = bitmapData.width * maxScale * Math.sin(rotation / 180 * Math.PI);
-			return new DisplacementMapFilter(bitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep)
+			var w:Number = Math.ceil(width);
+			var h:Number = Math.ceil(height);
+			var data:BitmapData = new BitmapData(w * 2,h * 2,false);
+			var hw:Number = w/2;
+			var hh:Number = h/2;
+			var dc:Number = 0x80 / hw / hh;
+			for (var i:int = 0;i < w * 2;i++)
+			{
+				for (var j:int = 0;j < h * 2;j++)
+				{
+					var g:int = MathUtil.limitIn(0x80 - (hw - (i - hw)) * (hh - (j - hh)) * dc, 0, 0xFF);
+					var r:int = MathUtil.limitIn(0xFF * (j - hh) / h, 0, 0xFF);
+					data.setPixel(i,j,r << 16 | g << 8);
+				}
+			}
+			
+			return data;
 		}
 		
-		public static function createVFilter(bitmapData:BitmapData, rotation:Number, maxScale:Number):DisplacementMapFilter
+		public static function createHFilter(bitmapData:BitmapData, rotation:Number):DisplacementMapFilter
 		{
-			var deep:Number = bitmapData.height * maxScale * Math.sin(rotation / 180 * Math.PI);
-			return new DisplacementMapFilter(bitmapData,new Point(),BitmapDataChannel.GREEN,BitmapDataChannel.RED,deep,deep)
+			var dx:Number = Math.min(2500,Math.abs(bitmapData.width * Math.tan(rotation / 180 * Math.PI)));
+			var dy:Number = bitmapData.height * Math.sin(rotation / 180 * Math.PI);
+			var p:Point = new Point(-bitmapData.width/4,-bitmapData.height/4);
+			return new DisplacementMapFilter(bitmapData,p,BitmapDataChannel.RED,BitmapDataChannel.GREEN,dx,dy,DisplacementMapFilterMode.COLOR)
+		}
+		
+		public static function createVFilter(bitmapData:BitmapData, rotation:Number):DisplacementMapFilter
+		{
+			var dx:Number = bitmapData.width * Math.sin(rotation / 180 * Math.PI);
+			var dy:Number = Math.min(2500,Math.abs(bitmapData.height * Math.tan(rotation / 180 * Math.PI)));
+			var p:Point = new Point(-bitmapData.width/4,-bitmapData.height/4);
+			return new DisplacementMapFilter(bitmapData,p,BitmapDataChannel.GREEN,BitmapDataChannel.RED,dx,dy,DisplacementMapFilterMode.COLOR)
 		}
 	}
 }

@@ -75,6 +75,9 @@
 		}
 		public function setTransform(x0:Number, y0:Number, x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number):void
 		{
+			if (!_dotList)
+				render();
+			
 			var w:Number = _w;
 			var h:Number = _h;
 			var dx30:Number = x3-x0;
