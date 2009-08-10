@@ -7,11 +7,6 @@ package org.ghostcat.bitmap
 	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	
-	import org.ghostcat.display.GBase;
-	import org.ghostcat.events.GEvent;
-	import org.ghostcat.events.MoveEvent;
-	import org.ghostcat.events.ResizeEvent;
 
 	
 	/**
@@ -96,7 +91,7 @@ package org.ghostcat.bitmap
 			
 			var rect: Rectangle = _target.getBounds(_target);
 			if (rect.width && rect.height)
-				bitmapData = new BitmapData(rect.width,rect.height * _falloff,true,0);
+				bitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height) * _falloff,true,0);
 		}
 	}
 }

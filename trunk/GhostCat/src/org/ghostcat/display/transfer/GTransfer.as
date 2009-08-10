@@ -5,11 +5,11 @@ package org.ghostcat.display.transfer
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
+	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.GNoScale;
 	import org.ghostcat.events.GEvent;
 	import org.ghostcat.events.MoveEvent;
 	import org.ghostcat.events.ResizeEvent;
-	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.GNoScale;
 
 	
 	/**
@@ -90,7 +90,7 @@ package org.ghostcat.display.transfer
 		{
 			super.updateDisplayList();
 			
-			if (_target && stage)
+			if (_target)
 				render()
 		}
 		

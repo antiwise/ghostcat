@@ -5,7 +5,9 @@ package
 	import flash.events.Event;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
+	
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.transfer.MiniMap;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	
@@ -35,7 +37,6 @@ package
 			b = new GBase(new TestCollision())
 			Geom.centerIn(b,stage);
 			addChild(b);
-			b.visible = false;
 			
 			var s:Shape = new Shape();
 			s.graphics.beginFill(0);

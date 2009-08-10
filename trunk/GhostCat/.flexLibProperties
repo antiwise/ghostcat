@@ -88,7 +88,6 @@
     <classEntry path="org.ghostcat.filter.ConvolutionFilterProxy"/>
     <classEntry path="org.ghostcat.filter.DisplacementMapFilterProxy"/>
     <classEntry path="org.ghostcat.filter.FilterProxy"/>
-    <classEntry path="org.ghostcat.filter.FilterUtil"/>
     <classEntry path="org.ghostcat.gxml.GXMLManager"/>
     <classEntry path="org.ghostcat.gxml.spec.ISpec"/>
     <classEntry path="org.ghostcat.gxml.spec.ItemSpec"/>
