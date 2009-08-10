@@ -74,7 +74,7 @@ package org.ghostcat.display.transfer
 		}
                 
 		/**
-		 * 根据目标创建位图 
+		 * 根据目标创建位图（目标大小变化时执行）
 		 * 
 		 */
 		protected function createBitmapData():void
@@ -94,6 +94,10 @@ package org.ghostcat.display.transfer
 				render()
 		}
 		
+		/**
+		 * 目标内容变化时执行
+		 * 
+		 */
 		protected function render():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
