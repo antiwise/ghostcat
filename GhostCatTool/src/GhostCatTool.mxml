@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" pageTitle="GhostCatTool" currentState="start">
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" pageTitle="GhostCatTool" currentState="start" xmlns:local="*">
 	<s:states>
 		<s:State name="start"/>
 		<s:State name="text"/>
@@ -9,9 +9,12 @@
 	<s:Button id="saveBN" x="87" y="10" click="saveBN_clickHandler(event)" label="保存" includeIn="text"/>
 	<s:CheckBox id="compress" includeIn="text" label="压缩" toolTip="是否采用Z-file方式压缩文件" x="173" y="10"/>
 	<s:TextArea id="textArea" includeIn="text" left="10" top="40" bottom="10" right="10" editable="true"/>
-	
+	<local:SWFShower id="swfShower" includeIn="swf" left="10" top="40" bottom="10" right="10"/>
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import mx.containers.TitleWindow;
+			import mx.controls.TabBar;
 			import org.ghostcat.text.CharSet;
 			private var file:FileReference = new FileReference()
 			protected function loadBN_clickHandler(event:MouseEvent):void
@@ -31,15 +34,18 @@
 			{
 				file.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 				
+				var fileData:ByteArray = file.data;
+					
 				if (file.type.toUpperCase() == ".SWF")
 				{
 					currentState = "swf";
+					
+					swfShower.source = fileData;
 				}
 				else
 				{
 					currentState = "text";
 					
-					var fileData:ByteArray = file.data;
 					compress.selected = false;
 					try
 					{
