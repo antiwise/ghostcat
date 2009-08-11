@@ -247,5 +247,25 @@ package org.ghostcat.util
             m.d = -1;
             displayObj.transform.matrix = m;
 		}
+		
+		/**
+		 * 获得子对象树列表
+		 * @param displayObj
+		 * 
+		 */
+		public static function getChildTree(displayObj:DisplayObject,data:XML=null):XML
+		{
+			if (!data)
+			{
+				data = new XML();
+				data.setLocalName(getQualifiedClassName(displayObj))
+			}
+				
+			if (displayObj)
+			{
+				
+			}	
+			return data;
+		}
 	}
 }
