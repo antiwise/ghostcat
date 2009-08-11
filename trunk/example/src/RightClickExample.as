@@ -18,7 +18,7 @@ package
 		{
 			trace (event.localX, event.localY ,InputManager.instance.mutliRightMouse)
 			graphics.beginFill(0);
-			graphics.drawCircle(event.localX,event.localY,3);
+			graphics.drawCircle(event.localX,event.localY,3 * InputManager.instance.mutliRightMouse);
 		}
 	}
 }
