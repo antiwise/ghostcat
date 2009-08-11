@@ -25,13 +25,13 @@
 		
 		/**
 		 * 获取对象。
-		 * 虽然这个类是代理类，可以直接设置属性，一般不建议这样使用，而是使用getValue方法将保存的对象取出，
+		 * 虽然这个类是代理类，可以直接设置属性，一般不建议这样使用，而是使用value属性将保存的对象取出，
 		 * 并用强制类型转换来使用它。
 		 * 
 		 * @return 
 		 * 
 		 */
-		public function getValue():Object
+		public function get value():Object
 		{
 			for (var n:Object in dictionary)
 				return n; 
@@ -42,23 +42,23 @@
 		
 		flash_proxy override function callProperty(methodName:*, ...args):*
 		{
-			var metrod:* = getValue()[methodName];
+			var metrod:* = value[methodName];
 			(metrod as Function).apply(null,args);
 		}
 		
 		flash_proxy override function getProperty(property:*):* 
 		{
-			return getValue()[property];
+			return value[property];
 		}
 		
 		flash_proxy override function setProperty(property:*,value:*):void 
 		{
-			getValue()[property] = value;
+			value[property] = value;
 		}
 		
 		flash_proxy override function deleteProperty(property:*):Boolean 
 		{
-			return delete(getValue()[property]);
+			return delete(value[property]);
 		}
 	}
 }

@@ -5,6 +5,12 @@ package org.ghostcat.manager
 	
 	import org.ghostcat.core.Singleton;
 	
+	/**
+	 * 通过JS与浏览器通讯
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BrowerManager extends Singleton
 	{
 		static public function get instance():BrowerManager

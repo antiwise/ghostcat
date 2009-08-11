@@ -1,5 +1,11 @@
 package org.ghostcat.util
 {
+	/**
+	 * 位处理类
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class BitUtil
 	{
 		/**

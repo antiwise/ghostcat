@@ -1,5 +1,11 @@
 package org.ghostcat.util
 {
+	/**
+	 * 函数执行器 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Handler
 	{
 		public var caller:*;
@@ -22,11 +28,21 @@ package org.ghostcat.util
 			this.caller = caller;
 		}
 		
+		/**
+		 * 调用
+		 * @return 
+		 * 
+		 */
 		public function call() : *
 		{
 			return (this.handler as Function).apply(this.caller,this.para);
 		}
 		
+		/**
+		 * 转换成Function
+		 * @return 
+		 * 
+		 */
 		public function toFunction():Function
 		{
 			if (_toFunction==null)
@@ -34,6 +50,10 @@ package org.ghostcat.util
 			return _toFunction;	
 		
 		}
+		/**
+		 * 销毁
+		 * 
+		 */
 		public function destory():void
 		{
 			_toFunction = null;

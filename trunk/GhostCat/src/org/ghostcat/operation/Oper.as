@@ -8,6 +8,12 @@ package org.ghostcat.operation
 	[Event(name="operation_complete",type="org.ghostcat.events.OperationEvent")]
 	[Event(name="operation_error",type="org.ghostcat.events.OperationEvent")]
 	
+	/**
+	 * 队列成员
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Oper extends EventDispatcher
 	{
 		public static const NONE:int = 0;

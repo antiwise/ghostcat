@@ -8,6 +8,12 @@ package org.ghostcat.operation
 	import org.ghostcat.util.Handler;
 	import org.ghostcat.util.Tick;
 
+	/**
+	 * 重复查看某个条件，条件满足则继续 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class WaitOper extends TimeoutOper
 	{
 		public var checkHandler:Handler;
