@@ -22,7 +22,7 @@
 		public static const MOUSE_MOVE_PATH:String = "mouse_move_path"
 		
 		/**
-		 * 鼠标右键事件（需要JS支持）
+		 * 鼠标右键
 		 */		
 		public static const MOUSE_RIGHT:String = "mouse_right";
 		

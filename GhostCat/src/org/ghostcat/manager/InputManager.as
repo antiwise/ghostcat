@@ -8,6 +8,7 @@
     import flash.events.MouseEvent;
     import flash.external.ExternalInterface;
     import flash.geom.Point;
+    import flash.utils.getQualifiedClassName;
     import flash.utils.getTimer;
     
     import org.ghostcat.core.Singleton;
@@ -19,23 +20,14 @@
      * 检测暂离，检测按钮是否按下，检测单独按键的一次点击（非组合键），鼠标手势，鼠标右键，连续按键
      * 实现方式是向外部发布InputEvent事件
      * 
-     * 
-     * 
-     * 鼠标右键需要JS支持。需要将rightClick.js（在ASGameUIExample的html-template目录下）加入到
-     * HTML文件中，并执行一次RightClick.init('${application}')
-     * （其中${application}是FLASH播放器的id，如果是在FB环境中，可以保留此值不变）
-     * 为了禁止FLASH自己的右键菜单，只能将FLASH的wmode改为opaque
-     *
-     * 如果在FB环境下，因为有参数进行自适应，一般情况直接拷贝rightClick.js，index.template.html到html-template目录即可满足要求
-     * 
-     * 示例：RightClickExample.as
+     * 启用鼠标右键时，为了禁止FLASH自己的右键菜单，必须将FLASH的wmode改为opaque
      *  
      * @author flashyiyi
      * 
      */    
     public class InputManager extends Singleton
     {
-    	public static var MUTLI_INTERVAL:int = 500;
+    	public static var MUTLI_INTERVAL:int = 300;
     	
 		private var keyBuffer:int = 0;
 		
@@ -54,6 +46,8 @@
 		private var _mouseLeave:Boolean = false;
 		private var _objAtMouse:DisplayObject;
 		
+		[Embed(source = "rightClick.js",mimeType="application/octet-stream")]
+		private var rightClickJSCode:Class;
 		
 		/**
 		 * 触发鼠标手势的最低速度
@@ -127,14 +121,17 @@
         {
         	var ins:InputManager = Singleton.getInstanceOrCreate(InputManager) as InputManager;
         	ins._objAtMouse = ins.stage = source.stage;
+        	
+        	if (ExternalInterface.available)//鼠标右键
+        	{
+        		var jsCode:String = new ins.rightClickJSCode().toString();
+        		ExternalInterface.call("eval",jsCode);
+        		ExternalInterface.call("RightClick.init",getQualifiedClassName(source.root));
+        		ExternalInterface.addCallback("openRightClick", ins.rightClickHandler);
+        	}
         }
         
-        public function InputManager():void
-        {
-        	ExternalInterface.addCallback("openRightClick", rightClickHandler);
-		}
-		
-		private function rightClickHandler():void 
+        private function rightClickHandler():void 
 		{ 
 			if (objAtMouse)
 			{
