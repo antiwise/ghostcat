@@ -266,7 +266,7 @@ package org.ghostcat.util
 			if (names.length == 2){
 				return new QName(names[0],names[1]);
 			}else{
-				return new QName(names[0]);
+				return new QName(null,names[0]);
 			}
 			return null;
 		}
