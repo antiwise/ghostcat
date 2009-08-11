@@ -1,7 +1,5 @@
 package org.ghostcat.text
 {
-	
-
 	/**
 	 * 关于文本处理的静态方法
 	 * 

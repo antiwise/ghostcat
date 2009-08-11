@@ -11,6 +11,11 @@ package org.ghostcat.util
 	[Event(name="io_error",type="flash.events.IOErrorEvent")]
 	[Event(name="progress",type="flash.events.ProgressEvent")]
 	
+	/**
+	 * 载入辅助类
+	 * @author flashyiyi
+	 * 
+	 */
 	public class LoadHelper extends EventDispatcher
 	{
 		/**

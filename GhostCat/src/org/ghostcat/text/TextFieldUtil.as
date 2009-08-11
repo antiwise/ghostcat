@@ -6,6 +6,12 @@ package org.ghostcat.text
 	import flash.text.TextLineMetrics;
 	import flash.utils.Timer;
 
+	/**
+	 * 文本框处理类 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class TextFieldUtil
 	{
 		static public const TEXT_WIDTH_PADDING:int = 5;

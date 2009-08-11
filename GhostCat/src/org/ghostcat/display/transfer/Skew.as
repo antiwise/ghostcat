@@ -208,7 +208,7 @@
 			renderTransform();
 		}
 		
-		private function renderTransform():void
+		protected function renderTransform():void
 		{
 			graphics.clear();
 			for (var i:int = pieceList.length - 1;i>=0;i--)

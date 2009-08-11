@@ -38,6 +38,7 @@
     <classEntry path="org.ghostcat.display.GNoScale"/>
     <classEntry path="org.ghostcat.display.GRepeater"/>
     <classEntry path="org.ghostcat.display.IData"/>
+    <classEntry path="org.ghostcat.display.IFrame"/>
     <classEntry path="org.ghostcat.display.IGBase"/>
     <classEntry path="org.ghostcat.display.graphics.ControlRect"/>
     <classEntry path="org.ghostcat.display.graphics.DragPoint"/>
@@ -88,6 +89,8 @@
     <classEntry path="org.ghostcat.filter.ConvolutionFilterProxy"/>
     <classEntry path="org.ghostcat.filter.DisplacementMapFilterProxy"/>
     <classEntry path="org.ghostcat.filter.FilterProxy"/>
+    <classEntry path="org.ghostcat.filter.RollFilterProxy"/>
+    <classEntry path="org.ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="org.ghostcat.gxml.GXMLManager"/>
     <classEntry path="org.ghostcat.gxml.spec.ISpec"/>
     <classEntry path="org.ghostcat.gxml.spec.ItemSpec"/>
@@ -164,6 +167,7 @@
     <classEntry path="org.ghostcat.util.CountDown"/>
     <classEntry path="org.ghostcat.util.DataCompress"/>
     <classEntry path="org.ghostcat.util.DisplayUtil"/>
+    <classEntry path="org.ghostcat.util.FilterUtil"/>
     <classEntry path="org.ghostcat.util.Geom"/>
     <classEntry path="org.ghostcat.util.Guid"/>
     <classEntry path="org.ghostcat.util.Handler"/>
@@ -190,9 +194,7 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.filter.TrapeziumFilterProxy"/>
-    <classEntry path="org.ghostcat.filter.RollFilterProxy"/>
-    <classEntry path="org.ghostcat.display.IFrame"/>
+    <classEntry path="org.ghostcat.display.transfer.Paper3D"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

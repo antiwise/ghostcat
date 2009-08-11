@@ -1,5 +1,11 @@
 package org.ghostcat.util
 {
+	/**
+	 * 数学相关方法
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class MathUtil
 	{
 		/**

@@ -1,5 +1,10 @@
 package org.ghostcat.util
 {
+	/**
+	 * 数组类
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class ArrayUtil
 	{
 		/**

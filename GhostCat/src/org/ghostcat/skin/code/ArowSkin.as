@@ -2,6 +2,7 @@ package org.ghostcat.skin.code
 {
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Point;
+	import flash.media.Sound;
 	
 	import org.ghostcat.display.GNoScale;
 	import org.ghostcat.parse.DisplayParse;
@@ -28,7 +29,7 @@ package org.ghostcat.skin.code
 		{
 			if (!point)
 				point = new Point(0,-5);
-			
+			new Sound().length
 			DisplayParse.create([new GraphicsLineStyle(borderThickness,borderColor),
 								new GraphicsFill(fillColor)]).parse(this);
 			this.filters = [new DropShadowFilter(4,45,0,0.5)];

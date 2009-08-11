@@ -1,4 +1,4 @@
-package org.ghostcat.filter
+package org.ghostcat.util
 {
 	import flash.display.DisplayObject;
 	import flash.utils.getDefinitionByName;
@@ -6,6 +6,12 @@ package org.ghostcat.filter
 	
 	import org.ghostcat.util.CallLater;
 
+	/**
+	 * 滤镜处理类 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class FilterUtil
 	{
 		/**
