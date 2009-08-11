@@ -2,6 +2,7 @@ package org.ghostcat.util
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * 此类用于查找显示对象
@@ -11,6 +12,7 @@ package org.ghostcat.util
 	 */
 	public final class SearchUtil
 	{
+		
 		/**
 		 * 遍历子对象，找到某个类型的第一个实例
 		 * @param displayObj 目标

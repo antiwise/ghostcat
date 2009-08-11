@@ -1,5 +1,9 @@
 package org.ghostcat.util
 {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.utils.getQualifiedClassName;
+
 	/**
 	 * 处理XML对象序列化的操作
 	 * 
@@ -18,7 +22,7 @@ package org.ghostcat.util
 		public static function objectToXML(v:*):XML
 		{
 			var key:*;
-			var result:XML = new XML();
+			var result:XML = <xml/>;
 			result.setName(ReflectUtil.getQName(v));
 			
 			var obj:Object = Util.unionObject(v,ReflectUtil.getPropertyList(v));
@@ -104,5 +108,29 @@ package org.ghostcat.util
 				setPropertyByXML(target,source[i].name(),source[i],root);
 			}
 		}
+		
+		/**
+		 * 获得子对象树
+		 *  
+		 * @param displayObj
+		 * @return 
+		 * 
+		 */
+		public static function getChildXML(v:DisplayObject):XML
+		{
+			var result:XML = <xml/>;
+			result.setName(ReflectUtil.getQName(v));
+			result.@name = v.name;
+			result.@x = v.x;
+			result.@y = v.y;
+			
+            if (v is DisplayObjectContainer)
+            {
+                var contain:DisplayObjectContainer = DisplayObjectContainer(v);
+                for (var i:int=0;i < contain.numChildren;i++) 
+                    result.appendChild(getChildXML(contain.getChildAt(i)));
+            }
+            return result;
+        }
 	}
 }
