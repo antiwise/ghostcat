@@ -8,7 +8,9 @@ package org.ghostcat.manager
 	import flash.utils.Dictionary;
 	
 	import org.ghostcat.events.DragEvent;
+	import org.ghostcat.events.TickEvent;
 	import org.ghostcat.util.Geom;
+	import org.ghostcat.util.Tick;
 	import org.ghostcat.util.Util;
 	
 	/**
@@ -89,7 +91,7 @@ package org.ghostcat.manager
 				
 			dragPos = new Point(obj.x,obj.y);
 			
-			obj.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			Tick.instance.addEventListener(TickEvent.TICK,enterFrameHandler);
 			obj.stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			obj.stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			obj.stage.addEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
@@ -107,7 +109,7 @@ package org.ghostcat.manager
 			if (evt.isDefaultPrevented())
 				return;
 			
-			obj.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			Tick.instance.removeEventListener(TickEvent.TICK,enterFrameHandler);
 			obj.stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			obj.stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			obj.stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
@@ -122,7 +124,7 @@ package org.ghostcat.manager
 			delete list[obj];
 		}
 		
-		private function enterFrameHandler(event:Event):void
+		private function enterFrameHandler(event:TickEvent):void
 		{
 			var	parentOffest:Point = Geom.localToContent(new Point(obj.mouseX,obj.mouseY),obj,obj.parent).subtract(dragMousePos);
 			

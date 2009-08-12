@@ -5,7 +5,7 @@
 		<mx:List id="list" width="150" height="100%" dataProvider="{symbolList}" change="list_changeHandler(event)"/>
 		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
 			<mx:Canvas id="imageCanvas" label="图象" width="100%" height="100%">
-				<mx:Image id="image"/>
+				<mx:Image id="image" mouseDown="image_mouseDownHandler(event)"/>
 			</mx:Canvas>
 			<mx:Canvas id="treeCanvas" label="结构" width="100%" height="100%">
 				<mx:Tree id="tree" width="100%" height="100%" labelFunction="treeLabelFuntion"/>
@@ -15,6 +15,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import org.ghostcat.manager.DragManager;
 			import org.ghostcat.util.ReflectXMLUtil;
 			import org.ghostcat.util.DisplayUtil;
 			import org.ghostcat.parse.DisplayParse;
@@ -86,6 +87,7 @@
 					sh.graphics.endFill();
 					sh.blendMode = BlendMode.INVERT;
 					
+					image.validateNow();
 					image.addChild(sh);
 					
 					tree.dataProvider = ReflectXMLUtil.getChildXML(displayObj);
@@ -111,6 +113,12 @@
 				var xml:XML = (item as XML).copy();
 				delete xml.*;
 				return xml.toXMLString();
+			}
+
+
+			protected function image_mouseDownHandler(event:MouseEvent):void
+			{
+				DragManager.startDrag(image)
 			}
 
 		]]>
