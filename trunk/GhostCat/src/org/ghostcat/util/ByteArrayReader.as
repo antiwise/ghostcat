@@ -12,7 +12,10 @@ package org.ghostcat.util
 	{
 		public var data:ByteArray;
 		
-		public var bitPos:int = 0;//在一个Byte型里从左到右的位的坐标
+		private var bitPos:int = 0;//在一个Byte型里从左到右的位的坐标
+		/**
+		 * 开始读取时的位置
+		 */
 		public var startPosition:int;
 		
 		public function ByteArrayReader(data:ByteArray)

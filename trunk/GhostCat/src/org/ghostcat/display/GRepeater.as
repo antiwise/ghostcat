@@ -8,8 +8,8 @@ package org.ghostcat.display
 	import flash.utils.Dictionary;
 	
 	import org.ghostcat.core.ClassFactory;
-	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.debug.Debug;
+	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.ReflectUtil;
@@ -59,6 +59,7 @@ package org.ghostcat.display
 		public override function set width(value:Number) : void
 		{
 			rect.width = value;
+			invalidateSize();
 		}
 		
 		public override function get width() : Number
@@ -69,6 +70,7 @@ package org.ghostcat.display
 		public override function set height(value:Number) : void
 		{
 			rect.height = value;
+			invalidateSize();
 		}
 		
 		public override function get height() : Number
@@ -86,8 +88,6 @@ package org.ghostcat.display
 			setContentClass(base);
 			
 			delayUpatePosition = true;//激活此属性坐标更新将会被延迟
-			
-			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 		
 		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
@@ -110,9 +110,10 @@ package org.ghostcat.display
 				var s:DisplayObject = this.ref.newInstance();
 				_contentRect = s.getRect(s);
 				
-				addItem(0,0);//加入初始对象。否则边框大小为0，会无法渲染
-				
-				render();
+				//加入初始对象。否则边框大小为0，会无法渲染
+				graphics.beginFill(0,0);
+				graphics.drawRect(0,0,1,1);
+				graphics.endFill();
 			}
 		}
 
@@ -126,7 +127,16 @@ package org.ghostcat.display
 			super.init();
 			if (scrollRectContainer == null)
 				scrollRectContainer = findScrollRectContainer();
-			
+				
+			render();
+			graphics.clear();//清除初始对象
+		
+			stage.addEventListener(Event.RESIZE,resizeHandler);
+		}
+		
+		private function resizeHandler(event:Event):void
+		{
+			render();
 		}
 		
 		private function findScrollRectContainer():DisplayObject
@@ -149,17 +159,12 @@ package org.ghostcat.display
 				
 			var sRect:Rectangle; 
 			if (viewRect)
-			{
 				sRect = viewRect;
-			}
 			else if (scrollRectContainer is Stage)
-			{
 				sRect = Geom.getRect(scrollRectContainer);
-			}
 			else
-			{
 				sRect = scrollRectContainer.scrollRect;
-			}
+			
 			return Geom.localRectToContent(sRect,scrollRectContainer,this).intersection(this.rect);
 			
 		}
@@ -171,10 +176,16 @@ package org.ghostcat.display
 			unuseContents = [];
 		}
 		
-		private function enterFrameHandler(event:Event):void
+		override public function updatePosition() : void
 		{
-			if (stage)
-				render();
+			super.updatePosition();
+			render();
+		}
+		
+		override public function updateSize() : void
+		{
+			super.updateSize();
+			render();
 		}
 		
 		private function render():void
@@ -185,26 +196,27 @@ package org.ghostcat.display
 			var curRect:Rectangle;
 			
 			curRect = getRect(this);
-			if (displayRect.left < curRect.left)
-				addItems(new Rectangle(displayRect.left,curRect.top,curRect.left - displayRect.left,curRect.height))
+			
+			if (displayRect.x < curRect.x)
+				addItems(new Rectangle(displayRect.x,curRect.y,curRect.x - displayRect.x,curRect.height))
 			if (displayRect.right > curRect.right)
-				addItems(new Rectangle(curRect.right,curRect.top,displayRect.right - curRect.right,curRect.height))
+				addItems(new Rectangle(curRect.right,curRect.y,displayRect.right - curRect.right,curRect.height))
 			curRect = getRect(this);
-			if (displayRect.top < curRect.top)
-				addItems(new Rectangle(curRect.left,displayRect.top,curRect.width,curRect.top - displayRect.top));
+			if (displayRect.y < curRect.y)
+				addItems(new Rectangle(curRect.x,displayRect.y,curRect.width,curRect.y - displayRect.y));
 			if (displayRect.bottom > curRect.bottom)
-				addItems(new Rectangle(curRect.left,curRect.bottom,curRect.width,displayRect.bottom - curRect.bottom));
+				addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,displayRect.bottom - curRect.bottom));
 			
 			curRect = getRect(this);
-			if (displayRect.left > curRect.left + contentRect.width)
-				removeItems(new Rectangle(curRect.left,curRect.top,displayRect.left - curRect.left - contentRect.width,curRect.height))
+			if (displayRect.x > curRect.x + contentRect.width)
+				removeItems(new Rectangle(curRect.x,curRect.y,displayRect.x - curRect.x - contentRect.width,curRect.height))
 			if (displayRect.right < curRect.right - contentRect.width)
-				removeItems(new Rectangle(displayRect.right+contentRect.width,curRect.top,curRect.right - displayRect.right,curRect.height))
+				removeItems(new Rectangle(displayRect.right+contentRect.width,curRect.y,curRect.right - displayRect.right,curRect.height))
 			curRect = getRect(this);
-			if (displayRect.top > curRect.top + contentRect.height)
-				removeItems(new Rectangle(curRect.left,curRect.top,curRect.width,displayRect.top - curRect.top - contentRect.height));
+			if (displayRect.y > curRect.y + contentRect.height)
+				removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,displayRect.y - curRect.y - contentRect.height));
 			if (displayRect.bottom < curRect.bottom - contentRect.height)
-				removeItems(new Rectangle(curRect.left,displayRect.bottom+contentRect.height,curRect.width,curRect.bottom - displayRect.bottom));
+				removeItems(new Rectangle(curRect.x,displayRect.bottom+contentRect.height,curRect.width,curRect.bottom - displayRect.bottom));
 		}
 		
 		/**
@@ -247,15 +259,15 @@ package org.ghostcat.display
 		private function addItems(rect:Rectangle):void
 		{
 			//精度问题，这里的计算可能会多加一个导致空行。暂时+1解决表面问题
-			for (var i:int = rect.left / contentRect.width;i < rect.right / contentRect.width;i++)
-				for (var j:int = (rect.top + 1) / contentRect.height;j < rect.bottom / contentRect.height;j++)
+			for (var i:int = rect.x / contentRect.width;i < rect.right / contentRect.width;i++)
+				for (var j:int = (rect.y + 1) / contentRect.height;j < rect.bottom / contentRect.height;j++)
 					addItem(i,j);
 		}
 		
 		private function removeItems(rect:Rectangle):void
 		{
-			for (var i:int = rect.left / contentRect.width;i < rect.right / contentRect.width;i++)
-				for (var j:int = rect.top / contentRect.height;j < rect.bottom / contentRect.height;j++)
+			for (var i:int = rect.x / contentRect.width;i < rect.right / contentRect.width;i++)
+				for (var j:int = rect.y / contentRect.height;j < rect.bottom / contentRect.height;j++)
 					removeItem(i,j);
 		}
 		
@@ -263,8 +275,6 @@ package org.ghostcat.display
 		{
 			super.destory();
 			clear();
-			
-			removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 
 	}

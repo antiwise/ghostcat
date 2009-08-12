@@ -23,19 +23,13 @@ package
 			repeater = new GRepeater(TestRepeater);
 			repeater.width = 100000;
 			repeater.height = 100000;
-			addChild(repeater);
 			repeater.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			repeater.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
-			
+			addChild(repeater);
 		}
 		private function mouseDownHandler(event:MouseEvent):void
 		{
 			DragManager.startDrag(repeater);
-		}
-		private function mouseUpHandler(event:MouseEvent):void
-		{
-			DragManager.stopDrag(repeater);
 		}
 		private function addRepeatItemHandler(event:RepeatEvent):void
 		{

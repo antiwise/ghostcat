@@ -101,7 +101,9 @@ package org.ghostcat.fileformat.swf
 			verison = bytes.readUnsignedByte();
 			fileLength = bytes.readUnsignedInt();
 			
-			this.bytes.readBytes(bytes);
+			var newBytes:ByteArray = new ByteArray();
+			newBytes.readBytes(bytes);
+			bytes = newBytes;
 			
 			if (compressed)
 				bytes.uncompress();
