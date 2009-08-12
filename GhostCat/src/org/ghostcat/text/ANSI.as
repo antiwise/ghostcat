@@ -8,7 +8,7 @@ package org.ghostcat.text
 	 * @author flashyiyi
 	 * 
 	 */	
-	public final class CharSet
+	public final class ANSI
 	{
 		/**
          * 将UTF8转换为gb2312的URL字符串，主要应付一些不支持unicode码的服务器，诸如百度- -
@@ -125,20 +125,11 @@ package org.ghostcat.text
         }
         
         /**
-  		 * 从ByteArray中读取文本，可以选择是否是ANSI编码。
-  		 * 需要的ByteArray在加载时设置URLLoader().dataFormat = URLLoaderDataFormat.BINARY即可获得。
-  		 * 
-  		 * 只要是字符串，就已经是utf-8的形式了，所以要解决输入数据的编码问题只能在生成String之前。
+  		 * 从ByteArray中读取ANSI编码文本
   		 */
-  		public static function readTextFromByteArray(data:ByteArray,isANSI:Boolean = false):String
+  		public static function readTextFromByteArray(data:ByteArray):String
   		{
-  			var result:String;
-  			if (isANSI) 
-  				result = data.readMultiByte(data.bytesAvailable, "gb2312");
-  			else
-  				result = data.toString();
-  				
-  			return result;
+  			return data.readMultiByte(data.bytesAvailable, "gb2312");
   		}
   		
 //  		/**

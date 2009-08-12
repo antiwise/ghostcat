@@ -8,7 +8,7 @@ package org.ghostcat.operation
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
-	import org.ghostcat.text.CharSet;
+	import org.ghostcat.text.ANSI;
 
 	/**
 	 * 这个类在提供读取ANSI编码文件的功能，文件无需是UTF8也可以正常读取
@@ -90,7 +90,7 @@ package org.ghostcat.operation
 				{
 				}
 			}
-			return CharSet.readTextFromByteArray(bytes,isANSI);
+			return isANSI ? ANSI.readTextFromByteArray(bytes) : bytes.toString();
 		}
 		
 	}

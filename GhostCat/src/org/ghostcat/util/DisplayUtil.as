@@ -7,7 +7,6 @@ package org.ghostcat.util
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * 一些用于图形的公用静态方法
@@ -245,6 +244,22 @@ package org.ghostcat.util
 		{
 			var m:Matrix = displayObj.transform.matrix.clone();
             m.d = -1;
+            displayObj.transform.matrix = m;
+		}
+		
+		/**
+		 * 斜切
+		 * 
+		 * @param displayObj
+		 * 
+		 */
+		public static function chamfer(displayObj:DisplayObject,dx:Number = 0,dy:Number = 0):void
+		{
+			var rect:Rectangle = displayObj.getRect(displayObj);
+			
+			var m:Matrix = displayObj.transform.matrix.clone();
+            m.c = Math.tan(dx / rect.width);
+            m.b = Math.tan(dy / rect.height);
             displayObj.transform.matrix = m;
 		}
 	}

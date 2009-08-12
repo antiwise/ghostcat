@@ -21,7 +21,7 @@
 		public static function toPinyin(str:String,sep:Boolean = false,firstChar:Boolean = false):String
 		{
 			var result:String = "";
-			var source:Array = CharSet.unicodeToANSI(str);
+			var source:Array = ANSI.unicodeToANSI(str);
 			for (var i:int=0; i<source.length; i++)
 			{
 				var n:int = source[i];
