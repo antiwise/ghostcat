@@ -16,7 +16,7 @@
 			import mx.controls.Alert;
 			import mx.containers.TitleWindow;
 			import mx.controls.TabBar;
-			import org.ghostcat.text.CharSet;
+			import org.ghostcat.text.ANSI;
 			private var file:FileReference = new FileReference()
 			protected function loadBN_clickHandler(event:MouseEvent):void
 			{
@@ -56,7 +56,7 @@
 					catch (e:Error)
 					{
 					}
-					textArea.text = CharSet.readTextFromByteArray(fileData).replace(/\r\n/g,"\n");
+					textArea.text = fileData.toString().replace(/\r\n/g,"\n");
 				}
 			}
 

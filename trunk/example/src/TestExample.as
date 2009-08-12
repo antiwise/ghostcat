@@ -1,16 +1,17 @@
 package
 {
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	
-	import org.ghostcat.util.Guid;
-	import org.ghostcat.util.Util;
-
+	import org.ghostcat.display.viewport.Wall;
+	
+	[SWF(width="400",height="400")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{
-			trace(Guid.create());
+			var p:Wall = new Wall(new TestRepeater(),new Point(0,100),new Point(50,50),50);
+			addChild(p);
 		}
 		
 	}

@@ -20,7 +20,7 @@ package
 		}
 		private function enterFrameHandler(event:Event):void
 		{
-			p.rotationZ++;
+			p.rotationY++;
 		}
 	}
 }
