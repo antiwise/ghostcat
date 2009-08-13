@@ -12,23 +12,10 @@ package org.ghostcat.display
         import flash.geom.Point;
         import flash.net.navigateToURL;
 		
-		
-		private static var htmlCreated:Boolean = false;
-		
 		[Embed(source = "IFrame.js",mimeType="application/octet-stream")]
 		private static var jsCode:Class;
+		ExternalInterface.available && ExternalInterface.call("eval",new jsCode().toString());
 		
-		private static function createHTML():void
-		{
-			if (htmlCreated)
-				return;
-			
-			if (ExternalInterface.available)
-			{
-				ExternalInterface.call("eval",new jsCode().toString());
-				htmlCreated = true;
-			}
-		}
 		
 		private var _url: String;
 		private var _id:String;
@@ -38,7 +25,6 @@ package org.ghostcat.display
 			super();
 			this._id = id;
 			
-			createHTML();
 			ExternalInterface.call("IFrameManager.createIFrame", id);
 		}
 		

@@ -47,7 +47,7 @@
 		private var _objAtMouse:DisplayObject;
 		
 		[Embed(source = "rightClick.js",mimeType="application/octet-stream")]
-		private var rightClickJSCode:Class;
+		private static var rightClickJSCode:Class;
 		
 		/**
 		 * 触发鼠标手势的最低速度
@@ -124,7 +124,7 @@
         	
         	if (ExternalInterface.available)//鼠标右键
         	{
-        		var jsCode:String = new ins.rightClickJSCode().toString();
+        		var jsCode:String = new rightClickJSCode().toString();
         		ExternalInterface.call("eval",jsCode);
         		ExternalInterface.call("RightClick.init",getQualifiedClassName(source.root));
         		ExternalInterface.addCallback("openRightClick", ins.rightClickHandler);

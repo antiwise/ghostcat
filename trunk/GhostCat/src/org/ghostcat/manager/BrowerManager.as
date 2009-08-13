@@ -13,15 +13,13 @@ package org.ghostcat.manager
 	 */
 	public class BrowerManager extends Singleton
 	{
+		[Embed(source = "BrowerManager.js",mimeType="application/octet-stream")]
+		private static var jsCode:Class;
+		ExternalInterface.available && ExternalInterface.call("eval",new jsCode().toString());
+		
 		static public function get instance():BrowerManager
 		{
 			return Singleton.getInstanceOrCreate(BrowerManager) as BrowerManager;
-		}
-		
-		protected function runJSCode(code:String , ...para):*
-		{
-			if (ExternalInterface.available)
-				return ExternalInterface.call.apply(null,[code].concat(para));
 		}
 		
 		/**
@@ -31,10 +29,7 @@ package org.ghostcat.manager
 		 */
 		public function get url():String
         {
-        	return runJSCode(
-			"function (url){" + 
-			"	return document.location.href;" + 
-			"}");
+        	return ExternalInterface.call("BrowerManager.getURL");
         };
         /**
          * 浏览器除去参数后的地址
@@ -57,18 +52,11 @@ package org.ghostcat.manager
          */        
         public function set title(v:String):void
         {
-        	runJSCode(
-			"function (title){" + 
-			"	document.title = title;" + 
-			"}"
-			,v);
+        	ExternalInterface.call("BrowerManager.setTitle",v);
         };
         public function get title():String
         {
-        	return runJSCode(
-			"function (){" + 
-			"	return document.title;" + 
-			"}");
+        	return ExternalInterface.call("BrowerManager.getTitle");
         };
         /**
          * 浏览器地址栏参数
@@ -81,10 +69,8 @@ package org.ghostcat.manager
         	var para:String = values.toString();
         	if (para.length>0)
         	 	url += "#" + para;
-        	runJSCode(
-			"function (url){" + 
-			"	window.location.replace(url);" + 
-			"}",url);
+        	
+        	ExternalInterface.call("BrowerManager.setUrlVariables",url);
         }
         public function get urlVariables():URLVariables
         {
@@ -101,15 +87,15 @@ package org.ghostcat.manager
          * @param title
          * 
          */        
-        public function addFavorite(url:String=null,title:String=null):void
+        public function addFavorite(title:String=null,url:String=null):void
         {
         	if (!url)
         		url = this.url;
-        	runJSCode(
-        	"function (url,title){"+
-        	"	window.external.AddFavorite(url, title);"+
-        	"}"
-        	,url,title);
+        	
+        	if (!title)
+        		title = this.title;
+        		
+        	ExternalInterface.call("BrowerManager.addFavorite",url,title);
         }
         /**
          * 设为主页
@@ -120,12 +106,8 @@ package org.ghostcat.manager
         {
         	if (!url)
         		url = this.url;
-        	runJSCode(
-        	"function (url){" + 
-        	"	this.style.behavior='url(#default#homepage)';" + 
-        	"	this.setHomePage(url);" +
-        	"}"
-        	,url);
+        		
+        	ExternalInterface.call("BrowerManager.setHomePage",url);
         }
 
 		/**
@@ -138,14 +120,7 @@ package org.ghostcat.manager
          */
         public function setCookie(name:String, value:String, expires:Date, security:Boolean):void
         {
-        	runJSCode(
-        	"function (name, value, expires, security) {" +
-			"	var str = name + '=' + escape(value);" +
-			"	if (expires != null) str += ';expires=' + expires" +
-			"	if (security == true) str += ';secure';" +
-			"	document.cookie = str;" +
-			"}"
-			,name,value,expires.toUTCString(),security);
+        	ExternalInterface.call("BrowerManager.setCookie",name,value,expires.toUTCString(),security);
         }
         
         /**
@@ -157,13 +132,7 @@ package org.ghostcat.manager
          */        
         public function getCookie(name:String):String
         {
-        	return runJSCode(
-        	"function (name) {" +
-			"	var arr = document.cookie.match(new RegExp(';?' +name + '=([^;]*)'));" +
-			"	if(arr != null) return unescape(arr[1]);" +
-			"	return null;" + 
-			"}"
-			,name);
+        	return ExternalInterface.call("BrowerManager.getCookie",name);
         }
 	}
 }
