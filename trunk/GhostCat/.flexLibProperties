@@ -55,7 +55,10 @@
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="org.ghostcat.display.transfer.GTransfer"/>
     <classEntry path="org.ghostcat.display.transfer.MiniMap"/>
+    <classEntry path="org.ghostcat.display.transfer.Paper3D"/>
     <classEntry path="org.ghostcat.display.transfer.Skew"/>
+    <classEntry path="org.ghostcat.display.viewport.Light"/>
+    <classEntry path="org.ghostcat.display.viewport.Wall"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
     <classEntry path="org.ghostcat.events.DragEvent"/>
     <classEntry path="org.ghostcat.events.GEvent"/>
@@ -69,10 +72,16 @@
     <classEntry path="org.ghostcat.events.TickEvent"/>
     <classEntry path="org.ghostcat.events.TimeLineEvent"/>
     <classEntry path="org.ghostcat.events.TweenEvent"/>
+    <classEntry path="org.ghostcat.fileformat.bmp.BMPDecoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFDecoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFEncoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.LZWEncoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.NeuQuant"/>
+    <classEntry path="org.ghostcat.fileformat.ico.BitmapInfoHeader"/>
+    <classEntry path="org.ghostcat.fileformat.ico.ICODecoder"/>
+    <classEntry path="org.ghostcat.fileformat.ico.ICOFileHeader"/>
+    <classEntry path="org.ghostcat.fileformat.ico.ICOImageData"/>
+    <classEntry path="org.ghostcat.fileformat.ico.ICOInfoHeader"/>
     <classEntry path="org.ghostcat.fileformat.jpg.JPGEncoder"/>
     <classEntry path="org.ghostcat.fileformat.png.PNGEncoder"/>
     <classEntry path="org.ghostcat.fileformat.swf.SWFDecoder"/>
@@ -85,6 +94,14 @@
     <classEntry path="org.ghostcat.fileformat.swf.tag.SetBackgroundColorTag"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.SymbolClassTag"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.Tag"/>
+    <classEntry path="org.ghostcat.fileformat.zip.CRC32"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipArchive"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipEvent"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipFile"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipInflater"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipParser"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipSerializer"/>
+    <classEntry path="org.ghostcat.fileformat.zip.ZipTag"/>
     <classEntry path="org.ghostcat.filter.ColorMatrixFilterProxy"/>
     <classEntry path="org.ghostcat.filter.ConvolutionFilterProxy"/>
     <classEntry path="org.ghostcat.filter.DisplacementMapFilterProxy"/>
@@ -144,6 +161,7 @@
     <classEntry path="org.ghostcat.skin.code.PointSkin"/>
     <classEntry path="org.ghostcat.skin.code.ProgressSkin"/>
     <classEntry path="org.ghostcat.skin.code.ToolTipSkin"/>
+    <classEntry path="org.ghostcat.text.ANSI"/>
     <classEntry path="org.ghostcat.text.IME"/>
     <classEntry path="org.ghostcat.text.PinYin"/>
     <classEntry path="org.ghostcat.text.TextFieldUtil"/>
@@ -193,9 +211,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.display.transfer.Paper3D"/>
-    <classEntry path="org.ghostcat.display.viewport.Wall"/>
-    <classEntry path="org.ghostcat.display.viewport.Light"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
