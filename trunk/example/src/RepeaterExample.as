@@ -3,7 +3,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import org.ghostcat.display.GRepeater;
+	import org.ghostcat.debug.DebugScreen;
+	import org.ghostcat.display.GRepeater45;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.manager.RootManager;
@@ -16,11 +17,11 @@ package
 	 */	
 	public class RepeaterExample extends Sprite
 	{
-		public var repeater:GRepeater;
+		public var repeater:GRepeater45;
 		public function RepeaterExample()
 		{
 			RootManager.register(this,1,1);
-			repeater = new GRepeater(TestRepeater);
+			repeater = new GRepeater45(TestRepeater,true);
 			repeater.width = 100000;
 			repeater.height = 100000;
 			repeater.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
