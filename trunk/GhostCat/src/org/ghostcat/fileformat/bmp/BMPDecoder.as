@@ -85,7 +85,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * コンストラクタ
+		 * BMP解析器
 		 */
 		public function BMPDecoder() {
 			nRPos = 0;
@@ -95,9 +95,9 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * デコード
+		 * 解析BMP文件
 		 * 
-		 * @param デコードしたいBMPファイルのバイナリデータ
+		 * @param BMP数据
 		 */
 		public function decode( data:ByteArray ):BitmapData {
 			bytes = data;
@@ -165,7 +165,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * BITMAP FILE HEADER 読み込み
+		 * BITMAP FILE HEADER
 		 */
 		private function readFileHeader():void {
 			var fileHeader:ByteArray = new ByteArray();
@@ -189,7 +189,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * BITMAP CORE HEADER 読み込み 
+		 * BITMAP CORE HEADER
 		 */
 		private function readCoreHeader():void {
 			var coreHeader:ByteArray = new ByteArray();
@@ -209,7 +209,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * BITMAP INFO HEADER 読み込み
+		 * BITMAP INFO HEADER
 		 */
 		private function readInfoHeader():void {
 			var infoHeader:ByteArray = new ByteArray();
@@ -265,9 +265,6 @@ package org.ghostcat.fileformat.bmp {
 		}
 		
 		
-		/**
-		 * ビットフィールド読み込み
-		 */
 		private function readBitFields():void {
 			if ( nCompression == COMP_RGB ){
 				if ( nBitsPerPixel == BIT16 ){
@@ -294,7 +291,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * カラーパレット読み込み
+		 * 读取色板
 		 */
 		private function readColorPalette():void {
 			var i:int;
@@ -308,7 +305,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * 1bitのBMPデコード
+		 * 解析1位BMP
 		 */
 		private function decode1BitBMP():void {
 			var x:int;
@@ -342,7 +339,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * 4bitのRLE圧縮BMPデコード
+		 * 解析8位压缩BMP
 		 */
 		private function decode4bitRLE():void {
 			var x:int;
@@ -361,7 +358,6 @@ package org.ghostcat.fileformat.bmp {
 						n = bytes.readUnsignedByte();
 						
 						if ( n > 0 ){
-							// エンコードデータ
 							data = bytes.readUnsignedByte();
 							for ( i = 0; i < n/2; ++i ){
 								buf.writeByte( data );
@@ -370,7 +366,6 @@ package org.ghostcat.fileformat.bmp {
 							n = bytes.readUnsignedByte();
 							
 							if ( n > 0 ){
-								// 絶対モードデータ
 								bytes.readBytes( buf, buf.length, n/2 );
 								buf.position += n/2;
 								
@@ -378,7 +373,6 @@ package org.ghostcat.fileformat.bmp {
 									bytes.readUnsignedByte();
 								}
 							} else {
-								// EOL
 								break;
 							}
 						}
@@ -400,7 +394,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * 4bitの非圧縮BMPデコード
+		 * 解析4位非压缩BMP
 		 */
 		private function decode4BitBMP():void {
 			var x:int;
@@ -433,7 +427,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * 8bitのRLE圧縮BMPデコード
+		 * 解析8位压缩BMP
 		 */
 		private function decode8BitRLE():void {
 			var x:int;
@@ -452,7 +446,6 @@ package org.ghostcat.fileformat.bmp {
 						n = bytes.readUnsignedByte();
 						
 						if ( n > 0 ){
-							// エンコードデータ
 							data = bytes.readUnsignedByte();
 							for ( i = 0; i < n; ++i ){
 								buf.writeByte( data );
@@ -461,14 +454,12 @@ package org.ghostcat.fileformat.bmp {
 							n = bytes.readUnsignedByte();
 							
 							if ( n > 0 ){
-								// 絶対モードデータ
 								bytes.readBytes( buf, buf.length, n );
 								buf.position += n;
 								if ( n + 1 >> 1 << 1 != n ){
 									bytes.readUnsignedByte();
 								}
 							} else {
-								// EOL
 								break;
 							}
 						}
@@ -486,7 +477,7 @@ package org.ghostcat.fileformat.bmp {
 		}
 		
 		/**
-		 * 8bitの非圧縮BMPデコード
+		 * 解析8位非压缩BMP
 		 */
 		private function decode8BitBMP():void {
 			var x:int;
@@ -515,7 +506,7 @@ package org.ghostcat.fileformat.bmp {
 		}
 		
 		/**
-		 * 16bitのBMPデコード
+		 * 解析16位色BMP
 		 */
 		private function decode16BitBMP():void {
 			var x:int;
@@ -535,7 +526,7 @@ package org.ghostcat.fileformat.bmp {
 		}
 		
 		/**
-		 * 24bitのBMPデコード
+		 * 解析24位色BMP
 		 */
 		private function decode24BitBMP():void {
 			var x:int;
@@ -563,7 +554,7 @@ package org.ghostcat.fileformat.bmp {
 		}
 		
 		/**
-		 * 32bitのBMPデコード
+		 * 解析32位色BMP
 		 */
 		private function decode32BitBMP():void {
 			var x:int;
@@ -584,7 +575,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * カラーマスクチェック
+		 * 颜色限制
 		 */
 		private function checkColorMask():void {
 			if ( ( nRMask & nGMask ) | ( nGMask & nBMask ) | ( nBMask & nRMask ) ){
@@ -608,7 +599,7 @@ package org.ghostcat.fileformat.bmp {
 		
 		
 		/**
-		 * 情報出力
+		 * 输出信息
 		 */
 		public function traceInfo():void {
 			trace("---- FILE HEADER ----");
