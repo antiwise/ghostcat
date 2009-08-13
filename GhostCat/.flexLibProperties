@@ -144,7 +144,6 @@
     <classEntry path="org.ghostcat.skin.code.PointSkin"/>
     <classEntry path="org.ghostcat.skin.code.ProgressSkin"/>
     <classEntry path="org.ghostcat.skin.code.ToolTipSkin"/>
-    <classEntry path="org.ghostcat.text.ANSI"/>
     <classEntry path="org.ghostcat.text.IME"/>
     <classEntry path="org.ghostcat.text.PinYin"/>
     <classEntry path="org.ghostcat.text.TextFieldUtil"/>

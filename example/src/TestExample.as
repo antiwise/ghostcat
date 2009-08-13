@@ -2,8 +2,10 @@ package
 {
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.net.URLVariables;
 	
 	import org.ghostcat.display.viewport.Wall;
+	import org.ghostcat.manager.BrowerManager;
 	
 	[SWF(width="400",height="400")]
 	public class TestExample extends Sprite
