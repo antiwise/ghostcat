@@ -40,11 +40,11 @@ package org.ghostcat.display
 		 */		
 		public var viewRect:Rectangle;
 		
-		private var contents:Dictionary;//当前显示出的对象
-		private var unuseContents:Array;//已删除的对象，保存在这里供新建时回收，增加性能
+		protected var contents:Dictionary;//当前显示出的对象
+		protected var unuseContents:Array;//已删除的对象，保存在这里供新建时回收，增加性能
 		
-		private var _rect:Rectangle;
-		private var _contentRect:Rectangle;//格子的矩形
+		protected var _rect:Rectangle;
+		protected var _contentRect:Rectangle;//格子的矩形
 		
 		public function get rect():Rectangle
 		{
@@ -107,13 +107,13 @@ package org.ghostcat.display
 			
 			if (this.ref)
 			{
-				var s:DisplayObject = this.ref.newInstance();
-				_contentRect = s.getRect(s);
-				
 				//加入初始对象。否则边框大小为0，会无法渲染
 				graphics.beginFill(0,0);
 				graphics.drawRect(0,0,1,1);
 				graphics.endFill();
+				
+				var s:DisplayObject = this.ref.newInstance();
+				_contentRect = s.getRect(s);
 			}
 		}
 
@@ -258,16 +258,23 @@ package org.ghostcat.display
 		
 		private function addItems(rect:Rectangle):void
 		{
-			//精度问题，这里的计算可能会多加一个导致空行。暂时+1解决表面问题
-			for (var i:int = rect.x / contentRect.width;i < rect.right / contentRect.width;i++)
-				for (var j:int = (rect.y + 1) / contentRect.height;j < rect.bottom / contentRect.height;j++)
+			var fi:Number = rect.x / contentRect.width;
+			var fj:Number = (rect.y + 1) / contentRect.height;//精度问题，这里的计算可能会多加一个导致空行。暂时+1解决表面问题
+			var ei:Number = rect.right / contentRect.width;
+			var ej:Number = rect.bottom / contentRect.height;
+			for (var i:int = fi;i < ei;i++)
+				for (var j:int = fj;j < ej;j++)
 					addItem(i,j);
 		}
 		
 		private function removeItems(rect:Rectangle):void
 		{
-			for (var i:int = rect.x / contentRect.width;i < rect.right / contentRect.width;i++)
-				for (var j:int = rect.y / contentRect.height;j < rect.bottom / contentRect.height;j++)
+			var fi:Number = rect.x / contentRect.width;
+			var fj:Number = rect.y / contentRect.height;
+			var ei:Number = rect.right / contentRect.width;
+			var ej:Number = rect.bottom / contentRect.height;
+			for (var i:int = fi;i < ei;i++)
+				for (var j:int = fj;j < ej;j++)
 					removeItem(i,j);
 		}
 		
