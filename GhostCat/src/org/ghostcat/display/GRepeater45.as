@@ -53,7 +53,7 @@ package org.ghostcat.display
 			}
 		}
 		
-		override protected function addItem(i:int,j:int):DisplayObject
+		override protected function addItem(i:int,j:int,lowest:Boolean=false):DisplayObject
 		{
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
@@ -72,7 +72,10 @@ package org.ghostcat.display
 			if (tranSourceTo45)
 				shapeTo45(s);
 				
-			addChild(s);
+			if (lowest)
+				addChildAt(s,0);
+			else
+				addChild(s);
 			dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j)}));
 		
 			return s;
