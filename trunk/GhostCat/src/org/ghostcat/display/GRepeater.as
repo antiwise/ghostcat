@@ -43,14 +43,20 @@ package org.ghostcat.display
 		protected var contents:Dictionary;//当前显示出的对象
 		protected var unuseContents:Array;//已删除的对象，保存在这里供新建时回收，增加性能
 		
-		protected var _rect:Rectangle;
-		protected var _contentRect:Rectangle;//格子的矩形
+		protected var _rect:Rectangle;//本图元的逻辑大小
+		protected var _contentRect:Rectangle;//单个格子的矩形
+		protected var curRect:Rectangle;//目前所有格子的矩形
 		
 		public function get rect():Rectangle
 		{
 			return _rect;
 		}
 
+		/**
+		 * 单个格子的矩形
+		 * @return 
+		 * 
+		 */
 		public function get contentRect():Rectangle
 		{
 			return _contentRect;
@@ -109,7 +115,7 @@ package org.ghostcat.display
 			{
 				//加入初始对象。否则边框大小为0，会无法渲染
 				graphics.beginFill(0,0);
-				graphics.drawRect(0,0,1,1);
+				graphics.drawRect(0,0,10,10);
 				graphics.endFill();
 				
 				var s:DisplayObject = this.ref.newInstance();
@@ -152,7 +158,7 @@ package org.ghostcat.display
 		}
 		
 		//获得可显示范围（本坐标系内）
-		private function getLocalScrollRect():Rectangle
+		private function getLocalScreen():Rectangle
 		{
 			if (!scrollRectContainer)
 				return null;
@@ -190,33 +196,32 @@ package org.ghostcat.display
 		
 		private function render():void
 		{
-			var displayRect:Rectangle = getLocalScrollRect();
-			if (!displayRect)
+			var screen:Rectangle = getLocalScreen();
+			if (!screen)
 				return;
-			var curRect:Rectangle;
 			
 			curRect = getRect(this);
 			
-			if (displayRect.x < curRect.x)
-				addItems(new Rectangle(displayRect.x,curRect.y,curRect.x - displayRect.x,curRect.height))
-			if (displayRect.right > curRect.right)
-				addItems(new Rectangle(curRect.right,curRect.y,displayRect.right - curRect.right,curRect.height))
+			if (screen.x < curRect.x)
+				addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),true)
+			if (screen.right > curRect.right)
+				addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),false)
 			curRect = getRect(this);
-			if (displayRect.y < curRect.y)
-				addItems(new Rectangle(curRect.x,displayRect.y,curRect.width,curRect.y - displayRect.y));
-			if (displayRect.bottom > curRect.bottom)
-				addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,displayRect.bottom - curRect.bottom));
+			if (screen.y < curRect.y)
+				addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),true);
+			if (screen.bottom > curRect.bottom)
+				addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),false);
 			
 			curRect = getRect(this);
-			if (displayRect.x > curRect.x + contentRect.width)
-				removeItems(new Rectangle(curRect.x,curRect.y,displayRect.x - curRect.x - contentRect.width,curRect.height))
-			if (displayRect.right < curRect.right - contentRect.width)
-				removeItems(new Rectangle(displayRect.right+contentRect.width,curRect.y,curRect.right - displayRect.right,curRect.height))
+			if (screen.x > curRect.x + contentRect.width)
+				removeItems(new Rectangle(curRect.x,curRect.y,screen.x - curRect.x - contentRect.width,curRect.height))
+			if (screen.right < curRect.right - contentRect.width)
+				removeItems(new Rectangle(screen.right+contentRect.width,curRect.y,curRect.right - screen.right,curRect.height))
 			curRect = getRect(this);
-			if (displayRect.y > curRect.y + contentRect.height)
-				removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,displayRect.y - curRect.y - contentRect.height));
-			if (displayRect.bottom < curRect.bottom - contentRect.height)
-				removeItems(new Rectangle(curRect.x,displayRect.bottom+contentRect.height,curRect.width,curRect.bottom - displayRect.bottom));
+			if (screen.y > curRect.y + contentRect.height)
+				removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,screen.y - curRect.y - contentRect.height));
+			if (screen.bottom < curRect.bottom - contentRect.height)
+				removeItems(new Rectangle(curRect.x,screen.bottom+contentRect.height,curRect.width,curRect.bottom - screen.bottom));
 		}
 		
 		/**
@@ -224,9 +229,10 @@ package org.ghostcat.display
 		 * 
 		 * @param i	横坐标序号
 		 * @param j	纵坐标序号
+		 * @param lowest 是否加在底层
 		 * 
 		 */		
-		protected function addItem(i:int,j:int):DisplayObject
+		protected function addItem(i:int,j:int,lowest:Boolean=false):DisplayObject
 		{
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
@@ -237,7 +243,11 @@ package org.ghostcat.display
 			s.x = i * contentRect.width;
 			s.y = j * contentRect.height;
 			contents[i + ":" +j] = s;
-			addChild(s);
+			
+			if (lowest)
+				addChildAt(s,0);
+			else
+				addChild(s);
 			dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j)}));
 		
 			return s;
@@ -256,15 +266,26 @@ package org.ghostcat.display
 			return s;
 		}
 		
-		private function addItems(rect:Rectangle):void
+		private function addItems(rect:Rectangle,lowest:Boolean=false):void
 		{
-			var fi:Number = rect.x / contentRect.width;
-			var fj:Number = (rect.y + 1) / contentRect.height;//精度问题，这里的计算可能会多加一个导致空行。暂时+1解决表面问题
-			var ei:Number = rect.right / contentRect.width;
-			var ej:Number = rect.bottom / contentRect.height;
-			for (var i:int = fi;i < ei;i++)
-				for (var j:int = fj;j < ej;j++)
-					addItem(i,j);
+			var fi:int = (rect.x + 1) / contentRect.width;
+			var fj:int = (rect.y + 1) / contentRect.height;
+			var ei:int = (rect.right - 1) / contentRect.width;
+			var ej:int = (rect.bottom - 1) / contentRect.height;
+			var i:int;
+			var j:int;
+			if (lowest)
+			{
+				for (i = ei;i >=fi;i--)
+					for (j = ej;j >=fj;j--)
+						addItem(i,j,true);
+			}
+			else
+			{
+				for (i = fi;i <= ei;i++)
+					for (j = fj;j <= ej;j++)
+						addItem(i,j,false);
+			}
 		}
 		
 		private function removeItems(rect:Rectangle):void
