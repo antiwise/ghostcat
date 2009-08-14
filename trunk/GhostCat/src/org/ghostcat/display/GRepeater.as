@@ -244,6 +244,9 @@ package org.ghostcat.display
 			s.y = j * contentRect.height;
 			contents[i + ":" +j] = s;
 			
+			修改curRect矩形
+			curRect = curRect.
+			
 			if (lowest)
 				addChildAt(s,0);
 			else
