@@ -4,8 +4,6 @@ package org.ghostcat.util
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
-	import org.ghostcat.debug.Debug;
 
     /**
      * 主要是一些处理矩形区域的方法
@@ -48,8 +46,6 @@ package org.ghostcat.util
 		 */		
 		public static function getRect(obj:*,space:DisplayObject=null):Rectangle
 		{	
-			Debug.restriction(obj,[DisplayObject,Rectangle]);
-			
 			if (!obj)
 				return null;
 			
@@ -279,6 +275,43 @@ package org.ghostcat.util
         {
         	target.x = source.x;
         	target.y = source.y;
+        }
+        
+        /**
+         * 将一个点包括在矩形内
+         * 
+         * @param source
+         * @param x
+         * @param y
+         * 
+         */
+        public static function unionPoint(source:*,x:Number=NaN,y:Number=NaN):void
+        {
+        	var rect:Rectangle = getRect(source);
+        	if (!isNaN(x))
+        	{
+				if (x < rect.x)
+				{
+					source.x = x;
+					source.width = rect.right - x;
+				}
+				else if (x > rect.right)
+				{
+					source.width = x - rect.x;
+				}
+        	}
+        	if (!isNaN(y))
+        	{
+				if (y < rect.y)
+				{
+					source.y = y;
+					source.height = rect.bottom - y;
+				}
+				else if (y > rect.bottom)
+				{
+					source.height = y - rect.y;
+				}
+        	}
         }
     }
 }

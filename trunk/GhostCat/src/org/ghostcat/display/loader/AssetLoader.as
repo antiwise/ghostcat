@@ -1,15 +1,13 @@
 package org.ghostcat.display.loader
 {
-	import flash.display.DisplayObject;
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import flash.utils.getDefinitionByName;
 	
 	import org.ghostcat.core.GSprite;
 	import org.ghostcat.events.OperationEvent;
 	import org.ghostcat.manager.AssetManager;
+	import org.ghostcat.operation.FunctionOper;
 	import org.ghostcat.operation.LoadOper;
+	import org.ghostcat.operation.Oper;
 	import org.ghostcat.operation.Queue;
 	import org.ghostcat.util.Handler;
 
@@ -34,6 +32,11 @@ package org.ghostcat.display.loader
 		public var ref:String;
 		
 		/**
+		 * 资源的类实例
+		 */
+		public var cls:Class;
+		
+		/**
 		 * 下载路径，否则根据包名和类名获得路径
 		 */		
 		public var url:String;
@@ -43,8 +46,8 @@ package org.ghostcat.display.loader
 		 */		
 		public var queue:Boolean = false;
 		
-		private var handlers:Array = [];
-		private var loader:LoadOper;
+		private var handlers:Array = [];//加载完成函数
+		private var loader:Oper;//加载器
 			
 		public function AssetLoader()
 		{
@@ -59,25 +62,41 @@ package org.ghostcat.display.loader
 			load();
 		}
 		/**
-		 * 立即加载
+		 * 加载
 		 */		
 		public function load():void
 		{
 			var c:Class = AssetManager.instance.loadIcon;
 			if (c)
 				setContent(new c());
-				
+			
 			if (url==null)
-				url = AssetManager.instance.getDefaultFilePath(ref);
-			loader = new LoadOper(url,null,rhander,fhander);
+				url = AssetManager.instance.getDefaultFilePath(ref);//未设置路径则取默认路径
+				
+			cls = null;
+			try
+			{
+				cls = getDefinitionByName(ref) as Class;
+			}
+			catch (e:Error){};
+			
+			if (!cls)
+				loader = new LoadOper(url,null,rhander,fhander);
+			else
+				loader = new FunctionOper(rhander);//如果已经加载过了，就直接取值而不再次加载
+			
 			(queue)?loader.commit(assetQueue):loader.execute();
 		}
 		
 		private function rhander(event:OperationEvent):void
 		{
-			var c:Class = loader.loaderInfo.applicationDomain.getDefinition(ref) as Class;
+			if (!cls)
+				cls = AssetManager.instance.getAssetByName(ref);
+			
+			var c:Class = cls;
 			if (c)
 				setContent(new c());
+			
 			doHandler();
 		}
 		
@@ -115,7 +134,8 @@ package org.ghostcat.display.loader
 			super.destory();
 			handlers = [];
 			
-			loader.halt();
+			if (loader)
+				loader.halt();
 		}
 	}
 }
