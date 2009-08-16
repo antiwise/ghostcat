@@ -57,7 +57,7 @@ package org.ghostcat.display
 		 * @return 
 		 * 
 		 */
-		public function get contentRect():Rectangle
+		protected function get contentRect():Rectangle
 		{
 			return _contentRect;
 		}
@@ -113,10 +113,7 @@ package org.ghostcat.display
 			
 			if (this.ref)
 			{
-				//加入初始对象。否则边框大小为0，会无法渲染
-				graphics.beginFill(0,0);
-				graphics.drawRect(0,0,10,10);
-				graphics.endFill();
+				curRect = new Rectangle();
 				
 				var s:DisplayObject = this.ref.newInstance();
 				_contentRect = s.getRect(s);
@@ -135,8 +132,7 @@ package org.ghostcat.display
 				scrollRectContainer = findScrollRectContainer();
 				
 			render();
-			graphics.clear();//清除初始对象
-		
+			
 			stage.addEventListener(Event.RESIZE,resizeHandler);
 		}
 		
@@ -157,8 +153,12 @@ package org.ghostcat.display
 			return contain;
 		}
 		
-		//获得可显示范围（本坐标系内）
-		private function getLocalScreen():Rectangle
+		/**
+		 * 
+		 * @return 获得可显示范围（本坐标系内）
+		 * 
+		 */
+		protected function getLocalScreen():Rectangle
 		{
 			if (!scrollRectContainer)
 				return null;
@@ -171,7 +171,7 @@ package org.ghostcat.display
 			else
 				sRect = scrollRectContainer.scrollRect;
 			
-			return Geom.localRectToContent(sRect,scrollRectContainer,this).intersection(this.rect);
+			return Geom.localRectToContent(sRect,scrollRectContainer,this);
 			
 		}
 		
@@ -194,34 +194,74 @@ package org.ghostcat.display
 			render();
 		}
 		
+		/**
+		 * 通过范围获得需要显示的方块
+		 * 
+		 * @param viewport
+		 * @return 
+		 * 
+		 */
+		protected function getItemRect(viewport:Rectangle):Rectangle
+		{
+			if (!viewport)
+				return null;
+			
+			var screen:Rectangle = new Rectangle();
+			screen.x = Math.floor(viewport.x / contentRect.width);
+			screen.y = Math.floor(viewport.y / contentRect.height);
+			screen.width = Math.ceil(viewport.right / contentRect.width) - screen.x;
+			screen.height = Math.ceil(viewport.bottom / contentRect.height) - screen.y;
+			
+			return screen;
+		}
+		
 		private function render():void
 		{
-			var screen:Rectangle = getLocalScreen();
+			//获得屏幕内应当显示的格子
+			var screen:Rectangle = getItemRect(getLocalScreen());
+			
 			if (!screen)
 				return;
 			
-			curRect = getRect(this);
+			//过滤显示范围	
+			var cRect:Rectangle = new Rectangle(0,0,Math.ceil(rect.width/contentRect.width),Math.ceil(rect.height/contentRect.height));
+			screen = screen.intersection(cRect);
 			
-			if (screen.x < curRect.x)
-				addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),true)
-			if (screen.right > curRect.right)
-				addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),false)
-			curRect = getRect(this);
-			if (screen.y < curRect.y)
-				addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),true);
-			if (screen.bottom > curRect.bottom)
-				addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),false);
-			
-			curRect = getRect(this);
-			if (screen.x > curRect.x + contentRect.width)
-				removeItems(new Rectangle(curRect.x,curRect.y,screen.x - curRect.x - contentRect.width,curRect.height))
-			if (screen.right < curRect.right - contentRect.width)
-				removeItems(new Rectangle(screen.right+contentRect.width,curRect.y,curRect.right - screen.right,curRect.height))
-			curRect = getRect(this);
-			if (screen.y > curRect.y + contentRect.height)
-				removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,screen.y - curRect.y - contentRect.height));
-			if (screen.bottom < curRect.bottom - contentRect.height)
-				removeItems(new Rectangle(curRect.x,screen.bottom+contentRect.height,curRect.width,curRect.bottom - screen.bottom));
+			//增删格子
+			if (curRect.x != screen.x)//左
+			{
+				if (curRect.x > screen.x)
+					addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),true)
+				else
+					removeItems(new Rectangle(curRect.x,curRect.y,screen.x - curRect.x,curRect.height));
+				curRect.width += curRect.x - screen.x;
+				curRect.x = screen.x;
+			}
+			if (screen.right != curRect.right)//右
+			{
+				if (screen.right > curRect.right)
+					addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),false)
+				else
+					removeItems(new Rectangle(screen.right,curRect.y,curRect.right - screen.right,curRect.height))
+				curRect.width = screen.width;
+			}
+			if (curRect.y != screen.y)//上
+			{
+				if (curRect.y > screen.y)
+					addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),true);
+				else
+					removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,screen.y - curRect.y));
+				curRect.height += curRect.y - screen.y;
+				curRect.y = screen.y;
+			}
+			if (screen.bottom != curRect.bottom)//下
+			{
+				if (screen.bottom > curRect.bottom)
+					addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),false);
+				else
+					removeItems(new Rectangle(curRect.x,screen.bottom,curRect.width,curRect.bottom - screen.bottom));
+				curRect.height = screen.height;
+			}
 		}
 		
 		/**
@@ -243,9 +283,6 @@ package org.ghostcat.display
 			s.x = i * contentRect.width;
 			s.y = j * contentRect.height;
 			contents[i + ":" +j] = s;
-			
-			修改curRect矩形
-			curRect = curRect.
 			
 			if (lowest)
 				addChildAt(s,0);
@@ -271,32 +308,32 @@ package org.ghostcat.display
 		
 		private function addItems(rect:Rectangle,lowest:Boolean=false):void
 		{
-			var fi:int = (rect.x + 1) / contentRect.width;
-			var fj:int = (rect.y + 1) / contentRect.height;
-			var ei:int = (rect.right - 1) / contentRect.width;
-			var ej:int = (rect.bottom - 1) / contentRect.height;
+			var fi:int = rect.x;
+			var fj:int = rect.y;
+			var ei:int = rect.right;
+			var ej:int = rect.bottom;
 			var i:int;
 			var j:int;
 			if (lowest)
 			{
-				for (i = ei;i >=fi;i--)
-					for (j = ej;j >=fj;j--)
+				for (i = ei - 1;i >= fi;i--)
+					for (j = ej - 1;j >= fj;j--)
 						addItem(i,j,true);
 			}
 			else
 			{
-				for (i = fi;i <= ei;i++)
-					for (j = fj;j <= ej;j++)
+				for (i = fi;i < ei;i++)
+					for (j = fj;j < ej;j++)
 						addItem(i,j,false);
 			}
 		}
 		
 		private function removeItems(rect:Rectangle):void
 		{
-			var fi:Number = rect.x / contentRect.width;
-			var fj:Number = rect.y / contentRect.height;
-			var ei:Number = rect.right / contentRect.width;
-			var ej:Number = rect.bottom / contentRect.height;
+			var fi:int = rect.x;
+			var fj:int = rect.y;
+			var ei:int = rect.right;
+			var ej:int = rect.bottom;
 			for (var i:int = fi;i < ei;i++)
 				for (var j:int = fj;j < ej;j++)
 					removeItem(i,j);

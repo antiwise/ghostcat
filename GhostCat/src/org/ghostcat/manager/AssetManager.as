@@ -1,10 +1,9 @@
 package org.ghostcat.manager
 {
 	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
 	
 	import org.ghostcat.core.Singleton;
-	import org.ghostcat.text.TextUtil;
+	import org.ghostcat.debug.Debug;
 
 	/**
 	 * 资源管理类
@@ -19,10 +18,19 @@ package org.ghostcat.manager
 			return Singleton.getInstanceOrCreate(AssetManager) as AssetManager;
 		}
 		
+		/**
+		 * 资源加载的基本地址
+		 */
 		public var assetBase:String="";
 		
+		/**
+		 * 加载时显示的图标 
+		 */
 		public var loadIcon:Class;
 		
+		/**
+		 * 加载错误时显示的图标
+		 */
 		public var errorIcon:Class;
 		
 		/**
@@ -54,6 +62,19 @@ package org.ghostcat.manager
 				url = (names[0] as String).toLowerCase();
 			}
 			return assetBase + url + ".swf";
+		}
+		
+		public function getAssetByName(ref:String):Class
+		{
+			try
+			{
+				return getDefinitionByName(ref) as Class;
+			}
+			catch (e:Error)
+			{
+				Debug.error(ref+"资源不存在");
+			}
+			return null;
 		}
 	}
 }
