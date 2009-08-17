@@ -12,11 +12,41 @@ var BrowerManager={
 		window.location.replace(url);
 	},
 	addFavorite:function (url,title){
-		window.external.AddFavorite(url, title);
+		if (document.all)
+		{
+			window.external.addFavorite(url,title);
+		}
+		else if (window.sidebar)
+		{
+			window.sidebar.addPanel(title, url, "");
+		}
+		else
+		{
+			alert("抱歉！您的浏览器不支持添加收藏。");  
+		} 
 	},
 	setHomePage:function (url){
-		this.style.behavior='url(#default#homepage)';
-        	this.setHomePage(url);
+		try
+		{
+			document.body.style.behavior='url(#default#homepage)';
+			document.body.setHomePage(url);
+		}
+		catch(e)
+		{
+			if(window.netscape)
+			{
+				try 
+				{
+					netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");  
+				}  
+				catch (e) 
+				{ 
+					alert("抱歉！您的浏览器不支持直接设为首页。请在浏览器地址栏输入“about:config”并回车然后将[signed.applets.codebase_principal_support]设置为“true”，点击“加入收藏”后忽略安全提示，即可设置成功。");  
+				}
+				var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+				prefs.setCharPref('browser.startup.homepage',vrl);
+			}
+		}
 	},
 	setCookie:function (name, value, expires, security) {
 		var str = name + '=' + escape(value);
