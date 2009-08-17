@@ -118,9 +118,10 @@ package org.ghostcat.manager
 		 * @param expires        cookie过期时间
 		 * @param security       是否加密
          */
-        public function setCookie(name:String, value:String, expires:Date, security:Boolean):void
+        public function setCookie(name:String, value:String, expires:Date=null, security:Boolean=false):void
         {
-        	ExternalInterface.call("BrowerManager.setCookie",name,value,expires.toUTCString(),security);
+        	expires || (expires = new Date(new Date().time + (1000 * 86400 * 365)));
+        	ExternalInterface.call("BrowerManager.setCookie",name,value,expires.time,security);
         }
         
         /**

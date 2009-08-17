@@ -212,6 +212,7 @@
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.display.GRepeater45"/>
+    <classEntry path="org.ghostcat.util.HitTest"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

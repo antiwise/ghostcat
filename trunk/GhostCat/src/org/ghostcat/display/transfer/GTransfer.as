@@ -131,22 +131,22 @@ package org.ghostcat.display.transfer
 		                
 		private function addTargetEvents():void
 		{
-			if (_target && _target is GBase)
-			{
-				_target.addEventListener(GEvent.UPDATE_COMPLETE, handleTargetUpdateComplete);
-				_target.addEventListener(MoveEvent.MOVE, handleTargetMove);
-				_target.addEventListener(ResizeEvent.RESIZE, handleTargetResize);
-			}
+			if (!_target)
+				return;
+			
+			_target.addEventListener(GEvent.UPDATE_COMPLETE, handleTargetUpdateComplete);
+			_target.addEventListener(MoveEvent.MOVE, handleTargetMove);
+			_target.addEventListener(ResizeEvent.RESIZE, handleTargetResize);
 		}
 		
 		private function removeTargetEvents():void
 		{
-			if (_target && _target is GBase)
-			{
-				_target.removeEventListener(GEvent.UPDATE_COMPLETE, handleTargetUpdateComplete);
-				_target.removeEventListener(MoveEvent.MOVE, handleTargetMove);
-				_target.removeEventListener(ResizeEvent.RESIZE, handleTargetResize);
-			}
+			if (!_target)
+				return;
+		
+			_target.removeEventListener(GEvent.UPDATE_COMPLETE, handleTargetUpdateComplete);
+			_target.removeEventListener(MoveEvent.MOVE, handleTargetMove);
+			_target.removeEventListener(ResizeEvent.RESIZE, handleTargetResize);
 		}
 		
 		public override function destory():void

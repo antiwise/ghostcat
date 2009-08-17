@@ -1,12 +1,9 @@
 package org.ghostcat.display
 {
 	import flash.display.DisplayObject;
-	import flash.display.Stage;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
-	import org.ghostcat.util.Geom;
 
 	/**
 	 * 45度角重复场景
@@ -17,6 +14,7 @@ package org.ghostcat.display
 	public class GRepeater45 extends GRepeater
 	{
 		private var tranSourceTo45:Boolean = false;
+		private var wh:Number;//方块长宽比
 		/**
 		 * 
 		 * @param base	源图像
@@ -52,7 +50,6 @@ package org.ghostcat.display
 		 */
 		public function displayToItem(p:Point):Point
 		{
-			var wh:Number = contentRect.width / contentRect.height;
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
 		
@@ -65,7 +62,6 @@ package org.ghostcat.display
 		 */
 		public function itemToDisplay(p:Point):Point
 		{
-			var wh:Number = contentRect.width / contentRect.height;
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
 		}
 		
@@ -76,28 +72,20 @@ package org.ghostcat.display
 			{
 				if (tranSourceTo45)
 					_contentRect = new Rectangle(_contentRect.x,_contentRect.y,_contentRect.width * 2,_contentRect.height);
+				wh = _contentRect.width/_contentRect.height;
 			}
 		}
 		
 		override protected function getLocalScreen():Rectangle
 		{
-			if (!scrollRectContainer)
-				return null;
-				
-			var sRect:Rectangle; 
-			if (viewRect)
-				sRect = viewRect;
-			else if (scrollRectContainer is Stage)
-				sRect = Geom.getRect(scrollRectContainer);
-			else
-				sRect = scrollRectContainer.scrollRect;
-			
-			sRect = sRect.clone();
-			sRect.x -= sRect.width;
-			sRect.y -= sRect.height;
-			sRect.width *= 3;
-			sRect.height *= 3;
-			return Geom.localRectToContent(sRect,scrollRectContainer,this);
+			//扩大显示
+			var sRect:Rectangle = super.getLocalScreen();
+			var nRect:Rectangle = new Rectangle();
+			nRect.x = sRect.x;
+			nRect.y = sRect.y - sRect.width;
+			nRect.width = sRect.width + sRect.height + contentRect.width;
+			nRect.height = sRect.height + sRect.width + contentRect.height;
+			return nRect;
 		}
 		
 		override protected function getItemRect(viewport:Rectangle):Rectangle
