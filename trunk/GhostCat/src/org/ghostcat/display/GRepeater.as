@@ -120,9 +120,54 @@ package org.ghostcat.display
 			}
 		}
 
+		/**
+		 * 获得方块
+		 * 
+		 * @param i
+		 * @param j
+		 * @return 
+		 * 
+		 */
 		public function getItem(i:int,j:int):*
 		{
 			return contents[i + ":" + j];
+		}
+		
+				
+		/**
+		 * 获得屏幕上点所在的方块坐标
+		 * 
+		 * @param p
+		 * 
+		 */
+		public function getItemPointAtPoint(p:Point):Point
+		{
+			p = displayToItem(p);
+			return new Point(int(p.x / contentRect.width), int(p.y / contentRect.height)); 
+		}
+		
+		/**
+		 * 由显示坐标转换为内部坐标
+		 * 
+		 * @param p
+		 * @return 
+		 * 
+		 */
+		public function displayToItem(p:Point):Point
+		{
+			return p.clone();
+		}
+		
+		/**
+		 * 由内部坐标转换为显示坐标
+		 * 
+		 * @param p
+		 * @return 
+		 * 
+		 */
+		public function itemToDisplay(p:Point):Point
+		{
+			return p.clone();
 		}
 		
 		protected override function init():void

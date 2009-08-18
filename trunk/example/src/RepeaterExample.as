@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import org.ghostcat.display.GRepeater;
@@ -37,6 +38,7 @@ package
 		private function mouseDownHandler(event:MouseEvent):void
 		{
 			DragManager.startDrag(repeater);
+			trace(repeater.getItemPointAtPoint(new Point(repeater.mouseX,repeater.mouseY)))
 		}
 		private function addRepeatItemHandler(event:RepeatEvent):void
 		{

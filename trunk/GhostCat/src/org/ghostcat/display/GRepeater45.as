@@ -41,26 +41,19 @@ package org.ghostcat.display
             m.ty = p.y;
             p.transform.matrix = m;
 		}
-		/**
-		 * 由显示坐标转换为内部坐标
-		 * 
-		 * @param p
-		 * @return 
-		 * 
-		 */
-		public function displayToItem(p:Point):Point
+		
+		override public function getItemPointAtPoint(p:Point):Point
+		{
+			p = displayToItem(p);
+			return new Point(Math.round(p.x / contentRect.width) - 1 , Math.round(p.y / contentRect.height)); 
+		}
+		
+		override public function displayToItem(p:Point):Point
 		{
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
 		
-		/**
-		 * 由内部坐标转换为显示坐标
-		 * 
-		 * @param p
-		 * @return 
-		 * 
-		 */
-		public function itemToDisplay(p:Point):Point
+		override public function itemToDisplay(p:Point):Point
 		{
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
 		}
@@ -78,13 +71,13 @@ package org.ghostcat.display
 		
 		override protected function getLocalScreen():Rectangle
 		{
-			//扩大显示
+			//扩大显示范围
 			var sRect:Rectangle = super.getLocalScreen();
 			var nRect:Rectangle = new Rectangle();
 			nRect.x = sRect.x;
-			nRect.y = sRect.y - sRect.width;
-			nRect.width = sRect.width + sRect.height + contentRect.width;
-			nRect.height = sRect.height + sRect.width + contentRect.height;
+			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
+			nRect.width = sRect.width + sRect.height * wh /4 + contentRect.width*2;
+			nRect.height = sRect.height + sRect.width / wh /4;
 			return nRect;
 		}
 		
