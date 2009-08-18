@@ -176,6 +176,16 @@ package org.ghostcat.util
 			return lastVergePoint!=null;
 		}
 		
+		
+		/**
+		 * 检测交叠点
+		 *  
+		 * @param p	点
+		 * @param old	点的旧值
+		 * @param rects	矩形
+		 * @return 返回碰撞边缘点。如果没有碰撞则返回null
+		 * 
+		 */
 		private function checkCollisionItem(p:Point,old:Point,rects:Array):Point
 		{
 			var v:Point;//边缘坐标
