@@ -1,8 +1,12 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	import org.ghostcat.display.viewport.Light;
+	import org.ghostcat.parse.DisplayParse;
+	import org.ghostcat.parse.graphics.GraphicsLineStyle;
+	import org.ghostcat.parse.graphics.GraphicsRect;
 	import org.ghostcat.util.HitTest;
 	
 	[SWF(width="400",height="400")]
@@ -15,9 +19,11 @@ package
 			addChild(p1);
 			var p2:Sprite = new TestRepeater45();
 			addChild(p2);
+			p2.x = 50;
+			p2.y = 25;
 			
-			trace(HitTest.intersectionRectangle(p1,p2))
-			trace(p1.getBounds(stage).intersection(p2.getBounds(stage)))
+			var i:Rectangle = HitTest.intersectionEllipse(p1,p2);
+			addChild(DisplayParse.createShape([new GraphicsLineStyle(0), new GraphicsRect(i.x,i.y,i.width,i.height)]))
 		}
 		
 	}
