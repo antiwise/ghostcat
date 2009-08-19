@@ -40,6 +40,9 @@ package org.ghostcat.text
 		 */
 		public var skin:IGBase;
 		
+		/**
+		 * 是否激活 
+		 */
 		public var enabled:Boolean = true;
 		
 		/**
@@ -94,6 +97,12 @@ package org.ghostcat.text
 			input.addEventListener(MouseEvent.MOUSE_DOWN,resetHandler);
 		}
 		
+		/**
+		 * 取消注册
+		 * 
+		 * @param input
+		 * 
+		 */
 		public function unregister(input:TextField):void
 		{
 			input.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
@@ -109,7 +118,13 @@ package org.ghostcat.text
 		private var inputBeginIndex:int;
 		private var inputEndIndex:int;
 		
+		/**
+		 * 一次显示几个词
+		 */
 		public var charNum:int = 5;
+		/**
+		 * 输入框与录入提示的间距
+		 */
 		public var offest:Point = new Point(5,5);
 		
 		private function textInputHandler(event:TextEvent):void
