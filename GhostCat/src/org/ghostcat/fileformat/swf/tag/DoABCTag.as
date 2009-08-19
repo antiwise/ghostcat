@@ -4,6 +4,12 @@ package org.ghostcat.fileformat.swf.tag
 	
 	import org.ghostcat.util.ByteArrayReader;
 
+	/**
+	 * AS3代码Tag
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public class DoABCTag extends Tag
 	{
 		public static const type:int = 82;

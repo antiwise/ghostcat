@@ -2,7 +2,6 @@
 {
 	import flash.events.MouseEvent;
 	
-	
 	/**
 	 * 特殊的输入事件
 	 * 

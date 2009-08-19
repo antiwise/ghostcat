@@ -2,6 +2,12 @@ package org.ghostcat.events
 {
 	import flash.events.Event;
 	
+	/**
+	 * GhostCat基本组建事件
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GEvent extends Event
 	{
 		public static const UPDATE_COMPLETE:String = "update_complete";

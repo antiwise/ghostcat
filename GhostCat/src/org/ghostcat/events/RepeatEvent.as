@@ -3,6 +3,12 @@ package org.ghostcat.events
 	import flash.events.Event;
 	import flash.geom.Point;
 
+	/**
+	 * Repeater类的专用事件
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class RepeatEvent extends Event
 	{
 		/**

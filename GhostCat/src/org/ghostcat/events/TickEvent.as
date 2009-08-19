@@ -2,6 +2,12 @@ package org.ghostcat.events
 {
 	import flash.events.Event;
 	
+	/**
+	 * 屏幕更新事件
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TickEvent extends Event
 	{
 		/**

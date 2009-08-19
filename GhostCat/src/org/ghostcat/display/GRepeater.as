@@ -72,13 +72,17 @@ package org.ghostcat.display
 		{
 			return rect.width;
 		}
-		
+		/**
+		 * @inheritDoc
+		 */
 		public override function set height(value:Number) : void
 		{
 			rect.height = value;
 			invalidateSize();
 		}
-		
+		/**
+		 * @inheritDoc
+		 */
 		public override function get height() : Number
 		{
 			return rect.height;
@@ -96,6 +100,9 @@ package org.ghostcat.display
 			delayUpatePosition = true;//激活此属性坐标更新将会被延迟
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
 		{
 			setContentClass(ReflectUtil.getClass(skin));

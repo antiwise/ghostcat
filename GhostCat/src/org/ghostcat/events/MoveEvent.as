@@ -3,6 +3,12 @@ package org.ghostcat.events
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	/**
+	 * 移动事件
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class MoveEvent extends Event
 	{
 		public static const MOVE:String = "move";

@@ -4,6 +4,11 @@ package org.ghostcat.events
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	/**
+	 * 碰撞事件
+	 * @author flashyiyi
+	 * 
+	 */
 	public class CollideEvent extends Event
 	{
 		public static const COLLIDE:String = "collide";

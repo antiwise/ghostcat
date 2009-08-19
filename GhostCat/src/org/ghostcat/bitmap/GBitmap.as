@@ -46,6 +46,9 @@ package org.ghostcat.bitmap
 		private var _width:Number;
 		private var _height:Number;
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function set bitmapData(value:BitmapData) : void
 		{
 			super.bitmapData = value;
@@ -53,11 +56,17 @@ package org.ghostcat.bitmap
 			_height = bitmapData.height;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function get width() : Number
 		{
 			return _width;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function set width(v:Number):void
 		{
 			if (_width == v)
@@ -67,11 +76,17 @@ package org.ghostcat.bitmap
 			invalidateSize();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public override function get height() : Number
 		{
 			return _height;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function set height(v:Number):void
 		{
 			if (_height == v)
@@ -81,11 +96,17 @@ package org.ghostcat.bitmap
 			invalidateSize();
 		}
 
+		/**
+		 * @inheritDoc
+		 */
 		public function invalidateSize():void
 		{
 			CallLater.callLater(updateSize,null,true);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function invalidateDisplayList():void
 		{
 			CallLater.callLater(updateDisplayList,null,true);
@@ -188,6 +209,9 @@ package org.ghostcat.bitmap
 		{
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function destory():void
 		{
 			if (parent)
