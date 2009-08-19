@@ -4,6 +4,12 @@ package org.ghostcat.events
 	
 	import org.ghostcat.util.TweenUtil;
 	
+	/**
+	 * 缓动类时间 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TweenEvent extends Event
 	{
 		public static const TWEEN_START:String="tween_start";

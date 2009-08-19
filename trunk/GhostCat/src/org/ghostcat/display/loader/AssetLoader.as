@@ -16,6 +16,8 @@ package org.ghostcat.display.loader
 	 * 
 	 * 依赖于AssetManager类，请参照此类说明使用。
 	 * 
+	 * @see org.ghostcat.manager.AssetManager
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */

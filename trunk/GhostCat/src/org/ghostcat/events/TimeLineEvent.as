@@ -2,6 +2,12 @@ package org.ghostcat.events
 {
 	import flash.events.Event;
 	
+	/**
+	 * 时间线变化事件
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TimeLineEvent extends Event
 	{
 		/**
@@ -10,7 +16,7 @@ package org.ghostcat.events
 		public static const LABEL_CHANGED:String = "label_changed";
 		
 		/**
-		 * 动画结束
+		 * 时间线末尾
 		 */
 		public static const TIMELINE_END:String = "timeline_end";
 		

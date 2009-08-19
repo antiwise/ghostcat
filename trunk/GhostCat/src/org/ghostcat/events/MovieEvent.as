@@ -2,6 +2,12 @@ package org.ghostcat.events
 {
 	import flash.events.Event;
 	
+	/**
+	 * 动画事件
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class MovieEvent extends Event
 	{
 		/**

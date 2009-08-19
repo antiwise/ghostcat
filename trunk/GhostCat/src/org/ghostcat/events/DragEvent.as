@@ -3,6 +3,12 @@ package org.ghostcat.events
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
+	/**
+	 * 拖动事件
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class DragEvent extends Event
 	{
 		/**
