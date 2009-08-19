@@ -6,6 +6,7 @@ package org.ghostcat.ui
 	import flash.utils.Timer;
 	
 	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.core.IDisplayObject;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.skin.code.ToolTipSkin;
 	import org.ghostcat.util.Util;
@@ -13,12 +14,10 @@ package org.ghostcat.ui
 	/**
 	 * 提示类
 	 * 
-	 * 使用时候需要在参数里设置一个用来显示提示的默认ToolTipClass，诸如GToolTipObj(new GText(skin))
-	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GToolTipObj extends GBase
+	public class ToolTipSprite extends GBase
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ToolTipSkin);
 		/**
@@ -32,9 +31,10 @@ package org.ghostcat.ui
 		public var cooldown:int = 250;
 		
 		/**
-		 *  限定触发提示的类型，避免与其他框架冲突
+		 * 限定触发提示的类型，避免与其他框架冲突
 		 */
 		public var onlyWithClasses:Array;
+		
 		/**
 		 * ToolTip目标
 		 */		
@@ -43,7 +43,7 @@ package org.ghostcat.ui
 		/**
 		 * 默认ToolTipClass
 		 */		
-		public var defaultObj:GBase;
+		public var defaultObj:IToolTipSkin;
 		
 		private var toolTipObjs:Object;//已注册的ToolTipObj集合
 		
@@ -51,24 +51,24 @@ package org.ghostcat.ui
 		
 		private var delayCooldown:Timer;//连续显示计时器
 		
-		private static var _instance:GToolTipObj;
+		private static var _instance:ToolTipSprite;
 		
-		public function GToolTipObj(obj:GBase=null)
+		public function ToolTipSprite(obj:IToolTipSkin=null)
 		{
 			if (!obj)
 				obj = defaultSkin.newInstance();
+			defaultObj = obj;
 				
-			super(obj,true);
+			super();
 			
 			this.acceptContentPosition = false;
 			
 			if (!_instance)
 				_instance = this;
 			
-			defaultObj = obj;
 		}
 		
-		public static function get instance():GToolTipObj
+		public static function get instance():ToolTipSprite
 		{
 			return _instance;
 		}
@@ -122,11 +122,10 @@ package org.ghostcat.ui
 		{
 			target = findToolTipTarget(event.target as DisplayObject);
 			
-			if (target){
+			if (target)
 				delayShow(delay);
-			}else{
+			else
 				hide();
-			}
 		}
 		
 		private function findToolTipTarget(displayObj : DisplayObject) : DisplayObject
@@ -135,7 +134,7 @@ package org.ghostcat.ui
 			
 			while (currentTarget && currentTarget.parent != currentTarget)
 			{
-				if (currentTarget["toolTip"] && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
+				if (currentTarget.hasOwnProperty("toolTip") && currentTarget["toolTip"] && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
 					return currentTarget;
 				currentTarget = currentTarget.parent;
 			}
@@ -160,6 +159,7 @@ package org.ghostcat.ui
 			}else{
 				delayTimer = new Timer(t,1);
 				delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE,show);
+				delayTimer.start();
 			}
 		}
 		
@@ -172,11 +172,11 @@ package org.ghostcat.ui
 			if (obj is String){
 				obj = toolTipObjs[obj];
 			}
-			if (!(obj is GBase))
+			if (!(obj is IDisplayObject))
 				obj = defaultObj;
 			setContent(obj);
 			
-			data = target["toolTip"];
+			(content as IToolTipSkin).data = target["toolTip"];
 		}
 		
 		/**
@@ -192,6 +192,7 @@ package org.ghostcat.ui
 			}else{
 				delayCooldown = new Timer(cooldown,1);
 				delayCooldown.addEventListener(TimerEvent.TIMER_COMPLETE,removeCooldown);
+				delayCooldown.start();
 			}
 		}
 		

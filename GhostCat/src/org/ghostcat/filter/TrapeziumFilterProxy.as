@@ -31,6 +31,11 @@ package org.ghostcat.filter
 			this.type = type;
 		}
 		
+		/**
+		 * 旋转角度 
+		 * @return 
+		 * 
+		 */
 		public function get rotation():Number
 		{
 			return _rotation;
@@ -42,6 +47,11 @@ package org.ghostcat.filter
 			CallLater.callLater(update,null,true);
 		}
 
+		/**
+		 * 类型
+		 * @return 
+		 * 
+		 */
 		public function get type():int
 		{
 			return _type;

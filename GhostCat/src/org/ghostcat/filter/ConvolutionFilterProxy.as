@@ -5,10 +5,25 @@ package org.ghostcat.filter
 	import org.ghostcat.util.CallLater;
 	import org.ghostcat.debug.Debug;
 	
+	/**
+	 * Convolution滤镜
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public dynamic class ConvolutionFilterProxy extends FilterProxy
 	{
+		/**
+		 * 高斯模糊
+		 */
 		public static const GAUSS:int = 0;
+		/**
+		 * 锐化
+		 */
 		public static const SHARPE:int = 1;
+		/**
+		 * 查找边缘
+		 */
 		public static const EDGE:int = 2;
 		
 		private var _type:int = 0;
@@ -19,6 +34,11 @@ package org.ghostcat.filter
 			this.type = type;
 		}
 		
+		/**
+		 * 滤镜类型 
+		 * @return 
+		 * 
+		 */
 		public function get type():int
 		{
 			return _type;

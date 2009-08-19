@@ -20,7 +20,7 @@ package org.ghostcat.ui
 		public function RootLoader()
 		{
 			super();
-			progressSprite = new GProgressBar(new ProgressSkin(),true,GPercentBar.SCALEX);
+			progressSprite = new GProgressBar(null,true,GPercentBar.SCALEX);
 			progressSprite.target = this;
 			addChild(progressSprite);
 			

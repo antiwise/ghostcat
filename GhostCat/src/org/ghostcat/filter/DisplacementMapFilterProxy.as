@@ -21,9 +21,21 @@ package org.ghostcat.filter
 	 */
 	public dynamic class DisplacementMapFilterProxy extends FilterProxy
 	{
+		/**
+		 * 水泡 
+		 */
 		public static const BUBBLE:int = 0;
+		/**
+		 * 同心波纹
+		 */
 		public static const WAVE:int = 1;
+		/**
+		 * 横向波纹 
+		 */
 		public static const HWAVE:int = 2;
+		/**
+		 * 纵向波纹
+		 */
 		public static const VWAVE:int = 3;
 		
 		public var mask:BitmapData;
@@ -36,6 +48,11 @@ package org.ghostcat.filter
 			this.type = type;
 		}
 		
+		/**
+		 * 偏移数量 
+		 * @return 
+		 * 
+		 */
 		public function get deep():Number
 		{
 			return _deep;
@@ -47,6 +64,11 @@ package org.ghostcat.filter
 			CallLater.callLater(update,null,true);
 		}
 
+		/**
+		 * 偏移起点
+		 * @return 
+		 * 
+		 */
 		public function get pos():Point
 		{
 			return _pos;
@@ -58,6 +80,11 @@ package org.ghostcat.filter
 			CallLater.callLater(update,null,true);
 		}
 
+		/**
+		 * 波纹重复次数
+		 * @return 
+		 * 
+		 */
 		public function get cycle():int
 		{
 			return _cycle;
@@ -70,6 +97,11 @@ package org.ghostcat.filter
 			CallLater.callLater(update,null,true);
 		}
 
+		/**
+		 * 偏移范围半径
+		 * @return 
+		 * 
+		 */
 		public function get radius():Number
 		{
 			return _radius;
@@ -83,6 +115,11 @@ package org.ghostcat.filter
 			
 		}
 
+		/**
+		 * 偏移类型
+		 * @return 
+		 * 
+		 */
 		public function get type():int
 		{
 			return _type;

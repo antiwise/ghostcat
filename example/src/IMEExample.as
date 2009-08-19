@@ -2,17 +2,16 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	
 	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.skin.code.ArowSkin;
+	import org.ghostcat.skin.code.ToolTipSkin;
 	import org.ghostcat.text.IME;
 	import org.ghostcat.ui.controls.GText;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.Util;
-	
+
 	[SWF(width="500",height="400")]
 	[Frame(factoryClass="org.ghostcat.ui.RootLoader")]
 	public class IMEExample extends Sprite
@@ -37,9 +36,7 @@ package
 			textInput2 = Util.createObject(TextField,{type:TextFieldType.INPUT,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput2);
 			
-			var skin:GText = new GText(new ArowSkin());
-			skin.adjustSize = true;
-			skin.mouseEnabled = skin.mouseChildren = false;
+			var skin:GText = new ToolTipSkin();
 			addChild(skin);
 			
 			ime = new IME(new pinyin().toString(),skin);

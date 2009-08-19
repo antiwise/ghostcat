@@ -11,6 +11,10 @@ package org.ghostcat.core
 	import flash.geom.Rectangle;
 	import flash.geom.Transform;
 
+	/**
+	 * DisplayObject接口
+	 * 
+	 */
 	public interface IDisplayObject extends IBitmapDrawable,IEventDispatcher
 	{
     /**

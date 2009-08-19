@@ -1,6 +1,11 @@
-package org.ghostcat.algorithm.bezier{
+package org.ghostcat.algorithm.bezier
+{
 	import flash.geom.Point;
 
+	/**
+	 * 统一直接和曲线类的接口
+	 * 
+	 */
 	public interface IParametric
 	{
 		/**

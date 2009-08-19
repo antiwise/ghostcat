@@ -4,10 +4,17 @@ package org.ghostcat.skin.code
 	import flash.geom.Rectangle;
 	
 	import org.ghostcat.core.ClassFactory;
-	import org.ghostcat.display.GBase;
+	import org.ghostcat.ui.IToolTipSkin;
+	import org.ghostcat.ui.controls.GText;
 	import org.ghostcat.util.Geom;
 	
-	public class ToolTipSkin extends GBase
+	/**
+	 * 默认ToolTip
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
+	public class ToolTipSkin extends GText implements IToolTipSkin
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ArowSkin);
 		
@@ -15,8 +22,10 @@ package org.ghostcat.skin.code
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
-			
 			super(skin);
+		
+			this.adjustSize = true;
+			this.mouseEnabled = this.mouseChildren = false;
 		}
 		
 		public function setTarget(target:DisplayObject):void

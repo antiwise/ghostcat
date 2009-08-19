@@ -21,9 +21,6 @@ package
 			addChild(p2);
 			p2.x = 50;
 			p2.y = 25;
-			
-			var i:Rectangle = HitTest.intersectionEllipse(p1,p2);
-			addChild(DisplayParse.createShape([new GraphicsLineStyle(0), new GraphicsRect(i.x,i.y,i.width,i.height)]))
 		}
 		
 	}

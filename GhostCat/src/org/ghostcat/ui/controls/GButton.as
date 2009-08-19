@@ -9,7 +9,6 @@ package org.ghostcat.ui.controls
 	import org.ghostcat.display.movieclip.GMovieClip;
 	
 	/**
-	 * 
 	 * 按钮
 	 * @author flashyiyi
 	 * 

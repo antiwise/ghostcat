@@ -108,6 +108,10 @@ package org.ghostcat.display.transfer
 			bitmap.bitmapData.draw(target,matrix);
 		}
 		
+		/**
+		 * 更新范围显示框
+		 * 
+		 */
 		public function scrollShapeRenfer():void
 		{
 			if (!stage)

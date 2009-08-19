@@ -44,7 +44,7 @@ package org.ghostcat.algorithm.astar
 			
 			var curTry : int = 0;
 			
-			this.openNote(start, 0, 0, null);
+			this.openNote(start, 0, 0, null);//建立首节点
 			
 			while (this.openList.length > 0)
 			{
