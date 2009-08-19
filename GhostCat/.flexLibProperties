@@ -213,6 +213,7 @@
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.display.GRepeater45"/>
     <classEntry path="org.ghostcat.util.HitTest"/>
+    <classEntry path="org.ghostcat.events.SelectEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

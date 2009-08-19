@@ -1,7 +1,6 @@
 package org.ghostcat.display.graphics
 {
-	import flash.display.Sprite;
-	
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.parse.DisplayParse;
 	
 	/**
@@ -10,7 +9,7 @@ package org.ghostcat.display.graphics
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GraphicsSprite extends Sprite
+	public class GraphicsSprite extends GBase
 	{
 		private var _parse:DisplayParse;
 		
@@ -27,13 +26,15 @@ package org.ghostcat.display.graphics
 		public function set graphicsData(v:Array):void
 		{
 			_parse.children = v;
-			refresh();
+			invalidateDisplayList();
 		}
 		
-		public function refresh():void
+		override public function updateDisplayList() : void
 		{
 			graphics.clear();
 			_parse.parse(this);
+			
+			super.updateDisplayList();
 		}
 
 	}
