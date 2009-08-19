@@ -166,8 +166,8 @@
     <classEntry path="org.ghostcat.text.PinYin"/>
     <classEntry path="org.ghostcat.text.TextFieldUtil"/>
     <classEntry path="org.ghostcat.text.TextUtil"/>
-    <classEntry path="org.ghostcat.ui.GCursorObj"/>
-    <classEntry path="org.ghostcat.ui.GToolTipObj"/>
+    <classEntry path="org.ghostcat.ui.CursorSprite"/>
+    <classEntry path="org.ghostcat.ui.ToolTipSprite"/>
     <classEntry path="org.ghostcat.ui.RootLoader"/>
     <classEntry path="org.ghostcat.ui.controls.GButton"/>
     <classEntry path="org.ghostcat.ui.controls.GPercentBar"/>

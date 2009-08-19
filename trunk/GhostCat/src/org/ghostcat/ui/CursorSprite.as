@@ -20,7 +20,7 @@ package org.ghostcat.ui
 	 * 
 	 */		
 		
-	public class GCursorObj extends GMovieClip
+	public class CursorSprite extends GMovieClip
 	{
 		/**
 		 *	光标集合，可自行添加内容 
@@ -38,13 +38,13 @@ package org.ghostcat.ui
 		
 		private var buttonDown:Boolean=false;//鼠标是否按下 
 		
-		private static var _instance:GCursorObj;
+		private static var _instance:CursorSprite;
 		/**
 		 * 
 		 * @param skin	皮肤动画，内部是数个默认光标，以实例名为准
 		 * 
 		 */		
-		public function GCursorObj(skin:DisplayObjectContainer)
+		public function CursorSprite(skin:DisplayObjectContainer)
 		{
 			super(null);
 			
@@ -74,7 +74,7 @@ package org.ghostcat.ui
 			stage.addEventListener(Event.MOUSE_LEAVE,this.mouseLeaveHandler);
 		}
 		
-		public static function get instance():GCursorObj
+		public static function get instance():CursorSprite
 		{
 			return _instance;
 		}

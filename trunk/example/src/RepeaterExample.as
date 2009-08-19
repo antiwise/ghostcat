@@ -12,6 +12,7 @@ package
 	import org.ghostcat.parse.DisplayParse;
 	import org.ghostcat.parse.graphics.GraphicsLineStyle;
 	import org.ghostcat.parse.graphics.GraphicsRect;
+	import org.ghostcat.ui.ToolTipSprite;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源

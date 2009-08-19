@@ -2,6 +2,12 @@ package org.ghostcat.algorithm.astar
 {
 	import flash.geom.Point;
 
+	/**
+	 * 地图模型类接口
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public interface IMapModel
 	{
 		/**

@@ -70,7 +70,7 @@ package org.ghostcat.algorithm.astar
 
 		
 		/**
-		 * 判断两个节点是否相同
+		 * 判断是否到达终点
 		 * 
 		 * @param p1	节点1
 		 * @param p2	节点2

@@ -4,6 +4,12 @@ package org.ghostcat.community.filter
 	
 	import org.ghostcat.util.DisplayUtil;
 
+	/**
+	 * 过滤屏幕内物品
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class OnlyCheckScreenFilter
 	{
 		/**

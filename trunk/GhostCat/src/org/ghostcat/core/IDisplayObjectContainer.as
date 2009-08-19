@@ -1,13 +1,13 @@
 package org.ghostcat.core
 {
-	/**
-	 *  The IDisplayObjectContainerInterface defines the basic set of APIs
-	 *  for web version of flash.display.DisplayObjectContainer
-	 */
 	import flash.text.TextSnapshot;
 	import flash.geom.Point;
 	import flash.display.DisplayObject;
 
+	/**
+	 * DisplayObjectContainer接口
+	 * 
+	 */
 	public interface IDisplayObjectContainer extends IDisplayObject
 	{
 

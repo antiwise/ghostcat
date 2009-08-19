@@ -18,7 +18,7 @@ package org.ghostcat.community
 		{
 			super(command);
 			
-			this.setDirtyWhenEvent = MoveEvent.MOVE;
+			this.setDirtyWhenEvent = MoveEvent.MOVE;//当发布MOVE事件的时候自动setDirty
 		}
 		
 		/**

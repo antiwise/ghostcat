@@ -11,6 +11,13 @@ package org.ghostcat.community.command
 	 */
 	public final class DrawPriorityCommand
 	{
+		/**
+		 * 按y轴排序
+		 *  
+		 * @param d1
+		 * @param d2
+		 * 
+		 */
 		public static function SORTY(d1:DisplayObject,d2:DisplayObject):void
 		{
 			if (d1.parent != d2.parent)
@@ -25,6 +32,13 @@ package org.ghostcat.community.command
 				parent.swapChildren(d1,d2);
 		}
 		
+		/**
+		 * 按对象的priority值排序
+		 * 
+		 * @param d1
+		 * @param d2
+		 * 
+		 */
 		public static function PRIORITY(d1:DisplayObject,d2:DisplayObject):void
 		{
 			if (d1.parent != d2.parent)
@@ -39,6 +53,13 @@ package org.ghostcat.community.command
 				parent.swapChildren(d1,d2);
 		}
 		
+		/**
+		 * 首先按priority值排序，然后按Y轴排序
+		 *  
+		 * @param d1
+		 * @param d2
+		 * 
+		 */
 		public static function PRIORITY_SORTY(d1:DisplayObject,d2:DisplayObject):void
 		{
 			if (d1.parent != d2.parent)

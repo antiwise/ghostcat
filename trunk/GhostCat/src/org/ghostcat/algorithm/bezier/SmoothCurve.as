@@ -36,7 +36,7 @@ package org.ghostcat.algorithm.bezier
 		}
 		
 		/**
-		 * 插入节点
+		 * 插入中间节点
 		 * 
 		 * @param flashyiyi
 		 * 
@@ -84,9 +84,9 @@ package org.ghostcat.algorithm.bezier
 		}
 		
 		/**
-		 * 获得起点起一段长度的终点
+		 * 获得起点起经过一定长度的终点
 		 *  
-		 * @param distance
+		 * @param distance	距离
 		 * @return 
 		 * 
 		 */

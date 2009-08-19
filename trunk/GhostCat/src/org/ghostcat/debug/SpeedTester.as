@@ -2,8 +2,21 @@ package org.ghostcat.debug
 {
 	import flash.utils.getTimer;
 
+	/**
+	 * 速度测试
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class SpeedTester
 	{
+		/**
+		 * 重复执行一个方法检测速度
+		 * 
+		 * @param metord
+		 * @param repeat
+		 * 
+		 */
 		public static function testMetord(metord:Function,repeat:int = 100000):void
 		{
 			var i:int;
@@ -28,6 +41,10 @@ package org.ghostcat.debug
 		private static var t:int = -1;
 		private static var baseTime:int;
 		
+		/**
+		 * 测试开始
+		 * 
+		 */
 		public static function testStart():void
 		{
 			var t1:int,t2:int;
@@ -40,6 +57,10 @@ package org.ghostcat.debug
 			t = getTimer();
 		}
 		
+		/**
+		 * 测试结束
+		 * 
+		 */
 		public static function testEnd():void
 		{
 			if (t == -1)

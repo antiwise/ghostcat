@@ -5,12 +5,33 @@ package org.ghostcat.filter
 	import org.ghostcat.util.CallLater;
 	import org.ghostcat.debug.Debug;
 	
+	/**
+	 * 色彩变换滤镜
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public dynamic class ColorMatrixFilterProxy extends FilterProxy
 	{
+		/**
+		 * 色彩饱和度
+		 */
 		public static const SATURATION:int = 0;
+		/**
+		 * 对比度
+		 */
 		public static const CONTRAST:int = 1;
+		/**
+		 * 亮度
+		 */
 		public static const BRIGHTNESS:int = 2;
+		/**
+		 * 颜色反相
+		 */
 		public static const INVERSION:int = 3;
+		/**
+		 * 阈值
+		 */
 		public static const THRESHOLD:int = 4;
 		
 		private var _type:int;
@@ -23,6 +44,11 @@ package org.ghostcat.filter
 			this.n = n;
 		}
 		
+		/**
+		 * 滤镜需要的参数
+		 * @return 
+		 * 
+		 */
 		public function get n():int
 		{
 			return _n;
@@ -34,6 +60,11 @@ package org.ghostcat.filter
 			CallLater.callLater(update,null,true);
 		}
 
+		/**
+		 * 滤镜类型 
+		 * @return 
+		 * 
+		 */
 		public function get type():int
 		{
 			return _type;

@@ -6,6 +6,7 @@ package
 	import org.ghostcat.algorithm.bezier.Roupe;
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.manager.RootManager;
+	import org.ghostcat.ui.ToolTipSprite;
 	
 	public class SmoothCurveExample extends Sprite
 	{
@@ -22,12 +23,15 @@ package
 			initControl(start);
 			initControl(end);
 			roupe = new Roupe(start.point, end.point,10);
+			
+			addChild(new ToolTipSprite())
 		}
 		
 		private function initControl(pt:DragPoint, color:uint = 0, pointName:String = ""):void 
 		{
 			pt.x = Math.random()*stage.stageWidth;
 			pt.y = Math.random()*stage.stageHeight;
+			pt.toolTip = "拖动";
 			addChild(pt);
 		}
 		

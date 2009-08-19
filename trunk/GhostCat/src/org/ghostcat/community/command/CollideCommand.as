@@ -14,6 +14,13 @@ package org.ghostcat.community.command
 	 */
 	public final class CollideCommand
 	{
+		/**
+		 * 检测碰撞并向目标发送碰撞事件
+		 * 
+		 * @param v1
+		 * @param v2
+		 * 
+		 */
 		private function COLLIDE(v1:DisplayObject,v2:DisplayObject):void
 		{
 			if (v1 is GBase && v1 is GBase)

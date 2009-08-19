@@ -6,7 +6,7 @@ package org.ghostcat.display
 	import flash.geom.Rectangle;
 
 	/**
-	 * 45度角重复场景
+	 * 45度角重复场景，非常适合实现超大范围的地图显示
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -76,8 +76,8 @@ package org.ghostcat.display
 			var nRect:Rectangle = new Rectangle();
 			nRect.x = sRect.x;
 			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
-			nRect.width = sRect.width + sRect.height * wh /4 + contentRect.width*2;
-			nRect.height = sRect.height + sRect.width / wh /4;
+			nRect.width = sRect.width + sRect.height * wh /2 + contentRect.width;
+			nRect.height = sRect.height;
 			return nRect;
 		}
 		
