@@ -19,10 +19,25 @@ package org.ghostcat.display.graphics
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(PointSkin);
 		
+		private var _point : Point = new Point();
+
 		/**
 		 * 坐标
 		 */
-		public var point : Point = new Point();
+		public function get point():Point
+		{
+			return _point;
+		}
+
+		public function set point(v:Point):void
+		{
+			_point = v;
+			if (_point)
+			{
+				x = _point.x;
+				y = _point.y;
+			}
+		}
 
 		/**
 		 * 
@@ -38,14 +53,10 @@ package org.ghostcat.display.graphics
 			
 			super(skin, replace);
 			
+			if (!point)
+				point = new Point();
+			
 			this.point = point;
-			if (!this.point)
-				this.point = new Point();
-			if (this.point)
-			{
-				x = this.point.x;
-				y = this.point.y;
-			}
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
 			
