@@ -20,18 +20,18 @@ package
 			RootManager.register(this,1,1);
 			
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			initControl(start);
-			initControl(end);
+			initControl(start,"起点");
+			initControl(end,"终点");
 			roupe = new Roupe(start.point, end.point,10);
 			
 			addChild(new ToolTipSprite())
 		}
 		
-		private function initControl(pt:DragPoint, color:uint = 0, pointName:String = ""):void 
+		private function initControl(pt:DragPoint, pointName:String = null):void 
 		{
 			pt.x = Math.random()*stage.stageWidth;
 			pt.y = Math.random()*stage.stageHeight;
-			pt.toolTip = "拖动";
+			pt.toolTip = pointName;
 			addChild(pt);
 		}
 		

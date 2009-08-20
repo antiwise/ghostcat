@@ -50,9 +50,11 @@ package org.ghostcat.manager
 		 * @return 
 		 * 
 		 */		
-		public function load(url:String,embedClass:Class=null):void
+		public function load(url:String,embedClass:Class=null):LoadOper
 		{
-			new LoadOper(url,embedClass,completeHandler).commit();
+			var loader:LoadOper = new LoadOper(url,embedClass,completeHandler);
+			loader.commit();
+			return loader;
 		}
 		
 		private function completeHandler(event:Event):void
@@ -149,7 +151,7 @@ package org.ghostcat.manager
 			{
 				for (var i:int = 0;i<parms.length;i++)
 				{
-					result.replace(new RegExp("{"+i+"}","g"),parms[i]);
+					result = result.replace(new RegExp("\\{"+i+"\\}","g"),parms[i]);
 				}
 			}
 			for (var conv:* in customConversion)
@@ -157,7 +159,7 @@ package org.ghostcat.manager
 				var text:String = customConversion[conv];
 				if (text.charAt(0)=="#")
 					text = ReflectUtil.eval(text.slice(1));
-				result.replace(new RegExp("{"+conv+"}","g"),text);
+				result = result.replace(new RegExp("\\{"+conv+"\\}","g"),text);
 			}
 			return result;
 		}

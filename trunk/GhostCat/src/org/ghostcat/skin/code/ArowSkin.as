@@ -29,7 +29,7 @@ package org.ghostcat.skin.code
 		{
 			if (!point)
 				point = new Point(0,-5);
-			new Sound().length
+			
 			DisplayParse.create([new GraphicsLineStyle(borderThickness,borderColor),
 								new GraphicsFill(fillColor)]).parse(this);
 			this.filters = [new DropShadowFilter(4,45,0,0.5)];

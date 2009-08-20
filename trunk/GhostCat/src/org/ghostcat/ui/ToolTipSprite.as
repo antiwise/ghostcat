@@ -62,10 +62,10 @@ package org.ghostcat.ui
 			super();
 			
 			this.acceptContentPosition = false;
+			this.mouseEnabled = this.mouseChildren = false;
 			
 			if (!_instance)
 				_instance = this;
-			
 		}
 		
 		public static function get instance():ToolTipSprite
@@ -110,12 +110,18 @@ package org.ghostcat.ui
 			super.init();
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
+			stage.addEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 		}
 		
 		private function mouseMoveHandler(event:MouseEvent):void
 		{
-			this.x = parent.mouseX;
-			this.y = parent.mouseY;
+			if (content && target)
+				(content as IToolTipSkin).setTarget(target);
+		}
+		
+		private function mouseOutHandler(event:MouseEvent):void
+		{
+			hide();
 		}
 		
 		private function mouseOverHandler(event:MouseEvent):void
@@ -169,12 +175,14 @@ package org.ghostcat.ui
 			delayTimer = null;
 			
 			var obj:* = target["toolTipObj"];
-			if (obj is String){
+			if (obj is String)
 				obj = toolTipObjs[obj];
-			}
+			
 			if (!(obj is IDisplayObject))
 				obj = defaultObj;
+			
 			setContent(obj);
+			mouseMoveHandler(null);
 			
 			(content as IToolTipSkin).data = target["toolTip"];
 		}
@@ -208,6 +216,7 @@ package org.ghostcat.ui
 			super.destory();
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 		}
 	}
 }
