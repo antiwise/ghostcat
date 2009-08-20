@@ -26,7 +26,7 @@ package org.ghostcat.skin.code
 			this.adjustSize = true;
 		}
 		
-		public function setTarget(target:DisplayObject):void
+		public function positionTo(target:DisplayObject):void
 		{
 			var toolTipSprite:ToolTipSprite = this.parent as ToolTipSprite;
 			toolTipSprite.x = toolTipSprite.parent.mouseX + 15;

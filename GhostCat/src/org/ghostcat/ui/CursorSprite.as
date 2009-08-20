@@ -4,12 +4,12 @@ package org.ghostcat.ui
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.ui.Mouse;
 	
+	import org.ghostcat.display.ICursorManagerClient;
 	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Util;
@@ -28,7 +28,7 @@ package org.ghostcat.ui
 		public var cursors:Object;
 		
 		/**
-		 *  限定触发提示的类型，避免与其他框架冲突
+		 *  限定触发提示的类型
 		 */
 		public var onlyWithClasses:Array;
 		
@@ -170,9 +170,12 @@ package org.ghostcat.ui
 				if(currentCursorTarget is Sprite && Sprite(currentCursorTarget).buttonMode == true)
 					return null;
 				
-				var cursor:Class = currentCursorTarget["cursor"];
-				if (cursor && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
-					return cursor;
+				if(currentCursorTarget is ICursorManagerClient)
+				{
+					var cursor:Class = (currentCursorTarget as ICursorManagerClient).cursor;
+					if (cursor && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
+						return cursor;
+				}
 				currentCursorTarget = currentCursorTarget.parent;
 			}
 			return null;

@@ -8,6 +8,7 @@ package org.ghostcat.ui
 	import org.ghostcat.core.ClassFactory;
 	import org.ghostcat.core.IDisplayObject;
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.IToolTipManagerClient;
 	import org.ghostcat.skin.code.ToolTipSkin;
 	import org.ghostcat.util.Util;
 
@@ -31,7 +32,7 @@ package org.ghostcat.ui
 		public var cooldown:int = 250;
 		
 		/**
-		 * 限定触发提示的类型，避免与其他框架冲突
+		 * 限定触发提示的类型
 		 */
 		public var onlyWithClasses:Array;
 		
@@ -116,7 +117,7 @@ package org.ghostcat.ui
 		private function mouseMoveHandler(event:MouseEvent):void
 		{
 			if (content && target)
-				(content as IToolTipSkin).setTarget(target);
+				(content as IToolTipSkin).positionTo(target);
 		}
 		
 		private function mouseOutHandler(event:MouseEvent):void
@@ -140,13 +141,15 @@ package org.ghostcat.ui
 			
 			while (currentTarget && currentTarget.parent != currentTarget)
 			{
-				if (currentTarget.hasOwnProperty("toolTip") && currentTarget["toolTip"] && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
+				if (currentTarget is IToolTipManagerClient 
+					&& (currentTarget as IToolTipManagerClient).toolTip 
+					&& (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
 					return currentTarget;
+				
 				currentTarget = currentTarget.parent;
 			}
 			return null;
 		}
-
 		
 		/**
 		 * 延迟显示
@@ -174,7 +177,26 @@ package org.ghostcat.ui
 			delayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE,show);
 			delayTimer = null;
 			
-			var obj:* = target["toolTipObj"];
+			if (target is IToolTipManagerClient)
+			{
+				var client:IToolTipManagerClient = target as IToolTipManagerClient;
+				showToolTip(target,client.toolTip,client.toolTipObj);
+			}
+		}
+		
+		/**
+		 * 显示出ToolTip
+		 * 
+		 * @param target	目标
+		 * @param toolTip
+		 * @param toolTipObj	
+		 * 
+		 */
+		public function showToolTip(target:DisplayObject,toolTip:*,toolTipObj:*=null):void
+		{
+			this.target = target;
+			
+			var obj:* = toolTipObj;
 			if (obj is String)
 				obj = toolTipObjs[obj];
 			
@@ -184,7 +206,7 @@ package org.ghostcat.ui
 			setContent(obj);
 			mouseMoveHandler(null);
 			
-			(content as IToolTipSkin).data = target["toolTip"];
+			(content as IToolTipSkin).data = toolTip;
 		}
 		
 		/**
