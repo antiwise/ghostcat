@@ -38,10 +38,13 @@ package org.ghostcat.display.graphics
 			
 			super(skin, replace);
 			
-			if (point)
+			this.point = point;
+			if (!this.point)
+				this.point = new Point();
+			if (this.point)
 			{
-				x = point.x;
-				y = point.y;
+				x = this.point.x;
+				y = this.point.y;
 			}
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);

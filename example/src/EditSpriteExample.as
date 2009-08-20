@@ -8,9 +8,9 @@ package
 	import org.ghostcat.parse.graphics.GraphicsPath;
 	
 	[SWF(width="400",height="400")]
-	public class TestExample extends Sprite
+	public class EditSpriteExample extends Sprite
 	{
-		public function TestExample()
+		public function EditSpriteExample()
 		{
 			var path:GraphicsPath = new GraphicsPath([new Point(0,0),[new Point(100,0),new Point(50,50)],new Point(0,100)]);
 			var p:EditableGraphicsSprite = new EditableGraphicsSprite([new GraphicsLineStyle(0),path]);
