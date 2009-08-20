@@ -3,18 +3,24 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.graphics.EditableGraphicsSprite;
-	import org.ghostcat.parse.graphics.GraphicsLineStyle;
-	import org.ghostcat.parse.graphics.GraphicsPath;
+	import org.ghostcat.display.graphics.LinkLine;
 	
 	[SWF(width="400",height="400")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{
-			var path:GraphicsPath = new GraphicsPath([new Point(0,0),[new Point(100,0),new Point(50,50)],new Point(0,100)]);
-			var p:EditableGraphicsSprite = new EditableGraphicsSprite([new GraphicsLineStyle(0),path]);
+			var p:LinkLine = new LinkLine();
 			addChild(p);
+			
+			p.start = new Point(50,50);
+			p.startContent = this;
+			
+			var p2:Sprite = new Sprite();
+			addChild(p2);
+			
+			p.end = new Point(5,0);
+			p.startContent = p2;
 		}
 		
 	}
