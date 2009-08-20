@@ -13,6 +13,6 @@ package org.ghostcat.ui
 	 */
 	public interface IToolTipSkin extends IData,IDisplayObject
 	{
-		function setTarget(target:DisplayObject):void;
+		function positionTo(target:DisplayObject):void;
 	}
 }
