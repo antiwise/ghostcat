@@ -5,6 +5,7 @@ package
 	import flash.geom.Point;
 	
 	import org.ghostcat.display.GRepeater45;
+	import org.ghostcat.display.graphics.SelectRect;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.manager.RootManager;
@@ -28,9 +29,15 @@ package
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 		
 			addChild(repeater);
+			
+			addChild(p);
+			
 		}
+		
+		private var p:SelectRect = new SelectRect();
 		private function mouseDownHandler(event:MouseEvent):void
 		{
+			p.begin();
 			DragManager.startDrag(repeater);
 			trace(repeater.getItemPointAtPoint(new Point(repeater.mouseX,repeater.mouseY)))
 		}

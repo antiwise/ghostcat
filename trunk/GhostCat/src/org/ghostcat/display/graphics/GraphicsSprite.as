@@ -15,7 +15,8 @@ package org.ghostcat.display.graphics
 		
 		public function GraphicsSprite(data:Array = null)
 		{
-			_parse = DisplayParse.create(data);
+			_parse = new DisplayParse();
+			graphicsData = data;
 		}
 
 		public function get graphicsData():Array
