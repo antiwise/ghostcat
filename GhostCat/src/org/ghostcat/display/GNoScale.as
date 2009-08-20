@@ -1,11 +1,8 @@
 package org.ghostcat.display
 {
 	import flash.display.DisplayObject;
-	import flash.geom.Point;
 	
-	import org.ghostcat.events.GEvent;
-	import org.ghostcat.events.ResizeEvent;
-	import org.ghostcat.util.Util;
+	import org.ghostcat.util.CallLater;
 	
 	/**
 	 * Scale保持为固定值的显示对象
@@ -53,7 +50,12 @@ package org.ghostcat.display
 			invalidateSize();
 		}
 		
-		public override function updateSize() : void
+		override public function invalidateSize() : void
+		{
+			CallLater.callLater(updateSize,null,true);
+		}
+		
+		override public function updateSize() : void
 		{
 			super.updateSize();
 			updateDisplayList();

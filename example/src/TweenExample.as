@@ -5,6 +5,7 @@ package
 	
 	import org.ghostcat.filter.FilterProxy;
 	import org.ghostcat.manager.RootManager;
+	import org.ghostcat.operation.DelayOper;
 	import org.ghostcat.operation.RepeatOper;
 	import org.ghostcat.operation.TimeoutOper;
 	import org.ghostcat.operation.TweenOper;
@@ -34,8 +35,11 @@ package
 			f.applyFilter(sp);
 			
 			//利用Operation机制实现的顺序以及循环Tween
-			(Util.createObject(TimeoutOper,{timeout:2000,alawaySuccess:true}) as TimeoutOper).commit();
-			new RepeatOper([new TweenOper(f,1000,{blurX:20,blurY:20}),new TweenOper(f,1000,{blurX:0,blurY:0})]).commit();
+			(Util.createObject(DelayOper,{timeout:2000}) as DelayOper).commit();
+			new RepeatOper([
+				new TweenOper(f,1000,{blurX:20,blurY:20}),
+				new TweenOper(f,1000,{blurX:0,blurY:0})
+			]).commit();
 			
 		}
 	}

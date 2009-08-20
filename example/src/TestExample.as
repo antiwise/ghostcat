@@ -15,12 +15,7 @@ package
 		public var p:Light;
 		public function TestExample()
 		{
-			var p1:Sprite = new TestRepeater();
-			addChild(p1);
-			var p2:Sprite = new TestRepeater45();
-			addChild(p2);
-			p2.x = 50;
-			p2.y = 25;
+			trace("{0}".replace(new RegExp("\\{0\\}","g"),"123"))
 		}
 		
 	}
