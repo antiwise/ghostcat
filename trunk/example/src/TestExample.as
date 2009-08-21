@@ -23,33 +23,12 @@ package
 			p.end = new Point(5,0);
 			p.startContent = p2;
 			
-			var a:Sprite = new t();
-			addChild(a);
-			removeChild(a);
-		}
-		
-		public function h(event:Event):void
-		{
-			
-		}
-	}
-}
-import flash.display.Sprite;
-import flash.events.Event;
+			var arr:Array = [1,2,3,4];
+			for (var i:int = 0; i < arr.length; i++)
+			{
+				trace(arr.pop());	
+			}
 
-class t extends Sprite
-{
-	public function t():void
-	{
-		addEventListener(Event.ADDED_TO_STAGE,init);
+		}
 	}
-	private function init(event:Event):void
-	{
-		parent.addEventListener(Event.ENTER_FRAME,(parent as TestExample).h);
-	}
-	public function h(event:Event):void
-	{
-		
-	}
-	
 }
