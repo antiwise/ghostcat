@@ -1,10 +1,6 @@
 package org.ghostcat.display
 {
 	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.KeyboardEvent;
-	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
@@ -14,7 +10,6 @@ package org.ghostcat.display
 	import org.ghostcat.events.MoveEvent;
 	import org.ghostcat.events.ResizeEvent;
 	import org.ghostcat.util.CallLater;
-	import org.ghostcat.util.Collision;
 	import org.ghostcat.util.Util;
 	
 	[Event(name="update_complete",type="org.ghostcat.events.GEvent")]
@@ -53,14 +48,9 @@ package org.ghostcat.display
 		
 		/**
 		 * 是否延迟更新坐标。如果延迟更新，将不会出现设置了属性值屏幕却不能立即看到表现导致错位的情况，
-		 * 因为整个过程都被延后了。但这样画面会延后一帧，在拥有交互效果的时候这个缺陷尤为明显。
+		 * 因为整个过程都被延后了。但这样画面会延后一帧，会产生画面拖慢，因此只在必要的时候使用
 		 */		
 		public var delayUpatePosition:Boolean = false;
-		
-		/**
-		 * 碰撞检测块。这个属性指示的是图形的实体。
-		 */		
-		public var collision:Collision;
 		
 		/**
 		 * 参数与setContent方法相同
@@ -68,7 +58,6 @@ package org.ghostcat.display
 		 */		
 		public function GBase(skin:DisplayObject=null,replace:Boolean=true)
 		{
-			collision = new Collision(this);
 			super(skin,replace);
 		}
 		
@@ -196,6 +185,7 @@ package org.ghostcat.display
 		
 		/**
 		 * 设置位置坐标
+		 * @param v
 		 * 
 		 */		
 		public function set position(v:Point):void
@@ -209,104 +199,87 @@ package org.ghostcat.display
 			return _position;
 		}
 		
-		public override function set width(v:Number):void
+		public override function set width(value:Number):void
 		{
-			if (super.width == v)
+			if (super.width == value)
 				return;
 			
-			super.width = v;
+			super.width = value;
+				
 			invalidateSize();
 		}
 		
-		public override function set height(v:Number):void
+		public override function set height(value:Number):void
 		{
-			if (super.height == v)
+			if (super.height == value)
 				return;
 				
-			super.height = v;
+			super.height = value;
+				
 			invalidateSize();
 		}
 		
-		/**
-		 * 设置皮肤。
-		 * 
-		 * @param skin		皮肤	
-		 * @param replace	是否替换原图元
-		 * 
-		 */		
-		public override function setContent(skin:DisplayObject,replace:Boolean=true):void
-		{
-			super.setContent(skin,replace);
-			
-			collision.refresh();
-		}
-		
-		/**
-		 * 自动注册事件常量。
-		 */		
-		protected function get autoRegHandlers():Array
-		{
-			 return   [Event.ENTER_FRAME,
-						MouseEvent.CLICK,
-						MouseEvent.DOUBLE_CLICK,
-						MouseEvent.MOUSE_DOWN,
-						MouseEvent.MOUSE_MOVE,
-						MouseEvent.MOUSE_OUT,
-						MouseEvent.MOUSE_OVER,
-						MouseEvent.MOUSE_UP,
-						MouseEvent.MOUSE_WHEEL,
-						MouseEvent.ROLL_OUT,
-						MouseEvent.ROLL_OVER,
-						KeyboardEvent.KEY_DOWN,
-						KeyboardEvent.KEY_UP];
-		}
-		
-		/**
-		 * 
-		 * 自动注册事件，将自动注册符合条件的方法为事件，会在init()时自动触发。
-		 * 由于其生效机制，如果希望事件在所有派生类中都生效，事件函数应该是public或者protected，如果设成private，派生类里将不会注册这个事件。
-		 * 
-		 * 一次注册的事件将会有3个，分别对应this,parent,stage的情况，诸如：
-		 * this_clickHandler,parent_clickHandler,stage_clickHandler
-		 * 
-		 * @param remove		是否是卸除
-		 */	
-		protected function regEventHandler(remove:Boolean=false):void
-		{
-			var targetMap:Object = new Object();
-			targetMap["this"] = this;
-			if (this.parent) 
-				targetMap["parent"] = this.parent;
-			if (this.stage) 
-				targetMap["stage"] = this.stage;
-			
-			for (var i:int = 0;i < autoRegHandlers.length; i++)
-			{
-				for (var key:* in targetMap)
-				{
-					var target:EventDispatcher = targetMap[key];
-					var handler:String = key + "_" +autoRegHandlers[i] + "Handler";
-					if (hasOwnProperty(handler)){
-						if (remove){
-							target.removeEventListener(autoRegHandlers[i],this[handler]);
-						}else{
-							target.addEventListener(autoRegHandlers[i],this[handler]);
-						}
-					}
-				}
-			}
-		}
-		
-		/**
-		 *
-		 * 初始化方法，在第一次被加入显示列表时调用 
-		 * 
-		 */		
-		protected override function init():void
-		{
-			collision.refresh();
-			regEventHandler();
-		}
+//		/**
+//		 * 自动注册事件常量。
+//		 */		
+//		protected function get autoRegHandlers():Array
+//		{
+//			 return   [Event.ENTER_FRAME,
+//						MouseEvent.CLICK,
+//						MouseEvent.DOUBLE_CLICK,
+//						MouseEvent.MOUSE_DOWN,
+//						MouseEvent.MOUSE_MOVE,
+//						MouseEvent.MOUSE_OUT,
+//						MouseEvent.MOUSE_OVER,
+//						MouseEvent.MOUSE_UP,
+//						MouseEvent.MOUSE_WHEEL,
+//						MouseEvent.ROLL_OUT,
+//						MouseEvent.ROLL_OVER,
+//						KeyboardEvent.KEY_DOWN,
+//						KeyboardEvent.KEY_UP];
+//		}
+//		
+//		/**
+//		 * 
+//		 * 自动注册事件，将自动注册符合条件的方法为事件，会在init()时自动触发。
+//		 * 由于其生效机制，如果希望事件在所有派生类中都生效，事件函数应该是public或者protected，如果设成private，派生类里将不会注册这个事件。
+//		 * 
+//		 * 一次注册的事件将会有3个，分别对应this,parent,stage的情况，诸如：
+//		 * this_clickHandler,parent_clickHandler,stage_clickHandler
+//		 * 
+//		 * @param remove		是否是卸除
+//		 */	
+//		protected function regEventHandler(remove:Boolean=false):void
+//		{
+//			var targetMap:Object = new Object();
+//			targetMap["this"] = this;
+//			if (this.parent) 
+//				targetMap["parent"] = this.parent;
+//			if (this.stage) 
+//				targetMap["stage"] = this.stage;
+//			
+//			for (var i:int = 0;i < autoRegHandlers.length; i++)
+//			{
+//				for (var key:* in targetMap)
+//				{
+//					var target:EventDispatcher = targetMap[key];
+//					var handler:String = key + "_" +autoRegHandlers[i] + "Handler";
+//					if (hasOwnProperty(handler)){
+//						if (remove){
+//							target.removeEventListener(autoRegHandlers[i],this[handler]);
+//						}else{
+//							target.addEventListener(autoRegHandlers[i],this[handler]);
+//						}
+//					}
+//				}
+//			}
+//		}
+//		
+//		protected override function init():void
+//		{
+//			super.init();
+//			regEventHandler();
+//		}
 		
 		/**
 		 * 立即更新显示 
@@ -314,9 +287,9 @@ package org.ghostcat.display
 		 */
 		public function vaildNow():void
 		{
-			updatePosition();
-			updateSize();
-			updateDisplayList();
+			vaildPosition();
+			vaildSize();
+			vaildDisplayList();
 		}
 		
 		/**
@@ -325,7 +298,7 @@ package org.ghostcat.display
 		 */
 		public function invalidatePosition():void
 		{
-			CallLater.callLaterNextFrame(updatePosition,null,true);
+			CallLater.callLaterNextFrame(vaildPosition,null,true);
 		}
 		
 		/**
@@ -334,7 +307,7 @@ package org.ghostcat.display
 		 */
 		public function invalidateSize():void
 		{
-			CallLater.callLaterNextFrame(updateSize,null,true);
+			CallLater.callLaterNextFrame(vaildSize,null,true);
 		}
 		
 		/**
@@ -343,38 +316,67 @@ package org.ghostcat.display
 		 */
 		public function invalidateDisplayList():void
 		{
-			CallLater.callLater(updateDisplayList,null,true);
+			CallLater.callLater(vaildDisplayList,null,true);
 		}
 		
+		
 		/**
-		 * 更新位置 
+		 * 更新坐标并发事件
 		 * 
 		 */
-		public function updatePosition():void
+		public function vaildPosition():void
 		{
 			super.x = position.x;
-			super.y = position.y;
+			super.y = position.y;			
+		
+			updatePosition();
 			
 			dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
 			oldPosition = position.clone();
 		}
 		
 		/**
-		 * 更新大小
+		 * 更新大小并发事件 
 		 * 
 		 */
-		public function updateSize():void
+		public function vaildSize():void
 		{
+			updateSize();
 			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
 		}
 		
 		/**
-		 * 更新显示
+		 * 更新显示并发事件 
 		 * 
 		 */
-		public function updateDisplayList(): void
+		public function vaildDisplayList():void
 		{
-			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE))
+			updateDisplayList();
+			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
+		}
+		
+		/**
+		 * 更新位置的操作
+		 * 
+		 */
+		protected function updatePosition():void
+		{
+		}
+		
+		/**
+		 * 更新大小的操作
+		 * 
+		 */
+		protected function updateSize():void
+		{
+		}
+		
+		/**
+		 * 更新显示的操作
+		 * 
+		 */
+		protected function updateDisplayList(): void
+		{
 		}
 		
 		private var _refreshInterval:int = 0;
@@ -423,12 +425,11 @@ package org.ghostcat.display
 			invalidateDisplayList();
 		}
 		
-		public override function destory():void
-		{
-			regEventHandler(false);
-			super.destory();
-		}
-		
+//		public override function destory():void
+//		{
+//			regEventHandler(false);
+//			super.destory();
+//		}
 		
 	}
 }

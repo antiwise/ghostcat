@@ -3,6 +3,7 @@ package org.ghostcat.util
 	import flash.display.BitmapData;
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -126,6 +127,81 @@ package org.ghostcat.util
 			 
 			return bounds1.intersection(bounds2);
 		}
+		
+		/**
+		 * 遍历第2个物体的子对象并执行一次HitTestObject
+		 * 
+		 * @param target1
+		 * @param target2
+		 * @return 
+		 * 
+		 */
+		public static function hitTestObjectChildren(target1:DisplayObject,target2:DisplayObject):Boolean
+		{
+			var size:int = (target2 is DisplayObjectContainer)?(target2 as DisplayObjectContainer).numChildren : 0;
+			if (size == 0)
+				return target1.hitTestObject(target2);
+			else
+			{
+				for (var i:int = 0;i < size;i++)
+				{
+					if (target1.hitTestObject((target2 as DisplayObjectContainer).getChildAt(i)))
+						return true;
+				}
+			}
+			return false;
+		}
+		
+		/**
+		 * 遍历物体的子对象并执行一次HitTestPoint
+		 * 
+		 * @param target2
+		 * @param x
+		 * @param y
+		 * @param shapeFlag
+		 * @return 
+		 * 
+		 */
+		public static function hitTestPointChildren(target2:DisplayObject,x:Number,y:Number,shapeFlag:Boolean=false):Boolean
+		{
+			var size:int = (target2 is DisplayObjectContainer)?(target2 as DisplayObjectContainer).numChildren : 0;
+			if (size == 0)
+				return target2.hitTestPoint(x,y,shapeFlag);
+			else
+			{
+				for (var i:int = 0;i < size;i++)
+				{
+					if ((target2 as DisplayObjectContainer).getChildAt(i).hitTestPoint(x,y,shapeFlag))
+						return true;
+				}
+			}
+			return false;
+		}
+		
+		/**
+		 * 遍历第2个物体的子对象并执行一次complexHitTestObject
+		 *  
+		 * @param target1
+		 * @param target2
+		 * @return 
+		 * 
+		 */
+		public static function complexHitTestObjectChildren(target1:DisplayObject,target2:DisplayObject):Boolean
+		{
+			var size:int = (target2 is DisplayObjectContainer)?(target2 as DisplayObjectContainer).numChildren : 0;
+			if (size == 0)
+				return complexHitTestObject(target1,target2);
+			else
+			{
+				for (var i:int = 0;i < size;i++)
+				{
+					if (complexHitTestObject(target1,(target2 as DisplayObjectContainer).getChildAt(i)))
+						return true;
+				}
+			}
+			return false;
+		}
+		
 		
 //		/**
 //		 * 获得两个椭圆物品的交叠矩形

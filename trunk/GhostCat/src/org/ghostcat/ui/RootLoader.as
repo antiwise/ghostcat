@@ -8,7 +8,7 @@ package org.ghostcat.ui
 	import org.ghostcat.ui.controls.GProgressBar;
 	
 	/**
-	 * 自加载方式的实现。由于使用了组件的进度条，加载条本身就有15K的体积。
+	 * 自加载方式的实现。由于使用了组件的进度条，加载条本身就有14K的体积。
 	 * 如果对此不满的话，可以自己按需求再写一个。
 	 * 
 	 * @author flashyiyi

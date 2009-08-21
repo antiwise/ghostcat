@@ -19,6 +19,11 @@ package org.ghostcat.display.graphics
 			graphicsData = data;
 		}
 
+		/**
+		 * 图像数据，是一个Parse类组成的数组 
+		 * @return 
+		 * 
+		 */
 		public function get graphicsData():Array
 		{
 			return _parse.children;
@@ -30,7 +35,11 @@ package org.ghostcat.display.graphics
 			invalidateDisplayList();
 		}
 		
-		override public function updateDisplayList() : void
+		/**
+		 * 更新图像
+		 * 
+		 */
+		override protected function updateDisplayList() : void
 		{
 			graphics.clear();
 			_parse.parse(this);

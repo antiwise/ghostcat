@@ -61,7 +61,7 @@ package org.ghostcat.skin.code
 			invalidateSize();
 		}
 		
-		public override function updateDisplayList():void
+		protected override function updateDisplayList():void
 		{
 			graphics.clear();
 			DisplayParse.create([new GraphicsLineStyle(borderThickness,borderColor),

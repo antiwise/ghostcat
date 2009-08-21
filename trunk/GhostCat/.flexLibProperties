@@ -160,7 +160,7 @@
     <classEntry path="org.ghostcat.skin.code.BoxSkin"/>
     <classEntry path="org.ghostcat.skin.code.PointSkin"/>
     <classEntry path="org.ghostcat.skin.code.ProgressSkin"/>
-    <classEntry path="org.ghostcat.skin.code.ToolTipSkin"/>
+    <classEntry path="org.ghostcat.ui.ToolTipSkin"/>
     <classEntry path="org.ghostcat.text.ANSI"/>
     <classEntry path="org.ghostcat.text.IME"/>
     <classEntry path="org.ghostcat.text.PinYin"/>
@@ -214,6 +214,7 @@
     <classEntry path="org.ghostcat.display.GRepeater45"/>
     <classEntry path="org.ghostcat.util.HitTest"/>
     <classEntry path="org.ghostcat.events.SelectEvent"/>
+    <classEntry path="org.ghostcat.display.CollisionSprite"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

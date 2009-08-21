@@ -86,7 +86,7 @@ package org.ghostcat.display.transfer
 				bitmapData = new BitmapData(rect.width,rect.height,true,0);
 		}
 		
-		public override function updateDisplayList(): void
+		protected override function updateDisplayList(): void
 		{
 			super.updateDisplayList();
 			

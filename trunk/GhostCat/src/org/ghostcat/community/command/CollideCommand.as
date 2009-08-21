@@ -3,6 +3,7 @@ package org.ghostcat.community.command
 	import flash.display.DisplayObject;
 	
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.ICollisionClient;
 	import org.ghostcat.events.CollideEvent;
 	import org.ghostcat.util.Util;
 
@@ -23,10 +24,10 @@ package org.ghostcat.community.command
 		 */
 		private function COLLIDE(v1:DisplayObject,v2:DisplayObject):void
 		{
-			if (v1 is GBase && v1 is GBase)
+			if (v1 is GBase && v1 is ICollisionClient)
 			{
-				var g1:GBase = v1 as GBase;
-				var g2:GBase = v2 as GBase;
+				var g1:ICollisionClient = v1 as ICollisionClient;
+				var g2:ICollisionClient = v2 as ICollisionClient;
 				if (g1.collision.hitTestObject(g2.collision))
 					g1.dispatchEvent(Util.createObject(new CollideEvent(CollideEvent.COLLIDE),{vergePosition:g1.collision.lastVergePoint,hitObject:g2}));
 			}

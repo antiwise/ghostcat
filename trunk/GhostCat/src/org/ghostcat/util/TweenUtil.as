@@ -6,6 +6,7 @@ package org.ghostcat.util
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.SoundTransform;
+	import flash.utils.setTimeout;
 	
 	import org.ghostcat.events.TickEvent;
 	import org.ghostcat.events.TweenEvent;
@@ -24,7 +25,8 @@ package org.ghostcat.util
 	 */
 	public class TweenUtil extends EventDispatcher
 	{
-		private static var init:Boolean = false;//是否已经初始化
+		Tick.instance.addEventListener(TickEvent.TICK,tickHandler);//被引用时自动初始化
+		
 		private static var effects:Array = [];
 		
 		/**
@@ -72,28 +74,61 @@ package org.ghostcat.util
 			new TweenUtil(target,duration,params);
 		}
 		
-		public var invert:Boolean =false;//反向播放
-		public var started:Boolean = false;//是否已开始
-		public var paused:Boolean = false;//是否暂停
-		public var target:* = target;//目标
-		public var currentTime:int;//开始时间
-		public var duration:int;//缓动时间长度
-		public var ease:Function;//缓动效果实例
-		public var fromValues:Object = new Object();//起始值
-		public var toValues:Object = new Object();//结束值
-		public var onStart:Function;//开始Tween的回调函数
-		public var onUpdate:Function;//更新Tween的回调函数
-		public var onComplete:Function;//完成Tween的回调函数
-		public var renderOnStart:Boolean;//是否在倒放最开始的时候显示初值
+		/**
+		 * 是否反向播放
+		 */
+		public var invert:Boolean =false;
+		/**
+		 * 是否已开始
+		 */
+		public var started:Boolean = false;
+		/**
+		 * 是否暂停
+		 */
+		public var paused:Boolean = false;
+		/**
+		 * 目标
+		 */
+		public var target:* = target;
+		/**
+		 * 开始时间
+		 */
+		public var currentTime:int;
+		/**
+		 * 缓动时间长度
+		 */
+		public var duration:int;
+		/**
+		 * 缓动函数
+		 */
+		public var ease:Function;
+		/**
+		 * 起始值
+		 */
+		public var fromValues:Object = new Object();
+		/**
+		 * 结束值
+		 */
+		public var toValues:Object = new Object();
+		/**
+		 * 开始Tween的回调函数
+		 */
+		public var onStart:Function;
+		/**
+		 * 更新Tween的回调函数
+		 */
+		public var onUpdate:Function;
+		/**
+		 * 完成Tween的回调函数
+		 */
+		public var onComplete:Function;
+		/**
+		 * 是否在倒放最开始的时候显示初值
+		 */
+		public var renderOnStart:Boolean;
 		
 		public function TweenUtil(target:Object, duration:int, params:Object)
 		{
-			if (!init)
-			{
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
-				init = false;
-			}
-			
 			this.target = target;
 			this.duration = duration;
 			

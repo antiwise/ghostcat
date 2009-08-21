@@ -21,6 +21,11 @@ package
 			
 			p.end = new Point(5,0);
 			p.startContent = p2;
+			
+			
+			var n:uint = 0xFFFFFF;
+			n = n << 8;
+			trace(n.toString(16))
 		}
 		
 	}
