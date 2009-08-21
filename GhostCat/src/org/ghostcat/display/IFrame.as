@@ -28,13 +28,13 @@ package org.ghostcat.display
 			ExternalInterface.call("IFrameManager.createIFrame", id);
 		}
 		
-		public override function updateSize() : void
+		protected override function updateSize() : void
 		{
 			super.updateSize();
 			moveIFrame();
 		}
 		
-		public override function updatePosition() : void
+		protected override function updatePosition() : void
 		{
 			super.updatePosition();
 			moveIFrame();

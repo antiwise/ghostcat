@@ -6,8 +6,8 @@ package
 	import flash.text.TextFieldType;
 	
 	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.skin.code.ToolTipSkin;
 	import org.ghostcat.text.IME;
+	import org.ghostcat.ui.ToolTipSkin;
 	import org.ghostcat.ui.controls.GText;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.Util;

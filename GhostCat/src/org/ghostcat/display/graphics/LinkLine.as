@@ -47,7 +47,7 @@ package org.ghostcat.display.graphics
 		}
 
 		/**
-		 * 起始对象坐标系中的起始点
+		 * 起始对象坐标系中的点
 		 */
 		public function get start():Point
 		{
@@ -75,7 +75,7 @@ package org.ghostcat.display.graphics
 		}
 
 		/**
-		 * 结束对象坐标系中的结束点 
+		 * 结束对象坐标系中的点 
 		 */
 		public function get end():Point
 		{
@@ -88,7 +88,7 @@ package org.ghostcat.display.graphics
 			invalidateDisplayList();
 		}
 
-		override public function updateDisplayList() : void
+		override protected function updateDisplayList() : void
 		{
 			if (start == null || end ==  null)
 				return;

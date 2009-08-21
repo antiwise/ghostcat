@@ -6,8 +6,8 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
+	import org.ghostcat.display.CollisionSprite;
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.transfer.MiniMap;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	
@@ -24,7 +24,7 @@ package
 	 */
 	public class CollisionExample extends Sprite
 	{
-		public var b:GBase;
+		public var b:CollisionSprite;
 		
 		public var point:GBase;
 			
@@ -34,7 +34,7 @@ package
 		}
 		private function init(event:Event):void
 		{
-			b = new GBase(new TestCollision())
+			b = new CollisionSprite(new TestCollision())
 			Geom.centerIn(b,stage);
 			addChild(b);
 			

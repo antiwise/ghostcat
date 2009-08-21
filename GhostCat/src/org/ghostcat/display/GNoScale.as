@@ -55,7 +55,7 @@ package org.ghostcat.display
 			CallLater.callLater(updateSize,null,true);
 		}
 		
-		override public function updateSize() : void
+		override protected function updateSize() : void
 		{
 			super.updateSize();
 			updateDisplayList();

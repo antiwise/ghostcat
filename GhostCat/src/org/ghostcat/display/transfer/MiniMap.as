@@ -51,7 +51,7 @@ package org.ghostcat.display.transfer
 			stage.addEventListener(MouseEvent.MOUSE_UP,shapeMouseUpHandler);
 		}
 		
-		public override function updateSize() : void
+		protected override function updateSize() : void
 		{
 			if (bitmap.bitmapData)
 				bitmap.bitmapData.dispose();

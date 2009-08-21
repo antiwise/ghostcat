@@ -91,7 +91,7 @@ package org.ghostcat.display.viewport
 			invalidateDisplayList();
 		}
 		
-		override public function updateDisplayList() : void
+		override protected function updateDisplayList() : void
 		{
 			_line = new Line(_startPoint,_endPoint);
 			var sp:Point = globalToLocal(_startPoint);

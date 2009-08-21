@@ -17,6 +17,10 @@ package org.ghostcat.events
 		public static const RESIZE:String = "resize";
 		
 		/**
+		 * 缩放前的大小
+		 */
+		public var oldSize:Point;
+		/**
 		 * 缩放后新的大小
 		 */
 		public var size:Point;

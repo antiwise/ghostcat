@@ -9,7 +9,6 @@ package org.ghostcat.ui
 	import org.ghostcat.core.IDisplayObject;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.display.IToolTipManagerClient;
-	import org.ghostcat.skin.code.ToolTipSkin;
 	import org.ghostcat.util.Util;
 
 	/**

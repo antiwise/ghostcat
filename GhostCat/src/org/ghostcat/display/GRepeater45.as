@@ -6,7 +6,7 @@ package org.ghostcat.display
 	import flash.geom.Rectangle;
 
 	/**
-	 * 45度角重复场景，非常适合实现超大范围的地图显示
+	 * 45度角重复场景，适合实现超大范围的地图显示
 	 * 
 	 * @author flashyiyi
 	 * 

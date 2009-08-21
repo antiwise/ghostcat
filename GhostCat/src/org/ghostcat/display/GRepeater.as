@@ -234,13 +234,13 @@ package org.ghostcat.display
 			unuseContents = [];
 		}
 		
-		override public function updatePosition() : void
+		override protected function updatePosition() : void
 		{
 			super.updatePosition();
 			render();
 		}
 		
-		override public function updateSize() : void
+		override protected function updateSize() : void
 		{
 			super.updateSize();
 			render();
