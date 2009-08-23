@@ -2,29 +2,26 @@ package org.ghostcat.util
 {
 	import flash.system.Capabilities;
 	
+	/**
+	 * 生成一个GUID（由于无法获得网卡号，以serverString代替，实际上不能保证时空上唯一）
+	 * 
+	 */
 	public class Guid
 	{
 		private static var counter:Number=0;
 		
-		public static function create():String
+		public var value:Array;
+		
+		public function Guid()
 		{
-			var dt:Date=new Date();
-			var id1:Number=dt.getTime();
+			var id1:Number=new Date().getTime();
 			var id2:Number=Math.random() * Number.MAX_VALUE;
 			var id3:String=flash.system.Capabilities.serverString;
-			return calculate(id1 + id3 + id2 + counter++).toUpperCase();
-		}
-		private static function calculate(src:String):String
-		{
-			return hex_sha1(src);
+			var id:String = id1 + id3 + id2 + (counter++);
+			this.value = core_sha1(str2binb(id), id.length * 8);
 		}
 		
-		private static function hex_sha1(src:String):String
-		{
-			return binb2hex(core_sha1(str2binb(src), src.length * 8));
-		}
-		
-		private static function core_sha1(x:Array, len:Number):Array
+		private function core_sha1(x:Array, len:Number):Array
 		{
 			x[len >> 5]|=0x80 << (24 - len % 32);
 			x[((len + 64 >> 9) << 4) + 15]=len;
@@ -41,6 +38,7 @@ package org.ghostcat.util
 						w[j]=x[i + j];
 					else
 						w[j]=rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+					
 					var t:Number=safe_add(safe_add(rol(a, 5), sha1_ft(j, b, c, d)), safe_add(safe_add(e, w[j]), sha1_kt(j)));
 					e=d;
 					d=c;
@@ -57,7 +55,7 @@ package org.ghostcat.util
 			return new Array(a, b, c, d, e);
 		}
 		
-		private static function sha1_ft(t:Number, b:Number, c:Number, d:Number):Number
+		private function sha1_ft(t:Number, b:Number, c:Number, d:Number):Number
 		{
 			if (t < 20)
 				return (b & c) | ((~b) & d);
@@ -68,7 +66,7 @@ package org.ghostcat.util
 			return b ^ c ^ d;
 		}
 		
-		private static function sha1_kt(t:Number):Number
+		private function sha1_kt(t:Number):Number
 		{
 			return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 : (t < 60) ? -1894007588 : -899497514;
 		}
@@ -80,12 +78,12 @@ package org.ghostcat.util
 			return (msw << 16) | (lsw & 0xFFFF);
 		}
 		
-		private static function rol(num:Number, cnt:Number):Number
+		private function rol(num:Number, cnt:Number):Number
 		{
 			return (num << cnt) | (num >>> (32 - cnt));
 		}
 		
-		private static function str2binb(str:String):Array
+		private function str2binb(str:String):Array
 		{
 			var bin:Array=new Array();
 			var mask:Number=(1 << 8) - 1;
@@ -96,15 +94,28 @@ package org.ghostcat.util
 			return bin;
 		}
 		
-		private static function binb2hex(binarray:Array):String
+		private function getHashString(v:uint):String
 		{
-			var str:String="";
-			var tab:String=new String("0123456789abcdef");
-			for (var i:int = 0; i < binarray.length * 4; i++)
+			var s:String = v.toString(16);
+			while (s.length < 4)
+				s = "0" + s;
+			return s;
+		}
+		
+		public function toString():String
+		{
+			var a:Array = [];
+			for (var i:int = 0;i < value.length;i++)
 			{
-				str+=tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF) + tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
+				var v:uint = value[i];
+				var v1:uint = (v >> 16) & 0xFFFF;
+				var v2:uint = v & 0xFFFF;
+				a.push(v1,v2);
 			}
-			return str;
+			
+			return getHashString(a[0]) + getHashString(a[1]) + "-"
+					+ getHashString(a[2]) + "-" + getHashString(a[3]) + "-" + getHashString(a[4]) + "-"
+					+ getHashString(a[5]) + getHashString(a[6]) + getHashString(a[7])
 		}
 	}
 }

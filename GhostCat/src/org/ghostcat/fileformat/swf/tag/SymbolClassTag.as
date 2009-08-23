@@ -1,5 +1,6 @@
 package org.ghostcat.fileformat.swf.tag
 {
+	import org.ghostcat.fileformat.swf.SWFDecoder;
 	import org.ghostcat.util.ByteArrayReader;
 
 	/**
@@ -24,12 +25,12 @@ package org.ghostcat.fileformat.swf.tag
 			
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);
 			
-			var len:int = reader.readUint(2);
+			var len:int = bytes.readUnsignedShort();
 			for (var i:int = 0;i < len;i++)
 			{
-				var link:int = reader.readUint(2);
+				var link:int = bytes.readUnsignedShort();
 				links.push(link);
-				var name:String = reader.readString();
+				var name:String = SWFDecoder.readString(bytes);
 				symbolClasses.push(name);
 			}
 		}

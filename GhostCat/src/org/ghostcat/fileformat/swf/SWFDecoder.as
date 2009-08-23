@@ -106,7 +106,7 @@ package org.ghostcat.fileformat.swf
 			if (compressed)
 				bytes.uncompress();
 			
-			frameSize = readRect();
+			frameSize = readRect(bytes);
 			frameRate  = int(bytes.readUnsignedShort() / 256);
 			frameCount = bytes.readUnsignedShort();
 		}
@@ -130,7 +130,14 @@ package org.ghostcat.fileformat.swf
 			}
 		}
 		
-		private function readRect():Rectangle
+		/**
+		 * 读取RECT
+		 *  
+		 * @param bytes
+		 * @return 
+		 * 
+		 */
+		public static function readRect(bytes:ByteArray):Rectangle
 		{
 			var byteArrayReader:ByteArrayReader = new ByteArrayReader(bytes);
 			var t:int = byteArrayReader.readBits(5);
@@ -140,6 +147,44 @@ package org.ghostcat.fileformat.swf
 			var hmax:int = byteArrayReader.readBits(t) / 20;
 			return new Rectangle(wmin,hmin,wmax - wmin,hmax - hmin);
 		}	
+		
+		/**
+		 * 读取一个以0结尾的字符串
+		 * 
+		 * @param length	长度，默认则以取到0为止或者文件尾
+		 * @return 
+		 * 
+		 */
+		public static function readString(bytes:ByteArray,length:int = 0):String
+		{
+			var text:String = "";
+			
+			try
+			{
+				if (length > 0)
+					text = bytes.readUTFBytes(length);
+				else
+				{
+					var v:int = bytes.readUnsignedByte();
+					while (v)
+					{
+						text += String.fromCharCode(v);
+						v = bytes.readUnsignedByte();
+					}
+				}
+			}
+			catch (e:Error)
+			{};
+			
+			return text;
+		}
+		
+		public static function readDate(bytes:ByteArray):Date
+		{
+			var low:uint = bytes.readUnsignedInt();
+			var high:uint = bytes.readUnsignedInt();
+			return new Date(high * 0x100000000 + low)
+		}
 	}
 }
 
