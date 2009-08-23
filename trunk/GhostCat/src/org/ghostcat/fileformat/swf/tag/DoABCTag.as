@@ -2,6 +2,7 @@ package org.ghostcat.fileformat.swf.tag
 {
 	import flash.utils.ByteArray;
 	
+	import org.ghostcat.fileformat.swf.SWFDecoder;
 	import org.ghostcat.util.ByteArrayReader;
 
 	/**
@@ -21,8 +22,8 @@ package org.ghostcat.fileformat.swf.tag
 		{
 			super.read();
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);
-			flags = reader.readUint(4);
-			name = reader.readString();
+			flags = bytes.readUnsignedInt();
+			name = SWFDecoder.readString(bytes);
 			abcData = reader.readByteArray(length - reader.bytesReaded);
 		}
 	}
