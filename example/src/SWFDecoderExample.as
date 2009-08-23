@@ -33,8 +33,7 @@ package
 		private function rhandler(event:OperationEvent):void
 		{
 			var bytes:ByteArray = (event.target as LoadOper).data as ByteArray;
-			swfDecoder = new SWFDecoder();
-			swfDecoder.read(bytes);
+			swfDecoder = new SWFDecoder(bytes);
 			
 			Debug.traceObject(null,ReflectUtil.getPropertyList(swfDecoder))
 			
