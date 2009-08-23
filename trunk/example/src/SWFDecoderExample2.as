@@ -6,6 +6,7 @@ package
 	
 	import org.ghostcat.events.OperationEvent;
 	import org.ghostcat.fileformat.swf.SWFDecoder;
+	import org.ghostcat.fileformat.swf.SWFSelf;
 	import org.ghostcat.fileformat.swf.tag.DebugIDTag;
 	import org.ghostcat.fileformat.swf.tag.ProductInfoTag;
 	import org.ghostcat.operation.LoadOper;
@@ -21,17 +22,12 @@ package
 		public var swfDecoder:SWFDecoder;
 		public function SWFDecoderExample2()
 		{
-			var loader:LoadOper = new LoadOper("Paper3DExample.swf",null,rhandler);
-			loader.type = LoadOper.URLLOADER;
-			loader.dataFormat = URLLoaderDataFormat.BINARY;
-			loader.commit();
+			new SWFSelf(this,rhandler);
 		}
 		
-		private function rhandler(event:OperationEvent):void
+		private function rhandler(bytes:ByteArray):void
 		{
-			var bytes:ByteArray = (event.target as LoadOper).data as ByteArray;
-			swfDecoder = new SWFDecoder();
-			swfDecoder.read(bytes);
+			swfDecoder = new SWFDecoder(bytes);
 			
 			trace(swfDecoder.getTags(ProductInfoTag)[0].toString());
 			trace(swfDecoder.getTags(DebugIDTag)[0].toString());

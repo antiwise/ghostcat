@@ -50,6 +50,12 @@ package org.ghostcat.fileformat.swf
 		 */
 		public var frameCount:int;
 		
+		public function SWFDecoder(data:ByteArray = null)
+		{
+			if (data)
+				read(data);
+		}
+		
 		public function read(data:ByteArray):void
 		{
 			this.bytes = data;

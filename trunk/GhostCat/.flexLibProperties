@@ -217,6 +217,7 @@
     <classEntry path="org.ghostcat.display.CollisionSprite"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.ProductInfoTag"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.DebugIDTag"/>
+    <classEntry path="org.ghostcat.fileformat.swf.SWFSelf"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
