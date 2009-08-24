@@ -6,6 +6,7 @@ package
 	
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.display.transfer.Skew;
+	import org.ghostcat.ui.CursorSprite;
 	
 	[SWF(width="300",height="300")]
 	public class SkewExample extends Sprite

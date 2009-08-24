@@ -11,7 +11,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class FrameLabelTag extends Tag
 	{
-		public static const type:int = 43;
+		public override function get type() : int
+		{
+			return 43;
+		}
 		
 		public var name:String;
 		

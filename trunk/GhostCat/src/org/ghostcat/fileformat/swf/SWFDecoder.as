@@ -4,6 +4,7 @@ package org.ghostcat.fileformat.swf
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
+	import org.ghostcat.debug.Debug;
 	import org.ghostcat.fileformat.swf.tag.Tag;
 	import org.ghostcat.util.BitUtil;
 	import org.ghostcat.util.ByteArrayReader;
@@ -74,7 +75,11 @@ package org.ghostcat.fileformat.swf
 		 */
 		public function getTags(tagClass:Class):Array
 		{
-			var type:int = tagClass["type"];
+			var simpTag:Tag = new tagClass();
+			var type:int = simpTag.type;
+			if (type == 0)
+				Debug.error("继承Tag的类必须重写自己的type存取器")
+				
 			var result:Array = [];
 			for (var i:int = 0;i < tagList.length;i++)
 			{
@@ -83,9 +88,10 @@ package org.ghostcat.fileformat.swf
 				{
 					var newTag:Tag = new tagClass();
 					newTag.bytes = this.bytes;
-					newTag.position = tagItem.position;
+					newTag.bytes.position = newTag.position = tagItem.position;
 					newTag.length = tagItem.length;
 					newTag.read();
+					
 					result.push(newTag);
 				}
 			}

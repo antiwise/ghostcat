@@ -15,10 +15,19 @@ package org.ghostcat.ui.controls
 	 */	
 	public class GButton extends GMovieClip
 	{
-		private const LABELS:Array = [["up","selectedUp"],
-										["over","selectedOver"],
-										["down","selectedDown"],
-										["disabled","selectedDisabled"]];
+		public static const LABEL_UP:String = "up";
+		public static const LABEL_OVER:String = "over";
+		public static const LABEL_DOWN:String = "down";
+		public static const LABEL_DISABLED:String = "disabled";
+		public static const LABEL_SELECTED_UP:String = "selectedUp";
+		public static const LABEL_SELECTED_OVER:String = "selectedOver";
+		public static const LABEL_SELECTED_DOWN:String = "selectedDown";
+		public static const LABEL_SELECTED_DISABLED:String = "selectedDisabled";
+		
+		public static const LABELS:Array = [[LABEL_UP,LABEL_SELECTED_UP],
+										[LABEL_OVER,LABEL_SELECTED_OVER],
+										[LABEL_DOWN,LABEL_SELECTED_DOWN],
+										[LABEL_DISABLED,LABEL_SELECTED_DISABLED]];
 		private const UP:int = 0;
 		private const OVER:int = 1;
 		private const DOWN:int = 2;

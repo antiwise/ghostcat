@@ -11,7 +11,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class FileAttributesTag extends Tag
 	{
-		public static const type:int = 69;
+		public override function get type() : int
+		{
+			return 69;
+		}
 		
 		/**
 		 * 是否包含MetaData

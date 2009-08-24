@@ -1,5 +1,7 @@
 package org.ghostcat.ui
 {
+	import com.ghostcat.skin.cursor.CursorGroup;
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -8,7 +10,10 @@ package org.ghostcat.ui
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.ui.Mouse;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
+	import org.ghostcat.core.ClassFactory;
 	import org.ghostcat.display.ICursorManagerClient;
 	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.util.DisplayUtil;
@@ -22,8 +27,22 @@ package org.ghostcat.ui
 		
 	public class CursorSprite extends GMovieClip
 	{
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroup);
+		
+		public static const CURSOR_ARROW:String = "arrow";
+
+        public static const CURSOR_BUSY:String = "busy";
+        
+        public static const CURSOR_POINT:String = "point";
+
+        public static const CURSOR_DRAG:String = "drag";
+		
+		public static const CURSOR_H_DRAG:String = "h_drag";
+		
+		public static const CURSOR_V_DRAG:String = "v_drag";
+		
 		/**
-		 *	光标集合，可自行添加内容 
+		 *	光标集合，可自行添加内容。键为光标名，值为类
 		 */		
 		public var cursors:Object;
 		
@@ -39,14 +58,18 @@ package org.ghostcat.ui
 		private var buttonDown:Boolean=false;//鼠标是否按下 
 		
 		private static var _instance:CursorSprite;
+		
 		/**
 		 * 
-		 * @param skin	皮肤动画，内部是数个默认光标，以实例名为准
+		 * @param skin	皮肤动画，内部是数个默认光标的实例，以实例名为准
 		 * 
 		 */		
-		public function CursorSprite(skin:DisplayObjectContainer)
+		public function CursorSprite(skin:DisplayObjectContainer=null)
 		{
 			super(null);
+			
+			if (!skin)
+				skin = defaultSkin.newInstance();
 			
 			this.acceptContentPosition = false;
 			
@@ -60,7 +83,7 @@ package org.ghostcat.ui
 			for (var i:int;i < skin.numChildren;i++)
 			{
 				var child:DisplayObject = skin.getChildAt(i);
-				cursors[child.name] = child;
+				cursors[child.name] = getDefinitionByName(getQualifiedClassName(child)) as Class;
 			}
 		}
 		
@@ -70,6 +93,7 @@ package org.ghostcat.ui
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,this.updateButtonDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OVER,this.mouseOverHandler);
+			stage.addEventListener(MouseEvent.MOUSE_OUT,this.mouseOutHandler);
 			stage.addEventListener(Event.ENTER_FRAME,this.enterFrameHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE,this.mouseLeaveHandler);
 		}
@@ -98,6 +122,13 @@ package org.ghostcat.ui
 		{
 			var t:DisplayObject = evt.target as DisplayObject;
 			this.target = t;
+			buttonDown = evt.buttonDown;
+		}
+		
+		private function mouseOutHandler(evt:MouseEvent):void
+		{
+			var t:DisplayObject = evt.target as DisplayObject;
+			this.target = null;
 			buttonDown = evt.buttonDown;
 		}
 		
@@ -139,18 +170,19 @@ package org.ghostcat.ui
 			this.curCursor = cursor;
 			
 			var classRef:Class;
-			if (cursor is Class)
-			{
+			if (!cursor)
+				classRef = null;
+			else if (cursor is Class)
 				classRef = cursor;
-			}else{
+			else
 				classRef = cursors[cursor.toString()]
-			}
 			
 			if(classRef)
 			{
 				setContent(new classRef());
 				Mouse.hide();
-			}else
+			}
+			else
 			{
 				setContent(null);
 				Mouse.show();
@@ -158,7 +190,7 @@ package org.ghostcat.ui
 			
 		}
 		
-		private function findCursorClass(displayObj : DisplayObject):Class
+		private function findCursorClass(displayObj : DisplayObject):*
 		{
 			var currentCursorTarget:DisplayObject = displayObj;
 			
@@ -172,8 +204,8 @@ package org.ghostcat.ui
 				
 				if(currentCursorTarget is ICursorManagerClient)
 				{
-					var cursor:Class = (currentCursorTarget as ICursorManagerClient).cursor;
-					if (cursor && (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
+					var cursor:* = (currentCursorTarget as ICursorManagerClient).cursor;
+					if (cursor && (onlyWithClasses == null || Util.isIn(currentCursorTarget,onlyWithClasses)))
 						return cursor;
 				}
 				currentCursorTarget = currentCursorTarget.parent;
@@ -190,6 +222,7 @@ package org.ghostcat.ui
 				stage.removeEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_UP,this.updateButtonDownHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_OVER,this.mouseOverHandler);
+				stage.removeEventListener(MouseEvent.MOUSE_OUT,this.mouseOutHandler);
 				stage.removeEventListener(Event.ENTER_FRAME,this.enterFrameHandler);
 				stage.removeEventListener(Event.MOUSE_LEAVE,this.mouseLeaveHandler);
 			}
