@@ -1,6 +1,6 @@
 package org.ghostcat.ui
 {
-	import com.ghostcat.skin.cursor.CursorGroup;
+	import org.ghostcat.skin.cursor.CursorGroup;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -21,7 +21,7 @@ package org.ghostcat.ui
 
 	/**
 	 * 光标类，需要手动加载到某个容器内，将一直处于最高层。
-	 * 此类会一直检测鼠标下的物体，当其拥有toolTip属性时（无论是否继承GRepeater），就会根据其toolTipObj自动弹出。
+	 * 此类会一直检测鼠标下的物体，实现ICursorManagerClient就会根据其toolTipObj自动弹出。
 	 * 
 	 */		
 		
@@ -29,17 +29,17 @@ package org.ghostcat.ui
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroup);
 		
+		/*系统自带的默认Cursor定义*/
 		public static const CURSOR_ARROW:String = "arrow";
-
         public static const CURSOR_BUSY:String = "busy";
-        
         public static const CURSOR_POINT:String = "point";
-
         public static const CURSOR_DRAG:String = "drag";
-		
-		public static const CURSOR_H_DRAG:String = "h_drag";
-		
-		public static const CURSOR_V_DRAG:String = "v_drag";
+		public static const CURSOR_H_DRAG:String = "hDrag";
+		public static const CURSOR_V_DRAG:String = "vDrag";
+		public static const CURSOR_ROTATE_TOPLEFT:String = "rotateTopLeft";
+		public static const CURSOR_ROTATE_TOPRIGHT:String = "rotateTopRight";
+		public static const CURSOR_ROTATE_BOTTOMLEFT:String = "rotateBottomLeft";
+		public static const CURSOR_ROTATE_BOTTOMRIGHT:String = "rotateBottomRight";
 		
 		/**
 		 *	光标集合，可自行添加内容。键为光标名，值为类
@@ -89,7 +89,7 @@ package org.ghostcat.ui
 		
 		protected override function init():void
 		{
-			stage.addEventListener(MouseEvent.MOUSE_MOVE,this.updateButtonDownHandler);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,this.updateButtonDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OVER,this.mouseOverHandler);
@@ -102,6 +102,7 @@ package org.ghostcat.ui
 		{
 			return _instance;
 		}
+		
 		/**
 		 * 手动设置光标。此光标将一直存在直到执行removeCursor
 		 */		
@@ -118,18 +119,28 @@ package org.ghostcat.ui
 			stage.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 		
+		private function mouseMoveHandler(evt:MouseEvent):void
+		{
+			if (content)
+			{
+				this.x = parent.mouseX;
+				this.y = parent.mouseY;
+			}
+			updateButtonDownHandler(evt);
+		}
+		
 		private function mouseOverHandler(evt:MouseEvent):void
 		{
 			var t:DisplayObject = evt.target as DisplayObject;
 			this.target = t;
-			buttonDown = evt.buttonDown;
+			updateButtonDownHandler(evt);
 		}
 		
 		private function mouseOutHandler(evt:MouseEvent):void
 		{
 			var t:DisplayObject = evt.target as DisplayObject;
 			this.target = null;
-			buttonDown = evt.buttonDown;
+			updateButtonDownHandler(evt);
 		}
 		
 		private function updateButtonDownHandler(evt:MouseEvent):void
@@ -144,8 +155,6 @@ package org.ghostcat.ui
 			setCurrentCursorClass(findCursorClass(this.target));
 			
 			if (content){
-				this.x = parent.mouseX;
-				this.y = parent.mouseY;
 				if (this.content is MovieClip){
 					if (this.buttonDown){
 						this.mc.nextFrame();
@@ -196,9 +205,11 @@ package org.ghostcat.ui
 			
 			while (currentCursorTarget && currentCursorTarget.parent!=currentCursorTarget)
 			{
+				//可编辑的文本需要显示编辑框，必须显示设备光标
 				if(currentCursorTarget is TextField && TextField(currentCursorTarget).selectable)
 					return null;
 				
+				//拥有buttonMode的需要显示手型
 				if(currentCursorTarget is Sprite && Sprite(currentCursorTarget).buttonMode == true)
 					return null;
 				
@@ -218,7 +229,7 @@ package org.ghostcat.ui
 			super.destory();
 			
 			if (stage){
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE,this.updateButtonDownHandler);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_UP,this.updateButtonDownHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_OVER,this.mouseOverHandler);

@@ -60,6 +60,7 @@ package org.ghostcat.display.graphics
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
 			
+			this.cursor = "drag"
 			enabled = enabled;
 		}
 

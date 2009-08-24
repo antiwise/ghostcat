@@ -13,6 +13,7 @@ package org.ghostcat.ui
 
 	/**
 	 * 提示类
+	 * 实现IToolTipManagerClient即可启用
 	 * 
 	 * @author flashyiyi
 	 * 
