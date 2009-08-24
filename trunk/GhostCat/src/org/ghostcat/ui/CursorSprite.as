@@ -190,6 +190,9 @@ package org.ghostcat.ui
 			{
 				setContent(new classRef());
 				Mouse.hide();
+				
+				this.x = parent.mouseX;
+				this.y = parent.mouseY;
 			}
 			else
 			{

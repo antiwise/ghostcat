@@ -30,16 +30,11 @@ package
 		
 			addChild(repeater);
 			
-			addChild(p);
-			
 		}
 		
-		private var p:SelectRect = new SelectRect();
 		private function mouseDownHandler(event:MouseEvent):void
 		{
-			p.begin();
 			DragManager.startDrag(repeater);
-			trace(repeater.getItemPointAtPoint(new Point(repeater.mouseX,repeater.mouseY)))
 		}
 		private function addRepeatItemHandler(event:RepeatEvent):void
 		{

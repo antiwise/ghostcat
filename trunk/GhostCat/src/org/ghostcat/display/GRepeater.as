@@ -22,7 +22,7 @@ package org.ghostcat.display
 	/**
 	 * 无限重复区域，游戏背景的常用伎俩。
 	 * 
-	 * 同时，它也是ASGameUI的List实现的基础
+	 * 同时，它也是List实现的基础
 	 * 
 	 */		
 	public class GRepeater extends GBase
