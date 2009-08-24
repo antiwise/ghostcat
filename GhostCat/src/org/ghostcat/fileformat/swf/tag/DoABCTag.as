@@ -13,7 +13,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class DoABCTag extends Tag
 	{
-		public static const type:int = 82;
+		public override function get type() : int
+		{
+			return 82;
+		}
 		
 		public var flags:int;
 		public var name:String;

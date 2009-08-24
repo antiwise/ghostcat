@@ -27,6 +27,9 @@ package org.ghostcat.manager
 	 */	
 	public class CommandManager
 	{
+		import flash.events.EventDispatcher;
+		import flash.events.Event;
+
 		private static var list:Dictionary = new Dictionary();
 		
 		/**
@@ -41,52 +44,49 @@ package org.ghostcat.manager
 		 */		
 		public static function register(target:EventDispatcher,event:String,command:*,actionField:String="action",parmField:String="parameters"):void
 		{
-			list[command] = new ActionClass(target,event,command,actionField,parmField);
+			new CommandManager(target,event,command,actionField,parmField);
 		}
 		
 		public static function unregister(command:*):void
 		{
-			(list[command] as ActionClass).destory();
+			(list[command] as CommandManager).destory();
+		}
+		
+		private var target:EventDispatcher;
+		private var event:String;
+		private var command:*;
+		private var actionField:String;
+		private var parmField:String;
+		
+		public function CommandManager(target:EventDispatcher,event:String,command:*,actionField:String="action",parmField:String="parameters")
+		{
+			this.target = target;
+			this.event = event;
+			this.command = command;
+			this.actionField = actionField;
+			this.parmField = parmField;
+			
+			target.addEventListener(event,handler);
+			
+			list[command] = this;
+		}
+		
+		private function handler(event:Event):void
+		{
+			var action:String = event[actionField];
+			if (action == null)
+				return;
+			var parm:* = event[parmField];
+			if (!(parm is Array))
+				parm = [parm];
+			
+			(command[action] as Function).apply(null,parm);
+		}
+		
+		public function destory():void
+		{
+			target.removeEventListener(event,handler);
 			delete list[command];
 		}
-	}
-}
-import flash.events.EventDispatcher;
-import flash.events.Event;
-
-class ActionClass
-{
-	private var target:EventDispatcher;
-	private var event:String;
-	private var command:*;
-	private var actionField:String;
-	private var parmField:String;
-	
-	public function ActionClass(target:EventDispatcher,event:String,command:*,actionField:String,parmField:String)
-	{
-		this.target = target;
-		this.event = event;
-		this.command = command;
-		this.actionField = actionField;
-		this.parmField = parmField;
-		
-		target.addEventListener(event,handler);
-	}
-	
-	private function handler(event:Event):void
-	{
-		var action:String = event[actionField];
-		if (action == null)
-			return;
-		var parm:* = event[parmField];
-		if (!(parm is Array))
-			parm = [parm];
-		
-		(command[action] as Function).apply(null,parm);
-	}
-	
-	public function destory():void
-	{
-		target.removeEventListener(event,handler);
 	}
 }

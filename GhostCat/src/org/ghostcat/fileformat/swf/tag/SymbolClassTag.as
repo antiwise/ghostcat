@@ -11,7 +11,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class SymbolClassTag extends Tag
 	{
-		public static const type:int = 76;
+		public override function get type() : int
+		{
+			return 76;
+		}
 		
 		public var symbolClasses:Array;
 		public var links:Array;

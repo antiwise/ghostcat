@@ -31,9 +31,9 @@ package org.ghostcat.display
 	{
 		private var _enabled:Boolean = true;
 		
-		private var _cursorClass:Class;
+		private var _cursor:*;
 		
-		private var _toolTip:Object;
+		private var _toolTip:*;
 		
 		private var _toolTipObj:*;
 		
@@ -120,12 +120,12 @@ package org.ghostcat.display
 		 */		
 		public function get cursor():*
 		{
-			return _cursorClass;
+			return _cursor;
 		}
 
 		public function set cursor(v:*):void
 		{
-			_cursorClass = v;
+			_cursor = v;
 		}
 
 		/**

@@ -30,7 +30,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */	
 	public class ProductInfoTag extends Tag
 	{
-		public static const type:int = 41;
+		public override function get type() : int
+		{
+			return 41;
+		}
 		
 		public var productID:uint;
 		public var edition:uint;

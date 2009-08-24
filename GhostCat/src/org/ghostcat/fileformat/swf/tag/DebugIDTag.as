@@ -9,7 +9,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class DebugIDTag extends Tag
 	{
-		public static const type:int = 63;
+		public override function get type() : int
+		{
+			return 63;
+		}
 		
 		public var uUid:Array;
 		

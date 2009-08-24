@@ -96,7 +96,7 @@ package org.ghostcat.display.graphics
 
 		public override function set enabled(value : Boolean) : void
 		{
-			buttonMode = useHandCursor = mouseEnabled = super.enabled = value;
+			mouseEnabled = super.enabled = value;
 		}
 	}
 }

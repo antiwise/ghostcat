@@ -8,7 +8,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class SetBackgroundColorTag extends Tag
 	{
-		public static const type:int = 9;
+		public override function get type() : int
+		{
+			return 9;
+		}
 		
 		/**
 		 * 背景色

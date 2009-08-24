@@ -10,7 +10,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class ProtectTag extends Tag
 	{
-		public static const type:int = 24;
+		public override function get type() : int
+		{
+			return 24;
+		}
 		
 		/**
 		 * 这是一个MD5加密字符串

@@ -8,7 +8,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class ScriptLimitTag extends Tag
 	{
-		public static const type:int = 65;
+		public override function get type() : int
+		{
+			return 65;
+		}
 		
 		/**
 		 * 代码最大递归次数

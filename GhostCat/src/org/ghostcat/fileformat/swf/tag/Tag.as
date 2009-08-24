@@ -32,7 +32,7 @@ package org.ghostcat.fileformat.swf.tag
 		 */
 		public function get type():int
 		{
-			return getDefinitionByName(getQualifiedClassName(this))["type"];
+			return 0;
 		}
 		
 		/**
@@ -41,7 +41,6 @@ package org.ghostcat.fileformat.swf.tag
 		 */
 		public function read():void
 		{
-			bytes.position = position;
 		}
 		/**
 		 * 修改数据 
@@ -49,7 +48,6 @@ package org.ghostcat.fileformat.swf.tag
 		 */
 		public function write():void
 		{
-			bytes.position = position;
 		}
 	}
 }

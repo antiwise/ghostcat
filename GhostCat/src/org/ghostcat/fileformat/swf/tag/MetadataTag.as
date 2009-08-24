@@ -11,7 +11,10 @@ package org.ghostcat.fileformat.swf.tag
 	 */
 	public class MetadataTag extends Tag
 	{
-		public static const type:int = 77;
+		public override function get type() : int
+		{
+			return 77;
+		}
 		
 		public var metadata:XML;
 		
