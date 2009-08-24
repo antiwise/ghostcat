@@ -34,7 +34,6 @@ package
 			pt.x = Math.random()*stage.stageWidth;
 			pt.y = Math.random()*stage.stageHeight;
 			pt.toolTip = pointName;
-			pt.cursor = CursorSprite.CURSOR_DRAG;
 			addChild(pt);
 		}
 		

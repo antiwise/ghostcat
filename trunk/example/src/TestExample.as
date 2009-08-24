@@ -9,8 +9,7 @@ package
 	{
 		public function TestExample()
 		{
-			var v:Guid = new Guid();
-			trace(v.toString())
+			trace(uint.MAX_VALUE)
 		}
 	}
 }

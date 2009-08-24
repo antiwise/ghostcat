@@ -29,6 +29,8 @@ package
 			f.setTransform(p1.point,p2.point,p3.point,p4.point);
 			
 			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			
+			stage.addChild(new CursorSprite());
 		}
 		
 		private function enterFrameHandler(event:Event):void
