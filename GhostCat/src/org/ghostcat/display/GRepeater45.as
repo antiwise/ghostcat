@@ -88,7 +88,7 @@ package org.ghostcat.display
 			nRect.x = sRect.x;
 			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
 			nRect.width = sRect.width + sRect.height * wh /2 + contentRect.width;
-			nRect.height = sRect.height;
+			nRect.height = sRect.height + contentRect.height;
 			return nRect;
 		}
 		/**

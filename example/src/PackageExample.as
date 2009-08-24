@@ -16,14 +16,13 @@ package
 	 */	
 	public class PackageExample extends Sprite
 	{
-//		[Embed(source = "../bin-debug/CollisionExample.swf",mimeType="application/octet-stream")]
+		[Embed(source = "../bin-debug/CollisionExample.swf",mimeType="application/octet-stream")]
 		public var app:Class;
 		public function PackageExample()
 		{
-			var bytes:ByteArray = new app();
 			var loader:Loader = new Loader();
 			addChild(loader);
-			loader.loadBytes(bytes);
+			loader.loadBytes(new app());
 		}
 	}
 }

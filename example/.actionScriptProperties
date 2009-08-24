@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="IMEExample.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
+<actionScriptProperties mainApplicationPath="LangageExample.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
   <compiler additionalCompilerArguments="" autoRSLOrdering="true" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="1">
@@ -32,6 +32,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="LangageExample.as"/>
     <application path="SWFDecoderExample2.as"/>
     <application path="EditSpriteExample.as"/>
     <application path="Repeater45Example.as"/>
