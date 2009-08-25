@@ -19,6 +19,9 @@ package org.ghostcat.display.graphics
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(PointSkin);
 		
+		public var lockX:Boolean = false;
+		public var lockY:Boolean = false;
+		
 		private var _point : Point = new Point();
 
 		/**
@@ -38,6 +41,11 @@ package org.ghostcat.display.graphics
 				y = _point.y;
 			}
 		}
+		
+		/**
+		 * 鼠标是否按下
+		 */
+		public var mouseDown:Boolean = false;
 
 		/**
 		 * 
@@ -60,7 +68,7 @@ package org.ghostcat.display.graphics
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
 			
-			this.cursor = "drag"
+			this.cursor = "drag";
 			enabled = enabled;
 		}
 
@@ -68,6 +76,8 @@ package org.ghostcat.display.graphics
 		{
 			if (enabled)
 			{
+				mouseDown = true;
+				
 				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			}
@@ -75,14 +85,18 @@ package org.ghostcat.display.graphics
 
 		public function onMouseUpHandler(event : MouseEvent) : void
 		{
+			mouseDown = false;
+			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 		}
 
 		public function onMouseMoveHandler(event : MouseEvent) : void
 		{
-			x = event.stageX;
-			y = event.stageY;
+			if (!lockX)
+				x = parent.mouseX;
+			if (!lockY)
+				y = parent.mouseY;
 		}
 
 		override public function set x(value : Number) : void
