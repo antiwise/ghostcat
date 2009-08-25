@@ -52,6 +52,7 @@ package org.ghostcat.display
 		 */		
 		public var delayUpatePosition:Boolean = false;
 		
+		
 		/**
 		 * 参数与setContent方法相同
 		 * 

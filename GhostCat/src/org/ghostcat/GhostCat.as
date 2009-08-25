@@ -16,7 +16,9 @@
  * 
  * 天地会博客：http://uh.actionscript3.cn/space.php?uid=12147
  * 
- * Graphics类，Light，鼠标和Tip
+ * 任务（采用queue元素以及直接反射静态方法来确定条件），
+ * GMXL（通用加载器中间需要元素“setProperty”和“callProperty”，而专门的则根据情况省略。复制的属性和名称转义放置在数组方便调整。尝试继承XML并使用E4X来查询对象）
+ * Light
  * 
  */	
 package org.ghostcat
