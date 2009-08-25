@@ -17,7 +17,18 @@ package org.ghostcat.display.graphics
 	 */
 	public class ControlRect extends GBase
 	{
+		private static var selectedRects:Array = [];
+		private static function unSelectAll():void
+		{
+			for each (var rect:ControlRect in selectedRects)
+				rect.selected = false;
+			
+			selectedRects = [];
+		}
+		
 		public var controlCotainer:Sprite;
+		
+		private var _selected:Boolean = false;
 		
 		public var topLeftControl:DragPoint;
 		public var topRightControl:DragPoint;
@@ -38,6 +49,18 @@ package org.ghostcat.display.graphics
 			addEventListener(MouseEvent.ROLL_OUT,hideControlHandler);
 		}
 		
+		public function get selected():Boolean
+		{
+			return _selected;
+		}
+
+		public function set selected(v:Boolean):void
+		{
+			_selected = v;
+			
+			this.controlCotainer.visible = _selected;
+		}
+
 		override public function setContent(skin:DisplayObject, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);

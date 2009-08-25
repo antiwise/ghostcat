@@ -324,7 +324,7 @@ package org.ghostcat.display
 		 * @param lowest 是否加在底层
 		 * 
 		 */		
-		protected function addItem(i:int,j:int,lowest:Boolean=false):DisplayObject
+		protected function addItem(i:int,j:int,low:Boolean=false):DisplayObject
 		{
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
@@ -336,7 +336,7 @@ package org.ghostcat.display
 			s.y = j * contentRect.height;
 			contents[i + ":" +j] = s;
 			
-			if (lowest)
+			if (low)
 				addChildAt(s,0);
 			else
 				addChild(s);
@@ -358,7 +358,7 @@ package org.ghostcat.display
 			return s;
 		}
 		
-		private function addItems(rect:Rectangle,lowest:Boolean=false):void
+		private function addItems(rect:Rectangle,hLow:Boolean=false,vLow:Boolean=false):void
 		{
 			var fi:int = rect.x;
 			var fj:int = rect.y;
@@ -366,7 +366,7 @@ package org.ghostcat.display
 			var ej:int = rect.bottom;
 			var i:int;
 			var j:int;
-			if (lowest)
+			if (hLow)
 			{
 				for (i = ei - 1;i >= fi;i--)
 					for (j = ej - 1;j >= fj;j--)
