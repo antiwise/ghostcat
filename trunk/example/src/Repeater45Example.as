@@ -2,13 +2,12 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	
 	import org.ghostcat.display.GRepeater45;
-	import org.ghostcat.display.graphics.SelectRect;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.manager.RootManager;
+	import org.ghostcat.ui.CursorSprite;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源
@@ -27,8 +26,10 @@ package
 			repeater.height = 100000;
 			repeater.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
-		
+			repeater.cursor = CursorSprite.CURSOR_DRAG;
+			
 			addChild(repeater);
+			addChild(new CursorSprite())
 			
 		}
 		
