@@ -96,7 +96,6 @@
 			const nvX : Number = end.x - control.x - csX;
 			const nvY : Number = end.y - control.y - csY;
 			
-			// vectors: c0 = 4*(cs,cs), с1 = 8*(cs, ec-cs), c2 = 4*(ec-cs,ec-cs)
 			const c0 : Number = 4 * (csX * csX + csY * csY);
 			const c1 : Number = 8 * (csX * nvX + csY * nvY);
 			const c2 : Number = 4 * (nvX * nvX + nvY * nvY);
@@ -179,7 +178,6 @@
 			const nvX : Number = ecX - csX;
 			const nvY : Number = ecY - csY;
 	
-			// vectors: c0 = 4*(cs,cs), с1 = 8*(cs, ec-cs), c2 = 4*(ec-cs,ec-cs)
 			const c0 : Number = 4 * (csX * csX + csY * csY);
 			const c1 : Number = 8 * (csX * nvX + csY * nvY);
 			const c2 : Number = 4 * (nvX * nvX + nvY * nvY);

@@ -72,18 +72,12 @@
     <classEntry path="org.ghostcat.events.TickEvent"/>
     <classEntry path="org.ghostcat.events.TimeLineEvent"/>
     <classEntry path="org.ghostcat.events.TweenEvent"/>
-    <classEntry path="org.ghostcat.fileformat.bmp.BMPDecoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFDecoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFEncoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.LZWEncoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.NeuQuant"/>
-    <classEntry path="org.ghostcat.fileformat.ico.BitmapInfoHeader"/>
-    <classEntry path="org.ghostcat.fileformat.ico.ICODecoder"/>
-    <classEntry path="org.ghostcat.fileformat.ico.ICOFileHeader"/>
     <classEntry path="org.ghostcat.fileformat.ico.ICOImageData"/>
     <classEntry path="org.ghostcat.fileformat.ico.ICOInfoHeader"/>
-    <classEntry path="org.ghostcat.fileformat.jpg.JPGEncoder"/>
-    <classEntry path="org.ghostcat.fileformat.png.PNGEncoder"/>
     <classEntry path="org.ghostcat.fileformat.swf.SWFDecoder"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.DoABCTag"/>
     <classEntry path="org.ghostcat.fileformat.swf.tag.FileAttributesTag"/>
@@ -96,7 +90,6 @@
     <classEntry path="org.ghostcat.fileformat.swf.tag.Tag"/>
     <classEntry path="org.ghostcat.fileformat.zip.CRC32"/>
     <classEntry path="org.ghostcat.fileformat.zip.ZipArchive"/>
-    <classEntry path="org.ghostcat.fileformat.zip.ZipEvent"/>
     <classEntry path="org.ghostcat.fileformat.zip.ZipFile"/>
     <classEntry path="org.ghostcat.fileformat.zip.ZipInflater"/>
     <classEntry path="org.ghostcat.fileformat.zip.ZipParser"/>

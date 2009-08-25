@@ -1,5 +1,8 @@
 package org.ghostcat.manager
 {
+	import flash.display.BitmapData;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.utils.getDefinitionByName;
 	
 	import org.ghostcat.core.Singleton;
@@ -22,6 +25,11 @@ package org.ghostcat.manager
 		 * 资源加载的基本地址
 		 */
 		public var assetBase:String="";
+		
+		/**
+		 * 资源类的基础包名
+		 */		
+		public var packageBase:String="";
 		
 		/**
 		 * 加载时显示的图标 
@@ -64,17 +72,60 @@ package org.ghostcat.manager
 			return assetBase + url + ".swf";
 		}
 		
+		/**
+		 * 根据名称获得类
+		 * 
+		 * @param ref
+		 * @return 
+		 * 
+		 */
 		public function getAssetByName(ref:String):Class
 		{
 			try
 			{
-				return getDefinitionByName(ref) as Class;
+				return getDefinitionByName(packageBase + ref) as Class;
 			}
 			catch (e:Error)
 			{
 				Debug.error(ref+"资源不存在");
 			}
 			return null;
+		}
+		
+		/**
+		 * 创建一个MovieClip
+		 * 
+		 * @param ref
+		 * @return 
+		 * 
+		 */
+		public function createMovieClip(ref:String):MovieClip
+		{
+			return getAssetByName(ref)() as MovieClip;
+		}
+		
+		/**
+		 * 创建一个Sprite
+		 * 
+		 * @param ref
+		 * @return 
+		 * 
+		 */
+		public function createSprite(ref:String):Sprite
+		{
+			return getAssetByName(ref)() as Sprite;
+		}
+		
+		/**
+		 * 创建一个BitmapData
+		 * 
+		 * @param ref
+		 * @return 
+		 * 
+		 */
+		public function createBitmapData(ref:String):BitmapData
+		{
+			return getAssetByName(ref)() as BitmapData;
 		}
 	}
 }
