@@ -1,44 +1,45 @@
-﻿/**
- * Copyright (C) 2007 Flashlizi (flashlizi@gmail.com, www.riaidea.com)
- *
- * ZipArchive是一个Zip档案处理类，可读写各种zip格式文件。
- * 功能：1)轻松创建或加载一个zip档案；2)多种方式读取和删除zip档案中的文件；3)支持中文文件名；
- * 4)非常容易序列化一个zip档案，如有AIR、PHP等的支持下就可以把生成的zip档案保存在本地或服务器上。
- *
- * 如有任何意见或建议，可联系我：MSN:flashlizi@hotmail.com
- *
- * @version 0.1
- */
+/*
+nochump.util.zip.CRC32
+Copyright (C) 2007 David Chang (dchang@nochump.com)
 
-package org.ghostcat.fileformat.zip{
+This file is part of nochump.util.zip.
+
+nochump.util.zip is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+nochump.util.zip is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
+package org.ghostcat.fileformat.zip {
+	
 	import flash.utils.ByteArray;
 	
 	/**
-	 * CRC33校验类。
-	 * @private
+	 * Computes CRC32 data checksum of a data stream.
+	 * The actual CRC32 algorithm is described in RFC 1952
+	 * (GZIP file format specification version 4.3).
+	 * 
+	 * @author David Chang
+	 * @date January 2, 2007.
 	 */
 	public class CRC32 {
+		
+		/** The crc data checksum so far. */
+		private var crc:uint;
 		
 		/** The fast CRC table. Computed once when the CRC32 class is loaded. */
 		private static var crcTable:Array = makeCrcTable();
 		
-		public function getCRC32(data:ByteArray, start:uint = 0, len:uint = 0):uint {
-			if (start >= data.length) { start = data.length; }
-			if (len == 0) { len = data.length - start; }
-			if (len + start > data.length) { len = data.length - start; }
-			var i:uint;
-			var c:uint = 0xffffffff;
-			for (i = start; i < len; i++) {
-				c = uint(crcTable[(c ^ data[i]) & 0xff]) ^ (c >>> 8);
-			}
-			return (c ^ 0xffffffff);
-		}
-		/**
-		 * 生成CRC表
-		 * @return CRC表
-		 */
+		/** Make the table for a fast CRC. */
 		private static function makeCrcTable():Array {
-			var crcTable:Array = [];
+			var crcTable:Array = new Array(256);
 			for (var n:int = 0; n < 256; n++) {
 				var c:uint = n;
 				for (var k:int = 8; --k >= 0; ) {
@@ -49,5 +50,34 @@ package org.ghostcat.fileformat.zip{
 			}
 			return crcTable;
 		}
+		
+		/**
+		 * Returns the CRC32 data checksum computed so far.
+		 */
+		public function getValue():uint {
+			return crc & 0xffffffff;
+		}
+		
+		/**
+		 * Resets the CRC32 data checksum as if no update was ever called.
+		 */
+		public function reset():void {
+			crc = 0;
+		}
+		
+		/**
+		 * Adds the complete byte array to the data checksum.
+		 * 
+		 * @param buf the buffer which contains the data
+		 */
+		public function update(buf:ByteArray):void {
+			var off:uint = 0;
+			var len:uint = buf.length;
+			var c:uint = ~crc;
+			while(--len >= 0) c = crcTable[(c ^ buf[off++]) & 0xff] ^ (c >>> 8);
+			crc = ~c;
+		}
+		
 	}
+	
 }
