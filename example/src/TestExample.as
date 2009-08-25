@@ -9,7 +9,7 @@ package
 	{
 		public function TestExample()
 		{
-			trace(uint.MAX_VALUE)
+			
 		}
 	}
 }

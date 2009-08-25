@@ -29,7 +29,7 @@ package
 			repeater = new GRepeater(TestRepeater);
 			repeater.width = 100000;
 			repeater.height = 100000;
-			repeater.viewRect = new Rectangle(0,0,500,500);
+			repeater.viewRect = new Rectangle(0,0,500,500);//将显示范围限定了，这样可以看到方块的动态增删
 			repeater.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			

@@ -1,4 +1,4 @@
-package nochump.util.zip {
+package org.ghostcat.fileformat.zip {
 	import flash.events.Event;
 	import flash.utils.ByteArray;	
 

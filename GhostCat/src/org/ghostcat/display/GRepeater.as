@@ -27,6 +27,11 @@ package org.ghostcat.display
 	 */		
 	public class GRepeater extends GBase
 	{
+		protected const LEFT:int = 0;
+		protected const RIGHT:int = 1;
+		protected const UP:int = 2;
+		protected const DOWN:int = 3;
+		
 		/**
 		 * 图形
 		 */		
@@ -283,7 +288,7 @@ package org.ghostcat.display
 			if (curRect.x != screen.x)//左
 			{
 				if (curRect.x > screen.x)
-					addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),true)
+					addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),LEFT)
 				else
 					removeItems(new Rectangle(curRect.x,curRect.y,screen.x - curRect.x,curRect.height));
 				curRect.width += curRect.x - screen.x;
@@ -292,7 +297,7 @@ package org.ghostcat.display
 			if (screen.right != curRect.right)//右
 			{
 				if (screen.right > curRect.right)
-					addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),false)
+					addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),RIGHT)
 				else
 					removeItems(new Rectangle(screen.right,curRect.y,curRect.right - screen.right,curRect.height))
 				curRect.width = screen.width;
@@ -300,7 +305,7 @@ package org.ghostcat.display
 			if (curRect.y != screen.y)//上
 			{
 				if (curRect.y > screen.y)
-					addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),true);
+					addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),UP);
 				else
 					removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,screen.y - curRect.y));
 				curRect.height += curRect.y - screen.y;
@@ -309,7 +314,7 @@ package org.ghostcat.display
 			if (screen.bottom != curRect.bottom)//下
 			{
 				if (screen.bottom > curRect.bottom)
-					addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),false);
+					addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),DOWN);
 				else
 					removeItems(new Rectangle(curRect.x,screen.bottom,curRect.width,curRect.bottom - screen.bottom));
 				curRect.height = screen.height;
@@ -358,7 +363,14 @@ package org.ghostcat.display
 			return s;
 		}
 		
-		private function addItems(rect:Rectangle,hLow:Boolean=false,vLow:Boolean=false):void
+		/**
+		 * 增加一组格子
+		 *  
+		 * @param rect	格子区域
+		 * @param direct	方向	
+		 * 
+		 */
+		protected function addItems(rect:Rectangle,direct:int):void
 		{
 			var fi:int = rect.x;
 			var fj:int = rect.y;
@@ -366,21 +378,32 @@ package org.ghostcat.display
 			var ej:int = rect.bottom;
 			var i:int;
 			var j:int;
-			if (hLow)
+			switch (direct)
 			{
-				for (i = ei - 1;i >= fi;i--)
+				case LEFT:
+					for (i = ei - 1;i >= fi;i--)
+						for (j = ej - 1;j >= fj;j--)
+							addItem(i,j,true);
+					break;
+				case RIGHT:
+					for (i = fi;i < ei;i++)
+						for (j = fj;j < ej;j++)
+							addItem(i,j,false);
+					break;
+				case UP:
 					for (j = ej - 1;j >= fj;j--)
-						addItem(i,j,true);
-			}
-			else
-			{
-				for (i = fi;i < ei;i++)
+						for (i = ei - 1;i >= fi;i--)
+							addItem(i,j,true);
+					break;
+				case DOWN:
 					for (j = fj;j < ej;j++)
-						addItem(i,j,false);
-			}
+						for (i = fi;i < ei;i++)
+							addItem(i,j,false);
+					break;
+			}			
 		}
 		
-		private function removeItems(rect:Rectangle):void
+		protected function removeItems(rect:Rectangle):void
 		{
 			var fi:int = rect.x;
 			var fj:int = rect.y;
