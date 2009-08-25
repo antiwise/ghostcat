@@ -1,7 +1,9 @@
-package org.ghostcat.display
+package org.ghostcat.display.movieclip
 {
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	
+	import org.ghostcat.display.ICollisionClient;
 	import org.ghostcat.util.Collision;
 	
 	/**
@@ -10,14 +12,14 @@ package org.ghostcat.display
 	 * @author Administrator
 	 * 
 	 */
-	public class CollisionSprite extends GMovieClip implements ICollisionClient
+	public class CollisionMovieClip extends GMovieClip implements ICollisionClient
 	{
 		/**
 		 * 碰撞检测块。这个属性指示的是图形的实体。
 		 */		
 		private var _collision:Collision;
 		
-		public function CollisionSprite(skin:DisplayObject=null, replace:Boolean=true)
+		public function CollisionMovieClip(skin:MovieClip=null, replace:Boolean=true)
 		{
 			_collision = new Collision(this);
 			super(skin,replace);

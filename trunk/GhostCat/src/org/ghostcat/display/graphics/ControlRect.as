@@ -10,7 +10,7 @@ package org.ghostcat.display.graphics
 	import org.ghostcat.events.MoveEvent;
 
 	/**
-	 * 图像控制器
+	 * 图像变形控制器，点击自动选中，并可调整大小和变形
 	 * 
 	 * @author flashyiyi
 	 * 
