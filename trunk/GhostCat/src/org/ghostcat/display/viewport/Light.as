@@ -1,8 +1,9 @@
 package org.ghostcat.display.viewport
 {
 	import flash.display.BlendMode;
+	import flash.display.DisplayObject;
 	import flash.display.GradientType;
-	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	
 	import org.ghostcat.util.CallLater;
@@ -15,10 +16,15 @@ package org.ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-	public class Light extends Shape
+	public class Light extends Sprite
 	{
 		private var _radius:Number = 0;
 		private var _color:uint = 0xFFFFFF;
+		
+		private var items:Array = [];
+		private var walls:Array = [];
+		
+		private var maskSprite:Sprite;
 		
 		public function Light(radius:Number,color:uint=0xFFFFFF,alpha:Number=0.5)
 		{
@@ -26,6 +32,10 @@ package org.ghostcat.display.viewport
 			this.radius = radius;
 			this.color = color;
 			this.alpha = alpha;
+			
+			this.maskSprite = new Sprite();
+			this.addChild(maskSprite);
+			this.mask = this.maskSprite;
 		}
 		
 		
@@ -59,6 +69,18 @@ package org.ghostcat.display.viewport
 			graphics.beginGradientFill(GradientType.RADIAL,[_color,_color],[1,0],[200,255],m);
 			graphics.drawCircle(0,0,_radius);
 			graphics.endFill();
+		}
+		
+		public function addWall(v:Wall):void
+		{
+			walls.push(v);
+		}
+		
+		public function addItem(v:DisplayObject):void
+		{
+			items.push(v);
+			maskSprite.graphics.beginFill(0);
+			maskSprite.graphics.drawRect(0,0,111,111);
 		}
 
 	}
