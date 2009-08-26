@@ -17,6 +17,7 @@ package org.ghostcat.manager
 		 * 最小占用磁盘空间，建议将其设置到一个合适的值，避免重复提示用户增加缓存
 		 */
 		public var minDiskSpace:int = 0;
+		
 		static public function get instance():LocalManager
 		{
 			return Singleton.getInstanceOrCreate(LocalManager) as LocalManager;
@@ -31,23 +32,23 @@ package org.ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		static public function getLocalPath(obj:*,field:String,id:String=""):String
+		static public function getLocalPath(obj:*,id:String=""):String
 		{
-			return getQualifiedClassName(obj)+"_"+field+"_"+id;
+			return getQualifiedClassName(obj)+ id ? "(" + id + ")" : "";
 		} 
 		
 		/**
 		 * 保存一个数据
 		 *  
-		 * @param obj
-		 * @param field
-		 * @param id
+		 * @param obj	唯一对象
+		 * @param field	对象的键
+		 * @param id	用于判重的ID
 		 * 
 		 */
-		public function save(obj:*,field:String,id:String=""):void
+		public function save(obj:*,id:String=""):void
 		{
-			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,field,id));
-			so.data.value = obj[field];
+			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
+			so.data.value = obj;
 			so.data.time = new Date();
 			so.flush(minDiskSpace);
 		}
@@ -55,30 +56,30 @@ package org.ghostcat.manager
 		/**
 		 * 读取一个数据
 		 *  
-		 * @param obj
-		 * @param field
-		 * @param id
+		 * @param obj	唯一对象
+		 * @param field	对象的键
+		 * @param id	用于判重的ID
 		 * @return 
 		 * 
 		 */
-		public function load(obj:*,field:String,id:String=""):*
+		public function load(obj:*,id:String=""):*
 		{
-			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,field,id));
+			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
 			return so.data.value;
 		}
 		
 		/**
-		 * 读取一个当天的数据。其他的数据会被忽略
+		 * 读取一个当天的数据。其他日期的数据会被忽略
 		 *  
-		 * @param obj
-		 * @param field
-		 * @param id
+		 * @param obj	唯一对象
+		 * @param field	对象的键
+		 * @param id	用于判重的ID
 		 * @return 
 		 * 
 		 */
-		public function loadToday(obj:*,field:String,id:String=""):*
+		public function loadToday(obj:*,id:String=""):*
 		{
-			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,field,id));
+			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
 			var time:Date = so.data.time;
 			var today:Date = new Date();
 			if (time.fullYear == today.fullYear && time.month == today.month && time.date == today.date)
