@@ -28,9 +28,11 @@ package org.ghostcat.display.graphics
 		private static var selectedRects:Array = [];
 		public static function unSelectAll():void
 		{
-			for each (var rect:ControlRect in selectedRects)
+			for (var i:int = selectedRects.length - 1;i>=0;i--)
+			{
+				var rect:ControlRect = selectedRects[i];
 				rect.selected = false;
-			
+			}
 			selectedRects = [];
 		}
 		
@@ -79,6 +81,18 @@ package org.ghostcat.display.graphics
 		{
 			_selected = v;
 			
+			var index:int;
+			index = selectedRects.indexOf(this);
+			if (v)
+			{
+				if (index == -1)
+					selectedRects.push(this);
+			}
+			else
+			{
+				if (index != -1)
+					selectedRects.splice(index,1);
+			}
 			this.controlCotainer.visible = _selected;
 		}
 
@@ -256,17 +270,21 @@ package org.ghostcat.display.graphics
 		
 		protected function fillMouseDownHandler(event:MouseEvent):void
 		{
-			DragManager.startDrag(this);
+			for each (var rect:ControlRect in selectedRects)
+				DragManager.startDrag(rect);
 		}
 		
 		protected function mouseDownHandler(event:MouseEvent):void
 		{
+			if (!event.shiftKey)
+				unSelectAll();
+			
 			selected = true;
 		}
 		
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
-			updateControls();
+			
 		}
 		
 		override public function destory():void

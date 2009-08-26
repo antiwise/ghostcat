@@ -1,7 +1,5 @@
 package org.ghostcat.ui
 {
-	import org.ghostcat.skin.cursor.CursorGroup;
-	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -14,8 +12,10 @@ package org.ghostcat.ui
 	import flash.utils.getQualifiedClassName;
 	
 	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.core.IDisplayObject;
 	import org.ghostcat.display.ICursorManagerClient;
 	import org.ghostcat.display.movieclip.GMovieClip;
+	import org.ghostcat.skin.cursor.CursorGroup;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Util;
 
@@ -47,9 +47,14 @@ package org.ghostcat.ui
 		public var cursors:Object;
 		
 		/**
-		 *  限定触发提示的类型
+		 * 限定触发提示的类型
 		 */
 		public var onlyWithClasses:Array;
+		
+		/**
+		 * 默认光标
+		 */
+		public var defaultCursor:DisplayObject = null;
 		
 		private var curCursor:*;//当前光标类型 
 		
@@ -131,14 +136,12 @@ package org.ghostcat.ui
 		
 		private function mouseOverHandler(evt:MouseEvent):void
 		{
-			var t:DisplayObject = evt.target as DisplayObject;
-			this.target = t;
+			this.target = evt.target as DisplayObject;
 			updateButtonDownHandler(evt);
 		}
 		
 		private function mouseOutHandler(evt:MouseEvent):void
 		{
-			var t:DisplayObject = evt.target as DisplayObject;
 			this.target = null;
 			updateButtonDownHandler(evt);
 		}
@@ -178,17 +181,19 @@ package org.ghostcat.ui
 			
 			this.curCursor = cursor;
 			
-			var classRef:Class;
-			if (!cursor)
-				classRef = null;
-			else if (cursor is Class)
-				classRef = cursor;
-			else
-				classRef = cursors[cursor.toString()]
+			var obj:* = cursor;
+			if (obj is String)
+				obj = cursors[cursor];
 			
-			if(classRef)
+			if (obj is Class)
+				obj = new obj();
+			
+			if (!obj)
+				obj = defaultCursor;
+			
+			if (obj)
 			{
-				setContent(new classRef());
+				setContent(obj);
 				Mouse.hide();
 				
 				this.x = parent.mouseX;

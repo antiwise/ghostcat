@@ -7,7 +7,7 @@ package org.ghostcat.ui
 	import org.ghostcat.skin.code.ArowSkin;
 	
 	/**
-	 * 默认ToolTip
+	 * IToolTipSkin的默认实现
 	 * 
 	 * @author flashyiyi
 	 * 

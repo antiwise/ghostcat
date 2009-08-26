@@ -7,6 +7,7 @@ package org.ghostcat.display.graphics
 	import org.ghostcat.core.ClassFactory;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.skin.code.PointSkin;
+	import org.ghostcat.util.CallLater;
 
 	/**
 	 * 可拖动操控点
@@ -70,6 +71,8 @@ package org.ghostcat.display.graphics
 			
 			this.cursor = "drag";
 			enabled = enabled;
+			
+			this.delayUpatePosition = true;//这样做是为了避免反复设置属性。invalidatePosition已经被重写为立即执行了，所以并不会产生属性延迟。
 		}
 
 		public function onMouseDownHandler(event : MouseEvent) : void
@@ -86,6 +89,8 @@ package org.ghostcat.display.graphics
 		public function onMouseUpHandler(event : MouseEvent) : void
 		{
 			mouseDown = false;
+			
+			invalidatePosition();
 			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
@@ -112,6 +117,11 @@ package org.ghostcat.display.graphics
 		public override function set enabled(value : Boolean) : void
 		{
 			mouseEnabled = super.enabled = value;
+		}
+		
+		public override function invalidatePosition() : void
+		{
+			CallLater.callLater(vaildPosition,null,true);
 		}
 	}
 }
