@@ -54,6 +54,12 @@ package org.ghostcat.ui
 		
 		private static var _instance:ToolTipSprite;
 		
+		/**
+		 * 皮肤必须为IToolTipSkin
+		 * 
+		 * @param obj
+		 * 
+		 */
 		public function ToolTipSprite(obj:IToolTipSkin=null)
 		{
 			if (!obj)
@@ -200,7 +206,10 @@ package org.ghostcat.ui
 			if (obj is String)
 				obj = toolTipObjs[obj];
 			
-			if (!(obj is IDisplayObject))
+			if (obj is Class)
+				obj = new obj();
+			
+			if (!obj)
 				obj = defaultObj;
 			
 			setContent(obj);

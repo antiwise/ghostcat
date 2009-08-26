@@ -6,7 +6,7 @@ package org.ghostcat.ui
 	import org.ghostcat.display.IData;
 
 	/**
-	 * 可用于ToolTip的对象需要实现的接口
+	 * 可用于ToolTip的对象皮肤必须实现的接口
 	 * 
 	 * @author flashyiyi
 	 * 

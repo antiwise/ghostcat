@@ -11,6 +11,7 @@ package
 		public function ControlRectExample()
 		{
 			addChild(new ControlRect(new TestRepeater()))
+			addChild(new ControlRect(new TestRepeater45()))
 			addChild(new CursorSprite())
 		}
 	}
