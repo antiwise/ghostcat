@@ -1,5 +1,6 @@
 package org.ghostcat.manager
 {
+	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
@@ -44,6 +45,11 @@ package org.ghostcat.manager
 			setMenuMode(menuMode);
 		}
 		
+		/**
+		 * 设置缩放模式 
+		 * @param mode
+		 * 
+		 */
 		public static function setMode(mode:int):void
 		{
 			switch (mode)
@@ -59,6 +65,11 @@ package org.ghostcat.manager
 			}
 		}
 		
+		/**
+		 * 设置菜单模式
+		 * @param mode
+		 * 
+		 */
 		public static function setMenuMode(mode:int):void
 		{
 			var menu:ContextMenu = new ContextMenu();
@@ -72,6 +83,17 @@ package org.ghostcat.manager
 			}
 			root.contextMenu = menu;
 		}
+		
+		/**
+		 * 设置焦点
+		 * @param obj
+		 * 
+		 */
+		public static function setFocus(obj:InteractiveObject):void
+		{
+            stage.focus = obj;
+        } 
+        
 		/**
 		 * 读取FLASHVARS
 		 * 
