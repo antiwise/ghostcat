@@ -132,29 +132,18 @@ package org.ghostcat.text
   			return data.readMultiByte(data.bytesAvailable, "gb2312");
   		}
   		
-//  		/**
-//  		 * 判断一个ByteArray里的数据是否是ANSI编码
-//  		 * 
-//  		 * @param data
-//  		 * @return 
-//  		 * 
-//  		 */
-//  		public static function isANSI(data:ByteArray):Boolean
-//  		{
-//  			if (data.length <= 2)
-//  				return false;
-//  			
-//  			data.position = 0;
-//  			var b0 : int = data.readUnsignedByte();
-//   			var b1 : int = data.readUnsignedByte();
-//   			data.position = 0;
-//   			
-//   			if (b0 == 0xFF && b1 == 0xFE ||//Unicode
-//    			b0 == 0xFE && b1 == 0xFF ||//Unicode big endian
-//    			b0 == 0xEF && b1 == 0xBB)//UTF-8
-//    			return false;
-//   			else
-//   				return true;
-//  		}
+  		/**
+  		 * 获得一个字符串在ANSI码中的长度（中文长度为2）
+  		 * 
+  		 * @param data	字符串
+  		 * @return 
+  		 * 
+  		 */
+  		public static function getLength(data:String):int
+  		{
+			var byte:ByteArray = new ByteArray();
+			byte.writeMultiByte(data,"gb2312");
+			return byte.length;
+  		}
 	}
 }

@@ -1,6 +1,7 @@
 package org.ghostcat.util
 {
 	import flash.display.BitmapData;
+	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -170,6 +171,29 @@ package org.ghostcat.util
 			}
 			var p:Number = rect.width * rect.height;
 			return (int(ar/p) << 16) | (int(ag/p) << 8) | int(ab/p);
+		}
+		
+		/**
+		 * 获取位图的非透明区域，可以用来做图片按钮的hitArea区域
+		 * 
+		 * @param source	图像源
+		 * @return 
+		 * 
+		 */
+		public static function getMask(source:BitmapData):Shape
+		{
+			var s:Shape = new Shape();
+			s.graphics.beginFill(0);
+			for(var i:int = 0;i < source.width;i++)
+			{
+				for(var j:int = 0;j < source.height;j++)
+				{
+					if (source.getPixel32(i,j))
+						s.graphics.drawRect(i,j,1,1);
+				}
+			}
+			s.graphics.endFill();
+			return s;
 		}
 	}
 }

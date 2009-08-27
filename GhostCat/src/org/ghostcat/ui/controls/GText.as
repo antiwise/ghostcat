@@ -3,6 +3,7 @@ package org.ghostcat.ui.controls
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.events.TextEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -25,6 +26,7 @@ package org.ghostcat.ui.controls
 	public class GText extends GBase
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(TextField);
+		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		
@@ -34,6 +36,11 @@ package org.ghostcat.ui.controls
 		 * 是否让容器适应文本框的体积
 		 */
 		public var adjustSize:Boolean = false;
+		
+		/**
+		 * 限定输入内容的正则表达式
+		 */
+		public var regExp:RegExp;
 		
 		private var _bitmap:Bitmap;//用于缓存的Bitmap
 		
@@ -64,7 +71,10 @@ package org.ghostcat.ui.controls
 		public function getTextFieldFromSkin(skin:DisplayObject):void
 		{
 			if (textField)
+			{
+				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
 				removeChild(textField);
+			}
 			
 			textField = SearchUtil.findChildByClass(skin,TextField) as TextField;
 			
@@ -79,6 +89,7 @@ package org.ghostcat.ui.controls
 				textField.y = pos.y;
 			}
 			addChild(textField);
+			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
 		}
 		
 		/**
@@ -178,6 +189,20 @@ package org.ghostcat.ui.controls
 			}
 			
 			_bitmap.bitmapData.draw(textField);
+		}
+		
+		protected function textInputHandler(event:TextEvent):void
+		{
+			if (regExp && !regExp.test(textField.text))
+				event.preventDefault();
+		}
+		
+		public override function destory() : void
+		{
+			super.destory();
+			
+			if (_bitmap)
+				_bitmap.bitmapData.dispose();
 		}
 		
 	}
