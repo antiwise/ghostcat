@@ -2,7 +2,6 @@ package org.ghostcat.util
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * 处理XML对象序列化的操作
@@ -59,6 +58,9 @@ package org.ghostcat.util
 						break;
 					case Class:
 						obj[key] = ReflectUtil.getDefinitionByName(value) as Class;
+						break;
+					case Function:
+						obj[key] = ReflectUtil.eval(value) as Function;
 						break;
 					default:
 						obj[key] = value.toString();
