@@ -29,7 +29,7 @@ package org.ghostcat.operation
 			return _defaultQueue;
 		}
 		
-		private var queue:Array = [];
+		public var queue:Array = [];
 		
 		/**
 		 * 推入队列

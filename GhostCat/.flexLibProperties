@@ -221,6 +221,9 @@
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.manager.LocalManager"/>
+    <classEntry path="org.ghostcat.quest.QuestGroup"/>
+    <classEntry path="org.ghostcat.quest.QuestEvent"/>
+    <classEntry path="org.ghostcat.quest.Quest"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
