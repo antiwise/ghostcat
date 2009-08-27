@@ -23,7 +23,6 @@ package org.ghostcat.fileformat.swf.tag
 		public var abcData:ByteArray;
 		public override function read() : void
 		{
-			super.read();
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);
 			flags = bytes.readUnsignedInt();
 			name = SWFDecoder.readString(bytes);

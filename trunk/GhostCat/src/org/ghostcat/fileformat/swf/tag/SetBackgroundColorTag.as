@@ -20,8 +20,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			var r:int = bytes.readUnsignedByte();
 			var g:int = bytes.readUnsignedByte();
 			var b:int = bytes.readUnsignedByte(); 

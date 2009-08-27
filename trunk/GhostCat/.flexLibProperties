@@ -16,8 +16,6 @@
     <classEntry path="org.ghostcat.algorithm.bezier.SmoothCurve"/>
     <classEntry path="org.ghostcat.bitmap.BitmapDataGroup"/>
     <classEntry path="org.ghostcat.bitmap.GBitmap"/>
-    <classEntry path="org.ghostcat.bitmap.GBitmapTransfer"/>
-    <classEntry path="org.ghostcat.bitmap.Reflector"/>
     <classEntry path="org.ghostcat.community.CommunityManager"/>
     <classEntry path="org.ghostcat.community.DisplayCommunityManager"/>
     <classEntry path="org.ghostcat.community.command.CollideCommand"/>
@@ -59,10 +57,6 @@
     <classEntry path="org.ghostcat.display.movieclip.GMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClipBase"/>
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="org.ghostcat.display.transfer.GTransfer"/>
-    <classEntry path="org.ghostcat.display.transfer.MiniMap"/>
-    <classEntry path="org.ghostcat.display.transfer.Paper3D"/>
-    <classEntry path="org.ghostcat.display.transfer.Skew"/>
     <classEntry path="org.ghostcat.display.viewport.Light"/>
     <classEntry path="org.ghostcat.display.viewport.Wall"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
@@ -126,6 +120,7 @@
     <classEntry path="org.ghostcat.manager.FontManager"/>
     <classEntry path="org.ghostcat.manager.InputManager"/>
     <classEntry path="org.ghostcat.manager.LanguageManager"/>
+    <classEntry path="org.ghostcat.manager.LocalManager"/>
     <classEntry path="org.ghostcat.manager.PathAnalyzer"/>
     <classEntry path="org.ghostcat.manager.RootManager"/>
     <classEntry path="org.ghostcat.manager.SoundManager"/>
@@ -162,6 +157,9 @@
     <classEntry path="org.ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsPath"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsRect"/>
+    <classEntry path="org.ghostcat.quest.Quest"/>
+    <classEntry path="org.ghostcat.quest.QuestEvent"/>
+    <classEntry path="org.ghostcat.quest.QuestGroup"/>
     <classEntry path="org.ghostcat.skin.code.ArowSkin"/>
     <classEntry path="org.ghostcat.skin.code.BoxSkin"/>
     <classEntry path="org.ghostcat.skin.code.PointSkin"/>
@@ -172,6 +170,12 @@
     <classEntry path="org.ghostcat.text.PinYin"/>
     <classEntry path="org.ghostcat.text.TextFieldUtil"/>
     <classEntry path="org.ghostcat.text.TextUtil"/>
+    <classEntry path="org.ghostcat.transfer.GBitmapTransfer"/>
+    <classEntry path="org.ghostcat.transfer.GTransfer"/>
+    <classEntry path="org.ghostcat.transfer.MiniMap"/>
+    <classEntry path="org.ghostcat.transfer.Paper3D"/>
+    <classEntry path="org.ghostcat.transfer.Reflector"/>
+    <classEntry path="org.ghostcat.transfer.Skew"/>
     <classEntry path="org.ghostcat.ui.CursorSprite"/>
     <classEntry path="org.ghostcat.ui.IToolTipSkin"/>
     <classEntry path="org.ghostcat.ui.RootLoader"/>
@@ -220,10 +224,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.manager.LocalManager"/>
-    <classEntry path="org.ghostcat.quest.QuestGroup"/>
-    <classEntry path="org.ghostcat.quest.QuestEvent"/>
-    <classEntry path="org.ghostcat.quest.Quest"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -25,8 +25,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			maxRecursionDepth = bytes.readUnsignedShort();
 			scriptTimeoutSeconds = bytes.readUnsignedShort();
 		}

@@ -20,8 +20,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			var bytesReader:ByteArrayReader = new ByteArrayReader(bytes);
 			var text:String = SWFDecoder.readString(bytes);
 			metadata = new XML(text);

@@ -22,8 +22,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			if (length > 0)
 				password = bytes.readUTFBytes(length);
 		}

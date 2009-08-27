@@ -5,7 +5,7 @@ package
 	import flash.geom.Point;
 	
 	import org.ghostcat.display.graphics.DragPoint;
-	import org.ghostcat.display.transfer.Skew;
+	import org.ghostcat.transfer.Skew;
 	import org.ghostcat.ui.CursorSprite;
 	
 	[SWF(width="300",height="300")]

@@ -18,18 +18,14 @@ package org.ghostcat.quest
 			load(quests);
 		}
 		
-		public function load(quests:Array,finishData:Array=null,startData:Array=null):void
+		public function load(quests:Array,startList:BitArray=null,finishList:BitArray=null):void
 		{
 			var i:int;
 			var q:Quest;
 			
 			this.quests = quests;
-			
-			if (finishData)
-				finishList.createFromIntArray(finishData);
-				
-			if (startData)
-				startList.createFromIntArray(startData);	
+			this.startList = startList;
+			this.finishList = finishList;
 			
 			for (i = 0;i < quests.length;i++)
 			{

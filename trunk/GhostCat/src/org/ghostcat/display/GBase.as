@@ -276,11 +276,19 @@ package org.ghostcat.display
 //			}
 //		}
 //		
-//		protected override function init():void
-//		{
-//			super.init();
+		protected override function init():void
+		{
+			super.init();
+			
+			createChildren();
+			
 //			regEventHandler();
-//		}
+		}
+		
+		protected function createChildren():void
+		{
+			
+		}
 		
 		/**
 		 * 立即更新显示 

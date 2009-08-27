@@ -45,8 +45,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			productID = bytes.readUnsignedInt();
 			edition = bytes.readUnsignedInt();
 			majorVersion = bytes.readUnsignedByte();

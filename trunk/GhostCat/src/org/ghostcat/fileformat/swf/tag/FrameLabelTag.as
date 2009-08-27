@@ -20,8 +20,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);
 			name = SWFDecoder.readString(bytes);
 		}
