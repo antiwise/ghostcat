@@ -21,8 +21,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
-			
 			symbolClasses = [];
 			links = [];
 			

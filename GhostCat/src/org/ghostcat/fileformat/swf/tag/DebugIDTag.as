@@ -36,7 +36,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
 			uUid =[];
 			for (var i:int = 0;i < 8;i++)
 				uUid.push(bytes.readUnsignedShort());

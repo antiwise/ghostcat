@@ -31,7 +31,6 @@ package org.ghostcat.fileformat.swf.tag
 		
 		public override function read() : void
 		{
-			super.read();
 			var byteArrayReader:ByteArrayReader = new ByteArrayReader(bytes);
 			byteArrayReader.readBits(3);
 			hasMetaData = byteArrayReader.readBits(1) == 1;

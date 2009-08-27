@@ -125,7 +125,7 @@ package org.ghostcat.manager
 		 */
 		public function createBitmapData(ref:String):BitmapData
 		{
-			return getAssetByName(ref)() as BitmapData;
+			return getAssetByName(ref)(0,0) as BitmapData;
 		}
 	}
 }
