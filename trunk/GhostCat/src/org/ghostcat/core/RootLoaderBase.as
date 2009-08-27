@@ -47,7 +47,8 @@ package org.ghostcat.core
 			if(this.currentFrame == 2)
 			{
 				this.removeEventListener(Event.ENTER_FRAME,this.frameEnterHandler);
-				
+				root.loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progressHandler);
+		
 				dispatchEvent(new Event(Event.COMPLETE));
 				
 				loadComplete();
@@ -76,7 +77,8 @@ package org.ghostcat.core
 			var urlArr:Array = name.split(/\/+|\\+|\.|\?/ig);
         	name = decodeURI(urlArr[urlArr.length - 2]);
 			
-			this.addChild(new (getDefinitionByName(name) as Class));
+			stage.addChild(new (getDefinitionByName(name) as Class));
+			stage.removeChild(this);
 		}
 	}
 }
