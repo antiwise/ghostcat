@@ -1,8 +1,6 @@
 package org.ghostcat.display.viewport
 {
 	import flash.events.IEventDispatcher;
-	
-	import org.ghostcat.util.Collision;
 
 	/**
 	 * 支持不规则碰撞的物品需要实现的接口

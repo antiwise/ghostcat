@@ -7,6 +7,8 @@ package org.ghostcat.ui.controls
 	import flash.geom.Matrix;
 	
 	import org.ghostcat.display.movieclip.GMovieClip;
+	import org.ghostcat.events.ActionEvent;
+	import org.ghostcat.util.Util;
 	
 	/**
 	 * 按钮
@@ -42,6 +44,11 @@ package org.ghostcat.ui.controls
 		private var _mouseDown:Boolean = false;
 		
 		private var _mouseOver:Boolean = false;
+		
+		/**
+		 * 执行的指令名称
+		 */		
+		public var action:String;
 		
 		/**
 		 * 鼠标按下时移过是否转换焦点
@@ -93,6 +100,12 @@ package org.ghostcat.ui.controls
 				refreshLabelField();
 		}
 		
+		public override function set enabled(v:Boolean) : void
+		{
+			this.mouseChildren = this.mouseEnabled = super.enabled = v;
+			tweenTo(v ? UP : DISABLED);
+		}
+		
 		public function refreshLabelField():void
 		{
 			if (!_label)
@@ -121,11 +134,10 @@ package org.ghostcat.ui.controls
 		public function set toggle(v:Boolean):void
 		{
 			_toggle = v;
-			if (v){
-				addEventListener(MouseEvent.CLICK,clickHandler);
-			}else{
-				removeEventListener(MouseEvent.CLICK,clickHandler);
-			}
+			if (v)
+				addEventListener(MouseEvent.CLICK,toggleClickHandler);
+			else
+				removeEventListener(MouseEvent.CLICK,toggleClickHandler);
 		}
 		
 		public function get toggle():Boolean
@@ -151,6 +163,7 @@ package org.ghostcat.ui.controls
 			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			addEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
+			addEventListener(MouseEvent.CLICK,clickHandler);
 		
 			tweenTo(UP);
 		}
@@ -239,9 +252,15 @@ package org.ghostcat.ui.controls
 			_mouseOver = false;
 		}
 		
-		protected function clickHandler(event:MouseEvent):void
+		protected function toggleClickHandler(event:MouseEvent):void
 		{
 			selected = !selected;
+		}
+		
+		protected function clickHandler(event:MouseEvent):void
+		{
+			if (this.action)
+				dispatchEvent(Util.createObject(new ActionEvent(ActionEvent.ACTION),{action:this.action}))
 		}
 		
 		public override function destory() : void
@@ -250,6 +269,7 @@ package org.ghostcat.ui.controls
 			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			removeEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
+			removeEventListener(MouseEvent.CLICK,toggleClickHandler);
 			removeEventListener(MouseEvent.CLICK,clickHandler);
 			super.destory();
 		}

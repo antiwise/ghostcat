@@ -1,4 +1,4 @@
-package org.ghostcat.bitmap
+package org.ghostcat.display.movieclip
 {
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
