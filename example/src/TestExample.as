@@ -2,14 +2,19 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.text.ANSI;
+	import org.ghostcat.util.Hash;
+	import org.ghostcat.util.RandomUtil;
 	
 	[SWF(width="400",height="400")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{
-			trace(ANSI.getLength("123特"));
+			while (true)
+			{
+				var s:String = RandomUtil.string(16);
+				trace(Hash.fromString(s,0,true));
+			}
 		}
 	}
 }

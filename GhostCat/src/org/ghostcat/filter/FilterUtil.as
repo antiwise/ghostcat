@@ -1,4 +1,4 @@
-package org.ghostcat.util
+package org.ghostcat.filter
 {
 	import flash.display.DisplayObject;
 	import flash.utils.getDefinitionByName;

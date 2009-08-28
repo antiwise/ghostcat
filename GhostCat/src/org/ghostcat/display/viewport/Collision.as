@@ -1,9 +1,12 @@
-package org.ghostcat.util
+package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import org.ghostcat.util.Geom;
+	import org.ghostcat.util.SearchUtil;
 
 	/**
 	 * 碰撞检测块。

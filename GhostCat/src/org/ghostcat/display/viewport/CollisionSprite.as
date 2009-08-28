@@ -3,7 +3,6 @@ package org.ghostcat.display.viewport
 	import flash.display.DisplayObject;
 	
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.util.Collision;
 	
 	/**
 	 * 支持不规则碰撞的显示对象
