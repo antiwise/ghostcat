@@ -2,7 +2,7 @@ package org.ghostcat.skin.code
 {
 	import flash.display.DisplayObject;
 	
-	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.ui.IToolTipSkin;
 	import org.ghostcat.ui.ToolTipSprite;
 	import org.ghostcat.ui.controls.GText;

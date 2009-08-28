@@ -4,7 +4,7 @@ package org.ghostcat.display.graphics
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.skin.code.PointSkin;
 	import org.ghostcat.util.CallLater;

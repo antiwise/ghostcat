@@ -2,7 +2,7 @@ package org.ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	
-	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.ui.controls.GText;
 	import org.ghostcat.skin.code.ArowSkin;
 	

@@ -3,7 +3,7 @@ package org.ghostcat.display.movieclip
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	
-	import org.ghostcat.display.ICollisionClient;
+	import org.ghostcat.display.viewport.ICollisionClient;
 	import org.ghostcat.util.Collision;
 	
 	/**

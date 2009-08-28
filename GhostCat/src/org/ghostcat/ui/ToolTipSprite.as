@@ -5,8 +5,8 @@ package org.ghostcat.ui
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import org.ghostcat.core.ClassFactory;
-	import org.ghostcat.core.IDisplayObject;
+	import org.ghostcat.util.ClassFactory;
+	import org.ghostcat.display.IDisplayObject;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.display.IToolTipManagerClient;
 	import org.ghostcat.util.Util;

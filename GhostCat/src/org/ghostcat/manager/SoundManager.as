@@ -8,7 +8,7 @@ package org.ghostcat.manager
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	import org.ghostcat.util.Tick;
 	import org.ghostcat.util.TweenUtil;
 	

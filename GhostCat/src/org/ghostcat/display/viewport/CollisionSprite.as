@@ -1,7 +1,8 @@
-package org.ghostcat.display
+package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
 	
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.util.Collision;
 	
 	/**

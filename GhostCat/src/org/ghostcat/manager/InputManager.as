@@ -11,7 +11,7 @@
     import flash.utils.getQualifiedClassName;
     import flash.utils.getTimer;
     
-    import org.ghostcat.core.Singleton;
+    import org.ghostcat.util.Singleton;
     import org.ghostcat.events.InputEvent;
     
     /**

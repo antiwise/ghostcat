@@ -5,7 +5,7 @@ package org.ghostcat.manager
 	import flash.display.Sprite;
 	import flash.utils.getDefinitionByName;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	import org.ghostcat.debug.Debug;
 
 	/**

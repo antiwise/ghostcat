@@ -8,7 +8,7 @@ package org.ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
-	import org.ghostcat.core.ClassFactory;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.events.TextFieldEvent;
 	import org.ghostcat.parse.display.TextFieldParse;

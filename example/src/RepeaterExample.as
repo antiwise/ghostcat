@@ -5,7 +5,7 @@ package
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import org.ghostcat.display.GRepeater;
+	import org.ghostcat.display.viewport.GRepeater;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.manager.RootManager;

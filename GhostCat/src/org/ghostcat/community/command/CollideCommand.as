@@ -3,7 +3,7 @@ package org.ghostcat.community.command
 	import flash.display.DisplayObject;
 	
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.ICollisionClient;
+	import org.ghostcat.display.viewport.ICollisionClient;
 	import org.ghostcat.events.CollideEvent;
 	import org.ghostcat.util.Util;
 

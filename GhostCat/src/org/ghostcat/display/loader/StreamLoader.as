@@ -9,7 +9,7 @@ package org.ghostcat.display.loader
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
 	
-	import org.ghostcat.core.GSprite;
+	import org.ghostcat.display.GSprite;
 	
 	/**
 	 * 渐进式加载图片

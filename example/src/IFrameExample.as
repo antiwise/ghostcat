@@ -2,7 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.display.IFrame;
+	import org.ghostcat.display.extend.IFrame;
 	import org.ghostcat.util.Geom;
 	
 	[SWF(width="500",height="400")]

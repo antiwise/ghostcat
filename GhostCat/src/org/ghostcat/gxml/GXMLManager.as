@@ -3,7 +3,7 @@ package org.ghostcat.gxml
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	import org.ghostcat.gxml.spec.ItemSpec;
 
 	/**

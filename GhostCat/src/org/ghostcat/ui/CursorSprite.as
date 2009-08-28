@@ -11,11 +11,10 @@ package org.ghostcat.ui
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import org.ghostcat.core.ClassFactory;
-	import org.ghostcat.core.IDisplayObject;
 	import org.ghostcat.display.ICursorManagerClient;
 	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.skin.cursor.CursorGroup;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Util;
 
