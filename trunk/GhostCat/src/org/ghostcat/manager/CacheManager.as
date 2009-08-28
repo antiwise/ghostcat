@@ -4,7 +4,7 @@ package org.ghostcat.manager
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	
 	/**
 	 * 对象缓存管理类。由它删除的对象不会被清除，可以在被创建的时候重新使用。

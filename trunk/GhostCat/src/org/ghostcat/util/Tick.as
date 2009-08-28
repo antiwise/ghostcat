@@ -4,7 +4,7 @@ package org.ghostcat.util
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	import org.ghostcat.events.TickEvent;
 
 	[Event(name="tick",type="org.ghostcat.events.TickEvent")]

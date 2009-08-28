@@ -2,7 +2,7 @@ package org.ghostcat.ui
 {
 	import flash.events.Event;
 	
-	import org.ghostcat.core.RootLoaderBase;
+	import org.ghostcat.util.RootLoaderBase;
 	import org.ghostcat.skin.code.ProgressSkin;
 	import org.ghostcat.ui.controls.GPercentBar;
 	import org.ghostcat.ui.controls.GProgressBar;

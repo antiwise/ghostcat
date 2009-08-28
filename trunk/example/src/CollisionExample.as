@@ -6,7 +6,7 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.CollisionSprite;
+	import org.ghostcat.display.viewport.CollisionSprite;
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;

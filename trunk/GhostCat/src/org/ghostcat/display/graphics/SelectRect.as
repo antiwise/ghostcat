@@ -4,7 +4,7 @@ package org.ghostcat.display.graphics
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import org.ghostcat.core.GSprite;
+	import org.ghostcat.display.GSprite;
 	import org.ghostcat.events.SelectEvent;
 	import org.ghostcat.parse.graphics.GraphicsFill;
 	import org.ghostcat.parse.graphics.GraphicsLineStyle;
@@ -16,7 +16,7 @@ package org.ghostcat.display.graphics
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SelectRect extends GSprite
+	public class SelectRect extends org.ghostcat.display.GSprite
 	{
 		/**
 		 * 线型

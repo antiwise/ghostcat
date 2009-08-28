@@ -2,7 +2,7 @@ package org.ghostcat.display.loader
 {
 	import flash.utils.getDefinitionByName;
 	
-	import org.ghostcat.core.GSprite;
+	import org.ghostcat.display.GSprite;
 	import org.ghostcat.events.OperationEvent;
 	import org.ghostcat.manager.AssetManager;
 	import org.ghostcat.operation.FunctionOper;
@@ -21,7 +21,7 @@ package org.ghostcat.display.loader
 	 * @author flashyiyi
 	 * 
 	 */
-	public class AssetLoader extends GSprite
+	public class AssetLoader extends org.ghostcat.display.GSprite
 	{
 		/**
 		 * AssetLoader的独立加载队列

@@ -5,7 +5,6 @@ package org.ghostcat.display
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
-	import org.ghostcat.core.GSprite;
 	import org.ghostcat.events.GEvent;
 	import org.ghostcat.events.MoveEvent;
 	import org.ghostcat.events.ResizeEvent;

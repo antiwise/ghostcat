@@ -3,7 +3,7 @@ package org.ghostcat.manager
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
-	import org.ghostcat.core.Singleton;
+	import org.ghostcat.util.Singleton;
 	import org.ghostcat.events.TextFieldEvent;
 	import org.ghostcat.operation.LoadOper;
 	import org.ghostcat.text.TextUtil;
@@ -32,7 +32,7 @@ package org.ghostcat.manager
 		}
 		
 		/**
-		 * 自定义转换器，键为{}内部的文字，值为字符串。
+		 * 自定义转换器，键为{}内部的文字，值为文字属性或者函数。
 		 * 当字符串以#开头时，会将其余部分作为ReflectManager.evel()的参数传入，获得其返回值。
 		 * 这样一来，就可以方便地进行扩展。最普通的例子，就是自动转换玩家用户名以及性别的显示。
 		 */		
@@ -156,7 +156,12 @@ package org.ghostcat.manager
 			}
 			for (var conv:* in customConversion)
 			{
-				var text:String = customConversion[conv];
+				var text:String
+				if (customConversion[conv] is Function)
+					text = customConversion[conv]();
+				else
+					text = customConversion[conv];
+				
 				if (text.charAt(0)=="#")
 					text = ReflectUtil.eval(text.slice(1));
 				result = result.replace(new RegExp("\\{"+conv+"\\}","g"),text);

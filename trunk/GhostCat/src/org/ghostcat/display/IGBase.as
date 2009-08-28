@@ -1,6 +1,6 @@
 package org.ghostcat.display
 {
-	import org.ghostcat.core.IDisplayObject;
+	
 
 	/**
 	 * GBase接口 

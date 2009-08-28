@@ -1,4 +1,4 @@
-package org.ghostcat.display
+package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Matrix;

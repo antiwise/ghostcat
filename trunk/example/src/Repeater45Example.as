@@ -3,7 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import org.ghostcat.display.GRepeater45;
+	import org.ghostcat.display.viewport.GRepeater45;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.manager.RootManager;

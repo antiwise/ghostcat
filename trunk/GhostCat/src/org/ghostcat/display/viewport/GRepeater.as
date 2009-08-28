@@ -1,4 +1,4 @@
-package org.ghostcat.display
+package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
@@ -7,9 +7,10 @@ package org.ghostcat.display
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
-	import org.ghostcat.core.ClassFactory;
 	import org.ghostcat.debug.Debug;
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.events.RepeatEvent;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.ReflectUtil;

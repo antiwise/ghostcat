@@ -1,5 +1,7 @@
-package org.ghostcat.display
+package org.ghostcat.display.extend
 {
+	import org.ghostcat.display.GNoScale;
+
 	/**
 	 * 浏览器IFrame
 	 * 
