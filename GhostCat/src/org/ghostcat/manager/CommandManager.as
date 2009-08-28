@@ -22,6 +22,9 @@ package org.ghostcat.manager
 	 * 
 	 * 牢骚到此为止。在现在这个“业务逻辑就应该是后台做的”、“前台只负责表现数据”的守旧氛围里，我还是少说些危险言论比较好。
 	 * 
+	 * 默认事件是这个
+	 * @see org.ghostcat.events.ActionEvent
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */	

@@ -13,7 +13,7 @@ package org.ghostcat.quest
 		
 		public var quests:Array = [];
 		
-		public function QuestGroup(quests:Array,finishData:Array=null,startData:Array=null)
+		public function QuestGroup(quests:Array,startData:Array=null,finishData:Array=null)
 		{
 			load(quests);
 		}
