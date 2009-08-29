@@ -15,6 +15,7 @@
     <classEntry path="org.ghostcat.algorithm.bezier.Roupe"/>
     <classEntry path="org.ghostcat.algorithm.bezier.SmoothCurve"/>
     <classEntry path="org.ghostcat.bitmap.BitmapDataGroup"/>
+    <classEntry path="org.ghostcat.bitmap.BitmapUtil"/>
     <classEntry path="org.ghostcat.bitmap.GBitmap"/>
     <classEntry path="org.ghostcat.community.CommunityManager"/>
     <classEntry path="org.ghostcat.community.DisplayCommunityManager"/>
@@ -49,7 +50,9 @@
     <classEntry path="org.ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClipBase"/>
+    <classEntry path="org.ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
+    <classEntry path="org.ghostcat.display.viewport.Collision"/>
     <classEntry path="org.ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="org.ghostcat.display.viewport.GRepeater"/>
     <classEntry path="org.ghostcat.display.viewport.GRepeater45"/>
@@ -104,6 +107,7 @@
     <classEntry path="org.ghostcat.filter.ConvolutionFilterProxy"/>
     <classEntry path="org.ghostcat.filter.DisplacementMapFilterProxy"/>
     <classEntry path="org.ghostcat.filter.FilterProxy"/>
+    <classEntry path="org.ghostcat.filter.FilterUtil"/>
     <classEntry path="org.ghostcat.filter.RollFilterProxy"/>
     <classEntry path="org.ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="org.ghostcat.gxml.GXMLManager"/>

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<title>org.ghostcat.manager Summary</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'org.ghostcat.manager Package - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?org/ghostcat/manager/package-detail.html&amp;org/ghostcat/manager/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Package&nbsp;org.ghostcat.manager</td><td align="right" id="subNav" class="titleTableSubNav"><a href="package-detail.html#classSummary">Classes</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Package org.ghostcat.manager"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false,false,true,false);}
+--></script>
+<div class="MainContent">
+<br>
+<br>
+<hr>
+<a name="classSummary"></a>
+<div class="summaryTableTitle">Classes</div>
+<table class="summaryTable" cellspacing="0" cellpadding="3">
+<tr>
+<th>&nbsp;</th><th width="30%">Class</th><th width="70%">Description</th>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="AssetManager.html">AssetManager</a></td><td class="summaryTableLastCol">
+  资源管理类
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="BrowerManager.html">BrowerManager</a></td><td class="summaryTableLastCol">
+  通过JS与浏览器通讯
+  
+  </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CacheManager.html">CacheManager</a></td><td class="summaryTableLastCol">
+  对象缓存管理类。由它删除的对象不会被清除，可以在被创建的时候重新使用。
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CommandManager.html">CommandManager</a></td><td class="summaryTableLastCol">
+  将某个事件绑定到一个某个特定类来进行处理。
+  
+  利用AS3自带的事件冒泡，显示对象可以通过对自己发布冒泡事件，让事件得以发布到应用的顶端，也就是stage。
+  接着，使用此类将stage上的这个事件转移到特定类上，制定好处理规则。可以实现最简单的V->C的过程。
+  C->M不用说。M->V的过程可以利用FLEX的绑定，具体可参考例子BindingExample.as
+    标准的MVC框架之所以不适合游戏，就是因为游戏创建，删除显示对象的操作很频繁且没有规律，显示对象的数量和类型也非常多，C->V的过程难以用统一的方法解决且保证可靠性。
+  而M往往和V有着强烈的耦合，甚至直接就是一对一，将它们松耦完全是在自讨苦吃。而C->M的过程也和上面同理。
+  归根结底，就是因为游戏并不是一个规整的结构，它的结构会根据游戏内容不同而很自然地具有自己的特性，试图抛弃这种自然的特性而采用统一的方法处理，
+  反而会使得开发过程变得盲目，交流成本增加，效率大大降低。
+  但是，MVC的确是任何一个程序都必须遵守的原则，这一点并不会因为不适合标准MVC框架而改变。既然游戏拥有自己的结构特性，那么，我们就必须按照它的特性重新实现所有模式，
+  也就是需要一个定制的MVC框架。
+  
+  也就是说：适合“全部”游戏的MVC框架，是不存在的。这也是游戏开发难度大的原因之一。
+  
+  牢骚到此为止。在现在这个“业务逻辑就应该是后台做的”、“前台只负责表现数据”的守旧氛围里，我还是少说些危险言论比较好。
+  
+  默认事件是这个
+  </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="DragManager.html">DragManager</a></td><td class="summaryTableLastCol">
+  FLASH自带的拖动功能缺乏扩展性，因此必要时只能重新实现。
+  
+  这个类可以实现对Bitmap,TextField的拖动，支持多物品拖动,
+  并且会自动向外发布DragOver,DragOut事件。
+  
+  这个类的DragStart和DragStop事件都是可中断的，若指定中断就可以中止原来的操作。
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="EventManager.html">EventManager</a></td><td class="summaryTableLastCol">
+  事件管理类。使用此类代理进行监听以及销毁可确保事件能够被移除。
+  
+  AS3的事件管理是一个很基本的能力，不建议在这样的地方消耗多余的性能，除非必要否则请不要使用此类。
+  
+  </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="FontManager.html">FontManager</a></td><td class="summaryTableLastCol">
+  这个类用于保存字体样式以及帮助嵌入字体。
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="InputManager.html">InputManager</a></td><td class="summaryTableLastCol">
+     输入设备管理类，附加功能为：
+     
+     检测暂离，检测按钮是否按下，检测单独按键的一次点击（非组合键），鼠标手势，鼠标右键，连续按键
+     实现方式是向外部发布InputEvent事件
+     
+     启用鼠标右键时，为了禁止FLASH自己的右键菜单，必须将FLASH的wmode改为opaque
+      
+     </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="LanguageManager.html">LanguageManager</a></td><td class="summaryTableLastCol">
+  多语言支持
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="LocalManager.html">LocalManager</a></td><td class="summaryTableLastCol">
+  保存到FLASH本地缓存
+  
+  </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="PathAnalyzer.html">PathAnalyzer</a></td><td class="summaryTableLastCol">
+  鼠标手势解析类（用于配合InputManager）
+  
+  </td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="RootManager.html">RootManager</a></td><td class="summaryTableLastCol">
+  舞台对象相关扩展。
+  
+  主要功能为获取flashVars，直接使用getValue方法即可。不同的是，你可以使用setValue来设置parameters的值，模拟flashVars存在时的效果，
+  这样就可以在非网页环境进行测试。而当真正的flashVars存在时，与之冲突的设置值都会被忽略。
+  这样调试和发布就可以统一处理。
+  
+  </td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="SoundManager.html">SoundManager</a></td><td class="summaryTableLastCol">
+  声音管理类
+  
+  </td>
+</tr>
+</table>
+<p></p>
+<div>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</div>
+</body>
+</html>
+<!-- -->
