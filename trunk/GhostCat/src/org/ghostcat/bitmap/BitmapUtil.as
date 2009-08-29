@@ -6,6 +6,8 @@ package org.ghostcat.bitmap
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import org.ghostcat.util.ArrayUtil;
+	import org.ghostcat.util.MathUtil;
 	
 	/**
 	 * 位图处理相关方法

@@ -13,7 +13,6 @@ package org.ghostcat.ui
 	
 	import org.ghostcat.display.ICursorManagerClient;
 	import org.ghostcat.display.movieclip.GMovieClip;
-	import org.ghostcat.skin.cursor.CursorGroup;
 	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Util;
@@ -26,7 +25,10 @@ package org.ghostcat.ui
 		
 	public class CursorSprite extends GMovieClip
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroup);
+		[Embed(skinClass="org.ghostcat.skin.cursor.CursorGroup")]
+		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
+		
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
 		
 		/*系统自带的默认Cursor定义*/
 		public static const CURSOR_ARROW:String = "arrow";
