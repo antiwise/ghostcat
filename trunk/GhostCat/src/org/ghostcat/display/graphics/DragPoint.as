@@ -71,8 +71,6 @@ package org.ghostcat.display.graphics
 			
 			this.cursor = "drag";
 			enabled = enabled;
-			
-			this.delayUpatePosition = true;//这样做是为了避免反复设置属性。invalidatePosition已经被重写为立即执行了，所以并不会产生属性延迟。
 		}
 
 		public function onMouseDownHandler(event : MouseEvent) : void

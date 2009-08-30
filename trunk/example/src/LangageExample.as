@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	
 	import org.ghostcat.events.OperationEvent;
+	import org.ghostcat.extend.JSBridge;
 	import org.ghostcat.manager.LanguageManager;
 	import org.ghostcat.manager.RootManager;
 	import org.ghostcat.ui.controls.GText;

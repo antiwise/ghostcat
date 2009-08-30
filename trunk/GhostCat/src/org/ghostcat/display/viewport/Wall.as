@@ -1,11 +1,12 @@
 package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import org.ghostcat.algorithm.bezier.Line;
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.util.DisplayUtil;
 
 	/**
 	 * 场景墙壁类
@@ -96,13 +97,16 @@ package org.ghostcat.display.viewport
 			_line = new Line(_startPoint,_endPoint);
 			var sp:Point = globalToLocal(_startPoint);
 			var ep:Point = globalToLocal(_endPoint);
-			var wh:Number = wallHeight * DisplayUtil.getStageScale(this).y;
+			var wh:Number = wallHeight;
+			var rect:Rectangle = content.getRect(content);
 			
-			content.x = sp.x;
-			content.y = sp.y - wh;
-			content.width = ep.x - sp.x;
-			content.height = wh;
-			DisplayUtil.chamfer(content,0,ep.y - sp.y);
+			var m:Matrix = new Matrix();
+			m.tx = sp.x;
+			m.ty = sp.y - wh;
+			m.a = (ep.x - sp.x) / rect.width;
+			m.d = wh / rect.height;
+			m.b = Math.tan((ep.y - sp.y) / rect.height);
+			content.transform.matrix = m;
 		} 
 	}
 }

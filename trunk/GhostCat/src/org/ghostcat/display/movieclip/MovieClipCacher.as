@@ -100,7 +100,7 @@ package org.ghostcat.display.movieclip
 		{
 			if (mc.currentFrame >= readFrame)
 			{
-				var bitmapData:BitmapData = new BitmapData(size.x,size.y);
+				var bitmapData:BitmapData = new BitmapData(size.x,size.y,true,0);
 				var m:Matrix;
 				if (offest)
 				{

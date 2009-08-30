@@ -5,6 +5,7 @@ package org.ghostcat.util
 
     /**
      * 32位散列算法。由于只有32位，它的碰撞几率较高，使用时需要特别注意。
+     * 一般只建议用在确认字符串组的区分和数据变化验证
      * 
      * @author flashyiyi
      * 

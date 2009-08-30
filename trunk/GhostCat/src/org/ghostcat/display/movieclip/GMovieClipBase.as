@@ -74,7 +74,7 @@ package org.ghostcat.display.movieclip
         
         private var frameTimer:int;//记时器
 
-		private var _paused:Boolean;
+		private var _paused:Boolean = true;
 		
 		/**
 		 * 是否暂停动画。暂停后的动画和原本的MovieClip行为相同。
@@ -90,17 +90,19 @@ package org.ghostcat.display.movieclip
 			if (_paused == v)
 				return;
 				
-			if (v){
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
-			}else{
+			if (v)
 				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-			}
+			else
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			
 			_paused = v;
 		}
 		
-		public function GMovieClipBase(skin:DisplayObject=null, replace:Boolean=true)
+		public function GMovieClipBase(skin:DisplayObject=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			super(skin, replace);
+			this.content
+			this.paused = paused;
 		}
 		
 		/**
@@ -193,7 +195,7 @@ package org.ghostcat.display.movieclip
 				return;
 			
 			frameTimer -= event.interval;
-            while (numLoops > 0 && frameTimer < 0) 
+            while (numLoops != 0 && frameTimer < 0) 
 			{
 				if (hasReachedLabelEnd())
 				{

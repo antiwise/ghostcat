@@ -33,9 +33,7 @@ package org.ghostcat.display.movieclip
 		 */
 		public function GMovieClip(mc:MovieClip=null, replace:Boolean=true, paused:Boolean=false)
 		{
-			super(mc, replace);
-			
-			this.paused = paused;
+			super(mc, replace, paused);
 		}
 		
 		public function get mc():MovieClip

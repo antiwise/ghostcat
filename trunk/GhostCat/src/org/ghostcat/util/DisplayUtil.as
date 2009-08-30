@@ -200,9 +200,10 @@ package org.ghostcat.util
 			if (!point)
 				point = new Point();
 			
-			var m:Matrix = new Matrix();
+			var m:Matrix = displayObj.transform.matrix;
 			m.translate(-point.x,-point.y);  
-			m.scale(scaleX, scaleY)   ;
+			m.a = scaleX;
+			m.d = scaleY;
 			m.translate(point.x,point.y);   
 			displayObj.transform.matrix = m;
 		}
@@ -233,7 +234,7 @@ package org.ghostcat.util
 		public static function flipH(displayObj:DisplayObject):void
 		{
 			var m:Matrix = displayObj.transform.matrix.clone();
-            m.a = -1;
+            m.a = -m.a;
             displayObj.transform.matrix = m;
 		}
 		
@@ -243,7 +244,7 @@ package org.ghostcat.util
 		public static function flipV(displayObj:DisplayObject):void
 		{
 			var m:Matrix = displayObj.transform.matrix.clone();
-            m.d = -1;
+            m.d = -m.d;
             displayObj.transform.matrix = m;
 		}
 		
@@ -258,9 +259,9 @@ package org.ghostcat.util
 			var rect:Rectangle = displayObj.getRect(displayObj);
 			
 			var m:Matrix = displayObj.transform.matrix.clone();
-            m.c = Math.tan(dx / rect.width);
+			m.c = Math.tan(dx / rect.width);
             m.b = Math.tan(dy / rect.height);
             displayObj.transform.matrix = m;
-		}
+        }
 	}
 }
