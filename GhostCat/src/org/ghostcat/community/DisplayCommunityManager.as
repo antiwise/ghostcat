@@ -7,7 +7,7 @@ package org.ghostcat.community
 	import org.ghostcat.util.DisplayUtil;
 
 	/**
-	 * 针对显示对象的数据集群基类
+	 * 针对显示对象的群聚基类
 	 * 
 	 * @author flashyiyi
 	 * 

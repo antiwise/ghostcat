@@ -2,7 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.display.extend.IFrame;
+	import org.ghostcat.extend.IFrame;
 
 	[SWF(width="500",height="400")]
 	public class IFrameExample extends Sprite

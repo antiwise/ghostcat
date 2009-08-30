@@ -36,7 +36,6 @@
     <classEntry path="org.ghostcat.display.IDisplayObjectContainer"/>
     <classEntry path="org.ghostcat.display.IGBase"/>
     <classEntry path="org.ghostcat.display.IToolTipManagerClient"/>
-    <classEntry path="org.ghostcat.display.extend.IFrame"/>
     <classEntry path="org.ghostcat.display.graphics.ControlRect"/>
     <classEntry path="org.ghostcat.display.graphics.DragPoint"/>
     <classEntry path="org.ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -227,6 +226,8 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
+    <classEntry path="org.ghostcat.extend.JSBridge"/>
+    <classEntry path="org.ghostcat.extend.IFrame"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

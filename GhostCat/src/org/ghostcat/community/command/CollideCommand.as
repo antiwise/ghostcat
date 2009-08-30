@@ -8,7 +8,7 @@ package org.ghostcat.community.command
 	import org.ghostcat.util.Util;
 
 	/**
-	 * 碰撞检测
+	 * 碰撞检测（针对实现了ICollisionClient的对象）
 	 * 
 	 * @author flashyiyi
 	 * 

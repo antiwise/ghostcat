@@ -35,14 +35,12 @@ package org.ghostcat.display.movieclip
 		 * 
 		 */
 		 		
-		public function GBitmapMovieClip(bitmaps:Array,labels:Array,paused:Boolean=false)
+		public function GBitmapMovieClip(bitmaps:Array,labels:Array=null,paused:Boolean=false)
 		{
 			this._bitmaps = bitmaps;
-			this._labels = labels;
-		
-			super(new Bitmap(bitmaps[0]));
-		
-			this.paused = paused;
+			this._labels = labels ? labels : [];
+			
+			super(new Bitmap(bitmaps[0]),true,paused);
 			
 			clearQueue();
 			if (labels)
@@ -53,6 +51,8 @@ package org.ghostcat.display.movieclip
 		{
 			if (content)
 				Debug.error("不允许执行setContent方法")
+			else
+				super.setContent(skin,replace);
 		}
 		
 		public override function destory():void

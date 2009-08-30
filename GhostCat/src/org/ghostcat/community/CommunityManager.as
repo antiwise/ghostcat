@@ -7,7 +7,7 @@ package org.ghostcat.community
 	import org.ghostcat.util.Util;
 	
 	/**
-	 * 数据集群实现基类
+	 * 群聚实现基类
 	 * 
 	 * @author flashyiyi
 	 * 
