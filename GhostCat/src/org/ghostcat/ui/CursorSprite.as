@@ -11,8 +11,8 @@ package org.ghostcat.ui
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.display.ICursorManagerClient;
-	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.util.DisplayUtil;
 	import org.ghostcat.util.Util;
@@ -23,7 +23,7 @@ package org.ghostcat.ui
 	 * 
 	 */		
 		
-	public class CursorSprite extends GMovieClip
+	public class CursorSprite extends GBase
 	{
 		[Embed(skinClass="org.ghostcat.skin.cursor.CursorGroup")]
 		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
@@ -160,11 +160,11 @@ package org.ghostcat.ui
 			
 			if (content){
 				if (this.content is MovieClip){
-					if (this.buttonDown){
-						this.mc.nextFrame();
-					}else{
-						this.mc.prevFrame();
-					}
+					var mc:MovieClip = this.content as MovieClip;
+					if (this.buttonDown)
+						mc.nextFrame();
+					else
+						mc.prevFrame();
 				}
 			}
 			
