@@ -1,23 +1,20 @@
 package org.ghostcat.display.loader
 {
-	import flash.display.DisplayObject;
-	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
-	import flash.utils.ByteArray;
 	
-	import org.ghostcat.display.GSprite;
+	import org.ghostcat.ui.controls.GText;
 	
 	/**
-	 * 渐进式加载图片
+	 * 渐进式加载文本
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class StreamLoader extends GSprite
+	public class StreamTextLoader extends GText
 	{
 		/**
 		 * 载入完毕
@@ -26,9 +23,9 @@ package org.ghostcat.display.loader
 		
 		private var stream:URLStream;
 		
-		public function StreamLoader(request:URLRequest = null)
+		public function StreamTextLoader(request:URLRequest = null)
 		{
-			super(new Loader());
+			super();
 			
 			stream = new URLStream();
 			stream.addEventListener(ProgressEvent.PROGRESS,refreshProgress);
@@ -36,11 +33,6 @@ package org.ghostcat.display.loader
 			
 			if (request)
 				load(request);
-		}
-		
-		public override function get content():DisplayObject
-		{
-			return (content as Loader).content;
 		}
 		
 		public function load(request:URLRequest):void
@@ -56,11 +48,7 @@ package org.ghostcat.display.loader
 		
 		private function refreshProgress(event:Event):void
 		{
-			var loader:Loader = content as Loader;
-			var bytes:ByteArray;
-			stream.readBytes(bytes,0,stream.bytesAvailable);
-			bytes.position = 0;
-			loader.loadBytes(bytes);
+			text = text + stream.readUTFBytes(stream.bytesAvailable);
 		}
 		
 		private function completeHandler(event:Event):void

@@ -228,6 +228,8 @@
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.extend.JSBridge"/>
     <classEntry path="org.ghostcat.extend.IFrame"/>
+    <classEntry path="org.ghostcat.bitmap.BitmapCacher"/>
+    <classEntry path="org.ghostcat.display.loader.StreamTextLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
