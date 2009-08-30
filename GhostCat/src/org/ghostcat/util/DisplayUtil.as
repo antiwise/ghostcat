@@ -125,66 +125,6 @@ package org.ghostcat.util
 			return true;
         }
         
-        /**
-         * 将矢量图缓存为位图
-         * 
-         * @param content	容器
-         * @param rect	限定转换范围，这个范围是以content的坐标系为基准的。
-         * 
-         * 强制位图缓存一般都是用于缩放，因为FLASH复杂矢量图的缩放极其消耗资源，尤其是幅面较大的时候。
-         * 设置此参数可以将缩放范围限定为某一区域，诸如屏幕内，可以大大增强性能。
-         * 在缩小图像的时候，需要缓存屏幕之外的图形，可以用Geom.scaleRectByCenter方法将content参数扩大面积
-         * 
-         * @param precision	这个参数是缩放的时候使用的。当放大图形的时候，位图会变得模糊，将这个值设置为最大缩放比，将会以缩放到最大
-         * 时的图形精度来缓存位图，这样即使放大位图仍然可以保持图像清晰。
-         * 
-         * @return	返回生成的位图。因此，这个方法也可以顺带作为截屏方法使用。
-         */        
-        public function swapContentForBitmap(content:DisplayObjectContainer,rect:Rectangle=null,precision:Number=1.0):Bitmap
-        {
-        	if (rect==null)
-        		rect = content.getBounds(content);
-        	
-        	var tmp:Rectangle = rect.clone();
-            tmp.inflate((precision - 1) * rect.width, (precision - 1) * rect.height);
-            
-            var data:BitmapData = new BitmapData(rect.width * precision, rect.height * precision);
-            data.draw(content, new Matrix(precision, 0, 0, precision, -rect.x * precision, -rect.y * precision), 
-            		  null, null, null,true);
-           
-            var bitmap:Bitmap = new Bitmap(data);
-            bitmap.name ="contentBitmap";
-            bitmap.x = tmp.x;
-            bitmap.y = tmp.y;
-            bitmap.scaleX = bitmap.scaleY = 1 / precision;
-           
-            for (var i:int = 0 ;i< content.numChildren;i++)
-            	content.getChildAt(i).visible = false;
-            
-            content.addChild(bitmap);
-            return bitmap;
-        }
-        
-        /**
-         * 取消位图缓存
-         * 
-         * @param content	容器
-         * 
-         */        
-        public function swapBackToContent(content:DisplayObjectContainer):void
-        {
-            for (var i:int = 0 ;i< content.numChildren;i++)
-            {
-            	var child:DisplayObject = content.getChildAt(i);
-            	if (child.name!="contentBitmap" && child is Bitmap) 
-            	{
-            		content.removeChild(child);
-            		(child as Bitmap).bitmapData.dispose();
-            	}
-            	else
-            		child.visible = true;
-            }
-        }
         
 		/**
 		 * 自定义注册点缩放
