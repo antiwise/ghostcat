@@ -7,6 +7,7 @@ package org.ghostcat.display.viewport
 	
 	import org.ghostcat.algorithm.bezier.Line;
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.util.DisplayUtil;
 
 	/**
 	 * 场景墙壁类
@@ -105,8 +106,9 @@ package org.ghostcat.display.viewport
 			m.ty = sp.y - wh;
 			m.a = (ep.x - sp.x) / rect.width;
 			m.d = wh / rect.height;
-			m.b = Math.tan((ep.y - sp.y) / rect.height);
 			content.transform.matrix = m;
+			
+			DisplayUtil.chamfer(content,0,ep.y - sp.y);
 		} 
 	}
 }

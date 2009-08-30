@@ -259,8 +259,8 @@ package org.ghostcat.util
 			var rect:Rectangle = displayObj.getRect(displayObj);
 			
 			var m:Matrix = displayObj.transform.matrix.clone();
-			m.c = Math.tan(dx / rect.width);
-            m.b = Math.tan(dy / rect.height);
+			m.c = Math.tan(Math.atan2(dx,rect.height));
+            m.b = Math.tan(Math.atan2(dy,rect.width));
             displayObj.transform.matrix = m;
         }
 	}
