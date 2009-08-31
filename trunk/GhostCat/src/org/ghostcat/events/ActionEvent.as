@@ -24,7 +24,7 @@ package org.ghostcat.events
 		 */
 		public var parameters:Array;
 		
-		public function ActionEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function ActionEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}
