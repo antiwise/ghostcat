@@ -229,6 +229,8 @@
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.display.JSBright"/>
+    <classEntry path="org.ghostcat.extend.IFrame"/>
+    <classEntry path="org.ghostcat.extend.JSBridge"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
