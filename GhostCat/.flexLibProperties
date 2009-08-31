@@ -14,6 +14,7 @@
     <classEntry path="org.ghostcat.algorithm.bezier.Line"/>
     <classEntry path="org.ghostcat.algorithm.bezier.Roupe"/>
     <classEntry path="org.ghostcat.algorithm.bezier.SmoothCurve"/>
+    <classEntry path="org.ghostcat.bitmap.BitmapCacher"/>
     <classEntry path="org.ghostcat.bitmap.BitmapDataGroup"/>
     <classEntry path="org.ghostcat.bitmap.BitmapUtil"/>
     <classEntry path="org.ghostcat.bitmap.GBitmap"/>
@@ -45,6 +46,7 @@
     <classEntry path="org.ghostcat.display.graphics.SelectRect"/>
     <classEntry path="org.ghostcat.display.loader.AssetLoader"/>
     <classEntry path="org.ghostcat.display.loader.StreamLoader"/>
+    <classEntry path="org.ghostcat.display.loader.StreamTextLoader"/>
     <classEntry path="org.ghostcat.display.movieclip.CollisionMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="org.ghostcat.display.movieclip.GMovieClip"/>
@@ -226,10 +228,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.extend.JSBridge"/>
-    <classEntry path="org.ghostcat.extend.IFrame"/>
-    <classEntry path="org.ghostcat.bitmap.BitmapCacher"/>
-    <classEntry path="org.ghostcat.display.loader.StreamTextLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

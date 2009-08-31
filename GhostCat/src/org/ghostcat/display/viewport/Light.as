@@ -3,6 +3,7 @@ package org.ghostcat.display.viewport
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.display.GradientType;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	
@@ -24,18 +25,24 @@ package org.ghostcat.display.viewport
 		private var items:Array = [];
 		private var walls:Array = [];
 		
+		private var lightSprite:Shape;
 		private var maskSprite:Sprite;
 		
 		public function Light(radius:Number,color:uint=0xFFFFFF,alpha:Number=0.5)
 		{
-			this.blendMode = BlendMode.SCREEN;
+			this.lightSprite = new Shape();
+			this.lightSprite.blendMode = BlendMode.SCREEN;
+			this.addChild(lightSprite);
+		
+			this.maskSprite = new Sprite();
+			this.maskSprite.blendMode = BlendMode.ERASE;
+			this.addChild(maskSprite);
+			
+			this.blendMode = BlendMode.LAYER;
+		
 			this.radius = radius;
 			this.color = color;
 			this.alpha = alpha;
-			
-			this.maskSprite = new Sprite();
-			this.addChild(maskSprite);
-			this.mask = this.maskSprite;
 		}
 		
 		
@@ -63,12 +70,13 @@ package org.ghostcat.display.viewport
 		
 		protected function render():void
 		{
-			graphics.clear();
 			var m:Matrix = new Matrix();
 			m.createGradientBox(_radius*2,_radius*2,0,-_radius,-_radius);
-			graphics.beginGradientFill(GradientType.RADIAL,[_color,_color],[1,0],[200,255],m);
-			graphics.drawCircle(0,0,_radius);
-			graphics.endFill();
+			
+			lightSprite.graphics.clear();
+			lightSprite.graphics.beginGradientFill(GradientType.RADIAL,[_color,_color],[1,0],[200,255],m);
+			lightSprite.graphics.drawCircle(0,0,_radius);
+			lightSprite.graphics.endFill();
 		}
 		
 		public function addWall(v:Wall):void
