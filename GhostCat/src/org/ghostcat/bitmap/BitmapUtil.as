@@ -1,6 +1,7 @@
 package org.ghostcat.bitmap
 {
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -17,6 +18,22 @@ package org.ghostcat.bitmap
 	 */
 	public final class BitmapUtil
 	{
+		/**
+		 * 绘制一个位图。这个位图能确保容纳整个图像。
+		 * 
+		 * @param displayObj
+		 * @return 
+		 * 
+		 */
+		public static function drawToBitmap(displayObj:DisplayObject):BitmapData
+		{
+			var rect:Rectangle = displayObj.getBounds(displayObj);
+			var m:Matrix = new Matrix();
+			m.translate(-rect.x,-rect.y);
+			var bitmap:BitmapData = new BitmapData(rect.width,rect.height,true,0);
+			bitmap.draw(displayObj,m);
+			return bitmap;
+		}
 		/**
 		 * 切分位图为一组较小的位图
 		 * 

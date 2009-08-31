@@ -16,6 +16,7 @@ package org.ghostcat.display.loader
 	 */
 	public class StreamTextLoader extends GText
 	{
+		public var charSet:String="utf-8";
 		/**
 		 * 载入完毕
 		 */
@@ -29,7 +30,7 @@ package org.ghostcat.display.loader
 			
 			stream = new URLStream();
 			stream.addEventListener(ProgressEvent.PROGRESS,refreshProgress);
-			stream.addEventListener(Event.COMPLETE,refreshProgress);
+			stream.addEventListener(Event.COMPLETE,completeHandler);
 			
 			if (request)
 				load(request);
@@ -48,7 +49,7 @@ package org.ghostcat.display.loader
 		
 		private function refreshProgress(event:Event):void
 		{
-			text = text + stream.readUTFBytes(stream.bytesAvailable);
+			text = text + stream.readMultiByte(stream.bytesAvailable,charSet);
 		}
 		
 		private function completeHandler(event:Event):void

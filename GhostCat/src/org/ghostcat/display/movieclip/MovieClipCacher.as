@@ -105,7 +105,7 @@ package org.ghostcat.display.movieclip
 				if (offest)
 				{
 					m = new Matrix();
-					m.translate(offest.x,offest.y);
+					m.translate(-offest.x,-offest.y);
 				}
 				bitmapData.draw(mc,m);
 				result.push(bitmapData);

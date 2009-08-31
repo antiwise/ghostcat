@@ -89,6 +89,8 @@ package org.ghostcat.ui.controls
 				textField.y = pos.y;
 			}
 			addChild(textField);
+			this.text = textField.text;
+			
 			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
 		}
 		
@@ -132,11 +134,10 @@ package org.ghostcat.ui.controls
 			var str:String = v as String;
 			
 			if (str!=null && textField){
-				if (str.indexOf("<html>") != -1){
+				if (str.indexOf("<html>") != -1)
 					textField.htmlText = str;
-				}else{
+				else
 					textField.text = str;
-				}
 			}
 			
 			if (adjustSize)
