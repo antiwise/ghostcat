@@ -32,7 +32,7 @@ package org.ghostcat.display.loader
 			
 			stream = new URLStream();
 			stream.addEventListener(ProgressEvent.PROGRESS,refreshProgress);
-			stream.addEventListener(Event.COMPLETE,refreshProgress);
+			stream.addEventListener(Event.COMPLETE,completeHandler);
 			
 			if (request)
 				load(request);

@@ -6,8 +6,10 @@ package org.ghostcat.display.viewport
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	
 	import org.ghostcat.util.CallLater;
+	import org.ghostcat.util.Geom;
 
 	/**
 	 * 场景灯光类
@@ -31,7 +33,7 @@ package org.ghostcat.display.viewport
 		public function Light(radius:Number,color:uint=0xFFFFFF,alpha:Number=0.5)
 		{
 			this.lightSprite = new Shape();
-			this.lightSprite.blendMode = BlendMode.SCREEN;
+			this.lightSprite.blendMode = BlendMode.LIGHTEN;
 			this.addChild(lightSprite);
 		
 			this.maskSprite = new Sprite();
@@ -43,6 +45,8 @@ package org.ghostcat.display.viewport
 			this.radius = radius;
 			this.color = color;
 			this.alpha = alpha;
+			
+			this.mouseEnabled = this.mouseChildren = false;
 		}
 		
 		
@@ -79,6 +83,16 @@ package org.ghostcat.display.viewport
 			lightSprite.graphics.endFill();
 		}
 		
+		public function refresh():void
+		{
+			var i:int;
+			for (i = 0;i < items.length;i++)
+			{
+				var d:ShadowItem = items[i] as ShadowItem;
+				d.pointTo(Geom.localToContent(new Point(),d.item,this));
+			} 
+		}
+		
 		public function addWall(v:Wall):void
 		{
 			walls.push(v);
@@ -86,10 +100,68 @@ package org.ghostcat.display.viewport
 		
 		public function addItem(v:DisplayObject):void
 		{
-			items.push(v);
-			maskSprite.graphics.beginFill(0);
-			maskSprite.graphics.drawRect(0,0,111,111);
+			var item:ShadowItem = new ShadowItem(v,maskSprite);
+			
+			items.push(item);
+			maskSprite.addChild(item.shadow);
 		}
 
+	}
+}
+import flash.display.DisplayObject;
+import flash.display.Shape;
+import flash.display.Bitmap;
+import org.ghostcat.bitmap.BitmapUtil;
+import flash.geom.Point;
+import org.ghostcat.util.Geom;
+import flash.display.DisplayObjectContainer;
+import flash.geom.Matrix;
+import flash.display.Sprite;
+import flash.geom.Rectangle;
+
+class ShadowItem
+{
+	public var item:DisplayObject;
+	public var shadow:Sprite;
+	public var shadowBitmap:Bitmap;
+	public var parent:DisplayObjectContainer;
+	public function ShadowItem(item:DisplayObject,parent:DisplayObjectContainer):void
+	{
+		this.item = item;
+		this.parent = parent;
+		this.shadow = new Sprite();
+		this.shadowBitmap = new Bitmap();
+		this.shadow.addChild(this.shadowBitmap);
+		
+		render();
+	}
+	public function render():void
+	{
+		if (this.shadowBitmap.bitmapData)
+			this.shadowBitmap.bitmapData.dispose();
+	
+		var rect:Rectangle = item.getBounds(item);
+		this.shadowBitmap.bitmapData = BitmapUtil.drawToBitmap(item);
+		this.shadowBitmap.x = rect.x;
+		this.shadowBitmap.y = rect.y;
+		
+		updateShape();
+	}
+	public function updateShape():void
+	{
+		var p:Point = Geom.localToContent(new Point(),item,parent);
+		shadow.scaleX = item.scaleX;
+		shadow.scaleY = item.scaleY;
+		shadow.x = p.x;
+		shadow.y = p.y;
+	}
+	public function pointTo(p:Point):void
+	{
+		updateShape();
+		
+		var angle:Number = Math.atan2(p.y,p.x);
+		var len:Number = p.length;
+		shadow.rotation = angle / Math.PI * 180 + 90;
+		shadow.scaleY = len / item.height;
 	}
 }
