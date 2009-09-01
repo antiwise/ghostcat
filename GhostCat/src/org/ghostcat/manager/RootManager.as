@@ -84,16 +84,7 @@ package org.ghostcat.manager
 			root.contextMenu = menu;
 		}
 		
-		/**
-		 * 设置焦点
-		 * @param obj
-		 * 
-		 */
-		public static function setFocus(obj:InteractiveObject):void
-		{
-            stage.focus = obj;
-        } 
-        
+		       
 		/**
 		 * 读取FLASHVARS
 		 * 
