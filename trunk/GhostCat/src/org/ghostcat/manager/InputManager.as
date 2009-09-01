@@ -1,6 +1,7 @@
 ﻿package org.ghostcat.manager
 {
     import flash.display.DisplayObject;
+    import flash.display.InteractiveObject;
     import flash.display.Stage;
     import flash.events.Event;
     import flash.events.EventDispatcher;
@@ -11,8 +12,8 @@
     import flash.utils.getQualifiedClassName;
     import flash.utils.getTimer;
     
-    import org.ghostcat.util.Singleton;
     import org.ghostcat.events.InputEvent;
+    import org.ghostcat.util.Singleton;
     
     /**
      * 输入设备管理类，附加功能为：
@@ -177,6 +178,16 @@
             _stage.addEventListener(MouseEvent.MOUSE_OUT, mouseOutHandler);
             _stage.addEventListener(Event.MOUSE_LEAVE,mouseLeaveHandler);
     	}
+    	
+    	/**
+		 * 设置焦点
+		 * @param obj
+		 * 
+		 */
+		public function setFocus(obj:InteractiveObject):void
+		{
+            stage.focus = obj;
+        } 
     	
         /**
          * 判断某个键是否按下
