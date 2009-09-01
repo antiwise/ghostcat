@@ -8,7 +8,7 @@ package org.ghostcat.display.viewport
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
-	import org.ghostcat.util.CallLater;
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.util.Geom;
 
 	/**
@@ -19,7 +19,7 @@ package org.ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-	public class Light extends Sprite
+	public class Light extends GBase
 	{
 		private var _radius:Number = 0;
 		private var _color:uint = 0xFFFFFF;
@@ -27,13 +27,13 @@ package org.ghostcat.display.viewport
 		private var items:Array = [];
 		private var walls:Array = [];
 		
-		private var lightSprite:Shape;
-		private var maskSprite:Sprite;
+		public var lightSprite:Shape;
+		public var maskSprite:Sprite;
 		
 		public function Light(radius:Number,color:uint=0xFFFFFF,alpha:Number=0.5)
 		{
 			this.lightSprite = new Shape();
-			this.lightSprite.blendMode = BlendMode.LIGHTEN;
+			this.lightSprite.blendMode = BlendMode.SCREEN;
 			this.addChild(lightSprite);
 		
 			this.maskSprite = new Sprite();
@@ -58,7 +58,7 @@ package org.ghostcat.display.viewport
 		public function set color(v:uint):void
 		{
 			_color = v;
-			CallLater.callLater(render,null,true);
+			invalidateSize();
 		}
 
 		public function get radius():Number
@@ -69,21 +69,22 @@ package org.ghostcat.display.viewport
 		public function set radius(v:Number):void
 		{
 			_radius = v;
-			CallLater.callLater(render,null,true);
+			invalidateSize();
 		}
 		
-		protected function render():void
+		protected override function updateSize():void
 		{
+			super.updateSize();
 			var m:Matrix = new Matrix();
 			m.createGradientBox(_radius*2,_radius*2,0,-_radius,-_radius);
 			
 			lightSprite.graphics.clear();
-			lightSprite.graphics.beginGradientFill(GradientType.RADIAL,[_color,_color],[1,0],[200,255],m);
+			lightSprite.graphics.beginGradientFill(GradientType.RADIAL,[_color,_color],[1,0],[122,255],m);
 			lightSprite.graphics.drawCircle(0,0,_radius);
 			lightSprite.graphics.endFill();
 		}
 		
-		public function refresh():void
+		protected override function updateDisplayList() : void
 		{
 			var i:int;
 			for (i = 0;i < items.length;i++)
@@ -100,10 +101,21 @@ package org.ghostcat.display.viewport
 		
 		public function addItem(v:DisplayObject):void
 		{
-			var item:ShadowItem = new ShadowItem(v,maskSprite);
+			var item:ShadowItem = new ShadowItem(v,this);
 			
 			items.push(item);
 			maskSprite.addChild(item.shadow);
+		}
+		
+		public override function destory() : void
+		{
+			super.destory();
+			
+			for (var i:int = 0;i<items.length;i++)
+			{
+				var item:ShadowItem = items[i] as ShadowItem;
+				item.destory();
+			}
 		}
 
 	}
@@ -118,14 +130,17 @@ import flash.display.DisplayObjectContainer;
 import flash.geom.Matrix;
 import flash.display.Sprite;
 import flash.geom.Rectangle;
+import org.ghostcat.display.viewport.Light;
+import flash.filters.BlurFilter;
+import org.ghostcat.events.GEvent;
 
 class ShadowItem
 {
 	public var item:DisplayObject;
 	public var shadow:Sprite;
 	public var shadowBitmap:Bitmap;
-	public var parent:DisplayObjectContainer;
-	public function ShadowItem(item:DisplayObject,parent:DisplayObjectContainer):void
+	public var parent:Light;
+	public function ShadowItem(item:DisplayObject,parent:Light):void
 	{
 		this.item = item;
 		this.parent = parent;
@@ -133,6 +148,13 @@ class ShadowItem
 		this.shadowBitmap = new Bitmap();
 		this.shadow.addChild(this.shadowBitmap);
 		
+		render();
+		
+		item.addEventListener(GEvent.UPDATE_COMPLETE,renderHandler);
+		
+	}
+	private function renderHandler(event:GEvent):void
+	{
 		render();
 	}
 	public function render():void
@@ -163,5 +185,20 @@ class ShadowItem
 		var len:Number = p.length;
 		shadow.rotation = angle / Math.PI * 180 + 90;
 		shadow.scaleY = len / item.height;
+		shadow.alpha = 1 - len / parent.radius;
+		shadow.filters = [new BlurFilter(shadow.alpha*10,shadow.alpha*10)]
+	}
+	
+	public function destory():void
+	{
+		if (shadowBitmap)
+		{
+			shadowBitmap.parent.removeChild(shadowBitmap);
+			shadowBitmap.bitmapData.dispose();
+			shadowBitmap = null;
+		}
+		parent.maskSprite.removeChild(this.shadow);
+		
+		item.removeEventListener(GEvent.UPDATE_COMPLETE,renderHandler);
 	}
 }

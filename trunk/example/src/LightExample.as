@@ -1,41 +1,60 @@
 package 
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.display.viewport.Light;
 	import org.ghostcat.display.viewport.Wall;
 	import org.ghostcat.events.MoveEvent;
+	import org.ghostcat.manager.DragManager;
+	import org.ghostcat.skin.cursor.CursorDrag;
 	import org.ghostcat.ui.CursorSprite;
+	import org.ghostcat.util.Util;
 	
-	[SWF(width="500",height="400",backgroundColor="0x0")]
+	[SWF(width="500",height="400")]
 	public class LightExample extends Sprite
 	{
 		public var w:Wall;
+		public var l:Light;
+		public var l2:Light;
+		public var l3:Light;
+		public var r:GBase;
 		public function LightExample()
 		{
-			var p1:DragPoint = new DragPoint(new Point(0,100));
-			var p2:DragPoint = new DragPoint(new Point(100,0));
+			var p1:DragPoint = new DragPoint(new Point(100,200));
+			var p2:DragPoint = new DragPoint(new Point(200,100));
 			p1.addEventListener(MoveEvent.MOVE,moveHanlder);
 			p2.addEventListener(MoveEvent.MOVE,moveHanlder);
-			w = new Wall(new TestRepeater(),p1.point,p2.point,50);
+			w = new Wall(new TestRepeater(),p1.point,p2.point,100);
 			addChild(w);
 			addChild(p1);
 			addChild(p2);
 			
-			var r:Sprite = new TestRepeater45();
-			r.scaleX = r.scaleY = 0.2;
-			r.x = 200;
-			r.y = 100;
-			addChild(r);
-			
-			var l:Light = new Light(250);
-			l.x = 300;
-			l.y = 120;
+			l = Util.createObject(new Light(250),{refreshInterval:33,x:300,y:120,color:0xFF0000});
 			addChild(l);
+			l2 = Util.createObject(new Light(250),{refreshInterval:33,x:120,y:300,color:0x00FF00});
+			addChild(l2);
+			l3 = Util.createObject(new Light(250),{refreshInterval:33,x:420,y:300,color:0x0000FF});
+			l3.color = 0x0000FF;
+			addChild(l3);
+			
+			r = Util.createObject(new GBase(new TestHuman()),{cursor:CursorDrag,x:250,y:150});
+			addChild(r);
+			r.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			
 			l.addItem(r);
-			l.addWall(w);
+			l2.addItem(r);
+			l3.addItem(r);
+			
+			stage.addChild(new CursorSprite())
+		}
+		
+		private function mouseDownHandler(event:MouseEvent):void
+		{
+			DragManager.startDrag(r);
 		}
 		private function moveHanlder(event:MoveEvent):void
 		{
