@@ -55,8 +55,8 @@
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="org.ghostcat.display.viewport.Collision"/>
     <classEntry path="org.ghostcat.display.viewport.CollisionSprite"/>
-    <classEntry path="org.ghostcat.display.viewport.GRepeater"/>
-    <classEntry path="org.ghostcat.display.viewport.GRepeater45"/>
+    <classEntry path="org.ghostcat.display.viewport.Tile"/>
+    <classEntry path="org.ghostcat.display.viewport.Tile45"/>
     <classEntry path="org.ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="org.ghostcat.display.viewport.Light"/>
     <classEntry path="org.ghostcat.display.viewport.Wall"/>

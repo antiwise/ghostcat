@@ -17,11 +17,11 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/framework.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_flashflexkit.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/framework_textLayout.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/rpc.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/datavisualization.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_charts.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/datavisualization.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex4.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
@@ -32,26 +32,26 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="LightExample.as"/>
-    <application path="ControlRectExample.as"/>
-    <application path="LangageExample.as"/>
-    <application path="SWFDecoderExample2.as"/>
-    <application path="EditSpriteExample.as"/>
-    <application path="Repeater45Example.as"/>
+    <application path="Tile45Example.as"/>
+    <application path="RightClickExample.as"/>
+    <application path="TrapeziumExample.as"/>
+    <application path="PackageExample.as"/>
     <application path="Paper3DExample.as"/>
+    <application path="TestExample.as"/>
+    <application path="ControlRectExample.as"/>
+    <application path="LightExample.as"/>
+    <application path="TileExample.as"/>
     <application path="IFrameExample.as"/>
     <application path="SkewExample.as"/>
-    <application path="TrapeziumExample.as"/>
-    <application path="SWFDecoderExample.as"/>
-    <application path="SmoothCurveExample.as"/>
     <application path="IMEExample.as"/>
-    <application path="RightClickExample.as"/>
-    <application path="PackageExample.as"/>
+    <application path="SWFDecoderExample.as"/>
+    <application path="EditSpriteExample.as"/>
     <application path="TweenExample.as"/>
-    <application path="TestExample.as"/>
+    <application path="SmoothCurveExample.as"/>
+    <application path="LangageExample.as"/>
+    <application path="SWFDecoderExample2.as"/>
     <application path="BindingExample.as"/>
     <application path="CollisionExample.as"/>
-    <application path="RepeaterExample.as"/>
     <application path="AStarExample.as"/>
   </applications>
   <modules/>

@@ -11,7 +11,7 @@ package org.ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GRepeater45 extends GRepeater
+	public class Tile45 extends Tile
 	{
 		private var tranSourceTo45:Boolean = false;
 		private var wh:Number;//方块长宽比
@@ -21,7 +21,7 @@ package org.ghostcat.display.viewport
 		 * @param tranSourceTo45	是否将源图像由矩形转换成菱形
 		 * 
 		 */
-		public function GRepeater45(base:*,tranSourceTo45:Boolean = false)
+		public function Tile45(base:*,tranSourceTo45:Boolean = false)
 		{
 			this.tranSourceTo45 = tranSourceTo45;
 			super(base);
