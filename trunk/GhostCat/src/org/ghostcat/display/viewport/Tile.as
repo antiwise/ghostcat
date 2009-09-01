@@ -26,7 +26,7 @@ package org.ghostcat.display.viewport
 	 * 同时，它也是List实现的基础
 	 * 
 	 */		
-	public class GRepeater extends GBase
+	public class Tile extends GBase
 	{
 		protected const LEFT:int = 0;
 		protected const RIGHT:int = 1;
@@ -94,7 +94,7 @@ package org.ghostcat.display.viewport
 			return rect.height;
 		}
 		
-		public function GRepeater(base:*)
+		public function Tile(base:*)
 		{
 			super(null);
 			_rect = new Rectangle();
