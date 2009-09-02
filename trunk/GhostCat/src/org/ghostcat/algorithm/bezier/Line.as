@@ -12,8 +12,8 @@ package org.ghostcat.algorithm.bezier
 		private var _end : Point;
 		public function Line(start : Point, end : Point) 
 		{
-			start = start;
-			end = end;
+			this.start = start;
+			this.end = end;
 		}
 		/**
 		 * 终点
@@ -190,8 +190,8 @@ package org.ghostcat.algorithm.bezier
 			solve.x = -(c1 * b2 - c2 * b1) / determinant;
 			solve.y = -(a1 * c2 - a2 * c1) / determinant;
 			
-			const time : Number = b1 ? (start.x - solve.x) / b1 : (solve.y - start.y) / a1;
-			const targetTime : Number = b2 ? (targetLine.start.x - solve.x) / b2 : (solve.y - targetLine.start.y) / a2;
+			const time : Number = (b1 > 0) ? (start.x - solve.x) / b1 : (solve.y - start.y) / a1;
+			const targetTime : Number = (b2 > 0) ? (targetLine.start.x - solve.x) / b2 : (solve.y - targetLine.start.y) / a2;
 			
 			if (time < 0 || time > 1 || targetTime < 0 || targetTime > 1)
 				return null;				
