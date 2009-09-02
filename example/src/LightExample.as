@@ -1,5 +1,6 @@
 package 
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -43,18 +44,22 @@ package
 			
 			r = Util.createObject(new GBase(new TestHuman()),{cursor:CursorDrag,x:250,y:150});
 			addChild(r);
-			r.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
 			l.addItem(r);
 			l2.addItem(r);
 			l3.addItem(r);
+			l.addWall(w);
+			l2.addWall(w);
+			l3.addWall(w);
+			
+			r.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
 			stage.addChild(new CursorSprite())
 		}
 		
 		private function mouseDownHandler(event:MouseEvent):void
 		{
-			DragManager.startDrag(r);
+			DragManager.startDrag(event.currentTarget as DisplayObject);
 		}
 		private function moveHanlder(event:MoveEvent):void
 		{
