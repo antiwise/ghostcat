@@ -59,6 +59,10 @@ SWFDecoder
 
 功能虽远不如SWFAssert，但也能实现不少需求了。由于制作它的目的主要是为了编写自己的GhostCatTool，TAG并不多。大家可以参照swf_file_format_spec_v9.pdf来编写自己需要的TAG，随便找个写好的TAG看看应该就知道怎么做了。
 
+IME
+
+FLASH的内部拼音输入法，需要加载词库
+
 tranfer
 
 这个包主要用于处理一些需要转换成位图再实现的东西。比如缩略图，倒影，梯形变换。
