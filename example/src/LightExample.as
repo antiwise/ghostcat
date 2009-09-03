@@ -21,7 +21,6 @@ package
 		public var w:Wall;
 		public var l:Light;
 		public var l2:Light;
-		public var l3:Light;
 		public var r:GBase;
 		public function LightExample()
 		{
@@ -36,21 +35,16 @@ package
 			
 			l = Util.createObject(new Light(250),{refreshInterval:33,x:300,y:120,color:0xFF0000});
 			addChild(l);
-			l2 = Util.createObject(new Light(250),{refreshInterval:33,x:120,y:300,color:0x00FF00});
+			l2 = Util.createObject(new Light(250),{refreshInterval:33,x:420,y:300,color:0x0000FF});
 			addChild(l2);
-			l3 = Util.createObject(new Light(250),{refreshInterval:33,x:420,y:300,color:0x0000FF});
-			l3.color = 0x0000FF;
-			addChild(l3);
 			
 			r = Util.createObject(new GBase(new TestHuman()),{cursor:CursorDrag,x:250,y:150});
 			addChild(r);
 			
 			l.addItem(r);
 			l2.addItem(r);
-			l3.addItem(r);
 			l.addWall(w);
 			l2.addWall(w);
-			l3.addWall(w);
 			
 			r.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
