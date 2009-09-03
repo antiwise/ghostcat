@@ -17,17 +17,25 @@ package org.ghostcat.operation
 		{
 			group = [];
 			for (var i:int = 0; i<parms.length; i++)
-				add(parms[i]);
+				commitChild(parms[i] as Oper);
 		}
 		
-		public function add(oper:Oper):void
+		/**
+		 * 推入队列
+		 * 
+		 */			
+		public function commitChild(obj:Oper):void
 		{
-			group.push(oper);
+			group.push(obj);
 		}
 		
-		public function remove(oper:Oper):void
+		/**
+		 * 移出队列
+		 * 
+		 */
+		public function haltChild(obj:Oper):void
 		{
-			Util.remove(group,oper);
+			Util.remove(group,obj);
 			if (group.length==0)
 				result();
 		}
@@ -58,11 +66,10 @@ package org.ghostcat.operation
 		{
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
-			remove(oper);
+			haltChild(oper);
+			
 			if (group.length==0)
-			{
 				result();
-			}
 		}
 
 	}

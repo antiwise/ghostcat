@@ -58,15 +58,15 @@ package org.ghostcat.quest
 		
 		public function get finish():Boolean
 		{
-			return queue && queue.queue.length == 0;
+			return queue && queue.data.length == 0;
 		}
 		
 		public function start():void
 		{
 			queue = new Queue();
-			queue.addEventListener(OperationEvent.QUEUE_EMPTY,queueEmptyHandler);
+			queue.addEventListener(OperationEvent.OPERATION_COMPLETE,queueEmptyHandler);
 			for (var i:int = step; i< opers.length;i++)
-				queue.commit(opers[i] as Oper);
+				queue.commitChild(opers[i] as Oper);
 		}
 		
 		private function queueEmptyHandler(event:OperationEvent):void
