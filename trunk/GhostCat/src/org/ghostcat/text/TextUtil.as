@@ -258,6 +258,25 @@ package org.ghostcat.text
 			}
 			return htmlText.substr(startIndex,i);
 		}
+		
+		/**
+		 * 插入换行符使得字体可以竖排
+		 *  
+		 * @param str
+		 * @return 
+		 * 
+		 */
+		public static function vertical(str:String):String
+		{
+			var result:String = "";
+			for (var i:int = 0;i < str.length;i++)
+			{
+				result += str.charAt(i);
+				if (i < str.length - 1)
+					result += "\r";
+			}
+			return result;
+		}
         
 	}
 }
