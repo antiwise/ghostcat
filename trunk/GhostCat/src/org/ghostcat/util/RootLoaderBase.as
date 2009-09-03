@@ -26,40 +26,32 @@ package org.ghostcat.util
 	{
 		public function RootLoaderBase()
 		{	
-			this.stop();
+			this.gotoAndStop(1);
 			
-			root.loaderInfo.addEventListener(Event.INIT, rootInitHandler);
-			root.loaderInfo.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+			root.loaderInfo.addEventListener(Event.INIT, initHandler);
 		}
 		
-		private function rootInitHandler(event:Event):void
+		private function initHandler(event:Event):void
 		{
 			dispatchEvent(event);
 			
-			root.loaderInfo.removeEventListener(Event.INIT, rootInitHandler);
+			root.loaderInfo.removeEventListener(Event.INIT, initHandler);
 			
-			this.addEventListener(Event.ENTER_FRAME,frameEnterHandler);
+			root.loaderInfo.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+			root.loaderInfo.addEventListener(Event.COMPLETE, completeHandler);
 		}
 		
 		
-		private function frameEnterHandler(event:Event = null):void
+		private function completeHandler(event:Event):void
 		{
-			if(this.currentFrame == 2)
-			{
-				this.removeEventListener(Event.ENTER_FRAME,this.frameEnterHandler);
-				root.loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progressHandler);
-		
-				dispatchEvent(new Event(Event.COMPLETE));
-				
-				loadComplete();
-			}
-			else
-			{
-				if (currentFrame < this.framesLoaded)
-				{
-					this.nextFrame();
-				}
-			}
+			this.gotoAndStop(2);
+			
+			root.loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progressHandler);
+			root.loaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
+			
+			dispatchEvent(event);
+			
+			loadComplete();
 		}
 		
 		private function progressHandler(event:ProgressEvent):void
