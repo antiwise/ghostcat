@@ -4,7 +4,7 @@ package org.ghostcat.manager
 	import flash.events.EventDispatcher;
 	
 	import org.ghostcat.util.Singleton;
-	import org.ghostcat.events.TextFieldEvent;
+	import org.ghostcat.events.GTextEvent;
 	import org.ghostcat.operation.LoadOper;
 	import org.ghostcat.text.TextUtil;
 	import org.ghostcat.util.ReflectUtil;
@@ -82,14 +82,14 @@ package org.ghostcat.manager
 		 */		
 		public function register(target:EventDispatcher):void
 		{
-			target.addEventListener(TextFieldEvent.TEXT_CHANGE,replaceTextField);
+			target.addEventListener(GTextEvent.TEXT_CHANGE,replaceTextField);
 		}
 		
-		private function replaceTextField(event:TextFieldEvent):void
+		private function replaceTextField(event:GTextEvent):void
 		{
-			var text:String = event.textField.text;
+			var text:String = event.gText.text;
 			if (text.charAt(0)=="@")
-				event.textField.text = getString(text);
+				event.gText.text = getString(text);
 		}
 		
 		/**

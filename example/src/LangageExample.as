@@ -44,9 +44,10 @@ package
 			//自动替换参数
 			var t4:GText = new GText();
 			addChild(t4);
+			t4.adjustSize = true;
 			t4.y = 78;
+			t4.vertical = true;
 			t4.text = "@ui.sex";
-			t4.adjustTextSize();//自动替换是不会更新文本框大小的
 		}
 	}
 }

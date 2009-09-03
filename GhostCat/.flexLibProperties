@@ -71,7 +71,7 @@
     <classEntry path="org.ghostcat.events.RepeatEvent"/>
     <classEntry path="org.ghostcat.events.ResizeEvent"/>
     <classEntry path="org.ghostcat.events.SelectEvent"/>
-    <classEntry path="org.ghostcat.events.TextFieldEvent"/>
+    <classEntry path="org.ghostcat.events.GTextEvent"/>
     <classEntry path="org.ghostcat.events.TickEvent"/>
     <classEntry path="org.ghostcat.events.TimeLineEvent"/>
     <classEntry path="org.ghostcat.events.TweenEvent"/>

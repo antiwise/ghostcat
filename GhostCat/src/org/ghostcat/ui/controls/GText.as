@@ -8,14 +8,18 @@ package org.ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
-	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.events.TextFieldEvent;
+	import org.ghostcat.events.GTextEvent;
 	import org.ghostcat.parse.display.TextFieldParse;
+	import org.ghostcat.text.ANSI;
 	import org.ghostcat.text.TextFieldUtil;
+	import org.ghostcat.text.TextUtil;
+	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.SearchUtil;
 	import org.ghostcat.util.Util;
+	
+	[Event(name="text_change",type="org.ghostcat.events.GTextEvent")]
 	
 	/**
 	 * 显示文字用
@@ -42,6 +46,33 @@ package org.ghostcat.ui.controls
 		 */
 		public var regExp:RegExp;
 		
+		/**
+		 * 文字是否竖排
+		 */		
+		public var vertical:Boolean = false;
+		
+		/**
+		 * ANSI的最大输入限制字数（中文算两个字）
+		 */
+		public var ansiMaxChars:int;
+		
+		/**
+		 * 最大输入限制字数
+		 *  
+		 * @return 
+		 * 
+		 */
+		public function get maxChars():int
+		{
+			return textField ? textField.maxChars : 0;
+		}
+
+		public function set maxChars(v:int):void
+		{
+			if (textField)
+				textField.maxChars = v;
+		}
+
 		private var _bitmap:Bitmap;//用于缓存的Bitmap
 		
 		private var _asBitmap:Boolean = false;
@@ -133,6 +164,11 @@ package org.ghostcat.ui.controls
 			
 			var str:String = v as String;
 			
+			super.data = str;
+		
+			if (this.vertical)
+				str = TextUtil.vertical(str);
+			
 			if (str!=null && textField){
 				if (str.indexOf("<html>") != -1)
 					textField.htmlText = str;
@@ -146,9 +182,7 @@ package org.ghostcat.ui.controls
 			if (asBitmap)
 				reRenderBitmap();
 			
-			dispatchEvent(Util.createObject(new TextFieldEvent(TextFieldEvent.TEXT_CHANGE),{textField:textField}))
-			
-			super.data = str;
+			dispatchEvent(Util.createObject(new GTextEvent(GTextEvent.TEXT_CHANGE),{gText:this}))
 		}
 		
 		/**
@@ -194,7 +228,10 @@ package org.ghostcat.ui.controls
 		
 		protected function textInputHandler(event:TextEvent):void
 		{
-			if (regExp && !regExp.test(textField.text))
+			if (regExp && !regExp.test(textField.text + event.text))
+				event.preventDefault();
+			
+			if (ansiMaxChars && ANSI.getLength(textField.text + event.text) > ansiMaxChars)
 				event.preventDefault();
 		}
 		
@@ -204,6 +241,12 @@ package org.ghostcat.ui.controls
 			
 			if (_bitmap)
 				_bitmap.bitmapData.dispose();
+				
+			if (textField)
+			{
+				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
+				removeChild(textField);
+			}
 		}
 		
 	}
