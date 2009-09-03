@@ -9,7 +9,9 @@ package org.ghostcat.operation
 	[Event(name="operation_error",type="org.ghostcat.events.OperationEvent")]
 	
 	/**
-	 * 队列成员
+	 * 队列基类
+	 * 
+	 * 队列可使用Queue（顺序加载）或者GroupOper（并发加载）启动。加载队列本身同时也是一个加载器。
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -72,13 +74,17 @@ package org.ghostcat.operation
 			if (!queue)
 				queue = Queue.defaultQueue;
 			
-			queue.commit(this);
+			queue.commitChild(this);
 		}
 		
+		/**
+		 * 中断队列 
+		 * 
+		 */
 		public function halt():void
 		{
 			if (queue)
-				queue.halt(this);
+				queue.haltChild(this);
 		}
 	}
 }

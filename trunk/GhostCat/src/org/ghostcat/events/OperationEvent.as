@@ -11,11 +11,6 @@ package org.ghostcat.events
 	public class OperationEvent extends Event
 	{
 		/**
-		 * 队列为空时发布
-		 */		
-		public static const QUEUE_EMPTY:String = "queue_empty";
-		
-		/**
 		 * 开始
 		 */		
 		public static const OPERATION_START:String = "operation_start";
