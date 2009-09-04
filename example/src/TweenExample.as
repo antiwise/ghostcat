@@ -36,10 +36,7 @@ package
 			
 			//利用Operation机制实现的顺序以及循环Tween
 			(Util.createObject(DelayOper,{timeout:2000}) as DelayOper).commit();
-			new RepeatOper([
-				new TweenOper(f,1000,{blurX:20,blurY:20}),
-				new TweenOper(f,1000,{blurX:0,blurY:0})
-			]).commit();
+			new RepeatOper([new TweenOper(f,1000,{blurX:20,blurY:20}),new TweenOper(f,1000,{blurX:0,blurY:0})]).commit();
 			
 		}
 	}

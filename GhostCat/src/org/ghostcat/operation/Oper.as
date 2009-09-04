@@ -3,10 +3,14 @@ package org.ghostcat.operation
 	import flash.events.EventDispatcher;
 	
 	import org.ghostcat.events.OperationEvent;
+	import org.ghostcat.util.Util;
 	
 	[Event(name="operation_start",type="org.ghostcat.events.OperationEvent")]
 	[Event(name="operation_complete",type="org.ghostcat.events.OperationEvent")]
 	[Event(name="operation_error",type="org.ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_start",type="org.ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_complete",type="org.ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_error",type="org.ghostcat.events.OperationEvent")]
 	
 	/**
 	 * 队列基类
@@ -39,7 +43,10 @@ package org.ghostcat.operation
 		 */		
 		public function execute():void
 		{
-			dispatchEvent(new OperationEvent(OperationEvent.OPERATION_START));
+			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_START),{oper:this}));
+			if (queue) 
+				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_START),{oper:queue,childOper:this}));
+			
 			step = RUN;
 		}
 		
@@ -49,7 +56,10 @@ package org.ghostcat.operation
 		 */		
 		public function result(event:*=null):void
 		{
-			dispatchEvent(new OperationEvent(OperationEvent.OPERATION_COMPLETE));
+			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_COMPLETE),{oper:this}));
+			if (queue) 
+				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE),{oper:queue,childOper:this}));
+			
 			step = END;
 		}
 		
@@ -59,7 +69,10 @@ package org.ghostcat.operation
 		 */		
 		public function fault(event:*=null):void
 		{
-			dispatchEvent(new OperationEvent(OperationEvent.OPERATION_ERROR));
+			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_ERROR),{oper:this}));
+			if (queue) 
+				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR),{oper:queue,childOper:this}));
+			
 			step = END;
 		}
 		

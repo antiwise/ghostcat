@@ -20,10 +20,10 @@ package org.ghostcat.operation
 	public class LoadTextOper extends LoadOper
 	{
 		/**
-		 * 是否载入经过压缩的数据（压缩的数据可使用tool的DatEdit这个AIR程序打开及编辑），压缩文本数据可以使得体积大大减少。
+		 * 是否载入经过压缩的数据（压缩的数据可使用GhostCatTool打开及编辑），压缩文本数据可以使得体积大大减少。
 		 * 这并不是为了加密（傻子才会被这种小伎俩骗到）
 		 * 
-		 * 其实大可以一直设为true，未压缩的数据并不会被再次解压而是跳过。
+		 * 也可以一直设为true，未压缩的数据并不会被再次解压而是跳过。
 		 */
 		public var compress:Boolean;
 		

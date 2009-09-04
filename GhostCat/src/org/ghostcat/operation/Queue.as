@@ -4,7 +4,7 @@ package org.ghostcat.operation
 	
 	import org.ghostcat.debug.Debug;
 	import org.ghostcat.events.OperationEvent;
-
+	
 	/**
 	 * 队列系统
 	 * 
