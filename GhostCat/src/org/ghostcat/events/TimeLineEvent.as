@@ -44,5 +44,15 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:TimeLineEvent = new TimeLineEvent(type,bubbles,cancelable);
+			evt.prevLabel = this.prevLabel;
+			evt.label = this.label;
+			evt.prevFrame = this.prevFrame;
+			evt.frame = this.frame;
+			return evt;
+		}
 	}
 }

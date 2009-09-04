@@ -21,5 +21,13 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:MoveEvent = new MoveEvent(type,bubbles,cancelable);
+			evt.oldPosition = this.oldPosition;
+			evt.newPosition = this.newPosition;
+			return evt;
+		}
 	}
 }

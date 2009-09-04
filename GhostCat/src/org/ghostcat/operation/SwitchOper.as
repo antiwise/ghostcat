@@ -15,7 +15,7 @@ package org.ghostcat.operation
 		 */
 		public var cHandler:Function;
 		/**
-		 * 分支列表，元素为数组，第一项为值，第二项为需要执行的Oper
+		 * 分支列表，元素为二维数组，第一项为值，第二项为需要执行的Oper
 		 */
 		public var list:Array;
 		/**

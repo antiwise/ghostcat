@@ -5,7 +5,7 @@ package org.ghostcat.events
 	import org.ghostcat.util.TweenUtil;
 	
 	/**
-	 * 缓动类时间 
+	 * 缓动类事件 
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -19,6 +19,12 @@ package org.ghostcat.events
 		public function TweenEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
+		}
+		
+		public override function clone() : Event
+		{
+			var evt:TweenEvent = new TweenEvent(type,bubbles,cancelable);
+			return evt;
 		}
 	}
 }

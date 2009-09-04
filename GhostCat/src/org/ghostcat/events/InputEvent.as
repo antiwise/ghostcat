@@ -1,5 +1,7 @@
 ﻿package org.ghostcat.events
 {
+	import flash.display.InteractiveObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	/**
@@ -40,9 +42,19 @@
 		 */
 		public var multi:int;
 		
-		public function InputEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false, localX:Number = NaN, localY:Number = NaN)
+		public function InputEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false, localX:Number = NaN, localY:Number = NaN,
+			relatedObject:InteractiveObject = null, ctrlKey:Boolean = false, altKey:Boolean = false, shiftKey:Boolean = false, buttonDown:Boolean = false, delta:int = 0)
 		{
-			super(type, bubbles, cancelable, localX, localY);
+			super(type, bubbles, cancelable, localX, localY, relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta);
+		}
+		
+		public override function clone() :Event
+		{
+			var evt:InputEvent = new InputEvent(type,bubbles,cancelable,localX,localY,relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta);
+			evt.keyCode = this.keyCode;
+			evt.mousePath = this.mousePath;
+			evt.multi = this.multi;
+			return evt;
 		}
 	}
 }

@@ -28,5 +28,13 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:ActionEvent = new ActionEvent(type,bubbles,cancelable);
+			evt.action = this.action;
+			evt.parameters = this.parameters;
+			return evt;
+		}
 	}
 }

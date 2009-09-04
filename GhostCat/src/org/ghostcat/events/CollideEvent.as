@@ -27,5 +27,13 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:CollideEvent = new CollideEvent(type,bubbles,cancelable);
+			evt.vergePosition = this.vergePosition;
+			evt.hitObject = this.hitObject;
+			return evt;
+		}
 	}
 }

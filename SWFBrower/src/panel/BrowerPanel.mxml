@@ -48,8 +48,8 @@
 	</panel:states>
 	
 	<mx:SWFLoader id="swfLoader" width="100%" height="100%" visible="false"/>
-	<mx:TileList id="directory" width="100%" height="100%" visible="false" doubleClickEnabled="true"
+	<mx:TileList id="directory" width="100%" height="100%" visible="false"
 		rowHeight="100" columnWidth="100"
 		itemRenderer="mx.controls.Image"
-		itemDoubleClick="directory_itemDoubleClickHandler(event)"/>
+		itemClick="directory_itemDoubleClickHandler(event)"/>
 </panel:PanelBase>

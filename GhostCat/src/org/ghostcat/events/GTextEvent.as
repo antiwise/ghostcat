@@ -23,5 +23,12 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:GTextEvent = new GTextEvent(type,bubbles,cancelable);
+			evt.gText = this.gText;
+			return evt;
+		}
 	}
 }

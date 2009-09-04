@@ -31,5 +31,12 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:TickEvent = new TickEvent(type,bubbles,cancelable);
+			evt.interval = this.interval;
+			return evt;
+		}
 	}
 }
