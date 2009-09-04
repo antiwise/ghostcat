@@ -17,32 +17,40 @@ package org.ghostcat.util
 		 * @param fun	每个循环节执行的方法
 		 * @param fromValue	起始值
 		 * @param toValue	结束值
+		 * @param repeat	每次执行循环次数
 		 * @param completeHandler	完成后方法
 		 * @return 
 		 * 
 		 */
-		public static function asynFor(fun:Function,fromValue:int,toValue:int,completeHandler:Function=null):Timer
+		public static function asynFor(fun:Function,fromValue:int,toValue:int,repeat:int = 1,completeHandler:Function=null):Timer
 		{
 			var timer:Timer = new Timer(0,int.MAX_VALUE);
 			timer.addEventListener(TimerEvent.TIMER,asynHandler);
-			return timer;
 			
 			var i:int = fromValue;
+			timer.start();
+			return timer;
+			
 			
 			function asynHandler(event:TimerEvent):void
 			{
-				if (i < toValue)
+				for (var j:int = 0;j < repeat;j++)
 				{
-					fun(i);
-					i++;
-				}
-				else
-				{
-					timer.removeEventListener(TimerEvent.TIMER,asynHandler);
-					timer.stop();
-					
-					if (completeHandler != null) 
-						completeHandler();
+					if (i < toValue)
+					{
+						fun(i);
+						i++;
+					}
+					else
+					{
+						timer.removeEventListener(TimerEvent.TIMER,asynHandler);
+						timer.stop();
+						
+						if (completeHandler != null) 
+							completeHandler();
+						
+						break;
+					}
 				}
 			}
 		}
@@ -52,27 +60,34 @@ package org.ghostcat.util
 		 * 
 		 * @param fun	每个循环节执行的方法
 		 * @param endFun	此函数返回false时结束循环
+		 * @param repeat	每次执行循环次数
 		 * @param completeHandler	完成后方法
 		 * @return 
 		 * 
 		 */
-		public static function asynWhile(fun:Function,endFun:Function,completeHandler:Function=null):Timer
+		public static function asynWhile(fun:Function,endFun:Function,repeat:int = 1,completeHandler:Function=null):Timer
 		{
 			var timer:Timer = new Timer(0,int.MAX_VALUE);
 			timer.addEventListener(TimerEvent.TIMER,asynHandler);
+			timer.start();
 			return timer;
 			
 			function asynHandler(event:TimerEvent):void
 			{
-				if (!endFun())
-					fun()
-				else
+				for (var j:int = 0;j < repeat;j++)
 				{
-					timer.removeEventListener(TimerEvent.TIMER,asynHandler);
-					timer.stop();
-					
-					if (completeHandler != null) 
-						completeHandler();
+					if (!endFun())
+						fun()
+					else
+					{
+						timer.removeEventListener(TimerEvent.TIMER,asynHandler);
+						timer.stop();
+						
+						if (completeHandler != null) 
+							completeHandler();
+						
+						break;
+					}
 				}
 			}
 		}

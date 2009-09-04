@@ -7,6 +7,7 @@ package
 	import org.ghostcat.parse.graphics.GraphicsLineStyle;
 	import org.ghostcat.parse.graphics.GraphicsPath;
 	import org.ghostcat.ui.CursorSprite;
+	import org.ghostcat.util.Asyn;
 	
 	[SWF(width="400",height="400")]
 	public class EditSpriteExample extends Sprite
