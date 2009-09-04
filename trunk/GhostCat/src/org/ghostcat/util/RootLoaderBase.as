@@ -69,7 +69,7 @@ package org.ghostcat.util
 			var urlArr:Array = name.split(/\/+|\\+|\.|\?/ig);
         	name = decodeURI(urlArr[urlArr.length - 2]);
 			
-			stage.addChild(new (getDefinitionByName(name) as Class));
+			stage.addChildAt(new (getDefinitionByName(name) as Class),0);
 			stage.removeChild(this);
 		}
 	}
