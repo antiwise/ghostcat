@@ -36,12 +36,20 @@ package org.ghostcat.util
 		 * 此类用于计算载入进度相关数据
 		 * 
 		 */
-		public function LoadHelper(dispatcher:EventDispatcher)
+		public function LoadHelper(loader:EventDispatcher):void
 		{
-			if (dispatcher is Loader)
-				loadInfo = (dispatcher as Loader).contentLoaderInfo;
+			if (loader)
+				this.loader = loader;
+		}
+		
+		public function set loader(v:EventDispatcher):void
+		{
+			removeEvents();
+			
+			if (v is Loader)
+				loadInfo = (v as Loader).contentLoaderInfo;
 			else
-				loadInfo = dispatcher;
+				loadInfo = v;
 		
 			loadInfo.addEventListener(Event.OPEN,openHandler);
 			loadInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
@@ -167,10 +175,13 @@ package org.ghostcat.util
 		
 		private function removeEvents():void
 		{
-			loadInfo.removeEventListener(Event.OPEN,openHandler);
-			loadInfo.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
-			loadInfo.removeEventListener(Event.COMPLETE,completeHandler);
-			loadInfo.removeEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+			if (loadInfo)
+			{
+				loadInfo.removeEventListener(Event.OPEN,openHandler);
+				loadInfo.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
+				loadInfo.removeEventListener(Event.COMPLETE,completeHandler);
+				loadInfo.removeEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+			}
 		}
 		
 		public function destory():void
