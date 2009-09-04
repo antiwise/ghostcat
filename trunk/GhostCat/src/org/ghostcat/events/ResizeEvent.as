@@ -29,5 +29,13 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:ResizeEvent = new ResizeEvent(type,bubbles,cancelable);
+			evt.oldSize = this.oldSize;
+			evt.size = this.size;
+			return evt;
+		}
 	}
 }

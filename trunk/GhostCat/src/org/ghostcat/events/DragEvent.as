@@ -45,5 +45,12 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:DragEvent = new DragEvent(type,bubbles,cancelable);
+			evt.dragObj = this.dragObj;
+			return evt;
+		}
 	}
 }

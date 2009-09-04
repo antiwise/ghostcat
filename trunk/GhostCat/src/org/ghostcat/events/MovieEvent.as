@@ -34,5 +34,12 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:MovieEvent = new MovieEvent(type,bubbles,cancelable);
+			evt.labelName = this.labelName;
+			return evt;
+		}
 	}
 }

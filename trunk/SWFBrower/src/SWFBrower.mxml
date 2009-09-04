@@ -39,7 +39,9 @@
 	<mx:HDividedBox creationPolicy="queued" width="100%" height="100%">
 		<mx:FileSystemTree id="fileTree" width="250" height="100%" selectedPath="D:\" 
 			filterFunction="swfFilterFunction" 
-			change="fileTree_changeHandler(event)"/>
+			change="fileTree_changeHandler(event)"
+			itemClick="fileTree_changeHandler(event)"
+			/>
 		
 		<mx:TabNavigator id="tabNav" width="100%" height="100%" paddingTop="0" historyManagementEnabled="false"
 			change="tabNav_changeHandler(event)">

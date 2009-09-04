@@ -24,5 +24,12 @@ package org.ghostcat.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		public override function clone() : Event
+		{
+			var evt:SelectEvent = new SelectEvent(type,bubbles,cancelable);
+			evt.rect = this.rect;
+			return evt;
+		}
 	}
 }

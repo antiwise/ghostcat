@@ -32,5 +32,13 @@ package org.ghostcat.events
 			super(type, bubbles, cancelable);
 		}
 		
+		public override function clone() : Event
+		{
+			var evt:RepeatEvent = new RepeatEvent(type,bubbles,cancelable);
+			evt.repeatObj = this.repeatObj;
+			evt.repeatPos = this.repeatPos;
+			return evt;
+		}
+		
 	}
 }
