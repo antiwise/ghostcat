@@ -143,6 +143,8 @@ import flash.display.Graphics;
 import org.ghostcat.algorithm.bezier.Line;
 import flash.display.BitmapData;
 import flash.display.BlendMode;
+import org.ghostcat.util.ColorUtil;
+import flash.geom.ColorTransform;
 
 class ShadowItem
 {
@@ -195,6 +197,9 @@ class ShadowItem
 		var p:Point = Geom.localToContent(new Point(),this.item,light);
 		var angle:Number = Math.atan2(p.y,p.x);
 		var len:Number = p.length;
+		
+//		if (len <= light.radius)
+//			this.item.transform.colorTransform = ColorUtil.getColorTransform2(light.color,1 - len / light.radius);
 		
 		var rect:Rectangle = item.getBounds(item);
 		var m:Matrix = new Matrix();

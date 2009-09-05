@@ -74,7 +74,7 @@ package org.ghostcat.util
 		
 		/**
 		 * 从一个24位颜色值创建对应的ColorTransform对象，方法为过滤
-		 * 注意，此对象并不包含alpha
+		 * 注意，此对象会重置alpha
 		 * 
 		 * @param rgb	颜色值
 		 */
@@ -89,16 +89,17 @@ package org.ghostcat.util
 		
 		/**
 		 * 从一个24位颜色值创建对应的ColorTransform对象，方法为附加
-		 * 注意，此对象并不包含alpha
+		 * 注意，此对象会重置alpha
 		 * 
 		 * @param rgb	颜色值
+		 * @param alpha	附加颜色的透明度
 		 */
-		public static function getColorTransform2(rgb:uint):ColorTransform
+		public static function getColorTransform2(rgb:uint,alpha:Number = 1.0):ColorTransform
 		{
-			var r:Number = (rgb >> 16) & 0xFF;
-			var g:Number = (rgb >> 8) & 0xFF;
-			var b:Number = rgb & 0xFF;
-				
+			var r:Number = (rgb >> 16) & 0xFF * alpha;
+			var g:Number = (rgb >> 8) & 0xFF * alpha;
+			var b:Number = rgb & 0xFF * alpha;
+			
 			return new ColorTransform(1.0,1.0,1.0,1.0,r,g,b);
 		}
 

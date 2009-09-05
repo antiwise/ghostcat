@@ -4,9 +4,11 @@ package
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	import org.ghostcat.bitmap.effect.ResidualScreen;
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.transfer.Skew;
 	import org.ghostcat.ui.CursorSprite;
+	import org.ghostcat.util.Util;
 	
 	[SWF(width="300",height="300")]
 	public class SkewExample extends Sprite
@@ -21,6 +23,8 @@ package
 			f = new Skew(new TestCollision(),10,10);
 			addChild(f);
 			
+			addChild(Util.createObject(new ResidualScreen(300,300),{refreshInterval:30,fadeSpeed:0.9,blurSpeed:12,offest:new Point(0,-4),items:[f]}));
+			
 			addChild(p1);
 			addChild(p2);
 			addChild(p3);
@@ -31,6 +35,8 @@ package
 			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 			
 			stage.addChild(new CursorSprite());
+			
+			
 		}
 		
 		private function enterFrameHandler(event:Event):void

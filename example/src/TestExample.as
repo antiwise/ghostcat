@@ -2,7 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.skin.cursor.ScrollUpButton;
+	import org.ghostcat.skin.HScrollThumbSkin;
 	import org.ghostcat.ui.controls.GButton;
 	
 	[SWF(width="400",height="400")]
@@ -10,7 +10,7 @@ package
 	{
 		public function TestExample()
 		{
-			addChild(new GButton(new ScrollUpButton()))
+			addChild(new GButton(new HScrollThumbSkin()))
 		}
 	}
 }
