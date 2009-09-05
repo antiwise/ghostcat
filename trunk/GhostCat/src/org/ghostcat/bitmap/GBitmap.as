@@ -112,7 +112,27 @@ package org.ghostcat.bitmap
 			CallLater.callLater(updateDisplayList,null,true);
 		}
 		
-		public function updateSize():void
+		/**
+		 * 更新大小并发事件 
+		 * 
+		 */
+		public function vaildSize():void
+		{
+			updateSize();
+			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
+		}
+		
+		/**
+		 * 更新显示并发事件 
+		 * 
+		 */
+		public function vaildDisplayList():void
+		{
+			updateDisplayList();
+			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
+		}
+		
+		protected function updateSize():void
 		{
 			if (enabledScale)
 			{
@@ -129,16 +149,15 @@ package org.ghostcat.bitmap
 				}
 				bitmapData = newBitmapData;
 			}
-			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
 		}
 		
 		/**
 		 * 更新显示 
 		 * 
 		 */
-		public function updateDisplayList(): void
+		protected function updateDisplayList(): void
 		{
-			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE))
+			
 		}
 		
 		private var _refreshInterval:int = 0;
@@ -216,6 +235,9 @@ package org.ghostcat.bitmap
 		{
 			if (parent)
 				parent.removeChild(this);
+			
+			if (bitmapData)
+				bitmapData.dispose();
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);

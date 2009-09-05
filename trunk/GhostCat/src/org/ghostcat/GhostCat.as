@@ -20,10 +20,10 @@
  */	
 package org.ghostcat
 {
-	import org.ghostcat.skin.cursor.ScrollUpButton;
+	import org.ghostcat.skin.HScrollThumbSkin;
 
 	public class GhostCat
 	{
-		ScrollUpButton
+		HScrollThumbSkin
 	}
 }
