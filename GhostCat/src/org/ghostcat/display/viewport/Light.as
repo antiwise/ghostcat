@@ -24,8 +24,8 @@ package org.ghostcat.display.viewport
 		private var _radius:Number = 0;
 		private var _color:uint = 0xFFFFFF;
 		
-		private var items:Array = [];
-		private var walls:Array = [];
+		public var items:Array = [];
+		public var walls:Array = [];
 		
 		public var lightSprite:Shape;
 		public var maskSprite:Sprite;
@@ -141,21 +141,34 @@ import org.ghostcat.display.viewport.Wall;
 import org.ghostcat.parse.graphics.GraphicsPath;
 import flash.display.Graphics;
 import org.ghostcat.algorithm.bezier.Line;
+import flash.display.BitmapData;
+import flash.display.BlendMode;
 
 class ShadowItem
 {
 	public var item:DisplayObject;
-	public var shadow:Sprite;
-	public var shadowBitmap:Bitmap;
-	public var parent:Light;
-	public function ShadowItem(item:DisplayObject,parent:Light):void
+	public var light:Light;
+	
+	public var shadow:Bitmap;
+	private var shadowMask:Shape;
+	
+	public var shadow2:Bitmap;
+	private var shadowMask2:Shape;
+	
+	public function ShadowItem(item:DisplayObject,light:Light):void
 	{
 		this.item = item;
-		this.parent = parent;
-		this.shadow = new Sprite();
-		this.shadowBitmap = new Bitmap();
-		this.shadow.addChild(this.shadowBitmap);
-		this.parent.maskSprite.addChild(this.shadow);
+		this.light = light;
+		
+		this.shadow =  new Bitmap();
+		this.shadowMask = new Shape();
+		this.light.maskSprite.addChild(this.shadow);
+		this.light.maskSprite.addChild(this.shadowMask);
+		
+		this.shadow2 = new Bitmap(shadow.bitmapData);
+		this.shadowMask2 = new Shape();
+		this.light.maskSprite.addChild(this.shadow2);
+		this.light.maskSprite.addChild(this.shadowMask2)
 		
 		render();
 		
@@ -168,46 +181,139 @@ class ShadowItem
 	}
 	public function render():void
 	{
-		if (this.shadowBitmap.bitmapData)
-			this.shadowBitmap.bitmapData.dispose();
-	
-		var rect:Rectangle = item.getBounds(item);
-		this.shadowBitmap.bitmapData = BitmapUtil.drawToBitmap(item);
-		this.shadowBitmap.x = rect.x;
-		this.shadowBitmap.y = rect.y;
+		if (this.shadow.bitmapData)
+		{
+			this.shadow.bitmapData.dispose();
+			this.shadow2.bitmapData.dispose();
+		}
 		
-		updateShape();
-	}
-	public function updateShape():void
-	{
-		var p:Point = Geom.localToContent(new Point(),item,parent);
-		shadow.scaleX = item.scaleX;
-		shadow.scaleY = item.scaleY;
-		shadow.x = p.x;
-		shadow.y = p.y;
+		this.shadow.bitmapData = this.shadow2.bitmapData = BitmapUtil.drawToBitmap(item);
+		this.shadow2.visible = this.shadowMask2.visible = false;
 	}
 	public function pointTo():void
 	{
-		updateShape();
-		
-		var p:Point = Geom.localToContent(new Point(),this.item,parent);
+		var p:Point = Geom.localToContent(new Point(),this.item,light);
 		var angle:Number = Math.atan2(p.y,p.x);
 		var len:Number = p.length;
-		shadow.rotation = angle / Math.PI * 180 + 90;
-		shadow.scaleY = len / item.height;
-		shadow.alpha = 1 - len / parent.radius;
+		
+		var rect:Rectangle = item.getBounds(item);
+		var m:Matrix = new Matrix();
+		m.translate(rect.x,rect.y);
+		m.scale(item.scaleX,item.scaleY * len / item.height);
+		m.rotate(angle + Math.PI/2);
+		m.translate(p.x,p.y);
+		shadow.transform.matrix = m;
+		shadow.alpha = 1 - len / light.radius;
 		shadow.filters = [new BlurFilter(shadow.alpha*10,shadow.alpha*10)]
+		
+		var shadowLine:Line = new Line(p,p.add(p));
+		for each (var wall:WallShadowItem in light.walls)
+		{
+			//将坐标换算成基于光的坐标
+			var p1:Point = Geom.localToContent(wall.item.startPoint,wall.item.parent,light);
+			var p2:Point = Geom.localToContent(wall.item.endPoint,wall.item.parent,light);
+			
+			var pi:Point = shadowLine.intersectionLine(new Line(p1,p2))
+			if (pi && pi.length <= light.radius)
+			{
+				updateMaskShape(p1,p2,wall.item.wallHeight);
+				this.shadow.mask = this.shadowMask;
+				
+				m = new Matrix();
+				m.translate(rect.x,rect.y);
+				m.scale(item.scaleX,item.scaleY);
+				m.translate(pi.x,pi.y + Point.distance(pi,p) / len * item.height);
+				shadow2.transform.matrix = m;
+				shadow2.alpha = 1 - len / light.radius;
+				shadow2.filters = [new BlurFilter(shadow.alpha*10,shadow.alpha*10)]
+						
+				this.shadow2.mask = this.shadowMask2;
+				this.shadow2.visible = this.shadowMask2.visible = true;
+				return;
+			}
+			else
+			{
+				var p1h:Point = p1.clone();
+				p1h.y -= wall.item.wallHeight; 
+				var p2h:Point = p2.clone();
+				p2h.y -= wall.item.wallHeight;
+				
+				pi = shadowLine.intersectionLine(new Line(p1,p1h));
+				if (pi && pi.length <= light.radius)
+				{
+					updateMaskShape(p1,p2,wall.item.wallHeight);
+					this.shadow.mask = this.shadowMask;
+					this.shadow2.visible = this.shadowMask2.visible = false;
+					return;
+				}
+				else
+				{
+					pi = shadowLine.intersectionLine(new Line(p2,p2h));
+					if (pi && pi.length <= light.radius)
+					{
+						updateMaskShape(p1,p2,wall.item.wallHeight);
+						this.shadow.mask = this.shadowMask;
+						this.shadow2.visible = this.shadowMask2.visible = false;
+						return;
+					}
+				}
+			}
+		}
+		
+		this.shadowMask.graphics.clear();
+		this.shadowMask2.graphics.clear();
+		this.shadow.mask = null;
+		this.shadow2.mask = null;
+		this.shadow2.visible = this.shadowMask2.visible = false;
 	}
 	
+	private function updateMaskShape(p1:Point,p2:Point,wallHeight:Number):void
+	{
+		if (p1.x < p2.x)
+		{
+			var t:Point = p1;
+			p1 = p2;
+			p2 = t;
+		}
+		shadowMask.graphics.clear();
+		shadowMask.graphics.beginFill(0);
+		shadowMask.graphics.moveTo(light.radius,-light.radius);
+		shadowMask.graphics.lineTo(p1.x,-light.radius);
+		shadowMask.graphics.lineTo(p1.x,p1.y);
+		shadowMask.graphics.lineTo(p2.x,p2.y);
+		shadowMask.graphics.lineTo(p2.x,p2.y - wallHeight);
+		shadowMask.graphics.lineTo(p1.x,p1.y - wallHeight);
+		shadowMask.graphics.lineTo(p1.x,-light.radius);
+		shadowMask.graphics.lineTo(p2.x,-light.radius);
+		shadowMask.graphics.lineTo(-light.radius,-light.radius);
+		shadowMask.graphics.lineTo(-light.radius,light.radius);
+		shadowMask.graphics.lineTo(light.radius,light.radius);
+		shadowMask.graphics.endFill();
+		
+		shadowMask2.graphics.clear();
+		shadowMask2.graphics.beginFill(0);
+		shadowMask2.graphics.moveTo(p1.x,p1.y);
+		shadowMask2.graphics.lineTo(p1.x,p1.y - wallHeight);
+		shadowMask2.graphics.lineTo(p2.x,p2.y - wallHeight);
+		shadowMask2.graphics.lineTo(p2.x,p2.y);
+		shadowMask2.graphics.endFill();
+	}
+		
 	public function destory():void
 	{
-		if (shadowBitmap)
+		if (shadow)
 		{
-			shadowBitmap.parent.removeChild(shadowBitmap);
-			shadowBitmap.bitmapData.dispose();
-			shadowBitmap = null;
+			shadow.parent.removeChild(shadow);
+			shadow2.parent.removeChild(shadow2);
+			shadow.bitmapData.dispose();
+			shadow2.bitmapData.dispose();
+			shadow = null;
+			shadow2 = null;
 		}
-		parent.maskSprite.removeChild(this.shadow);
+		light.maskSprite.removeChild(this.shadow);
+		light.maskSprite.removeChild(this.shadowMask);
+		light.maskSprite.removeChild(this.shadow2);
+		light.maskSprite.removeChild(this.shadowMask2);
 		
 		item.removeEventListener(GEvent.UPDATE_COMPLETE,renderHandler);
 	}
@@ -217,29 +323,30 @@ class WallShadowItem
 {
 	public var item:Wall;
 	public var shadow:Shape;
-	public var parent:Light;
-	public function WallShadowItem(item:Wall,parent:Light):void
+	public var light:Light;
+	public function WallShadowItem(item:Wall,light:Light):void
 	{
 		this.item = item;
-		this.parent = parent;
+		this.light = light;
 		this.shadow = new Shape();
-		this.parent.maskSprite.addChild(this.shadow);
+		this.light.maskSprite.addChild(this.shadow);
 	}
 	public function pointTo():void
 	{
 		shadow.graphics.clear();
 		shadow.graphics.beginFill(0);
-		var p1:Point = Geom.localToContent(item.startPoint,this.item.parent,parent);
-		var p2:Point = Geom.localToContent(item.endPoint,this.item.parent,parent);
+		//将坐标换算成基于光球的坐标
+		var p1:Point = Geom.localToContent(item.startPoint,this.item.parent,light);
+		var p2:Point = Geom.localToContent(item.endPoint,this.item.parent,light);
 		
 		var p1h:Point = p1.clone();
 		p1h.y -= item.wallHeight;
 		var p2h:Point = p2.clone();
 		p2h.y -= item.wallHeight;
 		var p1o:Point = p1.clone();
-		p1o.normalize(parent.radius);
+		p1o.normalize(light.radius);
 		var p2o:Point = p2.clone();
-		p2o.normalize(parent.radius);
+		p2o.normalize(light.radius);
 		var p1d:Point = p1.clone();
 		p1d.normalize(int.MAX_VALUE);
 		var p2d:Point = p2.clone();
@@ -247,7 +354,7 @@ class WallShadowItem
 		
 		var r1:Number = Math.atan2(p1.y,p1.x);
 		var r2:Number = Math.atan2(p2.y,p2.x)
-		var l:Number = parent.radius / Math.cos((r1 - r2)/2);
+		var l:Number = light.radius / Math.cos((r1 - r2)/2);
 		var pr:Point = Point.polar(l,(r1+r2)/2);
 		
 		var pi:Point;
@@ -282,6 +389,6 @@ class WallShadowItem
 	
 	public function destory():void
 	{
-		parent.maskSprite.removeChild(this.shadow);
+		light.maskSprite.removeChild(this.shadow);
 	}
 }

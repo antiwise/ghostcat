@@ -55,15 +55,16 @@
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="org.ghostcat.display.viewport.Collision"/>
     <classEntry path="org.ghostcat.display.viewport.CollisionSprite"/>
-    <classEntry path="org.ghostcat.display.viewport.Tile"/>
-    <classEntry path="org.ghostcat.display.viewport.Tile45"/>
     <classEntry path="org.ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="org.ghostcat.display.viewport.Light"/>
+    <classEntry path="org.ghostcat.display.viewport.Tile"/>
+    <classEntry path="org.ghostcat.display.viewport.Tile45"/>
     <classEntry path="org.ghostcat.display.viewport.Wall"/>
     <classEntry path="org.ghostcat.events.ActionEvent"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
     <classEntry path="org.ghostcat.events.DragEvent"/>
     <classEntry path="org.ghostcat.events.GEvent"/>
+    <classEntry path="org.ghostcat.events.GTextEvent"/>
     <classEntry path="org.ghostcat.events.InputEvent"/>
     <classEntry path="org.ghostcat.events.MoveEvent"/>
     <classEntry path="org.ghostcat.events.MovieEvent"/>
@@ -71,10 +72,11 @@
     <classEntry path="org.ghostcat.events.RepeatEvent"/>
     <classEntry path="org.ghostcat.events.ResizeEvent"/>
     <classEntry path="org.ghostcat.events.SelectEvent"/>
-    <classEntry path="org.ghostcat.events.GTextEvent"/>
     <classEntry path="org.ghostcat.events.TickEvent"/>
     <classEntry path="org.ghostcat.events.TimeLineEvent"/>
     <classEntry path="org.ghostcat.events.TweenEvent"/>
+    <classEntry path="org.ghostcat.extend.IFrame"/>
+    <classEntry path="org.ghostcat.extend.JSBridge"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFDecoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.GIFEncoder"/>
     <classEntry path="org.ghostcat.fileformat.gif.LZWEncoder"/>
@@ -189,6 +191,7 @@
     <classEntry path="org.ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="org.ghostcat.ui.controls.GText"/>
     <classEntry path="org.ghostcat.util.ArrayUtil"/>
+    <classEntry path="org.ghostcat.util.Asyn"/>
     <classEntry path="org.ghostcat.util.BitArray"/>
     <classEntry path="org.ghostcat.util.BitUtil"/>
     <classEntry path="org.ghostcat.util.ByteArrayReader"/>
@@ -228,9 +231,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.extend.IFrame"/>
-    <classEntry path="org.ghostcat.extend.JSBridge"/>
-    <classEntry path="org.ghostcat.util.Asyn"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
