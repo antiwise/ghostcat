@@ -6,14 +6,12 @@ package org.ghostcat.display.movieclip
 	import flash.media.SoundTransform;
 	import flash.utils.Dictionary;
 	
-	import org.ghostcat.events.MoveEvent;
+	import org.ghostcat.display.GBase;
 	import org.ghostcat.events.MovieEvent;
 	import org.ghostcat.events.TickEvent;
 	import org.ghostcat.util.Handler;
 	import org.ghostcat.util.Tick;
 	import org.ghostcat.util.Util;
-	
-	import org.ghostcat.display.GBase;
 
 	[Event(name="movie_start",type="org.gameui.events.MovieEvent")]
 	
@@ -101,7 +99,7 @@ package org.ghostcat.display.movieclip
 		public function GMovieClipBase(skin:DisplayObject=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			super(skin, replace);
-			this.content
+			
 			this.paused = paused;
 		}
 		
@@ -141,6 +139,18 @@ package org.ghostcat.display.movieclip
         	}
         	return -1;
         }
+        
+        /**
+         * 是否存在某个标签
+         * 
+         * @param labelName
+         * @return 
+         * 
+         */
+        public function hasLabel(labelName:String):Boolean
+        {
+        	return getLabelIndex(labelName) != -1;
+        }
 		
 		/**
 		 * 设置当前动画 
@@ -151,6 +161,7 @@ package org.ghostcat.display.movieclip
 		 		
 		public function setLabel(labelName:String, repeat:int=-1):void
         {
+        	trace(labelName);
         	nextLabels = [];
         	
             var index:int = getLabelIndex(labelName);
@@ -160,10 +171,23 @@ package org.ghostcat.display.movieclip
 				currentFrame  = labels[index].frame;
 				curLabelIndex = index;
 				
-				dispatchEvent(Util.createObject(new MoveEvent(MovieEvent.MOVIE_START),{labelName:curLabelName}))
+				dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_START),{labelName:curLabelName}))
 				
 				if (GMovieClipBase.labelHandlers[labelName])
 					(GMovieClipBase.labelHandlers[labelName] as Handler).call();
+        	}
+        	else
+        	{
+        		dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_ERROR),{labelName:labelName}));
+//				if (nextLabels.length > 0)
+//				{
+//					setLabel(nextLabels[0][0], nextLabels[0][1]);
+//					nextLabels.splice(0, 1);
+//				}
+//				else 
+//				{
+//					dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_EMPTY),{labelName:curLabelName}));
+//				}
         	}
         }
         
@@ -206,7 +230,7 @@ package org.ghostcat.display.movieclip
 					
 					if (numLoops == 0)
 					{
-						dispatchEvent(Util.createObject(new MoveEvent(MovieEvent.MOVIE_END),{labelName:curLabelName}));
+						dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_END),{labelName:curLabelName}));
 						if (nextLabels.length > 0)
 						{
 							setLabel(nextLabels[0][0], nextLabels[0][1]);
@@ -214,7 +238,7 @@ package org.ghostcat.display.movieclip
 						}
 						else 
 						{
-							dispatchEvent(Util.createObject(new MoveEvent(MovieEvent.MOVIE_EMPTY),{labelName:curLabelName}));
+							dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_EMPTY),{labelName:curLabelName}));
 						}
 					}
 					else 
@@ -257,7 +281,7 @@ package org.ghostcat.display.movieclip
         }
         
         /**
-		 * 所有标签
+		 * 所有标签，类型为FrameLabel
 		 * @return 
 		 * 
 		 */

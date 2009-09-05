@@ -12,6 +12,10 @@ package org.ghostcat.ui.controls
 	
 	/**
 	 * 按钮
+	 * 
+	 * 标签规则：up,over,down,disabled,selectedUp,selectedOver,selectedDown,selectedDisabled是按钮的八个状态，
+	 * 状态间的过滤为两个标签中间加-，末尾加:start。比如up和over的过滤即为up-over:start
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
@@ -211,8 +215,13 @@ package org.ghostcat.ui.controls
 			if (content)
 			{
 				var trans:String = curLabelName+"-"+next+":start";
-				setLabel(curLabelName+"-"+next+":start");
-				queueLabel(next);
+				if (hasLabel(trans))
+				{
+					setLabel(curLabelName+"-"+next+":start",1);
+					queueLabel(next,-1);
+				}
+				else
+					setLabel(next,-1);
 			}
 		}
 		

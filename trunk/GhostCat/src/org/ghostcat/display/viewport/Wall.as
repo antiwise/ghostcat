@@ -1,6 +1,7 @@
 package org.ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

@@ -26,6 +26,11 @@ package org.ghostcat.events
 		public static const MOVIE_EMPTY:String="label_empty";
 		
 		/**
+		 * 动画错误 
+		 */		
+		public static const MOVIE_ERROR:String="label_error";
+		
+		/**
 		 * 动画名称 
 		 */		
 		public var labelName:String;

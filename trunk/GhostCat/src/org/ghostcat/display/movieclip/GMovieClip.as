@@ -52,7 +52,7 @@ package org.ghostcat.display.movieclip
 				mc.stop();
 				clearQueue();
 				if (labels)
-					setLabel(labels[0],-1);
+					setLabel(labels[0].name,-1);
 			}
 		}
 		
