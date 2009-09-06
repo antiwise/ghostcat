@@ -24,12 +24,12 @@ package org.ghostcat.ui.controls
 		 */
 		public var showNeedTime:Boolean = true;
 		
-		public function GProgressBar(skin:DisplayObject=null, replace:Boolean=true, mode:int=0, mcField:String="thumb", labelField:String="labelTextField")
+		public function GProgressBar(skin:DisplayObject=null, replace:Boolean=true, mode:int=0, fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
 			
-			super(skin, replace, mode, mcField, labelField);
+			super(skin, replace, mode, fields);
 		}
 		
 		private var _target:EventDispatcher;
