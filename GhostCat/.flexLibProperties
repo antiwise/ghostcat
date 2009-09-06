@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
   <includeClasses>
-    <classEntry path="org.ghostcat.GhostCat"/>
     <classEntry path="org.ghostcat.algorithm.BinaryHeap"/>
     <classEntry path="org.ghostcat.algorithm.Point3D"/>
     <classEntry path="org.ghostcat.algorithm.astar.AStar"/>
@@ -233,6 +232,12 @@
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.bitmap.effect.ResidualScreen"/>
     <classEntry path="org.ghostcat.bitmap.effect.FireScreen"/>
+    <classEntry path="org.ghostcat.Framework"/>
+    <classEntry path="org.ghostcat.ui.controls.GScrollBar"/>
+    <classEntry path="org.ghostcat.ui.controls.GVScrollBar"/>
+    <classEntry path="org.ghostcat.ui.controls.GHScrollBar"/>
+    <classEntry path="org.ghostcat.ui.controls.GCheckBox"/>
+    <classEntry path="org.ghostcat.ui.controls.GRadioButton"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
