@@ -52,6 +52,7 @@ package org.ghostcat.bitmap
 		public override function set bitmapData(value:BitmapData) : void
 		{
 			super.bitmapData = value;
+			
 			_width = bitmapData.width;
 			_height = bitmapData.height;
 		}

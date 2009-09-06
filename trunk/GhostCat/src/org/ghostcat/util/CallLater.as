@@ -71,7 +71,7 @@ package org.ghostcat.util
 				setTimeout(waitToCallLater,0,h,uniqueOn);
 			}
 			else
-				setTimeout(h.toFunction(),0);
+				setTimeout(h.call,0);
 		}
 		
 		/**

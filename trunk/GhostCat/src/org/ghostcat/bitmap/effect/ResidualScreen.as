@@ -7,8 +7,8 @@ package org.ghostcat.bitmap.effect
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	
-	import org.ghostcat.util.Util;
 	import org.ghostcat.bitmap.GBitmap;
+	import org.ghostcat.util.Util;
 
 	/**
 	 * 位图实现的残影效果
@@ -18,15 +18,8 @@ package org.ghostcat.bitmap.effect
 	 */
 	public class ResidualScreen extends GBitmap
 	{
-		/**
-		 * 渐隐速度（每次减少的透明度比例）
-		 */
-		public var fadeSpeed:Number;
-		
-		/**
-		 * 模糊速度
-		 */
-		public var blurSpeed:Number;
+		protected var fadeFilter:ColorMatrixFilter;
+		protected var blurFilter:BlurFilter;
 		
 		/**
 		 * 位移速度 
@@ -43,6 +36,35 @@ package org.ghostcat.bitmap.effect
 		 */
 		public var items:Array = [];
 		
+		/**
+		 * 模糊速度
+		 */
+		public function get blurSpeed():Number
+		{
+			return blurFilter.blurX;
+		}
+
+		public function set blurSpeed(v:Number):void
+		{
+			blurFilter = new BlurFilter(v,v);
+		}
+
+		/**
+		 * 渐隐速度（每次减少的透明度比例）
+		 */
+		public function get fadeSpeed():Number
+		{
+			return fadeFilter.matrix[18];
+		}
+
+		public function set fadeSpeed(v:Number):void
+		{
+			fadeFilter = new ColorMatrixFilter([1,0,0,0,0,
+										0,1,0,0,0,
+										0,0,1,0,0,
+										0,0,0,v,0]);
+		}
+
 		public function ResidualScreen(width:Number,height:Number):void
 		{
 			super(new BitmapData(width,height,true,0));
@@ -70,18 +92,11 @@ package org.ghostcat.bitmap.effect
 		
 		protected override function updateDisplayList() : void
 		{
-			super.updateDisplayList();
+			if (fadeFilter)
+				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),fadeFilter);
 			
-			if (fadeSpeed)
-				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),
-				new ColorMatrixFilter([1,0,0,0,0,
-										0,1,0,0,0,
-										0,0,1,0,0,
-										0,0,0,fadeSpeed,0]
-				));
-			
-			if (blurSpeed)
-				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),new BlurFilter(blurSpeed,blurSpeed));
+			if (blurFilter)
+				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),blurFilter);
 		
 			if (offest)
 				bitmapData.scroll(offest.x,offest.y);
@@ -93,9 +108,17 @@ package org.ghostcat.bitmap.effect
 			}
 			
 			for each (var obj:DisplayObject in items)
-			{
-				bitmapData.draw(obj,obj.transform.matrix);
-			}
+				drawItem(obj);
+		}
+		
+		/**
+		 * 绘制物品
+		 * @param obj
+		 * 
+		 */
+		protected function drawItem(obj:DisplayObject):void
+		{
+			bitmapData.draw(obj,obj.transform.matrix);
 		} 
 	}
 }

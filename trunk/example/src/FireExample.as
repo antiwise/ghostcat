@@ -9,7 +9,7 @@ package
 	import org.ghostcat.skin.cursor.CursorDrag;
 	import org.ghostcat.ui.CursorSprite;
 	
-	[SWF(width="300",height="300")]
+	[SWF(width="150",height="150")]
 	public class FireExample extends Sprite
 	{
 		public var p:GBase;
@@ -17,12 +17,12 @@ package
 		{
 			p = new GBase(new TestHuman());
 			p.cursor = CursorDrag;
-			p.x = 150;
-			p.y = 100
+			p.x = 70;
+			p.y = 140
 			addChild(p);
 			p.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
-			var f:FireScreen = new FireScreen(300,300);
+			var f:FireScreen = new FireScreen(150,150);
 			f.addItem(p);
 			addChildAt(f,0);
 			
