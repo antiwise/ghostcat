@@ -1,5 +1,9 @@
 package org.ghostcat.util
 {
+	import flash.display.BitmapData;
+	import flash.display.GradientType;
+	import flash.display.Shape;
+	import flash.geom.Matrix;
 	import flash.geom.ColorTransform;
 	
 	/**
@@ -220,6 +224,36 @@ package org.ghostcat.util
 			return ((r1 * r2 / 255) << 16) |
 				   ((g1 * g2 / 255) << 8) |
 				    (b1 * b2 / 255);
-		} 
+		}
+		
+		/**
+		 * 获得调色板数组
+		 * 
+		 * @param colors
+		 * @param alphas
+		 * @param rations
+		 * @return 
+		 * 
+		 */
+		public static function getPaletteArray(colors:Array,alphas:Array,rations:Array):Array
+		{
+			var m:Matrix = new Matrix();
+			m.createGradientBox(256,1);
+			
+			var s:Shape = new Shape();
+			s.graphics.beginGradientFill(GradientType.LINEAR,colors,alphas,rations,m);
+			s.graphics.drawRect(0,0,256,1);
+			s.graphics.endFill();
+			
+			var bitmap:BitmapData = new BitmapData(256,1);
+			bitmap.draw(s);
+			
+			var result:Array = [];
+			for (var i:int = 0;i < 256;i++)
+				result.push(bitmap.getPixel(i,0));
+			
+			bitmap.dispose();
+			return result;
+		}
 	}
 }
