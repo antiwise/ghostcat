@@ -5,6 +5,7 @@ package org.ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	
 	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.events.ActionEvent;
@@ -50,6 +51,11 @@ package org.ghostcat.ui.controls
 		private var _mouseOver:Boolean = false;
 		
 		/**
+		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 */
+		public var textPos:Point;
+		
+		/**
 		 * 执行的指令名称
 		 */		
 		public var action:String;
@@ -85,8 +91,11 @@ package org.ghostcat.ui.controls
 		private var labelField:GText;
 		
 		
-		public function GButton(skin:MovieClip, replace:Boolean=true, paused:Boolean=false)
+		public function GButton(skin:MovieClip, replace:Boolean=true, paused:Boolean=false,textPos:Point=null)
 		{
+			if (textPos)
+				this.textPos = textPos;
+			
 			super(skin, replace, paused);
 		}
 		
@@ -118,7 +127,7 @@ package org.ghostcat.ui.controls
 			if (labelField)
 				labelField.destory();
 			
-			labelField = new GText(content,false);
+			labelField = new GText(content,false,false,textPos);
 			labelField.text = _label;
 			addChild(labelField)
 		}

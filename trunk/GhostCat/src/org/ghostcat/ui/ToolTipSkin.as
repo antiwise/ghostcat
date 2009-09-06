@@ -22,7 +22,7 @@ package org.ghostcat.ui
 				skin = defaultSkin.newInstance();
 			super(skin);
 		
-			this.adjustSize = true;
+			this.enabledAdjustContextSize = true;
 		}
 		
 		public function positionTo(target:DisplayObject):void

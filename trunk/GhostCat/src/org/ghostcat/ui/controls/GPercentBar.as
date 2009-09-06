@@ -39,6 +39,12 @@
 		 * 取值模式
 		 */
 		public var mode:int = 0;
+		
+		/**
+		 * 内部元素名称
+		 */
+		public var fields:Object = {mcField:"thumb",labelField:"labelTextField"};
+		
 		/**
 		 * 
 		 * @param skin
@@ -48,13 +54,26 @@
 		 * @param labelField	标签实例名
 		 * 
 		 */
-		public function GPercentBar(skin:DisplayObject,replace:Boolean = true,mode:int = 0,mcField:String = "thumb",labelField:String = "labelTextField")
+		public function GPercentBar(skin:DisplayObject,replace:Boolean = true,mode:int = 0,fields:Object = null)
 		{
-			super(skin,replace);
+			if (fields)
+				this.fields = fields;
 			this.mode = mode;
+		
+			super(skin,replace);
+			
+		}
+		
+		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		{
+			super.setContent(skin,replace);
+			
+			var mcField:String = this.fields.mcField;
+			var labelField:String = this.fields.labelField;
+			
 			if (content.hasOwnProperty(mcField))
 				this.thumb = content[mcField];
-			
+				
 			if (content.hasOwnProperty(labelField))
 				this.labelTextField = content[labelField];
 		}

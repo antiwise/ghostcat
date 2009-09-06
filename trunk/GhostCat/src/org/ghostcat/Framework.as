@@ -20,10 +20,8 @@
  */	
 package org.ghostcat
 {
-	import org.ghostcat.skin.HScrollThumbSkin;
-
-	public class GhostCat
+	import org.ghostcat.skin.HScrollBarSkin;HScrollBarSkin;
+	public class Framework
 	{
-		HScrollThumbSkin
 	}
 }

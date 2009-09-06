@@ -37,9 +37,19 @@ package org.ghostcat.ui.controls
 		public var textField:TextField;
 		
 		/**
+		 * 是否让文本框适应文字的体积
+		 */
+		public var enabledAdjustTextSize:Boolean = true;
+		
+		/**
 		 * 是否让容器适应文本框的体积
 		 */
-		public var adjustSize:Boolean = false;
+		public var enabledAdjustContextSize:Boolean = false;
+		
+		/**
+		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 */
+		public var textPos:Point = new Point();
 		
 		/**
 		 * 限定输入内容的正则表达式
@@ -77,10 +87,13 @@ package org.ghostcat.ui.controls
 		
 		private var _asBitmap:Boolean = false;
 		
-		public function GText(skin:DisplayObject=null, replace:Boolean=true, asBitmap:Boolean = false)
+		public function GText(skin:DisplayObject=null, replace:Boolean=true, asBitmap:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
+			
+			if (textPos)
+				this.textPos = textPos;
 			
 			super(skin, replace);
 			
@@ -110,7 +123,15 @@ package org.ghostcat.ui.controls
 			textField = SearchUtil.findChildByClass(skin,TextField) as TextField;
 			
 			if (!textField)
+			{
 				textField = TextFieldParse.createTextField("");
+			
+				if (textPos)
+				{
+					textField.x = textPos.x;
+					textField.y = textPos.y;
+				}
+			}
 			else
 			{
 				var pos:Point = new Point(textField.x,textField.y);
@@ -141,9 +162,8 @@ package org.ghostcat.ui.controls
 			data = v;
 		}
 		
-		public function adjustTextSize():void
+		public function adjustContextSize():void
 		{
-			TextFieldUtil.adjustSize(textField);
 			if (content)
 			{
 				var rect:Rectangle = getBounds(this);
@@ -176,8 +196,11 @@ package org.ghostcat.ui.controls
 					textField.text = str;
 			}
 			
-			if (adjustSize)
-				adjustTextSize();
+			if (enabledAdjustTextSize)
+				TextFieldUtil.adjustSize(textField);
+			
+			if (enabledAdjustContextSize)
+				adjustContextSize();
 			
 			if (asBitmap)
 				reRenderBitmap();
