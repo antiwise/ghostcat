@@ -2,15 +2,16 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.skin.HScrollThumbSkin;
-	import org.ghostcat.ui.controls.GButton;
+	import org.ghostcat.ui.controls.GRadioButton;
 	
 	[SWF(width="400",height="400")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{
-			addChild(new GButton(new HScrollThumbSkin()))
+			var b:GRadioButton = new GRadioButton();
+			b.label = "123";
+			addChild(b);
 		}
 	}
 }
