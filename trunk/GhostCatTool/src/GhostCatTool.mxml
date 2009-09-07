@@ -13,6 +13,7 @@
 	<local:SWFShower id="swfShower" includeIn="swf" left="10" top="40" bottom="10" right="10"/>
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.ComboBox;
 			import mx.controls.Alert;
 			import mx.containers.TitleWindow;
 			import mx.controls.TabBar;
@@ -40,7 +41,6 @@
 				if (file.type.toUpperCase() == ".SWF")
 				{
 					currentState = "swf";
-					
 					swfShower.source = fileData;
 				}
 				else

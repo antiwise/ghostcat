@@ -4,7 +4,7 @@ package
 	import flash.events.Event;
 	
 	import org.ghostcat.algorithm.bezier.Roupe;
-	import org.ghostcat.bitmap.effect.ResidualScreen;
+	import org.ghostcat.display.effect.ResidualScreen;
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.manager.RootManager;
 	import org.ghostcat.ui.CursorSprite;

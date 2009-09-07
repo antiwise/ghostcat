@@ -36,7 +36,6 @@ package
 			
 			//手动设置需要参数的文本
 			var t3:GText = new GText();
-			t3.adjustSize = true;
 			addChild(t3);
 			t3.y = 52;
 			t3.text = LanguageManager.getString("@ui.tipText",["一段文本"]);
@@ -44,7 +43,6 @@ package
 			//自动替换参数
 			var t4:GText = new GText();
 			addChild(t4);
-			t4.adjustSize = true;
 			t4.y = 78;
 			t4.vertical = true;
 			t4.text = "@ui.sex";

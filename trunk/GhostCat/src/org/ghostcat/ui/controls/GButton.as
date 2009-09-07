@@ -163,6 +163,9 @@ package org.ghostcat.ui.controls
 		
 		public function set selected(v:Boolean):void
 		{
+			if (_selected == v)
+				return;
+			
 			_selected = v;
 			tweenTo(UP);
 			
@@ -294,6 +297,10 @@ package org.ghostcat.ui.controls
 			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			removeEventListener(MouseEvent.CLICK,toggleClickHandler);
 			removeEventListener(MouseEvent.CLICK,clickHandler);
+			
+			if (labelField)
+				labelField.destory();
+			
 			super.destory();
 		}
 	}

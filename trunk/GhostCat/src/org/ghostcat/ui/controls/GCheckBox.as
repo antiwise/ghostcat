@@ -16,6 +16,11 @@ package org.ghostcat.ui.controls
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(CheckBoxIconSkin);
 		
+		/**
+		 * 值
+		 */
+		public var value:*;
+		
 		public function GCheckBox(skin:MovieClip=null, replace:Boolean=true)
 		{
 			if (!skin)
