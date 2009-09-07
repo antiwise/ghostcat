@@ -127,7 +127,7 @@ package org.ghostcat.display.viewport
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.display.Bitmap;
-import org.ghostcat.bitmap.BitmapUtil;
+import org.ghostcat.display.bitmap.BitmapUtil;
 import flash.geom.Point;
 import org.ghostcat.util.Geom;
 import flash.display.DisplayObjectContainer;
@@ -145,6 +145,7 @@ import flash.display.BitmapData;
 import flash.display.BlendMode;
 import org.ghostcat.util.ColorUtil;
 import flash.geom.ColorTransform;
+import org.ghostcat.display.bitmap.BitmapUtil;
 
 class ShadowItem
 {

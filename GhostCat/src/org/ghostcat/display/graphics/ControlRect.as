@@ -15,7 +15,7 @@ package org.ghostcat.display.graphics
 	import org.ghostcat.parse.graphics.GraphicsLineStyle;
 	import org.ghostcat.parse.graphics.GraphicsRect;
 	import org.ghostcat.ui.CursorSprite;
-	import org.ghostcat.util.DisplayUtil;
+	import org.ghostcat.display.DisplayUtil;
 
 	/**
 	 * 图像变形控制器，点击自动选中，并可调整大小和变形
