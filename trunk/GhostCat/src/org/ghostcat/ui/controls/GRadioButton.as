@@ -1,6 +1,7 @@
 package org.ghostcat.ui.controls
 {
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import org.ghostcat.skin.RadioButtonIconSkin;
@@ -29,7 +30,6 @@ package org.ghostcat.ui.controls
 				skin = defaultSkin.newInstance();
 				
 			this.textPos = new Point(15,0);
-			this.toggle = true;
 			
 			super(skin, replace);
 		}
@@ -51,14 +51,24 @@ package org.ghostcat.ui.controls
 
 		public override function set selected(v:Boolean) : void
 		{
+			if (super.selected == v)
+				return;
+			
 			super.selected = v;
 			
-			if (groupName)
+			if (groupName && v)
 			{
 				var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(groupName);
 				g.selectedItem = this;
 			}
 		} 
+		
+		protected override function clickHandler(event:MouseEvent):void
+		{
+			super.clickHandler(event);
+			
+			this.selected = true;
+		}
 		
 		public override function destory():void
 		{
