@@ -22,7 +22,7 @@
 			import mx.events.ResizeEvent;
 			import org.ghostcat.manager.DragManager;
 			import org.ghostcat.util.ReflectXMLUtil;
-			import org.ghostcat.util.DisplayUtil;
+			import org.ghostcat.display.DisplayUtil;
 			import org.ghostcat.parse.DisplayParse;
 			import org.ghostcat.util.Geom;
 			import mx.events.ListEvent;

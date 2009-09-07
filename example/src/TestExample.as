@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
+	import org.ghostcat.ui.controls.GCheckBox;
 	import org.ghostcat.ui.controls.GRadioButton;
 	import org.ghostcat.ui.controls.GRadioButtonGroup;
 	
@@ -20,6 +21,11 @@ package
 			b2.groupName = "a";
 			b2.y = 20;
 			addChild(b2);
+			
+			var b3:GCheckBox = new GCheckBox();
+			b3.label = "789";
+			b3.y = 40;
+			addChild(b3);
 			
 			GRadioButtonGroup.getGroupByName("a").selectedItem = b;
 		}
