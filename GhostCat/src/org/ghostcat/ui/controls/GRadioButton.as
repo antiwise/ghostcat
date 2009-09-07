@@ -16,10 +16,12 @@ package org.ghostcat.ui.controls
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(RadioButtonIconSkin);
 		
+		private var _groupName:String;
+		
 		/**
-		 * 所属的组
+		 * 值
 		 */
-		public var group:String;
+		public var value:*;
 		
 		public function GRadioButton(skin:MovieClip=null, replace:Boolean=true)
 		{
@@ -32,9 +34,39 @@ package org.ghostcat.ui.controls
 			super(skin, replace);
 		}
 		
+		/**
+		 * 所属的组
+		 */
+		public function get groupName():String
+		{
+			return _groupName;
+		}
+
+		public function set groupName(v:String):void
+		{
+			_groupName = v;
+			var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(v);
+			g.addItem(this);
+		}
+
 		public override function set selected(v:Boolean) : void
 		{
 			super.selected = v;
+			
+			if (groupName)
+			{
+				var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(groupName);
+				g.selectedItem = this;
+			}
 		} 
+		
+		public override function destory():void
+		{
+			if (groupName)
+			{
+				var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(groupName);
+				g.removeItem(this);
+			}
+		}
 	}
 }

@@ -53,5 +53,17 @@ package org.ghostcat.ui.controls
 		{
 			super.updateSize();
 		} 
+		
+		public override function destory() : void
+		{
+			super.destory();
+			
+			if (upArrow) 
+				upArrow.destory();
+			if (downArrow) 
+				downArrow.destory();
+			if (thumb) 
+				thumb.destory();
+		}
 	}
 }
