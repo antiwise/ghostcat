@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
   <includeClasses>
+    <classEntry path="org.ghostcat.Framework"/>
     <classEntry path="org.ghostcat.algorithm.BinaryHeap"/>
     <classEntry path="org.ghostcat.algorithm.Point3D"/>
     <classEntry path="org.ghostcat.algorithm.astar.AStar"/>
@@ -13,10 +14,6 @@
     <classEntry path="org.ghostcat.algorithm.bezier.Line"/>
     <classEntry path="org.ghostcat.algorithm.bezier.Roupe"/>
     <classEntry path="org.ghostcat.algorithm.bezier.SmoothCurve"/>
-    <classEntry path="org.ghostcat.bitmap.BitmapCacher"/>
-    <classEntry path="org.ghostcat.bitmap.BitmapDataGroup"/>
-    <classEntry path="org.ghostcat.bitmap.BitmapUtil"/>
-    <classEntry path="org.ghostcat.bitmap.GBitmap"/>
     <classEntry path="org.ghostcat.community.CommunityManager"/>
     <classEntry path="org.ghostcat.community.DisplayCommunityManager"/>
     <classEntry path="org.ghostcat.community.command.CollideCommand"/>
@@ -27,6 +24,7 @@
     <classEntry path="org.ghostcat.debug.FPS"/>
     <classEntry path="org.ghostcat.debug.MemoryChecker"/>
     <classEntry path="org.ghostcat.debug.SpeedTester"/>
+    <classEntry path="org.ghostcat.display.DisplayUtil"/>
     <classEntry path="org.ghostcat.display.GBase"/>
     <classEntry path="org.ghostcat.display.GNoScale"/>
     <classEntry path="org.ghostcat.display.GSprite"/>
@@ -36,6 +34,13 @@
     <classEntry path="org.ghostcat.display.IDisplayObjectContainer"/>
     <classEntry path="org.ghostcat.display.IGBase"/>
     <classEntry path="org.ghostcat.display.IToolTipManagerClient"/>
+    <classEntry path="org.ghostcat.display.bitmap.BitmapCacher"/>
+    <classEntry path="org.ghostcat.display.bitmap.BitmapDataGroup"/>
+    <classEntry path="org.ghostcat.display.bitmap.BitmapUtil"/>
+    <classEntry path="org.ghostcat.display.bitmap.GBitmap"/>
+    <classEntry path="org.ghostcat.display.effect.FireScreen"/>
+    <classEntry path="org.ghostcat.display.effect.FireScreen2"/>
+    <classEntry path="org.ghostcat.display.effect.ResidualScreen"/>
     <classEntry path="org.ghostcat.display.graphics.ControlRect"/>
     <classEntry path="org.ghostcat.display.graphics.DragPoint"/>
     <classEntry path="org.ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -186,9 +191,14 @@
     <classEntry path="org.ghostcat.ui.ToolTipSkin"/>
     <classEntry path="org.ghostcat.ui.ToolTipSprite"/>
     <classEntry path="org.ghostcat.ui.controls.GButton"/>
+    <classEntry path="org.ghostcat.ui.controls.GCheckBox"/>
+    <classEntry path="org.ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="org.ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="org.ghostcat.ui.controls.GProgressBar"/>
+    <classEntry path="org.ghostcat.ui.controls.GRadioButton"/>
+    <classEntry path="org.ghostcat.ui.controls.GScrollBar"/>
     <classEntry path="org.ghostcat.ui.controls.GText"/>
+    <classEntry path="org.ghostcat.ui.controls.GVScrollBar"/>
     <classEntry path="org.ghostcat.util.ArrayUtil"/>
     <classEntry path="org.ghostcat.util.Asyn"/>
     <classEntry path="org.ghostcat.util.BitArray"/>
@@ -199,7 +209,6 @@
     <classEntry path="org.ghostcat.util.ColorUtil"/>
     <classEntry path="org.ghostcat.util.CountDown"/>
     <classEntry path="org.ghostcat.util.DataCompress"/>
-    <classEntry path="org.ghostcat.util.DisplayUtil"/>
     <classEntry path="org.ghostcat.util.Geom"/>
     <classEntry path="org.ghostcat.util.Guid"/>
     <classEntry path="org.ghostcat.util.Handler"/>
@@ -230,14 +239,8 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.bitmap.effect.ResidualScreen"/>
-    <classEntry path="org.ghostcat.bitmap.effect.FireScreen"/>
-    <classEntry path="org.ghostcat.Framework"/>
-    <classEntry path="org.ghostcat.ui.controls.GScrollBar"/>
-    <classEntry path="org.ghostcat.ui.controls.GVScrollBar"/>
-    <classEntry path="org.ghostcat.ui.controls.GHScrollBar"/>
-    <classEntry path="org.ghostcat.ui.controls.GCheckBox"/>
-    <classEntry path="org.ghostcat.ui.controls.GRadioButton"/>
+    <classEntry path="org.ghostcat.ui.controls.GRadioButtonGroup"/>
+    <classEntry path="org.ghostcat.ui.containers.ScrollPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
