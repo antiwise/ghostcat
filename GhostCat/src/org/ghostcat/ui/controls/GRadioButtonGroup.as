@@ -9,7 +9,8 @@ package org.ghostcat.ui.controls
 	[Event(name="change",type="flash.events.Event")]
 	
 	/**
-	 * 单选框组对象
+	 * 单选框组对象。
+	 * 请用getGroupByName方法创建并获取。
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -56,7 +57,7 @@ package org.ghostcat.ui.controls
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:GRadioButton = items[i] as GRadioButton;
-				item.selected = (item.value == v);
+				item.selected =  (item == v);
 			}
 			
 			dispatchEvent(new Event(Event.CHANGE));
@@ -81,8 +82,15 @@ package org.ghostcat.ui.controls
 					return;
 				}
 			}
+			selectedItem = null;
 		}
 		
+		/**
+		 * 手动执行构造方法是无效的，应当使用getGroupByName方法创建
+		 * 
+		 * @param groupName
+		 * 
+		 */
 		public function GRadioButtonGroup(groupName:String)
 		{
 			this.groupName = groupName;

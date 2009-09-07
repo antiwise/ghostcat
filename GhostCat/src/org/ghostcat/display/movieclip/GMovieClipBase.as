@@ -161,7 +161,6 @@ package org.ghostcat.display.movieclip
 		 		
 		public function setLabel(labelName:String, repeat:int=-1):void
         {
-        	trace(labelName);
         	nextLabels = [];
         	
             var index:int = getLabelIndex(labelName);
