@@ -5,8 +5,8 @@ package org.ghostcat.transfer
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
-	import org.ghostcat.bitmap.GBitmap;
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.bitmap.GBitmap;
 	import org.ghostcat.events.GEvent;
 	import org.ghostcat.events.MoveEvent;
 	import org.ghostcat.events.ResizeEvent;
@@ -18,7 +18,7 @@ package org.ghostcat.transfer
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmapTransfer extends GBitmap
+	public class GBitmapTransfer extends org.ghostcat.display.bitmap.GBitmap
 	{
 		protected var _target:DisplayObject;
 		

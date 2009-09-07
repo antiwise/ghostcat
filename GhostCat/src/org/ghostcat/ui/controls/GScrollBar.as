@@ -4,6 +4,11 @@ package org.ghostcat.ui.controls
 	
 	import org.ghostcat.display.GNoScale;
 	
+	/**
+	 * 滚动条 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GScrollBar extends GNoScale
 	{
 		public var upArrow:GButton;
@@ -43,5 +48,10 @@ package org.ghostcat.ui.controls
 			if (content.hasOwnProperty(backgroundField))
 				this.background = content[backgroundField];
 		}
+		
+		protected override function updateSize() : void
+		{
+			super.updateSize();
+		} 
 	}
 }
