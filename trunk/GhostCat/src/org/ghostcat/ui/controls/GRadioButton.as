@@ -24,12 +24,13 @@ package org.ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GRadioButton(skin:MovieClip=null, replace:Boolean=true)
+		public function GRadioButton(skin:MovieClip=null, replace:Boolean=true, textPos:Point=null)
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
-				
-			this.textPos = new Point(15,0);
+			
+			if (!textPos)
+				this.textPos = new Point(15,0);
 			
 			super(skin, replace);
 		}

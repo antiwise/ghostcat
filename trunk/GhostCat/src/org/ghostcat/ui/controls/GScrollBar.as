@@ -16,6 +16,16 @@ package org.ghostcat.ui.controls
 		public var thumb:GButton;
 		public var background:DisplayObject;
 		
+		/**
+		 * 滚动缓动效果
+		 */
+		public var tweenFunction:Function;
+		
+		/**
+		 * 滚动模糊效果
+		 */
+		public var blur:Number;
+		
 		public var fields:Object = {upArrowField:"upArrow",downArrowField:"downArrow",
 			thumbField:"thumb",backgroundField:"background"}
 		

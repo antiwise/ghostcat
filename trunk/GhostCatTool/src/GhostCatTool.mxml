@@ -11,6 +11,7 @@
 	<s:CheckBox id="compress" includeIn="text" label="压缩" toolTip="是否采用Z-file方式压缩文件" x="173" y="10"/>
 	<s:TextArea id="textArea" includeIn="text" left="10" top="40" bottom="10" right="10" editable="true"/>
 	<local:SWFShower id="swfShower" includeIn="swf" left="10" top="40" bottom="10" right="10"/>
+	
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.ComboBox;

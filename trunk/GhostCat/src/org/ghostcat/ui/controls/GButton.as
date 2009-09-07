@@ -94,12 +94,12 @@ package org.ghostcat.ui.controls
 		private var labelField:GText;
 		
 		
-		public function GButton(skin:MovieClip, replace:Boolean=true, paused:Boolean=false,textPos:Point=null)
+		public function GButton(skin:MovieClip, replace:Boolean=true, textPos:Point=null)
 		{
 			if (textPos)
 				this.textPos = textPos;
 			
-			super(skin, replace, paused);
+			super(skin, replace);
 		}
 		
 		public function get label():String
