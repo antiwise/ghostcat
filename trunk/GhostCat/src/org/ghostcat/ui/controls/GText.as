@@ -22,7 +22,8 @@ package org.ghostcat.ui.controls
 	[Event(name="text_change",type="org.ghostcat.events.GTextEvent")]
 	
 	/**
-	 * 显示文字用
+	 * 文本框
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */	

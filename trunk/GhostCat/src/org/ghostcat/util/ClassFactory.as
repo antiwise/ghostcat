@@ -1,5 +1,7 @@
 package org.ghostcat.util
 {
+	import flash.utils.getDefinitionByName;
+
 	/**
 	 * 类工厂类
 	 * 
@@ -11,14 +13,14 @@ package org.ghostcat.util
 		/**
 		 * 类
 		 */
-		public var generator : Class;
+		public var generator : *;
 
 		/**
 		 * 类的初始属性
 		 */
 		public var properties : Object = null;
 		
-		public function ClassFactory (generator:Class = null,properties:Object = null)
+		public function ClassFactory (generator:* = null,properties:Object = null)
 		{
 			this.generator = generator;
 			this.properties = properties;
@@ -46,7 +48,11 @@ package org.ghostcat.util
 		 */
 		public function newInstance():*
 		{
+			if (generator is String)
+				generator = getDefinitionByName(generator) as Class;
+			
 			var instance:* = new generator();
+			
 			if (properties)
 			{
 				for (var key : String in properties)

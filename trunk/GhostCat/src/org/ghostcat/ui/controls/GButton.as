@@ -2,6 +2,7 @@ package org.ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -10,6 +11,8 @@ package org.ghostcat.ui.controls
 	import org.ghostcat.display.movieclip.GMovieClip;
 	import org.ghostcat.events.ActionEvent;
 	import org.ghostcat.util.Util;
+	
+	[Event(name="change",type="flash.events.Event")]
 	
 	/**
 	 * 按钮
@@ -162,6 +165,8 @@ package org.ghostcat.ui.controls
 		{
 			_selected = v;
 			tweenTo(UP);
+			
+			dispatchEvent(new Event(Event.CHANGE))
 		}
 		
 		public function get selected():Boolean

@@ -5,6 +5,12 @@ package org.ghostcat.ui.controls
 	import org.ghostcat.skin.HScrollBarSkin;
 	import org.ghostcat.util.ClassFactory;
 	
+	/**
+	 * 横向滚动条
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GHScrollBar extends GScrollBar
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(HScrollBarSkin);

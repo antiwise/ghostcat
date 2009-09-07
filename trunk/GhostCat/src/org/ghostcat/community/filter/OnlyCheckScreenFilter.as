@@ -2,7 +2,7 @@ package org.ghostcat.community.filter
 {
 	import flash.display.DisplayObject;
 	
-	import org.ghostcat.util.DisplayUtil;
+	import org.ghostcat.display.DisplayUtil;
 
 	/**
 	 * 过滤屏幕内物品

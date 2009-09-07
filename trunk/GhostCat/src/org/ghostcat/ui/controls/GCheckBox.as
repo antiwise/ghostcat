@@ -6,6 +6,12 @@ package org.ghostcat.ui.controls
 	import org.ghostcat.skin.CheckBoxIconSkin;
 	import org.ghostcat.util.ClassFactory;
 	
+	/**
+	 * 多选框
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GCheckBox extends GButton
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(CheckBoxIconSkin);
