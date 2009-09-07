@@ -8,7 +8,7 @@ package org.ghostcat.display.viewport
 	
 	import org.ghostcat.algorithm.bezier.Line;
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.util.DisplayUtil;
+	import org.ghostcat.display.DisplayUtil;
 
 	/**
 	 * 场景墙壁类

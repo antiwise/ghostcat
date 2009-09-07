@@ -11,7 +11,7 @@ package org.ghostcat.display.viewport
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.events.RepeatEvent;
 	import org.ghostcat.util.ClassFactory;
-	import org.ghostcat.util.DisplayUtil;
+	import org.ghostcat.display.DisplayUtil;
 	import org.ghostcat.util.Geom;
 	import org.ghostcat.util.ReflectUtil;
 	import org.ghostcat.util.Util;
