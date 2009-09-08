@@ -5,8 +5,12 @@ package org.ghostcat.manager
 	import flash.display.Sprite;
 	import flash.utils.getDefinitionByName;
 	
-	import org.ghostcat.util.Singleton;
 	import org.ghostcat.debug.Debug;
+	import org.ghostcat.events.OperationEvent;
+	import org.ghostcat.operation.LoadOper;
+	import org.ghostcat.operation.LoadTextOper;
+	import org.ghostcat.operation.Queue;
+	import org.ghostcat.util.Singleton;
 
 	/**
 	 * 资源管理类
@@ -40,6 +44,59 @@ package org.ghostcat.manager
 		 * 加载错误时显示的图标
 		 */
 		public var errorIcon:Class;
+		
+		/**
+		 * 队列
+		 */
+		public var queue:Queue;
+		
+		/**
+		 * 批量载入资源
+		 * 
+		 * @param res	资源路径列表
+		 * @return 
+		 * 
+		 */
+		public function loadResource(...res):Queue
+		{
+			if (!queue)
+				queue = new Queue();
+			
+			for (var i:int = 0;i < res.length;i++)
+			{
+				var oper:LoadOper = new LoadOper(assetBase + res[i]);
+				oper.commit(queue);
+			}
+			return queue;
+		}
+		
+		/**
+		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
+		 * Oper的名称将是配置文件的@name属性，地址则是@url属性。
+		 * 
+		 * @param filePath	资源配置文件名称
+		 * @return 
+		 * 
+		 */
+		public function loadResourceFromResConfig(filePath:String):Queue
+		{
+			if (!queue)
+				queue = new Queue();
+			
+			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
+			return queue;
+		}
+		
+		private function resConfigHandler(event:OperationEvent):void
+		{
+			var xml:XML = new XML((event.oper as LoadTextOper).data);
+			for each (var child:XML in xml.children())
+			{
+				var oper:LoadOper = new LoadOper(child.@url.toString());
+				oper.name = child.@name.toString();
+				oper.commit(queue);
+			}
+		}
 		
 		/**
 		 * 通过类名来获得默认文件地址。地址始终是小写。
@@ -123,9 +180,9 @@ package org.ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function createBitmapData(ref:String):BitmapData
+		public function createBitmapData(ref:String,width:int,height:int):BitmapData
 		{
-			return getAssetByName(ref)(0,0) as BitmapData;
+			return getAssetByName(ref)(width,height) as BitmapData;
 		}
 	}
 }
