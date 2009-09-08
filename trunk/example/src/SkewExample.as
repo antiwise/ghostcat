@@ -4,7 +4,7 @@ package
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	import org.ghostcat.bitmap.effect.ResidualScreen;
+	import org.ghostcat.display.residual.ResidualScreen;
 	import org.ghostcat.display.graphics.DragPoint;
 	import org.ghostcat.transfer.Skew;
 	import org.ghostcat.ui.CursorSprite;
