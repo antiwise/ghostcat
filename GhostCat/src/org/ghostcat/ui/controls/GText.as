@@ -7,11 +7,11 @@ package org.ghostcat.ui.controls
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.utils.ByteArray;
 	
 	import org.ghostcat.display.GBase;
 	import org.ghostcat.events.GTextEvent;
 	import org.ghostcat.parse.display.TextFieldParse;
-	import org.ghostcat.text.ANSI;
 	import org.ghostcat.text.TextFieldUtil;
 	import org.ghostcat.text.TextUtil;
 	import org.ghostcat.util.ClassFactory;
@@ -250,12 +250,19 @@ package org.ghostcat.ui.controls
 			_bitmap.bitmapData.draw(textField);
 		}
 		
+		private function getANSILength(data:String):int
+  		{
+			var byte:ByteArray = new ByteArray();
+			byte.writeMultiByte(data,"gb2312");
+			return byte.length;
+  		}
+		
 		protected function textInputHandler(event:TextEvent):void
 		{
 			if (regExp && !regExp.test(textField.text + event.text))
 				event.preventDefault();
 			
-			if (ansiMaxChars && ANSI.getLength(textField.text + event.text) > ansiMaxChars)
+			if (ansiMaxChars && getANSILength(textField.text + event.text) > ansiMaxChars)
 				event.preventDefault();
 		}
 		

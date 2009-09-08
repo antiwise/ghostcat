@@ -38,6 +38,11 @@ package org.ghostcat.operation
 		public var step:int = NONE;
 		
 		/**
+		 * 最后一次的结果
+		 */
+		public var lastResult:*;
+		
+		/**
 		 * 立即执行
 		 * 
 		 */		
@@ -56,9 +61,11 @@ package org.ghostcat.operation
 		 */		
 		public function result(event:*=null):void
 		{
-			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_COMPLETE),{oper:this}));
+			lastResult = event;
+			
+			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_COMPLETE),{oper:this,result:event}));
 			if (queue) 
-				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE),{oper:queue,childOper:this}));
+				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE),{oper:queue,childOper:this,result:event}));
 			
 			step = END;
 		}
@@ -69,9 +76,11 @@ package org.ghostcat.operation
 		 */		
 		public function fault(event:*=null):void
 		{
-			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_ERROR),{oper:this}));
+			lastResult = event;
+			
+			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_ERROR),{oper:this,result:event}));
 			if (queue) 
-				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR),{oper:queue,childOper:this}));
+				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR),{oper:queue,childOper:this,result:event}));
 			
 			step = END;
 		}

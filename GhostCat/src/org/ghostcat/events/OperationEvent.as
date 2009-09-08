@@ -52,6 +52,11 @@ package org.ghostcat.events
 		 */
 		public var childOper:Oper;
 		
+		/**
+		 * 返回结果
+		 */
+		public var result:*;
+		
 		public function OperationEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
@@ -62,6 +67,7 @@ package org.ghostcat.events
 			var evt:OperationEvent = new OperationEvent(type,bubbles,cancelable);
 			evt.oper = this.oper;
 			evt.childOper = this.childOper;
+			evt.result = this.result;
 			return evt;
 		}
 	}

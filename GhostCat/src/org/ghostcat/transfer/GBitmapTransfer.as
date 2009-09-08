@@ -18,7 +18,7 @@ package org.ghostcat.transfer
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmapTransfer extends org.ghostcat.display.bitmap.GBitmap
+	public class GBitmapTransfer extends GBitmap
 	{
 		protected var _target:DisplayObject;
 		
