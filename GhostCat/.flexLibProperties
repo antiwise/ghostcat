@@ -38,9 +38,6 @@
     <classEntry path="org.ghostcat.display.bitmap.BitmapDataGroup"/>
     <classEntry path="org.ghostcat.display.bitmap.BitmapUtil"/>
     <classEntry path="org.ghostcat.display.bitmap.GBitmap"/>
-    <classEntry path="org.ghostcat.display.effect.FireScreen"/>
-    <classEntry path="org.ghostcat.display.effect.FireScreen2"/>
-    <classEntry path="org.ghostcat.display.effect.ResidualScreen"/>
     <classEntry path="org.ghostcat.display.graphics.ControlRect"/>
     <classEntry path="org.ghostcat.display.graphics.DragPoint"/>
     <classEntry path="org.ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -57,6 +54,9 @@
     <classEntry path="org.ghostcat.display.movieclip.GMovieClipBase"/>
     <classEntry path="org.ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
+    <classEntry path="org.ghostcat.display.residual.FireScreen"/>
+    <classEntry path="org.ghostcat.display.residual.FireScreen2"/>
+    <classEntry path="org.ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="org.ghostcat.display.viewport.Collision"/>
     <classEntry path="org.ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="org.ghostcat.display.viewport.ICollisionClient"/>
@@ -64,6 +64,7 @@
     <classEntry path="org.ghostcat.display.viewport.Tile"/>
     <classEntry path="org.ghostcat.display.viewport.Tile45"/>
     <classEntry path="org.ghostcat.display.viewport.Wall"/>
+    <classEntry path="org.ghostcat.effect.TweenEffect"/>
     <classEntry path="org.ghostcat.events.ActionEvent"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
     <classEntry path="org.ghostcat.events.DragEvent"/>
@@ -190,12 +191,14 @@
     <classEntry path="org.ghostcat.ui.RootLoader"/>
     <classEntry path="org.ghostcat.ui.ToolTipSkin"/>
     <classEntry path="org.ghostcat.ui.ToolTipSprite"/>
+    <classEntry path="org.ghostcat.ui.containers.ScrollPanel"/>
     <classEntry path="org.ghostcat.ui.controls.GButton"/>
     <classEntry path="org.ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="org.ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="org.ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="org.ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="org.ghostcat.ui.controls.GRadioButton"/>
+    <classEntry path="org.ghostcat.ui.controls.GRadioButtonGroup"/>
     <classEntry path="org.ghostcat.ui.controls.GScrollBar"/>
     <classEntry path="org.ghostcat.ui.controls.GText"/>
     <classEntry path="org.ghostcat.ui.controls.GVScrollBar"/>
@@ -239,8 +242,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.ui.controls.GRadioButtonGroup"/>
-    <classEntry path="org.ghostcat.ui.containers.ScrollPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
