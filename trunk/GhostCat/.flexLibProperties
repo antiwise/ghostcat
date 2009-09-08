@@ -64,7 +64,6 @@
     <classEntry path="org.ghostcat.display.viewport.Tile"/>
     <classEntry path="org.ghostcat.display.viewport.Tile45"/>
     <classEntry path="org.ghostcat.display.viewport.Wall"/>
-    <classEntry path="org.ghostcat.effect.TweenEffect"/>
     <classEntry path="org.ghostcat.events.ActionEvent"/>
     <classEntry path="org.ghostcat.events.CollideEvent"/>
     <classEntry path="org.ghostcat.events.DragEvent"/>
@@ -150,6 +149,11 @@
     <classEntry path="org.ghostcat.operation.TweenOper"/>
     <classEntry path="org.ghostcat.operation.WaitOper"/>
     <classEntry path="org.ghostcat.operation.WatchOper"/>
+    <classEntry path="org.ghostcat.operation.effect.TweenEffect"/>
+    <classEntry path="org.ghostcat.operation.quest.Quest"/>
+    <classEntry path="org.ghostcat.operation.quest.QuestEvent"/>
+    <classEntry path="org.ghostcat.operation.quest.QuestGroup"/>
+    <classEntry path="org.ghostcat.operation.server.RemotingProxy"/>
     <classEntry path="org.ghostcat.parse.DisplayParse"/>
     <classEntry path="org.ghostcat.parse.IParse"/>
     <classEntry path="org.ghostcat.parse.Parse"/>
@@ -167,9 +171,6 @@
     <classEntry path="org.ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsPath"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsRect"/>
-    <classEntry path="org.ghostcat.quest.Quest"/>
-    <classEntry path="org.ghostcat.quest.QuestEvent"/>
-    <classEntry path="org.ghostcat.quest.QuestGroup"/>
     <classEntry path="org.ghostcat.skin.code.ArowSkin"/>
     <classEntry path="org.ghostcat.skin.code.BoxSkin"/>
     <classEntry path="org.ghostcat.skin.code.PointSkin"/>

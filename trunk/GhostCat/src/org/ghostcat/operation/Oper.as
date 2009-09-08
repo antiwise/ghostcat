@@ -28,6 +28,11 @@ package org.ghostcat.operation
 		public static const END:int = 3;
 		
 		/**
+		 * 名称
+		 */
+		public var name:String;
+		
+		/**
 		 * 当前所处的队列
 		 */		
 		public var queue:Queue;
