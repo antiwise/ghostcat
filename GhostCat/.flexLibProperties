@@ -54,9 +54,6 @@
     <classEntry path="org.ghostcat.display.movieclip.GMovieClipBase"/>
     <classEntry path="org.ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="org.ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="org.ghostcat.display.residual.FireScreen"/>
-    <classEntry path="org.ghostcat.display.residual.FireScreen2"/>
-    <classEntry path="org.ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="org.ghostcat.display.viewport.Collision"/>
     <classEntry path="org.ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="org.ghostcat.display.viewport.ICollisionClient"/>
@@ -149,7 +146,9 @@
     <classEntry path="org.ghostcat.operation.TweenOper"/>
     <classEntry path="org.ghostcat.operation.WaitOper"/>
     <classEntry path="org.ghostcat.operation.WatchOper"/>
-    <classEntry path="org.ghostcat.operation.effect.TweenEffect"/>
+    <classEntry path="org.ghostcat.operation.effect.FlashEffect"/>
+    <classEntry path="org.ghostcat.operation.effect.IEffect"/>
+    <classEntry path="org.ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="org.ghostcat.operation.quest.Quest"/>
     <classEntry path="org.ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="org.ghostcat.operation.quest.QuestGroup"/>
