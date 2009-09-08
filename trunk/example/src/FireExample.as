@@ -23,6 +23,7 @@ package
 			p.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
 			var f:FireScreen = new FireScreen(150,150);
+			
 			f.addItem(p);
 			addChildAt(f,0);
 			
