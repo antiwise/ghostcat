@@ -3,8 +3,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import org.ghostcat.bitmap.effect.FireScreen;
 	import org.ghostcat.display.GBase;
+	import org.ghostcat.display.residual.FireScreen;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.skin.cursor.CursorDrag;
 	import org.ghostcat.ui.CursorSprite;

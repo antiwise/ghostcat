@@ -4,7 +4,6 @@ package org.ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import org.ghostcat.skin.RadioButtonIconSkin;
 	import org.ghostcat.util.ClassFactory;
 	
 	/**
@@ -15,7 +14,9 @@ package org.ghostcat.ui.controls
 	 */
 	public class GRadioButton extends GButton
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(RadioButtonIconSkin);
+		[Embed(skinClass="org.ghostcat.skin.RadioButtonIconSkin")]
+		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
 		
 		private var _groupName:String;
 		

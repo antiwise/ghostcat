@@ -2,7 +2,6 @@ package org.ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	
-	import org.ghostcat.skin.HScrollBarSkin;
 	import org.ghostcat.util.ClassFactory;
 	
 	/**
@@ -13,7 +12,9 @@ package org.ghostcat.ui.controls
 	 */
 	public class GHScrollBar extends GScrollBar
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(HScrollBarSkin);
+		[Embed(skinClass="org.ghostcat.skin.HScrollBarSkin")]
+		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
 		
 		public function GHScrollBar(skin:DisplayObject=null, replace:Boolean=true)
 		{
