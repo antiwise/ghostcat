@@ -245,6 +245,7 @@
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.operation.LoadGIFOper"/>
+    <classEntry path="org.ghostcat.ui.controls.scrollClasses.ScrollTextContent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

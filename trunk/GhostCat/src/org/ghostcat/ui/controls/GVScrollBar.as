@@ -21,6 +21,8 @@ package org.ghostcat.ui.controls
 			if (!skin)
 				skin = defaultSkin.newInstance();
 			
+			this.direction = 1;
+			
 			super(skin, replace);
 		}
 	}
