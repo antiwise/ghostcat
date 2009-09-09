@@ -88,6 +88,11 @@ package org.ghostcat.ui.controls
 		 */		
 		public var skins:Object;
 		
+		/**
+		 * 是否可以点击选择 
+		 */
+		public var toggle:Boolean;
+		
 		
 		
 		private var _label:String;
@@ -147,20 +152,6 @@ package org.ghostcat.ui.controls
 			refreshLabelField();
 		}
 		
-		public function set toggle(v:Boolean):void
-		{
-			_toggle = v;
-			if (v)
-				addEventListener(MouseEvent.CLICK,toggleClickHandler);
-			else
-				removeEventListener(MouseEvent.CLICK,toggleClickHandler);
-		}
-		
-		public function get toggle():Boolean
-		{
-			return _toggle;
-		}
-		
 		public function set selected(v:Boolean):void
 		{
 			if (_selected == v)
@@ -177,14 +168,28 @@ package org.ghostcat.ui.controls
 			return _selected;
 		}
 		
-		protected override function init():void
+		protected function addEvents():void
 		{
-			super.init();
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			addEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			addEventListener(MouseEvent.CLICK,clickHandler);
+		}
+		
+		protected function removeEvents():void
+		{
+			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			removeEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
+			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
+			removeEventListener(MouseEvent.CLICK,clickHandler);
+		}
+		
+		protected override function init():void
+		{
+			super.init();
+			addEvents();
 		
 			tweenTo(UP);
 		}
@@ -278,25 +283,18 @@ package org.ghostcat.ui.controls
 			_mouseOver = false;
 		}
 		
-		protected function toggleClickHandler(event:MouseEvent):void
-		{
-			selected = !selected;
-		}
-		
 		protected function clickHandler(event:MouseEvent):void
 		{
+			if (toggle)
+				selected = !selected;
+		
 			if (this.action)
 				dispatchEvent(Util.createObject(new ActionEvent(ActionEvent.ACTION),{action:this.action}))
 		}
 		
 		public override function destory() : void
 		{
-			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
-			removeEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
-			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
-			removeEventListener(MouseEvent.CLICK,toggleClickHandler);
-			removeEventListener(MouseEvent.CLICK,clickHandler);
+			removeEvents();
 			
 			if (labelField)
 				labelField.destory();
