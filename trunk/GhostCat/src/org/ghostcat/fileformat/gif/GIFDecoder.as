@@ -135,12 +135,12 @@ package org.ghostcat.fileformat.gif
 		 * @return 包含所有图片的数组
 		 * 
 		 */
-		public function getImages():Array
+		public function getBitmapDatas():Array
 		{	
 			var result:Array = [];
 			for (var i:int = 0;i < frameCount;i++)
 			{
-				result.push(GifFrame (frames[i]))
+				result.push(GifFrame (frames[i]).image)
 			}
 			return result;
 			
