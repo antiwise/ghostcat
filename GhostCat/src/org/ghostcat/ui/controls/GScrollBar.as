@@ -1,10 +1,16 @@
 package org.ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
 	
 	import org.ghostcat.display.GNoScale;
+	import org.ghostcat.manager.DragManager;
+	import org.ghostcat.ui.containers.ScrollPanel;
+	import org.ghostcat.ui.controls.scrollClasses.IScrollContent;
+	import org.ghostcat.ui.controls.scrollClasses.ScrollTextContent;
 	
 	/**
 	 * 滚动条 
@@ -19,6 +25,7 @@ package org.ghostcat.ui.controls
 		public var background:DisplayObject;
 		
 		private var _target:DisplayObject;
+		private var _scrollContent:IScrollContent;
 		
 		private var thumbAreaStart:Number;
 		private var thumbAreaLength:Number;
@@ -26,7 +33,7 @@ package org.ghostcat.ui.controls
 		/**
 		 * 方向
 		 */
-		private var _direction:int;
+		private var _direction:int = 1;
 		
 		/**
 		 * 滚动缓动效果
@@ -59,8 +66,17 @@ package org.ghostcat.ui.controls
 		{
 			_target = v;
 			
-			if (!v.scrollRect)
-				v.scrollRect = v.getBounds(v.parent);
+			if (v is IScrollContent)
+				_scrollContent = v as IScrollContent;
+			else if (_target is TextField)
+				_scrollContent = new ScrollTextContent(_target as TextField);
+			else
+				_scrollContent = new ScrollPanel(_target);
+		}
+		
+		public function get scrollContent():IScrollContent
+		{
+			return _scrollContent;
 		}
 		
 		public function get direction():int
@@ -74,30 +90,12 @@ package org.ghostcat.ui.controls
 			invalidateSize();
 		}
 		
-		public function get targetMaxHScrollPostion():int
+		public function setTargetScrollRect(rect:Rectangle):void
 		{
-			var rect:Rectangle = _target.getBounds(_target);
-			return rect.width - _target.scrollRect.width;
+			if (_scrollContent && _scrollContent is DisplayObject)
+				(_scrollContent as DisplayObject).scrollRect = rect;
 		}
 		
-		public function get targetMaxVScrollPostion():int
-		{
-			var rect:Rectangle = _target.getBounds(_target);
-			return rect.height - _target.scrollRect.height;
-		}
-		
-		public function get targetHScrollPostion():int
-		{
-			var rect:Rectangle = _target.getBounds(_target);
-			return	rect.x;
-		}
-		
-		public function get targetVScrollPostion():int
-		{
-			var rect:Rectangle = _target.getBounds(_target);
-			return rect.y;
-		}
-
 		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -136,11 +134,13 @@ package org.ghostcat.ui.controls
 			{
 				thumbAreaStart = upArrow.width;
 				thumbAreaLength = this.width - downArrow.width - thumb.width - thumbAreaStart;
+				background.width = width;
 			}
 			else
 			{
 				thumbAreaStart = upArrow.height;
 				thumbAreaLength = this.height - downArrow.height - thumb.height - thumbAreaStart;
+				background.height = height;
 			}
 			
 			updateThumb()
@@ -148,45 +148,42 @@ package org.ghostcat.ui.controls
 		
 		protected function updateThumb():void
 		{
+			if (!_scrollContent)
+				return;
+			
 			var p:Number;
 			if (direction == 0)
 			{
-				p = targetHScrollPostion / targetMaxHScrollPostion;
+				p = _scrollContent.scrollH / _scrollContent.maxScrollH;
 				thumb.x = thumbAreaStart + thumbAreaLength * p;
 			}
 			else
 			{
-				p = targetVScrollPostion / targetMaxVScrollPostion;
+				p = _scrollContent.scrollV / _scrollContent.maxScrollV;
 				thumb.y = thumbAreaStart + thumbAreaLength * p;
 			}
 		}
 		
 		protected function thumbMouseDownHandler(event:MouseEvent):void
 		{
-			stage.addEventListener(MouseEvent.MOUSE_UP,thumbMouseUpHandler);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE,thumbMouseMoveHandler);
+			var rect:Rectangle;
 			if (direction == 0)
-				thumb.startDrag(false,new Rectangle(thumbAreaStart,thumb.y,thumbAreaLength,thumb.y));
+				rect = new Rectangle(thumbAreaStart,thumb.y,thumbAreaLength,thumb.y);
 			else
-				thumb.startDrag(false,new Rectangle(thumb.x,thumbAreaStart,thumb.x,thumbAreaLength));
-		}
-		
-		protected function thumbMouseUpHandler(event:MouseEvent):void
-		{
-			stage.removeEventListener(MouseEvent.MOUSE_UP,thumbMouseUpHandler);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE,thumbMouseMoveHandler);
-			thumb.stopDrag();
-		}
-		
-		protected function thumbMouseMoveHandler(event:MouseEvent):void
-		{
-			var rect:Rectangle = target.scrollRect;
-			if (direction == 0)
-				rect.x = targetMaxHScrollPostion * (thumb.x - thumbAreaStart) / thumbAreaLength;
-			else
-				rect.y = targetMaxVScrollPostion * (thumb.y - thumbAreaStart) / thumbAreaLength;
+				rect = new Rectangle(thumb.x,thumbAreaStart,thumb.x,thumbAreaLength);
 				
-			target.scrollRect = rect;
+			DragManager.startDrag(thumb,rect,null,thumbMouseMoveHandler);
+		}
+		
+		protected function thumbMouseMoveHandler(event:Event):void
+		{
+			if (!_scrollContent)
+				return;
+			
+			if (direction == 0)
+				_scrollContent.scrollH = _scrollContent.maxScrollH * (thumb.x - thumbAreaStart) / thumbAreaLength;
+			else
+				_scrollContent.scrollV = _scrollContent.maxScrollV * (thumb.y - thumbAreaStart) / thumbAreaLength;
 		}
 		
 		public override function destory() : void
@@ -202,8 +199,6 @@ package org.ghostcat.ui.controls
 				thumb.destory();
 			
 				thumb.removeEventListener(MouseEvent.MOUSE_DOWN,thumbMouseDownHandler);
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE,thumbMouseMoveHandler);
-				stage.removeEventListener(MouseEvent.MOUSE_UP,thumbMouseUpHandler);
 			}
 		}
 	}

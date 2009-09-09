@@ -33,6 +33,11 @@ package org.ghostcat.operation
 			this.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
+		/**
+		 * 获取此属性时会进行解码，速度很慢
+		 * @return 
+		 * 
+		 */
 		public override function get data() : *
 		{
 			var bytes:ByteArray = super.data as ByteArray;
