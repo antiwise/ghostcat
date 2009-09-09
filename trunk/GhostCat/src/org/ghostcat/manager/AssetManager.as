@@ -10,6 +10,7 @@ package org.ghostcat.manager
 	import org.ghostcat.operation.LoadOper;
 	import org.ghostcat.operation.LoadTextOper;
 	import org.ghostcat.operation.Queue;
+	import org.ghostcat.ui.controls.GProgressBar;
 	import org.ghostcat.util.Singleton;
 
 	/**
@@ -51,23 +52,48 @@ package org.ghostcat.manager
 		public var queue:Queue;
 		
 		/**
+		 * 进度条
+		 */
+		public var progressBar:GProgressBar;
+		
+		/**
 		 * 批量载入资源
 		 * 
 		 * @param res	资源路径列表
+		 * @param names 资源的名称，用于在进度条中显示
 		 * @return 
 		 * 
 		 */
-		public function loadResource(...res):Queue
+		public function loadResource(res:Array,names:Array=null):Queue
 		{
 			if (!queue)
 				queue = new Queue();
 			
+			queue.addEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
+			queue.addEventListener(OperationEvent.OPERATION_COMPLETE,queueCompleteHandler);
+			
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(assetBase + res[i]);
+				if (names && names[i])
+					oper.name = names[i];
+				
 				oper.commit(queue);
 			}
+			
 			return queue;
+		}
+		
+		private function changeProgressTargetHandler(event:OperationEvent):void
+		{
+			if (progressBar)
+				progressBar.target = (event.childOper as LoadOper).eventDispatcher;
+		}
+		
+		private function queueCompleteHandler(event:OperationEvent):void
+		{
+			queue.removeEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
+			queue.removeEventListener(OperationEvent.OPERATION_COMPLETE,queueCompleteHandler);
 		}
 		
 		/**
@@ -85,17 +111,21 @@ package org.ghostcat.manager
 			
 			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
 			return queue;
+		
+			
 		}
 		
 		private function resConfigHandler(event:OperationEvent):void
 		{
 			var xml:XML = new XML((event.oper as LoadTextOper).data);
+			var res:Array = [];
+			var names:Array = [];
 			for each (var child:XML in xml.children())
 			{
-				var oper:LoadOper = new LoadOper(child.@url.toString());
-				oper.name = child.@name.toString();
-				oper.commit(queue);
+				res.push(child.@url.toString());
+				names.push(child.@name.toString());
 			}
+			loadResource(res,names);
 		}
 		
 		/**
