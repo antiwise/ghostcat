@@ -38,7 +38,7 @@ package org.ghostcat.operation
 			var bytes:ByteArray = super.data as ByteArray;
 			var gif:GIFDecoder = new GIFDecoder();
 			gif.read(bytes);
-			return gif.getImages();
+			return gif.getBitmapDatas();
 		}
 	}
 }
