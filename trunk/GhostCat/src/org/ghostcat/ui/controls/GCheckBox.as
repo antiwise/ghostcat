@@ -3,7 +3,6 @@ package org.ghostcat.ui.controls
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	
-	import org.ghostcat.skin.CheckBoxIconSkin;
 	import org.ghostcat.util.ClassFactory;
 	
 	/**
@@ -14,7 +13,9 @@ package org.ghostcat.ui.controls
 	 */
 	public class GCheckBox extends GButton
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(CheckBoxIconSkin);
+		[Embed(skinClass="org.ghostcat.skin.CheckBoxIconSkin")]
+		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
 		
 		/**
 		 * 值
