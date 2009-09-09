@@ -244,6 +244,7 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
+    <classEntry path="org.ghostcat.operation.LoadGIFOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

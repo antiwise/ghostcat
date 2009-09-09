@@ -44,37 +44,9 @@ package org.ghostcat.operation
 		public function LoadTextOper(url:String,embedClass:Class=null,compress:Boolean=false,rhandler:Function=null,fhandler:Function=null)
 		{
 			super(url,embedClass,rhandler,fhandler)
-		}
 		
-		public override function execute() : void
-		{
-			super.execute();
-			
-			var urlLoader:URLLoader = new URLLoader();
-			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-			urlLoader.addEventListener(Event.COMPLETE,result);
-			urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
-			urlLoader.load(new URLRequest(url));
-				
-			obj = urlLoader;
-		}
-		
-		public override function fault(event:*=null):void
-		{
-			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
-			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
-			
-			if (embedClass)
-			{
-				(obj as URLLoader).data = new embedClass();
-				embedClass = null;
-					
-				super.result(event);
-			}
-			else
-			{
-				super.fault(event);
-			}
+			this.type = LoadOper.URLLOADER;
+			this.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
 		public override function get data() : *

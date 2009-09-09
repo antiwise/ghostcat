@@ -17,7 +17,7 @@ package
 	public class PackageExample extends Sprite
 	{
 		[Embed(source = "../bin-debug/CollisionExample.swf",mimeType="application/octet-stream")]
-		public var app:Class;
+		public var app:Class; 
 		public function PackageExample()
 		{
 			var loader:Loader = new Loader();

@@ -115,14 +115,11 @@
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
 				if (useCurrentDomain)
 				{
+					var loaderContext:LoaderContext = new LoaderContext(true,ApplicationDomain.currentDomain);
 					if (Security.sandboxType == Security.REMOTE)
-					{
-						loader.load(new URLRequest(url),new LoaderContext(true,ApplicationDomain.currentDomain,SecurityDomain.currentDomain));
-					}
-					else
-					{
-						loader.load(new URLRequest(url),new LoaderContext(true,ApplicationDomain.currentDomain));
-					}
+						loaderContext.securityDomain = SecurityDomain.currentDomain;
+						
+					loader.load(new URLRequest(url),loaderContext);
 				}
 				else
 				{
@@ -170,8 +167,12 @@
 				}
 				else if (obj is URLLoader)
 				{
-					var text:String = byteArr.readUTFBytes(byteArr.bytesAvailable);
-					(obj as URLLoader).data = text;
+					var urlLoader:URLLoader = obj as URLLoader;
+					
+					if (urlLoader.dataFormat == URLLoaderDataFormat.BINARY)
+						urlLoader.data = byteArr;
+					else
+						urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
 					
 					super.result(event);
 				}
