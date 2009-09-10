@@ -137,6 +137,7 @@
     <classEntry path="org.ghostcat.operation.FunctionOper"/>
     <classEntry path="org.ghostcat.operation.GroupOper"/>
     <classEntry path="org.ghostcat.operation.IfOper"/>
+    <classEntry path="org.ghostcat.operation.LoadGIFOper"/>
     <classEntry path="org.ghostcat.operation.LoadOper"/>
     <classEntry path="org.ghostcat.operation.LoadTextOper"/>
     <classEntry path="org.ghostcat.operation.Oper"/>
@@ -149,6 +150,9 @@
     <classEntry path="org.ghostcat.operation.TweenOper"/>
     <classEntry path="org.ghostcat.operation.WaitOper"/>
     <classEntry path="org.ghostcat.operation.WatchOper"/>
+    <classEntry path="org.ghostcat.operation.effect.FlashEffect"/>
+    <classEntry path="org.ghostcat.operation.effect.IEffect"/>
+    <classEntry path="org.ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="org.ghostcat.operation.effect.TweenEffect"/>
     <classEntry path="org.ghostcat.operation.quest.Quest"/>
     <classEntry path="org.ghostcat.operation.quest.QuestEvent"/>
@@ -171,11 +175,11 @@
     <classEntry path="org.ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsPath"/>
     <classEntry path="org.ghostcat.parse.graphics.GraphicsRect"/>
-    <classEntry path="org.ghostcat.skin.code.ArowSkin"/>
-    <classEntry path="org.ghostcat.skin.code.BoxSkin"/>
-    <classEntry path="org.ghostcat.skin.code.PointSkin"/>
-    <classEntry path="org.ghostcat.skin.code.ProgressSkin"/>
-    <classEntry path="org.ghostcat.skin.code.ToolTipSkin"/>
+    <classEntry path="org.ghostcat.skin.ArowSkin"/>
+    <classEntry path="org.ghostcat.skin.BoxSkin"/>
+    <classEntry path="org.ghostcat.skin.PointSkin"/>
+    <classEntry path="org.ghostcat.skin.ProgressSkin"/>
+    <classEntry path="org.ghostcat.skin.ToolTipSkin"/>
     <classEntry path="org.ghostcat.text.ANSI"/>
     <classEntry path="org.ghostcat.text.IME"/>
     <classEntry path="org.ghostcat.text.PinYin"/>
@@ -204,6 +208,8 @@
     <classEntry path="org.ghostcat.ui.controls.GServerWaitBar"/>
     <classEntry path="org.ghostcat.ui.controls.GText"/>
     <classEntry path="org.ghostcat.ui.controls.GVScrollBar"/>
+    <classEntry path="org.ghostcat.ui.controls.scrollClasses.IScrollContent"/>
+    <classEntry path="org.ghostcat.ui.controls.scrollClasses.ScrollTextContent"/>
     <classEntry path="org.ghostcat.util.ArrayUtil"/>
     <classEntry path="org.ghostcat.util.Asyn"/>
     <classEntry path="org.ghostcat.util.BitArray"/>
@@ -244,8 +250,6 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
-    <classEntry path="org.ghostcat.operation.LoadGIFOper"/>
-    <classEntry path="org.ghostcat.ui.controls.scrollClasses.ScrollTextContent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -7,10 +7,12 @@ package org.ghostcat.ui.controls
 	import flash.text.TextField;
 	
 	import org.ghostcat.display.GNoScale;
+	import org.ghostcat.events.TickEvent;
 	import org.ghostcat.manager.DragManager;
 	import org.ghostcat.ui.containers.ScrollPanel;
 	import org.ghostcat.ui.controls.scrollClasses.IScrollContent;
 	import org.ghostcat.ui.controls.scrollClasses.ScrollTextContent;
+	import org.ghostcat.util.Tick;
 	
 	/**
 	 * 滚动条 
@@ -33,13 +35,23 @@ package org.ghostcat.ui.controls
 		/**
 		 * 方向
 		 */
-		private var _direction:int = 1;
+		private var _direction:int;
 		
 		/**
 		 * 滚动缓动效果
 		 */
 
 		public var tweenFunction:Function;
+		
+		/**
+		 * 滚动速度
+		 */
+		public var detra:int = 5;
+		
+		/**
+		 * 快速滚动速度
+		 */
+		public var pageDetra:int = 25;
 		
 		/**
 		 * 滚动模糊效果
@@ -55,6 +67,8 @@ package org.ghostcat.ui.controls
 				this.fields = fields;
 			
 			super(skin, replace);
+			
+			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		public function get target():DisplayObject
@@ -118,8 +132,10 @@ package org.ghostcat.ui.controls
 			}
 				
 			if (content.hasOwnProperty(backgroundField))
+			{
 				this.background = content[backgroundField];
-				
+				this.background.addEventListener(MouseEvent.MOUSE_DOWN,backgroundHandler);
+			}
 			invalidateSize();
 		}
 		
@@ -127,18 +143,21 @@ package org.ghostcat.ui.controls
 		{
 			super.updateSize();
 			
-			this.downArrow.x = this.width - this.downArrow.width;
-			this.downArrow.y = this.height - this.downArrow.height;
+			if (this.downArrow)
+			{
+				this.downArrow.x = this.width - this.downArrow.width;
+				this.downArrow.y = this.height - this.downArrow.height;
+			}
 			
 			if (direction == 0)
 			{
-				thumbAreaStart = upArrow.width;
+				thumbAreaStart = upArrow ? upArrow.width : 0;
 				thumbAreaLength = this.width - downArrow.width - thumb.width - thumbAreaStart;
 				background.width = width;
 			}
 			else
 			{
-				thumbAreaStart = upArrow.height;
+				thumbAreaStart = upArrow ? upArrow.height : 0;
 				thumbAreaLength = this.height - downArrow.height - thumb.height - thumbAreaStart;
 				background.height = height;
 			}
@@ -175,7 +194,7 @@ package org.ghostcat.ui.controls
 			DragManager.startDrag(thumb,rect,null,thumbMouseMoveHandler);
 		}
 		
-		protected function thumbMouseMoveHandler(event:Event):void
+		protected function thumbMouseMoveHandler(event:Event=null):void
 		{
 			if (!_scrollContent)
 				return;
@@ -186,19 +205,81 @@ package org.ghostcat.ui.controls
 				_scrollContent.scrollV = _scrollContent.maxScrollV * (thumb.y - thumbAreaStart) / thumbAreaLength;
 		}
 		
+		protected function tickHandler(event:TickEvent):void
+		{
+			if (direction == 0)
+			{
+				if (upArrow && upArrow.mouseDown)
+				{
+					_scrollContent.scrollH -= detra;
+					updateThumb();
+				}
+				
+				if (downArrow && downArrow.mouseDown)
+				{
+					_scrollContent.scrollH += detra;
+					updateThumb();
+				}
+			}
+			else
+			{
+				if (upArrow && upArrow.mouseDown)
+				{
+					_scrollContent.scrollV -= detra;
+					updateThumb();
+				}
+				
+				if (downArrow && downArrow.mouseDown)
+				{
+					_scrollContent.scrollV += detra;
+					updateThumb();
+				}
+			}
+		}
+		
+		protected function backgroundHandler(event:MouseEvent):void
+		{
+			if (direction == 0)
+			{
+				if (thumb.mouseX > pageDetra + thumb.width)
+					thumb.x += pageDetra;
+				else if (thumb.mouseX < -pageDetra)
+					thumb.x -= pageDetra;
+				else
+					thumb.x += thumb.mouseX;
+			}
+			else
+			{
+				if (thumb.mouseY > pageDetra + thumb.height)
+					thumb.y += pageDetra;
+				else if (thumb.mouseY < -pageDetra)
+					thumb.y -= pageDetra;
+				else
+					thumb.y += thumb.mouseY;
+			}
+			thumbMouseMoveHandler();
+		}
+		
 		public override function destory() : void
 		{
 			super.destory();
 			
+			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+			
 			if (upArrow) 
 				upArrow.destory();
+			
 			if (downArrow) 
 				downArrow.destory();
+			
 			if (thumb) 
 			{
 				thumb.destory();
 				thumb.removeEventListener(MouseEvent.MOUSE_DOWN,thumbMouseDownHandler);
 			}
+			
+			if (background)
+				background.removeEventListener(MouseEvent.MOUSE_DOWN,backgroundHandler);
 		}
 	}
 }

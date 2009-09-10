@@ -53,6 +53,10 @@ package org.ghostcat.ui.controls
 		
 		private var _mouseOver:Boolean = false;
 		
+		private var _label:String;
+		
+		private var labelField:GText;
+		
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
 		 */
@@ -93,11 +97,21 @@ package org.ghostcat.ui.controls
 		 */
 		public var toggle:Boolean;
 		
+		/**
+		 * 鼠标是否按下
+		 */
+		public function get mouseDown():Boolean
+		{
+			return _mouseDown;
+		}
 		
-		
-		private var _label:String;
-		private var labelField:GText;
-		
+		/**
+		 * 鼠标是否触发
+		 */
+		public function get mouseOver():Boolean
+		{
+			return _mouseOver;
+		}
 		
 		public function GButton(skin:MovieClip, replace:Boolean=true, textPos:Point=null)
 		{

@@ -51,7 +51,7 @@ package org.ghostcat.display.movieclip
 				//最开始的初始化，当设置了Label后，将首先在第一个Label内循环
 				mc.stop();
 				clearQueue();
-				if (labels)
+				if (labels && labels.length>0)
 					setLabel(labels[0].name,-1);
 			}
 		}
