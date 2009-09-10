@@ -180,7 +180,7 @@ package org.ghostcat.manager
 		 */
 		public function replaceAllTextField(obj:DisplayObject):void
 		{
-			var objs:TextField = SearchUtil.findChildrenByClass(obj,TextField) as TextField;
+			var objs:Array = SearchUtil.findChildrenByClass(obj,TextField);
 			for each (var item:TextField in objs)
 				item.text = getString(item.text);
 		}
