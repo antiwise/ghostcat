@@ -7,7 +7,7 @@ package org.ghostcat.ui.controls
 	import flash.events.ProgressEvent;
 	
 	import org.ghostcat.util.ClassFactory;
-	import org.ghostcat.skin.code.ProgressSkin;
+	import org.ghostcat.skin.ProgressSkin;
 	import org.ghostcat.util.LoadHelper;
 	
 	/**

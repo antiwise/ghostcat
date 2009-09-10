@@ -6,7 +6,7 @@ package org.ghostcat.display.graphics
 	
 	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.display.GBase;
-	import org.ghostcat.skin.code.PointSkin;
+	import org.ghostcat.skin.PointSkin;
 	import org.ghostcat.util.CallLater;
 
 	/**

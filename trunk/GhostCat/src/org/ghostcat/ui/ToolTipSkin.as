@@ -4,7 +4,7 @@ package org.ghostcat.ui
 	
 	import org.ghostcat.util.ClassFactory;
 	import org.ghostcat.ui.controls.GText;
-	import org.ghostcat.skin.code.ArowSkin;
+	import org.ghostcat.skin.ArowSkin;
 	
 	/**
 	 * IToolTipSkin的默认实现

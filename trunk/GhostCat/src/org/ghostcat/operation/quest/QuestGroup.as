@@ -20,16 +20,13 @@ package org.ghostcat.operation.quest
 		
 		public function load(quests:Array,startList:BitArray=null,finishList:BitArray=null):void
 		{
-			var i:int;
-			var q:Quest;
-			
 			this.quests = quests;
 			this.startList = startList;
 			this.finishList = finishList;
 			
-			for (i = 0;i < quests.length;i++)
+			for (var i:int = 0;i < quests.length;i++)
 			{
-				q = finishList[i] as Quest;
+				var q:Quest = finishList[i] as Quest;
 				q.addEventListener(QuestEvent.QUEST_START,questStartHandler);
 				q.addEventListener(QuestEvent.QUEST_COMPLETE,questCompleteHandler);
 				
