@@ -1,4 +1,4 @@
-package org.ghostcat.skin.code
+package org.ghostcat.skin
 {
 	import flash.display.Sprite;
 	

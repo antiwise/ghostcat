@@ -1,4 +1,4 @@
-package org.ghostcat.skin.code
+package org.ghostcat.skin
 {
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Point;
