@@ -50,6 +50,8 @@ package org.ghostcat.ui.containers
 		
 		public function set scrollH(v:int):void
 		{
+			v = Math.max(0,Math.min(v,maxScrollH))
+			
 			var rect:Rectangle = scrollRect.clone();
 			rect.x = v;
 			scrollRect = rect;
@@ -62,6 +64,8 @@ package org.ghostcat.ui.containers
 		
 		public function set scrollV(v:int):void
 		{
+			v = Math.max(0,Math.min(v,maxScrollV))
+			
 			var rect:Rectangle = scrollRect.clone();
 			rect.y = v;
 			scrollRect = rect;

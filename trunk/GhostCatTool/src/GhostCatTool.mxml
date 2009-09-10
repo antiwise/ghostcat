@@ -14,6 +14,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.managers.SystemManager;
 			import mx.controls.ComboBox;
 			import mx.controls.Alert;
 			import mx.containers.TitleWindow;
