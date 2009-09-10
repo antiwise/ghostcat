@@ -148,7 +148,7 @@ package org.ghostcat.ui.controls
 		
 		protected function updateThumb():void
 		{
-			if (!_scrollContent)
+			if (!_scrollContent || !thumb)
 				return;
 			
 			var p:Number;
@@ -197,7 +197,6 @@ package org.ghostcat.ui.controls
 			if (thumb) 
 			{
 				thumb.destory();
-			
 				thumb.removeEventListener(MouseEvent.MOUSE_DOWN,thumbMouseDownHandler);
 			}
 		}

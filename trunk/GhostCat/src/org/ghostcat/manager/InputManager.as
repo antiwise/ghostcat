@@ -21,7 +21,7 @@
      * 检测暂离，检测按钮是否按下，检测单独按键的一次点击（非组合键），鼠标手势，鼠标右键，连续按键
      * 实现方式是向外部发布InputEvent事件
      * 
-     * 启用鼠标右键时，为了禁止FLASH自己的右键菜单，必须将FLASH的wmode改为opaque
+     * 启用鼠标右键时，为了禁止FLASH自己的右键菜单，必须将FLASH的wmode改为opaque。已经自动提供了屏蔽浏览器右键的功能。
      *  
      * @author flashyiyi
      * 
@@ -116,17 +116,17 @@
     	 * 注册并开始使用，必须首先执行这个方法
     	 * 
     	 * @param source	舞台对象
+    	 * @param activeRightClick	是否启用鼠标右键。为了禁止FLASH自己的右键菜单，必须将FLASH的wmode改为opaque，激活后将自动屏蔽浏览器本身的右键菜单。
     	 * 
     	 */    	
-    	public static function register(source:DisplayObject):void
+    	public static function register(source:DisplayObject,activeRightClick:Boolean = true):void
         {
         	var ins:InputManager = Singleton.getInstanceOrCreate(InputManager) as InputManager;
         	ins._objAtMouse = ins.stage = source.stage;
         	
-        	if (ExternalInterface.available)//鼠标右键
+        	if (activeRightClick && ExternalInterface.available)//鼠标右键
         	{
-        		var jsCode:String = new rightClickJSCode().toString();
-        		ExternalInterface.call("eval",jsCode);
+        		ExternalInterface.call("eval",new rightClickJSCode().toString());
         		ExternalInterface.call("RightClick.init",getQualifiedClassName(source.root));
         		ExternalInterface.addCallback("openRightClick", ins.rightClickHandler);
         	}
