@@ -1,13 +1,17 @@
 package org.ghostcat.manager
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.text.TextField;
 	
-	import org.ghostcat.util.Singleton;
 	import org.ghostcat.events.GTextEvent;
 	import org.ghostcat.operation.LoadOper;
+	import org.ghostcat.operation.Queue;
 	import org.ghostcat.text.TextUtil;
 	import org.ghostcat.util.ReflectUtil;
+	import org.ghostcat.util.SearchUtil;
+	import org.ghostcat.util.Singleton;
 	
 	
 	/**
@@ -50,10 +54,10 @@ package org.ghostcat.manager
 		 * @return 
 		 * 
 		 */		
-		public function load(url:String,embedClass:Class=null):LoadOper
+		public function load(url:String,embedClass:Class=null,queue:Queue=null):LoadOper
 		{
 			var loader:LoadOper = new LoadOper(url,embedClass,completeHandler);
-			loader.commit();
+			loader.commit(queue);
 			return loader;
 		}
 		
@@ -167,6 +171,18 @@ package org.ghostcat.manager
 				result = result.replace(new RegExp("\\{"+conv+"\\}","g"),text);
 			}
 			return result;
+		}
+		
+		/**
+		 * 将容器里的所有文本框根据其内容里的文本标示替换成实际的文本
+		 * @param obj
+		 * 
+		 */
+		public function replaceAllTextField(obj:DisplayObject):void
+		{
+			var objs:TextField = SearchUtil.findChildrenByClass(obj,TextField) as TextField;
+			for each (var item:TextField in objs)
+				item.text = getString(item.text);
 		}
 	}
 }

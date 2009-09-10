@@ -235,8 +235,6 @@ package org.ghostcat.ui
 		
 		public override function destory():void
 		{
-			super.destory();
-			
 			if (stage){
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
@@ -246,6 +244,8 @@ package org.ghostcat.ui
 				stage.removeEventListener(Event.ENTER_FRAME,this.enterFrameHandler);
 				stage.removeEventListener(Event.MOUSE_LEAVE,this.mouseLeaveHandler);
 			}
+		
+			super.destory();
 		} 
 	}
 }

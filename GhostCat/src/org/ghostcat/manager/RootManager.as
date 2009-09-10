@@ -1,11 +1,14 @@
 package org.ghostcat.manager
 {
-	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.ContextMenuEvent;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 舞台对象相关扩展。
@@ -38,11 +41,27 @@ package org.ghostcat.manager
 			return root.stage;
 		}
 		
-		public static function register(root:Sprite,mode:int = 0,menuMode:int = 0):void
+		public static function register(root:Sprite,mode:int = 1,menuMode:int = 1):void
 		{
 			_root = root;
 			setMode(mode);
 			setMenuMode(menuMode);
+		}
+		
+		public static function addURLMenu(label:String,url:String):void
+		{
+			var item:ContextMenuItem = new ContextMenuItem(label);
+            if (url)
+            	item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuItemSelectHandler);
+            
+            var menu:ContextMenu = root.contextMenu;
+			menu.customItems.push(item);
+            root.contextMenu = menu;
+            
+            function menuItemSelectHandler(event:ContextMenuEvent):void
+            {
+            	navigateToURL(new URLRequest(url),"_blank");
+            }
 		}
 		
 		/**
@@ -94,12 +113,12 @@ package org.ghostcat.manager
 		 */		
 		public static function getValue(key:String):*
 		{
-			if (root.loaderInfo.hasOwnProperty(key)){
+			if (root.loaderInfo.hasOwnProperty(key))
 				return root.loaderInfo.parameters[key];
-			}else{
+			else
 				return _parameters[key];
-			}
 		}
+		
 		/**
 		 * 设置测试用FLASHVARS
 		 *  
