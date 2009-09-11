@@ -4,7 +4,7 @@ package org.ghostcat.parse.graphics
 	
 	import org.ghostcat.parse.DisplayParse;
 
-	public class GraphicsLineStyle extends DisplayParse
+	public class GraphicsLineStyle extends DisplayParse implements IGraphicsLineStyle
 	{
 		public var thickness:Number;
 		public var color:uint;

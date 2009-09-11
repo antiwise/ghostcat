@@ -1,7 +1,7 @@
 package org.ghostcat.parse
 {
 	/**
-	 * 这个类用于使用同样的方式来处理操作
+	 * 这个类用于将操作保存为数据
 	 * 
 	 * @author flashyiyi
 	 * 

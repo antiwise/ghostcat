@@ -5,7 +5,7 @@ package org.ghostcat.parse.graphics
 	
 	import org.ghostcat.parse.DisplayParse;
 
-	public class GraphicsGradientLineStyle extends DisplayParse
+	public class GraphicsGradientLineStyle extends DisplayParse implements IGraphicsLineStyle
 	{
 		public var type:String;
 		public var colors:Array;

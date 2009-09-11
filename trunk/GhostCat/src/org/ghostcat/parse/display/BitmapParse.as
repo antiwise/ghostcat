@@ -2,6 +2,7 @@ package org.ghostcat.parse.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
@@ -16,6 +17,8 @@ package org.ghostcat.parse.display
 		public var fillColor:uint = 0x00FFFFFF;
 		public var pixelSnapping:String = "auto";
 		public var smoothing:Boolean = false;
+		
+		public var grid9:Grid9Parse;
 		
 		public function BitmapParse(width:int,height:int,pos:Point=null,transparent:Boolean = true,fillColor:uint = 0x00FFFFFF,pixelSnapping:String = "auto",smoothing:Boolean = false)
 		{
@@ -42,6 +45,14 @@ package org.ghostcat.parse.display
 		{
 			super.parseContainer(target);
 			target.addChild(createBitmap());
+		}
+		
+		protected override function parseDisplay(target:DisplayObject) : void
+		{
+			super.parseDisplay(target);
+			
+			if (grid9)
+				grid9.parse(target);
 		}
 		
 		public static function createBitmap(width:int,height:int,pos:Point=null,transparent:Boolean = true,fillColor:uint = 0x00FFFFFF,pixelSnapping:String = "auto",smoothing:Boolean = false):Bitmap

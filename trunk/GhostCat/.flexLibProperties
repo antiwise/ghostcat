@@ -150,9 +150,6 @@
     <classEntry path="org.ghostcat.operation.TweenOper"/>
     <classEntry path="org.ghostcat.operation.WaitOper"/>
     <classEntry path="org.ghostcat.operation.WatchOper"/>
-    <classEntry path="org.ghostcat.operation.effect.FlashEffect"/>
-    <classEntry path="org.ghostcat.operation.effect.IEffect"/>
-    <classEntry path="org.ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="org.ghostcat.operation.effect.TweenEffect"/>
     <classEntry path="org.ghostcat.operation.quest.Quest"/>
     <classEntry path="org.ghostcat.operation.quest.QuestEvent"/>
@@ -196,6 +193,7 @@
     <classEntry path="org.ghostcat.ui.RootLoader"/>
     <classEntry path="org.ghostcat.ui.ToolTipSkin"/>
     <classEntry path="org.ghostcat.ui.ToolTipSprite"/>
+    <classEntry path="org.ghostcat.ui.UIConst"/>
     <classEntry path="org.ghostcat.ui.containers.ScrollPanel"/>
     <classEntry path="org.ghostcat.ui.controls.GButton"/>
     <classEntry path="org.ghostcat.ui.controls.GCheckBox"/>
@@ -250,6 +248,7 @@
     <classEntry path="org.ghostcat.util.easing.Quint"/>
     <classEntry path="org.ghostcat.util.easing.Sine"/>
     <classEntry path="org.ghostcat.util.easing.Strong"/>
+    <classEntry path="org.ghostcat.parse.display.ShapeParse"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
