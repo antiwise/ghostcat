@@ -1,7 +1,6 @@
 package org.ghostcat.util
 {
 	import flash.utils.ByteArray;
-	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * 
@@ -105,7 +104,6 @@ package org.ghostcat.util
 			var result:Array = [];
 			for (var i:int = 0;i < objs.length;i++)
 				result.push(cmd(objs[i]));
-			
 			return result;
 		}
 		
