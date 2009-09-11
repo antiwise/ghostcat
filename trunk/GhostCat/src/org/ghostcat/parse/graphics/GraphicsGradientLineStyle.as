@@ -27,7 +27,7 @@ package org.ghostcat.parse.graphics
 			this.interpolationMethod = interpolationMethod;
 			this.focalPointRatio = focalPointRatio;
 		}
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			target.lineGradientStyle(type,colors,alpha,ratios,matrix,spreadMethod,interpolationMethod,focalPointRatio);

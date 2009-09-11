@@ -61,11 +61,13 @@
 			
 			protected function list_changeHandler(event:ListEvent):void
 			{
+				var itemName:String = list.selectedItem.toString();
+				
 				SoundMixer.stopAll();
 				
 				var c:Class;
 				if (loader.content)
-					c = loader.contentLoaderInfo.applicationDomain.getDefinition(list.selectedItem.toString()) as Class
+					c = loader.contentLoaderInfo.applicationDomain.getDefinition(itemName) as Class
 				else
 					return;
 				
@@ -110,6 +112,11 @@
 				{
 					image.source = o;
 					tree.dataProvider = null;
+				}
+				else if (o is ByteArray)
+				{
+					var file:FileReference = new FileReference()
+					file.save(o as ByteArray,itemName.replace(".","_")+".swf");
 				}
 			}
 			

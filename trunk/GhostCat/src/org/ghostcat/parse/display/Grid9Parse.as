@@ -20,7 +20,7 @@ package org.ghostcat.parse.display
 			this.height = height;
 		}
 		
-		protected override function parseDisplay(target:DisplayObject) : void
+		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
 			

@@ -14,15 +14,17 @@ package org.ghostcat.parse.display
 		public var fill:IGraphicsFill;
 		public var parses:Array;
 		public var grid9:Grid9Parse;
-		public function ShapeParse(parses:Array,line:IGraphicsLineStyle=null,fill:IGraphicsFill=null)
+		public function ShapeParse(parses:Array,line:IGraphicsLineStyle=null,fill:IGraphicsFill=null,grid9:Grid9Parse=null)
 		{
 			this.parses = parses;
 			
 			this.line = line;
 			this.fill = fill;
+			
+			this.grid9 = grid9;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			
@@ -31,16 +33,22 @@ package org.ghostcat.parse.display
 			
 			if (fill)
 				fill.parse(target);
-				
-			if (parses)
-				for (var i:int = 0;i < parses.length;i++)
-					(parse[i] as DisplayParse).parse(target);
+			
+			parseShape(target);
 			
 			if (fill)
 				new GraphicsEndFill().parse(target);
 		}
+		public function parseShape(target:Graphics) : void
+		{
+			if (parses)
+			{
+				for (var i:int = 0;i < parses.length;i++)
+					(parse[i] as DisplayParse).parse(target);
+			}
+		}
 		
-		protected override function parseDisplay(target:DisplayObject) : void
+		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
 			

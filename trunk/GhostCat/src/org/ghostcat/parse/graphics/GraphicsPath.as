@@ -25,7 +25,7 @@ package org.ghostcat.parse.graphics
 			this.points = points;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			var p:Point = points[0] as Point;
 			var p2:Point;

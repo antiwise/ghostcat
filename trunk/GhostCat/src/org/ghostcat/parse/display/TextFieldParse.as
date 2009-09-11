@@ -20,7 +20,7 @@ package org.ghostcat.parse.display
 			this.defaultTextFormat = defaultTextFormat;
 		}
 		
-		protected override function parseContainer(target:DisplayObjectContainer) : void
+		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);
 			target.addChild(createTextField());

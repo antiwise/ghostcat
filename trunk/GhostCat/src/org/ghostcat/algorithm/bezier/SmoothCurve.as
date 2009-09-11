@@ -142,7 +142,7 @@ package org.ghostcat.algorithm.bezier
 			}
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			refresh();
 			

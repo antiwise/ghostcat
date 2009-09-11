@@ -3,6 +3,7 @@ package org.ghostcat.debug
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	import flash.net.sendToURL;
+	import flash.system.Security;
 	import flash.utils.getQualifiedClassName;
 	
 	import org.ghostcat.util.Util;
@@ -157,6 +158,16 @@ package org.ghostcat.debug
 		public static function get isDebugSWF():Boolean
 		{
 			return new Error().getStackTrace().search(/:[0-9]+]$/m) > -1;
+		}
+		
+		/**
+		 * 判断是否在网络上
+		 * @return 
+		 * 
+		 */
+		public static function get isNetWork():Boolean
+		{
+			return Security.sandboxType == Security.REMOTE;
 		}
 		
 	}
