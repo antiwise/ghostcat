@@ -20,7 +20,7 @@
  */	
 package org.ghostcat
 {
-	public class Framework
+	public class FrameworkClasses
 	{
 	}
 }
