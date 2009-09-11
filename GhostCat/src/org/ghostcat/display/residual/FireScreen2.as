@@ -7,7 +7,6 @@ package org.ghostcat.display.residual
 	import flash.filters.DisplacementMapFilterMode;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
-	import flash.utils.getTimer;
 
 	/**
 	 * 摆动方式固定的火焰效果（速度稍快）
@@ -17,6 +16,11 @@ package org.ghostcat.display.residual
 	 */
 	public class FireScreen2 extends ResidualScreen
 	{
+		/**
+		 * 缓存次数
+		 */
+		public var cacheNumber:int = 10;
+				
 		private var maskBitmapDatas:Array;
 		private var maskIndex:int = 0;
 		
@@ -39,7 +43,7 @@ package org.ghostcat.display.residual
 			destoryMaskBitmapDatas();
 			
 			maskBitmapDatas = [];
-			for (var i:int = 0;i < 10;i++)
+			for (var i:int = 0;i < cacheNumber;i++)
 			{
 				var maskBitmapData:BitmapData = new BitmapData(width,height);
 				maskBitmapData.perlinNoise(16, 16, 1, i, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest])

@@ -36,7 +36,7 @@ package org.ghostcat.parse
 		 * @param target
 		 * 
 		 */
-		protected function parseGraphics(target:Graphics):void
+		public function parseGraphics(target:Graphics):void
 		{
 			
 		}
@@ -46,7 +46,7 @@ package org.ghostcat.parse
 		 * @param target
 		 * 
 		 */
-		protected function parseContainer(target:DisplayObjectContainer):void
+		public function parseContainer(target:DisplayObjectContainer):void
 		{
 			
 		}
@@ -56,7 +56,7 @@ package org.ghostcat.parse
 		 * @param target
 		 * 
 		 */
-		protected function parseDisplay(target:DisplayObject):void
+		public function parseDisplay(target:DisplayObject):void
 		{
 			
 		}

@@ -11,7 +11,7 @@ package org.ghostcat.parse.graphics
 			
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parse(target);
 			target.endFill();

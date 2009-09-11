@@ -19,7 +19,7 @@ package org.ghostcat.parse.graphics
 			this.height = height;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			if (width == height)

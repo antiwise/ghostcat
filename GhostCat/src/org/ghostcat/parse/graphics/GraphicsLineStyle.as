@@ -26,7 +26,7 @@ package org.ghostcat.parse.graphics
 			this.miterLimit = miterLimit;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			target.lineStyle(thickness,color,alpha,pixelHinting,scaleMode,caps,joints,miterLimit);

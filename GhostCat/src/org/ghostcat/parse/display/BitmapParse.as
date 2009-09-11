@@ -41,13 +41,13 @@ package org.ghostcat.parse.display
 			return bitmap;
 		}
 		
-		protected override function parseContainer(target:DisplayObjectContainer) : void
+		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);
 			target.addChild(createBitmap());
 		}
 		
-		protected override function parseDisplay(target:DisplayObject) : void
+		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
 			

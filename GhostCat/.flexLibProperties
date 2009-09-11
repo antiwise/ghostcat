@@ -250,6 +250,9 @@
     <classEntry path="org.ghostcat.util.easing.Strong"/>
     <classEntry path="org.ghostcat.parse.display.ShapeParse"/>
     <classEntry path="org.ghostcat.util.LocalStorage"/>
+    <classEntry path="org.ghostcat.parse.display.RectParse"/>
+    <classEntry path="org.ghostcat.parse.display.EllipseParse"/>
+    <classEntry path="org.ghostcat.parse.display.PathParse"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -14,7 +14,7 @@ package org.ghostcat.parse.graphics
 			this.alpha = alpha;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			target.beginFill(color,alpha);

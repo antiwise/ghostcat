@@ -20,7 +20,7 @@ package org.ghostcat.parse.graphics
 			this.smooth = smooth;
 		}
 		
-		protected override function parseGraphics(target:Graphics) : void
+		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
 			target.beginBitmapFill(bitmap,matrix,repeat,smooth);
