@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
   <includeClasses>
-    <classEntry path="org.ghostcat.Framework"/>
+    <classEntry path="org.ghostcat.FrameworkClasses"/>
     <classEntry path="org.ghostcat.algorithm.BinaryHeap"/>
     <classEntry path="org.ghostcat.algorithm.Point3D"/>
     <classEntry path="org.ghostcat.algorithm.astar.AStar"/>
@@ -253,6 +253,7 @@
     <classEntry path="org.ghostcat.parse.display.RectParse"/>
     <classEntry path="org.ghostcat.parse.display.EllipseParse"/>
     <classEntry path="org.ghostcat.parse.display.PathParse"/>
+    <classEntry path="org.ghostcat.ui.UIBuilder"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
