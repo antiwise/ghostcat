@@ -6,7 +6,7 @@ package org.ghostcat.parse.graphics
 	
 	import org.ghostcat.parse.DisplayParse;
 
-	public class GraphicsBitmapFill extends DisplayParse
+	public class GraphicsBitmapFill extends DisplayParse implements IGraphicsFill
 	{
 		public var bitmap:BitmapData;
 		public var matrix:Matrix;

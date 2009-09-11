@@ -156,9 +156,9 @@ package org.ghostcat.util
 		 * 遍历物体的子对象并执行一次HitTestPoint
 		 * 
 		 * @param target2
-		 * @param x
-		 * @param y
-		 * @param shapeFlag
+		 * @param x	舞台x
+		 * @param y	舞台y
+		 * @param shapeFlag	是否位图检测
 		 * @return 
 		 * 
 		 */

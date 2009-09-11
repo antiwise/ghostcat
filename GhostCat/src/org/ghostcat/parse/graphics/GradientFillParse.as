@@ -5,7 +5,7 @@ package org.ghostcat.parse.graphics
 	
 	import org.ghostcat.parse.DisplayParse;
 
-	public class GradientFillParse extends DisplayParse
+	public class GradientFillParse extends DisplayParse implements IGraphicsFill
 	{
 		public var type:String;
 		public var colors:Array;

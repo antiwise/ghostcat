@@ -4,7 +4,7 @@ package org.ghostcat.parse.graphics
 	
 	import org.ghostcat.parse.DisplayParse;
 
-	public class GraphicsFill extends DisplayParse
+	public class GraphicsFill extends DisplayParse implements IGraphicsFill
 	{
 		public var color:uint;
 		public var alpha:Number = 1;
