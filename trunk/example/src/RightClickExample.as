@@ -3,8 +3,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	
-	import org.ghostcat.events.InputEvent;
-	import org.ghostcat.manager.InputManager;
+	import ghostcat.events.InputEvent;
+	import ghostcat.manager.InputManager;
 	
 	public class RightClickExample extends Sprite
 	{

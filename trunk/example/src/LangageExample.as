@@ -2,11 +2,11 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.events.OperationEvent;
-	import org.ghostcat.extend.JSBridge;
-	import org.ghostcat.manager.LanguageManager;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.ui.controls.GText;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.extend.JSBridge;
+	import ghostcat.manager.LanguageManager;
+	import ghostcat.manager.RootManager;
+	import ghostcat.ui.controls.GText;
 	
 	public class LangageExample extends Sprite
 	{

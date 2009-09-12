@@ -2,8 +2,8 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.display.graphics.ControlRect;
-	import org.ghostcat.ui.CursorSprite;
+	import ghostcat.display.graphics.ControlRect;
+	import ghostcat.ui.CursorSprite;
 	
 	[SWF(width="300",height="300")]
 	public class ControlRectExample extends Sprite

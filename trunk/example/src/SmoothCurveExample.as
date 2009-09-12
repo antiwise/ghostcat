@@ -3,11 +3,11 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import org.ghostcat.algorithm.bezier.Roupe;
-	import org.ghostcat.display.graphics.DragPoint;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.ui.CursorSprite;
-	import org.ghostcat.ui.ToolTipSprite;
+	import ghostcat.algorithm.bezier.Roupe;
+	import ghostcat.display.graphics.DragPoint;
+	import ghostcat.manager.RootManager;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.ui.ToolTipSprite;
 	
 	public class SmoothCurveExample extends Sprite
 	{

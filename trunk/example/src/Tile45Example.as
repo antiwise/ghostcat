@@ -3,11 +3,11 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import org.ghostcat.display.viewport.Tile45;
-	import org.ghostcat.events.RepeatEvent;
-	import org.ghostcat.manager.DragManager;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.ui.CursorSprite;
+	import ghostcat.display.viewport.Tile45;
+	import ghostcat.events.RepeatEvent;
+	import ghostcat.manager.DragManager;
+	import ghostcat.manager.RootManager;
+	import ghostcat.ui.CursorSprite;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源

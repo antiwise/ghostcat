@@ -5,14 +5,14 @@ package
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import org.ghostcat.display.viewport.Tile;
-	import org.ghostcat.events.RepeatEvent;
-	import org.ghostcat.manager.DragManager;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.parse.DisplayParse;
-	import org.ghostcat.parse.graphics.GraphicsLineStyle;
-	import org.ghostcat.parse.graphics.GraphicsRect;
-	import org.ghostcat.ui.CursorSprite;
+	import ghostcat.display.viewport.Tile;
+	import ghostcat.events.RepeatEvent;
+	import ghostcat.manager.DragManager;
+	import ghostcat.manager.RootManager;
+	import ghostcat.parse.DisplayParse;
+	import ghostcat.parse.graphics.GraphicsLineStyle;
+	import ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.ui.CursorSprite;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源

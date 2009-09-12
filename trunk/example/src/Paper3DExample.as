@@ -3,7 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import org.ghostcat.transfer.Paper3D;
+	import ghostcat.transfer.Paper3D;
 	
 	public class Paper3DExample extends Sprite
 	{

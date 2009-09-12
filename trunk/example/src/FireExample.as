@@ -3,11 +3,11 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.residual.FireScreen;
-	import org.ghostcat.manager.DragManager;
-	import org.ghostcat.skin.cursor.CursorDrag;
-	import org.ghostcat.ui.CursorSprite;
+	import ghostcat.display.GBase;
+	import ghostcat.display.residual.FireScreen;
+	import ghostcat.manager.DragManager;
+	import ghostcat.skin.cursor.CursorDrag;
+	import ghostcat.ui.CursorSprite;
 	
 	[SWF(width="150",height="150")]
 	public class FireExample extends Sprite

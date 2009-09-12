@@ -20,15 +20,15 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.events.ResizeEvent;
-			import org.ghostcat.manager.DragManager;
-			import org.ghostcat.util.ReflectXMLUtil;
-			import org.ghostcat.display.DisplayUtil;
-			import org.ghostcat.parse.DisplayParse;
-			import org.ghostcat.util.Geom;
+			import ghostcat.manager.DragManager;
+			import ghostcat.util.ReflectXMLUtil;
+			import ghostcat.display.DisplayUtil;
+			import ghostcat.parse.DisplayParse;
+			import ghostcat.util.Geom;
 			import mx.events.ListEvent;
 			import mx.collections.ArrayCollection;
-			import org.ghostcat.fileformat.swf.tag.SymbolClassTag;
-			import org.ghostcat.fileformat.swf.SWFDecoder;
+			import ghostcat.fileformat.swf.tag.SymbolClassTag;
+			import ghostcat.fileformat.swf.SWFDecoder;
 			
 			private var _source:ByteArray;
 			

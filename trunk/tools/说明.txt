@@ -1,0 +1,3 @@
+FontConverterLocal是Kevin Cao制作的嵌入字体工具
+
+http://kevincao.com/

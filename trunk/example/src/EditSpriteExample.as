@@ -3,11 +3,11 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.graphics.EditableGraphicsSprite;
-	import org.ghostcat.parse.graphics.GraphicsLineStyle;
-	import org.ghostcat.parse.graphics.GraphicsPath;
-	import org.ghostcat.ui.CursorSprite;
-	import org.ghostcat.util.Asyn;
+	import ghostcat.display.graphics.EditableGraphicsSprite;
+	import ghostcat.parse.graphics.GraphicsLineStyle;
+	import ghostcat.parse.graphics.GraphicsPath;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.util.Asyn;
 	
 	[SWF(width="400",height="400")]
 	public class EditSpriteExample extends Sprite

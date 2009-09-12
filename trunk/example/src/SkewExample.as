@@ -4,11 +4,11 @@ package
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.residual.ResidualScreen;
-	import org.ghostcat.display.graphics.DragPoint;
-	import org.ghostcat.transfer.Skew;
-	import org.ghostcat.ui.CursorSprite;
-	import org.ghostcat.util.Util;
+	import ghostcat.display.residual.ResidualScreen;
+	import ghostcat.display.graphics.DragPoint;
+	import ghostcat.transfer.Skew;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.util.Util;
 	
 	[SWF(width="300",height="300")]
 	public class SkewExample extends Sprite

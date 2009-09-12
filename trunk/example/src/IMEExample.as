@@ -5,15 +5,15 @@ package
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.text.IME;
-	import org.ghostcat.ui.ToolTipSkin;
-	import org.ghostcat.ui.controls.GText;
-	import org.ghostcat.util.Geom;
-	import org.ghostcat.util.Util;
+	import ghostcat.manager.RootManager;
+	import ghostcat.text.IME;
+	import ghostcat.ui.ToolTipSkin;
+	import ghostcat.ui.controls.GText;
+	import ghostcat.util.Geom;
+	import ghostcat.util.Util;
 
 	[SWF(width="500",height="400")]
-	[Frame(factoryClass="org.ghostcat.ui.RootLoader")]
+	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	public class IMEExample extends Sprite
 	{
 		[Embed(source = "pinyin.txt",mimeType="application/octet-stream")]

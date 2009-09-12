@@ -3,18 +3,18 @@ package
 	import flash.display.Sprite;
 	import flash.filters.BlurFilter;
 	
-	import org.ghostcat.filter.FilterProxy;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.operation.DelayOper;
-	import org.ghostcat.operation.RepeatOper;
-	import org.ghostcat.operation.TimeoutOper;
-	import org.ghostcat.operation.TweenOper;
-	import org.ghostcat.parse.DisplayParse;
-	import org.ghostcat.parse.graphics.GraphicsFill;
-	import org.ghostcat.parse.graphics.GraphicsRect;
-	import org.ghostcat.util.TweenUtil;
-	import org.ghostcat.util.Util;
-	import org.ghostcat.util.easing.Elastic;
+	import ghostcat.filter.FilterProxy;
+	import ghostcat.manager.RootManager;
+	import ghostcat.operation.DelayOper;
+	import ghostcat.operation.RepeatOper;
+	import ghostcat.operation.TimeoutOper;
+	import ghostcat.operation.TweenOper;
+	import ghostcat.parse.DisplayParse;
+	import ghostcat.parse.graphics.GraphicsFill;
+	import ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.util.TweenUtil;
+	import ghostcat.util.Util;
+	import ghostcat.util.easing.Elastic;
 	
 	public class TweenExample extends Sprite
 	{
