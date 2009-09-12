@@ -6,10 +6,10 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.DisplayUtil;
-	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.viewport.CollisionSprite;
-	import org.ghostcat.util.Geom;
+	import ghostcat.display.DisplayUtil;
+	import ghostcat.display.GBase;
+	import ghostcat.display.viewport.CollisionSprite;
+	import ghostcat.util.Geom;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]

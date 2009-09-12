@@ -6,12 +6,12 @@ package
 	import flash.geom.Point;
 	import flash.utils.getTimer;
 	
-	import org.ghostcat.algorithm.astar.AStar;
-	import org.ghostcat.algorithm.astar.MapModel;
-	import org.ghostcat.manager.RootManager;
-	import org.ghostcat.parse.DisplayParse;
-	import org.ghostcat.parse.graphics.GraphicsFill;
-	import org.ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.algorithm.astar.AStar;
+	import ghostcat.algorithm.astar.MapModel;
+	import ghostcat.manager.RootManager;
+	import ghostcat.parse.DisplayParse;
+	import ghostcat.parse.graphics.GraphicsFill;
+	import ghostcat.parse.graphics.GraphicsRect;
 	
 	/**
 	 * A* 算法演示

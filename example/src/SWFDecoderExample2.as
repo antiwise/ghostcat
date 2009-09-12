@@ -4,12 +4,12 @@ package
 	import flash.net.URLLoaderDataFormat;
 	import flash.utils.ByteArray;
 	
-	import org.ghostcat.events.OperationEvent;
-	import org.ghostcat.fileformat.swf.SWFDecoder;
-	import org.ghostcat.fileformat.swf.SWFSelf;
-	import org.ghostcat.fileformat.swf.tag.DebugIDTag;
-	import org.ghostcat.fileformat.swf.tag.ProductInfoTag;
-	import org.ghostcat.operation.LoadOper;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.fileformat.swf.SWFDecoder;
+	import ghostcat.fileformat.swf.SWFSelf;
+	import ghostcat.fileformat.swf.tag.DebugIDTag;
+	import ghostcat.fileformat.swf.tag.ProductInfoTag;
+	import ghostcat.operation.LoadOper;
 	
 	/**
 	 * SWF二进制代码解析（这几个Tag只有FLEX编译的文件才有）

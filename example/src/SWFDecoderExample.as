@@ -4,14 +4,14 @@ package
 	import flash.net.URLLoaderDataFormat;
 	import flash.utils.ByteArray;
 	
-	import org.ghostcat.debug.Debug;
-	import org.ghostcat.events.OperationEvent;
-	import org.ghostcat.fileformat.swf.SWFDecoder;
-	import org.ghostcat.fileformat.swf.tag.DoABCTag;
-	import org.ghostcat.fileformat.swf.tag.ProductInfoTag;
-	import org.ghostcat.fileformat.swf.tag.SymbolClassTag;
-	import org.ghostcat.operation.LoadOper;
-	import org.ghostcat.util.ReflectUtil;
+	import ghostcat.debug.Debug;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.fileformat.swf.SWFDecoder;
+	import ghostcat.fileformat.swf.tag.DoABCTag;
+	import ghostcat.fileformat.swf.tag.ProductInfoTag;
+	import ghostcat.fileformat.swf.tag.SymbolClassTag;
+	import ghostcat.operation.LoadOper;
+	import ghostcat.util.ReflectUtil;
 	
 	/**
 	 * SWF二进制代码解析

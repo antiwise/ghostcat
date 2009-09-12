@@ -2,7 +2,7 @@
 <panel:CheckSWFPanelBase label="检测名称" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panel="panel.*">
 	<mx:Script>
 		<![CDATA[
-			import org.ghostcat.text.PinYin;
+			import ghostcat.text.PinYin;
 			import mx.collections.ArrayCollection;
 			import mx.events.ListEvent;
 			import flash.filesystem.File;

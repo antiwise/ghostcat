@@ -4,8 +4,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import org.ghostcat.filter.TrapeziumFilterProxy;
-	import org.ghostcat.util.Geom;
+	import ghostcat.filter.TrapeziumFilterProxy;
+	import ghostcat.util.Geom;
 	
 	[SWF(width="300",height="300")]
 	public class TrapeziumExample extends Sprite

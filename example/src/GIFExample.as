@@ -2,9 +2,9 @@ package
 {
 	import flash.display.Sprite;
 	
-	import org.ghostcat.display.movieclip.GBitmapMovieClip;
-	import org.ghostcat.events.OperationEvent;
-	import org.ghostcat.operation.LoadGIFOper;
+	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.LoadGIFOper;
 	
 	[SWF(width="500",height="400")]
 	public class GIFExample extends Sprite

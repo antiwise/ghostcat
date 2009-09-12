@@ -5,15 +5,15 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import org.ghostcat.display.GBase;
-	import org.ghostcat.display.graphics.DragPoint;
-	import org.ghostcat.display.viewport.Light;
-	import org.ghostcat.display.viewport.Wall;
-	import org.ghostcat.events.MoveEvent;
-	import org.ghostcat.manager.DragManager;
-	import org.ghostcat.skin.cursor.CursorDrag;
-	import org.ghostcat.ui.CursorSprite;
-	import org.ghostcat.util.Util;
+	import ghostcat.display.GBase;
+	import ghostcat.display.graphics.DragPoint;
+	import ghostcat.display.viewport.Light;
+	import ghostcat.display.viewport.Wall;
+	import ghostcat.events.MoveEvent;
+	import ghostcat.manager.DragManager;
+	import ghostcat.skin.cursor.CursorDrag;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.util.Util;
 	
 	[SWF(width="500",height="400")]
 	public class LightExample extends Sprite
