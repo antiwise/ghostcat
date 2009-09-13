@@ -113,8 +113,7 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			if (data && data.length > 0)
-				commitChild(data[0] as Oper);
+			doLoad();
 		}
 		
 	}

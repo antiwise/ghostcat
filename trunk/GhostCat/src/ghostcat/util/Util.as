@@ -180,6 +180,8 @@ package ghostcat.util
 						return false;
 				}
 			}
+			else
+				return false;
 			return true;
 		}
 	}

@@ -9,7 +9,7 @@ package
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.manager.RootManager;
-	import ghostcat.parse.DisplayParse;
+	import ghostcat.parse.display.RectParse;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
 	import ghostcat.ui.CursorSprite;
@@ -25,7 +25,7 @@ package
 		public var repeater:Tile;
 		public function TileExample()
 		{
-			RootManager.register(this,1,1);
+			RootManager.register(this);
 			repeater = new Tile(TestRepeater);
 			repeater.width = 100000;
 			repeater.height = 100000;
@@ -35,8 +35,8 @@ package
 			repeater.cursor = CursorSprite.CURSOR_DRAG;
 			
 			addChild(repeater);
-			addChild(DisplayParse.createShape([new GraphicsLineStyle(0,0xFF0000),new GraphicsRect(0,0,500,500)]));
 			
+			addChild(new RectParse(new GraphicsRect(0,0,500,500),new GraphicsLineStyle(0,0xFF0000)).createShape());
 			addChild(new CursorSprite());
 		}
 		private function mouseDownHandler(event:MouseEvent):void

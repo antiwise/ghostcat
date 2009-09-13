@@ -65,8 +65,14 @@ package ghostcat.operation.quest
 		{
 			queue = new Queue();
 			queue.addEventListener(OperationEvent.OPERATION_COMPLETE,queueEmptyHandler);
+			queue.addEventListener(OperationEvent.CHILD_OPERATION_COMPLETE,queueCompleteHandler);
 			for (var i:int = step; i< opers.length;i++)
 				queue.commitChild(opers[i] as Oper);
+		}
+		
+		private function queueCompleteHandler(event:OperationEvent):void
+		{
+			_step++;
 		}
 		
 		private function queueEmptyHandler(event:OperationEvent):void
@@ -74,6 +80,15 @@ package ghostcat.operation.quest
 			var e:QuestEvent = new QuestEvent(QuestEvent.QUEST_COMPLETE);
 			e.id = this.id;
 			dispatchEvent(e);
+		}
+		
+		public function destory():void
+		{
+			if (queue)
+			{
+				queue.removeEventListener(OperationEvent.OPERATION_COMPLETE,queueEmptyHandler);
+				queue.removeEventListener(OperationEvent.CHILD_OPERATION_COMPLETE,queueCompleteHandler);
+			}	
 		}
 	}
 }

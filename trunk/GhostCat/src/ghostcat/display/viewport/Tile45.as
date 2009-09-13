@@ -49,23 +49,20 @@ package ghostcat.display.viewport
 			p = displayToItem(p);
 			return new Point(Math.round(p.x / contentRect.width) - 1 , Math.round(p.y / contentRect.height)); 
 		}
-		/**
-		 * @inheritDoc
-		 */
+		
+		/** @inheritDoc*/
 		override public function displayToItem(p:Point):Point
 		{
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
-		/**
-		 * @inheritDoc
-		 */
+		
+		/** @inheritDoc*/
 		override public function itemToDisplay(p:Point):Point
 		{
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
 		}
-		/**
-		 * @inheritDoc
-		 */
+		
+		/** @inheritDoc*/
 		override public function setContentClass(ref:*) : void
 		{
 			super.setContentClass(ref);
@@ -77,9 +74,7 @@ package ghostcat.display.viewport
 			}
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc*/
 		override protected function getLocalScreen():Rectangle
 		{
 			//扩大显示范围
@@ -91,17 +86,15 @@ package ghostcat.display.viewport
 			nRect.height = sRect.height + contentRect.height;
 			return nRect;
 		}
-		/**
-		 * @inheritDoc
-		 */
+		
+		/** @inheritDoc*/
 		override protected function getItemRect(viewport:Rectangle):Rectangle
 		{
 			var r:Rectangle = super.getItemRect(viewport);
 			return new Rectangle(r.x + r.y,r.y - r.x,r.width*2,r.height*2);
 		}
-		/**
-		 * @inheritDoc
-		 */
+		
+		/** @inheritDoc*/
 		override protected function addItem(i:int,j:int,lowest:Boolean=false):DisplayObject
 		{
 			var s:DisplayObject = super.addItem(i,j,lowest);

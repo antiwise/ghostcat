@@ -138,7 +138,12 @@ package ghostcat.filter
 			if (owner && index!= -1)
 			{
 				var arr:Array = owner.filters;
-				arr[index] = filter;
+				if (!arr[index])
+					updateIndex();
+				
+				if (arr[index])
+					arr[index] = filter;
+					
 				owner.filters = arr;
 			}
 		}

@@ -129,9 +129,8 @@ package ghostcat.util
 		 */		
 		public function destroy():void
 		{
-			for (var name:* in countDowns){
+			for (var name:* in countDowns)
 				removeCountDown(name);
-			}
 		}
 	}
 }

@@ -6,7 +6,6 @@ package ghostcat.util
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.SoundTransform;
-	import flash.utils.setTimeout;
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.events.TweenEvent;
@@ -19,6 +18,11 @@ package ghostcat.util
 	/**
 	 * 内部使用的Tween，用法基本和TweenLite相同
 	 * 依赖于Tick。Tick变速和暂停也会影响到这里。
+	 * 
+	 * 增加属性：
+	 * pan，将会改变声音的声道分配
+	 * tint2，将会以附加的方法增加颜色
+	 * dynamicPoint，是一个显示对象，将会以它的x,y属性作为Tween的终点。这两个值在过程中可变化追踪
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -159,6 +163,10 @@ package ghostcat.util
 					case "tint":
 					case "tint2":
 						this.fromValues[key] = (target as DisplayObject).transform.colorTransform.color & 0xFFFFFF;
+						this.toValues[key] = params[key];
+						break;
+					case "dynamicPoint":
+						this.fromValues[key] = new Point((target as DisplayObject).x, (target as DisplayObject).y)
 						this.toValues[key] = params[key];
 						break;
 					default :
@@ -308,6 +316,10 @@ package ghostcat.util
 					break;
 				case "tint2":
 					(target as DisplayObject).transform.colorTransform = ColorUtil.getColorTransform2(value as uint);
+					break;
+				case "dynamicPoint":
+					(target as DisplayObject).x = value.x;
+					(target as DisplayObject).y = value.y;
 					break;
 				default:
 					target[key] = value;

@@ -17,9 +17,9 @@ package ghostcat.parse.display
 			this.points = points;
 		}
 
-		public override function parseShape(target:Graphics) : void
+		protected override function parseBaseShape(target:Graphics) : void
 		{
-			super.parseGraphics(target);
+			super.parseBaseShape(target);
 			
 			if (points)
 				new GraphicsPath(points).parseGraphics(target);

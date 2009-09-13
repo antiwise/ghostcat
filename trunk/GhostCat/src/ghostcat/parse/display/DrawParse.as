@@ -32,11 +32,16 @@ package ghostcat.parse.display
 		
 		public override function parse(target:*):void
 		{
-			super.parse(target);
 			if (target is Bitmap)
 				target = (target as Bitmap).bitmapData;
-			if (target is BitmapData)
-				(target as BitmapData).draw(source,matrix,colorTransform,blendMode,clipRect,smoothing);
+		
+			super.parse(target);
+		}
+		
+		public override function parseBitmapData(target:BitmapData) : void
+		{
+			super.parseBitmapData(target);
+			target.draw(source,matrix,colorTransform,blendMode,clipRect,smoothing);
 		}
 		
 		public static function createBitmap(source:IBitmapDrawable,matrix:Matrix=null,colorTransform:ColorTransform=null,clipRect:Rectangle = null,smoothing:Boolean = false):Bitmap
@@ -56,6 +61,11 @@ package ghostcat.parse.display
 				matrix.ty -= bounds.y;
 			}
 			var bitmap:Bitmap = BitmapParse.createBitmap(width,height);
+			if (source is DisplayObject)
+			{
+				bitmap.x = (source as DisplayObject).x + bounds.x;
+				bitmap.y = (source as DisplayObject).y + bounds.y;
+			}
 			var draw:DrawParse = new DrawParse(source,matrix,colorTransform,clipRect,smoothing);
 			draw.parse(bitmap);
 			return bitmap;

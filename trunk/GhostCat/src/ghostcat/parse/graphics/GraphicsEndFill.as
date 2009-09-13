@@ -13,7 +13,7 @@ package ghostcat.parse.graphics
 		
 		public override function parseGraphics(target:Graphics) : void
 		{
-			super.parse(target);
+			super.parseGraphics(target);
 			target.endFill();
 		}
 	}

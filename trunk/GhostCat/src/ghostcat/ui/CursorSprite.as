@@ -63,6 +63,8 @@ package ghostcat.ui
 		
 		private var buttonDown:Boolean=false;//鼠标是否按下 
 		
+		private var findCursor:Boolean=false;//是否自动查找鼠标
+		
 		private static var _instance:CursorSprite;
 		
 		/**
@@ -114,7 +116,7 @@ package ghostcat.ui
 		 */		
 		public function setCursor(c:*):void
 		{
-			stage.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			findCursor = false;
 			this.setCurrentCursorClass(c);
 		}
 		/**
@@ -122,7 +124,7 @@ package ghostcat.ui
 		 */		
 		public function removeCursor():void
 		{
-			stage.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			findCursor = true;
 		}
 		
 		private function mouseMoveHandler(evt:MouseEvent):void
@@ -156,7 +158,8 @@ package ghostcat.ui
 		{
 			DisplayUtil.moveToHigh(this);
 			
-			setCurrentCursorClass(findCursorClass(this.target));
+			if (findCursor)
+				setCurrentCursorClass(findCursorClass(this.target));
 			
 			if (content){
 				if (this.content is MovieClip){
@@ -172,7 +175,8 @@ package ghostcat.ui
 		
 		private function mouseLeaveHandler(evt:Event):void
 		{
-			setContent(null);
+			if (findCursor)
+				setContent(null);
 		}
 		
 		private function setCurrentCursorClass(cursor:*):void

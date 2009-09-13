@@ -1,5 +1,6 @@
 package ghostcat.parse
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
@@ -25,6 +26,8 @@ package ghostcat.parse
 				parseContainer(target as DisplayObjectContainer);
 			if (target is Graphics)
 				parseGraphics(target as Graphics);
+			if (target is BitmapData)
+				parseBitmapData(target as BitmapData);
 				
 			var graphics:Graphics = (target.hasOwnProperty("graphics"))?target["graphics"] as Graphics : null;
 			if (graphics)
@@ -37,6 +40,16 @@ package ghostcat.parse
 		 * 
 		 */
 		public function parseGraphics(target:Graphics):void
+		{
+			
+		}
+		
+		/**
+		 * 更新位图
+		 * @param target
+		 * 
+		 */
+		public function parseBitmapData(target:BitmapData):void
 		{
 			
 		}
@@ -59,6 +72,34 @@ package ghostcat.parse
 		public function parseDisplay(target:DisplayObject):void
 		{
 			
+		}
+		
+		/**
+		 * 创建Sprite
+		 * 
+		 * @param para
+		 * @return 
+		 * 
+		 */
+		public function createSprite():Sprite
+		{
+			var s:Sprite = new Sprite();
+			parse(s);
+			return s;
+		}
+		
+		/**
+		 * 创建Shape
+		 * 
+		 * @param para
+		 * @return 
+		 * 
+		 */
+		public function createShape():Shape
+		{
+			var s:Shape = new Shape();
+			parse(s);
+			return s;
 		}
 		
 		/**
