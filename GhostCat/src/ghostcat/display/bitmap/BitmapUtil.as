@@ -1,5 +1,6 @@
 package ghostcat.display.bitmap
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -213,6 +214,24 @@ package ghostcat.display.bitmap
 			}
 			s.graphics.endFill();
 			return s;
+		}
+		
+		/**
+		 * 回收一个数组内所有的BitmapData
+		 *  
+		 * @param bitmapDatas
+		 * 
+		 */
+		public static function dispose(items:Array):void
+		{
+			for each (var item:* in items)
+			{
+				if (item is BitmapData)
+					(item as BitmapData).dispose();
+					
+				if (item is Bitmap)
+					(item as Bitmap).bitmapData.dispose();
+			}
 		}
 	}
 }

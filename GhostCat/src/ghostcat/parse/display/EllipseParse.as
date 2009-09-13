@@ -17,9 +17,9 @@ package ghostcat.parse.display
 			this.ellipse = ellipse;
 		}
 		
-		public override function parseShape(target:Graphics) : void
+		protected override function parseBaseShape(target:Graphics) : void
 		{
-			super.parseGraphics(target);
+			super.parseBaseShape(target);
 			
 			if (ellipse)
 				ellipse.parseGraphics(target);

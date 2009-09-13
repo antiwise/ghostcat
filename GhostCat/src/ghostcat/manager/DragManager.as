@@ -1,7 +1,7 @@
 package ghostcat.manager
 {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -9,6 +9,8 @@ package ghostcat.manager
 	
 	import ghostcat.events.DragEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.parse.display.AlphaShapeParse;
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.Geom;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
@@ -17,15 +19,30 @@ package ghostcat.manager
 	 * FLASH自带的拖动功能缺乏扩展性，因此必要时只能重新实现。
 	 * 
 	 * 这个类可以实现对Bitmap,TextField的拖动，支持多物品拖动,
-	 * 并且会自动向外发布DragOver,DragOut事件。
+	 * 并且会自动向外发布DragOver,DragOut,DragDrop等事件。
 	 * 
 	 * 这个类的DragStart和DragStop事件都是可中断的，若指定中断就可以中止原来的操作。
+	 * 
+	 * 设定type可以选择拖动临时图标代替拖动本体
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
 	public class DragManager
 	{
+		/**
+		 * 直接拖动
+		 */
+		public static const DIRECT:String = "direct";
+		/**
+		 * 复制一个图标并拖动
+		 */
+		public static const CLONE:String = "clone";
+		/**
+		 * 复制一个带有透明度的图标并拖动
+		 */
+		public static const ALPHA_CLONE:String = "alpha_clone";
+		
 		private static var list:Dictionary = new Dictionary();
 		
 		/**
@@ -35,13 +52,14 @@ package ghostcat.manager
 		 * @param bounds	拖动的范围，坐标系为父对象
 		 * @param stopHandler	停止拖动后执行的事件
 		 * @param onHandler	拖动时每帧执行的事件
+		 * @param type	拖动类型
 		 * @param lockCenter	是否以物体中心点为拖动的点
 		 * @param upWhenLeave	当移出拖动范围时，是否停止拖动
 		 * @param collideByRect	判断范围是否以物品的边缘而不是注册点为标准
 		 * 
 		 */
 		public static function startDrag(obj:DisplayObject,bounds:Rectangle=null,stopHandler:Function=null,onHandler:Function=null,
-									lockCenter:Boolean = false,upWhenLeave:Boolean = false,collideByRect:Boolean = false):void
+									type:String = DIRECT,lockCenter:Boolean = false,upWhenLeave:Boolean = false,collideByRect:Boolean = false):void
 		{
 			if (list[o]!=null)
 				return;
@@ -50,6 +68,7 @@ package ghostcat.manager
 			
 			o.obj = obj;
 			o.bounds = bounds;
+			o.type = type;
 			o.lockCenter = lockCenter;
 			o.upWhenLeave = upWhenLeave;
 			o.collideByRect = collideByRect;
@@ -65,6 +84,7 @@ package ghostcat.manager
 		}
 		
 		protected var obj:DisplayObject;
+		protected var type:String;
 		protected var lockCenter:Boolean;
 		protected var upWhenLeave:Boolean;
 		protected var collideByRect:Boolean;
@@ -74,6 +94,9 @@ package ghostcat.manager
 		
 		protected var dragMousePos:Point;
 		protected var dragPos:Point;
+		protected var dragContainer:DisplayObject;
+		
+		protected var image:Bitmap;
 	
 		protected function startDrag():void
 		{
@@ -99,6 +122,17 @@ package ghostcat.manager
 				obj.addEventListener(DragEvent.DRAG_STOP,stopHandler);
 			if (onHandler!=null)
 				obj.addEventListener(DragEvent.DRAG_ON,onHandler);
+				
+			if (type == CLONE || type == ALPHA_CLONE)
+			{
+				image = DrawParse.createBitmap(obj);
+				dragMousePos.x -= image.x;
+				dragMousePos.y -= image.y;
+				obj.stage.addChild(image);
+				
+				if (type == ALPHA_CLONE)
+					new AlphaShapeParse(image).parse(image.bitmapData);
+			}
 		}
 		
 		protected function stopDrag():void
@@ -122,14 +156,28 @@ package ghostcat.manager
 			dragMousePos = null;
 			
 			delete list[obj];
+			
+			if (image)
+			{
+				image.bitmapData.dispose();
+				image.parent.removeChild(image);
+			}
 		}
 		
 		private function enterFrameHandler(event:TickEvent):void
 		{
 			var	parentOffest:Point = Geom.localToContent(new Point(obj.mouseX,obj.mouseY),obj,obj.parent).subtract(dragMousePos);
 			
-			obj.x = dragPos.x + parentOffest.x;
-			obj.y = dragPos.y + parentOffest.y;
+			if (image)
+			{
+				image.x = dragPos.x + parentOffest.x;
+				image.y = dragPos.y + parentOffest.y;
+			}
+			else
+			{
+				obj.x = dragPos.x + parentOffest.x;
+				obj.y = dragPos.y + parentOffest.y;
+			}
 			
 			if (bounds)
 			{
@@ -148,10 +196,20 @@ package ghostcat.manager
 		private function mouseUpHandler(event:MouseEvent):void
 		{
 			stopDrag();
+			
+			if (dragContainer)
+			{
+				dragContainer.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_DROP,true,false),{dragObj:obj}));
+				dragContainer = null;
+			}
+			
+			obj.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_COMPLETE,false,false),{dragObj:obj}));
 		}
 		
 		private function mouseOverHandler(event:MouseEvent):void
 		{
+			dragContainer = event.target as DisplayObject;
+			
 			event.target.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_OVER,true,false),{dragObj:obj}));
 		}
 		

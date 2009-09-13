@@ -36,8 +36,11 @@ package ghostcat.parse.display
 		{
 			var bitmapData:BitmapData = new BitmapData(width,height,transparent,fillColor);
 			var bitmap:Bitmap = new Bitmap(bitmapData,pixelSnapping,smoothing);
-			bitmap.x = pos.x;
-			bitmap.y = pos.y;
+			if (pos)
+			{
+				bitmap.x = pos.x;
+				bitmap.y = pos.y;
+			}
 			return bitmap;
 		}
 		

@@ -1,7 +1,10 @@
 package ghostcat.parse.display
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
+	import flash.display.Shape;
 	
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsEndFill;
@@ -34,12 +37,12 @@ package ghostcat.parse.display
 			if (fill)
 				fill.parse(target);
 			
-			parseShape(target);
+			parseBaseShape(target);
 			
 			if (fill)
 				new GraphicsEndFill().parse(target);
 		}
-		public function parseShape(target:Graphics) : void
+		protected function parseBaseShape(target:Graphics) : void
 		{
 			if (parses)
 			{
@@ -48,12 +51,28 @@ package ghostcat.parse.display
 			}
 		}
 		
+		public override function parseBitmapData(target:BitmapData) : void
+		{
+			super.parseBitmapData(target);
+			
+			target.draw(createShape());
+		}
+		
+		
 		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
 			
 			if (grid9)
 				grid9.parse(target);
+		}
+		
+		public override function parseContainer(target:DisplayObjectContainer) : void
+		{
+			super.parseContainer(target);
+			
+			var s:Shape = createShape();
+			target.addChild(s);
 		}
 	}
 }

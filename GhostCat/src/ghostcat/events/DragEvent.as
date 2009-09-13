@@ -37,6 +37,16 @@ package ghostcat.events
 		public static const DRAG_OUT:String="drag_out";
 		
 		/**
+		 * 有物品成功拖到自己身上
+		 */
+		public static const DRAG_DROP:String="drag_drop";
+		
+		/**
+		 * 自己的拖动操作成功完成
+		 */
+		public static const DRAG_COMPLETE:String="drag_complete";
+		
+		/**
 		 * 拖动的物品
 		 */
 		public var dragObj:DisplayObject;

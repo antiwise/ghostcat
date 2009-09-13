@@ -258,6 +258,7 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
+    <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

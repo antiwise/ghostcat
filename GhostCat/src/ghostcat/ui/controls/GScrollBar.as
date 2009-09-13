@@ -13,6 +13,8 @@ package ghostcat.ui.controls
 	import ghostcat.ui.controls.scrollClasses.IScrollContent;
 	import ghostcat.ui.controls.scrollClasses.ScrollTextContent;
 	import ghostcat.util.Tick;
+	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.Circ;
 	
 	/**
 	 * 滚动条 
@@ -40,8 +42,12 @@ package ghostcat.ui.controls
 		/**
 		 * 滚动缓动效果
 		 */
-
-		public var tweenFunction:Function;
+		public var easing:Function = Circ.easeOut;
+		
+		/**
+		 * 缓动时间
+		 */		
+		public var duration:int = 1000;
 		
 		/**
 		 * 滚动速度
@@ -52,11 +58,6 @@ package ghostcat.ui.controls
 		 * 快速滚动速度
 		 */
 		public var pageDetra:int = 25;
-		
-		/**
-		 * 滚动模糊效果
-		 */
-		public var blur:Number;
 		
 		public var fields:Object = {upArrowField:"upArrow",downArrowField:"downArrow",
 			thumbField:"thumb",backgroundField:"background"}
@@ -216,13 +217,36 @@ package ghostcat.ui.controls
 		
 		protected function thumbMouseMoveHandler(event:Event=null):void
 		{
+			if (thumb.position.equals(thumb.oldPosition))
+				return;
+			
+			var v:Number;
+			
 			if (!_scrollContent)
 				return;
 			
 			if (direction == 0)
-				_scrollContent.scrollH = _scrollContent.maxScrollH * (thumb.x - thumbAreaStart) / thumbAreaLength;
+			{
+				v = _scrollContent.maxScrollH * (thumb.x - thumbAreaStart) / thumbAreaLength;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing})
+				}
+				else
+					_scrollContent.scrollH = v;
+			}
 			else
-				_scrollContent.scrollV = _scrollContent.maxScrollV * (thumb.y - thumbAreaStart) / thumbAreaLength;
+			{
+				v = _scrollContent.maxScrollV * (thumb.y - thumbAreaStart) / thumbAreaLength;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing})
+				}
+				else 
+					_scrollContent.scrollV = v;
+			}
 		}
 		
 		protected function tickHandler(event:TickEvent):void

@@ -346,7 +346,8 @@ package ghostcat.display.viewport
 				addChildAt(s,0);
 			else
 				addChild(s);
-			dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j)}));
+				
+			dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j),addToLow:low}));
 		
 			return s;
 		}

@@ -7,10 +7,18 @@ package ghostcat.display.bitmap
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
+	import ghostcat.display.IGBase;
 	import ghostcat.events.GEvent;
+	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.CallLater;
 	import ghostcat.util.Util;
+	
+	[Event(name="update_complete",type="ghostcat.events.GEvent")]
+	
+	[Event(name="move",type="ghostcat.events.MoveEvent")]
+	
+	[Event(name="resize",type="ghostcat.events.ResizeEvent")]
 	
 	/**
 	 * 此类默认会在修改大小后会自动调整Bitmapdata的大小，采用裁剪而不是缩放
@@ -18,8 +26,20 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmap extends Bitmap
+	public class GBitmap extends Bitmap implements IGBase
 	{
+		private var _enabled:Boolean = true;
+		
+		private var _cursor:*;
+		
+		private var _toolTip:*;
+		
+		private var _toolTipObj:*;
+		
+		private var _data:Object;
+		
+		public var delayUpatePosition:Boolean = false;
+		
 		/**
 		 * 是否在移出显示列表的时候删除自身
 		 */		
@@ -29,6 +49,13 @@ package ghostcat.display.bitmap
 		 * 是否允许缩放BitmapData
 		 */
 		public var enabledScale:Boolean = false;
+		
+		/**
+		 * 旧的位置坐标 
+		 */		
+		public var oldPosition:Point = new Point();
+		
+		private var _position:Point = new Point();
 		
 		public function GBitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false)
 		{
@@ -57,17 +84,127 @@ package ghostcat.display.bitmap
 			_height = bitmapData.height;
 		}
 		
+		/** @inheritDoc */
+		public function get data():*
+		{
+			return _data;
+		}
+
+		public function set data(v:*):void
+		{
+			_data = v;
+		}
+		
 		/**
-		 * @inheritDoc
+		 *
+		 * 是否激活 
+		 * @return 
+		 * 
 		 */
+		public function get enabled():Boolean
+		{
+			return _enabled;
+		}
+
+		public function set enabled(v:Boolean):void
+		{
+			_enabled = v;
+		}
+		
+		public override function set x(value:Number):void
+		{
+			if (x == value)
+				return;
+			
+			oldPosition.x = super.x;
+			position.x = value;
+			
+			if (!delayUpatePosition)
+				super.x = value;
+			
+			invalidatePosition();
+		}
+		
+		public override function get x() : Number
+		{
+			return position.x;
+		}
+		
+		public override function set y(value:Number):void
+		{
+			if (y == value)
+				return;
+			
+			oldPosition.y = super.y;
+			position.y = value;
+		
+			if (!delayUpatePosition)
+				super.y = value;
+				
+			invalidatePosition();
+		}
+		
+		public override function get y() : Number
+		{
+			return position.y;
+		}
+		
+		/**
+		 * 设置位置坐标
+		 * @param v
+		 * 
+		 */		
+		public function set position(v:Point):void
+		{
+			x = v.x;
+			y = v.y;
+		}
+		
+		public function get position():Point
+		{
+			return _position;
+		}
+		
+		/** @inheritDoc */
+		public function get toolTip():*
+		{
+			return _toolTip;
+		}
+
+		public function set toolTip(v:*):void
+		{
+			_toolTip = v;
+		}
+		
+		/** @inheritDoc */
+		public function get toolTipObj():*
+		{
+			return _toolTipObj;
+		}
+
+		public function set toolTipObj(v:*):void
+		{
+			_toolTipObj = v;
+		}
+		
+		/** @inheritDoc */
+		public function get cursor():*
+		{
+			return _cursor;
+		}
+
+		public function set cursor(v:*):void
+		{
+			_cursor = v;
+		}
+		
+		/** @inheritDoc */
 		public override function get width() : Number
 		{
 			return _width;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc */
 		public override function set width(v:Number):void
 		{
 			if (_width == v)
@@ -77,17 +214,13 @@ package ghostcat.display.bitmap
 			invalidateSize();
 		}
 
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc */
 		public override function get height() : Number
 		{
 			return _height;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc */
 		public override function set height(v:Number):void
 		{
 			if (_height == v)
@@ -96,6 +229,16 @@ package ghostcat.display.bitmap
 			_height = v;
 			invalidateSize();
 		}
+		
+		/**
+		 * 在之后更新坐标
+		 * 
+		 */
+		public function invalidatePosition():void
+		{
+			CallLater.callLaterNextFrame(vaildPosition,null,true);
+		}
+		
 
 		/**
 		 * @inheritDoc
@@ -111,6 +254,21 @@ package ghostcat.display.bitmap
 		public function invalidateDisplayList():void
 		{
 			CallLater.callLater(updateDisplayList,null,true);
+		}
+		
+		/**
+		 * 更新坐标并发事件
+		 * 
+		 */
+		public function vaildPosition():void
+		{
+			super.x = position.x;
+			super.y = position.y;			
+		
+			updatePosition();
+			
+			dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
+			oldPosition = position.clone();
 		}
 		
 		/**
@@ -131,6 +289,14 @@ package ghostcat.display.bitmap
 		{
 			updateDisplayList();
 			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
+		}
+		
+		/**
+		 * 更新位置的操作
+		 * 
+		 */
+		protected function updatePosition():void
+		{
 		}
 		
 		protected function updateSize():void
@@ -229,9 +395,6 @@ package ghostcat.display.bitmap
 		{
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
 		public function destory():void
 		{
 			if (parent)

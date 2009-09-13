@@ -32,22 +32,42 @@ package ghostcat.ui.containers
 			invalidateSize();
 		}
 		
-		public function addHScrollBar():void
+		/**
+		 * 在父级生成横向滚动条
+		 * @param skin
+		 * 
+		 */
+		public function addHScrollBar(skin:DisplayObject = null):void
 		{
-			hScrollBar = new GHScrollBar();
+			hScrollBar = new GHScrollBar(skin);
 			parent.addChild(hScrollBar);
 			hScrollBar.target = this;
 			
 			invalidateSize();
 		}
 		
-		public function addVScrollBar():void
+		/**
+		 * 在父级生成纵向滚动条
+		 * @param skin
+		 * 
+		 */
+		public function addVScrollBar(skin:DisplayObject = null):void
 		{
-			vScrollBar = new GVScrollBar();
+			vScrollBar = new GVScrollBar(skin);
 			parent.addChild(vScrollBar);
 			vScrollBar.target = this;
 			
 			invalidateSize();
+		}
+		
+		protected override function updatePosition() : void
+		{
+			super.updatePosition();
+			if (hScrollBar)
+				hScrollBar.y = this.y + this.height;
+			
+			if (vScrollBar)
+				vScrollBar.x = this.x + this.width;
 		}
 		
 		protected override function updateSize() : void
