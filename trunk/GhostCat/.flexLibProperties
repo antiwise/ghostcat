@@ -262,6 +262,8 @@
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
     <classEntry path="ghostcat.ui.LayoutUtil"/>
+    <classEntry path="ghostcat.ui.containers.ViewState"/>
+    <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

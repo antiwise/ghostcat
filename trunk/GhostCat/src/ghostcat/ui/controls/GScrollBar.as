@@ -262,16 +262,24 @@ package ghostcat.ui.controls
 		{
 			if (direction == 0)
 			{
-				if (upArrow && upArrow.mouseDown)
+				if (upArrow)
 				{
-					_scrollContent.scrollH -= detra;
-					updateThumb();
+					upArrow.enabled = _scrollContent.scrollH > 0;
+					if (upArrow.mouseDown)
+					{
+						_scrollContent.scrollH -= detra;
+						updateThumb();
+					}
 				}
 				
-				if (downArrow && downArrow.mouseDown)
+				if (downArrow)
 				{
-					_scrollContent.scrollH += detra;
-					updateThumb();
+					downArrow.enabled = _scrollContent.scrollH < _scrollContent.maxScrollH;
+					if (downArrow.mouseDown)
+					{
+						_scrollContent.scrollH += detra;
+						updateThumb();
+					}
 				}
 				
 				if (blur > 0)
@@ -300,16 +308,24 @@ package ghostcat.ui.controls
 			}
 			else
 			{
-				if (upArrow && upArrow.mouseDown)
+				if (upArrow)
 				{
-					_scrollContent.scrollV -= detra;
-					updateThumb();
+					upArrow.enabled = _scrollContent.scrollV > 0;
+					if (upArrow.mouseDown)
+					{
+						_scrollContent.scrollV -= detra;
+						updateThumb();
+					}
 				}
 				
-				if (downArrow && downArrow.mouseDown)
+				if (downArrow)
 				{
-					_scrollContent.scrollV += detra;
-					updateThumb();
+					downArrow.enabled = _scrollContent.scrollV < _scrollContent.maxScrollV;
+					if (downArrow.mouseDown)
+					{
+						_scrollContent.scrollV += detra;
+						updateThumb();
+					}
 				}
 				
 				if (blur > 0)
@@ -350,6 +366,8 @@ package ghostcat.ui.controls
 					thumb.x -= pageDetra;
 				else
 					thumb.x += thumb.mouseX;
+					
+				thumb.x = Math.max(Math.min(downArrow.x,thumb.x),upArrow.x + upArrow.width)
 			}
 			else
 			{
@@ -359,6 +377,8 @@ package ghostcat.ui.controls
 					thumb.y -= pageDetra;
 				else
 					thumb.y += thumb.mouseY;
+					
+				thumb.y = Math.max(Math.min(downArrow.y,thumb.y),upArrow.y + upArrow.height)
 			}
 			thumbMouseMoveHandler();
 		}
