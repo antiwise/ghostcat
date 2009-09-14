@@ -7,6 +7,7 @@ package
 	import ghostcat.manager.DragManager;
 	import ghostcat.skin.cursor.CursorArow;
 	import ghostcat.ui.CursorSprite;
+	import ghostcat.ui.controls.GImage;
 	import ghostcat.util.TweenUtil;
 	import ghostcat.util.easing.Elastic;
 	
@@ -17,19 +18,12 @@ package
 		{	
 			var t:Sprite = new TestCollision();
 			addChild(t);
-			t.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
-			var s:CursorSprite = new CursorSprite();
+			var s:GImage = new GImage(t);
+			s.width = 400;
+			s.height = 100;
 			addChild(s);
-			s.setCursor(CursorArow)
 			
-			TweenUtil.to(t,10000,{dynamicPoint:s,ease: ghostcat.util.easing.Elastic.easeOut})
-			
-		}
-		
-		private function mouseDownHandler(event:MouseEvent):void
-		{
-			DragManager.startDrag(event.currentTarget as DisplayObject);
 		}
 	}
 }
