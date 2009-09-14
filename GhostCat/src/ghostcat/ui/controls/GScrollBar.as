@@ -3,11 +3,13 @@ package ghostcat.ui.controls
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.BlurFilter;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
 	import ghostcat.display.GNoScale;
 	import ghostcat.events.TickEvent;
+	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.DragManager;
 	import ghostcat.ui.containers.ScrollPanel;
 	import ghostcat.ui.controls.scrollClasses.IScrollContent;
@@ -34,6 +36,8 @@ package ghostcat.ui.controls
 		private var thumbAreaStart:Number;
 		private var thumbAreaLength:Number;
 		
+		private var blurProxy:FilterProxy;
+		
 		/**
 		 * 方向
 		 */
@@ -58,6 +62,11 @@ package ghostcat.ui.controls
 		 * 快速滚动速度
 		 */
 		public var pageDetra:int = 25;
+		
+		/**
+		 * 滚动模糊
+		 */		
+		public var blur:Number = 0
 		
 		public var fields:Object = {upArrowField:"upArrow",downArrowField:"downArrow",
 			thumbField:"thumb",backgroundField:"background"}
@@ -264,6 +273,30 @@ package ghostcat.ui.controls
 					_scrollContent.scrollH += detra;
 					updateThumb();
 				}
+				
+				if (blur > 0)
+				{
+					if (_scrollContent.oldScrollH == _scrollContent.scrollH)
+					{
+						if (blurProxy)
+						{
+							blurProxy.removeFilter();
+							blurProxy = null;
+						}
+					}
+					else
+					{
+						if (!blurProxy)
+						{
+							blurProxy = new FilterProxy(new BlurFilter());
+							blurProxy.applyFilter(_scrollContent.content);
+						}
+						
+						blurProxy.blurX = Math.abs(_scrollContent.oldScrollH - _scrollContent.scrollH) * blur;
+						
+						_scrollContent.scrollH = _scrollContent.scrollH;
+					}
+				}
 			}
 			else
 			{
@@ -278,7 +311,33 @@ package ghostcat.ui.controls
 					_scrollContent.scrollV += detra;
 					updateThumb();
 				}
+				
+				if (blur > 0)
+				{
+					if (_scrollContent.oldScrollV == _scrollContent.scrollV)
+					{
+						if (blurProxy)
+						{
+							blurProxy.removeFilter();
+							blurProxy = null;
+						}
+					}
+					else
+					{
+						if (!blurProxy)
+						{
+							blurProxy = new FilterProxy(new BlurFilter());
+							blurProxy.applyFilter(_scrollContent.content);
+						}
+						
+						blurProxy.blurY = Math.abs(_scrollContent.oldScrollV - _scrollContent.scrollV) * blur;
+						
+						_scrollContent.scrollV = _scrollContent.scrollV;
+					}
+				}
 			}
+			
+			
 		}
 		
 		protected function backgroundHandler(event:MouseEvent):void

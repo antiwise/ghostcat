@@ -19,6 +19,9 @@ package ghostcat.ui.containers
 		public var hScrollBar:GScrollBar;
 		public var vScrollBar:GScrollBar;
 		
+		private var _oldScrollH:int;
+		private var _oldScrollV:int;
+		
 		public function ScrollPanel(skin:DisplayObject,scrollRect:Rectangle = null)
 		{
 			super(skin);
@@ -91,42 +94,48 @@ package ghostcat.ui.containers
 		
 		public function get maxScrollH():int
 		{
-			var rect:Rectangle = content.getBounds(content);
-			return rect.width - scrollRect.width;
+			return content.width - scrollRect.width;
 		}
 		
 		public function get maxScrollV():int
 		{
-			var rect:Rectangle = content.getBounds(content);
-			return rect.height - scrollRect.height;
+			return content.height - scrollRect.height;
+		}
+		
+		public function get oldScrollH():int
+		{
+			return _oldScrollH;
 		}
 		
 		public function get scrollH():int
 		{
-			return	scrollRect.x;
+			return	-content.x;
 		}
 		
 		public function set scrollH(v:int):void
 		{
 			v = Math.max(0,Math.min(v,maxScrollH))
 			
-			var rect:Rectangle = scrollRect.clone();
-			rect.x = v;
-			scrollRect = rect;
+			_oldScrollH = -content.x;
+			content.x = -v;
+		}
+		
+		public function get oldScrollV():int
+		{
+			return _oldScrollV;
 		}
 		
 		public function get scrollV():int
 		{
-			return scrollRect.y;
+			return -content.y;
 		}
 		
 		public function set scrollV(v:int):void
 		{
 			v = Math.max(0,Math.min(v,maxScrollV))
 			
-			var rect:Rectangle = scrollRect.clone();
-			rect.y = v;
-			scrollRect = rect;
+			_oldScrollV = -content.y;
+			content.y = -v;
 		}
 	}
 }

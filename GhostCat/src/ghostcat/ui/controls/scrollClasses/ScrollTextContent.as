@@ -2,16 +2,23 @@ package ghostcat.ui.controls.scrollClasses
 {
 	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
-	import flash.geom.Rectangle;
 	import flash.text.TextField;
 
 	public class ScrollTextContent extends EventDispatcher implements IScrollContent
 	{
-		public var target:TextField;
+		private var target:TextField;
+		
+		private var _oldScrollH:int;
+		private var _oldScrollV:int;
 		
 		public function ScrollTextContent(target:TextField)
 		{
 			this.target = target;
+		}
+		
+		public function get content():DisplayObject
+		{
+			return target;
 		}
 		
 		public function get maxScrollH():int
@@ -24,6 +31,11 @@ package ghostcat.ui.controls.scrollClasses
 			return target.maxScrollV;
 		}
 		
+		public function get oldScrollH():int
+		{
+			return _oldScrollH;
+		}
+		
 		public function get scrollH():int
 		{
 			return	target.scrollH;
@@ -31,7 +43,13 @@ package ghostcat.ui.controls.scrollClasses
 		
 		public function set scrollH(v:int):void
 		{
+			_oldScrollH = target.scrollH;
 			target.scrollH = v;
+		}
+		
+		public function get oldScrollV():int
+		{
+			return _oldScrollV;
 		}
 		
 		public function get scrollV():int
@@ -41,6 +59,7 @@ package ghostcat.ui.controls.scrollClasses
 		
 		public function set scrollV(v:int):void
 		{
+			_oldScrollV = target.scrollV;
 			target.scrollV = v;
 		}
 	}
