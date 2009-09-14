@@ -152,6 +152,7 @@
     <classEntry path="ghostcat.operation.WatchOper"/>
     <classEntry path="ghostcat.operation.effect.FlashEffect"/>
     <classEntry path="ghostcat.operation.effect.IEffect"/>
+    <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="ghostcat.operation.effect.TweenEffect"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
@@ -161,6 +162,7 @@
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
     <classEntry path="ghostcat.parse.Parse"/>
+    <classEntry path="ghostcat.parse.display.AlphaShapeParse"/>
     <classEntry path="ghostcat.parse.display.BitmapParse"/>
     <classEntry path="ghostcat.parse.display.DrawParse"/>
     <classEntry path="ghostcat.parse.display.EllipseParse"/>
@@ -258,7 +260,8 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
-    <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
+    <classEntry path="ghostcat.ui.controls.GImage"/>
+    <classEntry path="ghostcat.ui.LayoutUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

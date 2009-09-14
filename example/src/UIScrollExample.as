@@ -17,8 +17,10 @@ package
 			
 			var s:ScrollPanel = new ScrollPanel(t,new Rectangle(0,0,100,100));
 			addChild(s);
+			
 			s.addHScrollBar();
 			s.hScrollBar.easing = Back.easeOut;
+			
 			s.addVScrollBar();
 			s.vScrollBar.easing = Elastic.easeOut;
 			s.vScrollBar.blur = 4;
