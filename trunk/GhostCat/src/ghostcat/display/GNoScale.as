@@ -1,8 +1,10 @@
 package ghostcat.display
 {
 	import flash.display.DisplayObject;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.util.CallLater;
+	import ghostcat.util.Geom;
 	
 	/**
 	 * Scale保持为固定值的显示对象
@@ -48,6 +50,11 @@ package ghostcat.display
 				
 			_height = v;
 			invalidateSize();
+		}
+		
+		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
+		{
+			return Geom.localRectToContent(new Rectangle(0,0,width,height),this,targetCoordinateSpace);
 		}
 		
 		override public function invalidateSize() : void

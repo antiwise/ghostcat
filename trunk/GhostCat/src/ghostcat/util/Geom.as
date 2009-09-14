@@ -23,12 +23,18 @@ package ghostcat.util
 		 * 
 		 * @param displayObj	显示对象
 		 * @param rect	范围
+		 * @param equal	是否保持长宽比
 		 * 
 		 */		
-		public static function scaleToFit(displayObj:DisplayObject, rect:Rectangle):void
+		public static function scaleToFit(displayObj:DisplayObject, container:*, equal:Boolean = false):void
         {
+        	var rect:Rectangle = getRect(container);
+        	
             displayObj.scaleX = rect.width / displayObj.width;
             displayObj.scaleY = rect.height / displayObj.height;
+            
+            if (equal)
+            	displayObj.scaleX = displayObj.scaleY = Math.min(displayObj.scaleX,displayObj.scaleY);
             
             var objRect:Rectangle = displayObj.getRect(displayObj.parent);
             displayObj.x += rect.x - objRect.x;
@@ -102,6 +108,9 @@ package ghostcat.util
 		 */		
 		public static function localRectToContent(rect:Rectangle,source:DisplayObject,target:DisplayObject):Rectangle
 		{
+			if (source == target)
+				return rect;
+			
 			var topLeft:Point = localToContent(rect.topLeft,source,target);
 			var bottomRight:Point = localToContent(rect.bottomRight,source,target);
 			return new Rectangle(topLeft.x,topLeft.y,bottomRight.x - topLeft.x,bottomRight.y - topLeft.y);
