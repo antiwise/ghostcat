@@ -6,7 +6,10 @@ package ghostcat.ui.controls
 	import flash.events.IOErrorEvent;
 	
 	import ghostcat.util.LoadHelper;
-
+	
+	[Event(name="complete",type="flash.events.Event")]
+	[Event(name="io_error",type="flash.events.IOErrorEvent")]
+	
 	/**
 	 * 等待服务器返回时显示的提示，将不显示进度
 	 * 
@@ -56,11 +59,15 @@ package ghostcat.ui.controls
 		protected function completeHandler(event:Event):void
 		{
 			label = "加载完成";
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
 			label = "加载失败";
+			
+			dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR))
 		}
 	}
 }
