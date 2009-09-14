@@ -200,6 +200,7 @@
     <classEntry path="ghostcat.transfer.Skew"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.IToolTipSkin"/>
+    <classEntry path="ghostcat.ui.LayoutUtil"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
     <classEntry path="ghostcat.ui.ToolTipSkin"/>
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
@@ -209,6 +210,7 @@
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
+    <classEntry path="ghostcat.ui.controls.GImage"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="ghostcat.ui.controls.GRadioButton"/>
@@ -260,10 +262,7 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
-    <classEntry path="ghostcat.ui.controls.GImage"/>
-    <classEntry path="ghostcat.ui.LayoutUtil"/>
-    <classEntry path="ghostcat.ui.containers.ViewState"/>
-    <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
+    <classEntry path="ghostcat.ui.controls.List"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

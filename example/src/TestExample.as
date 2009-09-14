@@ -1,17 +1,10 @@
 package
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	
-	import ghostcat.manager.DragManager;
-	import ghostcat.skin.cursor.CursorArow;
-	import ghostcat.ui.CursorSprite;
-	import ghostcat.ui.controls.GImage;
-	import ghostcat.util.TweenUtil;
-	import ghostcat.util.easing.Elastic;
+	import ghostcat.ui.LayoutUtil;
 	
-	[SWF(width="400",height="400")]
+	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
@@ -19,10 +12,9 @@ package
 			var t:Sprite = new TestCollision();
 			addChild(t);
 			
-			var s:GImage = new GImage(t);
-			s.width = 400;
-			s.height = 100;
-			addChild(s);
+			LayoutUtil.percent(t,stage,1,1);
+			LayoutUtil.center(t,stage,0,0);
+//			LayoutUtil.metrics(t,stage,NaN,NaN,0,0);
 			
 		}
 	}

@@ -6,9 +6,12 @@ package ghostcat.ui.controls
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	
-	import ghostcat.util.ClassFactory;
 	import ghostcat.skin.ProgressSkin;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.LoadHelper;
+	
+	[Event(name="complete",type="flash.events.Event")]
+	[Event(name="io_error",type="flash.events.IOErrorEvent")]
 	
 	/**
 	 * 加载进度条
@@ -82,12 +85,16 @@ package ghostcat.ui.controls
 		{
 			percent = 1.0;
 			label = "加载完成";
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
 			percent = 0.0;
 			label = "加载失败";
+			
+			dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR))
 		}
 	}
 }

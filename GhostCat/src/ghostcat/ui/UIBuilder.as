@@ -64,5 +64,18 @@ package ghostcat.ui
 			}
 		}
 		
+		/**
+		 * 根据名字获取Skin
+		 *  
+		 * @param skin
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public static function getSkinByName(skin:DisplayObject,name:String):DisplayObject
+		{
+			return SearchUtil.findChildByProperty(skin,"name",name);
+		}
+		
 	}
 }

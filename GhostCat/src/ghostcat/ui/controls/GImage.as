@@ -16,6 +16,12 @@ package ghostcat.ui.controls
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Geom;
 	
+	/**
+	 * 图片
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GImage extends GNoScale
 	{
 		public var loaderContext:LoaderContext;
@@ -32,6 +38,11 @@ package ghostcat.ui.controls
 			this.source = source;
 		}
 		
+		/**
+		 * 垂直对齐
+		 * @return 
+		 * 
+		 */
 		public function get verticalAlign():String
 		{
 			return _verticalAlign;
@@ -43,6 +54,11 @@ package ghostcat.ui.controls
 			invalidateLayout();
 		}
 
+		/**
+		 * 水平对齐 
+		 * @return 
+		 * 
+		 */
 		public function get horizontalAlign():String
 		{
 			return _horizontalAlign;
@@ -54,6 +70,11 @@ package ghostcat.ui.controls
 			invalidateLayout();
 		}
 
+		/**
+		 * 是否缩放
+		 * @return 
+		 * 
+		 */
 		public function get scaleContent():Boolean
 		{
 			return _scaleContent;
@@ -65,6 +86,11 @@ package ghostcat.ui.controls
 			invalidateLayout();
 		}
 
+		/**
+		 * 是否裁切 
+		 * @return 
+		 * 
+		 */
 		public function get clipContent():Boolean
 		{
 			return _clipContent;
@@ -76,6 +102,11 @@ package ghostcat.ui.controls
 			scrollRect = v ? new Rectangle(0,0,width,height) : null;
 		}
 
+		/**
+		 * 数据源
+		 * @param v
+		 * 
+		 */
 		public function set source(v:*):void
 		{
 			var loader:Loader;
@@ -131,6 +162,10 @@ package ghostcat.ui.controls
 			CallLater.callLater(layoutChildren,null,true);
 		}
 		
+		/**
+		 * 更新布局
+		 * 
+		 */
 		protected function layoutChildren():void
 		{
 			if (scaleContent)
