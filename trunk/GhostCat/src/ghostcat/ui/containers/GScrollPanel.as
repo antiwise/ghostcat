@@ -14,7 +14,7 @@ package ghostcat.ui.containers
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ScrollPanel extends GBase implements IScrollContent
+	public class GScrollPanel extends GBase implements IScrollContent
 	{
 		public var hScrollBar:GScrollBar;
 		public var vScrollBar:GScrollBar;
@@ -22,7 +22,7 @@ package ghostcat.ui.containers
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		
-		public function ScrollPanel(skin:DisplayObject,scrollRect:Rectangle = null)
+		public function GScrollPanel(skin:DisplayObject,scrollRect:Rectangle = null)
 		{
 			super(skin);
 			

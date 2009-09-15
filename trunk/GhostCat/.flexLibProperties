@@ -205,7 +205,7 @@
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
     <classEntry path="ghostcat.ui.UIBuilder"/>
     <classEntry path="ghostcat.ui.UIConst"/>
-    <classEntry path="ghostcat.ui.containers.ScrollPanel"/>
+    <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
@@ -262,9 +262,11 @@
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
     <classEntry path="ghostcat.ui.LayoutUtil"/>
-    <classEntry path="ghostcat.ui.containers.ViewState"/>
+    <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
     <classEntry path="ghostcat.ui.controls.GSilder"/>
+    <classEntry path="ghostcat.ui.containers.GAlert"/>
+    <classEntry path="ghostcat.ui.PopupManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

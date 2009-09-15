@@ -5,11 +5,11 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	
-	public class ViewState extends GBase
+	public class GViewState extends GBase
 	{
 		private var _selectedIndex:int;
 		
-		public function ViewState(skin:DisplayObjectContainer = null,replace:Boolean = true)
+		public function GViewState(skin:DisplayObjectContainer = null,replace:Boolean = true)
 		{
 			super(skin, replace)
 		}
