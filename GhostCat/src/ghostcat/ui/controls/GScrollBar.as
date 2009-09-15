@@ -10,7 +10,7 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.DragManager;
-	import ghostcat.ui.containers.ScrollPanel;
+	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.ui.controls.scrollClasses.IScrollContent;
 	import ghostcat.ui.controls.scrollClasses.ScrollTextContent;
 	import ghostcat.util.Tick;
@@ -99,7 +99,7 @@ package ghostcat.ui.controls
 			else if (_target is TextField)
 				_scrollContent = new ScrollTextContent(_target as TextField);
 			else
-				_scrollContent = new ScrollPanel(_target);
+				_scrollContent = new GScrollPanel(_target);
 		}
 		
 		/**
