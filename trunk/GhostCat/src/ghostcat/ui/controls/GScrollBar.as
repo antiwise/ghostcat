@@ -70,7 +70,7 @@ package ghostcat.ui.controls
 		public var fields:Object = {upArrowField:"upArrow",downArrowField:"downArrow",
 			thumbField:"thumb",backgroundField:"background"}
 		
-		public function GScrollBar(skin:DisplayObject=null, replace:Boolean=true,fields:Object=null)
+		public function GScrollBar(skin:*=null, replace:Boolean=true,fields:Object=null)
 		{
 			if (fields)
 				this.fields = fields;
@@ -139,7 +139,7 @@ package ghostcat.ui.controls
 				(_scrollContent as DisplayObject).scrollRect = rect;
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			

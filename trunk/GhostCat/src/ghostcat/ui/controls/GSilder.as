@@ -6,7 +6,7 @@ package ghostcat.ui.controls
 	
 	public class GSilder extends GNoScale
 	{
-		public function GSilder(skin:DisplayObject=null,replace:Boolean=true)
+		public function GSilder(skin:*=null,replace:Boolean=true)
 		{
 			super(skin, replace);
 		}

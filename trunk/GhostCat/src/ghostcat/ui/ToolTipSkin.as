@@ -17,10 +17,10 @@ package ghostcat.ui
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ArowSkin);
 		
-		public function ToolTipSkin(skin:DisplayObject=null)
+		public function ToolTipSkin(skin:*=null)
 		{
 			if (!skin)
-				skin = defaultSkin.newInstance();
+				skin = defaultSkin;
 			super(skin,true,true,new Point(2,2));
 		}
 		

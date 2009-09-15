@@ -22,10 +22,10 @@ package ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GCheckBox(skin:MovieClip=null, replace:Boolean=true, textPos:Point=null)
+		public function GCheckBox(skin:*=null, replace:Boolean=true, textPos:Point=null)
 		{
 			if (!skin)
-				skin = defaultSkin.newInstance();
+				skin = defaultSkin;
 				
 			if (!textPos)
 				this.textPos = new Point(15,0);

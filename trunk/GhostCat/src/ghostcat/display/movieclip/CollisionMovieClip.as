@@ -19,7 +19,7 @@ package ghostcat.display.movieclip
 		 */		
 		private var _collision:Collision
 		
-		public function CollisionMovieClip(skin:MovieClip=null, replace:Boolean=true)
+		public function CollisionMovieClip(skin:*=null, replace:Boolean=true)
 		{
 			_collision = new Collision(this);
 			super(skin,replace);
@@ -30,7 +30,7 @@ package ghostcat.display.movieclip
 			return _collision;
 		}
 		
-		public override function setContent(skin:DisplayObject,replace:Boolean=true):void
+		public override function setContent(skin:*,replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			collision.refresh();

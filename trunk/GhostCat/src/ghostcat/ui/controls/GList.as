@@ -15,12 +15,16 @@ package ghostcat.ui.controls
 		public static const HLIST:String = "hlist";
 		public static const VLIST:String = "vlist";
 		
-		public static var defaultSkin:ClassFactory = new ClassFactory(GText);
+		public static var defaultSkin:ClassFactory =  new ClassFactory();
+		public static var defaultItemRender:ClassFactory = new ClassFactory(GText);
 		
 		public var type:String = TILE;
 		
-		public function GList(skin:DisplayObject,replace:Boolean = true, renderField:String = "render")
+		public function GList(skin:*,replace:Boolean = true, itemRender:ClassFactory = null, renderField:String = "render")
 		{
+			if (!itemRender)
+				itemRender = defaultItemRender;
+			
 			var render:ClassFactory;
 			if (skin)
 			{
@@ -34,8 +38,13 @@ package ghostcat.ui.controls
 			
 			if (!render)
 				render = defaultSkin;
+			
+			if (itemRender.params)
+				itemRender.params[0] = render;
+			else
+				itemRender.params = [render];
 				
-			super(render);
+			super(itemRender);
 		
 			setContent(skin, replace);
 		}

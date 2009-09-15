@@ -17,7 +17,7 @@ package ghostcat.display.viewport
 		 */		
 		private var _collision:Collision;
 		
-		public function CollisionSprite(skin:DisplayObject=null, replace:Boolean=true)
+		public function CollisionSprite(skin:*=null, replace:Boolean=true)
 		{
 			_collision = new Collision(this);
 			super(skin,replace);
@@ -28,7 +28,7 @@ package ghostcat.display.viewport
 			return _collision;
 		}
 		
-		public override function setContent(skin:DisplayObject,replace:Boolean=true):void
+		public override function setContent(skin:*,replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			collision.refresh();

@@ -3,6 +3,8 @@ package ghostcat.display
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
+	import ghostcat.util.ClassFactory;
 
 	/**
 	 * 基类，用于对图元进行包装。replace参数为false时将不会对源图元产生影响，可作为单独的控制类使用
@@ -33,7 +35,7 @@ package ghostcat.display
 		 * 参数与setContent方法相同
 		 * 
 		 */		
-		public function GSprite(skin:DisplayObject=null,replace:Boolean=true)
+		public function GSprite(skin:*=null,replace:Boolean=true)
 		{
 			super();
 			
@@ -63,12 +65,12 @@ package ghostcat.display
 		 * @return 
 		 * 
 		 */		
-		public function get skin():DisplayObject
+		public function get skin():*
 		{
 			return _content;
 		}
 		
-		public function set skin(v:DisplayObject):void
+		public function set skin(v:*):void
 		{
 			setContent(v,replace);
 		}
@@ -92,8 +94,14 @@ package ghostcat.display
 		 * @param replace	是否替换原图元
 		 * 
 		 */		
-		public function setContent(skin:DisplayObject,replace:Boolean=true):void
+		public function setContent(skin:*,replace:Boolean=true):void
 		{
+			if (skin is Class)
+				skin = new ClassFactory(skin);
+			
+			if (skin is ClassFactory)
+				skin = (skin as ClassFactory).newInstance();
+			
 			if (_content == skin)
 				return;
 			

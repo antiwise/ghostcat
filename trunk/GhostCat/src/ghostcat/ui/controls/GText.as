@@ -85,10 +85,10 @@ package ghostcat.ui.controls
 		
 		private var enabledAdjustContextSize:Boolean = false;//是否自动根据文本调整图元体积。如果为真，将会把TextField中皮肤中提出。
 		
-		public function GText(skin:DisplayObject=null, replace:Boolean=true, enabledAdjustContextSize:Boolean = false, textPos:Point=null)
+		public function GText(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
-				skin = defaultSkin.newInstance();
+				skin = defaultSkin;
 			
 			if (textPos)
 				this.textPos = textPos;
@@ -98,10 +98,10 @@ package ghostcat.ui.controls
 			super(skin, replace);
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
-			getTextFieldFromSkin(skin);
+			getTextFieldFromSkin(this.skin);
 		}
 		
 		/**

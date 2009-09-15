@@ -24,7 +24,7 @@ package ghostcat.display.viewport
 		private var _endPoint:Point;
 		private var _wallHeight:Number;
 		
-		public function Wall(skin:DisplayObject,startPoint:Point,endPoint:Point,wallHeight:Number)
+		public function Wall(skin:*,startPoint:Point,endPoint:Point,wallHeight:Number)
 		{
 			this.acceptContentPosition = false;
 			

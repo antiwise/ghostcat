@@ -54,6 +54,9 @@ package ghostcat.util
 		 */
 		public function newInstance():*
 		{
+			if (!generator)
+				return null;
+				
 			if (generator is String)
 				generator = getDefinitionByName(generator) as Class;
 			

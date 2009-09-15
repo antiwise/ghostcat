@@ -113,7 +113,7 @@ package ghostcat.ui.controls
 			return _mouseOver;
 		}
 		
-		public function GButton(skin:MovieClip, replace:Boolean=true, textPos:Point=null)
+		public function GButton(skin:*, replace:Boolean=true, textPos:Point=null)
 		{
 			if (textPos)
 				this.textPos = textPos;
@@ -155,7 +155,7 @@ package ghostcat.ui.controls
 			labelField.text = _label;
 		}
 
-		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
+		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			defaultSkin = skin;
 			setPartConetent(skin,replace);

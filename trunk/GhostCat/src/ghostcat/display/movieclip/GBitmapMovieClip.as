@@ -47,7 +47,7 @@ package ghostcat.display.movieclip
 				setLabel(labels[0],-1);
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
+		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			if (content)
 				Debug.error("不允许执行setContent方法")

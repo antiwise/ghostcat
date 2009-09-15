@@ -46,12 +46,10 @@ package ghostcat.util
 			if (accurracy <= 0) 
 				Debug.error("精度必须大于0");
 			
-			// If a simple hitTestObject is false, they cannot be intersecting.
 			if (!target1.hitTestObject(target2)) 
 				return new Rectangle();
 			
 			var hitRectangle:Rectangle = intersectionRectangle( target1, target2 );
-			// If their boundaries are no interesecting, they cannot be intersecting.
 			if (hitRectangle.width * accurracy < 1 || hitRectangle.height * accurracy < 1) 
 				return new Rectangle();
 			
@@ -63,17 +61,13 @@ package ghostcat.util
 			{
 				return new Rectangle();
 			}
-			// Draw the first target.
+			
 			bitmapData.draw(target1, getDrawMatrix( target1, hitRectangle, accurracy ), new ColorTransform( 1, 1, 1, 1, 255, -255, -255, 255 ) );
-			// Overlay the second target.
 			bitmapData.draw(target2, getDrawMatrix( target2, hitRectangle, accurracy ), new ColorTransform( 1, 1, 1, 1, 255, 255, 255, 255 ), BlendMode.DIFFERENCE );
 			
-			// Find the intersection.
 			var intersection:Rectangle = bitmapData.getColorBoundsRect( 0xFFFFFFFF,0xFF00FFFF );
-			
 			bitmapData.dispose();
 			
-			// Alter width and positions to compensate for accurracy
 			if (accurracy != 1)
 			{
 				intersection.x /= accurracy;

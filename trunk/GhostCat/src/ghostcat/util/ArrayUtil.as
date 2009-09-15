@@ -39,6 +39,9 @@ package ghostcat.util
 		
 		/**
 		 * 获得数组中特定标示的对象
+		 * 
+		 * getMapping([{x:0,y:0},{x:-2,y:4},{x:4,y:2}],"x",-2) //{x:-2:y:4}(x = -2)
+		 * getMapping([[1,2],[3,4],[5,6]],0,3) //[3,4](第一个元素为3)
 		 *  
 		 * @param arr	数组
 		 * @param value	值
@@ -60,6 +63,8 @@ package ghostcat.util
         
         /**
 		 * 获得数组中某个键的所有值
+		 * 
+		 * getFieldValues([{x:0,y:0},{x:-2,y:4},{x:4,y:2}],"x")	//[0,-2,4]
 		 *  
 		 * @param arr	数组
 		 * @param field	键

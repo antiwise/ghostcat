@@ -17,7 +17,7 @@ package ghostcat.display
 		private var _height:Number;
 		private var _width:Number;
 		
-		public function GNoScale(skin:DisplayObject=null,replace:Boolean=true)
+		public function GNoScale(skin:*=null,replace:Boolean=true)
 		{
 			super(skin,replace);
 			

@@ -6,7 +6,7 @@ package ghostcat.ui.containers
 	
 	public class GButtonBar extends GNoScale
 	{
-		public function GButtonBar(skin:DisplayObject=null, replace:Boolean=true)
+		public function GButtonBar(skin:*=null, replace:Boolean=true)
 		{
 			super(skin, replace);
 		}

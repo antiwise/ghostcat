@@ -9,7 +9,7 @@ package ghostcat.ui.containers
 	{
 		private var _selectedIndex:int;
 		
-		public function GViewState(skin:DisplayObjectContainer = null,replace:Boolean = true)
+		public function GViewState(skin:* = null,replace:Boolean = true)
 		{
 			super(skin, replace)
 		}

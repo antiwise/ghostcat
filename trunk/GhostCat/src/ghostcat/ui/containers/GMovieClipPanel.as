@@ -16,7 +16,7 @@ package ghostcat.ui.containers
 		 */
 		public var centerLayout:Boolean = true;
 		
-		public function GMovieClipPanel(mc:MovieClip=null, replace:Boolean=true, centerLayout:Boolean = true, fields:Object=null)
+		public function GMovieClipPanel(mc:*=null, replace:Boolean=true, centerLayout:Boolean = true, fields:Object=null)
 		{
 			this.centerLayout = centerLayout;
 			

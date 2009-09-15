@@ -3,7 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.ui.containers.ScrollPanel;
+	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.util.easing.Back;
 	import ghostcat.util.easing.Elastic;
 	
@@ -15,7 +15,7 @@ package
 			var t:Sprite = new TestCollision();
 			addChild(t);
 			
-			var s:ScrollPanel = new ScrollPanel(t,new Rectangle(0,0,100,100));
+			var s:GScrollPanel = new GScrollPanel(t,new Rectangle(0,0,100,100));
 			addChild(s);
 			
 			s.addHScrollBar();

@@ -58,7 +58,7 @@ package ghostcat.display.graphics
 		public var leftLineControl:DragPoint;
 		public var rightLineControl:DragPoint;
 		
-		public function ControlRect(skin:DisplayObject=null,replace:Boolean=true)
+		public function ControlRect(skin:*=null,replace:Boolean=true)
 		{
 			createControl();
 			
@@ -96,7 +96,7 @@ package ghostcat.display.graphics
 			this.controlCotainer.visible = _selected;
 		}
 
-		override public function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		override public function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			updateControls();
