@@ -49,7 +49,7 @@ package ghostcat.ui.controls
 			setContent(skin, replace);
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			
