@@ -171,8 +171,17 @@ package ghostcat.util
 			{
 				for (var i:int = 0;i < size;i++)
 				{
-					if ((target2 as DisplayObjectContainer).getChildAt(i).hitTestPoint(x,y,shapeFlag))
-						return true;
+					var item:DisplayObject = (target2 as DisplayObjectContainer).getChildAt(i);
+					if (item.hitTestPoint(x,y))
+					{
+						if (shapeFlag)
+						{
+							if (item.hitTestPoint(x,y,shapeFlag))
+								return true;
+						}
+						else
+							return true;
+					}
 				}
 			}
 			return false;

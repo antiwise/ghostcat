@@ -32,7 +32,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		static public function getLocalPath(obj:*,id:String=""):String
+		static public function getLocalPath(obj:*,id:*=""):String
 		{
 			return getQualifiedClassName(obj)+ id ? "(" + id + ")" : "";
 		} 
@@ -45,7 +45,7 @@ package ghostcat.manager
 		 * @param id	用于判重的ID
 		 * 
 		 */
-		public function save(obj:*,id:String=""):void
+		public function save(obj:*,id:*=""):void
 		{
 			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
 			so.data.value = obj;
@@ -62,7 +62,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function load(obj:*,id:String=""):*
+		public function load(obj:*,id:*=""):*
 		{
 			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
 			return so.data.value;
@@ -77,7 +77,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadToday(obj:*,id:String=""):*
+		public function loadToday(obj:*,id:*=""):*
 		{
 			var so:SharedObject = SharedObject.getLocal(getLocalPath(obj,id));
 			var time:Date = so.data.time;

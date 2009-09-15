@@ -267,6 +267,9 @@
     <classEntry path="ghostcat.ui.controls.GSilder"/>
     <classEntry path="ghostcat.ui.containers.GAlert"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
+    <classEntry path="ghostcat.ui.containers.GButtonBar"/>
+    <classEntry path="ghostcat.ui.controls.GComboBox"/>
+    <classEntry path="ghostcat.ui.controls.GNumericStepper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
