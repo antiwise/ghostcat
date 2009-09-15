@@ -20,7 +20,7 @@ package ghostcat.ui.controls
 	{
 		protected var loadHelper:LoadHelper;
 		
-		public function GServerWaitBar(skin:DisplayObject=null, replace:Boolean=true, mode:int=0, fields:Object=null)
+		public function GServerWaitBar(skin:*=null, replace:Boolean=true, mode:int=0, fields:Object=null)
 		{
 			super(skin, replace, mode, fields);
 		}

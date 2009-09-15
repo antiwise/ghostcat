@@ -22,7 +22,7 @@ package ghostcat.ui.containers
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		
-		public function GScrollPanel(skin:DisplayObject,scrollRect:Rectangle = null)
+		public function GScrollPanel(skin:*,scrollRect:Rectangle = null)
 		{
 			super(skin);
 			

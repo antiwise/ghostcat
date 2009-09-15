@@ -56,7 +56,7 @@ package ghostcat.display
 		 * 参数与setContent方法相同
 		 * 
 		 */		
-		public function GBase(skin:DisplayObject=null,replace:Boolean=true)
+		public function GBase(skin:*=null,replace:Boolean=true)
 		{
 			super(skin,replace);
 		}

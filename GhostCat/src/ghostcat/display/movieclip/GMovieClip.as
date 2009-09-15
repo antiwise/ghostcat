@@ -31,7 +31,7 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */
-		public function GMovieClip(mc:MovieClip=null, replace:Boolean=true, paused:Boolean=false)
+		public function GMovieClip(mc:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			super(mc, replace, paused);
 		}
@@ -41,7 +41,7 @@ package ghostcat.display.movieclip
 			return content as MovieClip;
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
+		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			

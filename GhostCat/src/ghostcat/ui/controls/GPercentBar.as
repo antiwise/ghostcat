@@ -54,7 +54,7 @@
 		 * @param labelField	标签实例名
 		 * 
 		 */
-		public function GPercentBar(skin:DisplayObject,replace:Boolean = true,mode:int = 0,fields:Object = null)
+		public function GPercentBar(skin:*,replace:Boolean = true,mode:int = 0,fields:Object = null)
 		{
 			if (fields)
 				this.fields = fields;
@@ -64,7 +64,7 @@
 			
 		}
 		
-		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			

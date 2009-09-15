@@ -63,7 +63,7 @@ package ghostcat.ui
 		
 		private var buttonDown:Boolean=false;//鼠标是否按下 
 		
-		private var findCursor:Boolean=false;//是否自动查找鼠标
+		private var findCursor:Boolean=true;//是否自动查找鼠标
 		
 		private static var _instance:CursorSprite;
 		

@@ -20,7 +20,7 @@ package ghostcat.ui.containers
 		public var title:String;
 		public var text:String;
 		
-		public function GAlert(mc:MovieClip=null, replace:Boolean=true, paused:Boolean=false, fields:Object=null)
+		public function GAlert(mc:*=null, replace:Boolean=true, paused:Boolean=false, fields:Object=null)
 		{
 			super(mc, replace, paused, fields);
 		}
