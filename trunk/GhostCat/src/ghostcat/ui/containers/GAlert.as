@@ -12,7 +12,7 @@ package ghostcat.ui.containers
 			alert.title = title;
 			alert.text = text;
 			
-			PopupManager.instance.popupLayer.addChild(alert);
+			PopupManager.instance.showPopup(alert);
 			
 			return alert;
 		}
