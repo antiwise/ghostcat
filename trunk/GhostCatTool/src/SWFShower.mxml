@@ -9,7 +9,7 @@
 		</mx:DataGrid>
 		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
 			<mx:Canvas clipContent="true" id="imageCanvas" label="图象" width="100%" height="100%" resize="image_resizeHandler(event)">
-				<mx:Image id="image" mouseDown="image_mouseDownHandler(event)"/>
+				<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
 			</mx:Canvas>
 			<mx:Canvas id="treeCanvas" label="结构" width="100%" height="100%">
 				<mx:Tree id="tree" width="100%" height="100%" labelFunction="treeLabelFuntion"/>
@@ -73,19 +73,25 @@
 				
 				var o:Object = new c();
 				
+				DisplayUtil.removeAllChildren(image);
+				
 				if (o is DisplayObject)
 				{
 					var displayObj:DisplayObject = o as DisplayObject;
-					image.source = displayObj;
+					image.addChild(displayObj);
 				
 					var rect:Rectangle = displayObj.getRect(displayObj);
-					image.x = Math.max(0,(imageCanvas.width - rect.width)/2 - rect.x);
-					image.y = Math.max(0,(imageCanvas.height - rect.height)/2 - rect.y);
+					displayObj.x = -rect.x;
+					displayObj.y = -rect.y;
 					
+					image.x = Math.max(0,(imageCanvas.width - rect.width)/2);
+					image.y = Math.max(0,(imageCanvas.height - rect.height)/2);
+					image.width = rect.width;
+					image.height = rect.height;
 					
-					//绘制注册点
 					var sh:Shape = new Shape();
-					
+					sh.x = -rect.x;
+					sh.y = -rect.y;
 					sh.graphics.lineStyle(0,0);
 					sh.graphics.moveTo(-5,0);
 					sh.graphics.lineTo(5,0);
@@ -94,7 +100,6 @@
 					sh.graphics.endFill();
 					sh.blendMode = BlendMode.INVERT;
 					
-					image.validateNow();
 					image.addChild(sh);
 					
 					tree.dataProvider = ReflectXMLUtil.getChildXML(displayObj);
@@ -103,14 +108,12 @@
 				}
 				else if (o is Sound)
 				{
-					image.source = null;
 					(o as Sound).play();
 					
 					tree.dataProvider = null;
 				}
 				else if (o is BitmapData)
 				{
-					image.source = o;
 					tree.dataProvider = null;
 				}
 				else if (o is ByteArray)
