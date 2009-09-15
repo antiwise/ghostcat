@@ -8,7 +8,7 @@
 	import ghostcat.text.TextFieldUtil;
 
 	/**
-	 * 进度条，滚动条，滑块基类
+	 * 进度条基类
 	 * 
 	 * @author flashyiyi
 	 * 

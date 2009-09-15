@@ -7,7 +7,6 @@ package ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
-	import ghostcat.display.GNoScale;
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.DragManager;
@@ -23,7 +22,7 @@ package ghostcat.ui.controls
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GScrollBar extends GNoScale
+	public class GScrollBar extends GSilder
 	{
 		public var upArrow:GButton;
 		public var downArrow:GButton;

@@ -9,7 +9,7 @@ package ghostcat.ui.controls
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.SearchUtil;
 	
-	public class List extends Tile
+	public class GList extends Tile
 	{
 		public static const TILE:String = "tile";
 		public static const HLIST:String = "hlist";
@@ -19,7 +19,7 @@ package ghostcat.ui.controls
 		
 		public var type:String = TILE;
 		
-		public function List(skin:DisplayObject,renderField:String = "render")
+		public function GList(skin:DisplayObject,replace:Boolean = true, renderField:String = "render")
 		{
 			var render:ClassFactory;
 			if (skin)
@@ -36,6 +36,16 @@ package ghostcat.ui.controls
 				render = defaultSkin;
 				
 			super(render);
+		
+			setContent(skin, replace);
+		}
+		
+		public override function setContent(skin:DisplayObject, replace:Boolean=true) : void
+		{
+			super.setContent(skin,replace);
+			
+			this.width = skin.width;
+			this.height = skin.height;
 		}
 		
 		protected override function get contentRect():Rectangle
