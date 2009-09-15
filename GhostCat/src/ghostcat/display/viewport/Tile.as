@@ -8,12 +8,11 @@ package ghostcat.display.viewport
 	import flash.utils.Dictionary;
 	
 	import ghostcat.debug.Debug;
+	import ghostcat.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.util.ClassFactory;
-	import ghostcat.display.DisplayUtil;
 	import ghostcat.util.Geom;
-	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.Util;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
@@ -94,24 +93,25 @@ package ghostcat.display.viewport
 			return rect.height;
 		}
 		
-		public function Tile(base:*)
+		/**
+		 * @inheritDoc
+		 */
+		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
+		{
+			return Geom.localRectToContent(rect,this,targetCoordinateSpace);
+		}
+		
+		public function Tile(itemClass:*)
 		{
 			super(null);
+			
 			_rect = new Rectangle();
 			contents = new Dictionary();
 			unuseContents = [];
 			
-			setContentClass(base);
+			setContentClass(itemClass);
 			
 			delayUpatePosition = true;//激活此属性坐标更新将会被延迟
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		public override function setContent(skin:DisplayObject, replace:Boolean=true):void
-		{
-			setContentClass(ReflectUtil.getClass(skin));
 		}
 		
 		public function setContentClass(ref:*):void
