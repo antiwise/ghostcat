@@ -41,7 +41,7 @@ package ghostcat.operation.server
 		public var service:String;
 		
 		/**
-		 * 队列
+		 * 使用的队列
 		 */
 		public var queue:Queue;
 		
