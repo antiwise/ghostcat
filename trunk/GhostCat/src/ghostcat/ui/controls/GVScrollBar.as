@@ -1,7 +1,6 @@
 package ghostcat.ui.controls
 {
-	import flash.display.DisplayObject;
-	
+	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
 	
 	/**
@@ -21,9 +20,9 @@ package ghostcat.ui.controls
 			if (!skin)
 				skin = defaultSkin;
 			
-			this.direction = 1;
-			
 			super(skin, replace);
+			
+			this.direction = UIConst.VERTICAL;
 		}
 	}
 }

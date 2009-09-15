@@ -1,6 +1,5 @@
 package ghostcat.ui.containers
 {
-	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.movieclip.GMovieClip;
@@ -9,7 +8,7 @@ package ghostcat.ui.containers
 	
 	public class GMovieClipPanel extends GMovieClip
 	{
-		public var fields:Object = {create:"create",close:"close",show:"show",hide:"hide"};
+		public var fields:Object = {create:"create",normal:"normal",close:"close",show:"show",hide:"hide"};
 		
 		/**
 		 * 是否将注册点移动到屏幕中央
@@ -30,6 +29,7 @@ package ghostcat.ui.containers
 		{
 			super.init();
 			setLabel(fields.create,1);
+			queueLabel(fields.normal,-1);
 		
 			if (centerLayout)
 			{
@@ -44,12 +44,20 @@ package ghostcat.ui.containers
 			if (super.visible == v)
 				return;
 			
-			super.visible = v;
-			
 			if (v)
+			{
+				super.visible = true;
+			
 				setLabel(fields.show,1);
+				queueLabel(fields.normal,-1);
+			}
 			else
+			{
 				setLabel(fields.hide,1);
+				
+				addEventListener(MovieEvent.MOVIE_END,hideMovieEndHandler);
+				addEventListener(MovieEvent.MOVIE_ERROR,hideMovieEndHandler);
+			}
 		}
 		
 		public function close() : void
@@ -66,6 +74,14 @@ package ghostcat.ui.containers
 			removeEventListener(MovieEvent.MOVIE_ERROR,closeMovieEndHandler);
 			
 			destory();
+		}
+		
+		private function hideMovieEndHandler(event:MovieEvent):void
+		{
+			removeEventListener(MovieEvent.MOVIE_END,hideMovieEndHandler);
+			removeEventListener(MovieEvent.MOVIE_ERROR,hideMovieEndHandler);
+			
+			super.visible = false;
 		}
 	}
 }

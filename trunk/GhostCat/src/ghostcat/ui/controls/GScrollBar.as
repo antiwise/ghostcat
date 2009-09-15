@@ -10,9 +10,11 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.DragManager;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.ui.controls.scrollClasses.IScrollContent;
 	import ghostcat.ui.controls.scrollClasses.ScrollTextContent;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Tick;
 	import ghostcat.util.TweenUtil;
 	import ghostcat.util.easing.Circ;
@@ -24,6 +26,10 @@ package ghostcat.ui.controls
 	 */
 	public class GScrollBar extends GSilder
 	{
+		[Embed(skinClass="ghostcat.skin.HScrollBarSkin")]
+		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
+		
 		public var upArrow:GButton;
 		public var downArrow:GButton;
 		public var thumb:GButton;
@@ -40,7 +46,7 @@ package ghostcat.ui.controls
 		/**
 		 * 方向
 		 */
-		private var _direction:int;
+		private var _direction:String = UIConst.HORIZONTAL;
 		
 		/**
 		 * 滚动缓动效果
@@ -72,6 +78,9 @@ package ghostcat.ui.controls
 		
 		public function GScrollBar(skin:*=null, replace:Boolean=true,fields:Object=null)
 		{
+			if (!skin)
+				skin = defaultSkin;
+			
 			if (fields)
 				this.fields = fields;
 			
@@ -117,12 +126,12 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function get direction():int
+		public function get direction():String
 		{
 			return _direction;
 		}
 
-		public function set direction(v:int):void
+		public function set direction(v:String):void
 		{
 			_direction = v;
 			invalidateSize();
@@ -178,7 +187,7 @@ package ghostcat.ui.controls
 				this.downArrow.y = this.height - this.downArrow.height;
 			}
 			
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 			{
 				thumbAreaStart = upArrow ? upArrow.width : 0;
 				thumbAreaLength = this.width - downArrow.width - thumb.width - thumbAreaStart;
@@ -200,7 +209,7 @@ package ghostcat.ui.controls
 				return;
 			
 			var p:Number;
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 			{
 				p = _scrollContent.scrollH / _scrollContent.maxScrollH;
 				thumb.x = thumbAreaStart + thumbAreaLength * p;
@@ -215,7 +224,7 @@ package ghostcat.ui.controls
 		protected function thumbMouseDownHandler(event:MouseEvent):void
 		{
 			var rect:Rectangle;
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 				rect = new Rectangle(thumbAreaStart,thumb.y,thumbAreaLength,thumb.y);
 			else
 				rect = new Rectangle(thumb.x,thumbAreaStart,thumb.x,thumbAreaLength);
@@ -233,7 +242,7 @@ package ghostcat.ui.controls
 			if (!_scrollContent)
 				return;
 			
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 			{
 				v = _scrollContent.maxScrollH * (thumb.x - thumbAreaStart) / thumbAreaLength;
 				if (duration > 0)
@@ -259,7 +268,7 @@ package ghostcat.ui.controls
 		
 		protected function tickHandler(event:TickEvent):void
 		{
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 			{
 				if (upArrow)
 				{
@@ -357,7 +366,7 @@ package ghostcat.ui.controls
 		
 		protected function backgroundHandler(event:MouseEvent):void
 		{
-			if (direction == 0)
+			if (direction == UIConst.HORIZONTAL)
 			{
 				if (thumb.mouseX > pageDetra + thumb.width)
 					thumb.x += pageDetra;
@@ -366,7 +375,7 @@ package ghostcat.ui.controls
 				else
 					thumb.x += thumb.mouseX;
 					
-				thumb.x = Math.max(Math.min(downArrow.x,thumb.x),upArrow.x + upArrow.width)
+				thumb.x = Math.max(Math.min(downArrow.x - thumb.width,thumb.x),upArrow.x + upArrow.width)
 			}
 			else
 			{
@@ -377,7 +386,7 @@ package ghostcat.ui.controls
 				else
 					thumb.y += thumb.mouseY;
 					
-				thumb.y = Math.max(Math.min(downArrow.y,thumb.y),upArrow.y + upArrow.height)
+				thumb.y = Math.max(Math.min(downArrow.y - thumb.height,thumb.y),upArrow.y + upArrow.height)
 			}
 			thumbMouseMoveHandler();
 		}
