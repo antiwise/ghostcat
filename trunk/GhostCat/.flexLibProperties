@@ -270,6 +270,7 @@
     <classEntry path="ghostcat.ui.containers.GButtonBar"/>
     <classEntry path="ghostcat.ui.controls.GComboBox"/>
     <classEntry path="ghostcat.ui.controls.GNumericStepper"/>
+    <classEntry path="ghostcat.operation.MovieOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
