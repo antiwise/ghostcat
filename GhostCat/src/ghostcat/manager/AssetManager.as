@@ -47,7 +47,7 @@ package ghostcat.manager
 		public var errorIcon:Class;
 		
 		/**
-		 * 队列
+		 * 使用的队列
 		 */
 		public var queue:Queue;
 		
