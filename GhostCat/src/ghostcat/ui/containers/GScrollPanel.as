@@ -4,10 +4,10 @@ package ghostcat.ui.containers
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.ui.classes.scroll.IScrollContent;
 	import ghostcat.ui.controls.GHScrollBar;
 	import ghostcat.ui.controls.GScrollBar;
 	import ghostcat.ui.controls.GVScrollBar;
-	import ghostcat.ui.controls.scrollClasses.IScrollContent;
 	
 	/**
 	 * 滚动区域

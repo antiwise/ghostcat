@@ -62,6 +62,11 @@ package ghostcat.ui.controls
 		 */
 		public var pageDetra:int = 25;
 		
+		/**
+		 * 当前值 
+		 * @return 
+		 * 
+		 */
 		public function get value():Number
 		{
 			return _value;
@@ -73,6 +78,11 @@ package ghostcat.ui.controls
 			_value = v;
 		}
 
+		/**
+		 * 最大值
+		 * @return 
+		 * 
+		 */
 		public function get maxValue():Number
 		{
 			return _maxValue;
@@ -83,6 +93,11 @@ package ghostcat.ui.controls
 			_maxValue = v;
 		}
 
+		/**
+		 * 最小值
+		 * @return 
+		 * 
+		 */
 		public function get minValue():Number
 		{
 			return _minValue;
@@ -93,6 +108,11 @@ package ghostcat.ui.controls
 			_minValue = v;
 		}
 		
+		/**
+		 * 百分比 
+		 * @return 
+		 * 
+		 */
 		public function get percent():Number
 		{
 			return (_value - _minValue) / (_maxValue - _minValue);

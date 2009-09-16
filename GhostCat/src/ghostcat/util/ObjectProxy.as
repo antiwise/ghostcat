@@ -66,6 +66,12 @@ package ghostcat.util
 			var oldValue:* = source[property];
 			source[property] = value;
 			
+			if (oldValue && oldValue is IEventDispatcher)
+				(oldValue as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,propertyChangeHandler);
+			
+			if (value && value is IEventDispatcher)
+				(value as IEventDispatcher).addEventListener(PropertyChangeEvent.PROPERTY_CHANGE,propertyChangeHandler);
+			
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
 				false,false,"update",
 				property,oldValue,value,this))
@@ -81,6 +87,27 @@ package ghostcat.util
 				property,oldValue,null,this))
 		
 			return s;
+		}
+		
+		protected function propertyChangeHandler(event:PropertyChangeEvent):void
+		{
+			var property:*;
+			for (var key:* in source)
+			{
+				if (source[key] == event.target)
+				{
+					property = key;
+					break;
+				}
+			}
+			
+			if (!property)
+				return;
+			
+			var value:* = source[property];
+			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
+				false,false,"update",
+				property,value,value,this))
 		}
 	}
 }

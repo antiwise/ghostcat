@@ -2,7 +2,6 @@ package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -10,9 +9,9 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.classes.scroll.IScrollContent;
+	import ghostcat.ui.classes.scroll.ScrollTextContent;
 	import ghostcat.ui.containers.GScrollPanel;
-	import ghostcat.ui.controls.scrollClasses.IScrollContent;
-	import ghostcat.ui.controls.scrollClasses.ScrollTextContent;
 	import ghostcat.util.TweenUtil;
 	import ghostcat.util.easing.Circ;
 	
