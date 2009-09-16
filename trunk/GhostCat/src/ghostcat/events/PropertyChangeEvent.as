@@ -4,7 +4,7 @@ package ghostcat.events
 	
 	public class PropertyChangeEvent extends Event
 	{
-		public static const PROPERTY_CHANGE:String = "propertyChange";
+		public static const PROPERTY_CHANGE:String = "property_change";
 		
 		public static function createUpdateEvent(source:Object,property:Object,oldValue:Object,newValue:Object):PropertyChangeEvent
 		{

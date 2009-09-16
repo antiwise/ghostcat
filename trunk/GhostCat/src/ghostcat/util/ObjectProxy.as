@@ -8,6 +8,8 @@ package ghostcat.util
 	
 	import ghostcat.events.PropertyChangeEvent;
 	
+	[Event(name="property_change",type="ghostcat.events.PropertyChangeEvent")]
+	
 	/**
 	 * 改变对象属性时将会触发事件
 	 * 
@@ -94,15 +96,13 @@ package ghostcat.util
 			var property:*;
 			for (var key:* in source)
 			{
-				if (source[key] == event.target)
+				var item:ObjectProxy = source[key];
+				if (item && item.eventDispather == event.target)
 				{
 					property = key;
 					break;
 				}
 			}
-			
-			if (!property)
-				return;
 			
 			var value:* = source[property];
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
