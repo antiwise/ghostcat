@@ -13,12 +13,13 @@ package
 		public function UIScrollExample()
 		{	
 			var list:GList = new GList();
-			list.type = GList.VLIST;
+			list.type = GList.TILE;
 			list.width = 100;
-			list.rowHeight = 20;
+			list.columnWidth = 50;
+			list.rowHeight = 30;
 			
 			var arr:ObjectProxy = new ObjectProxy(new Array());
-			for (var i:int = 0;i < 1000;i++)
+			for (var i:int = 0;i < 1000000;i++)
 				arr.push(i.toString());
 			 
 			list.data = arr;

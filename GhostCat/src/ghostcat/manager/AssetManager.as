@@ -56,6 +56,13 @@ package ghostcat.manager
 		 */
 		public var progressBar:GProgressBar;
 		
+		public function AssetManager():void
+		{
+			super();
+			
+			queue = Queue.defaultQueue;
+		}
+		
 		/**
 		 * 批量载入资源
 		 * 
@@ -66,9 +73,6 @@ package ghostcat.manager
 		 */
 		public function loadResource(res:Array,names:Array=null):Queue
 		{
-			if (!queue)
-				queue = new Queue();
-			
 			queue.addEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
 			queue.addEventListener(OperationEvent.OPERATION_COMPLETE,queueCompleteHandler);
 			
@@ -106,9 +110,6 @@ package ghostcat.manager
 		 */
 		public function loadResourceFromResConfig(filePath:String):Queue
 		{
-			if (!queue)
-				queue = new Queue();
-			
 			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
 			return queue;
 		

@@ -289,38 +289,58 @@ package ghostcat.display.viewport
 			if (curRect.x != screen.x)//左
 			{
 				if (curRect.x > screen.x)
-					addItems(new Rectangle(screen.x,curRect.y,curRect.x - screen.x,curRect.height),LEFT)
+					addItems(new Rectangle(screen.x,curRect.y,Math.min(screen.width,curRect.x - screen.x),curRect.height),LEFT)
+					//这里增加元素时，如果跨屏较多，在向回卷的时候高度将会很大，删除时很费时间，因此要在下面进行补偿处理
+					//形成这个问题是原因是向回跨屏时是先增加再删除，会同时存在两块分离的区域，暂时先这样解决
 				else
-					removeItems(new Rectangle(curRect.x,curRect.y,screen.x - curRect.x,curRect.height));
+					removeItems(new Rectangle(curRect.x,curRect.y,Math.min(curRect.width,screen.x - curRect.x),curRect.height));
 				curRect.width += curRect.x - screen.x;
+				curRect.width = Math.max(curRect.width,0);
 				curRect.x = screen.x;
 			}
 			if (screen.right != curRect.right)//右
 			{
 				if (screen.right > curRect.right)
-					addItems(new Rectangle(curRect.right,curRect.y,screen.right - curRect.right,curRect.height),RIGHT)
+					addItems(new Rectangle(curRect.right,curRect.y,Math.min(screen.width,screen.right - curRect.right),curRect.height),RIGHT)
 				else
-					removeItems(new Rectangle(screen.right,curRect.y,curRect.right - screen.right,curRect.height))
+				{
+					//当屏幕向回卷有大跨度时，只删除最下面的一部分
+					if (curRect.width > 5000)
+						removeItems(new Rectangle(screen.x + curRect.width - screen.width - 1,curRect.y,screen.width + 1,curRect.height));
+					else
+						removeItems(new Rectangle(screen.right,curRect.y,Math.min(curRect.width,curRect.right - screen.right),curRect.height))
+				}
 				curRect.width = screen.width;
 			}
 			if (curRect.y != screen.y)//上
 			{
 				if (curRect.y > screen.y)
-					addItems(new Rectangle(curRect.x,screen.y,curRect.width,curRect.y - screen.y),UP);
+					addItems(new Rectangle(curRect.x,screen.y,curRect.width,Math.min(screen.height,curRect.y - screen.y)),UP);
+					//这里增加元素时，如果跨屏较多，在向回卷的时候高度将会很大，删除时很费时间，因此要在下面进行补偿处理
+					//形成这个问题是原因是向回跨屏时是先增加再删除，会同时存在两块分离的区域，暂时先这样解决
 				else
-					removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,screen.y - curRect.y));
+					removeItems(new Rectangle(curRect.x,curRect.y,curRect.width,Math.min(curRect.height,screen.y - curRect.y)));
 				curRect.height += curRect.y - screen.y;
+				curRect.height = Math.max(curRect.height,0);
 				curRect.y = screen.y;
 			}
 			if (screen.bottom != curRect.bottom)//下
 			{
 				if (screen.bottom > curRect.bottom)
-					addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,screen.bottom - curRect.bottom),DOWN);
+					addItems(new Rectangle(curRect.x,curRect.bottom,curRect.width,Math.min(screen.height,screen.bottom - curRect.bottom)),DOWN);
 				else
-					removeItems(new Rectangle(curRect.x,screen.bottom,curRect.width,curRect.bottom - screen.bottom));
+				{
+					//当屏幕向回卷有大跨度时，只删除最下面的一部分
+					if (curRect.height > 5000)
+						removeItems(new Rectangle(curRect.x,screen.y + curRect.height - screen.height - 1,curRect.width,screen.height + 1));
+					else
+						removeItems(new Rectangle(curRect.x,screen.bottom,curRect.width,Math.min(curRect.height,curRect.bottom - screen.bottom)));
+				}
 				curRect.height = screen.height;
 			}
 		}
+		
+		protected var itemCount:int = 0;
 		
 		/**
 		 * 创建Item的方法，可以重载此方法来添加新功能
@@ -332,7 +352,6 @@ package ghostcat.display.viewport
 		 */		
 		protected function addItem(i:int,j:int,low:Boolean=false):DisplayObject
 		{
-			trace("add",i,j)
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
 			
@@ -355,7 +374,6 @@ package ghostcat.display.viewport
 		
 		protected function removeItem(i:int,j:int):DisplayObject
 		{
-			trace("del",i,j)
 			var s:DisplayObject = contents[i + ":" +j];
 			if (s)
 			{
@@ -376,6 +394,7 @@ package ghostcat.display.viewport
 		 */
 		protected function addItems(rect:Rectangle,direct:int):void
 		{
+			trace("add",rect);
 			var fi:int = rect.x;
 			var fj:int = rect.y;
 			var ei:int = rect.right;
@@ -409,6 +428,7 @@ package ghostcat.display.viewport
 		
 		protected function removeItems(rect:Rectangle):void
 		{
+			trace("del",rect)
 			var fi:int = rect.x;
 			var fj:int = rect.y;
 			var ei:int = rect.right;
