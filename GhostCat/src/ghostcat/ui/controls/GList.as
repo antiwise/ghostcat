@@ -27,7 +27,7 @@ package ghostcat.ui.controls
 		
 		private var _columnCount:int = -1;
 		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, renderField:String = "render")
+		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
 		{
 			if (!itemRender)
 				itemRender = defaultItemRender;
@@ -35,7 +35,7 @@ package ghostcat.ui.controls
 			var render:ClassFactory;
 			if (skin)
 			{
-				var t:DisplayObject = SearchUtil.findChildByProperty(skin,"name",renderField)
+				var t:DisplayObject = SearchUtil.findChildByProperty(skin,"name",itemSkinField)
 				if (t)
 				{
 					t.parent.removeChild(t);
@@ -177,6 +177,11 @@ package ghostcat.ui.controls
 			refreshItem(p.x,p.y);
 		}
 		
+		protected function removeRepeatItemHandler(event:RepeatEvent):void
+		{
+			(event.repeatObj as IData).data = null;
+		}
+		
 		public function refreshItem(i:int,j:int):Boolean
 		{
 			var d:*;
@@ -208,11 +213,6 @@ package ghostcat.ui.controls
 					for (var i:int = screen.left;i < screen.right;i++)
 						refreshItem(i,j);	
 			}
-		}
-		
-		protected function removeRepeatItemHandler(event:RepeatEvent):void
-		{
-			(event.repeatObj as IData).data = null;
 		}
 		
 		public override function destory() : void
