@@ -126,8 +126,11 @@ package ghostcat.ui
 		 * @param modal	是否是模态窗口
 		 * 
 		 */
-		public function showPopup(obj:DisplayObject,owner:DisplayObject,modal:Boolean = true):void
+		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true):void
 		{
+			if (!owner)
+				owner = popupLayer;
+			
 			popups[obj] = owner;
 			
 			popupLayer.addChild(obj);
