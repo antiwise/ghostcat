@@ -184,14 +184,18 @@ package ghostcat.ui.controls
 			if (v == super.data)
 				return;
 			
+			
 			var str:String = v as String;
+			if (!str)
+				str = "";
 			
 			super.data = str;
 		
 			if (this.vertical)
 				str = TextUtil.vertical(str);
 			
-			if (str!=null && textField){
+			
+			if (textField){
 				if (str.indexOf("<html>") != -1)
 					textField.htmlText = str;
 				else
