@@ -1,5 +1,6 @@
 package ghostcat.util
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Proxy;
@@ -16,9 +17,12 @@ package ghostcat.util
 	dynamic public class ObjectProxy extends Proxy implements IEventDispatcher
 	{
 		private var eventDispather:EventDispatcher;
+		private var source:*;
+		
 		public function ObjectProxy(o:Object)
 		{
-			eventDispather = new EventDispatcher();
+			this.source = o;
+			this.eventDispather = new EventDispatcher();
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
@@ -46,10 +50,21 @@ package ghostcat.util
 			return eventDispather.willTrigger(type);
 		}
 		
+		flash_proxy override function callProperty(methodName:*, ...args):*
+		{
+			var metrod:* = source[methodName];
+			(metrod as Function).apply(null,args);
+		}
+		
+		flash_proxy override function getProperty(property:*):* 
+		{
+			return source[property];
+		}
+		
 		flash_proxy override function setProperty(property:*,value:*):void 
 		{
-			var oldValue = value[property];
-			value[property] = value;
+			var oldValue:* = source[property];
+			source[property] = value;
 			
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
 				false,false,"update",
@@ -58,8 +73,8 @@ package ghostcat.util
 		
 		flash_proxy override function deleteProperty(property:*):Boolean 
 		{
-			var oldValue = value[property];
-			var s:Boolean = delete(this[property]);
+			var oldValue:* = source[property];
+			var s:Boolean = delete(source[property]);
 			
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
 				false,false,"delete",

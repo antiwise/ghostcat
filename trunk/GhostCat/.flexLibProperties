@@ -275,6 +275,7 @@
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
     <classEntry path="ghostcat.ui.controls.GList"/>
+    <classEntry path="ghostcat.util.ObjectProxy"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
