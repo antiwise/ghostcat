@@ -14,7 +14,7 @@ package
 		{	
 			var list:GList = new GList();
 			list.type = GList.TILE;
-			list.width = 100;
+			list.width = 150;
 			list.columnWidth = 50;
 			list.rowHeight = 30;
 			
@@ -24,7 +24,7 @@ package
 			 
 			list.data = arr;
 			
-			var s:GScrollPanel = new GScrollPanel(list,new Rectangle(0,0,80,100));
+			var s:GScrollPanel = new GScrollPanel(list,new Rectangle(0,0,150,100));
 			addChild(s);
 			
 			s.addVScrollBar();

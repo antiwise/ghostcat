@@ -95,7 +95,7 @@ package ghostcat.ui.controls
 				if (_columnCount > 0)
 					return _columnCount;
 				else
-					return Math.ceil(super.width / columnWidth);
+					return int(super.width / columnWidth);
 			}
 		}
 
@@ -106,7 +106,7 @@ package ghostcat.ui.controls
 			else if (type == VLIST)
 				return data ? data.length : 0;
 			else
-				return data ? data.length / columnCount : 0;
+				return data ? Math.ceil(data.length / columnCount) : 0;
 		}
 
 		public function set columnCount(v:int):void
@@ -184,23 +184,25 @@ package ghostcat.ui.controls
 		
 		public function refreshItem(i:int,j:int):Boolean
 		{
-			var d:*;
-			try
-			{
-				if (type == HLIST)
-					d = data[i];
-				else if (type == VLIST)
-					d = data[j];
-				else
-					d = data[j * columnCount + i];
-			}
-			catch(e:Error)
-			{
-				return false;
-			}
 			var item:IData = getItem(i,j);
 			if (item)
+			{
+				var d:*;
+				try
+				{
+					if (type == HLIST)
+						d = data[i];
+					else if (type == VLIST)
+						d = data[j];
+					else
+						d = data[j * columnCount + i];
+				}
+				catch(e:Error)
+				{
+					trace("error")
+				}
 				item.data = d;
+			}
 			return true;
 		}
 		
