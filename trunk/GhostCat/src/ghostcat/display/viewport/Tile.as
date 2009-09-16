@@ -282,7 +282,7 @@ package ghostcat.display.viewport
 				return;
 			
 			//过滤显示范围	
-			var cRect:Rectangle = new Rectangle(0,0,Math.ceil(rect.width/contentRect.width),Math.ceil(rect.height/contentRect.height));
+			var cRect:Rectangle = new Rectangle(0,0,Math.ceil(width/contentRect.width),Math.ceil(height/contentRect.height));
 			screen = screen.intersection(cRect);
 			
 			//增删格子
@@ -332,6 +332,7 @@ package ghostcat.display.viewport
 		 */		
 		protected function addItem(i:int,j:int,low:Boolean=false):DisplayObject
 		{
+			trace("add",i,j)
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
 			
@@ -354,6 +355,7 @@ package ghostcat.display.viewport
 		
 		protected function removeItem(i:int,j:int):DisplayObject
 		{
+			trace("del",i,j)
 			var s:DisplayObject = contents[i + ":" +j];
 			if (s)
 			{

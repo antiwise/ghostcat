@@ -4,7 +4,7 @@ package
 	import flash.geom.Rectangle;
 	
 	import ghostcat.ui.containers.GScrollPanel;
-	import ghostcat.util.easing.Back;
+	import ghostcat.ui.controls.GList;
 	import ghostcat.util.easing.Elastic;
 	
 	[SWF(width="400",height="400")]
@@ -12,18 +12,21 @@ package
 	{
 		public function UIScrollExample()
 		{	
-			var t:Sprite = new TestCollision();
-			addChild(t);
+			var list:GList = new GList();
+			list.type = GList.VLIST;
+			list.width = 100;
+			list.rowHeight = 20;
+			var arr:Array = []
+			for (var i:int = 0;i < 1000;i++)
+				arr.push(i.toString()); 
+			list.data = arr;
 			
-			var s:GScrollPanel = new GScrollPanel(t,new Rectangle(0,0,100,100));
+			var s:GScrollPanel = new GScrollPanel(list,new Rectangle(0,0,50,100));
 			addChild(s);
 			
-			s.addHScrollBar();
-			s.hScrollBar.easing = Back.easeOut;
-			
 			s.addVScrollBar();
-			s.vScrollBar.easing = Elastic.easeOut;
-			s.vScrollBar.blur = 4;
+			s.vScrollBar.blur = 2;
+			
 			//也可以直接创建GScrollBar并设置target实现，但这个滚动条将不会随着容器移动
 			//如果target是普通Sprite也是可以的，它会被自动包装成ScrollPanel。但如果你连续对一个Sprite多次设置滚动条的话，
 			//会不断的包装ScrollPanel，虽然显示还是正常的。。。

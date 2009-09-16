@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
+	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
@@ -8,6 +9,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.IData;
 	import ghostcat.display.viewport.Tile;
+	import ghostcat.events.PropertyChangeEvent;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.SearchUtil;
@@ -23,11 +25,13 @@ package ghostcat.ui.controls
 		
 		public var type:String = TILE;
 		
-		public function GList(skin:*,replace:Boolean = true, itemRender:ClassFactory = null, renderField:String = "render")
+		private var _columnCount:int = -1;
+		
+		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, renderField:String = "render")
 		{
 			if (!itemRender)
 				itemRender = defaultItemRender;
-			
+				
 			var render:ClassFactory;
 			if (skin)
 			{
@@ -41,6 +45,8 @@ package ghostcat.ui.controls
 			
 			if (!render)
 				render = defaultSkin;
+			
+			this.type = type;
 			
 			if (itemRender.params)
 				itemRender.params[0] = render;
@@ -59,8 +65,11 @@ package ghostcat.ui.controls
 		{
 			super.setContent(skin,replace);
 			
-			this.width = skin.width;
-			this.height = skin.height;
+			if (this.skin)
+			{
+				this.width = this.skin.width;
+				this.height = this.skin.height;
+			}
 		}
 		
 		protected override function get contentRect():Rectangle
@@ -75,19 +84,59 @@ package ghostcat.ui.controls
 			return rect;
 		}
 		
+		public function get columnCount():int
+		{
+			if (type == HLIST)
+				return data.length;
+			else if (type == VLIST)
+				return 1;
+			else
+			{
+				if (_columnCount > 0)
+					return _columnCount;
+				else
+					return Math.ceil(super.width / columnWidth);
+			}
+		}
+
+		public function get rowCount():int
+		{
+			if (type == HLIST)
+				return 1;
+			else if (type == VLIST)
+				return data ? data.length : 0;
+			else
+				return data ? data.length / columnCount : 0;
+		}
+
+		public function set columnCount(v:int):void
+		{
+			_columnCount = v;
+		}
+
+		public override function get width() : Number
+		{
+			return (type != VLIST) ? columnWidth * columnCount : super.width;
+		}
+		
+		public override function get height() : Number
+		{
+			return (type != HLIST) ? rowHeight * rowCount : super.height;
+		}
+		
 		public function get columnWidth():Number
 		{
-			return _contentRect.width;
+			return (type == VLIST) ? width : _contentRect.width;
+		}
+		
+		public function get rowHeight():Number
+		{
+			return (type == HLIST) ? height : _contentRect.height;
 		}
 		
 		public function set columnWidth(v:Number):void
 		{
 			_contentRect.width = v;
-		}
-		
-		public function get rowHeight():Number
-		{
-			return _contentRect.height;
 		}
 		
 		public function set rowHeight(v:Number):void
@@ -99,16 +148,27 @@ package ghostcat.ui.controls
 		{
 			super.data = v;
 			refresh();
+			
+			if (v is IEventDispatcher)
+				(v as IEventDispatcher).addEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler,false,0,true);
 		}
 		
-		public function refresh():void
+		protected function dataChangeHandler(event:PropertyChangeEvent):void
 		{
-			var screen:Rectangle = getItemRect(getLocalScreen());
+			var i:int;
+			var j:int;
 			
-			for (var j:int = screen.top;j < screen.bottom;j++)
-				for (var i:int = screen.left;i < screen.right;i++)
-					refreshItem(i,j);	
+			if (type == HLIST)
+				i = int(event.property);
+			else if (type == VLIST)
+				j = int(event.property);
+			else
+			{
+				j = int(event.property) / columnCount;
+				i = int(event.property) % columnCount;
+			}
 			
+			refreshItem(i,j);
 		}
 		
 		protected function addRepeatItemHandler(event:RepeatEvent):void
@@ -117,17 +177,37 @@ package ghostcat.ui.controls
 			refreshItem(p.x,p.y);
 		}
 		
-		protected function refreshItem(i:int,j:int):void
+		public function refreshItem(i:int,j:int):Boolean
 		{
 			var d:*;
-			if (type == HLIST)
-				d = data[i];
-			else if (type == VLIST)
-				d = data[j];
-			else
-				d = data[j][i]
-			
-			(getItem(i,j) as IData).data = d;
+			try
+			{
+				if (type == HLIST)
+					d = data[i];
+				else if (type == VLIST)
+					d = data[j];
+				else
+					d = data[j * columnCount + i];
+			}
+			catch(e:Error)
+			{
+				return false;
+			}
+			var item:IData = getItem(i,j);
+			if (item)
+				item.data = d;
+			return true;
+		}
+		
+		public function refresh():void
+		{
+			var screen:Rectangle = getItemRect(getLocalScreen());
+			if (screen)
+			{
+				for (var j:int = screen.top;j < screen.bottom;j++)
+					for (var i:int = screen.left;i < screen.right;i++)
+						refreshItem(i,j);	
+			}
 		}
 		
 		protected function removeRepeatItemHandler(event:RepeatEvent):void
@@ -138,6 +218,10 @@ package ghostcat.ui.controls
 		public override function destory() : void
 		{
 			super.destory();
+			
+			if (data && data is IEventDispatcher)
+				(data as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler);
+		
 			
 			removeEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			removeEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
