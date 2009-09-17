@@ -37,7 +37,7 @@ package ghostcat.display
 		
 		private var _toolTipObj:*;
 		
-		private var _data:Object;
+		protected var _data:Object;
 		
 		/**
 		 * 旧的位置坐标 

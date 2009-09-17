@@ -182,19 +182,13 @@ package ghostcat.ui.controls
 				content.height = textField.height - rect.y;
 			}
 		}
-		
-		public override function get data():*
-		{
-			return super.data;
-		}
 
 		public override function set data(v:*):void
 		{
 			if (v == super.data)
 				return;
 			
-			
-			var str:String = v as String;
+			var str:String = v.toString();
 			if (!str)
 				str = "";
 			
