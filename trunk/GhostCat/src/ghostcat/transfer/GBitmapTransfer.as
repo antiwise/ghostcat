@@ -78,7 +78,8 @@ package ghostcat.transfer
 		 */
 		protected function createBitmapData():void
 		{
-			bitmapData && bitmapData.dispose();
+			if (bitmapData)
+				bitmapData.dispose();
 			
 			var rect: Rectangle = _target.getBounds(_target);
 			if (rect.width && rect.height)

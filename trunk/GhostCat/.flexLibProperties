@@ -224,7 +224,7 @@
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
     <classEntry path="ghostcat.ui.controls.GList"/>
-    <classEntry path="ghostcat.ui.controls.GNumericStepper"/>
+    <classEntry path="ghostcat.ui.controls.GNumbericStepper"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="ghostcat.ui.controls.GRadioButton"/>
@@ -279,6 +279,7 @@
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.display.movieclip.TransitionLayer"/>
     <classEntry path="ghostcat.transfer.Mosaic"/>
+    <classEntry path="ghostcat.ui.controls.GNumberic"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
