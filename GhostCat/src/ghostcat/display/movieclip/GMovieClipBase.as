@@ -70,7 +70,7 @@ package ghostcat.display.movieclip
         
         protected var curLabelIndex:int=0;//缓存LabelIndex的序号，避免重复遍历
         
-        private var frameTimer:int;//记时器
+        private var frameTimer:int=0;//记时器，小于0则需要播放，直到大于0
 
 		private var _paused:Boolean = true;
 		
@@ -177,6 +177,7 @@ package ghostcat.display.movieclip
         	}
         	else
         	{
+        		dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_END),{labelName:labelName}));
         		dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_ERROR),{labelName:labelName}));
 //				if (nextLabels.length > 0)
 //				{

@@ -67,7 +67,12 @@ package ghostcat.ui.controls
 			else if (_target is TextField)
 				_scrollContent = new ScrollTextContent(_target as TextField);
 			else
-				_scrollContent = new GScrollPanel(_target);
+			{
+				if (v.parent && v.parent is IScrollContent && (v.parent as IScrollContent).content == v)
+					_scrollContent = v.parent as IScrollContent;
+				else	
+					_scrollContent = new GScrollPanel(_target);
+			}
 		}
 		
 		public override function get value():Number

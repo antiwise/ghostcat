@@ -37,8 +37,6 @@ package ghostcat.display.graphics
 		}
 		
 		public var controlCotainer:Sprite;
-		
-		private var _selected:Boolean = false;
 		/**
 		 * 线型
 		 */
@@ -72,14 +70,9 @@ package ghostcat.display.graphics
 			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 		}
 		
-		public function get selected():Boolean
+		public override function set selected(v:Boolean):void
 		{
-			return _selected;
-		}
-
-		public function set selected(v:Boolean):void
-		{
-			_selected = v;
+			super.selected = v;
 			
 			var index:int;
 			index = selectedRects.indexOf(this);
@@ -93,7 +86,7 @@ package ghostcat.display.graphics
 				if (index != -1)
 					selectedRects.splice(index,1);
 			}
-			this.controlCotainer.visible = _selected;
+			this.controlCotainer.visible = v;
 		}
 
 		override public function setContent(skin:*, replace:Boolean=true) : void

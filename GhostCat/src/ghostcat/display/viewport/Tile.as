@@ -141,7 +141,7 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public function getItem(i:int,j:int):*
+		public function getItemAt(i:int,j:int):*
 		{
 			return contents[i + ":" + j];
 		}
