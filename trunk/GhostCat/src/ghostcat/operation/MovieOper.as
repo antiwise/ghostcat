@@ -27,7 +27,6 @@ package ghostcat.operation
 			super.execute();
 			
 			mc.addEventListener(MovieEvent.MOVIE_END,result);
-			mc.addEventListener(MovieEvent.MOVIE_ERROR,result);
 			
 			mc.setLabel(labelName,loop);
 		}
@@ -37,7 +36,6 @@ package ghostcat.operation
 			super.result(event);
 			
 			mc.removeEventListener(MovieEvent.MOVIE_END,result);
-			mc.removeEventListener(MovieEvent.MOVIE_ERROR,result);
 		}
 		
 		public override function fault(event:* = null) : void
@@ -45,7 +43,6 @@ package ghostcat.operation
 			super.fault(event);
 		
 			mc.removeEventListener(MovieEvent.MOVIE_END,result);
-			mc.removeEventListener(MovieEvent.MOVIE_ERROR,result);
 		}
 	}
 }

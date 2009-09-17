@@ -7,7 +7,7 @@ package ghostcat.ui.controls
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.display.IData;
+	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.Tile;
 	import ghostcat.events.PropertyChangeEvent;
 	import ghostcat.events.RepeatEvent;
@@ -27,11 +27,9 @@ package ghostcat.ui.controls
 		
 		private var _columnCount:int = -1;
 		
-		public var selectPos:Point;
 		
-		public var selectItem:Point;
-		
-		public var selectChild:DisplayObject;
+		private var oldSelectedItem:DisplayObject;
+		private var _selectedData:*;
 		
 		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
 		{
@@ -67,6 +65,81 @@ package ghostcat.ui.controls
 			addEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
 		}
 		
+		public function getDataAt(i:int,j:int):*
+		{
+			if (type == HLIST)
+				return data[i];
+			else if (type == VLIST)
+				return data[j];
+			else
+				return data[j * columnCount + i];
+		}
+		
+		public function get selectedData():*
+		{
+			return _selectedData;
+		}
+
+		public function set selectedData(v:*):void
+		{
+			_selectedData = v;
+			
+			if (oldSelectedItem && oldSelectedItem is GBase)
+				(oldSelectedItem as GBase).selected = false;
+			
+			var item:DisplayObject = selectedItem;
+			
+			if (item && item is GBase)
+				(item as GBase).selected = true;
+		}
+		
+		public function get selectedRow():int
+		{
+			var selectIndex:int = data.indexOf(_selectedData);
+			
+			if (selectIndex != -1)
+			{
+				if (type == HLIST)
+					return 1;
+				else if (type == VLIST)
+					return selectIndex;
+				else
+					return Math.ceil(selectIndex / columnCount);
+			}
+			return -1;
+		}
+
+		public function set selectedRow(v:int):void
+		{
+			selectedData = getDataAt(selectedColumn,v);
+		}
+		
+		public function get selectedColumn():int
+		{
+			var selectIndex:int = data.indexOf(_selectedData);
+			
+			if (selectIndex != -1)
+			{
+				if (type == HLIST)
+					return selectIndex;
+				else if (type == VLIST)
+					return 1;
+				else
+					return selectIndex % columnCount;
+			}
+			return -1;
+		}
+
+		public function set selectedColumn(v:int):void
+		{
+			selectedData = getDataAt(v,selectedRow);
+		}
+		
+		public function get selectedItem():DisplayObject
+		{
+			return getItemAt(selectedColumn,selectedRow);
+		}
+
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -185,12 +258,12 @@ package ghostcat.ui.controls
 		
 		protected function removeRepeatItemHandler(event:RepeatEvent):void
 		{
-			(event.repeatObj as IData).data = null;
+			(event.repeatObj as GBase).data = null;
 		}
 		
-		public function refreshItem(i:int,j:int):Boolean
+		public function refreshItem(i:int,j:int):GBase
 		{
-			var item:IData = getItem(i,j);
+			var item:GBase = getItemAt(i,j);
 			if (item)
 			{
 				var d:*;
@@ -207,9 +280,11 @@ package ghostcat.ui.controls
 				{
 					trace("error")
 				}
+				
 				item.data = d;
+				item.selected = (d == selectedData);
 			}
-			return true;
+			return item;
 		}
 		
 		public function refresh():void

@@ -1,6 +1,5 @@
 package ghostcat.display
 {
-	import flash.display.DisplayObject;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
@@ -29,6 +28,8 @@ package ghostcat.display
 	public class GBase extends GSprite implements IGBase
 	{
 		private var _enabled:Boolean = true;
+		
+		private var _selected:Boolean = false;
 		
 		private var _cursor:*;
 		
@@ -66,6 +67,7 @@ package ghostcat.display
 		 * @return 
 		 * 
 		 */		
+
 		public function get data():*
 		{
 			return _data;
@@ -129,12 +131,27 @@ package ghostcat.display
 		}
 
 		/**
+		 * 是否选中
+		 * 
+		 * @return 
+		 * 
+		 */
+		public function get selected():Boolean
+		{
+			return _selected;
+		}
+
+		public function set selected(v:Boolean):void
+		{
+			_selected = v;
+		}
+
+		/**
 		 *
 		 * 是否激活 
 		 * @return 
 		 * 
 		 */
-		 		
 		public function get enabled():Boolean
 		{
 			return _enabled;

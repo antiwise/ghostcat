@@ -56,7 +56,6 @@ package ghostcat.ui.containers
 				setLabel(fields.hide,1);
 				
 				addEventListener(MovieEvent.MOVIE_END,hideMovieEndHandler);
-				addEventListener(MovieEvent.MOVIE_ERROR,hideMovieEndHandler);
 			}
 		}
 		
@@ -65,13 +64,11 @@ package ghostcat.ui.containers
 			setLabel(fields.close,1);
 			
 			addEventListener(MovieEvent.MOVIE_END,closeMovieEndHandler);
-			addEventListener(MovieEvent.MOVIE_ERROR,closeMovieEndHandler);
 		}
 		
 		private function closeMovieEndHandler(event:MovieEvent):void
 		{
 			removeEventListener(MovieEvent.MOVIE_END,closeMovieEndHandler);
-			removeEventListener(MovieEvent.MOVIE_ERROR,closeMovieEndHandler);
 			
 			destory();
 		}
@@ -79,7 +76,6 @@ package ghostcat.ui.containers
 		private function hideMovieEndHandler(event:MovieEvent):void
 		{
 			removeEventListener(MovieEvent.MOVIE_END,hideMovieEndHandler);
-			removeEventListener(MovieEvent.MOVIE_ERROR,hideMovieEndHandler);
 			
 			super.visible = false;
 		}

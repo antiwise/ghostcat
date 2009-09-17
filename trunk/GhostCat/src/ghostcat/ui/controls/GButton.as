@@ -182,20 +182,15 @@ package ghostcat.ui.controls
 			refreshLabelField();
 		}
 		
-		public function set selected(v:Boolean):void
+		public override function set selected(v:Boolean):void
 		{
-			if (_selected == v)
+			if (super.selected == v)
 				return;
 			
 			_selected = v;
 			tweenTo(UP);
 			
 			dispatchEvent(new Event(Event.CHANGE))
-		}
-		
-		public function get selected():Boolean
-		{
-			return _selected;
 		}
 		
 		protected function addEvents():void

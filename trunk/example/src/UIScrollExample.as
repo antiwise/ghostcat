@@ -18,7 +18,7 @@ package
 			list.columnWidth = 50;
 			list.rowHeight = 30;
 			
-			var arr:ObjectProxy = new ObjectProxy(new Array());
+			var arr:ObjectProxy = new ObjectProxy(new Array());//这里用普通Array也可以，但必须用这个才能实现动态修改数据
 			for (var i:int = 0;i < 1000000;i++)
 				arr.push(i.toString());
 			 
@@ -30,11 +30,10 @@ package
 			s.addVScrollBar();
 			s.vScrollBar.blur = 2;
 			
-			arr[2] = "动态修改数据源";
+			arr[2] = "动态修改数据";
 			
 			//也可以直接创建GScrollBar并设置target实现，但这个滚动条将不会随着容器移动
-			//如果target是普通Sprite也是可以的，它会被自动包装成ScrollPanel。但如果你连续对一个Sprite多次设置滚动条的话，
-			//会不断的包装ScrollPanel，虽然显示还是正常的。。。
+			//如果target是普通Sprite也是可以的，它会被自动包装成ScrollPanel。
 		}
 	}
 }
