@@ -202,14 +202,14 @@
     <classEntry path="ghostcat.transfer.Skew"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.IToolTipSkin"/>
-    <classEntry path="ghostcat.ui.LayoutUtil"/>
+    <classEntry path="ghostcat.ui.layout.LayoutUtil"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
     <classEntry path="ghostcat.ui.ToolTipSkin"/>
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
     <classEntry path="ghostcat.ui.UIBuilder"/>
     <classEntry path="ghostcat.ui.UIConst"/>
-    <classEntry path="ghostcat.ui.classes.layout.Layout"/>
+    <classEntry path="ghostcat.ui.layout.Layout"/>
     <classEntry path="ghostcat.ui.classes.scroll.IScrollContent"/>
     <classEntry path="ghostcat.ui.classes.scroll.ScrollTextContent"/>
     <classEntry path="ghostcat.ui.containers.GAlert"/>
