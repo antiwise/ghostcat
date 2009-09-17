@@ -5,9 +5,9 @@ package ghostcat.ui.controls
 	
 	public class GComboBox extends GButton
 	{
-		public function GComboBox(skin:*, replace:Boolean=true, textPos:Point=null)
+		public function GComboBox(skin:*, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
-			super(skin, replace, textPos);
+			super(skin, replace, separateTextField, textPos);
 		}
 	}
 }
