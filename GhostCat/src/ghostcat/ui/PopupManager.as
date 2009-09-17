@@ -45,6 +45,9 @@ package ghostcat.ui
 		public function set applicationEnabled(v:Boolean):void
 		{
 			_applicationEnabled = v;
+			
+			application.mouseEnabled = application.mouseChildren = v;
+			
 			if (v)
 				application.filters = null;
 			else
@@ -130,7 +133,7 @@ package ghostcat.ui
 		{
 			if (!owner)
 				owner = popupLayer;
-			
+				
 			popups[obj] = owner;
 			
 			popupLayer.addChild(obj);

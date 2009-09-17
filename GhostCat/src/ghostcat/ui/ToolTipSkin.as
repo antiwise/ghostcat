@@ -21,7 +21,10 @@ package ghostcat.ui
 		{
 			if (!skin)
 				skin = defaultSkin;
+				
 			super(skin,true,true,new Point(2,2));
+			
+			this.enabledAdjustContextSize = true;
 		}
 		
 		public function positionTo(target:DisplayObject):void

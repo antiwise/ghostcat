@@ -45,7 +45,7 @@ package ghostcat.display.movieclip
 		{
 			super.setContent(skin,replace);
 			
-			if (skin is MovieClip)
+			if (mc)
 			{
 				timeLine = new TimeLine(mc);
 				//最开始的初始化，当设置了Label后，将首先在第一个Label内循环

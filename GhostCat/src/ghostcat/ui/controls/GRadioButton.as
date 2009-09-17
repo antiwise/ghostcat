@@ -25,15 +25,15 @@ package ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GRadioButton(skin:*=null, replace:Boolean=true, textPos:Point=null)
+		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
 			if (!textPos)
-				this.textPos = new Point(15,0);
+				textPos = new Point(15,0);
 			
-			super(skin, replace);
+			super(skin, replace,separateTextField,textPos);
 		}
 		
 		/**

@@ -48,6 +48,16 @@ package ghostcat.ui.controls
 		public var textPos:Point = new Point();
 		
 		/**
+		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
+		 */
+		public var separateTextField:Boolean = false;
+		
+		/**
+		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
+		 */
+		public var enabledAdjustContextSize:Boolean = false;
+		
+		/**
 		 * 限定输入内容的正则表达式
 		 */
 		public var regExp:RegExp;
@@ -83,9 +93,7 @@ package ghostcat.ui.controls
 		
 		private var _asBitmap:Boolean = false;
 		
-		private var enabledAdjustContextSize:Boolean = false;//是否自动根据文本调整图元体积。如果为真，将会把TextField中皮肤中提出。
-		
-		public function GText(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean = false, textPos:Point=null)
+		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -93,7 +101,7 @@ package ghostcat.ui.controls
 			if (textPos)
 				this.textPos = textPos;
 			
-			this.enabledAdjustContextSize = enabledAdjustContextSize;
+			this.separateTextField = separateTextField;
 			
 			super(skin, replace);
 		}
@@ -123,6 +131,7 @@ package ghostcat.ui.controls
 			
 			if (!textField)
 			{
+				this.separateTextField = true;
 				textField = TextFieldParse.createTextField("");
 			
 				if (textPos)
@@ -140,7 +149,7 @@ package ghostcat.ui.controls
 				textField.x = pos.x;
 				textField.y = pos.y;
 			
-				if (this.enabledAdjustContextSize)
+				if (this.separateTextField)
 					addChild(textField);//可缩放背景必须提取文本框
 			}
 			this.text = textField.text;
