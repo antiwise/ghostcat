@@ -185,21 +185,25 @@ package ghostcat.ui.controls
 			
 			if (direction == UIConst.HORIZONTAL)
 			{
-				thumbAreaStart = upArrow ? upArrow.width : 0;
+				thumbAreaStart = upArrow.width;
 				thumbAreaLength = this.width - downArrow.width - thumb.width - thumbAreaStart;
 				background.width = width;
 			}
 			else
 			{
-				thumbAreaStart = upArrow ? upArrow.height : 0;
+				thumbAreaStart = upArrow.height;
 				thumbAreaLength = this.height - downArrow.height - thumb.height - thumbAreaStart;
 				background.height = height;
 			}
 			
-			updateThumb()
+			updateThumb();
 		}
 		
-		protected function updateThumb():void
+		/**
+		 * 更新滚动条的位置
+		 * 
+		 */
+		public function updateThumb():void
 		{
 			if (!thumb)
 				return;

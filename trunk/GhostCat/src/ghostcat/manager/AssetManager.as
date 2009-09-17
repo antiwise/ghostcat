@@ -26,6 +26,8 @@ package ghostcat.manager
 			return Singleton.getInstanceOrCreate(AssetManager) as AssetManager;
 		}
 		
+		private var progressBar:GProgressBar;
+		
 		/**
 		 * 资源加载的基本地址
 		 */
@@ -51,16 +53,16 @@ package ghostcat.manager
 		 */
 		public var queue:Queue;
 		
-		/**
-		 * 进度条
-		 */
-		public var progressBar:GProgressBar;
-		
 		public function AssetManager():void
 		{
 			super();
 			
 			queue = Queue.defaultQueue;
+		}
+		
+		public function setProgressBar(v:GProgressBar):void
+		{
+			this.progressBar = v;
 		}
 		
 		/**
@@ -187,7 +189,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function createMovieClip(ref:String):MovieClip
+		public function getMovieClip(ref:String):MovieClip
 		{
 			return getAssetByName(ref)() as MovieClip;
 		}
@@ -199,7 +201,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function createSprite(ref:String):Sprite
+		public function getSprite(ref:String):Sprite
 		{
 			return getAssetByName(ref)() as Sprite;
 		}
@@ -211,7 +213,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function createBitmapData(ref:String,width:int,height:int):BitmapData
+		public function getBitmapData(ref:String,width:int,height:int):BitmapData
 		{
 			return getAssetByName(ref)(width,height) as BitmapData;
 		}

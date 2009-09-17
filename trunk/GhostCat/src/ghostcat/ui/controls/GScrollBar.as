@@ -38,7 +38,6 @@ package ghostcat.ui.controls
 		 */		
 		public var duration:int = 1000;
 		
-		
 		/**
 		 * 滚动模糊
 		 */		
@@ -109,7 +108,7 @@ package ghostcat.ui.controls
 		
 		public override function get percent():Number
 		{
-			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH/_scrollContent.maxScrollH : _scrollContent.scrollV/_scrollContent.maxScrollV;
+			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH / _scrollContent.maxScrollH : _scrollContent.scrollV / _scrollContent.maxScrollV;
 		}
 		
 		public override function set percent(v:Number):void
@@ -131,7 +130,22 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 设置目标的滚动区域
+		 * 设置目标
+		 * 
+		 * @param target	目标
+		 * @param scrollRect	目标的滚动大小
+		 * 
+		 */
+		public function setTarget(target:DisplayObject,scrollRect:Rectangle = null):void
+		{
+			this.target = target;
+			
+			if (scrollRect)
+				setTargetScrollRect(scrollRect);
+		}
+		
+		/**
+		 * 设置目标的滚动大小
 		 * @param rect
 		 * 
 		 */
@@ -141,7 +155,7 @@ package ghostcat.ui.controls
 				(_scrollContent as DisplayObject).scrollRect = rect;
 		}
 		
-		protected override function updateThumb():void
+		public override function updateThumb():void
 		{
 			if (!_scrollContent)
 				return;

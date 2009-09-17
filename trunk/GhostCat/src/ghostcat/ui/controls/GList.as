@@ -27,6 +27,12 @@ package ghostcat.ui.controls
 		
 		private var _columnCount:int = -1;
 		
+		public var selectPos:Point;
+		
+		public var selectItem:Point;
+		
+		public var selectChild:DisplayObject;
+		
 		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
 		{
 			if (!itemRender)
