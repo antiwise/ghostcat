@@ -22,17 +22,17 @@ package ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GCheckBox(skin:*=null, replace:Boolean=true, textPos:Point=null)
+		public function GCheckBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 				
 			if (!textPos)
-				this.textPos = new Point(15,0);
+				textPos = new Point(15,0);
 			
 			this.toggle = true;
 			
-			super(skin, replace);
+			super(skin, replace,separateTextField,textPos);
 		}
 	}
 }

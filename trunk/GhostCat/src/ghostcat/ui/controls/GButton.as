@@ -1,7 +1,6 @@
 package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
@@ -43,7 +42,7 @@ package ghostcat.ui.controls
 		private const DOWN:int = 2;
 		private const DISABLED:int = 3;
 		
-		private var defaultSkin:DisplayObject;//默认skin
+		private var defaultSkin:*;//默认skin
 		
 		private var _toggle:Boolean;
 		
@@ -61,6 +60,16 @@ package ghostcat.ui.controls
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
 		 */
 		public var textPos:Point;
+		
+		/**
+		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
+		 */
+		public var separateTextField:Boolean = false;
+		
+		/**
+		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
+		 */
+		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
 		 * 执行的指令名称
@@ -113,10 +122,12 @@ package ghostcat.ui.controls
 			return _mouseOver;
 		}
 		
-		public function GButton(skin:*, replace:Boolean=true, textPos:Point=null)
+		public function GButton(skin:*, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (textPos)
 				this.textPos = textPos;
+			
+			this.separateTextField = separateTextField;
 			
 			super(skin, replace);
 		}
@@ -137,6 +148,9 @@ package ghostcat.ui.controls
 		
 		public override function set enabled(v:Boolean) : void
 		{
+			if (super.enabled == v)
+				return;
+			
 			this.mouseChildren = this.mouseEnabled = super.enabled = v;
 			tweenTo(v ? UP : DISABLED);
 		}
@@ -149,7 +163,8 @@ package ghostcat.ui.controls
 			if (labelField)
 				labelField.destory();
 			
-			labelField = new GText(content,false,false,textPos);
+			labelField = new GText(content,false,separateTextField,textPos);
+			labelField.enabledAdjustContextSize = enabledAdjustContextSize;
 			addChild(labelField)
 			
 			labelField.text = _label;
@@ -161,7 +176,7 @@ package ghostcat.ui.controls
 			setPartConetent(skin,replace);
 		}
 		
-		public function setPartConetent(skin:DisplayObject, replace:Boolean=true):void
+		public function setPartConetent(skin:*, replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			refreshLabelField();
