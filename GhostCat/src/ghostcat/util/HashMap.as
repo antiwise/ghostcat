@@ -62,18 +62,26 @@ package ghostcat.util
 		}
 		
 		/**
-		 * 将属性值复制到另一个封闭对象上
+		 * 将属性值复制到另一个对象上
 		 * 
-		 * @param target	目标对象，为一封闭类
+		 * @param target	目标对象，为一类
 		 * 
 		 */		
 		public function parse(target:Object):void
 		{
-			for (var key:* in this)
-			{
-				if (target.hasOwnProperty(key))
-					target[key] = this[key]
-			}
+			HashMap.parse(this,target);
+		}
+		
+		/**
+		 * 将属性值复制到另一个对象上
+		 * 
+		 * @param target	目标对象
+		 * 
+		 */		
+		public static function parse(source:Object,target:Object):void
+		{
+			for (var key:* in source)
+				target[key] = source[key]
 		}
 	}
 }

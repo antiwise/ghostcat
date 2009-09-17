@@ -10,7 +10,7 @@ package ghostcat.ui.controls
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GNoScale;
-	import ghostcat.ui.LayoutUtil;
+	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.CallLater;
 	import ghostcat.util.ClassFactory;

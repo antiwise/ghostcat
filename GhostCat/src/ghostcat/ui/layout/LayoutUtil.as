@@ -1,9 +1,10 @@
-package ghostcat.ui
+package ghostcat.ui.layout
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.util.Geom;
+	import ghostcat.ui.UIConst;
 	
 	/**
 	 * 布局方法
