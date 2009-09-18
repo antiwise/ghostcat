@@ -19,6 +19,19 @@ package ghostcat.util
     public final class Geom extends Object
     {
     	/**
+		 * 等比例缩放，但不会超过容器的范围
+		 */
+		public static const UNIFORM:String = "uniform";
+		/**
+		 * 等比例填充，多余的部分会被裁切
+		 */
+		public static const CROP:String = "crop";
+		/**
+		 * 非等比例填充
+		 */
+		public static const FILL:String = "fill";
+		
+		/**
 		 * 拉伸对象到充满到某个区域
 		 * 
 		 * @param displayObj	显示对象
@@ -26,15 +39,17 @@ package ghostcat.util
 		 * @param equal	是否保持长宽比
 		 * 
 		 */		
-		public static function scaleToFit(displayObj:DisplayObject, container:*, equal:Boolean = false):void
+		public static function scaleToFit(displayObj:DisplayObject, container:*, type:String = UNIFORM):void
         {
         	var rect:Rectangle = getRect(container);
         	
             displayObj.scaleX = rect.width / displayObj.width;
             displayObj.scaleY = rect.height / displayObj.height;
             
-            if (equal)
+            if (type == UNIFORM)
             	displayObj.scaleX = displayObj.scaleY = Math.min(displayObj.scaleX,displayObj.scaleY);
+            else if (type == CROP)
+            	displayObj.scaleX = displayObj.scaleY = Math.max(displayObj.scaleX,displayObj.scaleY);
             
             var objRect:Rectangle = displayObj.getRect(displayObj.parent);
             displayObj.x += rect.x - objRect.x;

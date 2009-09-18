@@ -10,8 +10,8 @@ package ghostcat.ui.controls
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GNoScale;
-	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.CallLater;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Geom;
@@ -24,6 +24,9 @@ package ghostcat.ui.controls
 	 */
 	public class GImage extends GNoScale
 	{
+		/**
+		 * 载入时使用的loaderContext
+		 */
 		public var loaderContext:LoaderContext;
 		
 		private var _clipContent:Boolean = false;
@@ -31,12 +34,6 @@ package ghostcat.ui.controls
 		
 		private var _horizontalAlign:String = UIConst.CENTER;
 		private var _verticalAlign:String = UIConst.MIDDLE;
-		
-		public function GImage(source:*=null, replace:Boolean=true)
-		{
-			super(source as DisplayObject, replace);
-			this.source = source;
-		}
 		
 		/**
 		 * 垂直对齐
@@ -69,6 +66,23 @@ package ghostcat.ui.controls
 			_horizontalAlign = v;
 			invalidateLayout();
 		}
+		
+		private var _scaleType:String = Geom.UNIFORM;
+
+		/**
+		 * 缩放类型。常量在Geom类中。
+		 */
+		public function get scaleType():String
+		{
+			return _scaleType;
+		}
+
+		public function set scaleType(v:String):void
+		{
+			_scaleType = v;
+			invalidateLayout();
+		}
+
 
 		/**
 		 * 是否缩放
@@ -140,6 +154,12 @@ package ghostcat.ui.controls
 			setContent(v as DisplayObject, replace);
 		}
 		
+		public function GImage(source:*=null, replace:Boolean=true)
+		{
+			super(source as DisplayObject, replace);
+			this.source = source;
+		}
+		
 		private function loadCompleteHandler(event:Event):void
 		{
 			(event.currentTarget as EventDispatcher).removeEventListener(Event.COMPLETE,loadCompleteHandler);
@@ -169,7 +189,7 @@ package ghostcat.ui.controls
 		protected function layoutChildren():void
 		{
 			if (scaleContent)
-				Geom.scaleToFit(content,this,true);
+				Geom.scaleToFit(content,this,_scaleType);
 			else
 				content.scaleX = content.scaleY = 1.0;
 			
