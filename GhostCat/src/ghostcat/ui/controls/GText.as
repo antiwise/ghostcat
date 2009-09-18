@@ -3,10 +3,14 @@ package ghostcat.ui.controls
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.FocusEvent;
+	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldType;
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GBase;
@@ -89,6 +93,23 @@ package ghostcat.ui.controls
 				textField.maxChars = v;
 		}
 
+		/**
+		 * 可编辑
+		 * @return 
+		 * 
+		 */
+		public function get editable():Boolean
+		{
+			return textField.type == TextFieldType.INPUT;
+		}
+
+		public function set editable(v:Boolean):void
+		{
+			textField.type = v ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+		}
+		
+		private var _editable:Boolean;
+		
 		private var _bitmap:Bitmap;//用于缓存的Bitmap
 		
 		private var _asBitmap:Boolean = false;
@@ -118,11 +139,14 @@ package ghostcat.ui.controls
 		 * @param skin
 		 * 
 		 */
-		private function getTextFieldFromSkin(skin:DisplayObject):void
+		protected function getTextFieldFromSkin(skin:DisplayObject):void
 		{
 			if (textField)
 			{
 				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
+				textField.removeEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
+				textField.removeEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
+				textField.removeEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
 				if (textField.parent == this)
 					this.removeChild(textField);
 			}
@@ -155,6 +179,9 @@ package ghostcat.ui.controls
 			this.text = textField.text;
 			
 			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
+			textField.addEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
+			textField.addEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
+			textField.addEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
 		}
 		
 		/**
@@ -188,9 +215,11 @@ package ghostcat.ui.controls
 			if (v == super.data)
 				return;
 			
-			var str:String = v.toString();
-			if (!str)
+			var str:String;
+			if (!v)
 				str = "";
+			else
+				str = v.toString();
 			
 			super.data = str;
 		
@@ -214,7 +243,7 @@ package ghostcat.ui.controls
 			if (asBitmap)
 				reRenderBitmap();
 			
-			dispatchEvent(Util.createObject(new GTextEvent(GTextEvent.TEXT_CHANGE),{gText:this}))
+			dispatchEvent(Util.createObject(new GTextEvent(GTextEvent.TEXT_CHANGE),{gText:this}));//只在设置属性的时候才替换语言，而不是文本变化时就换
 		}
 		
 		/**
@@ -274,6 +303,21 @@ package ghostcat.ui.controls
 				event.preventDefault();
 		}
 		
+		protected function textFocusInHandler(event:Event):void
+		{
+			
+		}
+		
+		protected function textFocusOutHandler(event:Event):void
+		{
+			
+		}
+		
+		protected function textKeyDownHandler(event:KeyboardEvent):void
+		{
+			
+		}
+		
 		public override function destory() : void
 		{
 			super.destory();
@@ -284,6 +328,9 @@ package ghostcat.ui.controls
 			if (textField)
 			{
 				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
+				textField.removeEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
+				textField.removeEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
+				textField.removeEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
 				removeChild(textField);
 			}
 		}

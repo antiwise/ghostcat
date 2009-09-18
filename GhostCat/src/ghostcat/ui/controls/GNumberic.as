@@ -21,6 +21,20 @@ package ghostcat.ui.controls
 		public var duration:int=1000;
 		
 		/**
+		 * 附加在数字前的文字
+		 * @return 
+		 * 
+		 */
+		public var prefix:String = "";
+		
+		/**
+		 * 附加在数字后的文字
+		 * @return 
+		 * 
+		 */
+		public var suffix:String = "";
+		
+		/**
 		 * 缓动函数
 		 */
 		public var easing:Function = Circ.easeOut;
@@ -35,11 +49,18 @@ package ghostcat.ui.controls
 			super(skin, replace, separateTextField, textPos);
 		}
 		
+		/**
+		 * 设置数值
+		 * 
+		 * @param v
+		 * @param tween	是否缓动
+		 * 
+		 */
 		public function setValue(v : Number, tween:Boolean = true):void
 		{
 			v = Number(v);
-			if (_data && v == data)
-				return;
+//			if (_data && v == data)
+//				return;
 				
 			_data = v;
 			
@@ -52,6 +73,17 @@ package ghostcat.ui.controls
 			}
 		
 			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		/**
+		 * 获得数据
+		 * 
+		 * @return 
+		 * 
+		 */
+		public function getValue():*
+		{
+			return data;
 		}
 		
 		public override function set data(v : *):void
@@ -76,7 +108,7 @@ package ghostcat.ui.controls
 			_displayValue = v;
 			
 			if (textField)
-				textField.text = v.toFixed(fix);
+				textField.text = prefix + v.toFixed(fix) + suffix;
 			
 			if (enabledAdjustTextSize)
 				TextFieldUtil.adjustSize(textField);

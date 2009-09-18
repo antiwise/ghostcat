@@ -1,9 +1,10 @@
 package ghostcat.ui.classes.scroll
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.text.TextField;
-
+	
 	public class ScrollTextContent extends EventDispatcher implements IScrollContent
 	{
 		private var target:TextField;
@@ -11,6 +12,12 @@ package ghostcat.ui.classes.scroll
 		public function ScrollTextContent(target:TextField)
 		{
 			this.target = target;
+			target.addEventListener(Event.SCROLL,scrollHandler,false,0,true);
+		}
+		
+		private function scrollHandler(event:Event):void
+		{
+			dispatchEvent(new Event(Event.SCROLL));
 		}
 		
 		public function get content():DisplayObject
