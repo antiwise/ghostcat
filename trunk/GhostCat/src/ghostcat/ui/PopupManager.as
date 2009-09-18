@@ -129,7 +129,7 @@ package ghostcat.ui
 		 * @param modal	是否是模态窗口
 		 * 
 		 */
-		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true):void
+		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true):DisplayObject
 		{
 			if (!owner)
 				owner = popupLayer;
@@ -142,6 +142,7 @@ package ghostcat.ui
 				applicationEnabled = false;
 				obj.addEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 			}
+			return obj;
 		}
 		
 		protected function modulePopupCloseHandler(event:Event):void
