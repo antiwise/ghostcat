@@ -70,8 +70,8 @@ package ghostcat.transfer
 			if (!result)
 				result = source.clone();
 				
-			var wl:int = source.width / width;
-			var hl:int = source.height / height;
+			var wl:int = Math.ceil(source.width / width);
+			var hl:int = Math.ceil(source.height / height);
 			
 			for (var j:int = 0;j < hl;j++)
 			{

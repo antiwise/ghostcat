@@ -9,13 +9,22 @@ package ghostcat.ui.layout
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.ResizeEvent;
+	import ghostcat.util.CallLater;
 	import ghostcat.util.Util;
 	
+	/**
+	 * 布局器基类
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Layout
 	{
 		private var _target:DisplayObjectContainer;
 		
 		public var children:Array = [];
+		
+		public var isRoot:Boolean;
 		
 		public function Layout(target:DisplayObjectContainer,isRoot:Boolean = false):void
 		{
@@ -33,17 +42,18 @@ package ghostcat.ui.layout
 			{
 				_target.removeEventListener(ResizeEvent.RESIZE,resizeHandler);
 				if (_target.stage)
-					_target.stage.removeEventListener(Event.RESIZE,stageResizeHandler);
+					_target.stage.removeEventListener(Event.RESIZE,resizeHandler);
 			}
 			
 			_target = value;
+			this.isRoot = isRoot;
 			
 			if (_target)
 			{
 				if (isRoot)
 				{
 					if (_target.stage)
-						_target.stage.addEventListener(Event.RESIZE,stageResizeHandler);
+						_target.stage.addEventListener(Event.RESIZE,resizeHandler);
 				}
 				else
 					_target.addEventListener(ResizeEvent.RESIZE,resizeHandler);
@@ -100,16 +110,28 @@ package ghostcat.ui.layout
 			setTarget(null);
 		}
 		
-		protected function resizeHandler(event:ResizeEvent):void
+		protected function resizeHandler(event:Event):void
 		{
-			var rect:Rectangle = _target.getRect(_target);
-			layoutChildren(rect.x,rect.y,rect.width,rect.height);
+			invalidateLayout();
 		}
 		
-		protected function stageResizeHandler(event:Event):void
+		public function invalidateLayout():void
 		{
-			var stage:Stage = target as Stage;
-			layoutChildren(0,0,stage.stageWidth,stage.stageHeight);
+			CallLater.callLater(vaildLayout,null,true);
+		}
+		
+		public function vaildLayout():void
+		{
+			if (isRoot)
+			{
+				var stage:Stage = target as Stage;
+				layoutChildren(0,0,stage.stageWidth,stage.stageHeight);
+			}
+			else
+			{
+				var rect:Rectangle = _target.getRect(_target);
+				layoutChildren(rect.x,rect.y,rect.width,rect.height);
+			}
 		}
 		
 		

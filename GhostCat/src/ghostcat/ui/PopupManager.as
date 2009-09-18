@@ -9,6 +9,8 @@ package ghostcat.ui
 	
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
+	import ghostcat.operation.PopupOper;
+	import ghostcat.operation.Queue;
 	import ghostcat.util.Singleton;
 	
 	/**
@@ -29,6 +31,11 @@ package ghostcat.ui
 		private var _applicationEnabled:Boolean = true;
 		
 		private var popups:Dictionary;
+		
+		/**
+		 * 弹出窗口指定的队列，为空则为全局队列
+		 */
+		public var queue:Queue = null;
 		
 		public var applicationDisabledFilters:Array;
 		
@@ -142,6 +149,27 @@ package ghostcat.ui
 				applicationEnabled = false;
 				obj.addEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 			}
+			return obj;
+		}
+		
+		/**
+		 * 队列显示一个窗口
+		 * 
+		 * @param obj	窗口实例
+		 * @param owner	调用者
+		 * @param modal	是否是模态窗口
+		 * @param queue	使用的队列。默认使用PopupManager指定的队列。
+		 * 
+		 */
+		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,queue:Queue = null):DisplayObject
+		{
+			var oper:PopupOper = new PopupOper(obj,owner,modal);
+			
+			if (queue)
+				oper.commit(queue);
+			else
+				oper.commit(this.queue);
+				
 			return obj;
 		}
 		

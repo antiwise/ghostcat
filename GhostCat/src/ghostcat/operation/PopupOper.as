@@ -1,7 +1,6 @@
 package ghostcat.operation
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	
 	import ghostcat.ui.PopupManager;
@@ -9,9 +8,9 @@ package ghostcat.operation
 	public class PopupOper extends Oper
 	{
 		public var popup:DisplayObject;
-		public var owner:DisplayObjectContainer;
+		public var owner:DisplayObject;
 		public var modal:Boolean;
-		public function PopupOper(popup:DisplayObject,owner:DisplayObjectContainer,modal:Boolean = true)
+		public function PopupOper(popup:DisplayObject,owner:DisplayObject,modal:Boolean = true)
 		{
 			super();
 			
