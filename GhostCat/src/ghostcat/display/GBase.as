@@ -1,5 +1,6 @@
 package ghostcat.display
 {
+	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
@@ -160,6 +161,24 @@ package ghostcat.display
 		public function set enabled(v:Boolean):void
 		{
 			_enabled = v;
+		}
+		
+		public override function set visible(value:Boolean) : void
+		{
+			if (value == visible)
+				return;
+				
+			var evt:GEvent;
+			if (value)
+				evt = new GEvent(GEvent.SHOW,false,true)
+			else
+				evt = new GEvent(GEvent.HIDE,false,true)
+				
+			dispatchEvent(evt);
+			if (evt.isDefaultPrevented())
+				return;
+			
+			super.visible = true;
 		}
 		
 		public override function set x(value:Number):void
@@ -450,11 +469,17 @@ package ghostcat.display
 			invalidateDisplayList();
 		}
 		
-//		public override function destory():void
-//		{
-//			regEventHandler(false);
-//			super.destory();
-//		}
+		
+		public override function destory():void
+		{
+			var evt:GEvent = new GEvent(GEvent.REMOVE,false,true)
+			dispatchEvent(evt);
+			
+			if (evt.isDefaultPrevented())
+				return;
+			
+			super.destory();
+		}
 		
 	}
 }

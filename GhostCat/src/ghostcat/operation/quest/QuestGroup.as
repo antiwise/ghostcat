@@ -8,13 +8,34 @@ package ghostcat.operation.quest
 	[Event(name="quest_start",type="ghostcat.operation.quest.QuestEvent")]
 	[Event(name="quest_complete",type="ghostcat.operation.quest.QuestEvent")]
 	
+	/**
+	 * 任务组
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class QuestGroup extends EventDispatcher
 	{
+		/**
+		 * 开始列表 
+		 */
 		public var startList:BitArray;
+		
+		/**
+		 * 完成列表
+		 */
 		public var finishList:BitArray;
 		
+		/**
+		 * 任务定义列表 
+		 */
 		public var quests:Array = [];
 		
+		/**
+		 * 任务进度列表
+		 * @return 
+		 * 
+		 */
 		public function get stepList():Array
 		{
 			var result:Array = [];
@@ -30,6 +51,15 @@ package ghostcat.operation.quest
 			finishList = new BitArray();
 		}
 		
+		/**
+		 * 载入任务
+		 *  
+		 * @param quests	任务定义列表
+		 * @param startList	是否开始列表
+		 * @param finishList	是否结束列表
+		 * @param stepList	任务进度列表
+		 * 
+		 */
 		public function load(quests:Array,startList:BitArray=null,finishList:BitArray=null,stepList:Array=null):void
 		{
 			this.quests = quests;
@@ -50,6 +80,13 @@ package ghostcat.operation.quest
 			}
 		}	
 		
+		/**
+		 * 从一个二进制数据中载入
+		 *  
+		 * @param quests	任务定义列表
+		 * @param bytes	数据
+		 * 
+		 */
 		public function loadFromByteArray(quests:Array,bytes:ByteArray):void
 		{
 			var i:int;
@@ -78,6 +115,11 @@ package ghostcat.operation.quest
 			load(quests,startList,finishList,stepList);
 		}	
 		
+		/**
+		 * 获得可保存的数据 
+		 * @return 
+		 * 
+		 */
 		public function getByteArray():ByteArray
 		{
 			var bytes:ByteArray = new ByteArray();
@@ -101,6 +143,13 @@ package ghostcat.operation.quest
 			return bytes;
 		}
 		
+		/**
+		 * 由ID获得任务
+		 * 
+		 * @param id
+		 * @return 
+		 * 
+		 */
 		public function getQuestById(id:int):Quest
 		{
 			for (var i:int = 0;i < quests.length;i++)

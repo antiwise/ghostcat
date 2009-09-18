@@ -10,7 +10,25 @@ package ghostcat.events
 	 */
 	public class GEvent extends Event
 	{
+		/**
+		 * 更新事件
+		 */
 		public static const UPDATE_COMPLETE:String = "update_complete";
+		
+		/**
+		 * 显示事件（可中断）
+		 */
+		public static const SHOW:String = "show";
+		
+		/**
+		 * 隐藏事件（可中断）
+		 */
+		public static const HIDE:String = "hide";
+		
+		/**
+		 * 执行destory方法时触发的事件（可中断，若是直接被removeChild，即使触发了这个事件也无法中断了）
+		 */
+		public static const REMOVE:String = "remove";
 		
 		public function GEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
