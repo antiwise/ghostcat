@@ -1,8 +1,11 @@
 package ghostcat.ui.classes.scroll
 {
 	import flash.display.DisplayObject;
+	import flash.events.IEventDispatcher;
 
-	public interface IScrollContent
+	[Event(name="scroll",type="flash.events.Event")]
+	
+	public interface IScrollContent extends IEventDispatcher
 	{
 		function get content():DisplayObject;
 		

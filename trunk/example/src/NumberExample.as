@@ -7,9 +7,9 @@ package
 	import ghostcat.ui.controls.GNumbericStepper;
 	
 	[SWF(width="600",height="600")]
-	public class TestExample extends Sprite
+	public class NumberExample extends Sprite
 	{
-		public function TestExample()
+		public function NumberExample()
 		{	
 			var t:GNumbericStepper = new GNumbericStepper();
 			t.prefix = "$";

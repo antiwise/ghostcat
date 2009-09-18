@@ -60,6 +60,9 @@ package ghostcat.ui.controls
 
 		public function set target(v:DisplayObject):void
 		{
+			if (_target)
+				_target.removeEventListener(Event.SCROLL,scrollHandler);
+			
 			_target = v;
 			
 			if (v is IScrollContent)
@@ -73,6 +76,9 @@ package ghostcat.ui.controls
 				else	
 					_scrollContent = new GScrollPanel(_target);
 			}
+			
+			if (_target)
+				_target.addEventListener(Event.SCROLL,scrollHandler);
 		}
 		
 		public override function get value():Number
@@ -201,6 +207,11 @@ package ghostcat.ui.controls
 			}
 		}
 		
+		protected function scrollHandler(event:Event):void
+		{
+			updateThumb();
+		}
+		
 		protected override function tickHandler(event:TickEvent):void
 		{
 			super.tickHandler(event);
@@ -233,6 +244,13 @@ package ghostcat.ui.controls
 					value = value;
 				}
 			}
+		}
+		
+		public override function destory() : void
+		{
+			super.destory();
+			
+			target = null;
 		}
 	}
 }

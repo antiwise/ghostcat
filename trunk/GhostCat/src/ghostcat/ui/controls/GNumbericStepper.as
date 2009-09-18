@@ -1,9 +1,14 @@
 package ghostcat.ui.controls
 {
+	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
+	import flash.ui.Keyboard;
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
+	import ghostcat.util.TweenUtil;
 	
 	/**
 	 * 数字选择框
@@ -32,6 +37,12 @@ package ghostcat.ui.controls
 			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 		}
 		
+		protected override function getTextFieldFromSkin(skin:DisplayObject) : void
+		{
+			super.getTextFieldFromSkin(skin);
+			textField.multiline = false;
+		}
+		
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -44,6 +55,13 @@ package ghostcat.ui.controls
 			
 			if (content.hasOwnProperty(downArrowField))
 				downArrow = new GButton(content[downArrowField])
+		}
+		
+		public override function getValue():*
+		{
+			accaptText();
+			
+			return super.getValue();
 		}
 		
 		protected function tickHandler(event:TickEvent):void
@@ -61,6 +79,51 @@ package ghostcat.ui.controls
 				if (downArrow.mouseDown)
 					data += detra;
 			}
+		}
+		
+		protected override function textFocusInHandler(event:Event) : void
+		{
+			super.textFocusInHandler(event);
+			
+			TweenUtil.removeTween(this);
+			textField.text = data.toString();
+		}
+		
+		protected override function textFocusOutHandler(event:Event) : void
+		{
+			super.textFocusOutHandler(event);
+			accaptText();
+		}
+		
+		protected override function textKeyDownHandler(event:KeyboardEvent):void
+		{
+			super.textKeyDownHandler(event);
+			if (event.keyCode == Keyboard.ENTER)
+				stage.focus = null;
+		}
+		
+		/**
+		 * 确认文本的数据
+		 * 
+		 */
+		public function accaptText():void
+		{
+			var v:Number = Number(textField.text);
+			if (isNaN(v))
+				v = minValue;
+			
+			if (isNaN(v))
+				v = 0;
+				
+			v = Number(v.toFixed(fix));
+			
+			if (!isNaN(maxValue) && v > maxValue)
+				v = maxValue;
+			
+			if (!isNaN(minValue) && v < minValue)
+				v = minValue;
+			
+			setValue(v,false);
 		}
 		
 		public override function destory() : void
