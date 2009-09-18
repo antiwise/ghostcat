@@ -53,12 +53,12 @@ package ghostcat.algorithm.bezier
 				stepPoint = steps[i] as Point;
 				
 				//数值始终尝试向两点间中值靠拢
-				var targetX:Number = (prevPoint.x + nextPoint.x)/2;
-				stepPoint.x += (targetX - curPoint.x) * elasticity;
-				stepPoint.x += gravity.x;
-				stepPoint.x *= friction;
+				var targetX:Number = (prevPoint.x + nextPoint.x)/2;//取中值为目标
+				stepPoint.x += (targetX - curPoint.x) * elasticity;//以于目标的距离乘以引力系数，模拟引力
+				stepPoint.x += gravity.x;//附加重力矢量
+				stepPoint.x *= friction;//速度比例衰减
 				
-				curPoint.x += stepPoint.x;
+				curPoint.x += stepPoint.x;//应用速度
 				
 				var targetY:Number = (prevPoint.y + nextPoint.y)/2;
 				stepPoint.y += (targetY - curPoint.y) * elasticity;

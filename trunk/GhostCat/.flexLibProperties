@@ -282,6 +282,7 @@
     <classEntry path="ghostcat.ui.controls.GNumberic"/>
     <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
     <classEntry path="ghostcat.operation.PopupOper"/>
+    <classEntry path="ghostcat.operation.SetPropertyOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
