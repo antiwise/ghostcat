@@ -158,6 +158,18 @@ package ghostcat.util
 		}
 		
 		/**
+		 * 将属性值复制到另一个对象上
+		 * 
+		 * @param target	目标对象
+		 * 
+		 */		
+		public static function copy(source:*,target:*):void
+		{
+			for (var key:* in source)
+				target[key] = source[key]
+		}
+		
+		/**
 		 * 比较对象是否内容相同（此操作较慢）
 		 * 
 		 * @param obj1

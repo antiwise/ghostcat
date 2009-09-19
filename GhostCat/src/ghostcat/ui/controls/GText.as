@@ -92,6 +92,11 @@ package ghostcat.ui.controls
 			if (textField)
 				textField.maxChars = v;
 		}
+		
+		/**
+		 * 编辑时是否自动全选
+		 */
+		public var autoSelect:Boolean
 
 		/**
 		 * 可编辑
@@ -305,7 +310,8 @@ package ghostcat.ui.controls
 		
 		protected function textFocusInHandler(event:Event):void
 		{
-			
+			if (autoSelect)
+				textField.setSelection(0,textField.length);
 		}
 		
 		protected function textFocusOutHandler(event:Event):void

@@ -19,11 +19,15 @@ package ghostcat.util
 	dynamic public class ObjectProxy extends Proxy implements IEventDispatcher
 	{
 		private var eventDispather:EventDispatcher;
-		private var source:*;
+		
+		/**
+		 * 原值 
+		 */
+		public var data:*;
 		
 		public function ObjectProxy(o:Object)
 		{
-			this.source = o;
+			this.data = o;
 			this.eventDispather = new EventDispatcher();
 		}
 		
@@ -54,19 +58,19 @@ package ghostcat.util
 		
 		flash_proxy override function callProperty(methodName:*, ...args):*
 		{
-			var metrod:* = source[methodName];
+			var metrod:* = data[methodName];
 			(metrod as Function).apply(null,args);
 		}
 		
 		flash_proxy override function getProperty(property:*):* 
 		{
-			return source[property];
+			return data[property];
 		}
 		
 		flash_proxy override function setProperty(property:*,value:*):void 
 		{
-			var oldValue:* = source[property];
-			source[property] = value;
+			var oldValue:* = data[property];
+			data[property] = value;
 			
 			if (oldValue && oldValue is IEventDispatcher)
 				(oldValue as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,propertyChangeHandler);
@@ -81,8 +85,8 @@ package ghostcat.util
 		
 		flash_proxy override function deleteProperty(property:*):Boolean 
 		{
-			var oldValue:* = source[property];
-			var s:Boolean = delete(source[property]);
+			var oldValue:* = data[property];
+			var s:Boolean = delete(data[property]);
 			
 			if (oldValue && oldValue is IEventDispatcher)
 				(oldValue as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,propertyChangeHandler);
@@ -97,9 +101,9 @@ package ghostcat.util
 		protected function propertyChangeHandler(event:PropertyChangeEvent):void
 		{
 			var property:*;
-			for (var key:* in source)
+			for (var key:* in data)
 			{
-				var item:ObjectProxy = source[key];
+				var item:ObjectProxy = data[key];
 				if (item && item.eventDispather == event.target)
 				{
 					property = key;
@@ -107,7 +111,7 @@ package ghostcat.util
 				}
 			}
 			
-			var value:* = source[property];
+			var value:* = data[property];
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
 				false,false,"update",
 				property,value,value,this))

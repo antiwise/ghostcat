@@ -284,6 +284,7 @@
     <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
     <classEntry path="ghostcat.util.URL"/>
+    <classEntry path="ghostcat.util.FilePath"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

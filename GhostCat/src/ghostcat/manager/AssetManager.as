@@ -3,12 +3,14 @@ package ghostcat.manager
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.LoadTextOper;
+	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.Singleton;
@@ -53,6 +55,11 @@ package ghostcat.manager
 		 */
 		public var queue:Queue;
 		
+		/**
+		 * 资源列表 
+		 */
+		public var opers:Dictionary;
+		
 		public function AssetManager():void
 		{
 			super();
@@ -66,6 +73,27 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 载入一个资源
+		 * 
+		 * @param res	资源路径
+		 * @param name	资源的名称，用于在进度条中显示
+		 * @return 
+		 * 
+		 */
+		public function loadResource(res:String,name:String=null):Oper
+		{
+			var oper:LoadOper = new LoadOper(assetBase + res);
+			if (name)
+				oper.name = name;
+			
+			oper.addEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
+			oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			
+			oper.commit(queue);
+			return oper;
+		}
+		
+		/**
 		 * 批量载入资源
 		 * 
 		 * @param res	资源路径列表
@@ -73,17 +101,17 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResource(res:Array,names:Array=null):Queue
+		public function loadResources(res:Array,names:Array=null):Oper
 		{
-			queue.addEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
-			queue.addEventListener(OperationEvent.OPERATION_COMPLETE,queueCompleteHandler);
-			
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(assetBase + res[i]);
 				if (names && names[i])
 					oper.name = names[i];
 				
+				oper.addEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
+				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			
 				oper.commit(queue);
 			}
 			
@@ -93,13 +121,17 @@ package ghostcat.manager
 		private function changeProgressTargetHandler(event:OperationEvent):void
 		{
 			if (progressBar)
-				progressBar.target = (event.childOper as LoadOper).eventDispatcher;
+				progressBar.target = (event.oper as LoadOper).eventDispatcher;
 		}
 		
-		private function queueCompleteHandler(event:OperationEvent):void
+		private function loadCompleteHandler(event:OperationEvent):void
 		{
-			queue.removeEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
-			queue.removeEventListener(OperationEvent.OPERATION_COMPLETE,queueCompleteHandler);
+			var oper:Oper = event.oper;
+			if (oper.name)
+				opers[oper.name] = oper;
+			
+			oper.removeEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
+			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
 		}
 		
 		/**
@@ -110,7 +142,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourceFromResConfig(filePath:String):Queue
+		public function loadResourcesFromXMLFile(filePath:String):Oper
 		{
 			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
 			return queue;
@@ -128,7 +160,7 @@ package ghostcat.manager
 				res.push(child.@url.toString());
 				names.push(child.@name.toString());
 			}
-			loadResource(res,names);
+			loadResources(res,names);
 		}
 		
 		/**
@@ -160,6 +192,30 @@ package ghostcat.manager
 				url = (names[0] as String).toLowerCase();
 			}
 			return assetBase + url + ".swf";
+		}
+		
+		/**
+		 * 根据载入时的名称获取加载器，继而可以取得加载完成的资源
+		 *  
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function getOper(name:String):Oper
+		{
+			return opers[name];
+		}
+		
+		/**
+		 * 删除载入的资源。只有这样做才能回收用loadResource加载的资源。
+		 * 
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function deleteOper(name:String):Boolean
+		{
+			return (delete opers[name]);
 		}
 		
 		/**

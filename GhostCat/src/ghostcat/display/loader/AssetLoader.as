@@ -21,7 +21,7 @@ package ghostcat.display.loader
 	 * @author flashyiyi
 	 * 
 	 */
-	public class AssetLoader extends ghostcat.display.GSprite
+	public class AssetLoader extends GSprite
 	{
 		/**
 		 * AssetLoader的独立加载队列
