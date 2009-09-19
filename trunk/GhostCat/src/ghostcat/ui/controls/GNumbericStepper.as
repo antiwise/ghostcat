@@ -83,10 +83,10 @@ package ghostcat.ui.controls
 		
 		protected override function textFocusInHandler(event:Event) : void
 		{
-			super.textFocusInHandler(event);
-			
 			TweenUtil.removeTween(this);
 			textField.text = data.toString();
+		
+			super.textFocusInHandler(event);
 		}
 		
 		protected override function textFocusOutHandler(event:Event) : void

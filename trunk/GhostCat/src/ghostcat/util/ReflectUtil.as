@@ -249,6 +249,9 @@ package ghostcat.util
 		/**
 		 * 获取一个类的特定属性下的MetaData
 		 * 
+		 * MetaData属于编译期标签，大部分将会在编译后被删除。
+		 * 如果要保留MetaData供这个方法读取的话，则需要在编译参数上加上-keep-as3-metadata+=xxx
+		 * 
 		 * @param obj	对象
 		 * @param property	属性名称，为空则为类
 		 * @param metaName	元标签的名称，为空则是第一个

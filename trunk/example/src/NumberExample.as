@@ -15,6 +15,7 @@ package
 			t.prefix = "$";
 			t.setValue(100);
 			t.editable = true;
+			t.autoSelect = true;
 			addChild(t);
 		}
 	}
