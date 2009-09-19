@@ -239,7 +239,8 @@ package ghostcat.ui
 		
 		public override function destory():void
 		{
-			if (stage){
+			if (stage)
+			{
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_DOWN,this.updateButtonDownHandler);
 				stage.removeEventListener(MouseEvent.MOUSE_UP,this.updateButtonDownHandler);

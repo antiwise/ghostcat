@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -13,6 +14,8 @@ package ghostcat.ui.controls
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.SearchUtil;
+
+	[Event(name="change",type="flash.events.Event")]
 	
 	public class GList extends Tile
 	{
@@ -91,6 +94,8 @@ package ghostcat.ui.controls
 			
 			if (item && item is GBase)
 				(item as GBase).selected = true;
+				
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function get selectedRow():int

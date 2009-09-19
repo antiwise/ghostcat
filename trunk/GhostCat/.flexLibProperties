@@ -283,6 +283,7 @@
     <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
     <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
+    <classEntry path="ghostcat.util.URL"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

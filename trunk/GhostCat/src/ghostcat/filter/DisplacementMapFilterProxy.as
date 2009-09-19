@@ -49,7 +49,7 @@ package ghostcat.filter
 		}
 		
 		/**
-		 * 偏移数量 
+		 * 深度 
 		 * @return 
 		 * 
 		 */
@@ -65,7 +65,7 @@ package ghostcat.filter
 		}
 
 		/**
-		 * 偏移起点
+		 * 起点
 		 * @return 
 		 * 
 		 */
@@ -81,7 +81,7 @@ package ghostcat.filter
 		}
 
 		/**
-		 * 波纹重复次数
+		 * 波纹重复次数（对BUBBLE无效）
 		 * @return 
 		 * 
 		 */
@@ -98,7 +98,7 @@ package ghostcat.filter
 		}
 
 		/**
-		 * 偏移范围半径
+		 * 作用半径
 		 * @return 
 		 * 
 		 */
@@ -295,7 +295,7 @@ package ghostcat.filter
 		/**
 		 * 同心水波效果
 		 * 
-		 * @param bitmapData	水波遮罩，需由createWaveMash方法生成
+		 * @param bitmapData	水波遮罩，需由createWaveMask方法生成
 		 * @param pos	水波中心坐标
 		 * @param deep	波幅
 		 * @return 
