@@ -36,7 +36,7 @@ package ghostcat.ui.layout
 			return _target;
 		}
 		
-		public function setTarget(value:DisplayObjectContainer,isRoot:Boolean = false):void
+		public function setTarget(value:DisplayObjectContainer,isRoot:Boolean = false,withChildren:Boolean = false):void
 		{
 			if (_target)
 			{
@@ -58,11 +58,14 @@ package ghostcat.ui.layout
 				else
 					_target.addEventListener(ResizeEvent.RESIZE,resizeHandler);
 			}
+			
+			if (withChildren)
+				addAllChild();
 		}
 		
 		public function addChild(child:DisplayObject):void
 		{
-			if (child.parent && child.parent == _target)
+			if (child.parent)
 				return;
 			
 			_target.addChild(child);
@@ -72,7 +75,7 @@ package ghostcat.ui.layout
 		
 		public function addChildAt(child:DisplayObject,index:int):void
 		{
-			if (child.parent && child.parent == _target)
+			if (child.parent)
 				return;
 			
 			_target.addChildAt(child,index)

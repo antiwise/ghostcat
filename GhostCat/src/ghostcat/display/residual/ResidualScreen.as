@@ -5,6 +5,8 @@ package ghostcat.display.residual
 	import flash.filters.BitmapFilter;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
+	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
 	import ghostcat.display.bitmap.GBitmap;
@@ -12,6 +14,8 @@ package ghostcat.display.residual
 
 	/**
 	 * 位图实现的残影效果
+	 * 
+	 * 此对象和需要显示效果的对象必须在同一个容器的同一层内
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -30,6 +34,11 @@ package ghostcat.display.residual
 		 * 附加的滤镜
 		 */		
 		public var effects:Array;
+		
+		/**
+		 * 物品绘制时附加的颜色
+		 */
+		public var itemColorTransform:ColorTransform;
 		
 		/**
 		 * 需要应用的物品
@@ -118,7 +127,13 @@ package ghostcat.display.residual
 		 */
 		protected function drawItem(obj:DisplayObject):void
 		{
-			bitmapData.draw(obj,obj.transform.matrix);
+			//修正缩放
+			var m1:Matrix = obj.transform.matrix;
+			var m2:Matrix = this.transform.matrix;
+			m2.invert();
+			m1.concat(m2);
+			
+			bitmapData.draw(obj,m1,itemColorTransform);
 		} 
 	}
 }

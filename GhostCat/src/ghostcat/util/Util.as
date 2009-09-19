@@ -109,6 +109,7 @@ package ghostcat.util
 		
 		/**
 		 * 创建一个对象并赋初值
+		 * 同样的功能也能通过创建ClassFactory代替
 		 * 
 		 * @param obj	一个对象的实例或者一个类，类会自动实例化。
 		 * @param values	初值对象

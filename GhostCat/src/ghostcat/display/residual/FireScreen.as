@@ -31,6 +31,7 @@ package ghostcat.display.residual
 			this.fadeSpeed = 0.9;
 			this.blurSpeed = 4;
 			this.offest = new Point(0,-4);
+			this.itemColorTransform = new ColorTransform(0,0,0,1,255);
 			
 			displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
 		}
@@ -58,11 +59,6 @@ package ghostcat.display.residual
 			maskBitmapData.perlinNoise(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest])
 			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
 		}
-		
-		protected override function drawItem(obj:DisplayObject):void
-		{
-			bitmapData.draw(obj,obj.transform.matrix,new ColorTransform(0,0,0,1,255));
-		} 
 		
 		public override function destory() : void
 		{

@@ -178,7 +178,7 @@ package ghostcat.display
 			if (evt.isDefaultPrevented())
 				return;
 			
-			super.visible = true;
+			super.visible = value;
 		}
 		
 		public override function set x(value:Number):void

@@ -84,6 +84,9 @@ package ghostcat.util
 			var oldValue:* = source[property];
 			var s:Boolean = delete(source[property]);
 			
+			if (oldValue && oldValue is IEventDispatcher)
+				(oldValue as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,propertyChangeHandler);
+			
 			dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,
 				false,false,"delete",
 				property,oldValue,null,this))
