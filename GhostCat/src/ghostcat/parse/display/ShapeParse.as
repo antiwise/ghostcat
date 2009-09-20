@@ -13,13 +13,16 @@ package ghostcat.parse.display
 	
 	public class ShapeParse extends DisplayParse
 	{
+		public var reset:Boolean;
 		public var line:IGraphicsLineStyle;
 		public var fill:IGraphicsFill;
 		public var parses:Array;
 		public var grid9:Grid9Parse;
-		public function ShapeParse(parses:Array,line:IGraphicsLineStyle=null,fill:IGraphicsFill=null,grid9:Grid9Parse=null)
+		public function ShapeParse(parses:Array,line:IGraphicsLineStyle=null,fill:IGraphicsFill=null,grid9:Grid9Parse=null,reset:Boolean = false)
 		{
 			this.parses = parses;
+			
+			this.reset = reset;
 			
 			this.line = line;
 			this.fill = fill;
@@ -30,6 +33,9 @@ package ghostcat.parse.display
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
+			
+			if (reset)
+				target.clear();
 			
 			if (line)
 				line.parse(target);

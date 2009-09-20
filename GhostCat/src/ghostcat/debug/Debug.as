@@ -4,6 +4,7 @@ package ghostcat.debug
 	import flash.net.URLVariables;
 	import flash.net.sendToURL;
 	import flash.system.Security;
+	import flash.text.TextField;
 	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.util.Util;
@@ -36,12 +37,17 @@ package ghostcat.debug
 		/**
 		 * 记录日志用。实际运行时，可在程序出错后将客户端日志信息发送出去，做为服务端日志的有效补充。 
 		 */		
-		public static var log:String = ""; 
-		
+		public static var log:String = "";
+				
 		/**
 		 * 是否激活日志记录 
 		 */		
 		public static var enabledLog:Boolean = false;
+		
+		/**
+		 * 用来显示TRACE信息的TextField
+		 */
+		public static var debugTextField:TextField;
 		
 		/**
 		 * 是否显示时间
@@ -73,6 +79,9 @@ package ghostcat.debug
 			
 			if (enabledLog)
 				log += text+"\n";
+				
+			if (debugTextField)
+				debugTextField.appendText(text+"\n");
 		}
 		
 		public static function traceObject(channel:String,obj:Object):void

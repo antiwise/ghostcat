@@ -3,7 +3,7 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.display.GNoScale;
 	import ghostcat.ui.classes.scroll.IScrollContent;
 	import ghostcat.ui.controls.GHScrollBar;
 	import ghostcat.ui.controls.GScrollBar;
@@ -14,7 +14,7 @@ package ghostcat.ui.containers
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GScrollPanel extends GBase implements IScrollContent
+	public class GScrollPanel extends GNoScale implements IScrollContent
 	{
 		public var hScrollBar:GScrollBar;
 		public var vScrollBar:GScrollBar;

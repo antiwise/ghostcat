@@ -1,6 +1,5 @@
 package ghostcat.display.movieclip
 {
-	import flash.display.DisplayObject;
 	import flash.display.FrameLabel;
 	import flash.media.Sound;
 	import flash.media.SoundTransform;
@@ -211,6 +210,18 @@ package ghostcat.display.movieclip
         public function clearQueue():void
         {
             nextLabels = [];
+        }
+        
+        /**
+         * 在暂停状态下，仍然可以手动使用此方法激活tick。利用它可以处理区域调速等功能。
+         * @param v
+         * 
+         */
+        public function tick(v:int):void
+        {
+        	var evt:TickEvent = new TickEvent(TickEvent.TICK);
+        	evt.interval = v;
+        	tickHandler(evt);
         }
 		
 		protected function tickHandler(event:TickEvent):void

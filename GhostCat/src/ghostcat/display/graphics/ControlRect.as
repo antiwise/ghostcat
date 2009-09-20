@@ -104,14 +104,15 @@ package ghostcat.display.graphics
 			DisplayParse.create([new GraphicsClear(),lineStyle,fill,
 				new GraphicsRect(rect.x,rect.y,rect.width,rect.height)]).parse(fillControl);
 			
-			topLeftControl.point = new Point(rect.x,rect.y);
-			topRightControl.point = new Point(rect.right,rect.y);
-			bottomLeftControl.point = new Point(rect.x,rect.bottom);
-			bottomRightControl.point = new Point(rect.right,rect.bottom);
-			topLineControl.point = new Point(rect.x + rect.width/2,rect.y);
-			bottomLineControl.point = new Point(rect.x + rect.width/2,rect.bottom);
-			leftLineControl.point = new Point(rect.x,rect.y + rect.height/2);
-			rightLineControl.point = new Point(rect.right,rect.y + rect.height/2);		}
+			topLeftControl.setPoint(new Point(rect.x,rect.y),true);
+			topRightControl.setPoint(new Point(rect.right,rect.y),true);
+			bottomLeftControl.setPoint(new Point(rect.x,rect.bottom),true);
+			bottomRightControl.setPoint(new Point(rect.right,rect.bottom),true);
+			topLineControl.setPoint(new Point(rect.x + rect.width/2,rect.y),true);
+			bottomLineControl.setPoint(new Point(rect.x + rect.width/2,rect.bottom),true);
+			leftLineControl.setPoint(new Point(rect.x,rect.y + rect.height/2),true);
+			rightLineControl.setPoint(new Point(rect.right,rect.y + rect.height/2),true);
+		}
 		
 		private function createControl():void
 		{
@@ -127,21 +128,25 @@ package ghostcat.display.graphics
 			topLeftControl = new DragPoint();
 			topLeftControl.cursor = CursorSprite.CURSOR_ROTATE_TOPLEFT;
 			topLeftControl.addEventListener(MoveEvent.MOVE,topLeftControlHandler,false,0,true);
+			topLeftControl.delayUpatePosition = true;
 			controlCotainer.addChild(topLeftControl);
 			
 			topRightControl = new DragPoint();	
 			topRightControl.cursor = CursorSprite.CURSOR_ROTATE_TOPRIGHT;
 			topRightControl.addEventListener(MoveEvent.MOVE,topRightControlHandler,false,0,true);
+			topRightControl.delayUpatePosition = true;
 			controlCotainer.addChild(topRightControl);
 			
 			bottomLeftControl = new DragPoint();	
 			bottomLeftControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMLEFT;
 			bottomLeftControl.addEventListener(MoveEvent.MOVE,bottomLeftControlHandler,false,0,true);
+			bottomLeftControl.delayUpatePosition = true;
 			controlCotainer.addChild(bottomLeftControl);
 			
 			bottomRightControl = new DragPoint();	
 			bottomRightControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMRIGHT;
 			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler,false,0,true);
+			bottomRightControl.delayUpatePosition = true;
 			controlCotainer.addChild(bottomRightControl);
 			
 			topLineControl = new DragPoint();	

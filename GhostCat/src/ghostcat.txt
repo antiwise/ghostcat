@@ -51,7 +51,7 @@ Roupe
 
 TweenUtil
 
-和TweenLite类似的缓动模块，供库里的某些类使用（比如SoundManager）。它并没有TweenLite的效率高，但也相距不远。功能上，配合Queue和TweenProxy可以实现大部分需求。
+和TweenLite类似的缓动模块，供库里的某些类使用（比如SoundManager）。它并没有TweenLite的效率高，但也相距不远。功能上，配合Queue和FilterProxy可以实现大部分需求。
 
 SWFDecoder
 

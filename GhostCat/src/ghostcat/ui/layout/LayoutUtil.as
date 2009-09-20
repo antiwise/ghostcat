@@ -1,10 +1,11 @@
 package ghostcat.ui.layout
 {
+	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.Geom;
 	import ghostcat.ui.UIConst;
+	import ghostcat.util.Geom;
 	
 	/**
 	 * 布局方法
@@ -141,6 +142,41 @@ package ghostcat.ui.layout
 			
 			if (!isNaN(height))
 				obj.height = container.height * height;
+		}
+		
+		/**
+		 * 横向排列
+		 * 
+		 * @param obj
+		 * @param prev	上一个物品
+		 * @param gap	间距
+		 * 
+		 */
+		public static function horizontal(obj:*,prev:*,container:*,gap:int = 0):void
+		{
+			var pRect:Rectangle = Geom.getRect(prev,container);
+			var rect:Rectangle = Geom.getRect(obj,container);
+			var offest:Point = new Point(obj.x - rect.x,obj.y - rect.y);
+			
+			obj.x = pRect.right + offest.x + gap;
+		}
+		
+		/**
+		 * 纵向排列
+		 * 
+		 * @param obj
+		 * @param prev	上一个物品
+		 * @param gap	间距
+		 * 
+		 */
+		public static function vertical(obj:*,prev:*,container:*,gap:int = 0):void
+		{
+			var pRect:Rectangle = Geom.getRect(prev,container);
+			var rect:Rectangle = Geom.getRect(obj,container);
+			var offest:Point = new Point(obj.x - rect.x,obj.y - rect.y);
+			
+			obj.y = pRect.bottom + offest.y + gap;
+		
 		}
 	}
 }

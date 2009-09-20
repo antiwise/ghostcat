@@ -1,6 +1,5 @@
 package ghostcat.display
 {
-	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
@@ -217,6 +216,43 @@ package ghostcat.display
 		public override function get y() : Number
 		{
 			return position.y;
+		}
+		
+		/**
+		 * 设置这组属性不会延迟显示和触发updatePosition,以及MOVE事件
+		 * @param v
+		 * 
+		 */
+		public function set $x(value:Number):void
+		{
+			if ($x == value)
+				return;
+			
+			oldPosition.x = super.x;
+			position.x = value;
+			
+			super.x = value;
+		}
+		
+		public function get $x():Number
+		{
+			return super.x;
+		}
+		
+		public function set $y(value:Number):void
+		{
+			if ($y == value)
+				return;
+			
+			oldPosition.y = super.y;
+			position.y = value;
+		
+			super.y = value;
+		}
+		
+		public function get $y():Number
+		{
+			return super.y;
 		}
 		
 		/**

@@ -237,9 +237,10 @@ package ghostcat.ui.controls
 		
 		protected function tickHandler(event:TickEvent):void
 		{
+			var p:Number = percent;
 			if (upArrow)
 			{
-				upArrow.enabled = percent > 0;
+				upArrow.enabled = !isNaN(p) && p > 0;
 				if (upArrow.mouseDown)
 				{
 					value -= detra;
@@ -249,17 +250,25 @@ package ghostcat.ui.controls
 			
 			if (downArrow)
 			{
-				downArrow.enabled = percent < 1;
+				downArrow.enabled = !isNaN(p) && p < 1;
 				if (downArrow.mouseDown)
 				{
 					value += detra;
 					updateThumb();
 				}
 			}
+			
+			if (thumb)
+			{
+				thumb.visible =  !isNaN(p);
+			}
 		}
 		
 		protected function backgroundHandler(event:MouseEvent):void
 		{
+			if (isNaN(percent))
+				return;
+			
 			if (direction == UIConst.HORIZONTAL)
 			{
 				if (thumb.mouseX > pageDetra + thumb.width)

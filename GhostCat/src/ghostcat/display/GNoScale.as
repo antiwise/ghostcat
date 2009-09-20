@@ -24,6 +24,14 @@ package ghostcat.display
 			invalidateSize();
 		}
 		
+		public override function setContent(skin:*, replace:Boolean=true) : void
+		{
+			super.setContent(skin,replace);
+			
+			_width = content.width;
+			_height = content.height;
+		}
+		
 		public override function get width():Number
 		{
 			return _width ? _width:super.width;

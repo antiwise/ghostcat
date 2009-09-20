@@ -10,9 +10,9 @@ package ghostcat.parse.display
 	{
 		public var ellipse:GraphicsEllipse;
 		
-		public function EllipseParse(ellipse:GraphicsEllipse, line:IGraphicsLineStyle=null, fill:IGraphicsFill=null,grid9:Grid9Parse=null)
+		public function EllipseParse(ellipse:GraphicsEllipse, line:IGraphicsLineStyle=null, fill:IGraphicsFill=null,grid9:Grid9Parse=null,reset:Boolean = false)
 		{
-			super(null, line, fill, grid9);
+			super(null, line, fill, grid9, reset);
 			
 			this.ellipse = ellipse;
 		}

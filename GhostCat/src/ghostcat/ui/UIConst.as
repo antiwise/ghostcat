@@ -26,6 +26,8 @@ package ghostcat.ui
 		
 		public static const VERTICAL:String = "vertical";
 		
+		public static const TILE:String = "tile";
+		
 		public static const AUTO : String = "auto";
 		
 		public static const ON : String = "on";

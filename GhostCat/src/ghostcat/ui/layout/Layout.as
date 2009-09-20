@@ -22,8 +22,6 @@ package ghostcat.ui.layout
 	{
 		private var _target:DisplayObjectContainer;
 		
-		public var children:Array = [];
-		
 		public var isRoot:Boolean;
 		
 		public function Layout(target:DisplayObjectContainer,isRoot:Boolean = false):void
@@ -36,7 +34,7 @@ package ghostcat.ui.layout
 			return _target;
 		}
 		
-		public function setTarget(value:DisplayObjectContainer,isRoot:Boolean = false,withChildren:Boolean = false):void
+		public function setTarget(value:DisplayObjectContainer,isRoot:Boolean = false):void
 		{
 			if (_target)
 			{
@@ -59,56 +57,54 @@ package ghostcat.ui.layout
 					_target.addEventListener(ResizeEvent.RESIZE,resizeHandler);
 			}
 			
-			if (withChildren)
-				addAllChild();
 		}
 		
-		public function addChild(child:DisplayObject):void
-		{
-			if (child.parent)
-				return;
-			
-			_target.addChild(child);
-			if (children.indexOf(child) == -1)
-				children.push(child);
-		}
-		
-		public function addChildAt(child:DisplayObject,index:int):void
-		{
-			if (child.parent)
-				return;
-			
-			_target.addChildAt(child,index)
-			if (children.indexOf(child) == -1)
-				children.splice(index,0,child);
-		}
-		
-		public function addAllChild():void
-		{
-			for (var i:int = 0;i < _target.numChildren;i++)
-				addChild(_target.getChildAt(i));
-		}
-		
-		public function removeChild(child:DisplayObject):void
-		{
-			_target.removeChild(child);
-			Util.remove(children,child);
-		}
-		
-		public function removeAllChild():void
-		{
-			if (!_target)
-				return;
-			
-			for (var i:int = children.length - 1;i >= 0;i--)
-				removeChild(_target.getChildAt(i))
-				
-			children = [];
-		}
+//		public function addChild(child:DisplayObject):void
+//		{
+//			if (child.parent)
+//				return;
+//			
+//			_target.addChild(child);
+//			if (children.indexOf(child) == -1)
+//				children.push(child);
+//		}
+//		
+//		public function addChildAt(child:DisplayObject,index:int):void
+//		{
+//			if (child.parent)
+//				return;
+//			
+//			_target.addChildAt(child,index)
+//			if (children.indexOf(child) == -1)
+//				children.splice(index,0,child);
+//		}
+//		
+//		public function addAllChild():void
+//		{
+//			for (var i:int = 0;i < _target.numChildren;i++)
+//				addChild(_target.getChildAt(i));
+//		}
+//		
+//		public function removeChild(child:DisplayObject):void
+//		{
+//			_target.removeChild(child);
+//			Util.remove(children,child);
+//		}
+//		
+//		public function removeAllChild():void
+//		{
+//			if (!_target)
+//				return;
+//			
+//			for (var i:int = children.length - 1;i >= 0;i--)
+//				removeChild(_target.getChildAt(i))
+//				
+//			children = [];
+//		}
 		
 		public function destory():void
 		{
-			removeAllChild();
+//			removeAllChild();
 			
 			setTarget(null);
 		}
