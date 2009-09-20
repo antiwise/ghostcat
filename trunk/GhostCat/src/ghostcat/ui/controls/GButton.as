@@ -42,7 +42,7 @@ package ghostcat.ui.controls
 		private const DOWN:int = 2;
 		private const DISABLED:int = 3;
 		
-		private var defaultSkin:*;//默认skin
+		private var defaultSkin:*;//保存默认skin
 		
 		private var _toggle:Boolean;
 		

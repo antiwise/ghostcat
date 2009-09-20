@@ -1,14 +1,16 @@
 package ghostcat.ui.containers
 {
-	import flash.display.DisplayObject;
-	
-	import ghostcat.display.GNoScale;
-	
-	public class GButtonBar extends GNoScale
+	import ghostcat.ui.controls.GButton;
+
+	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
+	public class GButtonBar extends GRepeater
 	{
-		public function GButtonBar(skin:*=null, replace:Boolean=true)
+		public function GButtonBar(skin:*=null, replace:Boolean=true,ref:* = null)
 		{
-			super(skin, replace);
+			if (!ref)
+				ref = GButton;
+			
+			super(skin, replace,ref);
 		}
 	}
 }

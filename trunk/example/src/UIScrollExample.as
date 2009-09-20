@@ -1,9 +1,8 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.geom.Rectangle;
 	
-	import ghostcat.ui.containers.GScrollPanel;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GList;
 	import ghostcat.util.ObjectProxy;
 	
@@ -13,8 +12,10 @@ package
 		public function UIScrollExample()
 		{	
 			var list:GList = new GList();
-			list.type = GList.TILE;
 			list.width = 150;
+			list.height = 150;
+			
+			list.type = UIConst.TILE;
 			list.columnWidth = 50;
 			list.rowHeight = 30;
 			
@@ -24,11 +25,10 @@ package
 			 
 			list.data = arr;
 			
-			var s:GScrollPanel = new GScrollPanel(list,new Rectangle(0,0,150,100));
-			addChild(s);
+			addChild(list);
 			
-			s.addVScrollBar();
-			s.vScrollBar.blur = 2;
+			list.addVScrollBar();
+			list.vScrollBar.blur = 2;
 			
 			arr[2] = "动态修改数据";
 			

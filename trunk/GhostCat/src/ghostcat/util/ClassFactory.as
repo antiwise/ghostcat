@@ -76,6 +76,24 @@ package ghostcat.util
 		}
 		
 		/**
+		 * 判断是否是这个类型
+		 * 
+		 * @param obj
+		 * @return 
+		 * 
+		 */
+		public function isClass(obj:*):Boolean
+		{
+			if (!generator)
+				return false;
+				
+			if (generator is String)
+				generator = getDefinitionByName(generator) as Class;
+				
+			return obj is generator;
+		}
+		
+		/**
 		 * 用参数数组来构造类
 		 *  
 		 * @param generator

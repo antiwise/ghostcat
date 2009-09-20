@@ -18,7 +18,7 @@ package ghostcat.util
 		public var protocol:String;
     	
     	/**
-		 * 主机名（诸如www.google.com）
+		 * 主机名（诸如www.google.com）或者文件系统中的盘符
 		 */
 		public var host:String;
     	
@@ -28,7 +28,7 @@ package ghostcat.util
 		public var port:int;
 		
 		/**
-		 * 除去主机名后的路径（诸如/search）
+		 * 除去主机名后的路径
 		 */
 		public var pathname:FilePath;
 		

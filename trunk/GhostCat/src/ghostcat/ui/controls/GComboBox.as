@@ -6,6 +6,7 @@ package ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.ui.UIConst;
 	import ghostcat.util.Geom;
 	
 	public class GComboBox extends GButton
@@ -56,7 +57,13 @@ package ghostcat.ui.controls
 			var listField:String = fields.listField;
 			
 			if (content.hasOwnProperty(listField))
-				list = new GList(content[listField],true,GList.VLIST);
+			{
+				list = new GList(content[listField],true,UIConst.VERTICAL);
+				list.width = this.width;
+				list.height = list.rowHeight * 6;
+				
+				list.parent.removeChild(list);
+			}
 		}
 		
 		protected override function mouseDownHandler(event:MouseEvent) : void
@@ -92,7 +99,7 @@ package ghostcat.ui.controls
 				s = s.parent;
 			}
 			
-			if (s != list && list.parent == listContainer)
+			if (s == list && list.parent == listContainer)
 				this.listContainer.removeChild(list)
 		}
 		

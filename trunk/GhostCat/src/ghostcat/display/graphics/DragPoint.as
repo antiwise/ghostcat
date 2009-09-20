@@ -4,10 +4,10 @@ package ghostcat.display.graphics
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import ghostcat.util.ClassFactory;
 	import ghostcat.display.GBase;
 	import ghostcat.skin.PointSkin;
 	import ghostcat.util.CallLater;
+	import ghostcat.util.ClassFactory;
 
 	/**
 	 * 可拖动操控点
@@ -35,18 +35,43 @@ package ghostcat.display.graphics
 
 		public function set point(v:Point):void
 		{
+			setPoint(v);
+		}
+		
+		/**
+		 * 设置坐标
+		 * 
+		 * @param v
+		 * @param silence	是否触发Move事件
+		 * 
+		 */
+		public function setPoint(v:Point,silence:Boolean = false):void
+		{
 			_point = v;
-			if (_point)
+			if (v)
 			{
-				x = _point.x;
-				y = _point.y;
+				if (silence)
+				{
+					$x = _point.x;
+					$y = _point.y;
+				}
+				else
+				{
+					x = _point.x;
+					y = _point.y;
+				}
 			}
 		}
+		
+		private var localMousePoint:Point;//按下时的鼠标位置
 		
 		/**
 		 * 鼠标是否按下
 		 */
-		public var mouseDown:Boolean = false;
+		public function get mouseDown():Boolean
+		{
+			return localMousePoint!=null;
+		}
 
 		/**
 		 * 
@@ -71,13 +96,15 @@ package ghostcat.display.graphics
 			
 			this.cursor = "drag";
 			enabled = enabled;
+			
+//			this.delayUpatePosition = true;//设置此属性是为了消除闪烁
 		}
 
 		public function onMouseDownHandler(event : MouseEvent) : void
 		{
 			if (enabled)
 			{
-				mouseDown = true;
+				localMousePoint = new Point(x - parent.mouseX,y - parent.mouseY);
 				
 				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
@@ -86,7 +113,7 @@ package ghostcat.display.graphics
 
 		public function onMouseUpHandler(event : MouseEvent) : void
 		{
-			mouseDown = false;
+			localMousePoint = null;
 			
 			invalidatePosition();
 			
@@ -97,16 +124,16 @@ package ghostcat.display.graphics
 		public function onMouseMoveHandler(event : MouseEvent) : void
 		{
 			if (!lockX)
-				x = parent.mouseX;
+				x = parent.mouseX + localMousePoint.x;
 			if (!lockY)
-				y = parent.mouseY;
+				y = parent.mouseY + localMousePoint.y;
 		}
-
+		
 		override public function set x(value : Number) : void
 		{
 			point.x = super.x = value;
 		}
-
+		
 		override public function set y(value : Number) : void
 		{
 			point.y = super.y = value;

@@ -2,317 +2,175 @@ package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	import flash.events.IEventDispatcher;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Tile;
-	import ghostcat.events.PropertyChangeEvent;
-	import ghostcat.events.RepeatEvent;
+	import ghostcat.events.ItemClickEvent;
+	import ghostcat.ui.UIConst;
+	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.util.ClassFactory;
-	import ghostcat.util.SearchUtil;
-
-	[Event(name="change",type="flash.events.Event")]
 	
-	public class GList extends Tile
+	[Event(name="change",type="flash.events.Event")]
+	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
+	
+	/**
+	 * 通过包装GScrollPanel，提供了滚动条的List
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
+	public class GList extends GScrollPanel
 	{
-		public static const TILE:String = "tile";
-		public static const HLIST:String = "hlist";
-		public static const VLIST:String = "vlist";
+		public var listContent:GListBase;
 		
-		public static var defaultSkin:ClassFactory =  new ClassFactory();
-		public static var defaultItemRender:ClassFactory = new ClassFactory(GText);
-		
-		public var type:String = TILE;
-		
-		private var _columnCount:int = -1;
-		
-		
-		private var oldSelectedItem:DisplayObject;
-		private var _selectedData:*;
-		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
+		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
 		{
-			if (!itemRender)
-				itemRender = defaultItemRender;
-				
-			var render:ClassFactory;
-			if (skin)
-			{
-				var t:DisplayObject = SearchUtil.findChildByProperty(skin,"name",itemSkinField)
-				if (t)
-				{
-					t.parent.removeChild(t);
-					render = new ClassFactory(getDefinitionByName(getQualifiedClassName(t)));
-				}
-			}
-			
-			if (!render)
-				render = defaultSkin;
-			
-			this.type = type;
-			
-			if (itemRender.params)
-				itemRender.params[0] = render;
-			else
-				itemRender.params = [render];
-				
-			super(itemRender);
-		
-			setContent(skin, replace);
-			
-			addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
-			addEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
+			listContent = new GListBase(skin,replace,type,itemRender,itemSkinField);
+			super(listContent);
 		}
 		
-		public function getDataAt(i:int,j:int):*
-		{
-			if (type == HLIST)
-				return data[i];
-			else if (type == VLIST)
-				return data[j];
-			else
-				return data[j * columnCount + i];
-		}
-		
-		public function get selectedData():*
-		{
-			return _selectedData;
-		}
-
-		public function set selectedData(v:*):void
-		{
-			_selectedData = v;
-			
-			if (oldSelectedItem && oldSelectedItem is GBase)
-				(oldSelectedItem as GBase).selected = false;
-			
-			var item:DisplayObject = selectedItem;
-			
-			if (item && item is GBase)
-				(item as GBase).selected = true;
-				
-			dispatchEvent(new Event(Event.CHANGE));
-		}
-		
-		public function get selectedRow():int
-		{
-			var selectIndex:int = data.indexOf(_selectedData);
-			
-			if (selectIndex != -1)
-			{
-				if (type == HLIST)
-					return 1;
-				else if (type == VLIST)
-					return selectIndex;
-				else
-					return Math.ceil(selectIndex / columnCount);
-			}
-			return -1;
-		}
-
-		public function set selectedRow(v:int):void
-		{
-			selectedData = getDataAt(selectedColumn,v);
-		}
-		
-		public function get selectedColumn():int
-		{
-			var selectIndex:int = data.indexOf(_selectedData);
-			
-			if (selectIndex != -1)
-			{
-				if (type == HLIST)
-					return selectIndex;
-				else if (type == VLIST)
-					return 1;
-				else
-					return selectIndex % columnCount;
-			}
-			return -1;
-		}
-
-		public function set selectedColumn(v:int):void
-		{
-			selectedData = getDataAt(v,selectedRow);
-		}
-		
-		public function get selectedItem():DisplayObject
-		{
-			return getItemAt(selectedColumn,selectedRow);
-		}
-
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
-			super.setContent(skin,replace);
-			
-			if (this.skin)
-			{
-				this.width = this.skin.width;
-				this.height = this.skin.height;
-			}
-		}
-		
-		protected override function get contentRect():Rectangle
-		{
-			var rect:Rectangle = super.contentRect.clone();
-			
-			if (type == HLIST)
-				rect.height = height;
-			else if (type == VLIST)
-				rect.width = width;
-			
-			return rect;
-		}
-		
-		public function get columnCount():int
-		{
-			if (type == HLIST)
-				return data.length;
-			else if (type == VLIST)
-				return 1;
+			if (content)
+				throw new Error("不允许手动执行此方法");
 			else
-			{
-				if (_columnCount > 0)
-					return _columnCount;
-				else
-					return int(super.width / columnWidth);
-			}
-		}
-
-		public function get rowCount():int
-		{
-			if (type == HLIST)
-				return 1;
-			else if (type == VLIST)
-				return data ? data.length : 0;
-			else
-				return data ? Math.ceil(data.length / columnCount) : 0;
-		}
-
-		public function set columnCount(v:int):void
-		{
-			_columnCount = v;
-		}
-
-		public override function get width() : Number
-		{
-			return (type != VLIST) ? columnWidth * columnCount : super.width;
-		}
-		
-		public override function get height() : Number
-		{
-			return (type != HLIST) ? rowHeight * rowCount : super.height;
-		}
-		
-		public function get columnWidth():Number
-		{
-			return (type == VLIST) ? width : _contentRect.width;
-		}
-		
-		public function get rowHeight():Number
-		{
-			return (type == HLIST) ? height : _contentRect.height;
-		}
-		
-		public function set columnWidth(v:Number):void
-		{
-			_contentRect.width = v;
-		}
-		
-		public function set rowHeight(v:Number):void
-		{
-			_contentRect.height = v;
-		}
-		
-		public override function set data(v:*):void
-		{
-			super.data = v;
-			refresh();
+				super.setContent(skin,replace);
 			
-			if (v is IEventDispatcher)
-				(v as IEventDispatcher).addEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler,false,0,true);
+			if (content)
+			{	
+				content.addEventListener(Event.CHANGE,eventpaseHandler);
+				content.addEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
+			}
 		}
 		
-		protected function dataChangeHandler(event:PropertyChangeEvent):void
+		protected override function updateSize() : void
 		{
-			var i:int;
-			var j:int;
+			super.updateSize();
 			
-			if (type == HLIST)
-				i = int(event.property);
-			else if (type == VLIST)
-				j = int(event.property);
-			else
-			{
-				j = int(event.property) / columnCount;
-				i = int(event.property) % columnCount;
-			}
-			
-			refreshItem(i,j);
-		}
-		
-		protected function addRepeatItemHandler(event:RepeatEvent):void
-		{
-			var p:Point = event.repeatPos;
-			refreshItem(p.x,p.y);
-		}
-		
-		protected function removeRepeatItemHandler(event:RepeatEvent):void
-		{
-			(event.repeatObj as GBase).data = null;
-		}
-		
-		public function refreshItem(i:int,j:int):GBase
-		{
-			var item:GBase = getItemAt(i,j);
-			if (item)
-			{
-				var d:*;
-				try
-				{
-					if (type == HLIST)
-						d = data[i];
-					else if (type == VLIST)
-						d = data[j];
-					else
-						d = data[j * columnCount + i];
-				}
-				catch(e:Error)
-				{
-					trace("error")
-				}
-				
-				item.data = d;
-				item.selected = (d == selectedData);
-			}
-			return item;
-		}
-		
-		public function refresh():void
-		{
-			var screen:Rectangle = getItemRect(getLocalScreen());
-			if (screen)
-			{
-				for (var j:int = screen.top;j < screen.bottom;j++)
-					for (var i:int = screen.left;i < screen.right;i++)
-						refreshItem(i,j);	
-			}
+			listContent.width = this.width;
+			listContent.height = this.height;
+			this.scrollRect = new Rectangle(0,0,width,height);
 		}
 		
 		public override function destory() : void
 		{
 			super.destory();
 			
-			if (data && data is IEventDispatcher)
-				(data as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler);
+			if (content)
+			{
+				content.removeEventListener(Event.CHANGE,eventpaseHandler);
+				content.removeEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
+			}
+		}
 		
+		private function eventpaseHandler(event:Event):void
+		{
+			dispatchEvent(event);//转移事件
+		}
+		
+		
+		
+		
+		
+		public function set type(v:String) : void
+		{
+			listContent.type = v;
+		}
+		
+		public function get type():String
+		{
+			return listContent.type;
+		}
+		
+		public override function set data(v:*) : void
+		{
+			listContent.data = v;
+		}
+		
+		public override function get data() : *
+		{
+			return listContent.data;
+		}
+		
+		public function get selectedData():*
+		{
+			return listContent.selectedData;
+		}
+
+		public function set selectedData(v:*):void
+		{
+			listContent.selectedData = v;
 			
-			removeEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
-			removeEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
+			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		public function get selectedRow():int
+		{
+			return listContent.selectedRow;
+		}
+
+		public function set selectedRow(v:int):void
+		{
+			listContent.selectedData = v;
+		}
+		
+		public function get selectedColumn():int
+		{
+			return listContent.selectedColumn;
+		}
+
+		public function set selectedColumn(v:int):void
+		{
+			listContent.selectedColumn = v;
+		}
+		
+		public function get selectedItem():DisplayObject
+		{
+			return listContent.selectedItem;
+		}
+		
+		public function get columnCount():int
+		{
+			return listContent.columnCount;
+		}
+
+		public function get rowCount():int
+		{
+			return listContent.rowCount;
+		}
+
+		public function set columnCount(v:int):void
+		{
+			listContent.columnCount = v;
+		}
+
+		public function get listWidth() : Number
+		{
+			return listContent.width;
+		}
+		
+		public function get listHeight() : Number
+		{
+			return listContent.height;
+		}
+		
+		public function get columnWidth():Number
+		{
+			return listContent.columnWidth;
+		}
+		
+		public function get rowHeight():Number
+		{
+			return listContent.rowHeight;
+		}
+		
+		public function set columnWidth(v:Number):void
+		{
+			listContent.columnWidth = v;
+		}
+		
+		public function set rowHeight(v:Number):void
+		{
+			listContent.rowHeight = v;
 		}
 	}
 }

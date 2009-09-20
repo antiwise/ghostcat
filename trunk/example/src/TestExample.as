@@ -2,14 +2,18 @@ package
 {
 	import flash.display.Sprite;
 	
-	import ghostcat.util.URL;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.ui.containers.GResizePanel;
 	
 	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{	
-			trace(new URL(loaderInfo.url));
+			var t:GResizePanel = new GResizePanel(new TestCollision());
+			addChild(t);
+			
+			addChild(new CursorSprite())
 		}
 	}
 }

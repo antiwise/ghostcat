@@ -223,7 +223,7 @@
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
-    <classEntry path="ghostcat.ui.controls.GList"/>
+    <classEntry path="ghostcat.ui.controls.GListBase"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="ghostcat.ui.controls.GRadioButton"/>
@@ -285,6 +285,12 @@
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
     <classEntry path="ghostcat.util.URL"/>
     <classEntry path="ghostcat.util.FilePath"/>
+    <classEntry path="ghostcat.ui.containers.GResizePanel"/>
+    <classEntry path="ghostcat.debug.DebugPanel"/>
+    <classEntry path="ghostcat.ui.controls.GList"/>
+    <classEntry path="ghostcat.ui.containers.GRepeater"/>
+    <classEntry path="ghostcat.ui.layout.AbsoluteLayout"/>
+    <classEntry path="ghostcat.events.ItemClickEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
