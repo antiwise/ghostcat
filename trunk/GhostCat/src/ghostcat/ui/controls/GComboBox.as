@@ -6,44 +6,31 @@ package ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Geom;
 	
 	public class GComboBox extends GButton
 	{
+		public static var defaultSkin:ClassFactory = new ClassFactory(ComboBoxSkin);
+		
 		public var fields:Object = {listField:"list"}
 		
 		public var list:GList;
+		
+		public var listData:Array;
 		
 		/**
 		 * 承载List的容器
 		 */
 		public var listContainer:DisplayObjectContainer;
-		
-		private var _selectedData:*;
-		
-		public override function get label():String
-		{
-			return _selectedData;
-		}
-		
-		public override function set label(v:String):void
-		{
-			_selectedData = v;
-		}
-		
-		public function get selectedData():*
-		{
-			return _selectedData;
-		}
 
-		public function set selectedData(v:*):void
+		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null,fields:Object=null)
 		{
-			_selectedData = v;
-		}
-
-		public function GComboBox(skin:*, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null,fields:Object=null)
-		{
+			if (!skin)
+				skin = defaultSkin;
+			
 			if (fields)
 				this.fields = fields;
 			
@@ -56,24 +43,25 @@ package ghostcat.ui.controls
 			
 			var listField:String = fields.listField;
 			
-			if (content.hasOwnProperty(listField))
-			{
+//			if (content.hasOwnProperty(listField))
+//			{
 				list = new GList(content[listField],true,UIConst.VERTICAL);
 				list.width = this.width;
 				list.height = list.rowHeight * 6;
 				
-				list.parent.removeChild(list);
-			}
+				if (list.parent)
+					list.parent.removeChild(list);
+//			}
 		}
 		
 		protected override function mouseDownHandler(event:MouseEvent) : void
 		{
 			super.mouseDownHandler(event);
 		
-			var listPos:Point = Geom.localToContent(new Point(),list,listContainer)
+			var listPos:Point = Geom.localToContent(new Point(),this,listContainer)
 			list.x = listPos.x;
-			list.y = listPos.y;
-			list.data = data;
+			list.y = listPos.y + content.height;
+			list.data = listData;
 			list.addEventListener(Event.CHANGE,listChangeHandler);
 			
 			this.listContainer.addChild(list);	
@@ -94,18 +82,18 @@ package ghostcat.ui.controls
 			var s:DisplayObject = event.target as DisplayObject;
 			while (s.parent && s.parent != s.stage)
 			{
-				if (s == list)
-					break;
+				if (s == list || s == this)
+					return;
 				s = s.parent;
 			}
 			
-			if (s == list && list.parent == listContainer)
+			if (list.parent == listContainer)
 				this.listContainer.removeChild(list)
 		}
 		
 		private function listChangeHandler(event:Event):void
 		{
-			this.selectedData = list.selectedData;
+			this.data = list.selectedData;
 			
 			if (list.parent == listContainer)
 				this.listContainer.removeChild(list)

@@ -12,16 +12,25 @@ package ghostcat.gxml.spec
 		{
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function createObject(xml:XML,root:*=null):*
 		{
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function addChild(source:*,child:*,xml:XML,root:*=null):void
 		{
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public function applyProperties(source:*,child:*,xml:XML,root:*=null):void
 		{
 			

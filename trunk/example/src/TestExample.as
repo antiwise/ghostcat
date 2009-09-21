@@ -2,20 +2,19 @@ package
 {
 	import flash.display.Sprite;
 	
-	import ghostcat.util.PropertyHistory;
+	import ghostcat.ui.controls.GComboBox;
+	import ghostcat.ui.controls.GNumbericStepper;
 	
 	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{	
-			var v:PropertyHistory = new PropertyHistory({x:0,y:0},["x","y"]);
-			v.x = 1;
-			v.y = 2;
-			v.undo();
-			trace(v.x,v.y)
-			v.undo();
-			trace(v.x,v.y)
+			var b:GComboBox = new GComboBox();
+			b.data = 123;
+			b.x = 100;
+			b.listData = [222,343,554]
+			addChild(b)
 		}
 	}
 }

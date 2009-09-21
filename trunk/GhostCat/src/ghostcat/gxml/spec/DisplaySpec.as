@@ -25,6 +25,9 @@ package ghostcat.gxml.spec
 	 */
 	public class DisplaySpec extends ItemSpec
 	{
+		/**
+		 * @inheritDoc
+		 */
 		public override function createObject(xml:XML,root:*=null):*
 		{
 			var obj:*;
@@ -44,6 +47,9 @@ package ghostcat.gxml.spec
 			return obj;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		public override function addChild(source:*,child:*,xml:XML,root:*=null):void
 		{
 			if (isClass(xml) && source is DisplayObjectContainer)
