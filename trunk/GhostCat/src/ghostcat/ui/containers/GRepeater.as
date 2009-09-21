@@ -19,13 +19,9 @@ package ghostcat.ui.containers
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GRepeater extends GNoScale
+	public class GRepeater extends GBox
 	{
-		public var layout:LinearLayout;
-		
 		public var ref:ClassFactory;
-		
-		public var listContainer:Sprite;
 		
 		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null)
 		{
@@ -36,12 +32,7 @@ package ghostcat.ui.containers
 			else if (ref is ClassFactory)
 				this.ref = ref as ClassFactory;
 			
-			listContainer = new Sprite();
-			addChild(listContainer);
-			
-			layout = new LinearLayout(listContainer);
-			
-			listContainer.addEventListener(MouseEvent.CLICK,clickHandler);
+			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			
 		}
 		
@@ -49,12 +40,12 @@ package ghostcat.ui.containers
 		{
 			super.data = v;
 			
-			DisplayUtil.removeAllChildren(listContainer);
+			DisplayUtil.removeAllChildren(contentPane);
 			
 			for (var i:int = 0;i < data.length;i++)
 			{
 				var obj:GBase = ref.newInstance() as GBase;
-				listContainer.addChild(obj);
+				contentPane.addChild(obj);
 				obj.data = data[i];
 			}
 		}
@@ -63,22 +54,12 @@ package ghostcat.ui.containers
 		{
 			super.destory();
 			
-			listContainer.removeEventListener(MouseEvent.CLICK,clickHandler);
-		}
-		
-		public function get type():String
-		{
-			return layout.type;
-		}
-
-		public function set type(v:String):void
-		{
-			layout.type = v;
+			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		
 		protected function clickHandler(event:MouseEvent):void
 		{
-			if (event.target == listContainer)
+			if (event.target == contentPane)
 				return;
 			
 			var o:DisplayObject = event.target as DisplayObject;
