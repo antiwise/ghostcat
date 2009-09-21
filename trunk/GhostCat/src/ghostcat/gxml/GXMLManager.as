@@ -1,10 +1,7 @@
 package ghostcat.gxml
 {
-	import flash.display.Sprite;
-	import flash.utils.Dictionary;
-	
+	import ghostcat.gxml.spec.ISpec;
 	import ghostcat.util.Singleton;
-	import ghostcat.gxml.spec.ItemSpec;
 
 	/**
 	 * XML解析类
@@ -19,24 +16,22 @@ package ghostcat.gxml
 			return Singleton.getInstanceOrCreate(GXMLManager) as GXMLManager;
 		}
 		
-		private var specs:Dictionary;
-		
-		private var defaultSpec:Class;
-		
-		public function GXMLManager()
+		/**
+		 * 根据XML创建对象
+		 * 
+		 * @param xml	XML数据
+		 * @param spec	解析器类型
+		 * @param root	初始对象
+		 * @return 
+		 * 
+		 */
+		public function create(xml:XML,spec:Class,root:* = null):*
 		{
-			specs = new Dictionary();
-			registerDefault(ItemSpec);
-		}
-		
-		public function registerDefault(spec:Class):void
-		{
-			defaultSpec = spec;
-		}
-		
-		public function register(type:*,spec:Class):void
-		{
-			specs[type] = spec;
+			var o:* = new spec();
+			if (o is ISpec)
+				return (o as ISpec).createObject(xml,root);
+			else
+				return null;
 		}
 	}
 }

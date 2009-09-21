@@ -295,6 +295,7 @@
     <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.util.PropertyHistory"/>
+    <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

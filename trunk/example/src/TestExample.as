@@ -2,18 +2,20 @@ package
 {
 	import flash.display.Sprite;
 	
-	import ghostcat.ui.CursorSprite;
-	import ghostcat.ui.containers.GResizePanel;
+	import ghostcat.util.PropertyHistory;
 	
 	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{	
-			var t:GResizePanel = new GResizePanel(new TestCollision());
-			addChild(t);
-			
-			addChild(new CursorSprite())
+			var v:PropertyHistory = new PropertyHistory({x:0,y:0},["x","y"]);
+			v.x = 1;
+			v.y = 2;
+			v.undo();
+			trace(v.x,v.y)
+			v.undo();
+			trace(v.x,v.y)
 		}
 	}
 }

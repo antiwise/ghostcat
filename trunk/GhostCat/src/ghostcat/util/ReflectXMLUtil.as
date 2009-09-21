@@ -31,19 +31,19 @@ package ghostcat.util
 		}
 		
 		/**
-		 * 根据XML设置对象属性
+		 * 根据属性类型设置对象属性
 		 * 
 		 * @param obj	对象
 		 * @param key	键
 		 * @param value	值
 		 * @param root	执行此方法的对象，是反射外部属性的依据。缺省为obj本身。
 		 */
-		public static function setPropertyByXML(obj:*,key:String,value:XML,root:*=null):void
+		public static function setProperty(obj:*,key:String,value:*,root:*=null):void
 		{
 			if (!root)
 				root = obj;
 				
-			if (new RegExp("^{.*}$").test(value))
+			if (new RegExp("^{.*}$").test(value.toString()))
 			{
 				var prop:String = value.toString().substring(1,value.toString().length - 1);
 				obj[key] = root[prop];
@@ -54,16 +54,16 @@ package ghostcat.util
 				switch (propClass)
 				{
 					case Boolean:
-						obj[key] = (value == "true");
+						obj[key] = (value == "true" || value == true);
 						break;
 					case Class:
-						obj[key] = ReflectUtil.getDefinitionByName(value) as Class;
+						obj[key] = ReflectUtil.getDefinitionByName(value.toString()) as Class;
 						break;
 					case Function:
 						obj[key] = ReflectUtil.eval(value) as Function;
 						break;
 					default:
-						obj[key] = value.toString();
+						obj[key] = value;
 						break;
 				}
 			}
@@ -107,7 +107,7 @@ package ghostcat.util
 			var source:XMLList = v.attributes();
 			for (var i:int = 0; i < source.length(); i++)
 			{
-				setPropertyByXML(target,source[i].name(),source[i],root);
+				setProperty(target,source[i].name(),source[i],root);
 			}
 		}
 		

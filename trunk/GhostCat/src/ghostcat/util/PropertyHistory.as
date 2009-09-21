@@ -1,7 +1,6 @@
 package ghostcat.util
 {
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.utils.flash_proxy;
 
 	use namespace flash_proxy;
@@ -13,7 +12,7 @@ package ghostcat.util
 	 * @author flashyiyi
 	 * 
 	 */
-	public class PropertyHistory extends ObjectProxy
+	dynamic public class PropertyHistory extends ObjectProxy
 	{
 		private var propertys:Array;
 		private var _stepIndex:int = -1;
@@ -25,14 +24,29 @@ package ghostcat.util
 		/**
 		 * 是否自动记录状态
 		 */
-		public var autoRecord:Boolean = false;
+		public var autoRecord:Boolean = true;
 		
-		public function PropertyHistory(obj:*, propertys:Array)
+		public function PropertyHistory(obj:*, propertys:Array=null)
 		{
 			super(obj);
 			this.propertys = propertys;
 			
 			record();
+		}
+		
+		/**
+		 * 批量设置属性，只会触发一次record
+		 * @param params
+		 * @return 
+		 * 
+		 */
+		public function setPropertys(params:Object):void
+		{
+			for (var key:* in params)
+				data[key] = params[key];
+		
+			if (autoRecord)
+				record();
 		}
 		
 		/**
@@ -61,7 +75,7 @@ package ghostcat.util
 			for (var i:int = 0;i < propertys.length;i++)
 			{
 				var property:String = propertys[i];
-				data[property] = steps[_stepIndex][property];
+				data[property] = steps[_stepIndex][i];
 			}
 		}
 		
@@ -115,7 +129,7 @@ package ghostcat.util
 		
 		flash_proxy override function setProperty(property:*,value:*):void 
 		{
-			super.setProperty(propertys,value);
+			super.setProperty(property,value);
 			
 			if (autoRecord)
 				record();
