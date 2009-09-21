@@ -22,9 +22,9 @@ package ghostcat.ui.containers
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		
-		public function GScrollPanel(skin:*,scrollRect:Rectangle = null)
+		public function GScrollPanel(skin:*,replace:Boolean = true,scrollRect:Rectangle = null)
 		{
-			super(skin);
+			super(skin,replace);
 			
 			if (scrollRect)
 				this.scrollRect = scrollRect;
@@ -136,6 +136,17 @@ package ghostcat.ui.containers
 			
 			_oldScrollV = -content.y;
 			content.y = -v;
+		}
+		
+		public override function destory() : void
+		{
+			super.destory();
+		
+			if (hScrollBar)
+				hScrollBar.destory();
+			
+			if (vScrollBar)
+				vScrollBar.destory()
 		}
 	}
 }

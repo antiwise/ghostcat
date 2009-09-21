@@ -7,6 +7,7 @@ package ghostcat.ui.containers
 	import ghostcat.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
+	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.ClassFactory;
@@ -54,6 +55,11 @@ package ghostcat.ui.containers
 		{
 			super.destory();
 			
+			for (var i:int = 0; i < contentPane.numChildren;i++)
+			{
+				if (contentPane.getChildAt(i) is GSprite)
+					(contentPane.getChildAt(i) as GSprite).destory();
+			}
 			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		

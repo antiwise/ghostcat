@@ -10,6 +10,7 @@ package ghostcat.ui.controls
 	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.display.GSprite;
 	import ghostcat.display.viewport.Tile;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.events.PropertyChangeEvent;
@@ -41,7 +42,7 @@ package ghostcat.ui.controls
 		private var oldSelectedItem:DisplayObject;
 		private var _selectedData:*;
 		
-		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
+		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null)
 		{
 			if (!itemRender)
 				itemRender = defaultItemRender;
@@ -49,12 +50,16 @@ package ghostcat.ui.controls
 			var render:ClassFactory;
 			if (skin)
 			{
-				var t:DisplayObject = SearchUtil.findChildByProperty(skin,"name",itemSkinField)
-				if (t)
+				if (skin is DisplayObject)
 				{
+					var t:DisplayObject = skin;
 					t.parent.removeChild(t);
 					render = new ClassFactory(getDefinitionByName(getQualifiedClassName(t)));
 				}
+				else if (skin is Class)
+					render = new ClassFactory(skin);
+				else if (skin is ClassFactory)
+					render = skin as ClassFactory
 			}
 			
 			if (!render)
@@ -68,8 +73,6 @@ package ghostcat.ui.controls
 				itemRender.params = [render];
 				
 			super(itemRender);
-		
-			setContent(skin, replace);
 			
 			addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			addEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
@@ -159,17 +162,6 @@ package ghostcat.ui.controls
 		public function get selectedItem():DisplayObject
 		{
 			return getItemAt(selectedColumn,selectedRow);
-		}
-
-		public override function setContent(skin:*, replace:Boolean=true) : void
-		{
-			super.setContent(skin,replace);
-			
-			if (this.skin)
-			{
-				this.width = this.skin.width;
-				this.height = this.skin.height;
-			}
 		}
 		
 		protected override function get contentRect():Rectangle
@@ -338,6 +330,12 @@ package ghostcat.ui.controls
 			
 			if (data && data is IEventDispatcher)
 				(data as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler);
+				
+			for (var i:int = 0; i < numChildren;i++)
+			{
+				if (getChildAt(i) is GSprite)
+					(getChildAt(i) as GSprite).destory();
+			}
 			
 			removeEventListener(MouseEvent.CLICK,clickHandler);
 			removeEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);

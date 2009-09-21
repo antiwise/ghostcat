@@ -28,13 +28,22 @@ package ghostcat.display
 		{
 			super.setContent(skin,replace);
 			
+			autoSize();
+		}
+		
+		/**
+		 * 根据内容调整大小
+		 * 
+		 */
+		public function autoSize():void
+		{
 			_width = content.width;
 			_height = content.height;
 		}
 		
 		public override function get width():Number
 		{
-			return _width ? _width:super.width;
+			return _width;
 		}
 		
 		public override function set width(v:Number):void
@@ -48,7 +57,7 @@ package ghostcat.display
 		
 		public override function get height():Number
 		{
-			return _height ? _height:super.height;
+			return _height;
 		}
 		
 		public override function set height(v:Number):void

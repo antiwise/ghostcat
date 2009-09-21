@@ -106,6 +106,9 @@ package ghostcat.ui.controls
 		private function listChangeHandler(event:Event):void
 		{
 			this.selectedData = list.selectedData;
+			
+			if (list.parent == listContainer)
+				this.listContainer.removeChild(list)
 		}
 		
 		public override function destory() : void
