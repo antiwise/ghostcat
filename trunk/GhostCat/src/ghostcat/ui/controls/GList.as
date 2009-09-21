@@ -13,7 +13,7 @@ package ghostcat.ui.controls
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
 	
 	/**
-	 * 通过包装GScrollPanel，提供了滚动条的List
+	 * 通过包装GScrollPanel，提供了滚动条的List。不支持背景。
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -22,9 +22,9 @@ package ghostcat.ui.controls
 	{
 		public var listContent:GListBase;
 		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null, itemSkinField:String = "render")
+		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null)
 		{
-			listContent = new GListBase(skin,replace,type,itemRender,itemSkinField);
+			listContent = new GListBase(skin,replace,type,itemRender);
 			super(listContent);
 		}
 		
@@ -35,11 +35,8 @@ package ghostcat.ui.controls
 			else
 				super.setContent(skin,replace);
 			
-			if (content)
-			{	
-				content.addEventListener(Event.CHANGE,eventpaseHandler);
-				content.addEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
-			}
+			listContent.addEventListener(Event.CHANGE,eventpaseHandler);
+			listContent.addEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
 		}
 		
 		protected override function updateSize() : void
@@ -55,11 +52,8 @@ package ghostcat.ui.controls
 		{
 			super.destory();
 			
-			if (content)
-			{
-				content.removeEventListener(Event.CHANGE,eventpaseHandler);
-				content.removeEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
-			}
+			listContent.removeEventListener(Event.CHANGE,eventpaseHandler);
+			listContent.removeEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
 		}
 		
 		private function eventpaseHandler(event:Event):void

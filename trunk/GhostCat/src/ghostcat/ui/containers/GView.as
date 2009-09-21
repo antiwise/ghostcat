@@ -1,6 +1,7 @@
 package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	
 	import ghostcat.display.DisplayUtil;
@@ -8,14 +9,11 @@ package ghostcat.ui.containers
 	
 	public class GView extends GNoScale
 	{
-		public var contentPane:Sprite;
-		
+		public var contentPane:DisplayObjectContainer;
 		public function GView(skin:*=null, replace:Boolean=true)
 		{
 			super(skin, replace);
-			
-			contentPane = new Sprite();
-			addChild(contentPane);
+			contentPane = content as DisplayObjectContainer;
 		}
 		
 		public function addObject(child:DisplayObject) : DisplayObject

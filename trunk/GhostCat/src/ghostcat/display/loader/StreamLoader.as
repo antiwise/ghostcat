@@ -67,6 +67,7 @@ package ghostcat.display.loader
 		{
 			refreshProgress(event);
 			loadComplete = true;
+			stream.close();
 		}
 		
 		public override function destory() : void
