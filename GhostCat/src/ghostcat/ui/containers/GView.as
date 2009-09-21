@@ -12,6 +12,9 @@ package ghostcat.ui.containers
 		public var contentPane:DisplayObjectContainer;
 		public function GView(skin:*=null, replace:Boolean=true)
 		{
+			if (!skin)
+				skin = new Sprite();
+			
 			super(skin, replace);
 			contentPane = content as DisplayObjectContainer;
 		}

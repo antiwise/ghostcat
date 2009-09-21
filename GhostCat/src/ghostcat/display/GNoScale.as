@@ -37,8 +37,11 @@ package ghostcat.display
 		 */
 		public function autoSize():void
 		{
-			_width = content.width;
-			_height = content.height;
+			if (content)
+			{
+				_width = content.width;
+				_height = content.height;
+			}
 		}
 		
 		public override function get width():Number

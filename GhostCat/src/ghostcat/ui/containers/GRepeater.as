@@ -49,6 +49,7 @@ package ghostcat.ui.containers
 				contentPane.addChild(obj);
 				obj.data = data[i];
 			}
+			layout.invalidateLayout();
 		}
 
 		public override function destory() : void
@@ -69,7 +70,7 @@ package ghostcat.ui.containers
 				return;
 			
 			var o:DisplayObject = event.target as DisplayObject;
-			while (o.parent != this)
+			while (o.parent != contentPane)
 				o = o.parent;
 			
 			if (ref.isClass(o))

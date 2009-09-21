@@ -9,6 +9,8 @@ package ghostcat.ui.controls
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
+	import ghost.skin.ListBackground;
+	
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
 	import ghostcat.display.viewport.Tile;
@@ -17,7 +19,6 @@ package ghostcat.ui.controls
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
-	import ghostcat.util.SearchUtil;
 	import ghostcat.util.Util;
 
 	[Event(name="change",type="flash.events.Event")]
@@ -31,9 +32,8 @@ package ghostcat.ui.controls
 	 */
 	public class GListBase extends Tile
 	{
-		public static var defaultSkin:ClassFactory =  new ClassFactory();
-		public static var defaultItemRender:ClassFactory = new ClassFactory(GText);
-		
+		public static var defaultSkin:ClassFactory =  new ClassFactory(ListBackground);
+		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton);
 		public var type:String = UIConst.TILE;
 		
 		private var _columnCount:int = -1;
@@ -110,11 +110,13 @@ package ghostcat.ui.controls
 				(oldSelectedItem as GBase).selected = false;
 			
 			var item:DisplayObject = selectedItem;
+			oldSelectedItem = item;
 			
 			if (item && item is GBase)
 				(item as GBase).selected = true;
 				
 			dispatchEvent(new Event(Event.CHANGE));
+			
 		}
 		
 		public function get selectedRow():int
@@ -128,7 +130,7 @@ package ghostcat.ui.controls
 				else if (type == UIConst.VERTICAL)
 					return selectIndex;
 				else
-					return Math.ceil(selectIndex / columnCount);
+					return selectIndex / columnCount;
 			}
 			return -1;
 		}
@@ -162,6 +164,11 @@ package ghostcat.ui.controls
 		public function get selectedItem():DisplayObject
 		{
 			return getItemAt(selectedColumn,selectedRow);
+		}
+		
+		public function set selectedItem(v:DisplayObject):void
+		{
+			selectedData = (v as GBase).data;
 		}
 		
 		protected override function get contentRect():Rectangle
@@ -267,11 +274,13 @@ package ghostcat.ui.controls
 		{
 			var p:Point = event.repeatPos;
 			refreshItem(p.x,p.y);
+			(event.repeatObj as GBase).visible = true;
 		}
 		
 		protected function removeRepeatItemHandler(event:RepeatEvent):void
 		{
 			(event.repeatObj as GBase).data = null;
+			(event.repeatObj as GBase).visible = false;
 		}
 		
 		protected function clickHandler(event:MouseEvent):void
@@ -284,7 +293,10 @@ package ghostcat.ui.controls
 				o = o.parent;
 			
 			if (ref.isClass(o))
+			{
+				selectedItem = o;
 				dispatchEvent(Util.createObject(new ItemClickEvent(ItemClickEvent.ITEM_CLICK),{item:(o as GBase).data,relatedObject:o}));
+			}
 		}
 		
 		public function refreshItem(i:int,j:int):GBase

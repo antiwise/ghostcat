@@ -7,6 +7,8 @@ package ghostcat.ui.controls
 	import flash.ui.Keyboard;
 	
 	import ghostcat.events.TickEvent;
+	import ghostcat.skin.NumberStepperSkin;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Tick;
 	import ghostcat.util.TweenUtil;
 	
@@ -18,6 +20,8 @@ package ghostcat.ui.controls
 	 */
 	public class GNumbericStepper extends GNumberic
 	{
+		public static var defaultSkin:ClassFactory = new ClassFactory(NumberStepperSkin);
+		
 		public var upArrow:GButton;
 		public var downArrow:GButton;
 		
@@ -29,6 +33,9 @@ package ghostcat.ui.controls
 		
 		public function GNumbericStepper(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean=false, textPos:Point=null, fields:Object=null)
 		{
+			if (!skin)
+				skin = defaultSkin;
+			
 			if (fields)
 				this.fields = fields;
 			

@@ -1,6 +1,5 @@
 package ghostcat.ui.controls
 {
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
@@ -9,6 +8,8 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.ActionEvent;
+	import ghostcat.skin.ButtonSkin;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Util;
 	
 	[Event(name="change",type="flash.events.Event")]
@@ -24,6 +25,8 @@ package ghostcat.ui.controls
 	 */	
 	public class GButton extends GMovieClip
 	{
+		public static var defaultSkin:ClassFactory = new ClassFactory(ButtonSkin)
+		
 		public static const LABEL_UP:String = "up";
 		public static const LABEL_OVER:String = "over";
 		public static const LABEL_DOWN:String = "down";
@@ -46,15 +49,16 @@ package ghostcat.ui.controls
 		
 		private var _toggle:Boolean;
 		
-		private var _selected:Boolean;
-		
 		private var _mouseDown:Boolean = false;
 		
 		private var _mouseOver:Boolean = false;
 		
-		private var _label:String;
+		private var labelTextField:GText;
 		
-		private var labelField:GText;
+		/**
+		 * 现实成label的字段
+		 */
+		public var labelField:String;
 		
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
@@ -122,8 +126,11 @@ package ghostcat.ui.controls
 			return _mouseOver;
 		}
 		
-		public function GButton(skin:*, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
+			if (!skin)
+				skin = GButton.defaultSkin;
+			
 			if (textPos)
 				this.textPos = textPos;
 			
@@ -134,17 +141,30 @@ package ghostcat.ui.controls
 		
 		public function get label():String
 		{
-			return _label;
+			return labelField ? data[labelField] : data;
 		}
 
 		public function set label(v:String):void
 		{
-			_label = v;
 			if (labelField)
-				labelField.text = _label;
+			{
+				if (super.data == null)
+					super.data = new Object();
+					
+				super.data[labelField] = v;
+			}
+			else
+				data = v;
+		}
+		
+		public override function set data(v:*) : void
+		{
+			super.data = v;
+			if (labelTextField)
+				labelTextField.text = label;
 			else
 				refreshLabelField();
-		}
+		} 
 		
 		public override function set enabled(v:Boolean) : void
 		{
@@ -157,17 +177,17 @@ package ghostcat.ui.controls
 		
 		public function refreshLabelField():void
 		{
-			if (!_label)
+			if (!label)
 				return;
 			
-			if (labelField)
-				labelField.destory();
+			if (labelTextField)
+				labelTextField.destory();
 			
-			labelField = new GText(content,false,separateTextField,textPos);
-			labelField.enabledAdjustContextSize = enabledAdjustContextSize;
-			addChild(labelField)
+			labelTextField = new GText(content,false,separateTextField,textPos);
+			labelTextField.enabledAdjustContextSize = enabledAdjustContextSize;
+			addChild(labelTextField)
 			
-			labelField.text = _label;
+			labelTextField.text = label;
 		}
 
 		public override function setContent(skin:*, replace:Boolean=true):void
@@ -187,7 +207,7 @@ package ghostcat.ui.controls
 			if (super.selected == v)
 				return;
 			
-			_selected = v;
+			super.selected = v;
 			tweenTo(UP);
 			
 			dispatchEvent(new Event(Event.CHANGE))
@@ -321,8 +341,8 @@ package ghostcat.ui.controls
 		{
 			removeEvents();
 			
-			if (labelField)
-				labelField.destory();
+			if (labelTextField)
+				labelTextField.destory();
 			
 			super.destory();
 		}

@@ -59,7 +59,7 @@ package ghostcat.util
 		flash_proxy override function callProperty(methodName:*, ...args):*
 		{
 			var metrod:* = data[methodName];
-			(metrod as Function).apply(null,args);
+			return (metrod as Function).apply(null,args);
 		}
 		
 		flash_proxy override function getProperty(property:*):* 

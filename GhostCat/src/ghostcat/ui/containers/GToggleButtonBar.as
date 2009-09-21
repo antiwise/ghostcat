@@ -49,7 +49,7 @@ package ghostcat.ui.containers
 			{
 				var item:GBase = contentPane.getChildAt(i) as GBase;
 				if (item)
-					item.selected = (item.data == data); 
+					item.selected = (item.data == v); 
 			}
 			
 			dispatchEvent(new Event(Event.CHANGE));
