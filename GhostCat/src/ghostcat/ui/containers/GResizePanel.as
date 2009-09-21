@@ -55,7 +55,7 @@ package ghostcat.ui.containers
 		{
 			super.updateSize();
 			
-			var fill:GraphicsFill = new GraphicsFill(0,1);
+			var fill:GraphicsFill = new GraphicsFill(0,0);
 			
 			var leftRect:GraphicsRect = new GraphicsRect(0,5,5,height - 10);
 			var topRect:GraphicsRect = new GraphicsRect(5,0,width - 10,5);
