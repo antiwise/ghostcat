@@ -20,6 +20,7 @@
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
     <classEntry path="ghostcat.community.filter.OnlyCheckScreenFilter"/>
     <classEntry path="ghostcat.debug.Debug"/>
+    <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
@@ -54,6 +55,7 @@
     <classEntry path="ghostcat.display.movieclip.GMovieClipBase"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
+    <classEntry path="ghostcat.display.movieclip.TransitionLayer"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
@@ -70,6 +72,7 @@
     <classEntry path="ghostcat.events.GEvent"/>
     <classEntry path="ghostcat.events.GTextEvent"/>
     <classEntry path="ghostcat.events.InputEvent"/>
+    <classEntry path="ghostcat.events.ItemClickEvent"/>
     <classEntry path="ghostcat.events.MoveEvent"/>
     <classEntry path="ghostcat.events.MovieEvent"/>
     <classEntry path="ghostcat.events.OperationEvent"/>
@@ -143,10 +146,12 @@
     <classEntry path="ghostcat.operation.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
     <classEntry path="ghostcat.operation.Oper"/>
+    <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.Queue"/>
     <classEntry path="ghostcat.operation.RemoteOper"/>
     <classEntry path="ghostcat.operation.RepeatOper"/>
     <classEntry path="ghostcat.operation.RetryOper"/>
+    <classEntry path="ghostcat.operation.SetPropertyOper"/>
     <classEntry path="ghostcat.operation.SwitchOper"/>
     <classEntry path="ghostcat.operation.TimeoutOper"/>
     <classEntry path="ghostcat.operation.TweenOper"/>
@@ -197,24 +202,26 @@
     <classEntry path="ghostcat.transfer.GBitmapTransfer"/>
     <classEntry path="ghostcat.transfer.GTransfer"/>
     <classEntry path="ghostcat.transfer.MiniMap"/>
+    <classEntry path="ghostcat.transfer.Mosaic"/>
     <classEntry path="ghostcat.transfer.Paper3D"/>
     <classEntry path="ghostcat.transfer.Reflector"/>
     <classEntry path="ghostcat.transfer.Skew"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.IToolTipSkin"/>
-    <classEntry path="ghostcat.ui.layout.LayoutUtil"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
     <classEntry path="ghostcat.ui.ToolTipSkin"/>
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
     <classEntry path="ghostcat.ui.UIBuilder"/>
     <classEntry path="ghostcat.ui.UIConst"/>
-    <classEntry path="ghostcat.ui.layout.Layout"/>
     <classEntry path="ghostcat.ui.classes.scroll.IScrollContent"/>
+    <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
     <classEntry path="ghostcat.ui.classes.scroll.ScrollTextContent"/>
     <classEntry path="ghostcat.ui.containers.GAlert"/>
     <classEntry path="ghostcat.ui.containers.GButtonBar"/>
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
+    <classEntry path="ghostcat.ui.containers.GRepeater"/>
+    <classEntry path="ghostcat.ui.containers.GResizePanel"/>
     <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
@@ -223,7 +230,10 @@
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
+    <classEntry path="ghostcat.ui.controls.GList"/>
     <classEntry path="ghostcat.ui.controls.GListBase"/>
+    <classEntry path="ghostcat.ui.controls.GNumberic"/>
+    <classEntry path="ghostcat.ui.controls.GNumbericStepper"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
     <classEntry path="ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="ghostcat.ui.controls.GRadioButton"/>
@@ -234,6 +244,8 @@
     <classEntry path="ghostcat.ui.controls.GText"/>
     <classEntry path="ghostcat.ui.controls.GVScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
+    <classEntry path="ghostcat.ui.layout.Layout"/>
+    <classEntry path="ghostcat.ui.layout.LayoutUtil"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.Asyn"/>
     <classEntry path="ghostcat.util.BitArray"/>
@@ -244,6 +256,7 @@
     <classEntry path="ghostcat.util.ColorUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
     <classEntry path="ghostcat.util.DataCompress"/>
+    <classEntry path="ghostcat.util.FilePath"/>
     <classEntry path="ghostcat.util.Geom"/>
     <classEntry path="ghostcat.util.Guid"/>
     <classEntry path="ghostcat.util.Handler"/>
@@ -262,6 +275,7 @@
     <classEntry path="ghostcat.util.Singleton"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.TweenUtil"/>
+    <classEntry path="ghostcat.util.URL"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.WeakReference"/>
     <classEntry path="ghostcat.util.easing.Back"/>
@@ -276,21 +290,10 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
-    <classEntry path="ghostcat.display.movieclip.TransitionLayer"/>
-    <classEntry path="ghostcat.transfer.Mosaic"/>
-    <classEntry path="ghostcat.ui.controls.GNumbericStepper"/>
-    <classEntry path="ghostcat.ui.controls.GNumberic"/>
-    <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
-    <classEntry path="ghostcat.operation.PopupOper"/>
-    <classEntry path="ghostcat.operation.SetPropertyOper"/>
-    <classEntry path="ghostcat.util.URL"/>
-    <classEntry path="ghostcat.util.FilePath"/>
-    <classEntry path="ghostcat.ui.containers.GResizePanel"/>
-    <classEntry path="ghostcat.debug.DebugPanel"/>
-    <classEntry path="ghostcat.ui.controls.GList"/>
-    <classEntry path="ghostcat.ui.containers.GRepeater"/>
-    <classEntry path="ghostcat.ui.layout.AbsoluteLayout"/>
-    <classEntry path="ghostcat.events.ItemClickEvent"/>
+    <classEntry path="ghostcat.ui.containers.GCanvas"/>
+    <classEntry path="ghostcat.ui.containers.GHBox"/>
+    <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
+    <classEntry path="ghostcat.ui.containers.GView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -30,7 +30,7 @@ package ghostcat.ui.containers
 			titleSprite.text = v;
 		}
 
-		public static function show(text:String,title:String = null,buttons:Array = null,closeHandler:Function = null):GAlert
+		public static function show(text:String,title:String = null,buttons:Array = null,icon:*=null,closeHandler:Function = null):GAlert
 		{
 			if (!buttons)
 				buttons = defaultButtons;
@@ -38,6 +38,7 @@ package ghostcat.ui.containers
 			var alert:GAlert = new GAlert();
 			alert.title = title;
 			alert.text = text;
+			alert.iconSprite.source = icon;
 			alert.buttonBar.data = buttons;
 			
 			if (closeHandler!=null)
@@ -87,7 +88,15 @@ package ghostcat.ui.containers
 				iconSprite = new GImage(content[iconField])
 			
 			if (content.hasOwnProperty(buttonBarField))
+			{
 				buttonBar = new GButtonBar(content[buttonBarField])
+				buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,closeHandler,false,0,true);
+			}
+		}
+		
+		private function closeHandler(event:ItemClickEvent):void
+		{
+			close();
 		}
 	}
 }
