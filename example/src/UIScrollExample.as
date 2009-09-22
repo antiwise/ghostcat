@@ -16,10 +16,9 @@ package
 			list.height = 150;
 			
 			list.type = UIConst.TILE;
-			list.columnWidth = 50;
 			
 			var arr:ObjectProxy = new ObjectProxy([]);//这里用普通Array也可以，但必须用这个才能实现动态修改数据
-			for (var i:int = 0;i < 1000000;i++)
+			for (var i:int = 0;i < 1000;i++)
 				arr.push(i.toString());
 			 
 			list.data = arr;

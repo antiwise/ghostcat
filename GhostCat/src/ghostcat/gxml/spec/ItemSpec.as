@@ -43,10 +43,10 @@ package ghostcat.gxml.spec
 			if (root && id)
 				root[id] = obj;//如果设置了ID属性，创建的对象将会创建指定的外部引用
 			
-			if (root is IEventDispatcher)
+			if (obj is IEventDispatcher)
 			{
 				for (var key:String in handlers)
-					(root as IEventDispatcher).addEventListener(key,root[handlers[key]],false,0,true); 
+					(obj as IEventDispatcher).addEventListener(key,root[handlers[key]],false,0,true); 
 			}
 			
 			return obj;

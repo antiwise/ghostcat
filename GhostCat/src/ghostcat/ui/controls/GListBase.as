@@ -33,11 +33,16 @@ package ghostcat.ui.controls
 	public class GListBase extends Tile
 	{
 		public static var defaultSkin:ClassFactory =  new ClassFactory(ListBackground);
-		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton);
+		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton,null,[null,true,true]);
+		
 		public var type:String = UIConst.TILE;
 		
-		private var _columnCount:int = -1;
+		/**
+		 * 是否自动更新Item的大小 
+		 */
+		public var autoReszieItemContent:Boolean = true;
 		
+		private var _columnCount:int = -1;
 		
 		private var oldSelectedItem:DisplayObject;
 		private var _selectedData:*;
@@ -194,7 +199,7 @@ package ghostcat.ui.controls
 				if (_columnCount > 0)
 					return _columnCount;
 				else
-					return int(super.width / columnWidth);
+					return Math.ceil(super.width / columnWidth);
 			}
 		}
 
@@ -273,14 +278,17 @@ package ghostcat.ui.controls
 		protected function addRepeatItemHandler(event:RepeatEvent):void
 		{
 			var p:Point = event.repeatPos;
+			var item:GBase = event.repeatObj as GBase;
 			refreshItem(p.x,p.y);
-			(event.repeatObj as GBase).visible = true;
+			
+			item.visible = (item.data != null);
 		}
 		
 		protected function removeRepeatItemHandler(event:RepeatEvent):void
 		{
-			(event.repeatObj as GBase).data = null;
-			(event.repeatObj as GBase).visible = false;
+			var item:GBase = event.repeatObj as GBase;
+			item.data = null;
+			item.visible = item.selected = false;
 		}
 		
 		protected function clickHandler(event:MouseEvent):void
@@ -320,6 +328,11 @@ package ghostcat.ui.controls
 				}
 				
 				item.data = d;
+				if (autoReszieItemContent)
+				{
+					item.content.width = columnWidth;
+					item.content.height = rowHeight;
+				}
 				item.selected = (d == selectedData);
 			}
 			return item;

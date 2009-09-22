@@ -10,7 +10,10 @@ package
 	import ghostcat.gxml.GXMLManager;
 	import flash.events.MouseEvent;
 	import ghostcat.manager.DragManager;
+	import ghostcat.debug.Debug;
+	import ghostcat.parse.display.TextFieldParse;
 
+	[SWF(width="800",height="400")]
 	public class GXMLExample extends Sprite
 	{
 		public var button:DisplayObject;
@@ -23,9 +26,10 @@ package
 									<fi:DropShadowFilter color="0x0000FF"/>
 								</filters>
 							</skin:ScrollUpButtonSkin>;
+			
+			new TextFieldParse(xml.toXMLString()).parse(this);
 							
 			GXMLManager.instance.create(xml,new DisplaySpec(this));
-			
 			addChild(button);
 		}
 		
