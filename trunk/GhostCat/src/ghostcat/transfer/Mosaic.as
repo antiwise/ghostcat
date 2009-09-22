@@ -4,6 +4,12 @@ package ghostcat.transfer
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
+	/**
+	 * 马赛克变化类
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Mosaic extends GBitmapTransfer
 	{
 		public var normalBitmapData:BitmapData;

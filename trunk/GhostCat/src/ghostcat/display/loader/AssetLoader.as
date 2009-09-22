@@ -28,11 +28,25 @@ package ghostcat.display.loader
 		 */		
 		public static var assetQueue:Queue = new Queue();
 		
+		
+		private var _ref:String;
+		private var handlers:Array = [];//加载完成函数
+		private var loader:Oper;//加载器
+			
 		/**
 		 * 资源的类名
 		 */		
-		public var ref:String;
-		
+		public function get ref():String
+		{
+			return _ref;
+		}
+
+		public function set ref(v:String):void
+		{
+			_ref = v;
+			load();
+		}
+
 		/**
 		 * 资源的类实例
 		 */
@@ -48,21 +62,16 @@ package ghostcat.display.loader
 		 */		
 		public var queue:Boolean = false;
 		
-		private var handlers:Array = [];//加载完成函数
-		private var loader:Oper;//加载器
-			
-		public function AssetLoader()
+		public function AssetLoader(ref:String=null)
 		{
 			super();
+			
 			this.acceptContentPosition = false;
+		
+			if (ref)
+				this.ref = ref;
 		}
 		
-		protected override function init():void
-		{
-			super.init();
-			
-			load();
-		}
 		/**
 		 * 加载
 		 */		
