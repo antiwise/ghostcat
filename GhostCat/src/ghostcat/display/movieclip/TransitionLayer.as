@@ -89,6 +89,7 @@ package ghostcat.display.movieclip
 						setLabel(waitAnimate,-1);
 					else
 						state = FADE_OUT;
+					switchHandler();
 					break;
 				case FADE_OUT:
 					playAnimate(fadeOut,END);

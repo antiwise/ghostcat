@@ -12,7 +12,7 @@ package ghostcat.transfer
 	import ghostcat.util.Geom;
 
 	/**
-	 * 缩略图显示
+	 * 缩略图显示（显示当前范围方框并可以反向选择，如果要禁止此功能可以将enabled设为false）
 	 *  
 	 * @author flashyiyi
 	 * 
