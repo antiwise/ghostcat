@@ -17,14 +17,27 @@ package ghostcat.operation
 		
 		public var tween:TweenUtil;
 		
-		public function TweenOper(target:*,duration:int,params:Object)
+		public function TweenOper(target:*,duration:int,params:Object,invert:Boolean = false)
 		{
 			super();
 			this.target = target;
 			this.duration = duration;
 			this.params = params;
+			
+			if (invert)
+				this.params.invert = true;
 		}
 		
+		public function get invert():Boolean
+		{
+			return this.params.invert;
+		}
+
+		public function set invert(v:Boolean):void
+		{
+			this.params.invert = v;
+		}
+
 		public override function execute() : void
 		{
 			super.execute();
