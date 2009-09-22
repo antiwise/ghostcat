@@ -25,6 +25,21 @@ package ghostcat.ui.controls
 	public class GImage extends GNoScale
 	{
 		/**
+		 * 等比例缩放，但不会超过容器的范围
+		 */
+		public static const UNIFORM:String = Geom.UNIFORM;
+		
+		/**
+		 * 等比例填充，多余的部分会被裁切
+		 */
+		public static const CROP:String = Geom.CROP;
+		
+		/**
+		 * 非等比例填充
+		 */
+		public static const FILL:String = Geom.FILL;
+		
+		/**
 		 * 载入时使用的loaderContext
 		 */
 		public var loaderContext:LoaderContext;

@@ -144,9 +144,12 @@ package ghostcat.manager
 				return;
 			
 			Tick.instance.removeEventListener(TickEvent.TICK,enterFrameHandler);
-			obj.stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
-			obj.stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
-			obj.stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
+			if (obj.stage)
+			{
+				obj.stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+				obj.stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
+				obj.stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
+			}
 			if (stopHandler!=null)
 				obj.removeEventListener(DragEvent.DRAG_STOP,stopHandler);
 			if (onHandler!=null)

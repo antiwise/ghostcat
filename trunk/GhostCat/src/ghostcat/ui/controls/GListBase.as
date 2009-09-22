@@ -9,14 +9,13 @@ package ghostcat.ui.controls
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghost.skin.ListBackground;
-	
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
 	import ghostcat.display.viewport.Tile;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.events.PropertyChangeEvent;
 	import ghostcat.events.RepeatEvent;
+	import ghostcat.skin.ListBackground;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Util;

@@ -279,7 +279,7 @@ package ghostcat.ui.controls
 				}
 			}
 			
-			if (content)
+			if (content && timeLine)
 			{
 				var trans:String = curLabelName+"-"+next+":start";
 				if (hasLabel(trans))

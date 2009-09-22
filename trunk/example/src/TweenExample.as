@@ -30,6 +30,7 @@ package
 			TweenUtil.from(sp,1000,{delay:500,x:100,tint:0xFF0000,ease:Elastic.easeIn,renderOnStart:true})
 			TweenUtil.to(sp,1000,{delay:1500,x:100,tint:0x0000FF,ease:Elastic.easeOut});
 			
+			
 			//利用滤镜代理来实现滤镜Tween
 			f = new FilterProxy(new BlurFilter(0,0));
 			f.applyFilter(sp);

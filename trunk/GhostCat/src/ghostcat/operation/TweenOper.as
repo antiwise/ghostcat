@@ -25,7 +25,8 @@ package ghostcat.operation
 			this.params = params;
 			
 			if (invert)
-				this.params.invert = true;
+				this.invert = invert;
+			
 		}
 		
 		public function get invert():Boolean
