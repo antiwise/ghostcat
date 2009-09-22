@@ -6,6 +6,7 @@ package ghostcat.parse.display
 	import flash.text.TextFormat;
 	
 	import ghostcat.parse.DisplayParse;
+	import ghostcat.text.TextFieldUtil;
 
 	public class TextFieldParse extends DisplayParse
 	{
@@ -33,7 +34,7 @@ package ghostcat.parse.display
 			var textField:TextField = new TextField();
 			textField.defaultTextFormat = defaultTextFormat;
 			textField.selectable = false;
-			if (text.indexOf("<html>"))
+			if (text.indexOf("<html>") != -1)
 				textField.htmlText = text;
 			else
 				textField.text = text;
@@ -42,6 +43,7 @@ package ghostcat.parse.display
 				textField.x = pos.x;
 				textField.y = pos.y;
 			}
+			TextFieldUtil.adjustSize(textField);
 			return textField;
 		}
 		

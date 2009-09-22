@@ -75,6 +75,19 @@ package ghostcat.ui.controls
 			return listContent.type;
 		}
 		
+		/**
+		 * 是否自动更新Item的大小 
+		 */
+		public function get autoReszieItemContent():Boolean
+		{
+			return listContent.autoReszieItemContent;
+		}
+
+		public function set autoReszieItemContent(v:Boolean):void
+		{
+			listContent.autoReszieItemContent = v;
+		}
+		
 		public override function set data(v:*) : void
 		{
 			listContent.data = v;

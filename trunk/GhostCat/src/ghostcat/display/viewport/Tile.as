@@ -116,7 +116,6 @@ package ghostcat.display.viewport
 		
 		public function setContentClass(ref:*):void
 		{
-			Debug.restriction(ref,[Class,ClassFactory]);
 			if (ref is Class)
 				this.ref = new ClassFactory(ref);
 			else 

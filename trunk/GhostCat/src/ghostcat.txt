@@ -1,7 +1,119 @@
-﻿@author flashyiyi
-天地会博客：http://uh.actionscript3.cn/space.php?uid=12147
+﻿类库未完成。不提供DownLoad，请自行从SVN上拉。
+如果有错误请尽快提出，我会马上修改。
+
+@author flashyiyi
+blog:http://uh.actionscript3.cn/space.php?uid=12147
+
+----------------------------------------------------------
+Main Function Points 
+
+Tool sets and frameworks 
+
+It provides a miniature visual object framework, similar to FLEX delayed update mechanism to achieve some basic optimization of processing and infrastructure functions. This will provide a lot of new features to facilitate the development. 
+Provides a wealth of practical classes, to cover the color matrix conversion, bitmap caching, text processing, reflecting management, filter agents, fonts, events, mouse, sound, drag, the difficulty for many developing solutions to provide a standard . 
+Compared with the general framework of its various functions and the framework itself has lower coupling. Is therefore more similar to the tool set. 
+
+Bitmap animation and vector animation centrally 
+
+GMovieClipBase is an animated abstract classes in order to frame label processing unit can be easily spliced loop animation, a simple treatment of complex animations, especially for walking off the direction of turn eight and so a coherent movement. 
+The game must be to achieve a constant rate (jump) function. 
+Such as the abstract class, and its two entities, classes, GMovieClip, GBitmapMovieClip were realized on the common vector and bitmap animation array of animation centrally. 
+
+Pan-use of the dynamic display module 
+
+Tile class will be automatically tiled in one element of the dynamic of the deletions within the region to simulate the large range of repeated primitives. You can use him as a map grid, can also be used to do some shows need to repeat the background of the picture. 
+It uses elements of the incident update, use the intuitive, convenient, and easier to extend, or even can be used to achieve components List. 
+It derived class Tile45 realize the game is commonly used in the game map features a 45-degree angle. 
+
+The sequence data using XML serialization and anti - 
+
+Similar to the FLEX tag representation to achieve the basic function (attribute, ID binding, events). On the design purposes, and not only to that interface, the same can also be used with other data to deserialize (such as oper definition) 
+Designed with an open-style design, you can switch the parser to deal with a variety of different situations, and can modify and redesign their own parser.
+
+To the queue as a means to simplify asynchronous approach 
+
+Queue system easy to use, it is easy to extend. It can be load of resources, methods, implementation of mixed-queue model, in order to achieve a similar approach to synchronize the original. Can even determine which conditions of accession and circulation. 
+Rely on it, and was built to FilterProxy queuing Tween playback and support for filters, narrowed and TweenMax functional distance. 
+Rely on it to achieve a simple and flexible QUEST system that can help achieve the tutorial, RPG nature of the effect of the plot shows
+
+To the skin as the main GUI class library
+
+This is a free addChild to any visual container on the UI component library, there is no precise notion of the container, all the components only need to addChild to stage to take effect. 
+In meeting the above requirements at the same time to optimize the functional. Since the main for the game, right MovieClip good support, adaptive content is more inclined than the expression and diversity. This is not the main data. 
+Components tend to replace the original pixel on the graphics to achieve the components of the skin, not to make interface and then attached to the skin, but rather directly into the skin interface, thus enabling a perfect graphic design to show the contents of the script. But not exclusive way the original skin. 
+Please note. Use of the main points of this library is "art first." "Program first" and even "no art", then do not apply.
+
+-------------------------------------------------- -------- 
+
+A number of miscellaneous functions 
+
+Collision 
+
+An alternative collision detection module. Using a graphical expression of the "circular" and "rectangular" as the collision of the standards in order to splice out these basic graphical objects irregular shape, which replaces the slower way to judge the bitmap. 
+
+A * 
+
+Common types of A * algorithm. Speed has been slow, but the expansion of the performance very good, very easy to read. 
+
+Roupe 
+
+This is an interesting example of the application of Bell's Law curve. One has the physical properties of the elastic cord. 
+You can refer to the curve of its trajectory to achieve TweenMax function. 
+
+TweenUtil 
+
+And TweenLite similar slow moving module, for certain categories of library use (such as SoundManager). It does not TweenLite of high efficiency, but also not far. Functions to meet the Queue, and most of the demand can be achieved FilterProxy. 
+
+SWFDecoder 
+
+Although far less functional SWFAssert, but also can achieve a lot of demand for the. Because of the its main purpose is to write your own GhostCatTool, TAG not much. We can refer to swf_file_format_spec_v9.pdf to write their own needs TAG, casual look to find a TAG should be written on the know how to do. 
+
+IME 
+
+The internal FLASH Pinyin input method, need to load the thesaurus
+
+tranfer 
+
+This package is mainly used to deal with some need to be converted into a bitmap and then to achieve things. For example thumbnails, reflection, trapezoidal transformation. 
+
+parse 
+
+This package is used to convert an object operation. In particular, easy to use for the Graphics. Primarily for other types of support. However, this approach is very useful. 
+
+Drag Tool 
+
+display.graphics offers a range of Graphic editing tools can help achieve the foundation classes. (Graphic refers to the flow chart similar to that kind of stuff) 
+
+Single-file self-loading 
+
+Frame Meta tags used to achieve single-file self-loading, this should be a very common need. 
+
+Mouse gestures 
+
+InputManager joined in the way I used to write mouse gesture system. This increases the game's user experience is very useful. 
+Monitor events and used PathAnalyzer analysis on it. 
+
+Shadow Builder
+
+Can generate an object's shadow, and shadow can also be folded into the wall
+
+----------------------------------------------------------
+Name of Source: 
+
+Each monsters, have all served as human beings. 
+- This is only circulated among monsters, preposterous urban legend. 
+
+"Why do monsters eat people?" 
+"As for the monsters, the humans are engraved in their hearts they are the most perfect existence. Therefore, even if the possibility of only a little thin, even if the end would therefore encounter, they still could not suppress this kind hearts desire - to human existence one step closer to the desire to eventually lose their reason. " 
+
+Memory disappears. Hypothetical construct of the self, or debris, or origin? 
+Lazy filled hollow heart, body hair licked back of the hand. 
+Moonlit Traceless, ghost cat.
+
+-----------------------------------------------------------------------------
 
 主要功能点
+
 
 工具集以及框架
 
@@ -21,18 +133,26 @@ Tile类会自动将元素平铺在一个区域内进行动态的增删，以模�
 它采用事件进行元素的更新，使用直观便利，且较易进行扩展，甚至可以用来实现组件List。
 它的派生类Tile45则实现了游戏常用的45度角游戏地图功能。
 
+采用XML进行数据的序列及反序列化
+
+类似FLEX的标签表示形式，实现了基本的功能（属性设置，ID绑定，事件）。就设计目的而言并不仅仅是为了表示界面，同样也可以用与其他数据的反序列化（诸如oper定义）
+采用的是开放式的设计，可以切换解析器来应对多种不同的情况，并可自行修改和重新设计解析器。
+
 以队列为手段的简化异步处理方式
 
 简单易用的队列系统，很容易进行扩展。它可以实现资源加载，方法执行的混合队列模式，以实现类似原来的同步的处理方式。甚至可以在里面加入条件判断和循环。
 依赖它和FilterProxy实现了内置Tween的排队播放和对滤镜的支持，拉近了和TweenMax功能上的距离。
 依赖它实现了一个简单灵活的QUEST系统，可以帮助实现教程，RPG性质的情节演出效果
 
-以皮肤为主体的GUI类库（未完成）
+以皮肤为主体的GUI类库
 
 这是一个可以自由addChild到任何可视容器上的UI组件库，并没有确切的容器的概念，所有组件只需要addChild到舞台上即可生效。
 在满足以上要求的同时尽可能完善了功能。由于主要面向游戏，对MovieClip有良好的支持，比起自适应内容更倾向与多样化的表现方式。数据在这里并不是主体。
 组件倾向于替换原有图元上的图形来实现组件皮肤，并不是做出界面然后附上皮肤，而是将皮肤直接转换成界面，因此能够完美呈现美工设计稿上的内容。但也不排斥原有的皮肤方式。
 请注意。这个类库的使用要点是“美工先行”。“程序先行”甚至“没有美工”的话，并不适用。
+
+
+----------------------------------------------------------
 
 一些杂项功能
 
@@ -86,9 +206,9 @@ InputManager内顺便加入了我以前写的鼠标手势系统。这对于增�
 
 可以生成物体的影子，并且影子还可以折到墙壁上
 
-
-名称来源：
 ----------------------------------------------------------
+名称来源：
+
 每个妖怪，都曾经身为人类。
 ——这是只在妖怪之间流传的，荒诞无稽的都市传说。
 
