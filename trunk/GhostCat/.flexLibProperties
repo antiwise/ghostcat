@@ -123,7 +123,7 @@
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
-    <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
+    <classEntry path="ghostcat.gxml.spec.Spec"/>
     <classEntry path="ghostcat.manager.AssetManager"/>
     <classEntry path="ghostcat.manager.BrowerManager"/>
     <classEntry path="ghostcat.manager.CacheManager"/>
@@ -295,6 +295,7 @@
     <classEntry path="ghostcat.util.PropertyHistory"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.operation.effect.ClipEffect"/>
+    <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
