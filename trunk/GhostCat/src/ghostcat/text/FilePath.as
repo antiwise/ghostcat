@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.text
 {
 	/**
 	 * 文件路径解析类

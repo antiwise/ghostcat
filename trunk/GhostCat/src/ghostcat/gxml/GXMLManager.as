@@ -25,13 +25,9 @@ package ghostcat.gxml
 		 * @return 
 		 * 
 		 */
-		public function create(xml:XML,spec:Class,root:* = null):*
+		public function create(xml:XML,spec:ISpec):*
 		{
-			var o:* = new spec();
-			if (o is ISpec)
-				return (o as ISpec).createObject(xml,root);
-			else
-				return null;
+			return spec.createObject(xml);
 		}
 	}
 }

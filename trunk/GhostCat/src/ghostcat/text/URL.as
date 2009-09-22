@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.text
 {
 	import flash.net.URLVariables;
 
