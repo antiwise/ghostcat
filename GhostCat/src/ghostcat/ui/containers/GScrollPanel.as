@@ -42,6 +42,8 @@ package ghostcat.ui.containers
 		 */
 		public function addHScrollBar(skin:DisplayObject = null):void
 		{
+			removeHScrollBar();
+				
 			hScrollBar = new GHScrollBar(skin);
 			parent.addChild(hScrollBar);
 			hScrollBar.target = this;
@@ -56,11 +58,31 @@ package ghostcat.ui.containers
 		 */
 		public function addVScrollBar(skin:DisplayObject = null):void
 		{
+			removeVScrollBar();
+			
 			vScrollBar = new GVScrollBar(skin);
 			parent.addChild(vScrollBar);
 			vScrollBar.target = this;
 			
 			invalidateSize();
+		}
+		
+		public function removeHScrollBar():void
+		{
+			if (hScrollBar)
+			{
+				hScrollBar.destory();
+				hScrollBar = null;
+			}
+		}
+		
+		public function removeVScrollBar():void
+		{
+			if (vScrollBar)
+			{
+				vScrollBar.destory();
+				vScrollBar = null;
+			}
 		}
 		
 		protected override function updatePosition() : void
@@ -81,13 +103,15 @@ package ghostcat.ui.containers
 			
 			if (hScrollBar)
 			{
-				hScrollBar.y = this.y + this.height;
+				hScrollBar.x = this.x;
+				hScrollBar.y = this.y + this.height - hScrollBar.height;
 				hScrollBar.width = this.width;
 			}
 			
 			if (vScrollBar)
 			{
-				vScrollBar.x = this.x + this.width;
+				vScrollBar.y = this.y;
+				vScrollBar.x = this.x + this.width - vScrollBar.width;
 				vScrollBar.height = this.height;
 			}
 		}

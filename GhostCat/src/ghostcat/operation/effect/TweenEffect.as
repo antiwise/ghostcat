@@ -8,5 +8,13 @@ package ghostcat.operation.effect
 		{
 			super(target,duration,params,invert);
 		}
+		
+		public override function execute() : void
+		{
+			super.execute();
+			
+			if (invert)
+				tween.update();//执行update确认属性
+		}
 	}
 }

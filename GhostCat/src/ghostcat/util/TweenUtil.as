@@ -6,6 +6,7 @@ package ghostcat.util
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.SoundTransform;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.events.TweenEvent;
@@ -194,76 +195,79 @@ package ghostcat.util
 			for (var i:int = effects.length - 1; i >=0; i--) 
 			{
 				var $o:TweenUtil = effects[i] as TweenUtil;
-				var key:String;
+				$o.update(interval);
+			}
+		}
+		
+		public function update(interval:int=0):void
+		{
+			var key:String;
 				
-				//倒放时初值显示
-				if ($o.invert && $o.renderOnStart)
-				{	
-					for (key in $o.toValues)
-						updateValue($o.target,key,$o.toValues[key])
-					$o.renderOnStart = false;
-				}
-				
-				if ($o.paused)
-					continue;
-				
-				$o.currentTime += interval;
-				if ($o.currentTime < 0)
-					continue;
-								
-				//判断是否是第一次
-				if (!$o.started) 
-				{
-					$o.started = true;
-					
-					if ($o.onStart!=null)
-						$o.onStart();
-					
-					$o.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
-				}
-			
-				//更新属性
-				if ($o.currentTime >= $o.duration)
-				{
-					for (key in $o.toValues)
-					{
-						updateValue($o.target,key,($o.invert)?$o.fromValues[key]:$o.toValues[key]);
-					}
-				}
-				else 
-				{
-					for (key in $o.toValues)
-					{
-						var t:int = ($o.invert)?($o.duration - $o.currentTime):$o.currentTime;
-						var newValue:* = calculateValue($o,t,key);
-						updateValue($o.target,key,newValue);
-					}
-				}
-				
-				//执行更新回调函数
-				if ($o.onUpdate!=null)
-				{
-					if (updateWithCurrentTime)
-						$o.onUpdate($o.currentTime/$o.duration);
-					else
-						$o.onUpdate();
-					
-					$o.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
-				}
-				
-				//如果已经结束则执行结束回调函数并删除
-				if ($o.currentTime >= $o.duration)
-				{
-					if ($o.onComplete!=null)
-						$o.onComplete();
-					
-					effects.splice(i, 1);
-					
-					$o.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
-				}
-				
+			//倒放时初值显示
+			if (this.invert && this.renderOnStart)
+			{	
+				for (key in this.toValues)
+					updateValue(this.target,key,this.toValues[key])
+				this.renderOnStart = false;
 			}
 			
+			if (this.paused)
+				return;
+			
+			this.currentTime += interval;
+			if (this.currentTime < 0)
+				return;
+			
+			//判断是否是第一次
+			if (!this.started) 
+			{
+				this.started = true;
+				
+				if (this.onStart!=null)
+					this.onStart();
+				
+				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
+			}
+			
+			//更新属性
+			if (this.currentTime >= this.duration)
+			{
+				for (key in this.toValues)
+				{
+					updateValue(this.target,key,(this.invert)?this.fromValues[key]:this.toValues[key]);
+				}
+			}
+			else 
+			{
+				for (key in this.toValues)
+				{
+					var t:int = (this.invert)?(this.duration - this.currentTime):this.currentTime;
+					var newValue:* = calculateValue(this,t,key);
+					updateValue(this.target,key,newValue);
+				}
+			}
+			
+			//执行更新回调函数
+			if (this.onUpdate!=null)
+			{
+				if (updateWithCurrentTime)
+					this.onUpdate(this.currentTime/this.duration);
+				else
+					this.onUpdate();
+				
+				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
+			}
+			
+			//如果已经结束则执行结束回调函数并删除
+			if (this.currentTime >= this.duration)
+			{
+				if (this.onComplete!=null)
+					this.onComplete();
+				
+				effects.splice(effects.indexOf(this), 1);
+				
+				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
+			}
 		}
 		
 		private static function calculateValue($o:TweenUtil,t:int,key:String):*

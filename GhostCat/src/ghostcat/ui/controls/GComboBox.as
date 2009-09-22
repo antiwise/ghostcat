@@ -15,17 +15,40 @@ package ghostcat.ui.controls
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ComboBoxSkin);
 		
-		public var fields:Object = {listField:"list"}
+		public var fields:Object = {listField:"list",openButtonField:"openButton"};
 		
 		public var list:GList;
+		public var openButton:GButton;
 		
+		/**
+		 * 列表属性
+		 */
 		public var listData:Array;
 		
 		/**
 		 * 承载List的容器
 		 */
 		public var listContainer:DisplayObjectContainer;
+		
+		private var _maxLine:int = 6;
 
+		/**
+		 * 最大显示List条目
+		 * @return 
+		 * 
+		 */
+		public function get maxLine():int
+		{
+			return _maxLine;
+		}
+
+		public function set maxLine(v:int):void
+		{
+			_maxLine = v;
+			if (list)
+				list.height = list.rowHeight * maxLine;
+		}
+		
 		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null,fields:Object=null)
 		{
 			if (!skin)
@@ -42,16 +65,16 @@ package ghostcat.ui.controls
 			super.setContent(skin,replace);
 			
 			var listField:String = fields.listField;
+			var openButtonField:String = fields.openButtonField;
 			
-//			if (content.hasOwnProperty(listField))
-//			{
-				list = new GList(content[listField],true,UIConst.VERTICAL);
-				list.width = this.width;
-				list.height = list.rowHeight * 6;
-				
-				if (list.parent)
-					list.parent.removeChild(list);
-//			}
+			openButton = new GButton(content[openButtonField]);
+			
+			list = new GList(content[listField],true,UIConst.VERTICAL);
+			list.width = this.width;
+			list.height = list.rowHeight * maxLine;
+			
+			if (list.parent)
+				list.parent.removeChild(list);
 		}
 		
 		protected override function mouseDownHandler(event:MouseEvent) : void
@@ -65,6 +88,9 @@ package ghostcat.ui.controls
 			list.addEventListener(Event.CHANGE,listChangeHandler);
 			
 			this.listContainer.addChild(list);	
+			
+			if (listData.length > maxLine)
+				list.addVScrollBar();
 		}
 		
 		protected override function init():void
@@ -82,13 +108,16 @@ package ghostcat.ui.controls
 			var s:DisplayObject = event.target as DisplayObject;
 			while (s.parent && s.parent != s.stage)
 			{
-				if (s == list || s == this)
+				if (s == list || s == this || s == list.vScrollBar)
 					return;
 				s = s.parent;
 			}
 			
 			if (list.parent == listContainer)
+			{
+				list.removeVScrollBar()
 				this.listContainer.removeChild(list)
+			}
 		}
 		
 		private function listChangeHandler(event:Event):void
@@ -96,7 +125,10 @@ package ghostcat.ui.controls
 			this.data = list.selectedData;
 			
 			if (list.parent == listContainer)
+			{
+				list.removeVScrollBar()
 				this.listContainer.removeChild(list)
+			}
 		}
 		
 		public override function destory() : void

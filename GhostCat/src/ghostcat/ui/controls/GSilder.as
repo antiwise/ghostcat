@@ -25,9 +25,9 @@ package ghostcat.ui.controls
 		
 		private var _target:DisplayObject;
 		
-		private var _minValue:Number;
-		private var _maxValue:Number;
-		private var _value:Number;
+		private var _minValue:Number = 0;
+		private var _maxValue:Number = 100;
+		private var _value:Number = 0;
 		
 		/**
 		 * 旧值 
@@ -219,9 +219,9 @@ package ghostcat.ui.controls
 		{
 			var rect:Rectangle;
 			if (direction == UIConst.HORIZONTAL)
-				rect = new Rectangle(thumbAreaStart,thumb.y,thumbAreaLength,thumb.y);
+				rect = new Rectangle(thumbAreaStart,thumb.y,thumbAreaLength,0);
 			else
-				rect = new Rectangle(thumb.x,thumbAreaStart,thumb.x,thumbAreaLength);
+				rect = new Rectangle(thumb.x,thumbAreaStart,0,thumbAreaLength);
 				
 			DragManager.startDrag(thumb,rect,null,thumbMouseMoveHandler);
 		}
@@ -296,8 +296,6 @@ package ghostcat.ui.controls
 		
 		public override function destory() : void
 		{
-			super.destory();
-			
 			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 			
 			if (upArrow) 
@@ -314,6 +312,8 @@ package ghostcat.ui.controls
 			
 			if (background)
 				background.removeEventListener(MouseEvent.MOUSE_DOWN,backgroundHandler);
+		
+			super.destory();
 		}
 		
 		

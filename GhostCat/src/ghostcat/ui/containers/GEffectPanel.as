@@ -4,10 +4,9 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.Oper;
-	import ghostcat.operation.Queue;
-	import ghostcat.operation.TweenOper;
+	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.util.Geom;
+	import ghostcat.util.TweenUtil;
 	
 	/**
 	 * 采用Effect的Panel
@@ -17,11 +16,11 @@ package ghostcat.ui.containers
 	 */
 	public class GEffectPanel extends GBase
 	{
-		public var createEffect:TweenOper;
-		public var showEffect:TweenOper;
-		public var closeEffect:TweenOper;
-		public var hideEffect:TweenOper;
-		
+		public var createEffect:TweenEffect;
+		public var showEffect:TweenEffect;
+		public var closeEffect:TweenEffect;
+		public var hideEffect:TweenEffect;
+	
 		/**
 		 * 是否将注册点移动到屏幕中央
 		 */
@@ -40,6 +39,8 @@ package ghostcat.ui.containers
 			
 			if (createEffect)
 			{
+				TweenUtil.removeTween(createEffect.target);
+				
 				createEffect.invert = true;
 				createEffect.execute();
 			}
@@ -60,9 +61,10 @@ package ghostcat.ui.containers
 			if (v)
 			{
 				super.visible = true;
-			
 				if (showEffect)
 				{
+					TweenUtil.removeTween(showEffect.target);
+					
 					showEffect.invert = true;
 					showEffect.execute();
 				}
@@ -71,11 +73,13 @@ package ghostcat.ui.containers
 			{
 				if (hideEffect)
 				{
+					TweenUtil.removeTween(hideEffect.target);
+					
 					hideEffect.addEventListener(OperationEvent.OPERATION_COMPLETE,hideMovieEndHandler);
 					hideEffect.execute();
 				}
 				else
-					hideMovieEndHandler(null);
+					super.visible = false;
 			}
 		}
 		
@@ -83,11 +87,13 @@ package ghostcat.ui.containers
 		{
 			if (closeEffect)
 			{
+				TweenUtil.removeTween(closeEffect.target);
+				
 				closeEffect.addEventListener(OperationEvent.OPERATION_COMPLETE,closeMovieEndHandler);
 				closeEffect.execute();
 			}
 			else
-				closeMovieEndHandler(null);
+				destory();
 		}
 		
 		private function closeMovieEndHandler(event:OperationEvent):void

@@ -65,6 +65,9 @@ package ghostcat.ui.controls
 			
 			_target = v;
 			
+			if (!v)
+				return;
+			
 			if (v is IScrollContent)
 				_scrollContent = v as IScrollContent;
 			else if (_target is TextField)
@@ -248,9 +251,9 @@ package ghostcat.ui.controls
 		
 		public override function destory() : void
 		{
-			super.destory();
-			
 			target = null;
+		
+			super.destory();
 		}
 	}
 }
