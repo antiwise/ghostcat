@@ -47,6 +47,13 @@ package ghostcat.gxml.spec
 		 */
 		public function createObject(xml:XML):*
 		{
+			var id:String;
+			if (xml.hasOwnProperty("@id"))//处理id
+			{
+				id = xml.@id.toString();
+				delete xml.@id;
+			}
+			
 			var obj:*;
 			if (xml.nodeKind()=="text")
 			{
@@ -59,11 +66,15 @@ package ghostcat.gxml.spec
 			}
 			else
 			{
-				obj = [];
+				obj = [];//参数先暂存为数组
 				var xmlList:XMLList = xml.children();
 				for each (var child:XML in xmlList)
 					(obj as Array).push(createObject(child))
 			}
+			
+			if (root && id)
+				root[id] = obj;//如果设置了ID属性，创建的对象将会创建指定的外部引用
+			
 			return obj;
 		}
 		
@@ -82,7 +93,7 @@ package ghostcat.gxml.spec
 				if (child is Array)
 				{
 					var ref:Class = ReflectUtil.getTypeByProperty(source,name)
-					if (ref == Array)
+					if (ref == Array)//在这里判断是否真的是数组，不是仍然直接赋值
 						source[name] = child;
 					else
 						ReflectXMLUtil.setProperty(source,name,child[0]);
