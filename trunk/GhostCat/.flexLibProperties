@@ -296,6 +296,7 @@
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.operation.effect.ClipEffect"/>
     <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
+    <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
