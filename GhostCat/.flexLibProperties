@@ -256,7 +256,6 @@
     <classEntry path="ghostcat.util.ColorUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
     <classEntry path="ghostcat.util.DataCompress"/>
-    <classEntry path="ghostcat.util.FilePath"/>
     <classEntry path="ghostcat.util.Geom"/>
     <classEntry path="ghostcat.util.Guid"/>
     <classEntry path="ghostcat.util.Handler"/>
@@ -275,7 +274,6 @@
     <classEntry path="ghostcat.util.Singleton"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.TweenUtil"/>
-    <classEntry path="ghostcat.util.URL"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.WeakReference"/>
     <classEntry path="ghostcat.util.easing.Back"/>
@@ -296,6 +294,7 @@
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.util.PropertyHistory"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
+    <classEntry path="ghostcat.operation.effect.ClipEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
