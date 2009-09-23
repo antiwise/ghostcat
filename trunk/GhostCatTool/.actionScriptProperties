@@ -20,7 +20,9 @@
       <libraryPathEntry kind="1" linkType="1" path="${DCD_LIB_LOCATION}"/>
       <libraryPathEntry kind="1" linkType="1" path="${DCD_LOCALE_LOCATION}"/>
     </libraryPath>
-    <sourceAttachmentPath/>
+    <sourceAttachmentPath>
+      <sourceAttachmentPathEntry index="1" kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/textLayout.swc" sourcepath="${PROJECT_FRAMEWORKS}/projects/framework_textLayout/src" useDefaultLinkType="true"/>
+    </sourceAttachmentPath>
   </compiler>
   <applications>
     <application path="GhostCatTool.mxml"/>

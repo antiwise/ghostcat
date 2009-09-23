@@ -56,7 +56,7 @@ package ghostcat.ui.controls
 		private var labelTextField:GText;
 		
 		/**
-		 * 现实成label的字段
+		 * data中显示成label的字段
 		 */
 		public var labelField:String;
 		

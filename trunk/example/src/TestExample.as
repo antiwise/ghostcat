@@ -1,23 +1,22 @@
 package
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
-	import ghostcat.ui.controls.GComboBox;
-	import ghostcat.ui.controls.GVSilder;
+	import ghostcat.operation.effect.AlphaClipEffect;
 	
 	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{	
-			var b:GComboBox = new GComboBox();
-			b.data = 123;
-			b.x = 100;
-			b.listData = [222,343,554,343,554,343,554,343,554,343,554,343,554,343,554,343,554];
-			addChild(b)
+			var v:DisplayObject = new TestHuman();
+			addChild(v);
 			
-			var s:GVSilder = new GVSilder();
-			addChild(s);
+			v.x = 100;
+			v.y = 100;
+			
+			new AlphaClipEffect(v,5000,AlphaClipEffect.DOWN,null).execute();
 		}
 	}
 }

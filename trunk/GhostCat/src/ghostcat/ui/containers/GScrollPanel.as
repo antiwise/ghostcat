@@ -36,7 +36,7 @@ package ghostcat.ui.containers
 		}
 		
 		/**
-		 * 在父级生成横向滚动条
+		 * 生成横向滚动条
 		 * @param skin
 		 * 
 		 */
@@ -45,14 +45,14 @@ package ghostcat.ui.containers
 			removeHScrollBar();
 				
 			hScrollBar = new GHScrollBar(skin);
-			parent.addChild(hScrollBar);
+			addChild(hScrollBar);
 			hScrollBar.target = this;
 			
 			invalidateSize();
 		}
 		
 		/**
-		 * 在父级生成纵向滚动条
+		 * 生成纵向滚动条
 		 * @param skin
 		 * 
 		 */
@@ -61,7 +61,7 @@ package ghostcat.ui.containers
 			removeVScrollBar();
 			
 			vScrollBar = new GVScrollBar(skin);
-			parent.addChild(vScrollBar);
+			addChild(vScrollBar);
 			vScrollBar.target = this;
 			
 			invalidateSize();
@@ -106,15 +106,15 @@ package ghostcat.ui.containers
 			
 			if (hScrollBar)
 			{
-				hScrollBar.x = this.x;
-				hScrollBar.y = this.y + this.height - hScrollBar.height;
+				hScrollBar.x = 0;
+				hScrollBar.y = this.height - hScrollBar.height;
 				hScrollBar.width = this.width;
 			}
 			
 			if (vScrollBar)
 			{
-				vScrollBar.y = this.y;
-				vScrollBar.x = this.x + this.width - vScrollBar.width;
+				vScrollBar.y = 0;
+				vScrollBar.x = this.width - vScrollBar.width;
 				vScrollBar.height = this.height;
 			}
 		}

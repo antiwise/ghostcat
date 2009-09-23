@@ -173,40 +173,6 @@ package ghostcat.text
             }
             return str;
         }
-		
-		/**
-		 * 删除HTML标签
-		 * 
-		 */		
-		public static function removeHTMLTag(text:String):String
-		{
-        	return text.replace(/<.*?>/g,"");
-        }
-        
-        /**
-         * 将文件路径字符串切分为数组。最后两个将会是文件名和扩展名。
-         * 
-         * @param url	路径
-         * @return 
-         * 
-         */        
-        public static function splitUrl(url:String):Array
-        {
-        	return url.split(/\/+|\\+|\.|\?/ig);
-        }
-        
-        
-        /**
-         * 删除文本两端的空格
-         * 
-         * @param str	文本
-         * @return 
-         * 
-         */        
-        public static function trim(str:String):String
-        {
-        	return str.replace(/^\s*/,"").replace(/\s*$/,"");
-        }
         
         /**
          * 从右侧截取固定长度字符串
@@ -219,18 +185,6 @@ package ghostcat.text
         public static function right(str:String,len:int):String
         {
         	return str.slice(str.length - len);
-        }
-        
-        /**
-         * 匹配半角字符
-         * 
-         * @param str
-         * @return 
-         * 
-         */        
-        public static function matchAscii(str:String):Array
-        {
-        	return str.match(/[\x00-\xFF]*/g);
         }
         
         /**

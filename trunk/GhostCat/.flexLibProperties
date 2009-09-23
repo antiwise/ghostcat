@@ -298,9 +298,11 @@
     <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
     <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
     <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
-    <classEntry path="ghostcat.operation.effect.WhiteFlashEffect"/>
+    <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
     <classEntry path="ghostcat.display.GTickBase"/>
+    <classEntry path="ghostcat.text.RegExpUtil"/>
+    <classEntry path="ghostcat.ui.containers.GVBox"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

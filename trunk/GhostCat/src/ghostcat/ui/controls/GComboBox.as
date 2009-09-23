@@ -6,10 +6,13 @@ package ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.effect.AlphaClipEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Geom;
+	import ghostcat.util.easing.Circ;
 	
 	public class GComboBox extends GButton
 	{
@@ -87,10 +90,12 @@ package ghostcat.ui.controls
 			list.data = listData;
 			list.addEventListener(Event.CHANGE,listChangeHandler);
 			
-			this.listContainer.addChild(list);	
+			this.listContainer.addChild(list);
 			
 			if (listData.length > maxLine)
 				list.addVScrollBar();
+			
+			new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut,true).execute();
 		}
 		
 		protected override function init():void
@@ -108,26 +113,38 @@ package ghostcat.ui.controls
 			var s:DisplayObject = event.target as DisplayObject;
 			while (s.parent && s.parent != s.stage)
 			{
-				if (s == list || s == this || s == list.vScrollBar)
+				if (s == list || s == this)
 					return;
 				s = s.parent;
 			}
 			
-			if (list.parent == listContainer)
-			{
-				list.removeVScrollBar()
-				this.listContainer.removeChild(list)
-			}
+			hideList();
 		}
 		
 		private function listChangeHandler(event:Event):void
 		{
 			this.data = list.selectedData;
 			
+			hideList();
+		}
+		
+		private function hideList():void
+		{
 			if (list.parent == listContainer)
 			{
-				list.removeVScrollBar()
-				this.listContainer.removeChild(list)
+				var e:AlphaClipEffect = new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut);
+				e.addEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
+				e.execute();
+			}
+		}
+		
+		private function hideListCompleteHandler(event:OperationEvent):void
+		{
+			(event.currentTarget as AlphaClipEffect).removeEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
+			if (list.parent == listContainer)
+			{
+				list.removeVScrollBar();
+				this.listContainer.removeChild(list);
 			}
 		}
 		

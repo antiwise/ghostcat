@@ -20,10 +20,13 @@ package ghostcat.ui.controls
 		
 		private var _groupName:String;
 		
+		
 		/**
-		 * 值
+		 * data中作为value的字段
 		 */
-		public var value:*;
+		public var valueField:String;
+		
+		private var _value:*;
 		
 		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
@@ -36,8 +39,30 @@ package ghostcat.ui.controls
 			super(skin, replace,separateTextField,textPos);
 		}
 		
+		
 		/**
-		 * 所属的组
+		 * 值
+		 */
+		public function get value():*
+		{
+			return valueField ? data[valueField] :_value;
+		}
+
+		public function set value(v:*):void
+		{
+			if (valueField)
+			{
+				if (data == null)
+					data = new Object();
+					
+				super.data[valueField] = v;
+			}
+			else
+				_value = v;
+		}
+
+		/**
+		 * 所属的组名
 		 */
 		public function get groupName():String
 		{
