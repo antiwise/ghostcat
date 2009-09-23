@@ -41,24 +41,24 @@ package ghostcat.operation.effect
 		
 		private var baseRect:Rectangle;
 		
-		public function get scrollX():int
+		public function get scrollX():Number
 		{
 			return contentTarget.scrollRect.x - baseRect.x;
 		}
 
-		public function set scrollX(v:int):void
+		public function set scrollX(v:Number):void
 		{
 			var s:Rectangle = contentTarget.scrollRect.clone();
 			s.x = v + baseRect.x;
 			contentTarget.scrollRect = s;
 		}
 		
-		public function get scrollY():int
+		public function get scrollY():Number
 		{
 			return contentTarget.scrollRect.y - baseRect.y;
 		}
 
-		public function set scrollY(v:int):void
+		public function set scrollY(v:Number):void
 		{
 			var s:Rectangle = contentTarget.scrollRect.clone();
 			s.y = v + baseRect.y;

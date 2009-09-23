@@ -294,6 +294,11 @@ package ghostcat.display
 //		{
 //			return super.y;
 //		}
+
+		public function set position(v:Point):void
+		{
+			setPosition(v.x,v.y);
+		}
 		
 		public function get position():Point
 		{

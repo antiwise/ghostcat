@@ -12,17 +12,18 @@ package ghostcat.operation.effect
 		
 		public function FlashEffect(target:*, duration:int, fromAlpha:Number = 1.0, toAlpha:Number = 0.5, loop:int = -1)
 		{
+			super(null, loop);
+			
+			this.target = target;
 			this.duration = duration;
 			this.fromAlpha = fromAlpha;
 			this.toAlpha = toAlpha;
-			
-			super(null, loop);
 		}
 		public override function execute():void
 		{
 			(target as DisplayObject).alpha = fromAlpha;
 			
-			var list:Array = [new TweenEffect(target,duration,{alpha:toAlpha}),
+			this.list = [new TweenEffect(target,duration,{alpha:toAlpha}),
 							new TweenEffect(target,duration,{alpha:fromAlpha})];
 			
 			super.execute();
