@@ -21,22 +21,43 @@ package ghostcat.ui.controls
 	public class GList extends GScrollPanel
 	{
 		public var listContent:GListBase;
+		public var fields:Object = {renderField:"render"};
 		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null)
+		private var itemRender:ClassFactory;
+		private var _type:String;
+		
+		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null,fields:Object = null)
 		{
-			listContent = new GListBase(skin,replace,type,itemRender);
-			super(listContent);
+			if (fields)
+				this.fields = fields;
+			
+			this.type = type;
+			this.itemRender = itemRender;
+			
+			super(skin,replace);
 		}
 		
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
-			if (content)
-				throw new Error("不允许手动执行此方法");
-			else
-				super.setContent(skin,replace);
+			super.setContent(skin,replace);
+			
+			var renderSkin:DisplayObject;
+			var renderField:String = fields[renderField];
+			
+			if (renderField)
+				renderSkin = content[renderField] as DisplayObject;
+			
+			if (renderSkin && renderSkin.parent)
+				renderSkin.parent.removeChild(renderSkin);
+			
+			listContent = new GListBase(renderSkin,replace,_type,itemRender);
+			addChild(listContent);
+			
+			content = listContent;//用listContent取代原来的content
 			
 			listContent.addEventListener(Event.CHANGE,eventpaseHandler);
 			listContent.addEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
+			
 		}
 		
 		protected override function updateSize() : void
@@ -61,18 +82,17 @@ package ghostcat.ui.controls
 			dispatchEvent(event);//转移事件
 		}
 		
-		
-		
-		
-		
 		public function set type(v:String) : void
 		{
-			listContent.type = v;
+			_type = v;
+			
+			if (listContent) 
+				listContent.type = v;
 		}
 		
 		public function get type():String
 		{
-			return listContent.type;
+			return listContent ? listContent.type : _type;
 		}
 		
 		/**

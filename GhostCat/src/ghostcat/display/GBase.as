@@ -7,7 +7,9 @@ package ghostcat.display
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
+	import ghostcat.events.TickEvent;
 	import ghostcat.util.CallLater;
+	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
@@ -30,6 +32,8 @@ package ghostcat.display
 		private var _enabled:Boolean = true;
 		
 		private var _selected:Boolean = false;
+		
+		private var _paused:Boolean = false;
 		
 		private var _cursor:*;
 		
@@ -145,6 +149,20 @@ package ghostcat.display
 		{
 			_selected = v;
 		}
+		
+		/**
+		 * 是否暂停
+		 * @return 
+		 */		
+		public function get paused():Boolean
+		{
+			return _paused;
+		}
+
+		public function set paused(v:Boolean):void
+		{
+			_paused = v;
+		}
 
 		/**
 		 *
@@ -218,53 +236,64 @@ package ghostcat.display
 			return position.y;
 		}
 		
-		/**
-		 * 设置这组属性不会延迟显示和触发updatePosition,以及MOVE事件
-		 * @param v
-		 * 
-		 */
-		public function set $x(value:Number):void
+		public function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
 		{
-			if ($x == value)
-				return;
+			if (super.x != x)
+			{
+				oldPosition.x = super.x;
+				position.x = x;
 			
-			oldPosition.x = super.x;
-			position.x = value;
+				if (!delayUpatePosition)
+					super.x = x;
+			}
+			if (super.y != y)
+			{
+				oldPosition.y = super.y;
+				position.y = y;
+				
+				if (!delayUpatePosition)
+					super.y = y;
+			}
 			
-			super.x = value;
+			vaildPosition(noEvent); 
 		}
 		
-		public function get $x():Number
-		{
-			return super.x;
-		}
-		
-		public function set $y(value:Number):void
-		{
-			if ($y == value)
-				return;
-			
-			oldPosition.y = super.y;
-			position.y = value;
-		
-			super.y = value;
-		}
-		
-		public function get $y():Number
-		{
-			return super.y;
-		}
-		
-		/**
-		 * 设置位置坐标
-		 * @param v
-		 * 
-		 */		
-		public function set position(v:Point):void
-		{
-			x = v.x;
-			y = v.y;
-		}
+//		/**
+//		 * 设置这组属性不会延迟显示和触发updatePosition,以及MOVE事件
+//		 * @param v
+//		 * 
+//		 */
+//		public function set $x(value:Number):void
+//		{
+//			if ($x == value)
+//				return;
+//			
+//			oldPosition.x = super.x;
+//			position.x = value;
+//			
+//			super.x = value;
+//		}
+//		
+//		public function get $x():Number
+//		{
+//			return super.x;
+//		}
+//		
+//		public function set $y(value:Number):void
+//		{
+//			if ($y == value)
+//				return;
+//			
+//			oldPosition.y = super.y;
+//			position.y = value;
+//		
+//			super.y = value;
+//		}
+//		
+//		public function get $y():Number
+//		{
+//			return super.y;
+//		}
 		
 		public function get position():Point
 		{
@@ -289,6 +318,22 @@ package ghostcat.display
 			super.height = value;
 				
 			invalidateSize();
+		}
+		
+		public function setSize(width:Number,height:Number,noEvent:Boolean = false):void
+		{
+			if (super.width != width)
+				super.width = width;
+			
+			if (super.height != height)
+				super.height = height;
+				
+			vaildSize(noEvent);
+		}
+		
+		public function get size():Point
+		{
+			return new Point(width,height);
 		}
 		
 //		/**
@@ -404,14 +449,15 @@ package ghostcat.display
 		 * 更新坐标并发事件
 		 * 
 		 */
-		public function vaildPosition():void
+		public function vaildPosition(noEvent:Boolean = false):void
 		{
 			super.x = position.x;
 			super.y = position.y;			
 		
 			updatePosition();
 			
-			dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
+			if (!noEvent)
+				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
 			oldPosition = position.clone();
 		}
 		
@@ -419,20 +465,22 @@ package ghostcat.display
 		 * 更新大小并发事件 
 		 * 
 		 */
-		public function vaildSize():void
+		public function vaildSize(noEvent:Boolean = false):void
 		{
 			updateSize();
-			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
+			if (!noEvent)
+				dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
 		}
 		
 		/**
 		 * 更新显示并发事件 
 		 * 
 		 */
-		public function vaildDisplayList():void
+		public function vaildDisplayList(noEvent:Boolean = false):void
 		{
 			updateDisplayList();
-			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
+			if (!noEvent)
+				dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
 		}
 		
 		/**
@@ -504,7 +552,6 @@ package ghostcat.display
 		{
 			invalidateDisplayList();
 		}
-		
 		
 		public override function destory():void
 		{

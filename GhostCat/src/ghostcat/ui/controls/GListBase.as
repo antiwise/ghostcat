@@ -46,6 +46,14 @@ package ghostcat.ui.controls
 		private var oldSelectedItem:DisplayObject;
 		private var _selectedData:*;
 		
+		/**
+		 * 
+		 * @param skin	Render皮肤
+		 * @param replace	是否替换
+		 * @param type	滚动方向
+		 * @param itemRender	Render类型
+		 * 
+		 */
 		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null)
 		{
 			if (!itemRender)

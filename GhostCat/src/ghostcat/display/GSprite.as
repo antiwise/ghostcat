@@ -87,6 +87,11 @@ package ghostcat.display
 			return _content;
 		}
 		
+		public function set content(v:DisplayObject):void
+		{
+			_content = v;
+		}
+		
 		/**
 		 * 设置皮肤。
 		 * 

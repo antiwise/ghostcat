@@ -7,9 +7,18 @@ package ghostcat.operation.effect
 
 	public class LightOnceEffect extends QueueEffect
 	{
-		private var target:*;
-		
 		private var blurProxy:FilterProxy;
+		
+		private var _target:*;
+		public override function get target():*
+		{
+			return _target;
+		}
+
+		public override function set target(v:*):void
+		{
+			_target = v;
+		}
 		
 		public function LightOnceEffect(target:*, duration:int, color:uint = 0xFFFFFF, alpha:Number = 1.0, blurX:Number = 16, blurY:Number = 16, strength:Number = 2)
 		{

@@ -16,6 +16,8 @@ package ghostcat.display.movieclip
 	 * 由于MovieClip播放的异步以及播放速度的不稳定特性，不断执行gotoAndStop等方法时将会造成子动画播放不正常，
 	 * 请尽可能避免在动画内再放置“影片剪辑”，而以“图形”代替。
 	 * 
+	 * 设置paused=false时和原本的MovieClip行为相同。
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */	

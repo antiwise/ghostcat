@@ -60,9 +60,9 @@ package ghostcat.util
 		 * @param params	参数，比如：{x:50, alpha:1, delay:300, onComplete:function, ease:Function}
 		 * 基本和TweenLite相同，选了几个我需要用的东西，诸如volume,pan,frame,"-100"相对坐标模式也还在
 		 */		
-		public static function to(target:Object, duration:int, params:Object):void
+		public static function to(target:Object, duration:int, params:Object):TweenUtil
 		{
-			new TweenUtil(target,duration,params);
+			return new TweenUtil(target,duration,params);
 		}
 		
 		/**
@@ -73,10 +73,10 @@ package ghostcat.util
 		 * @param params	参数
 		 * 
 		 */
-		public static function from(target:Object, duration:int, params:Object):void
+		public static function from(target:Object, duration:int, params:Object):TweenUtil
 		{
 			params.invert = true;
-			new TweenUtil(target,duration,params);
+			return new TweenUtil(target,duration,params);
 		}
 		
 		/**

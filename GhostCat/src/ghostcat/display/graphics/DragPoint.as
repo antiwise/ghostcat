@@ -39,28 +39,17 @@ package ghostcat.display.graphics
 		}
 		
 		/**
-		 * 设置坐标
-		 * 
+		 * 设置绑定的坐标
+		 *  
 		 * @param v
-		 * @param silence	是否触发Move事件
+		 * @param noEvent	是否触发事件
 		 * 
 		 */
-		public function setPoint(v:Point,silence:Boolean = false):void
+		public function setPoint(v:Point,noEvent:Boolean = false):void
 		{
 			_point = v;
 			if (v)
-			{
-				if (silence)
-				{
-					$x = _point.x;
-					$y = _point.y;
-				}
-				else
-				{
-					x = _point.x;
-					y = _point.y;
-				}
-			}
+				setPosition(v.x,v.y,noEvent);
 		}
 		
 		private var localMousePoint:Point;//按下时的鼠标位置
