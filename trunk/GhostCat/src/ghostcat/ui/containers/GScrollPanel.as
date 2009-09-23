@@ -29,7 +29,7 @@ package ghostcat.ui.containers
 			if (scrollRect)
 				this.scrollRect = scrollRect;
 			
-			if (!this.scrollRect)
+			if (!this.scrollRect && content)
 				this.scrollRect = content.getBounds(this);
 			
 			invalidateSize();
@@ -99,7 +99,10 @@ package ghostcat.ui.containers
 		{
 			super.updateSize();
 			
-			this.scrollRect = new Rectangle(this.scrollRect.x,this.scrollRect.y,width,height);
+			if (scrollRect)
+				this.scrollRect = new Rectangle(this.scrollRect.x,this.scrollRect.y,width,height);
+			else
+				this.scrollRect = new Rectangle(0,0,width,height);
 			
 			if (hScrollBar)
 			{

@@ -1,7 +1,10 @@
 package ghostcat.operation.effect
 {
-	public interface IEffect
+	import ghostcat.operation.IOper;
+
+	public interface IEffect extends IOper
 	{
-		
+		function get target():*;
+		function set target(v:*):void
 	}
 }

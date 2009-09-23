@@ -260,14 +260,15 @@ package ghostcat.display.bitmap
 		 * 更新坐标并发事件
 		 * 
 		 */
-		public function vaildPosition():void
+		public function vaildPosition(noEvent:Boolean = false):void
 		{
 			super.x = position.x;
 			super.y = position.y;			
 		
 			updatePosition();
 			
-			dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
+			if (!noEvent)
+				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
 			oldPosition = position.clone();
 		}
 		
@@ -275,9 +276,10 @@ package ghostcat.display.bitmap
 		 * 更新大小并发事件 
 		 * 
 		 */
-		public function vaildSize():void
+		public function vaildSize(noEvent:Boolean = false):void
 		{
-			updateSize();
+			if (!noEvent)
+				updateSize();
 			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
 		}
 		
@@ -285,9 +287,10 @@ package ghostcat.display.bitmap
 		 * 更新显示并发事件 
 		 * 
 		 */
-		public function vaildDisplayList():void
+		public function vaildDisplayList(noEvent:Boolean = false):void
 		{
-			updateDisplayList();
+			if (!noEvent)
+				updateDisplayList();
 			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
 		}
 		

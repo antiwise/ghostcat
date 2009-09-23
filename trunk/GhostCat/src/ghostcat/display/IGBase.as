@@ -26,16 +26,16 @@ package ghostcat.display
 		/**
 		 * 更新坐标并发事件
 		 */
-		function vaildPosition():void
+		function vaildPosition(noEvent:Boolean = false):void
 		
 		/**
 		 * 更新大小并发事件 
 		 */
-		function vaildSize():void
+		function vaildSize(noEvent:Boolean = false):void
 		
 		/**
 		 * 更新显示并发事件 
 		 */
-		function vaildDisplayList():void
+		function vaildDisplayList(noEvent:Boolean = false):void
 	}
 }

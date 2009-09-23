@@ -6,6 +6,7 @@ package ghostcat.display.movieclip
 	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.display.GTickBase;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Handler;
@@ -25,7 +26,7 @@ package ghostcat.display.movieclip
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GMovieClipBase extends GBase
+	public class GMovieClipBase extends GTickBase
 	{
 		/**
 		 * 全局默认帧频，为0时则取舞台帧频。
@@ -71,35 +72,9 @@ package ghostcat.display.movieclip
         
         private var frameTimer:int=0;//记时器，小于0则需要播放，直到大于0
 
-		private var _paused:Boolean = true;
-		
-		/**
-		 * 是否暂停动画。暂停后的动画和原本的MovieClip行为相同。
-		 * @return 
-		 */		
-		public function get paused():Boolean
-		{
-			return _paused;
-		}
-
-		public function set paused(v:Boolean):void
-		{
-			if (_paused == v)
-				return;
-				
-			if (v)
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-			else
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
-			
-			_paused = v;
-		}
-		
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			super(skin, replace);
-			
-			this.paused = paused;
 		}
 		
 		/**
@@ -224,7 +199,7 @@ package ghostcat.display.movieclip
         	tickHandler(evt);
         }
 		
-		protected function tickHandler(event:TickEvent):void
+		protected override function tickHandler(event:TickEvent):void
 		{
 			if (frameRate == 0)
 				return;

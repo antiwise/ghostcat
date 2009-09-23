@@ -11,7 +11,18 @@ package ghostcat.operation
 	 */
 	public class TweenOper extends Oper
 	{
-		public var target:*;
+		private var _target:*;
+
+		public function get target():*
+		{
+			return _target;
+		}
+
+		public function set target(v:*):void
+		{
+			_target = v;
+		}
+
 		public var duration:int;
 		public var params:Object;
 		

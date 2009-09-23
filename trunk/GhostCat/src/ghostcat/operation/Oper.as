@@ -20,7 +20,7 @@ package ghostcat.operation
 	 * @author flashyiyi
 	 * 
 	 */
-	public class Oper extends EventDispatcher
+	public class Oper extends EventDispatcher implements IOper
 	{
 		public static const NONE:int = 0;
 		public static const WAIT:int = 1;
