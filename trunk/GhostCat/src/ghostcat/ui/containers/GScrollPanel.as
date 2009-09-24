@@ -19,11 +19,19 @@ package ghostcat.ui.containers
 		public var hScrollBar:GScrollBar;
 		public var vScrollBar:GScrollBar;
 		
+		public var hScrollBarSkin:DisplayObject;
+		public var vScrollBarSkin:DisplayObject;
+		
+		public var fields:Object = {vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
+		
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		
-		public function GScrollPanel(skin:*,replace:Boolean = true,scrollRect:Rectangle = null)
+		public function GScrollPanel(skin:*,replace:Boolean = true,scrollRect:Rectangle = null,fields:Object = null)
 		{
+			if (fields)
+				this.fields = fields;
+				
 			super(skin,replace);
 			
 			if (scrollRect)
@@ -35,14 +43,37 @@ package ghostcat.ui.containers
 			invalidateSize();
 		}
 		
+		public override function setContent(skin:*, replace:Boolean=true) : void
+		{
+			super.setContent(skin,replace);
+			
+			var vScrollBarField:String = fields[vScrollBarField];
+			var hScrollBarField:String = fields[hScrollBarField];
+			
+			if (hScrollBarField)
+			{
+				hScrollBarSkin = content[hScrollBarField] as DisplayObject;
+				hScrollBarSkin.parent.removeChild(hScrollBarSkin);
+			}
+			
+			if (vScrollBarField)
+			{
+				vScrollBarSkin = content[vScrollBarField] as DisplayObject;
+				vScrollBarSkin.parent.removeChild(vScrollBarSkin);
+			}
+		}
+		
 		/**
 		 * 生成横向滚动条
 		 * @param skin
 		 * 
 		 */
-		public function addHScrollBar(skin:DisplayObject = null):void
+		public function addHScrollBar(skin:* = null):void
 		{
 			removeHScrollBar();
+			
+			if (!skin)
+				skin = hScrollBarSkin;
 				
 			hScrollBar = new GHScrollBar(skin);
 			addChild(hScrollBar);
@@ -56,9 +87,12 @@ package ghostcat.ui.containers
 		 * @param skin
 		 * 
 		 */
-		public function addVScrollBar(skin:DisplayObject = null):void
+		public function addVScrollBar(skin:* = null):void
 		{
 			removeVScrollBar();
+			
+			if (!skin)
+				skin = vScrollBarSkin;
 			
 			vScrollBar = new GVScrollBar(skin);
 			addChild(vScrollBar);

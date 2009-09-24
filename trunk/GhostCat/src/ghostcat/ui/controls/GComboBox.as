@@ -8,6 +8,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.effect.AlphaClipEffect;
+	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
@@ -32,6 +33,11 @@ package ghostcat.ui.controls
 		 * 承载List的容器
 		 */
 		public var listContainer:DisplayObjectContainer;
+		
+		/**
+		 * List展开特效
+		 */
+		public var listOpenEffect:TweenEffect;
 		
 		private var _maxLine:int = 6;
 
@@ -59,7 +65,7 @@ package ghostcat.ui.controls
 			
 			if (fields)
 				this.fields = fields;
-			
+				
 			super(skin, replace, separateTextField, textPos);
 		}
 		
@@ -78,6 +84,11 @@ package ghostcat.ui.controls
 			
 			if (list.parent)
 				list.parent.removeChild(list);
+			
+			if (!listOpenEffect)
+				listOpenEffect = new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut);
+			else
+				listOpenEffect.target = list;
 		}
 		
 		protected override function mouseDownHandler(event:MouseEvent) : void
@@ -95,7 +106,8 @@ package ghostcat.ui.controls
 			if (listData.length > maxLine)
 				list.addVScrollBar();
 			
-			new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut,true).execute();
+			listOpenEffect.invert = true;
+			listOpenEffect.execute();
 		}
 		
 		protected override function init():void
@@ -132,9 +144,9 @@ package ghostcat.ui.controls
 		{
 			if (list.parent == listContainer)
 			{
-				var e:AlphaClipEffect = new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut);
-				e.addEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
-				e.execute();
+				listOpenEffect.invert = false;
+				listOpenEffect.addEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
+				listOpenEffect.execute();
 			}
 		}
 		

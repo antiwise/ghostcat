@@ -1,7 +1,7 @@
 package ghostcat.util
 {
 	/**
-	 * 函数执行器 
+	 * 带参函数执行器 
 	 * 
 	 * @author flashyiyi
 	 * 

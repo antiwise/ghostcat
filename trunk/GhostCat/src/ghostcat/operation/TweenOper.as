@@ -31,7 +31,7 @@ package ghostcat.operation
 		public function TweenOper(target:*,duration:int,params:Object,invert:Boolean = false)
 		{
 			super();
-			this.target = target;
+			this._target = target;
 			this.duration = duration;
 			this.params = params;
 			
@@ -53,7 +53,7 @@ package ghostcat.operation
 		public override function execute() : void
 		{
 			super.execute();
-			tween = new TweenUtil(target,duration,params);
+			tween = new TweenUtil(_target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
 		}
 		

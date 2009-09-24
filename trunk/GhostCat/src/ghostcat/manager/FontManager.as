@@ -15,9 +15,9 @@ package ghostcat.manager
 	 */
 	public class FontManager extends Singleton
 	{
-		static public function get instance():CacheManager
+		static public function get instance():FontManager
 		{
-			return Singleton.getInstanceOrCreate(CacheManager) as CacheManager;
+			return Singleton.getInstanceOrCreate(FontManager) as FontManager;
 		}
 		
 		/**

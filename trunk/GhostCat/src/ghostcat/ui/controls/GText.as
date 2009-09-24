@@ -11,10 +11,12 @@ package ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.GTextEvent;
+	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
@@ -35,7 +37,9 @@ package ghostcat.ui.controls
 	public class GText extends GBase
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(TextField);
+		public static var defaultTextFormat:String;
 		
+		private var _textFormat:String;
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		
@@ -76,6 +80,25 @@ package ghostcat.ui.controls
 		 */
 		public var ansiMaxChars:int;
 		
+		/**
+		 * 字体
+		 */
+		public function get textFormat():String
+		{
+			return _textFormat;
+		}
+
+		public function set textFormat(v:String):void
+		{
+			_textFormat = v;
+			if (textField && v)
+			{
+				var f:TextFormat = FontManager.instance.getTextFormat(v);
+				if (f)
+					textField.defaultTextFormat = f;
+			}
+		}
+
 		/**
 		 * 最大输入限制字数
 		 *  
@@ -181,6 +204,12 @@ package ghostcat.ui.controls
 				if (this.separateTextField)
 					addChild(textField);//可缩放背景必须提取文本框
 			}
+			
+			if (!textFormat)
+				textFormat = defaultTextFormat;
+			else
+				textFormat = textFormat;
+			
 			this.text = textField.text;
 			
 			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
