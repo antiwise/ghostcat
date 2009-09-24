@@ -10,6 +10,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class ProtectTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 24;
@@ -19,7 +20,7 @@ package ghostcat.fileformat.swf.tag
 		 * 这是一个MD5加密字符串
 		 */
 		public var password:String;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			if (length > 0)

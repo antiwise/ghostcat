@@ -6,8 +6,19 @@ package ghostcat.ui.containers
 	import ghostcat.display.GBase;
 	import ghostcat.events.ItemClickEvent;
 
+	/**
+	 * 可按下的按钮条
+	 * 
+	 * 标签规则：子对象的render将会被作为子对象的默认skin
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GToggleButtonBar extends GButtonBar
 	{
+		/**
+		 * 是否点击选中
+		 */
 		public var toggleOnClick:Boolean = true;
 		
 		private var _selectedData:*;
@@ -18,12 +29,22 @@ package ghostcat.ui.containers
 			addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 		}
 		
+		/**
+		 * 按钮点击事件
+		 * @param event
+		 * 
+		 */
 		protected function itemClickHandler(event:ItemClickEvent):void
 		{
 			if (toggleOnClick)
 				selectedData = event.item;
 		}
 
+		/**
+		 * 选择的索引 
+		 * @return 
+		 * 
+		 */
 		public function get selectedIndex():int
 		{
 			return data.indexOf(_selectedData);
@@ -37,6 +58,11 @@ package ghostcat.ui.containers
 				_selectedData = data[v];
 		}
 
+		/**
+		 * 选择的数据 
+		 * @return 
+		 * 
+		 */
 		public function get selectedData():*
 		{
 			return _selectedData;
@@ -55,6 +81,11 @@ package ghostcat.ui.containers
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 
+		/**
+		 * 选择的按钮
+		 * @return 
+		 * 
+		 */
 		public function get selectedChild():DisplayObject
 		{
 			return contentPane.getChildAt(selectedIndex);

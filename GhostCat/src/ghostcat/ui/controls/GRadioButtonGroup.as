@@ -96,6 +96,11 @@ package ghostcat.ui.controls
 			this.groupName = groupName;
 		}
 		
+		/**
+		 * 增加 
+		 * @param item
+		 * 
+		 */
 		public function addItem(item:GRadioButton):void
 		{
 			if (!items)
@@ -104,6 +109,11 @@ package ghostcat.ui.controls
 				items.push(item);
 		}
 		
+		/**
+		 * 删除 
+		 * @param item
+		 * 
+		 */
 		public function removeItem(item:GRadioButton):void
 		{
 			if (items)

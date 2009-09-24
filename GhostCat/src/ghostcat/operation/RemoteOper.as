@@ -38,7 +38,7 @@ package ghostcat.operation
 			if (fhandler!=null)
 				this.addEventListener(OperationEvent.OPERATION_ERROR,fhandler);
 		}
-		
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();

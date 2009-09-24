@@ -31,26 +31,26 @@ package ghostcat.parse.display
 		
 			super(graphicsRect,null,graphicsFill);
 		}
-		
+		/** @inheritDoc*/
 		public override function createShape() : Shape
 		{
 			var s:Shape = super.createShape();
 			s.blendMode = BlendMode.ALPHA;
 			return s;
 		}
-		
+		/** @inheritDoc*/
 		public override function createSprite() : Sprite
 		{
 			var s:Sprite = super.createSprite();
 			s.blendMode = BlendMode.ALPHA;
 			return s;
 		}
-		
+		/** @inheritDoc*/
 		public override function parseBitmapData(target:BitmapData) : void
 		{
 			target.draw(createShape(),null,null,BlendMode.ALPHA);
 		}
-		
+		/** @inheritDoc*/
 		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);

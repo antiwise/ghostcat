@@ -12,6 +12,14 @@ package ghostcat.ui.controls
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.Tick;
 	
+	/**
+	 * 拖动块
+	 * 
+	 * 标签规则：子对象中，upArrow,downArrow是上下按钮，thumb是滚动块，background是背景
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GSilder extends GNoScale
 	{
 		public var upArrow:GButton;
@@ -19,7 +27,13 @@ package ghostcat.ui.controls
 		public var thumb:GButton;
 		public var background:DisplayObject;
 		
+		/**
+		 * 拖动起点
+		 */
 		protected var thumbAreaStart:Number;
+		/**
+		 * 拖动长度
+		 */
 		protected var thumbAreaLength:Number;
 		
 		
@@ -138,7 +152,7 @@ package ghostcat.ui.controls
 			_direction = v;
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -172,7 +186,7 @@ package ghostcat.ui.controls
 				
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
@@ -215,6 +229,11 @@ package ghostcat.ui.controls
 				thumb.y = v;
 		}
 		
+		/**
+		 * 滚动块按下
+		 * @param event
+		 * 
+		 */
 		protected function thumbMouseDownHandler(event:MouseEvent):void
 		{
 			var rect:Rectangle;
@@ -226,6 +245,11 @@ package ghostcat.ui.controls
 			DragManager.startDrag(thumb,rect,null,thumbMouseMoveHandler);
 		}
 		
+		/**
+		 * 滚动块移动
+		 * @param event
+		 * 
+		 */
 		protected function thumbMouseMoveHandler(event:Event=null):void
 		{
 			if (thumb.position.equals(thumb.oldPosition))
@@ -235,6 +259,11 @@ package ghostcat.ui.controls
 			percent = (currentPos - thumbAreaStart) / thumbAreaLength;
 		}
 		
+		/**
+		 * 时基方法 
+		 * @param event
+		 * 
+		 */
 		protected function tickHandler(event:TickEvent):void
 		{
 			var p:Number = percent;
@@ -264,6 +293,11 @@ package ghostcat.ui.controls
 			}
 		}
 		
+		/**
+		 * 点击背景的方法
+		 * @param event
+		 * 
+		 */
 		protected function backgroundHandler(event:MouseEvent):void
 		{
 			if (isNaN(percent))
@@ -293,7 +327,7 @@ package ghostcat.ui.controls
 			}
 			thumbMouseMoveHandler();
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);

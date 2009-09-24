@@ -7,6 +7,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.Oper;
 	import ghostcat.operation.effect.AlphaClipEffect;
 	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.skin.ComboBoxSkin;
@@ -15,13 +16,28 @@ package ghostcat.ui.controls
 	import ghostcat.util.Geom;
 	import ghostcat.util.easing.Circ;
 	
+	/**
+	 * 下拉框
+	 * 
+	 * 标签规则：子对象openButton被转化为展开的按钮，list被转换为列表项，列表项按列表项的方法处理。
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GComboBox extends GButton
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ComboBoxSkin);
 		
 		public var fields:Object = {listField:"list",openButtonField:"openButton"};
 		
+		/**
+		 * 列表实例
+		 */
 		public var list:GList;
+		
+		/**
+		 * 展开按钮
+		 */
 		public var openButton:GButton;
 		
 		/**
@@ -68,7 +84,7 @@ package ghostcat.ui.controls
 				
 			super(skin, replace, separateTextField, textPos);
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -90,7 +106,7 @@ package ghostcat.ui.controls
 			else
 				listOpenEffect.target = list;
 		}
-		
+		/** @inheritDoc*/
 		protected override function mouseDownHandler(event:MouseEvent) : void
 		{
 			super.mouseDownHandler(event);
@@ -106,10 +122,13 @@ package ghostcat.ui.controls
 			if (listData.length > maxLine)
 				list.addVScrollBar();
 			
+			if (listOpenEffect.step == Oper.RUN)
+				listOpenEffect.result();
+				
 			listOpenEffect.invert = true;
 			listOpenEffect.execute();
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			super.init();
@@ -159,7 +178,7 @@ package ghostcat.ui.controls
 				this.listContainer.removeChild(list);
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			if (stage)

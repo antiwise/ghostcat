@@ -29,11 +29,22 @@ package ghostcat.ui.layout
 			setTarget(target,isRoot);
 		}
 		
+		/**
+		 * 容器
+		 * @return 
+		 * 
+		 */
 		public function get target():DisplayObjectContainer
 		{
 			return _target;
 		}
 		
+		/**
+		 * 设置容器 
+		 * @param value
+		 * @param isRoot	是否按舞台处理
+		 * 
+		 */
 		public function setTarget(value:DisplayObjectContainer,isRoot:Boolean = false):void
 		{
 			if (_target)
@@ -102,6 +113,10 @@ package ghostcat.ui.layout
 //			children = [];
 //		}
 		
+		/**
+		 * 销毁
+		 * 
+		 */
 		public function destory():void
 		{
 //			removeAllChild();
@@ -109,16 +124,24 @@ package ghostcat.ui.layout
 			setTarget(null);
 		}
 		
-		protected function resizeHandler(event:Event):void
+		private function resizeHandler(event:Event):void
 		{
 			invalidateLayout();
 		}
 		
+		/**
+		 * 在一次更新布局 
+		 * 
+		 */
 		public function invalidateLayout():void
 		{
 			CallLater.callLater(vaildLayout,null,true);
 		}
 		
+		/**
+		 * 更新布局
+		 * 
+		 */
 		public function vaildLayout():void
 		{
 			if (isRoot)

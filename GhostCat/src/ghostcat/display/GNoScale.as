@@ -23,7 +23,7 @@ package ghostcat.display
 			
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -43,7 +43,7 @@ package ghostcat.display
 				_height = content.height;
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function get width():Number
 		{
 			return _width;
@@ -57,7 +57,7 @@ package ghostcat.display
 			_width = v;
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function get height():Number
 		{
 			return _height;
@@ -71,17 +71,17 @@ package ghostcat.display
 			_height = v;
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
 		{
 			return Geom.localRectToContent(new Rectangle(0,0,width,height),this,targetCoordinateSpace);
 		}
-		
+		/** @inheritDoc*/
 		override public function invalidateSize() : void
 		{
 			CallLater.callLater(updateSize,null,true);
 		}
-		
+		/** @inheritDoc*/
 		override protected function updateSize() : void
 		{
 			super.updateSize();

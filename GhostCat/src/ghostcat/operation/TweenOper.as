@@ -13,6 +13,11 @@ package ghostcat.operation
 	{
 		private var _target:*;
 
+		/**
+		 * 目标
+		 * @return 
+		 * 
+		 */
 		public function get target():*
 		{
 			return _target;
@@ -23,9 +28,18 @@ package ghostcat.operation
 			_target = v;
 		}
 
+		/**
+		 * 持续时间
+		 */
 		public var duration:int;
+		/**
+		 * 参数
+		 */
 		public var params:Object;
 		
+		/**
+		 * 缓动实例 
+		 */
 		public var tween:TweenUtil;
 		
 		public function TweenOper(target:*,duration:int,params:Object,invert:Boolean = false)
@@ -40,6 +54,11 @@ package ghostcat.operation
 			
 		}
 		
+		/**
+		 * 是否倒放
+		 * @return 
+		 * 
+		 */
 		public function get invert():Boolean
 		{
 			return this.params.invert;
@@ -49,14 +68,14 @@ package ghostcat.operation
 		{
 			this.params.invert = v;
 		}
-
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
 			tween = new TweenUtil(_target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:*=null):void
 		{
 			tween.removeEventListener(TweenEvent.TWEEN_END,result);

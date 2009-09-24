@@ -22,7 +22,13 @@ package ghostcat.display.residual
 	 */
 	public class ResidualScreen extends GBitmap
 	{
+		/**
+		 * 渐消滤镜
+		 */
 		protected var fadeFilter:ColorMatrixFilter;
+		/**
+		 * 模糊滤镜
+		 */
 		protected var blurFilter:BlurFilter;
 		
 		/**

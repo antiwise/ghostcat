@@ -15,11 +15,16 @@ package ghostcat.ui.controls
 	/**
 	 * 通过包装GScrollPanel，提供了滚动条的List。不支持背景。
 	 * 
+	 * 标签规则：滚动条规则和ScrollPanel相同，其中的render对象会被当作ItemRender的skin来处理（它必须有链接名），其余的部分则是自己的skin，决定自身初始大小，并不会被滚动
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class GList extends GScrollPanel
 	{
+		/**
+		 * 列表容器 
+		 */
 		public var listContent:GListBase;
 		private var listFields:Object = {renderField:"render",vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
@@ -36,7 +41,7 @@ package ghostcat.ui.controls
 			
 			super(skin,replace,null,fields);
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -59,7 +64,7 @@ package ghostcat.ui.controls
 			listContent.addEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
 			
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
@@ -68,7 +73,7 @@ package ghostcat.ui.controls
 			listContent.height = this.height;
 			this.scrollRect = new Rectangle(0,0,width,height);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();
@@ -82,6 +87,11 @@ package ghostcat.ui.controls
 			dispatchEvent(event);//转移事件
 		}
 		
+		/**
+		 * 类型 
+		 * @param v
+		 * 
+		 */
 		public function set type(v:String) : void
 		{
 			_type = v;
@@ -107,7 +117,7 @@ package ghostcat.ui.controls
 		{
 			listContent.autoReszieItemContent = v;
 		}
-		
+		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{
 			listContent.data = v;
@@ -118,6 +128,11 @@ package ghostcat.ui.controls
 			return listContent.data;
 		}
 		
+		/**
+		 * 选择的数据 
+		 * @return 
+		 * 
+		 */
 		public function get selectedData():*
 		{
 			return listContent.selectedData;
@@ -130,6 +145,11 @@ package ghostcat.ui.controls
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
+		/**
+		 * 选择的行 
+		 * @return 
+		 * 
+		 */
 		public function get selectedRow():int
 		{
 			return listContent.selectedRow;
@@ -140,6 +160,11 @@ package ghostcat.ui.controls
 			listContent.selectedData = v;
 		}
 		
+		/**
+		 * 选择的列 
+		 * @return 
+		 * 
+		 */
 		public function get selectedColumn():int
 		{
 			return listContent.selectedColumn;
@@ -150,49 +175,84 @@ package ghostcat.ui.controls
 			listContent.selectedColumn = v;
 		}
 		
+		/**
+		 * 选择的元素 
+		 * @return 
+		 * 
+		 */
 		public function get selectedItem():DisplayObject
 		{
 			return listContent.selectedItem;
 		}
 		
+		/**
+		 * 总列数 
+		 * @return 
+		 * 
+		 */
 		public function get columnCount():int
 		{
 			return listContent.columnCount;
 		}
-
+		
+		public function set columnCount(v:int):void
+		{
+			listContent.columnCount = v;
+		}
+		
+		/**
+		 * 总行数 
+		 * @return 
+		 * 
+		 */
 		public function get rowCount():int
 		{
 			return listContent.rowCount;
 		}
 
-		public function set columnCount(v:int):void
-		{
-			listContent.columnCount = v;
-		}
-
+		/**
+		 * 列表实际宽度 
+		 * @return 
+		 * 
+		 */
 		public function get listWidth() : Number
 		{
 			return listContent.width;
 		}
 		
+		/**
+		 * 列表实际高度
+		 * @return 
+		 * 
+		 */
 		public function get listHeight() : Number
 		{
 			return listContent.height;
 		}
 		
+		/**
+		 * 列宽
+		 * @return 
+		 * 
+		 */
 		public function get columnWidth():Number
 		{
 			return listContent.columnWidth;
 		}
 		
-		public function get rowHeight():Number
-		{
-			return listContent.rowHeight;
-		}
-		
 		public function set columnWidth(v:Number):void
 		{
 			listContent.columnWidth = v;
+		}
+		
+		/**
+		 * 行高 
+		 * @return 
+		 * 
+		 */
+		public function get rowHeight():Number
+		{
+			return listContent.rowHeight;
 		}
 		
 		public function set rowHeight(v:Number):void

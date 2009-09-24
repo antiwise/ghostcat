@@ -10,6 +10,11 @@ package ghostcat.parse.display
 	
 	import ghostcat.parse.DisplayParse;
 
+	/**
+	 * 绘制到位图
+	 * @author flashyiyi
+	 * 
+	 */
 	public class DrawParse extends DisplayParse
 	{
 		public var source:IBitmapDrawable;
@@ -29,7 +34,7 @@ package ghostcat.parse.display
 			this.clipRect = clipRect;
 			this.smoothing = smoothing;
 		}
-		
+		/** @inheritDoc*/
 		public override function parse(target:*):void
 		{
 			if (target is Bitmap)
@@ -37,13 +42,23 @@ package ghostcat.parse.display
 		
 			super.parse(target);
 		}
-		
+		/** @inheritDoc*/
 		public override function parseBitmapData(target:BitmapData) : void
 		{
 			super.parseBitmapData(target);
 			target.draw(source,matrix,colorTransform,blendMode,clipRect,smoothing);
 		}
 		
+		/**
+		 * 根据图形创建一个位图 
+		 * @param source
+		 * @param matrix
+		 * @param colorTransform
+		 * @param clipRect
+		 * @param smoothing
+		 * @return 
+		 * 
+		 */
 		public static function createBitmap(source:IBitmapDrawable,matrix:Matrix=null,colorTransform:ColorTransform=null,clipRect:Rectangle = null,smoothing:Boolean = false):Bitmap
 		{
 			var displayObj:DisplayObject = source as DisplayObject;

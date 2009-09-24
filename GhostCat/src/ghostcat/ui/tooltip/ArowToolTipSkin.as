@@ -27,12 +27,12 @@ package ghostcat.ui.tooltip
 			
 			this.enabledAdjustContextSize = true;
 		}
-		
+		/** @inheritDoc*/
 		public function show(target:DisplayObject):void
 		{
 			
 		}
-		
+		/** @inheritDoc*/
 		public function positionTo(target:DisplayObject):void
 		{
 			var toolTipSprite:ToolTipSprite = this.parent as ToolTipSprite;

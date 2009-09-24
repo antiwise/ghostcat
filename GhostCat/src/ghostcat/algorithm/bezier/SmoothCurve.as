@@ -13,9 +13,18 @@ package ghostcat.algorithm.bezier
 	 */
 	public class SmoothCurve extends DisplayParse
 	{
+		/**
+		 * 曲线段数组
+		 */
 		protected var beziers:Array = [];
 		
+		/**
+		 * 起始点
+		 */
 		public var start:Point;
+		/**
+		 * 结束点
+		 */
 		public var end:Point;
 		
 		/**
@@ -141,7 +150,7 @@ package ghostcat.algorithm.bezier
 				prevBezier = currentBezier;
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			refresh();

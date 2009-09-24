@@ -16,6 +16,8 @@ package ghostcat.ui.controls
 	/**
 	 * 加载进度条
 	 * 
+	 * 标签规则：和PercentBar相同
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -71,6 +73,11 @@ package ghostcat.ui.controls
 			loadHelper.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
 		}
 		
+		/**
+		 * 进度事件 
+		 * @param event
+		 * 
+		 */
 		protected function progressHandler(event:ProgressEvent):void
 		{
 			percent = loadHelper.loadPercent;
@@ -81,6 +88,11 @@ package ghostcat.ui.controls
 						 "\n预计剩余时间：" + loadHelper.progressNeedTimeString;
 		}
 		
+		/**
+		 * 完成事件 
+		 * @param event
+		 * 
+		 */
 		protected function completeHandler(event:Event):void
 		{
 			percent = 1.0;
@@ -89,6 +101,11 @@ package ghostcat.ui.controls
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
+		/**
+		 * 错误事件 
+		 * @param event
+		 * 
+		 */
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
 			percent = 0.0;

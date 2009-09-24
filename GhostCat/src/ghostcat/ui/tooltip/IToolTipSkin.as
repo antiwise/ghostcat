@@ -13,7 +13,18 @@ package ghostcat.ui.tooltip
 	 */
 	public interface IToolTipSkin extends IData,IDisplayObject
 	{
+		
+		/**
+		 * 显示提示
+		 * @param target
+		 * 
+		 */
 		function show(target:DisplayObject):void;
+		/**
+		 * 更新指向位置 
+		 * @param target
+		 * 
+		 */
 		function positionTo(target:DisplayObject):void;
 	}
 }

@@ -22,7 +22,7 @@ package ghostcat.operation
 		public var alawaySuccess:Boolean = false;
 		
 		private var timeId:int;
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
@@ -34,13 +34,13 @@ package ghostcat.operation
 					timeId = setTimeout(fault,timeout);
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:*=null):void
 		{
 			clearTimeout(timeId);
 			super.result(event);
 		}
-		
+		/** @inheritDoc*/
 		public override function fault(event:*=null):void
 		{
 			clearTimeout(timeId);

@@ -5,6 +5,11 @@ package ghostcat.operation
 	
 	import ghostcat.ui.PopupManager;
 
+	/**
+	 * 弹出窗口操作
+	 * @author flashyiyi
+	 * 
+	 */
 	public class PopupOper extends Oper
 	{
 		public var popup:DisplayObject;
@@ -18,12 +23,12 @@ package ghostcat.operation
 			this.owner = owner;
 			this.modal = modal;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			PopupManager.instance.showPopup(popup,owner,modal).addEventListener(Event.REMOVED_FROM_STAGE,result);;
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:* = null) : void
 		{
 			super.result(event);

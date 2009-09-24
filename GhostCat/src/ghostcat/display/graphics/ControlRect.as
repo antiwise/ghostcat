@@ -25,7 +25,14 @@ package ghostcat.display.graphics
 	 */
 	public class ControlRect extends GBase
 	{
+		/**
+		 * 选择的对象数组 
+		 */
 		private static var selectedRects:Array = [];
+		/**
+		 * 取消全部选择 
+		 * 
+		 */
 		public static function unSelectAll():void
 		{
 			for (var i:int = selectedRects.length - 1;i>=0;i--)
@@ -36,6 +43,9 @@ package ghostcat.display.graphics
 			selectedRects = [];
 		}
 		
+		/**
+		 * 容纳控制点的容器
+		 */
 		public var controlCotainer:Sprite;
 		/**
 		 * 线型
@@ -62,14 +72,14 @@ package ghostcat.display.graphics
 			
 			super(skin,replace);
 		}
-		
+		/** @inheritDoc*/
 		protected override function init() : void
 		{
 			super.init();
 			this.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 		}
-		
+		/** @inheritDoc*/
 		public override function set selected(v:Boolean):void
 		{
 			super.selected = v;
@@ -88,13 +98,17 @@ package ghostcat.display.graphics
 			}
 			this.controlCotainer.visible = v;
 		}
-
+		/** @inheritDoc*/
 		override public function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			updateControls();
 		}
 			
+		/**
+		 * 更新控制点
+		 * 
+		 */
 		public function updateControls():void
 		{
 			DisplayUtil.moveToHigh(controlCotainer);
@@ -174,7 +188,7 @@ package ghostcat.display.graphics
 			controlCotainer.addChild(rightLineControl);
 		}
 		
-		protected function topLeftControlHandler(event:MoveEvent):void
+		private function topLeftControlHandler(event:MoveEvent):void
 		{	
 			if (!topLeftControl.mouseDown)
 				return;
@@ -185,7 +199,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function topRightControlHandler(event:MoveEvent):void
+		private function topRightControlHandler(event:MoveEvent):void
 		{
 			if (!topRightControl.mouseDown)
 				return;
@@ -196,7 +210,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function bottomLeftControlHandler(event:MoveEvent):void
+		private function bottomLeftControlHandler(event:MoveEvent):void
 		{
 			if (!bottomLeftControl.mouseDown)
 				return;
@@ -207,7 +221,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function bottomRightControlHandler(event:MoveEvent):void
+		private function bottomRightControlHandler(event:MoveEvent):void
 		{
 			if (!bottomRightControl.mouseDown)
 				return;
@@ -218,7 +232,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function topLineControlHandler(event:MoveEvent):void
+		private function topLineControlHandler(event:MoveEvent):void
 		{
 			if (!topLineControl.mouseDown)
 				return;
@@ -231,7 +245,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function bottomLineControlHandler(event:MoveEvent):void
+		private function bottomLineControlHandler(event:MoveEvent):void
 		{
 			if (!bottomLineControl.mouseDown)
 				return;
@@ -242,7 +256,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function leftLineControlHandler(event:MoveEvent):void
+		private function leftLineControlHandler(event:MoveEvent):void
 		{
 			if (!leftLineControl.mouseDown)
 				return;
@@ -255,7 +269,7 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function rightLineControlHandler(event:MoveEvent):void
+		private function rightLineControlHandler(event:MoveEvent):void
 		{
 			if (!rightLineControl.mouseDown)
 				return;
@@ -266,13 +280,13 @@ package ghostcat.display.graphics
 			updateControls();
 		}
 		
-		protected function fillMouseDownHandler(event:MouseEvent):void
+		private function fillMouseDownHandler(event:MouseEvent):void
 		{
 			for each (var rect:ControlRect in selectedRects)
 				DragManager.startDrag(rect);
 		}
 		
-		protected function mouseDownHandler(event:MouseEvent):void
+		private function mouseDownHandler(event:MouseEvent):void
 		{
 			if (!event.shiftKey)
 				unSelectAll();
@@ -280,11 +294,11 @@ package ghostcat.display.graphics
 			selected = true;
 		}
 		
-		protected function mouseUpHandler(event:MouseEvent):void
+		private function mouseUpHandler(event:MouseEvent):void
 		{
 			
 		}
-		
+		/** @inheritDoc*/
 		override public function destory():void
 		{
 			this.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);

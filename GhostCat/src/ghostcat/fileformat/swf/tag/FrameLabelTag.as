@@ -11,13 +11,14 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class FrameLabelTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 43;
 		}
 		
 		public var name:String;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);

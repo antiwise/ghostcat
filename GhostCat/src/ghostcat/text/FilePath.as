@@ -8,6 +8,9 @@ package ghostcat.text
 	 */
 	public class FilePath
 	{
+		/**
+		 * 使用的正则 
+		 */
 		public const regex:RegExp = /^((\w)?:)?([^.]+)?(\.(\w+)?)?/; 
  		
  		/**

@@ -16,10 +16,21 @@ package ghostcat.operation.effect
 		public static const LEFT:String = "left";
 		public static const RIGHT:String = "right";
 		
+		/**
+		 * 方向
+		 */
 		public var direction:String = DOWN;
 		
+		/**
+		 * 目标
+		 */
 		public var contentTarget:DisplayObject;
 		
+		/**
+		 * 缓动函数
+		 * @return 
+		 * 
+		 */
 		public function get ease():Function
 		{
 			return params.ease;
@@ -41,6 +52,11 @@ package ghostcat.operation.effect
 		
 		private var baseRect:Rectangle;
 		
+		/**
+		 * 滚动x
+		 * @return 
+		 * 
+		 */
 		public function get scrollX():Number
 		{
 			return contentTarget.scrollRect.x - baseRect.x;
@@ -53,6 +69,11 @@ package ghostcat.operation.effect
 			contentTarget.scrollRect = s;
 		}
 		
+		/**
+		 * 滚动y 
+		 * @return 
+		 * 
+		 */
 		public function get scrollY():Number
 		{
 			return contentTarget.scrollRect.y - baseRect.y;
@@ -64,7 +85,7 @@ package ghostcat.operation.effect
 			s.y = v + baseRect.y;
 			contentTarget.scrollRect = s;
 		}
-
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			baseRect = contentTarget.getRect(contentTarget);
@@ -86,7 +107,7 @@ package ghostcat.operation.effect
 			} 
 			super.execute();
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:* = null) : void
 		{
 			super.result(event);

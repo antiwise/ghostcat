@@ -17,8 +17,10 @@ package ghostcat.ui.controls
 	/**
 	 * 按钮
 	 * 
-	 * 标签规则：up,over,down,disabled,selectedUp,selectedOver,selectedDown,selectedDisabled是按钮的八个状态，
+	 * 标签规则：为一整动画，up,over,down,disabled,selectedUp,selectedOver,selectedDown,selectedDisabled是按钮的八个状态，
 	 * 状态间的过滤为两个标签中间加-，末尾加:start。比如up和over的过滤即为up-over:start
+	 * 
+	 * 皮肤同时也会当作文本框再次处理一次
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -139,6 +141,11 @@ package ghostcat.ui.controls
 			super(skin, replace);
 		}
 		
+		/**
+		 * Label文字 
+		 * @return 
+		 * 
+		 */
 		public function get label():String
 		{
 			return labelField ? data[labelField] : data;
@@ -156,7 +163,7 @@ package ghostcat.ui.controls
 			else
 				data = v;
 		}
-		
+		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{
 			super.data = v;
@@ -165,7 +172,7 @@ package ghostcat.ui.controls
 			else
 				refreshLabelField();
 		} 
-		
+		/** @inheritDoc*/
 		public override function set enabled(v:Boolean) : void
 		{
 			if (super.enabled == v)
@@ -175,6 +182,10 @@ package ghostcat.ui.controls
 			tweenTo(v ? UP : DISABLED);
 		}
 		
+		/**
+		 * 更新label
+		 * 
+		 */
 		public function refreshLabelField():void
 		{
 			if (!label)
@@ -189,19 +200,25 @@ package ghostcat.ui.controls
 			
 			labelTextField.text = label;
 		}
-
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			defaultSkin = skin;
 			setPartConetent(skin,replace);
 		}
 		
+		/**
+		 * 设置单个状态 
+		 * @param skin
+		 * @param replace
+		 * 
+		 */
 		public function setPartConetent(skin:*, replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			refreshLabelField();
 		}
-		
+		/** @inheritDoc*/
 		public override function set selected(v:Boolean):void
 		{
 			if (super.selected == v)
@@ -213,6 +230,10 @@ package ghostcat.ui.controls
 			dispatchEvent(new Event(Event.CHANGE))
 		}
 		
+		/**
+		 * 增加事件
+		 * 
+		 */
 		protected function addEvents():void
 		{
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
@@ -222,6 +243,10 @@ package ghostcat.ui.controls
 			addEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		
+		/**
+		 * 删除事件
+		 * 
+		 */
 		protected function removeEvents():void
 		{
 			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
@@ -230,7 +255,7 @@ package ghostcat.ui.controls
 			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			removeEventListener(MouseEvent.CLICK,clickHandler);
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			super.init();
@@ -292,12 +317,22 @@ package ghostcat.ui.controls
 			}
 		}
 		
+		/**
+		 * 鼠标按下事件
+		 * @param event
+		 * 
+		 */
 		protected function mouseDownHandler(event:MouseEvent):void
 		{
 			tweenTo(DOWN);
 			_mouseDown = true;
 		}
 		
+		/**
+		 * 鼠标松开事件 
+		 * @param event
+		 * 
+		 */
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
 			tweenTo(_mouseOver ? OVER : UP);
@@ -307,6 +342,11 @@ package ghostcat.ui.controls
 				dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		}
 		
+		/**
+		 * 鼠标移入事件
+		 * @param event
+		 * 
+		 */
 		protected function rollOverHandler(event:MouseEvent):void
 		{	
 			if (event.buttonDown)
@@ -322,12 +362,22 @@ package ghostcat.ui.controls
 			_mouseOver = true;
 		}
 		
+		/**
+		 * 鼠标移出事件 
+		 * @param event
+		 * 
+		 */
 		protected function rollOutHandler(event:MouseEvent):void
 		{
 			tweenTo(UP);
 			_mouseOver = false;
 		}
 		
+		/**
+		 * 点击事件
+		 * @param event
+		 * 
+		 */
 		protected function clickHandler(event:MouseEvent):void
 		{
 			if (toggle)
@@ -336,7 +386,7 @@ package ghostcat.ui.controls
 			if (this.action)
 				dispatchEvent(Util.createObject(new ActionEvent(ActionEvent.ACTION),{action:this.action}))
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			removeEvents();

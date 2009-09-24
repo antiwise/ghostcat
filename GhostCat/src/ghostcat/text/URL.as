@@ -10,6 +10,9 @@ package ghostcat.text
 	 */
 	public class URL
 	{
+		/**
+		 * 使用的正则
+		 */
 		public const regex:RegExp = /^((\w+):\/{2,3})?((\w+):?(\w+)?@)?([^\/\?:]+):?(\d+)?(\/?[^\?#]+)?\??([^#]+)?#?(\w*)/; 
  		
  		/**

@@ -57,6 +57,12 @@ package ghostcat.fileformat.swf
 				read(data);
 		}
 		
+		/**
+		 * 读取
+		 * 
+		 * @param data
+		 * 
+		 */
 		public function read(data:ByteArray):void
 		{
 			this.bytes = data;

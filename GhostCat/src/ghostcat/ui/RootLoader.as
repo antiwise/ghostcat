@@ -16,6 +16,9 @@ package ghostcat.ui
 	 */	
 	public class RootLoader extends RootLoaderBase
 	{
+		/**
+		 * 进度条 
+		 */
 		public var progressSprite:GProgressBar;
 		public function RootLoader()
 		{
@@ -33,7 +36,7 @@ package ghostcat.ui
 			progressSprite.x = (stage.stageWidth - progressSprite.width)/2;
 			progressSprite.y = (stage.stageHeight - 50)/2;
 		}
-		
+		/** @inheritDoc*/
 		protected override function loadComplete():void 
 		{
 			removeChild(progressSprite);

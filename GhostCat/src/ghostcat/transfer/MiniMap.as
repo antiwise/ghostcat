@@ -38,7 +38,7 @@ package ghostcat.transfer
 			scrollShape = new Shape();
 			addChild(scrollShape);
 		}
-
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			super.init();
@@ -50,7 +50,7 @@ package ghostcat.transfer
 			addEventListener(MouseEvent.MOUSE_DOWN,shapeMouseDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,shapeMouseUpHandler);
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			if (bitmap.bitmapData)
@@ -59,12 +59,12 @@ package ghostcat.transfer
 			bitmap.bitmapData = new BitmapData(width,height);
 			super.updateSize();
 		} 
-		
+		/** @inheritDoc*/
 		protected override function createBitmapData() : void
 		{
 			//取消原来根据目标修改位图大小的操作。位图大小将由updateSize控制
 		}
-		
+		/** @inheritDoc*/
 		protected override function render() : void
 		{
 			if (!bitmap.bitmapData)
@@ -148,6 +148,11 @@ package ghostcat.transfer
 			};
 		}
 		
+		/**
+		 * 绘制选取范围 
+		 * @param localRect
+		 * 
+		 */
 		protected function drawScrollShape(localRect:Rectangle):void
 		{
 			scrollShape.graphics.clear();
@@ -197,7 +202,7 @@ package ghostcat.transfer
 		{
 			scrollShapeRenfer();
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			stage.removeEventListener(Event.RESIZE,_resizeEvt);

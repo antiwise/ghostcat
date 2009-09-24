@@ -5,15 +5,30 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	
+	/**
+	 * 切换显示容器
+	 * 
+	 * 标签规则：子对象成为不同的View，只显示其中一个
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GViewState extends GBase
 	{
-		private var _selectedIndex:int;
+		private var _selectedIndex:int = -1;
 		
 		public function GViewState(skin:* = null,replace:Boolean = true)
 		{
 			super(skin, replace)
+			
+			selectedIndex = 0;
 		}
 
+		/**
+		 * 选择显示的容器 
+		 * @return 
+		 * 
+		 */
 		public function get selectedChild():DisplayObject
 		{
 			return _selectedIndex != -1 ? (content as DisplayObjectContainer).getChildAt(_selectedIndex) : null;
@@ -34,6 +49,11 @@ package ghostcat.ui.containers
 			selectedIndex = -1;
 		}
 
+		/**
+		 * 选择的容器的索引
+		 * @return 
+		 * 
+		 */
 		public function get selectedIndex():int
 		{
 			return _selectedIndex;

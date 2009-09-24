@@ -10,6 +10,8 @@
 	/**
 	 * 进度条基类
 	 * 
+	 * 标签规则：子对象thumb是滑块，labelTextField是显示信息的文本
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -54,7 +56,7 @@
 		 * @param labelField	标签实例名
 		 * 
 		 */
-		public function GPercentBar(skin:*,replace:Boolean = true,mode:int = 0,fields:Object = null)
+		public function GPercentBar(skin:*=null,replace:Boolean = true,mode:int = 0,fields:Object = null)
 		{
 			if (fields)
 				this.fields = fields;
@@ -63,7 +65,7 @@
 			super(skin,replace);
 			
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);

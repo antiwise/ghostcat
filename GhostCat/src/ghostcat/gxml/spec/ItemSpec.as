@@ -17,7 +17,7 @@ package ghostcat.gxml.spec
 		{
 			super(root);
 		}
-		
+		/** @inheritDoc*/
 		public override function createObject(xml:XML):*
 		{
 			var id:String;

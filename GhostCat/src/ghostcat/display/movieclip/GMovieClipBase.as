@@ -248,7 +248,7 @@ package ghostcat.display.movieclip
             currentFrame = (labels.length > 0) ? labels[curLabelIndex].frame : 1;
         }
 		
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			super.destory();

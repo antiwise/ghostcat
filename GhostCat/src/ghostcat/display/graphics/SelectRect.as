@@ -35,6 +35,10 @@ package ghostcat.display.graphics
 			mouseEnabled = mouseChildren = false;
 		}
 		
+		/**
+		 * 开始选择
+		 * 
+		 */
 		public function begin():void
 		{
 			start = new Point(mouseX,mouseY);
@@ -46,13 +50,13 @@ package ghostcat.display.graphics
 			refresh();
 		}
 		
-		protected function mouseMoveHandler(event:MouseEvent):void
+		private function mouseMoveHandler(event:MouseEvent):void
 		{
 			end = new Point(mouseX,mouseY);
 			refresh();
 		}
 		
-		protected function mouseUpHandler(event:MouseEvent):void
+		private function mouseUpHandler(event:MouseEvent):void
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
@@ -70,6 +74,10 @@ package ghostcat.display.graphics
 			refresh();
 		}
 		
+		/**
+		 * 更新图形 
+		 * 
+		 */
 		public function refresh():void
 		{
 			graphics.clear();
@@ -80,7 +88,7 @@ package ghostcat.display.graphics
 				graphics.drawRect(start.x,start.y,end.x - start.x,end.y - start.y);
 			}
 		}
-		
+		/** @inheritDoc*/
 		override public function destory():void
 		{
 			super.destory();

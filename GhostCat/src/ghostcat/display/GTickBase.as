@@ -34,6 +34,11 @@ package ghostcat.display
 			super.paused = v;
 		}
 		
+		/**
+		 * 实际事件
+		 * @param event
+		 * 
+		 */
 		protected function tickHandler(event:TickEvent):void
 		{
 			

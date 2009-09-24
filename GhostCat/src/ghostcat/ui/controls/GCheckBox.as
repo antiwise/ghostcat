@@ -3,19 +3,20 @@ package ghostcat.ui.controls
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	
+	import ghostcat.skin.CheckBoxIconSkin;
 	import ghostcat.util.ClassFactory;
 	
 	/**
 	 * 多选框
+	 * 
+	 * 标签规则：当作按钮转换
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class GCheckBox extends GButton
 	{
-		[Embed(skinClass="ghostcat.skin.CheckBoxIconSkin")]
-		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
+		public static var defaultSkin:ClassFactory = new ClassFactory(CheckBoxIconSkin);
 		
 		/**
 		 * 值

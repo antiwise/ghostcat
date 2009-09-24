@@ -14,12 +14,15 @@ package ghostcat.display.graphics
 	 */
 	public class EditableGraphicsSprite extends GraphicsSprite
 	{
+		/**
+		 * 控制点数组
+		 */
 		public var controls:Array = [];
 		public function EditableGraphicsSprite(data:Array = null)
 		{
 			super(data);
 		}
-		
+		/** @inheritDoc*/
 		override public function set graphicsData(v:Array) : void
 		{
 			clear();
@@ -71,7 +74,7 @@ package ghostcat.display.graphics
 			}
 			controls = [];
 		}
-		
+		/** @inheritDoc*/
 		override public function destory() : void
 		{
 			clear();

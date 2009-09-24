@@ -12,8 +12,17 @@ package ghostcat.events
 	 */
 	public class TweenEvent extends Event
 	{
+		/**
+		 * 缓动开始
+		 */
 		public static const TWEEN_START:String="tween_start";
+		/**
+		 * 缓动结束 
+		 */
 		public static const TWEEN_END:String="tween_end";
+		/**
+		 * 缓动更新
+		 */
 		public static const TWEEN_UPDATE:String="tween_update";
 		
 		public function TweenEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)

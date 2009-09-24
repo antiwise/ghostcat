@@ -11,6 +11,11 @@ package ghostcat.parse.display
 	import ghostcat.parse.graphics.IGraphicsFill;
 	import ghostcat.parse.graphics.IGraphicsLineStyle;
 	
+	/**
+	 * 图形
+	 * @author flashyiyi
+	 * 
+	 */
 	public class ShapeParse extends DisplayParse
 	{
 		public var reset:Boolean;
@@ -29,7 +34,7 @@ package ghostcat.parse.display
 			
 			this.grid9 = grid9;
 		}
-		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
@@ -48,6 +53,7 @@ package ghostcat.parse.display
 			if (fill)
 				new GraphicsEndFill().parse(target);
 		}
+		/** @inheritDoc*/
 		protected function parseBaseShape(target:Graphics) : void
 		{
 			if (parses)
@@ -56,7 +62,7 @@ package ghostcat.parse.display
 					(parse[i] as DisplayParse).parse(target);
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function parseBitmapData(target:BitmapData) : void
 		{
 			super.parseBitmapData(target);
@@ -64,7 +70,7 @@ package ghostcat.parse.display
 			target.draw(createShape());
 		}
 		
-		
+		/** @inheritDoc*/
 		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
@@ -72,7 +78,7 @@ package ghostcat.parse.display
 			if (grid9)
 				grid9.parse(target);
 		}
-		
+		/** @inheritDoc*/
 		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);

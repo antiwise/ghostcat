@@ -73,9 +73,7 @@ package ghostcat.display.bitmap
 		private var _width:Number;
 		private var _height:Number;
 		
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc*/
 		public override function set bitmapData(value:BitmapData) : void
 		{
 			super.bitmapData = value;
@@ -111,6 +109,7 @@ package ghostcat.display.bitmap
 			_enabled = v;
 		}
 		
+		/** @inheritDoc*/
 		public override function set x(value:Number):void
 		{
 			if (x == value)
@@ -130,6 +129,7 @@ package ghostcat.display.bitmap
 			return position.x;
 		}
 		
+		/** @inheritDoc*/
 		public override function set y(value:Number):void
 		{
 			if (y == value)
@@ -398,6 +398,10 @@ package ghostcat.display.bitmap
 		{
 		}
 		
+		/**
+		 * 销毁方法 
+		 * 
+		 */
 		public function destory():void
 		{
 			if (parent)

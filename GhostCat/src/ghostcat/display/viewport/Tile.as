@@ -36,22 +36,48 @@ package ghostcat.display.viewport
 		 * 图形
 		 */		
 		public var ref:ClassFactory;
+		
 		/**
 		 * 限制范围的容器
 		 */		
 		public var scrollRectContainer:DisplayObject;
+		
 		/**
 		 * 相对与scrollRectContainer的限定范围的矩形，为空则是scrollRect的值
 		 */		
 		public var viewRect:Rectangle;
 		
-		protected var contents:Dictionary;//当前显示出的对象
-		protected var unuseContents:Array;//已删除的对象，保存在这里供新建时回收，增加性能
+		/**
+		 * 当前显示出的对象
+		 */
+		protected var contents:Dictionary;
 		
-		protected var _rect:Rectangle;//本图元的逻辑大小
-		protected var _contentRect:Rectangle;//单个格子的矩形
-		protected var curRect:Rectangle;//目前所有格子的矩形
+		/**
+		 * 已删除的对象，保存在这里供新建时回收，增加性能
+		 */
+		protected var unuseContents:Array;
 		
+		/**
+		 * 本图元的逻辑大小
+		 */
+		protected var _rect:Rectangle;
+		
+		/**
+		 * 单个格子的矩形
+		 */
+		protected var _contentRect:Rectangle;
+		
+		/**
+		 * 目前所有格子的矩形
+		 */
+		protected var curRect:Rectangle;
+		
+		
+		/**
+		 * 全部内容的矩形
+		 * @return 
+		 * 
+		 */
 		public function get rect():Rectangle
 		{
 			return _rect;
@@ -66,7 +92,7 @@ package ghostcat.display.viewport
 		{
 			return _contentRect;
 		}
-		
+		/** @inheritDoc*/
 		public override function set width(value:Number) : void
 		{
 			rect.width = value;
@@ -114,6 +140,11 @@ package ghostcat.display.viewport
 			delayUpatePosition = true;//激活此属性坐标更新将会被延迟
 		}
 		
+		/**
+		 * 设置重复块的类
+		 * @param ref
+		 * 
+		 */
 		public function setContentClass(ref:*):void
 		{
 			if (ref is Class)
@@ -339,6 +370,9 @@ package ghostcat.display.viewport
 			}
 		}
 		
+		/**
+		 * 物品总量
+		 */
 		protected var itemCount:int = 0;
 		
 		/**
@@ -371,6 +405,14 @@ package ghostcat.display.viewport
 			return s;
 		}
 		
+		/**
+		 * 删除物品
+		 * 
+		 * @param i
+		 * @param j
+		 * @return 
+		 * 
+		 */
 		protected function removeItem(i:int,j:int):DisplayObject
 		{
 			var s:DisplayObject = contents[i + ":" +j];
@@ -424,6 +466,11 @@ package ghostcat.display.viewport
 			}			
 		}
 		
+		/**
+		 * 删除一组物品
+		 * @param rect
+		 * 
+		 */
 		protected function removeItems(rect:Rectangle):void
 		{
 			var fi:int = rect.x;
@@ -434,7 +481,7 @@ package ghostcat.display.viewport
 				for (var j:int = fj;j < ej;j++)
 					removeItem(i,j);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

@@ -5,6 +5,12 @@ package ghostcat.parse.display
 	
 	import ghostcat.parse.DisplayParse;
 	
+	/**
+	 * 9切片
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Grid9Parse extends DisplayParse
 	{
 		public var x:Number;
@@ -19,7 +25,7 @@ package ghostcat.parse.display
 			this.width = width;
 			this.height = height;
 		}
-		
+		/** @inheritDoc*/
 		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);

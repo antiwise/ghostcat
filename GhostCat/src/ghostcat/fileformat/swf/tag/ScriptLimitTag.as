@@ -8,6 +8,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class ScriptLimitTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 65;
@@ -22,7 +23,7 @@ package ghostcat.fileformat.swf.tag
 		 * 代码超时时间
 		 */
 		public var scriptTimeoutSeconds:int;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			maxRecursionDepth = bytes.readUnsignedShort();

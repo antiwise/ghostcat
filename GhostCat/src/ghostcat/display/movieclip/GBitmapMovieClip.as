@@ -46,7 +46,7 @@ package ghostcat.display.movieclip
 			if (labels)
 				setLabel(labels[0],-1);
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			if (content)
@@ -54,7 +54,7 @@ package ghostcat.display.movieclip
 			else
 				super.setContent(skin,replace);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			super.destory();
@@ -62,7 +62,7 @@ package ghostcat.display.movieclip
 			for (var i:int = 0;i < _bitmaps.length;i++)
 				(_bitmaps[i] as BitmapData).dispose();
 		}
-		
+		/** @inheritDoc*/
 		public override function get curLabelName():String
 		{
 			for (var i:int = labels.length - 1;i>=0;i--)
@@ -72,12 +72,12 @@ package ghostcat.display.movieclip
         	}
         	return null;
 		}
-		
+		/** @inheritDoc*/
 		public override function get currentFrame():int
         {
         	return _currentFrame;
         }
-        
+        /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
         	if (frame < 1)
@@ -89,18 +89,18 @@ package ghostcat.display.movieclip
         	
         	_currentFrame = frame;
         }
-        
+        /** @inheritDoc*/
         public override function get totalFrames():int
         {
         	return _bitmaps.length;
         }
-        
+        /** @inheritDoc*/
         public override function get labels():Array
 		{
 			return _labels;
 		}
 		
-        
+        /** @inheritDoc*/
         public override function nextFrame():void
         {
         	currentFrame ++;

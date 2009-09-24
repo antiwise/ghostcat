@@ -17,7 +17,13 @@ package ghostcat.display.viewport
 	 */	
 	public class Collision
 	{
+		/**
+		 * 方框类型
+		 */
 		public static const RECT:int = 0;
+		/**
+		 * 椭圆类型
+		 */
 		public static const ELLIPSE:int = 1;
 		
 		private var rects:Array;
@@ -43,6 +49,11 @@ package ghostcat.display.viewport
 			refresh();
 		}
 		
+		/**
+		 * 获得舞台坐标 
+		 * @return 
+		 * 
+		 */
 		public function get globalPosition():Point
 		{
 			var pos:Point;

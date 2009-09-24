@@ -42,7 +42,7 @@
 			this.hP = hP;
 			super(target);
 		}
-		
+		/** @inheritDoc*/
 		public override function set target(value:DisplayObject) : void
 		{
 			super.target = value;
@@ -117,7 +117,7 @@
 			_topLeft = v;
 			invalidateTransform()
 		}
-
+		/** @inheritDoc*/
 		protected override function createBitmapData():void
 		{
 			super.createBitmapData();
@@ -152,7 +152,7 @@
 				}
 			}
 		}
-		
+		/** @inheritDoc*/
 		protected override function render():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);

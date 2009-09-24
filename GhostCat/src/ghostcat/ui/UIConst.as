@@ -1,5 +1,10 @@
 package ghostcat.ui
 {
+	/**
+	 * UI常量
+	 * @author flashyiyi
+	 * 
+	 */
 	public class UIConst
 	{
 		public static const TOP:String = "top";

@@ -8,6 +8,11 @@ package ghostcat.skin
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
 	
+	/**
+	 * 方框
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BoxSkin extends Sprite
 	{
 		public function BoxSkin(width:Number=100,height:Number=100,radius:Number = 0,borderColor:uint = 0,borderThickness:Number=1,fillColor:uint = 0xFFFFFF)

@@ -41,9 +41,7 @@ package ghostcat.display.viewport
             m.ty = p.y;
             p.transform.matrix = m;
 		}
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc*/
 		override public function getItemPointAtPoint(p:Point):Point
 		{
 			p = displayToItem(p);

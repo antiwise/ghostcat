@@ -10,8 +10,17 @@ package ghostcat.operation
 	 */
 	public class RepeatOper extends Oper
 	{
+		/**
+		 * 操作列表
+		 */
 		public var list:Array;
+		/**
+		 * 循环次数 
+		 */
 		public var loop:int;
+		/**
+		 * 位置
+		 */
 		public var index:int = 0;
 		
 		public function RepeatOper(list:Array,loop:int = -1)

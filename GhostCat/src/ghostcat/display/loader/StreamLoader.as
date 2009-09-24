@@ -37,7 +37,7 @@ package ghostcat.display.loader
 			if (request)
 				load(request);
 		}
-		
+		/** @inheritDoc*/
 		public override function get content():DisplayObject
 		{
 			return (content as Loader).content;
@@ -49,6 +49,11 @@ package ghostcat.display.loader
 			stream.load(request);
 		}
 		
+		/**
+		 * 或者加载器 
+		 * @return 
+		 * 
+		 */
 		public function get eventDispatcher():EventDispatcher
 		{
 			return stream;
@@ -69,7 +74,7 @@ package ghostcat.display.loader
 			loadComplete = true;
 			stream.close();
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

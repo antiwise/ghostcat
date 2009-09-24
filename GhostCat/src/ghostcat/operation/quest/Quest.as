@@ -9,8 +9,16 @@ package ghostcat.operation.quest
 
 	[Event(name="quest_complete",type="ghostcat.quest.QuestEvent")]
 	
+	/**
+	 * 任务
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Quest extends EventDispatcher
 	{
+		/**
+		 * 任务标示
+		 */
 		public var id:int = 0;
 		private var queue:Queue;
 		private var opers:Array;
@@ -19,6 +27,11 @@ package ghostcat.operation.quest
 		
 		private var _step:int = 0;
 		
+		/**
+		 * 执行阶段 
+		 * @return 
+		 * 
+		 */
 		public function get step():int
 		{
 			return _step;
@@ -46,21 +59,40 @@ package ghostcat.operation.quest
 			this.step = step;
 		}
 		
+		/**
+		 * 是否可用 
+		 * @return 
+		 * 
+		 */
 		public function get enabled():Boolean
 		{
 			return activeHandler==null || activeHandler.call();
 		}
 		
+		/**
+		 * 是否开始
+		 * @return 
+		 * 
+		 */
 		public function get started():Boolean
 		{
 			return queue != null;
 		}
 		
+		/**
+		 * 是否完成
+		 * @return 
+		 * 
+		 */
 		public function get finish():Boolean
 		{
 			return queue && queue.data.length == 0;
 		}
 		
+		/**
+		 * 开始 
+		 * 
+		 */
 		public function start():void
 		{
 			queue = new Queue();
@@ -82,6 +114,10 @@ package ghostcat.operation.quest
 			dispatchEvent(e);
 		}
 		
+		/**
+		 * 销毁 
+		 * 
+		 */
 		public function destory():void
 		{
 			if (queue)

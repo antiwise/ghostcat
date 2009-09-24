@@ -17,6 +17,8 @@ package ghostcat.ui.containers
 	/**
 	 * 根据data复制对象排列的容器
 	 * 
+	 * 标签规则：子对象的render将会被作为子对象的默认skin，其余部分照常显示并会被作为自己的初始大小
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -24,22 +26,45 @@ package ghostcat.ui.containers
 	{
 		public var ref:ClassFactory;
 		
+		public var fields:Object = {renderField:"render"};
+		public var renderSkin:DisplayObject;
+		
 		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null)
 		{
-			super(skin, replace);
+			if (fields)
+				this.fields = fields;
 			
 			if (ref is Class)
 				this.ref = new ClassFactory(ref)
 			else if (ref is ClassFactory)
 				this.ref = ref as ClassFactory;
 			
+			super(skin, replace);
+			
 			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			
 		}
-		
+		/** @inheritDoc*/
+		public override function setContent(skin:*, replace:Boolean=true) : void
+		{
+			super.setContent(skin,replace);
+			
+			var renderField:String = fields.renderField;
+			if (renderField)
+				renderSkin = content[renderField];
+		}
+		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{
 			super.data = v;
+			
+			if (ref && renderSkin)
+			{
+				if (ref.params)
+					ref.params[0] = renderSkin;
+				else
+					ref.params = [renderSkin];
+			}
 			
 			DisplayUtil.removeAllChildren(contentPane);
 			
@@ -51,7 +76,7 @@ package ghostcat.ui.containers
 			}
 			layout.invalidateLayout();
 		}
-
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();
@@ -64,6 +89,11 @@ package ghostcat.ui.containers
 			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		
+		/**
+		 * 点击事件 
+		 * @param event
+		 * 
+		 */
 		protected function clickHandler(event:MouseEvent):void
 		{
 			if (event.target == contentPane)

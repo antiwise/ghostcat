@@ -173,6 +173,11 @@ package ghostcat.ui
 			return obj;
 		}
 		
+		/**
+		 * 模式窗口关闭方法 
+		 * @param event
+		 * 
+		 */
 		protected function modulePopupCloseHandler(event:Event):void
 		{
 			applicationEnabled = true;

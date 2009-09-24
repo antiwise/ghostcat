@@ -89,7 +89,7 @@ package ghostcat.display.graphics
 //			this.delayUpatePosition = true;//设置此属性是为了消除闪烁
 		}
 
-		public function onMouseDownHandler(event : MouseEvent) : void
+		private function onMouseDownHandler(event : MouseEvent) : void
 		{
 			if (enabled)
 			{
@@ -100,7 +100,7 @@ package ghostcat.display.graphics
 			}
 		}
 
-		public function onMouseUpHandler(event : MouseEvent) : void
+		private function onMouseUpHandler(event : MouseEvent) : void
 		{
 			localMousePoint = null;
 			
@@ -110,29 +110,29 @@ package ghostcat.display.graphics
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 		}
 
-		public function onMouseMoveHandler(event : MouseEvent) : void
+		private function onMouseMoveHandler(event : MouseEvent) : void
 		{
 			if (!lockX)
 				x = parent.mouseX + localMousePoint.x;
 			if (!lockY)
 				y = parent.mouseY + localMousePoint.y;
 		}
-		
+		/** @inheritDoc*/
 		override public function set x(value : Number) : void
 		{
 			point.x = super.x = value;
 		}
-		
+		/** @inheritDoc*/
 		override public function set y(value : Number) : void
 		{
 			point.y = super.y = value;
 		}
-
+		/** @inheritDoc*/
 		public override function set enabled(value : Boolean) : void
 		{
 			mouseEnabled = super.enabled = value;
 		}
-		
+		/** @inheritDoc*/
 		public override function invalidatePosition() : void
 		{
 			CallLater.callLater(vaildPosition,null,true);

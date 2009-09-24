@@ -20,6 +20,11 @@ package ghostcat.ui.layout
 		private var _paddingBottom:Number = 0;
 		
 		
+		/**
+		 * 左边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingLeft():Number
 		{
 			return _paddingLeft;
@@ -31,6 +36,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 上边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingTop():Number
 		{
 			return _paddingTop;
@@ -42,6 +52,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 右边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingRight():Number
 		{
 			return _paddingRight;
@@ -53,6 +68,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 下边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingBottom():Number
 		{
 			return _paddingBottom;
@@ -64,12 +84,28 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 设置外围方框的距离 
+		 * @param obj
+		 * @param left
+		 * @param top
+		 * @param right
+		 * @param bottom
+		 * 
+		 */
 		public function setMetrics(obj:DisplayObject,left:Number=NaN,top:Number=NaN,right:Number=NaN,bottom:Number=NaN):void
 		{
 			layoutDict[obj] = new MetricsItem(left,top,right,bottom);
 			invalidateLayout();
 		}
 		
+		/**
+		 * 设置与中心的距离
+		 * @param obj
+		 * @param horizontalCenter
+		 * @param verticalCenter
+		 * 
+		 */
 		public function setCenter(obj:DisplayObject,horizontalCenter:Number=NaN,verticalCenter:Number=NaN):void
 		{
 			layoutDict[obj] = new CenterItem(horizontalCenter,verticalCenter);
@@ -80,7 +116,7 @@ package ghostcat.ui.layout
 		{
 			super(target,isRoot);
 		}
-		
+		/** @inheritDoc*/
 		protected override function layoutChildren(x:Number, y:Number, w:Number, h:Number) : void
 		{
 			for (var obj:* in layoutDict)

@@ -4,10 +4,25 @@ package ghostcat.operation.effect
 	
 	import ghostcat.operation.RepeatOper;
 
+	/**
+	 * 透明度闪烁效果
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class FlashEffect extends RepeatEffect
 	{
+		/**
+		 * 持续时间
+		 */
 		public var duration:int;
+		/**
+		 * 其实透明度
+		 */
 		public var fromAlpha:Number;
+		/**
+		 * 结束透明度 
+		 */
 		public var toAlpha:Number;
 		
 		public function FlashEffect(target:*, duration:int, fromAlpha:Number = 1.0, toAlpha:Number = 0.5, loop:int = -1)
@@ -19,6 +34,7 @@ package ghostcat.operation.effect
 			this.fromAlpha = fromAlpha;
 			this.toAlpha = toAlpha;
 		}
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			(target as DisplayObject).alpha = fromAlpha;

@@ -35,7 +35,7 @@ package ghostcat.display.residual
 			
 			displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize():void
 		{
 			super.updateSize();
@@ -51,7 +51,7 @@ package ghostcat.display.residual
 				maskBitmapData = newBitmapData;
 			}
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
 			super.updateDisplayList();
@@ -59,7 +59,7 @@ package ghostcat.display.residual
 			maskBitmapData.perlinNoise(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest])
 			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

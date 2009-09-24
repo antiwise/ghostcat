@@ -11,6 +11,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class FileAttributesTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 69;

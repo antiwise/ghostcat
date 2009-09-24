@@ -24,6 +24,9 @@ package ghostcat.display.movieclip
 	
 	public class GMovieClip extends GMovieClipBase
 	{
+		/**
+		 * 时间线对象 
+		 */
 		public var timeLine:TimeLine;
 		
 		/**
@@ -38,11 +41,16 @@ package ghostcat.display.movieclip
 			super(mc, replace, paused);
 		}
 		
+		/**
+		 * 获得当前动画 
+		 * @return 
+		 * 
+		 */
 		public function get mc():MovieClip
 		{
 			return content as MovieClip;
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
@@ -57,37 +65,37 @@ package ghostcat.display.movieclip
 					setLabel(labels[0].name,-1);
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function get curLabelName():String
 		{
 			return timeLine.curLabelName;
 		}
-		
+		/** @inheritDoc*/
 		public override function getLabelIndex(labelName:String):int
         {
         	return timeLine.getLabelIndex(labelName);
         }
-		
+		/** @inheritDoc*/
 		public override function get labels():Array
 		{
 			return timeLine.labels;
 		}
-		
+		/** @inheritDoc*/
 		public override function get currentFrame():int
         {
         	return mc.currentFrame;
         }
-        
+        /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
         	mc.gotoAndStop(frame);
         }
-        
+        /** @inheritDoc*/
         public override function get totalFrames():int
         {
         	return mc.totalFrames;
         }
-        
+        /** @inheritDoc*/
         public override function nextFrame():void
         {
         	mc.nextFrame();

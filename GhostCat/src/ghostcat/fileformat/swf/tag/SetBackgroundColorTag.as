@@ -8,6 +8,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class SetBackgroundColorTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 9;
@@ -17,7 +18,7 @@ package ghostcat.fileformat.swf.tag
 		 * 背景色
 		 */
 		public var backgroundColor:uint;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			var r:int = bytes.readUnsignedByte();
