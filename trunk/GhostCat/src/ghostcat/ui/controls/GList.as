@@ -8,6 +8,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.util.ClassFactory;
+	import ghostcat.util.Util;
 	
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
@@ -35,7 +36,7 @@ package ghostcat.ui.controls
 		{
 			if (!fields)
 				fields = listFields;
-		
+			
 			this.type = type;
 			this.itemRender = itemRender;
 			

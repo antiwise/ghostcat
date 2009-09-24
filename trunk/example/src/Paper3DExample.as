@@ -10,6 +10,14 @@ package
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.Back;
 	
+	/**
+	 * 3D旋转例子
+	 * 
+	 * 顺带加了特效
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Paper3DExample extends Sprite
 	{
 		public var p:Paper3D;

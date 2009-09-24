@@ -9,6 +9,13 @@ package
 	import ghostcat.ui.controls.GRadioButtonGroup;
 	import ghostcat.util.Util;
 	
+	/**
+	 * 此类稍微演示了下VBox布局和RadioButton的用法。
+	 * 布局并不是ghostcat的重点。
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class UIBoxExample extends Sprite
 	{
 		public function UIBoxExample()

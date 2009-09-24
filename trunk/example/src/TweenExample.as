@@ -7,7 +7,6 @@ package
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.DelayOper;
 	import ghostcat.operation.RepeatOper;
-	import ghostcat.operation.TimeoutOper;
 	import ghostcat.operation.TweenOper;
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsFill;
@@ -16,6 +15,11 @@ package
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.Elastic;
 	
+	/**
+	 * 几个Tween的演示
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TweenExample extends Sprite
 	{
 		public var sp:Sprite;
@@ -39,6 +43,7 @@ package
 			(Util.createObject(DelayOper,{timeout:2000}) as DelayOper).commit();
 			new RepeatOper([new TweenOper(f,1000,{blurX:20,blurY:20}),new TweenOper(f,1000,{blurX:0,blurY:0})]).commit();
 			
+			TweenUtil.update();//手动更新缓动，主要为了处理倒放时第一帧的空位问题
 		}
 	}
 }

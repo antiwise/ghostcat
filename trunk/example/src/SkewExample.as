@@ -11,6 +11,14 @@ package
 	import ghostcat.util.Util;
 	
 	[SWF(width="300",height="300")]
+	/**
+	 * 自由变化例子
+	 * 
+	 * 顺带加了特效
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SkewExample extends Sprite
 	{
 		public var f:Skew;

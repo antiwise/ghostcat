@@ -10,6 +10,11 @@ package
 	import ghostcat.ui.CursorSprite;
 	
 	[SWF(width="150",height="150")]
+	/**
+	 * 火焰效果例子
+	 * @author flashyiyi
+	 * 
+	 */
 	public class FireExample extends Sprite
 	{
 		public var p:GBase;
@@ -23,7 +28,6 @@ package
 			p.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
 			var f:FireScreen = new FireScreen(150,150);
-			
 			f.addItem(p);
 			addChildAt(f,0);
 			

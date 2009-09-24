@@ -1,10 +1,6 @@
 package ghostcat.operation
 {
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
 	import ghostcat.fileformat.gif.GIFDecoder;
@@ -43,7 +39,13 @@ package ghostcat.operation
 			var bytes:ByteArray = super.data as ByteArray;
 			var gif:GIFDecoder = new GIFDecoder();
 			gif.read(bytes);
-			return gif.getBitmapDatas();
+			
+			var result:Array = [];
+			var len:int = gif.getFrameCount();
+			for (var i:int = 0;i < len;i++)
+				result.push(gif.getFrame(i))
+				
+			return result;
 		}
 	}
 }

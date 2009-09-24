@@ -10,6 +10,12 @@ package
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.tooltip.ArowToolTipSkin;
 	
+	/**
+	 * 拥有重力的细绳
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SmoothCurveExample extends Sprite
 	{
 		private var roupe:Roupe;

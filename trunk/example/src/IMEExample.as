@@ -14,6 +14,13 @@ package
 
 	[SWF(width="500",height="400")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
+	/**
+	 * 这是一个自制输入法例子，完全不依赖外部环境，缺陷是需要载入词库，体积不小。
+	 * 可能会和系统输入法冲突，请使用ctrl+enter切换到英文输入法（不要用shift，shift同时也会将内部输入法切换到英文- -）
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class IMEExample extends Sprite
 	{
 		[Embed(source = "pinyin.txt",mimeType="application/octet-stream")]

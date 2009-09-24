@@ -5,8 +5,16 @@ package
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GList;
 	import ghostcat.util.ObjectProxy;
+	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="400",height="400")]
+	/**
+	 * 此类用于演示List，所以加入了一个百万条的数据源。单单生成它就需要耗费数秒时间。
+	 * 这个List拥有完美的缓动效果
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class UIScrollExample extends Sprite
 	{
 		public function UIScrollExample()
@@ -27,6 +35,7 @@ package
 			
 			list.addVScrollBar();
 			list.vScrollBar.blur = 2;
+			list.vScrollBar.easing = Circ.easeOut;
 			
 			arr[2] = "动态修改数据";
 			

@@ -6,6 +6,14 @@ package
 	import ghostcat.events.InputEvent;
 	import ghostcat.manager.InputManager;
 	
+	/**
+	 * 右键演示
+	 * 
+	 * 不需要做多余的事情，但必须设置SWF为透明显示来禁用原来的播放器右键
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class RightClickExample extends Sprite
 	{
 		public function RightClickExample()

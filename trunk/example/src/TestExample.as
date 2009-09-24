@@ -1,22 +1,18 @@
 package
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
-	import ghostcat.operation.effect.AlphaClipEffect;
+	import ghostcat.manager.RootManager;
+	import ghostcat.ui.containers.GAlert;
 	
 	[SWF(width="600",height="600")]
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
 		{	
-			var v:DisplayObject = new TestHuman();
-			addChild(v);
+			RootManager.register(this);
 			
-			v.x = 100;
-			v.y = 100;
-			
-			new AlphaClipEffect(v,5000,AlphaClipEffect.DOWN,null).execute();
+			GAlert.show("123");
 		}
 	}
 }

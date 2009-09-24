@@ -130,23 +130,6 @@ package ghostcat.fileformat.gif
 		}
 		
 		/**
-		 * 获得所有帧的图片
-		 * 
-		 * @return 包含所有图片的数组
-		 * 
-		 */
-		public function getBitmapDatas():Array
-		{	
-			var result:Array = [];
-			for (var i:int = 0;i < frameCount;i++)
-			{
-				result.push(GifFrame (frames[i]).image)
-			}
-			return result;
-			
-		}
-
-		/**
 		 * 获得循环次数，为0则为无限循环
 		 *
 		 * @return
