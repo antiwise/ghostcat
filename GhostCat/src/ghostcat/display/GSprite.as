@@ -120,8 +120,8 @@ package ghostcat.display
 				{
 					//新设置内容的时候，获取内容的坐标
 					if (skin.parent)
-						skin.parent.addChild(this);
-					
+						skin.parent.addChildAt(this,skin.parent.getChildIndex(skin));
+						
 					if (acceptContentPosition)
 					{
 						this.x = skin.x;

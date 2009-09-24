@@ -21,20 +21,20 @@ package ghostcat.ui.controls
 	public class GList extends GScrollPanel
 	{
 		public var listContent:GListBase;
-		public var fields:Object = {renderField:"render"};
+		private var listFields:Object = {renderField:"render",vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
 		private var itemRender:ClassFactory;
 		private var _type:String;
 		
 		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null,fields:Object = null)
 		{
-			if (fields)
-				this.fields = fields;
-			
+			if (!fields)
+				fields = listFields;
+		
 			this.type = type;
 			this.itemRender = itemRender;
 			
-			super(skin,replace);
+			super(skin,replace,null,fields);
 		}
 		
 		public override function setContent(skin:*, replace:Boolean=true) : void

@@ -13,15 +13,18 @@ package
 		public function UIComboBoxExample()
 		{	
 			var b:GComboBox = new GComboBox();
-			b.data = 123;
+			b.data = 10;
 			b.x = 100;
-			b.listData = [222,343,554,343,554,343,554,343,554,343,554,343,554,343,554,343,554];
+			b.y = 50;
+			b.listData = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
 			addChild(b)
 			
 			var s:GVSilder = new GVSilder();
+			s.x = 50;
+			s.y = 50;
 			addChild(s);
 			
-			addChild(Util.createObject(new ResidualScreen(20,100),{refreshInterval:30,fadeSpeed:0.8,blurSpeed:3,items:[s]}));
+			s.addChild(Util.createObject(new ResidualScreen(s.width + 10,s.height + 10),{x:-5,y:-5,refreshInterval:30,fadeSpeed:0.8,blurSpeed:3,items:[s.thumb]}));
 		}
 	}
 }

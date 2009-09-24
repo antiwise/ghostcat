@@ -29,6 +29,7 @@
     <classEntry path="ghostcat.display.GBase"/>
     <classEntry path="ghostcat.display.GNoScale"/>
     <classEntry path="ghostcat.display.GSprite"/>
+    <classEntry path="ghostcat.display.GTickBase"/>
     <classEntry path="ghostcat.display.ICursorManagerClient"/>
     <classEntry path="ghostcat.display.IData"/>
     <classEntry path="ghostcat.display.IDisplayObject"/>
@@ -122,7 +123,9 @@
     <classEntry path="ghostcat.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
+    <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
+    <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
     <classEntry path="ghostcat.gxml.spec.Spec"/>
     <classEntry path="ghostcat.manager.AssetManager"/>
     <classEntry path="ghostcat.manager.BrowerManager"/>
@@ -140,6 +143,7 @@
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FunctionOper"/>
     <classEntry path="ghostcat.operation.GroupOper"/>
+    <classEntry path="ghostcat.operation.IOper"/>
     <classEntry path="ghostcat.operation.IfOper"/>
     <classEntry path="ghostcat.operation.LoadGIFOper"/>
     <classEntry path="ghostcat.operation.LoadOper"/>
@@ -157,10 +161,14 @@
     <classEntry path="ghostcat.operation.TweenOper"/>
     <classEntry path="ghostcat.operation.WaitOper"/>
     <classEntry path="ghostcat.operation.WatchOper"/>
+    <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
+    <classEntry path="ghostcat.operation.effect.ClipEffect"/>
+    <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
     <classEntry path="ghostcat.operation.effect.FlashEffect"/>
     <classEntry path="ghostcat.operation.effect.IEffect"/>
     <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
+    <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
     <classEntry path="ghostcat.operation.effect.TweenEffect"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
@@ -195,10 +203,13 @@
     <classEntry path="ghostcat.skin.PointSkin"/>
     <classEntry path="ghostcat.skin.ProgressSkin"/>
     <classEntry path="ghostcat.text.ANSI"/>
+    <classEntry path="ghostcat.text.FilePath"/>
     <classEntry path="ghostcat.text.IME"/>
     <classEntry path="ghostcat.text.PinYin"/>
+    <classEntry path="ghostcat.text.RegExpUtil"/>
     <classEntry path="ghostcat.text.TextFieldUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
+    <classEntry path="ghostcat.text.URL"/>
     <classEntry path="ghostcat.transfer.GBitmapTransfer"/>
     <classEntry path="ghostcat.transfer.GTransfer"/>
     <classEntry path="ghostcat.transfer.MiniMap"/>
@@ -207,10 +218,8 @@
     <classEntry path="ghostcat.transfer.Reflector"/>
     <classEntry path="ghostcat.transfer.Skew"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
-    <classEntry path="ghostcat.ui.IToolTipSkin"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
-    <classEntry path="ghostcat.ui.ToolTipSkin"/>
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
     <classEntry path="ghostcat.ui.UIBuilder"/>
     <classEntry path="ghostcat.ui.UIConst"/>
@@ -218,11 +227,18 @@
     <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
     <classEntry path="ghostcat.ui.classes.scroll.ScrollTextContent"/>
     <classEntry path="ghostcat.ui.containers.GAlert"/>
+    <classEntry path="ghostcat.ui.containers.GBox"/>
     <classEntry path="ghostcat.ui.containers.GButtonBar"/>
+    <classEntry path="ghostcat.ui.containers.GCanvas"/>
+    <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
+    <classEntry path="ghostcat.ui.containers.GHBox"/>
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
     <classEntry path="ghostcat.ui.containers.GRepeater"/>
     <classEntry path="ghostcat.ui.containers.GResizePanel"/>
     <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
+    <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
+    <classEntry path="ghostcat.ui.containers.GVBox"/>
+    <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
@@ -244,8 +260,13 @@
     <classEntry path="ghostcat.ui.controls.GText"/>
     <classEntry path="ghostcat.ui.controls.GVScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
+    <classEntry path="ghostcat.ui.layout.AbsoluteLayout"/>
     <classEntry path="ghostcat.ui.layout.Layout"/>
     <classEntry path="ghostcat.ui.layout.LayoutUtil"/>
+    <classEntry path="ghostcat.ui.layout.LinearLayout"/>
+    <classEntry path="ghostcat.ui.tooltip.ArowToolTipSkin"/>
+    <classEntry path="ghostcat.ui.tooltip.IToolTipSkin"/>
+    <classEntry path="ghostcat.ui.tooltip.ToolTipSkin"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.Asyn"/>
     <classEntry path="ghostcat.util.BitArray"/>
@@ -266,6 +287,7 @@
     <classEntry path="ghostcat.util.LocalStorage"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.ObjectProxy"/>
+    <classEntry path="ghostcat.util.PropertyHistory"/>
     <classEntry path="ghostcat.util.RandomUtil"/>
     <classEntry path="ghostcat.util.ReflectUtil"/>
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
@@ -288,21 +310,6 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
-    <classEntry path="ghostcat.ui.containers.GCanvas"/>
-    <classEntry path="ghostcat.ui.containers.GHBox"/>
-    <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
-    <classEntry path="ghostcat.ui.containers.GView"/>
-    <classEntry path="ghostcat.util.PropertyHistory"/>
-    <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
-    <classEntry path="ghostcat.operation.effect.ClipEffect"/>
-    <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
-    <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
-    <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
-    <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
-    <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
-    <classEntry path="ghostcat.display.GTickBase"/>
-    <classEntry path="ghostcat.text.RegExpUtil"/>
-    <classEntry path="ghostcat.ui.containers.GVBox"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

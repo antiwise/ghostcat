@@ -7,8 +7,8 @@ package
 	
 	import ghostcat.manager.RootManager;
 	import ghostcat.text.IME;
-	import ghostcat.ui.ToolTipSkin;
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.tooltip.ToolTipSkin;
 	import ghostcat.util.Geom;
 	import ghostcat.util.Util;
 

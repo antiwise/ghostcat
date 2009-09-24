@@ -5,10 +5,12 @@ package ghostcat.ui
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import ghostcat.util.ClassFactory;
-	import ghostcat.display.IDisplayObject;
 	import ghostcat.display.GBase;
+	import ghostcat.display.IDisplayObject;
 	import ghostcat.display.IToolTipManagerClient;
+	import ghostcat.ui.tooltip.IToolTipSkin;
+	import ghostcat.ui.tooltip.ToolTipSkin;
+	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Util;
 
 	/**
@@ -64,6 +66,7 @@ package ghostcat.ui
 		{
 			if (!obj)
 				obj = defaultSkin.newInstance();
+				
 			defaultObj = obj;
 				
 			super();
@@ -213,9 +216,10 @@ package ghostcat.ui
 				obj = defaultObj;
 			
 			setContent(obj);
-			mouseMoveHandler(null);
-			
 			(content as IToolTipSkin).data = toolTip;
+			(content as IToolTipSkin).show(target);
+			
+			mouseMoveHandler(null);
 		}
 		
 		/**

@@ -8,6 +8,7 @@ package
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.ui.ToolTipSprite;
+	import ghostcat.ui.tooltip.ArowToolTipSkin;
 	
 	public class SmoothCurveExample extends Sprite
 	{

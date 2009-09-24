@@ -33,6 +33,16 @@ package ghostcat.operation.effect
 			params.ease = v;
 		}
 		
+		public override function get target():*
+		{
+			return contentTarget;
+		}
+		
+		public override function set target(v:*):void
+		{
+			contentTarget = v;
+		}
+		
 		public function AlphaClipEffect(target:*, duration:int, direction:String, ease:Function = null, invert:Boolean = false)
 		{
 			super(this, duration, {}, invert);
