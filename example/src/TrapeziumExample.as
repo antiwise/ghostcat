@@ -8,6 +8,7 @@ package
 	import ghostcat.util.Geom;
 	
 	[SWF(width="300",height="300")]
+	
 	public class TrapeziumExample extends Sprite
 	{
 		public var p:Sprite;

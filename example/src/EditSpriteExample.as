@@ -10,6 +10,12 @@ package
 	import ghostcat.util.Asyn;
 	
 	[SWF(width="400",height="400")]
+	/**
+	 * 编辑矢量图形例子
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class EditSpriteExample extends Sprite
 	{
 		public function EditSpriteExample()

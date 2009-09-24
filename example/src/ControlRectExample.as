@@ -6,6 +6,12 @@ package
 	import ghostcat.ui.CursorSprite;
 	
 	[SWF(width="300",height="300")]
+	/**
+	 * 图形变换例子
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class ControlRectExample extends Sprite
 	{
 		public function ControlRectExample()

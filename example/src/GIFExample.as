@@ -7,6 +7,14 @@ package
 	import ghostcat.operation.LoadGIFOper;
 	
 	[SWF(width="500",height="400")]
+	/**
+	 * GIF载入播放例子
+	 * 
+	 * GIF解析速度很慢，实际上并不具有太多的实用性。
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GIFExample extends Sprite
 	{
 		public var loader:LoadGIFOper;

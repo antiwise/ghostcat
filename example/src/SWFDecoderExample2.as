@@ -13,6 +13,7 @@ package
 	
 	/**
 	 * SWF二进制代码解析（这几个Tag只有FLEX编译的文件才有）
+	 * 顺带演示如何用SWFSelf加载自身数据
 	 * 
 	 * @author Administrator
 	 * 

@@ -7,7 +7,7 @@ package ghostcat.display
 	import ghostcat.util.Geom;
 	
 	/**
-	 * Scale保持为固定值的显示对象
+	 * 重写了width,height使得scale保持为1的显示对象，大部分组件类的基类
 	 * 
 	 * @author flashyiyi
 	 * 

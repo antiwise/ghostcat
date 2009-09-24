@@ -190,6 +190,11 @@ package ghostcat.util
 			update(event.interval);
 		}
 		
+		/**
+		 * 立即更新全部缓动
+		 * @param interval
+		 * 
+		 */
 		public static function update(interval:int=0):void 
 		{
 			for (var i:int = effects.length - 1; i >=0; i--) 
@@ -199,6 +204,11 @@ package ghostcat.util
 			}
 		}
 		
+		/**
+		 * 更新缓动
+		 * @param interval
+		 * 
+		 */
 		public function update(interval:int=0):void
 		{
 			var key:String;

@@ -336,7 +336,7 @@ package ghostcat.display.viewport
 					addItems(new Rectangle(curRect.right,curRect.y,Math.min(screen.width,screen.right - curRect.right),curRect.height),RIGHT)
 				else
 				{
-					//当屏幕向回卷有大跨度时，只删除最下面的一部分
+					//当屏幕向回卷有大跨度时，只删除最下面的一部分，暂时先这样特殊处理一下
 					if (curRect.width > 5000)
 						removeItems(new Rectangle(screen.x + curRect.width - screen.width - 1,curRect.y,screen.width + 1,curRect.height));
 					else

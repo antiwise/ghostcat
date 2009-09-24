@@ -19,12 +19,9 @@ package ghostcat.display
 	[Event(name="resize",type="ghostcat.events.ResizeEvent")]
 	
 	/**
-	 * 这个类实现了光标和提示接口，以及更新事件
+	 * 这个类实现了光标和提示接口，以及属性变化事件
 	 * 
-	 * 这个类并不是专门针对UI的。事实上，就算是普通的显示对象，一样有设置toolTip和cursor的需求，UI和非UI的区分并没有那么大。
-	 * 而这种程度的内存增加是完全可以接受的。真需要严格控制性能的时候，也应该使用Bitmap,Shape之类的东西。
-	 * 
-	 * collision和oldPosition则主要针对于游戏
+	 * 建议全部可视对象都以此类作为基类，而不仅仅是组件。
 	 * 
 	 * @author flashyiyi
 	 * 

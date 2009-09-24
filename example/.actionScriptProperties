@@ -32,34 +32,34 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="UIComboBoxExample.as"/>
-    <application path="UIBoxExample.as"/>
-    <application path="GXMLExample.as"/>
-    <application path="NumberExample.as"/>
-    <application path="UIScrollExample.as"/>
-    <application path="GIFExample.as"/>
-    <application path="FireExample.as"/>
     <application path="Tile45Example.as"/>
     <application path="RightClickExample.as"/>
     <application path="TrapeziumExample.as"/>
-    <application path="PackageExample.as"/>
-    <application path="Paper3DExample.as"/>
-    <application path="TestExample.as"/>
+    <application path="GIFExample.as"/>
+    <application path="UIComboBoxExample.as"/>
+    <application path="UINumberExample.as"/>
     <application path="ControlRectExample.as"/>
-    <application path="LightExample.as"/>
-    <application path="TileExample.as"/>
     <application path="IFrameExample.as"/>
     <application path="SkewExample.as"/>
     <application path="IMEExample.as"/>
     <application path="SWFDecoderExample.as"/>
-    <application path="EditSpriteExample.as"/>
-    <application path="TweenExample.as"/>
     <application path="SmoothCurveExample.as"/>
     <application path="LangageExample.as"/>
+    <application path="AStarExample.as"/>
+    <application path="PackageExample.as"/>
+    <application path="Paper3DExample.as"/>
+    <application path="TestExample.as"/>
+    <application path="LightExample.as"/>
+    <application path="FireExample.as"/>
+    <application path="TileExample.as"/>
+    <application path="UIBoxExample.as"/>
+    <application path="TweenExample.as"/>
+    <application path="EditSpriteExample.as"/>
+    <application path="UIScrollExample.as"/>
     <application path="SWFDecoderExample2.as"/>
     <application path="BindingExample.as"/>
     <application path="CollisionExample.as"/>
-    <application path="AStarExample.as"/>
+    <application path="GXMLExample.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
