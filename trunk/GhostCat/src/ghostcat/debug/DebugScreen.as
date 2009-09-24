@@ -37,10 +37,23 @@ package ghostcat.debug
 		private var currentObj:DisplayObject;
 		private var global:Boolean;
 		
+		/**
+		 * 显示到舞台上
+		 * @param root
+		 * 
+		 */
 		public static function show(root:DisplayObject):void
 		{
 			root.stage.addChild(new DebugScreen());
 		}
+		/**
+		 * 获得显示对象的具体属性
+		 * 
+		 * @param obj	对象
+		 * @param global	是否取舞台属性
+		 * @return 
+		 * 
+		 */
 		public static function getdisplayObjectDetail(obj:DisplayObject,global:Boolean = false):String
 		{
 			var result:String = "";
@@ -116,6 +129,10 @@ package ghostcat.debug
 			global = false;
 		}
 		
+		/**
+		 * 销毁方法
+		 * 
+		 */
 		public function destory():void
 		{
 			stage.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);

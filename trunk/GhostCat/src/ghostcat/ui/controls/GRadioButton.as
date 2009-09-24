@@ -4,19 +4,20 @@ package ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.skin.RadioButtonIconSkin;
 	import ghostcat.util.ClassFactory;
 	
 	/**
 	 * 单选框
+	 * 
+	 * 标签规则：当作按钮转换
 	 * 
 	 * @author flashyiyi
 	 *  
 	 */
 	public class GRadioButton extends GButton
 	{
-		[Embed(skinClass="ghostcat.skin.RadioButtonIconSkin")]
-		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
+		public static var defaultSkin:ClassFactory = new ClassFactory(RadioButtonIconSkin);
 		
 		private var _groupName:String;
 		
@@ -75,7 +76,7 @@ package ghostcat.ui.controls
 			var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(v);
 			g.addItem(this);
 		}
-
+		/** @inheritDoc*/
 		public override function set selected(v:Boolean) : void
 		{
 			if (super.selected == v)
@@ -89,14 +90,14 @@ package ghostcat.ui.controls
 				g.selectedItem = this;
 			}
 		} 
-		
+		/** @inheritDoc*/
 		protected override function clickHandler(event:MouseEvent):void
 		{
 			super.clickHandler(event);
 			
 			this.selected = true;
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			if (groupName)

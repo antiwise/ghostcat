@@ -20,47 +20,47 @@ package ghostcat.ui.classes.scroll
 		{
 			this.target = target;
 		}
-		
+		/** @inheritDoc*/
 		public function get content():DisplayObject
 		{
 			return target;
 		}
-		
+		/** @inheritDoc*/
 		public function get maxScrollH():int
 		{
 			return _maxScrollH;
 		}
-		
+		/** @inheritDoc*/
 		public function get maxScrollV():int
 		{
 			return _maxScrollV;
 		}
-		
+		/** @inheritDoc*/
 		public function set maxScrollH(v:int):void
 		{
 			_maxScrollH = v;
 		}
-		
+		/** @inheritDoc*/
 		public function set maxScrollV(v:int):void
 		{
 			_maxScrollV = v;
 		}
-		
+		/** @inheritDoc*/
 		public function get scrollH():int
 		{
 			return -content.x;
 		}
-		
+		/** @inheritDoc*/
 		public function get scrollV():int
 		{
 			return -content.y;
 		}
-		
+		/** @inheritDoc*/
 		public function set scrollH(v:int):void
 		{
 			content.x = -v;
 		}
-		
+		/** @inheritDoc*/
 		public function set scrollV(v:int):void
 		{
 			content.y = -v;

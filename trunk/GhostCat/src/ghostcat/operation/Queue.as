@@ -97,7 +97,7 @@ package ghostcat.operation
 		
 			doLoad();
 		}
-		
+		/** @inheritDoc*/
 		public override function commit(queue:Queue=null) : void
 		{
 			if (!queue)
@@ -108,7 +108,7 @@ package ghostcat.operation
 			else
 				super.commit(queue);
 		}
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();

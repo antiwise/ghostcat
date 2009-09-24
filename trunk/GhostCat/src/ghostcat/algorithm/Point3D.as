@@ -2,15 +2,24 @@ package ghostcat.algorithm
 {
 	
 	/**
-	 * 3D坐标
+	 * 3D坐标类
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class Point3D
 	{
+		/**
+		 * x坐标
+		 */
 		public var x:Number;
+		/**
+		 * y坐标
+		 */
 		public var y:Number;
+		/**
+		 * z坐标
+		 */
 		public var z:Number;
 		public function Point3D(x:Number=0,y:Number=0,z:Number=0)
 		{

@@ -1,7 +1,10 @@
 package ghostcat.extend
 {
 	import ghostcat.display.GNoScale;
-
+	import flash.external.ExternalInterface;
+    import flash.geom.Point;
+    import flash.net.navigateToURL;
+		
 	/**
 	 * 浏览器IFrame
 	 * 
@@ -10,10 +13,6 @@ package ghostcat.extend
 	 */
 	public class IFrame extends GNoScale
 	{
-		import flash.external.ExternalInterface;
-        import flash.geom.Point;
-        import flash.net.navigateToURL;
-		
 		[Embed(source = "IFrame.js",mimeType="application/octet-stream")]
 		private static var jsCode:Class;
 		ExternalInterface.available && ExternalInterface.call("eval",new jsCode().toString());
@@ -29,13 +28,13 @@ package ghostcat.extend
 			
 			ExternalInterface.call("IFrameManager.createIFrame", id);
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
 			moveIFrame();
 		}
-		
+		/** @inheritDoc*/
 		protected override function updatePosition() : void
 		{
 			super.updatePosition();
@@ -85,14 +84,14 @@ package ghostcat.extend
         {
             return _url;
         }
-
+		/** @inheritDoc*/
         override public function set visible(v: Boolean): void
         {
             super.visible = v;
 
             ExternalInterface.call(v ? "IFrameManager.showIFrame":"IFrameManager.hideIFrame" , id);            
         }
-        
+        /** @inheritDoc*/
         override public function destory() : void
         {
         	super.destory();

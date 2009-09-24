@@ -9,7 +9,7 @@ package ghostcat.ui.containers
 	import ghostcat.util.TweenUtil;
 	
 	/**
-	 * 采用Effect的Panel
+	 * 采用Effect代替的动画窗口
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -32,7 +32,7 @@ package ghostcat.ui.containers
 			
 			super(mc, replace);
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{	
 			super.init();
@@ -52,7 +52,7 @@ package ghostcat.ui.containers
 				this.y = pRect.y + pRect.height / 2;
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function set visible(v:Boolean):void
 		{
 			if (super.visible == v)
@@ -83,6 +83,10 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		/**
+		 * 关闭窗口 
+		 * 
+		 */
 		public function close() : void
 		{
 			if (closeEffect)

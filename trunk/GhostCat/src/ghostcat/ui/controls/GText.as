@@ -30,6 +30,8 @@ package ghostcat.ui.controls
 	/**
 	 * 文本框
 	 * 
+	 * 标签规则：内容将作为背景存在，以内部找到的第一个TextField为标准，否则重新创建
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
@@ -234,6 +236,10 @@ package ghostcat.ui.controls
 			data = v;
 		}
 		
+		/**
+		 * 根据文本框更新图形大小
+		 * 
+		 */
 		public function adjustContextSize():void
 		{
 			if (content)
@@ -243,7 +249,7 @@ package ghostcat.ui.controls
 				content.height = textField.height - rect.y;
 			}
 		}
-
+		/** @inheritDoc*/
 		public override function set data(v:*):void
 		{
 			if (v == super.data)
@@ -328,6 +334,11 @@ package ghostcat.ui.controls
 			return byte.length;
   		}
 		
+		/**
+		 * 键入文字事件 
+		 * @param event
+		 * 
+		 */
 		protected function textInputHandler(event:TextEvent):void
 		{
 			if (regExp && !regExp.test(textField.text + event.text))
@@ -337,6 +348,11 @@ package ghostcat.ui.controls
 				event.preventDefault();
 		}
 		
+		/**
+		 * 文件焦点事件 
+		 * @param event
+		 * 
+		 */
 		protected function textFocusInHandler(event:Event):void
 		{
 			if (autoSelect)
@@ -352,7 +368,7 @@ package ghostcat.ui.controls
 		{
 			
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

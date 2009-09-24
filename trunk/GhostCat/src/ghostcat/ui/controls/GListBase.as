@@ -26,7 +26,9 @@ package ghostcat.ui.controls
 	/**
 	 * 没有滚动条的List
 	 * 
-	 * @author tangwei
+	 * 标签规则：skin直接被当作重复块的skin处理
+	 * 
+	 * @author flashyiyi
 	 * 
 	 */
 	public class GListBase extends Tile
@@ -34,6 +36,9 @@ package ghostcat.ui.controls
 		public static var defaultSkin:ClassFactory =  new ClassFactory(ListBackground);
 		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton,null,[null,true,true]);
 		
+		/**
+		 * 类型 
+		 */
 		public var type:String = UIConst.TILE;
 		
 		/**
@@ -92,6 +97,13 @@ package ghostcat.ui.controls
 			addEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		
+		/**
+		 * 获得某个坐标的数据 
+		 * @param i
+		 * @param j
+		 * @return 
+		 * 
+		 */
 		public function getDataAt(i:int,j:int):*
 		{
 			if (type == UIConst.HORIZONTAL)
@@ -102,6 +114,12 @@ package ghostcat.ui.controls
 				return data[j * columnCount + i];
 		}
 		
+		/**
+		 * 由数据获得元素 
+		 * @param item
+		 * @return 
+		 * 
+		 */
 		public function getDataFromItem(item:DisplayObject):*
 		{
 			var i:int = item.x / columnWidth;
@@ -109,6 +127,11 @@ package ghostcat.ui.controls
 			return getDataAt(i,j);
 		}
 		
+		/**
+		 * 选择的数据 
+		 * @return 
+		 * 
+		 */
 		public function get selectedData():*
 		{
 			return _selectedData;
@@ -131,6 +154,11 @@ package ghostcat.ui.controls
 			
 		}
 		
+		/**
+		 * 选择的行
+		 * @return 
+		 * 
+		 */
 		public function get selectedRow():int
 		{
 			var selectIndex:int = data.indexOf(_selectedData);
@@ -152,6 +180,11 @@ package ghostcat.ui.controls
 			selectedData = getDataAt(selectedColumn,v);
 		}
 		
+		/**
+		 * 选择的列
+		 * @return 
+		 * 
+		 */
 		public function get selectedColumn():int
 		{
 			var selectIndex:int = data.indexOf(_selectedData);
@@ -173,6 +206,11 @@ package ghostcat.ui.controls
 			selectedData = getDataAt(v,selectedRow);
 		}
 		
+		/**
+		 * 选择的元素 
+		 * @return 
+		 * 
+		 */
 		public function get selectedItem():DisplayObject
 		{
 			return getItemAt(selectedColumn,selectedRow);
@@ -183,6 +221,11 @@ package ghostcat.ui.controls
 			selectedData = (v as GBase).data;
 		}
 		
+		/**
+		 * 元素大小 
+		 * @return 
+		 * 
+		 */
 		protected override function get contentRect():Rectangle
 		{
 			var rect:Rectangle = super.contentRect.clone();
@@ -195,6 +238,16 @@ package ghostcat.ui.controls
 			return rect;
 		}
 		
+		/**
+		 * 总列数 
+		 * @param v
+		 * 
+		 */
+		public function set columnCount(v:int):void
+		{
+			_columnCount = v;
+		}
+
 		public function get columnCount():int
 		{
 			if (type == UIConst.HORIZONTAL)
@@ -210,6 +263,11 @@ package ghostcat.ui.controls
 			}
 		}
 
+		/**
+		 * 总行数 
+		 * @return 
+		 * 
+		 */
 		public function get rowCount():int
 		{
 			if (type == UIConst.HORIZONTAL)
@@ -220,29 +278,34 @@ package ghostcat.ui.controls
 				return data ? Math.ceil(data.length / columnCount) : 0;
 		}
 
-		public function set columnCount(v:int):void
-		{
-			_columnCount = v;
-		}
-
+		/**
+		 * 组件的宽度 
+		 * @return 
+		 * 
+		 */
 		public override function get width() : Number
 		{
 			return (type != UIConst.VERTICAL) ? columnWidth * columnCount : super.width;
 		}
 		
+		/**
+		 * 组件的高度 
+		 * @return 
+		 * 
+		 */
 		public override function get height() : Number
 		{
 			return (type != UIConst.HORIZONTAL) ? rowHeight * rowCount : super.height;
 		}
 		
+		/**
+		 * 列宽 
+		 * @return 
+		 * 
+		 */
 		public function get columnWidth():Number
 		{
 			return (type == UIConst.VERTICAL) ? width : _contentRect.width;
-		}
-		
-		public function get rowHeight():Number
-		{
-			return (type == UIConst.HORIZONTAL) ? height : _contentRect.height;
 		}
 		
 		public function set columnWidth(v:Number):void
@@ -250,11 +313,21 @@ package ghostcat.ui.controls
 			_contentRect.width = v;
 		}
 		
+		/**
+		 * 行高
+		 * @return 
+		 * 
+		 */
+		public function get rowHeight():Number
+		{
+			return (type == UIConst.HORIZONTAL) ? height : _contentRect.height;
+		}
+		
 		public function set rowHeight(v:Number):void
 		{
 			_contentRect.height = v;
 		}
-		
+		/** @inheritDoc*/
 		public override function set data(v:*):void
 		{
 			super.data = v;
@@ -264,6 +337,11 @@ package ghostcat.ui.controls
 				(v as IEventDispatcher).addEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler,false,0,true);
 		}
 		
+		/**
+		 * 通过外部修改数据源变化事件 
+		 * @param event
+		 * 
+		 */
 		protected function dataChangeHandler(event:PropertyChangeEvent):void
 		{
 			var i:int;
@@ -282,6 +360,11 @@ package ghostcat.ui.controls
 			refreshItem(i,j);
 		}
 		
+		/**
+		 * 增加元素事件 
+		 * @param event
+		 * 
+		 */
 		protected function addRepeatItemHandler(event:RepeatEvent):void
 		{
 			var p:Point = event.repeatPos;
@@ -291,6 +374,11 @@ package ghostcat.ui.controls
 			item.visible = (item.data != null);
 		}
 		
+		/**
+		 * 移除元素事件 
+		 * @param event
+		 * 
+		 */
 		protected function removeRepeatItemHandler(event:RepeatEvent):void
 		{
 			var item:GBase = event.repeatObj as GBase;
@@ -298,6 +386,11 @@ package ghostcat.ui.controls
 			item.visible = item.selected = false;
 		}
 		
+		/**
+		 * 点击事件 
+		 * @param event
+		 * 
+		 */
 		protected function clickHandler(event:MouseEvent):void
 		{
 			if (event.target == this)
@@ -314,6 +407,13 @@ package ghostcat.ui.controls
 			}
 		}
 		
+		/**
+		 * 刷新某个坐标的元素 
+		 * @param i
+		 * @param j
+		 * @return 
+		 * 
+		 */
 		public function refreshItem(i:int,j:int):GBase
 		{
 			var item:GBase = getItemAt(i,j);
@@ -345,6 +445,10 @@ package ghostcat.ui.controls
 			return item;
 		}
 		
+		/**
+		 * 刷新元素的内容 
+		 * 
+		 */
 		public function refresh():void
 		{
 			var screen:Rectangle = getItemRect(getLocalScreen());
@@ -355,7 +459,7 @@ package ghostcat.ui.controls
 						refreshItem(i,j);	
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

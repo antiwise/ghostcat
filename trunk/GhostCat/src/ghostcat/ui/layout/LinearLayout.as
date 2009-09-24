@@ -24,6 +24,11 @@ package ghostcat.ui.layout
 		private var _paddingBottom:Number = 0;
 		
 		
+		/**
+		 * 方向 
+		 * @return 
+		 * 
+		 */
 		public function get type():String
 		{
 			return _type;
@@ -35,6 +40,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 横向间距 
+		 * @return 
+		 * 
+		 */
 		public function get horizontalGap():Number
 		{
 			return _horizontalGap;
@@ -46,6 +56,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 纵向间距
+		 * @return 
+		 * 
+		 */
 		public function get verticalGap():Number
 		{
 			return _verticalGap;
@@ -56,6 +71,11 @@ package ghostcat.ui.layout
 			_verticalGap = v;
 			invalidateLayout();
 		}
+		/**
+		 * 左边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingLeft():Number
 		{
 			return _paddingLeft;
@@ -67,6 +87,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 上边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingTop():Number
 		{
 			return _paddingTop;
@@ -78,6 +103,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 右边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingRight():Number
 		{
 			return _paddingRight;
@@ -89,6 +119,11 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 
+		/**
+		 * 下边距
+		 * @return 
+		 * 
+		 */
 		public function get paddingBottom():Number
 		{
 			return _paddingBottom;
@@ -104,7 +139,7 @@ package ghostcat.ui.layout
 		{
 			super(target,isRoot);
 		}
-		
+		/** @inheritDoc*/
 		protected override function layoutChildren(x:Number, y:Number, w:Number, h:Number) : void
 		{
 			var prev:DisplayObject;

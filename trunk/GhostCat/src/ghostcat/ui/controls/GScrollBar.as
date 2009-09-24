@@ -17,6 +17,9 @@ package ghostcat.ui.controls
 	
 	/**
 	 * 滚动条 
+	 * 
+	 * 标签规则：和Silder相同
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -83,12 +86,11 @@ package ghostcat.ui.controls
 			if (_target)
 				_target.addEventListener(Event.SCROLL,scrollHandler);
 		}
-		
+		/** @inheritDoc*/
 		public override function get value():Number
 		{
 			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH : _scrollContent.scrollV;
 		}
-
 		public override function set value(v:Number):void
 		{
 			super.value = v;
@@ -99,17 +101,17 @@ package ghostcat.ui.controls
 				_scrollContent.scrollV = v;
 				
 		}
-		
+		/** @inheritDoc*/
 		public override function get maxValue():Number
 		{
 			return (direction == UIConst.HORIZONTAL) ? _scrollContent.maxScrollH : _scrollContent.maxScrollV;
 		}
-
+		
 		public override function set maxValue(v:Number):void
 		{
 			throw new Error("此属性是只读的")
 		}
-
+		/** @inheritDoc*/
 		public override function get minValue():Number
 		{
 			return 0;
@@ -119,7 +121,7 @@ package ghostcat.ui.controls
 		{
 			throw new Error("此属性是只读的")
 		}
-		
+		/** @inheritDoc*/
 		public override function get percent():Number
 		{
 			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH / _scrollContent.maxScrollH : _scrollContent.scrollV / _scrollContent.maxScrollV;
@@ -168,7 +170,7 @@ package ghostcat.ui.controls
 			if (_scrollContent && _scrollContent is DisplayObject)
 				(_scrollContent as DisplayObject).scrollRect = rect;
 		}
-		
+		/** @inheritDoc*/
 		public override function updateThumb():void
 		{
 			if (!_scrollContent)
@@ -176,7 +178,7 @@ package ghostcat.ui.controls
 			
 			super.updateThumb();
 		}
-		
+		/** @inheritDoc*/
 		protected override function thumbMouseMoveHandler(event:Event=null):void
 		{
 			if (thumb.position.equals(thumb.oldPosition))
@@ -214,7 +216,7 @@ package ghostcat.ui.controls
 		{
 			updateThumb();
 		}
-		
+		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent):void
 		{
 			super.tickHandler(event);
@@ -248,7 +250,7 @@ package ghostcat.ui.controls
 				}
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			target = null;

@@ -11,9 +11,20 @@ package ghostcat.ui.containers
 	import ghostcat.parse.graphics.GraphicsRect;
 	import ghostcat.ui.CursorSprite;
 	
+	/**
+	 * 可拖动边缘缩放的窗口
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GResizePanel extends GNoScale
 	{
+		/**
+		 * 最小高度
+		 */
 		public var minHeight:Number = 0;
+		/**
+		 * 最大高度
+		 */
 		public var minWidth:Number = 0;
 		
 		private var leftEdge:DragPoint;
@@ -27,6 +38,10 @@ package ghostcat.ui.containers
 			createContorl();
 		}
 			
+		/**
+		 * 创建控制区域
+		 * 
+		 */
 		protected function createContorl():void
 		{
 			leftEdge = new DragPoint(null,new Shape());
@@ -50,7 +65,7 @@ package ghostcat.ui.containers
 			bottomEdge.addEventListener(MoveEvent.MOVE,bottomEdgeHandler);
 			addChild(bottomEdge);
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
@@ -73,7 +88,7 @@ package ghostcat.ui.containers
 			new RectParse(bottomRect,null,fill,null,true).parse(bottomEdge.content);
 		}
 		
-		protected function topEdgeHandler(event:MoveEvent):void
+		private function topEdgeHandler(event:MoveEvent):void
 		{
 			if (height - topEdge.y > minHeight)
 			{
@@ -82,7 +97,7 @@ package ghostcat.ui.containers
 			}
 		}
 		
-		protected function bottomEdgeHandler(event:MoveEvent):void
+		private function bottomEdgeHandler(event:MoveEvent):void
 		{
 			if (bottomEdge.y > minHeight)
 			{
@@ -90,7 +105,7 @@ package ghostcat.ui.containers
 			}
 		}
 		
-		protected function leftEdgeHandler(event:MoveEvent):void
+		private function leftEdgeHandler(event:MoveEvent):void
 		{
 			if (width - leftEdge.x > minWidth)
 			{
@@ -99,7 +114,7 @@ package ghostcat.ui.containers
 			}
 		}
 		
-		protected function rightEdgeHandler(event:MoveEvent):void
+		private function rightEdgeHandler(event:MoveEvent):void
 		{
 			if (rightEdge.x > minWidth)
 				width = rightEdge.x;

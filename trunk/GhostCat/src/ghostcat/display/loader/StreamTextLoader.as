@@ -36,12 +36,22 @@ package ghostcat.display.loader
 				load(request);
 		}
 		
+		/**
+		 * 加载 
+		 * @param request
+		 * 
+		 */
 		public function load(request:URLRequest):void
 		{
 			loadComplete = false;
 			stream.load(request);
 		}
 		
+		/**
+		 * 加载器 
+		 * @return 
+		 * 
+		 */
 		public function get eventDispatcher():EventDispatcher
 		{
 			return stream;
@@ -57,7 +67,7 @@ package ghostcat.display.loader
 			refreshProgress(event);
 			loadComplete = true;
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

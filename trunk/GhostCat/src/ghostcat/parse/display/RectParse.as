@@ -6,6 +6,11 @@ package ghostcat.parse.display
 	import ghostcat.parse.graphics.IGraphicsFill;
 	import ghostcat.parse.graphics.IGraphicsLineStyle;
 	
+	/**
+	 * 方框 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class RectParse extends ShapeParse
 	{
 		public var rect:GraphicsRect;
@@ -16,7 +21,7 @@ package ghostcat.parse.display
 			
 			this.rect = rect;
 		}
-		
+		/** @inheritDoc*/
 		protected override function parseBaseShape(target:Graphics) : void
 		{
 			super.parseBaseShape(target);

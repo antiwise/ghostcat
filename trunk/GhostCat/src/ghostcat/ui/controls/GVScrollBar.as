@@ -1,5 +1,6 @@
 package ghostcat.ui.controls
 {
+	import ghostcat.skin.VScrollBarSkin;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
 	
@@ -11,9 +12,7 @@ package ghostcat.ui.controls
 	 */
 	public class GVScrollBar extends GScrollBar
 	{
-		[Embed(skinClass="ghostcat.skin.VScrollBarSkin")]
-		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
+		public static var defaultSkin:ClassFactory = new ClassFactory(VScrollBarSkin);
 		
 		public function GVScrollBar(skin:*=null, replace:Boolean=true)
 		{

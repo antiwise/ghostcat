@@ -8,6 +8,11 @@ package ghostcat.display
 	 */
 	public interface IData
 	{
+		/**
+		 * 数据
+		 * @param v
+		 * 
+		 */
 		function set data(v:*):void;
 		function get data():*; 
 	}

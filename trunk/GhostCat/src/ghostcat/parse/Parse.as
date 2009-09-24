@@ -20,6 +20,11 @@ package ghostcat.parse
 		
 		private var _children:Array;
 		
+		/**
+		 * 子对象
+		 * @param v
+		 * 
+		 */
 		public function set children(v:Array):void
 		{
 			_children = v;
@@ -30,6 +35,13 @@ package ghostcat.parse
 			return _children;
 		}
 		
+		/**
+		 * 创建
+		 *  
+		 * @param para
+		 * @return 
+		 * 
+		 */
 		public static function create(para:Array):Parse
 		{
 			var p:Parse = new Parse();

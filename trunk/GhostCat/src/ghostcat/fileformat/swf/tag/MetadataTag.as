@@ -11,13 +11,14 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class MetadataTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 77;
 		}
 		
 		public var metadata:XML;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			var bytesReader:ByteArrayReader = new ByteArrayReader(bytes);

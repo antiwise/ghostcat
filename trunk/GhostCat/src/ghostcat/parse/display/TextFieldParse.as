@@ -8,10 +8,24 @@ package ghostcat.parse.display
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.text.TextFieldUtil;
 
+	/**
+	 * 文本框 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TextFieldParse extends DisplayParse
 	{
+		/**
+		 * 文字 
+		 */
 		public var text:String;
+		/**
+		 * 偏移量
+		 */
 		public var pos:Point;
+		/**
+		 * 默认字体 
+		 */
 		public var defaultTextFormat:TextFormat;
 		
 		public function TextFieldParse(text:String,pos:Point=null,defaultTextFormat:TextFormat=null)
@@ -20,13 +34,18 @@ package ghostcat.parse.display
 			this.pos = pos;
 			this.defaultTextFormat = defaultTextFormat;
 		}
-		
+		/** @inheritDoc*/
 		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);
 			target.addChild(createTextField());
 		}
 		
+		/**
+		 * 创建文本框 
+		 * @return 
+		 * 
+		 */
 		public function createTextField():TextField
 		{
 			if (!defaultTextFormat)
@@ -47,6 +66,14 @@ package ghostcat.parse.display
 			return textField;
 		}
 		
+		/**
+		 * 创建文本框 
+		 * @param text
+		 * @param pos
+		 * @param defaultTextFormat
+		 * @return 
+		 * 
+		 */
 		public static function createTextField(text:String,pos:Point=null,defaultTextFormat:TextFormat=null):TextField
 		{
 			var p:TextFieldParse = new TextFieldParse(text,pos,defaultTextFormat);

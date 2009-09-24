@@ -85,7 +85,7 @@ package ghostcat.transfer
 			if (rect.width && rect.height)
 				bitmapData = new BitmapData(rect.width,rect.height,true,0);
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateDisplayList(): void
 		{
 			super.updateDisplayList();
@@ -148,7 +148,7 @@ package ghostcat.transfer
 			_target.removeEventListener(MoveEvent.MOVE, handleTargetMove);
 			_target.removeEventListener(ResizeEvent.RESIZE, handleTargetResize);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			super.destory();

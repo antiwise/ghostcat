@@ -66,7 +66,7 @@ package ghostcat.transfer
 			x = rect.x + this.x;
 			y = rect.bottom + this.y + _distance;
 		}
-		
+		/** @inheritDoc*/
 		protected override function render(): void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
@@ -84,7 +84,7 @@ package ghostcat.transfer
 			sh.graphics.endFill();
 			bitmapData.draw(sh,null,null,BlendMode.ALPHA);
 		}
-		
+		/** @inheritDoc*/
 		protected override function createBitmapData():void
 		{
 			bitmapData && bitmapData.dispose();

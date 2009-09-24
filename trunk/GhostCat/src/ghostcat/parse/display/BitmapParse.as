@@ -31,7 +31,7 @@ package ghostcat.parse.display
 			this.pixelSnapping = pixelSnapping;
 			this.smoothing = smoothing;
 		}
-		
+		/** @inheritDoc*/
 		public function createBitmap():Bitmap
 		{
 			var bitmapData:BitmapData = new BitmapData(width,height,transparent,fillColor);
@@ -43,13 +43,13 @@ package ghostcat.parse.display
 			}
 			return bitmap;
 		}
-		
+		/** @inheritDoc*/
 		public override function parseContainer(target:DisplayObjectContainer) : void
 		{
 			super.parseContainer(target);
 			target.addChild(createBitmap());
 		}
-		
+		/** @inheritDoc*/
 		public override function parseDisplay(target:DisplayObject) : void
 		{
 			super.parseDisplay(target);
@@ -58,6 +58,18 @@ package ghostcat.parse.display
 				grid9.parse(target);
 		}
 		
+		/**
+		 * 创建一个位图
+		 * @param width
+		 * @param height
+		 * @param pos
+		 * @param transparent
+		 * @param fillColor
+		 * @param pixelSnapping
+		 * @param smoothing
+		 * @return 
+		 * 
+		 */
 		public static function createBitmap(width:int,height:int,pos:Point=null,transparent:Boolean = true,fillColor:uint = 0x00FFFFFF,pixelSnapping:String = "auto",smoothing:Boolean = false):Bitmap
 		{
 			return new BitmapParse(width,height,pos,transparent,fillColor,pixelSnapping,smoothing).createBitmap();

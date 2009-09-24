@@ -11,6 +11,11 @@ package ghostcat.skin
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
 	
+	/**
+	 * 滚动条皮肤 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class ProgressSkin extends Sprite
 	{
 		public var thumb:DisplayObject;

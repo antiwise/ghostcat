@@ -40,19 +40,19 @@ package ghostcat.display.graphics
 		{
 			return _enabledGrid;
 		}
-
+		
 		public function set enabledGrid(v:Boolean):void
 		{
 			_enabledGrid = v;
 			x = x;
 			y = y;
 		}
-
+		/** @inheritDoc*/
 		public override function set x(value:Number) : void
 		{
 			super.x = _enabledGrid ? Math.round(value / gridWidth) * gridWidth : value;
 		}
-		
+		/** @inheritDoc*/
 		public override function set y(value:Number) : void
 		{
 			super.y = _enabledGrid ? Math.round(value / gridHeight) * gridHeight : value;

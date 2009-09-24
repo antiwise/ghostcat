@@ -10,6 +10,8 @@ package ghostcat.ui.controls
 	/**
 	 * 数值显示
 	 * 
+	 * 标签规则：和文本框相同
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -85,7 +87,7 @@ package ghostcat.ui.controls
 		{
 			return data;
 		}
-		
+		/** @inheritDoc*/
 		public override function set data(v : *):void
 		{
 			setValue(v);
@@ -97,7 +99,7 @@ package ghostcat.ui.controls
 		}
 		
 		private var _displayValue:Number;
-		
+		/** @inheritDoc*/
 		public function get displayValue():Number
 		{
 			return _displayValue;

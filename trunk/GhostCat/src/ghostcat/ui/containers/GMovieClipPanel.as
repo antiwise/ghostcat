@@ -6,6 +6,14 @@ package ghostcat.ui.containers
 	import ghostcat.events.MovieEvent;
 	import ghostcat.util.Geom;
 	
+	/**
+	 * 动画窗口
+	 * 
+	 * 标签规则：窗口创建关闭显示隐藏时会跳到相应的动画标签内
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GMovieClipPanel extends GMovieClip
 	{
 		public var fields:Object = {create:"create",normal:"normal",close:"close",show:"show",hide:"hide"};
@@ -24,7 +32,7 @@ package ghostcat.ui.containers
 			
 			super(mc, replace);
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			super.init();
@@ -38,7 +46,7 @@ package ghostcat.ui.containers
 				this.y = pRect.y + pRect.height / 2;
 			}
 		}
-		
+		/** @inheritDoc*/
 		public override function set visible(v:Boolean):void
 		{
 			if (super.visible == v)
@@ -59,6 +67,10 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		/**
+		 * 关闭窗口 
+		 * 
+		 */
 		public function close() : void
 		{
 			setLabel(fields.close,1);

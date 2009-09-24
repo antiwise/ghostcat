@@ -137,7 +137,7 @@ package ghostcat.display.movieclip
 		{
 			state = FADE_IN;
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

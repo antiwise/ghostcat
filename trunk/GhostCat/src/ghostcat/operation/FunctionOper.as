@@ -22,7 +22,7 @@ package ghostcat.operation
 		{
 			this.cmd = new Handler(handler,para,caller);
 		}
-		
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();

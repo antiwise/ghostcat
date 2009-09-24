@@ -76,6 +76,15 @@ package ghostcat.operation.server
 			this.connect(gateway);
 		}
 		
+		/**
+		 * 执行方法
+		 * @param method	方法
+		 * @param para	参数
+		 * @param rHander	完成函数
+		 * @param fHander	失败函数
+		 * @return 
+		 * 
+		 */
 		public function operate(method:String,para:Array=null,rHander:Function=null,fHander:Function=null):RemoteOper
 		{
 			if (service)

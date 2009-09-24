@@ -4,6 +4,11 @@ package ghostcat.ui.controls
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ClassFactory;
 
+	/**
+	 * 纵向拖动块 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GVSilder extends GSilder
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(VSilderSkin)

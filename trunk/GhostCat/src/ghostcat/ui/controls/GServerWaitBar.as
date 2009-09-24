@@ -13,6 +13,8 @@ package ghostcat.ui.controls
 	/**
 	 * 等待服务器返回时显示的提示，将不显示进度
 	 * 
+	 * 标签规则：和进度条相同
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */

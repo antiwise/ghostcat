@@ -26,7 +26,13 @@ package ghostcat.manager
 		
 		private static var _parameters:Object = new Object();
 		
+		/**
+		 * 普通模式
+		 */
 		public static const MODE_NORMAL:int = 0;
+		/**
+		 * 无缩放模式
+		 */
 		public static const MODE_NOSCALE:int = 1;
 		
 		public static function get root():Sprite
@@ -41,6 +47,14 @@ package ghostcat.manager
 			return root.stage;
 		}
 		
+		/**
+		 * 注册对象
+		 * 
+		 * @param root	舞台
+		 * @param mode	模式
+		 * @param menuMode	菜单模式
+		 * 
+		 */
 		public static function register(root:Sprite,mode:int = 1,menuMode:int = 1):void
 		{
 			_root = root;

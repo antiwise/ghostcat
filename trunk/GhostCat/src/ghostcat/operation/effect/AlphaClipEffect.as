@@ -9,6 +9,12 @@ package ghostcat.operation.effect
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 
+	/**
+	 * 透明渐变裁切
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class AlphaClipEffect extends TweenEffect
 	{
 		public static const UP:String = "up";
@@ -16,13 +22,24 @@ package ghostcat.operation.effect
 		public static const LEFT:String = "left";
 		public static const RIGHT:String = "right";
 		
+		/**
+		 * 方向
+		 */
 		public var direction:String = DOWN;
 		
+		/**
+		 * 目标 
+		 */
 		public var contentTarget:DisplayObject;
 		
 		private var oldBlendMode:String;
 		private var mask:Shape;
 		
+		/**
+		 * 缓动函数 
+		 * @return 
+		 * 
+		 */
 		public function get ease():Function
 		{
 			return params.ease;
@@ -32,7 +49,7 @@ package ghostcat.operation.effect
 		{
 			params.ease = v;
 		}
-		
+		/** @inheritDoc*/
 		public override function get target():*
 		{
 			return contentTarget;
@@ -54,6 +71,11 @@ package ghostcat.operation.effect
 		
 		private var baseRect:Rectangle;
 		
+		/**
+		 * 滚动x 
+		 * @return 
+		 * 
+		 */
 		public function get scrollX():Number
 		{
 			return mask.x;
@@ -64,6 +86,11 @@ package ghostcat.operation.effect
 			mask.x = v;
 		}
 		
+		/**
+		 * 滚动y
+		 * @return 
+		 * 
+		 */
 		public function get scrollY():Number
 		{
 			return mask.y;
@@ -73,7 +100,7 @@ package ghostcat.operation.effect
 		{
 			mask.y = v;
 		}
-
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			baseRect = contentTarget.getBounds(contentTarget);
@@ -121,7 +148,7 @@ package ghostcat.operation.effect
 			
 			super.execute();
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:* = null) : void
 		{
 			super.result(event);

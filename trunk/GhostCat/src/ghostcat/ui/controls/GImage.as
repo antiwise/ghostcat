@@ -181,7 +181,7 @@ package ghostcat.ui.controls
 			
 			invalidateLayout();
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
@@ -192,6 +192,10 @@ package ghostcat.ui.controls
 			layoutChildren();
 		}
 		
+		/**
+		 * 之后更新布局 
+		 * 
+		 */
 		public function invalidateLayout():void
 		{
 			CallLater.callLater(layoutChildren,null,true);

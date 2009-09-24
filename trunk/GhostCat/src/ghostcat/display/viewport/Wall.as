@@ -93,7 +93,7 @@ package ghostcat.display.viewport
 			_endPoint = v;
 			invalidateDisplayList();
 		}
-		
+		/** @inheritDoc*/
 		override protected function updateDisplayList() : void
 		{
 			_line = new Line(_startPoint,_endPoint);

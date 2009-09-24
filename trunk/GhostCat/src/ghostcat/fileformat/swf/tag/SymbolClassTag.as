@@ -11,6 +11,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class SymbolClassTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 76;
@@ -18,7 +19,7 @@ package ghostcat.fileformat.swf.tag
 		
 		public var symbolClasses:Array;
 		public var links:Array;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			symbolClasses = [];

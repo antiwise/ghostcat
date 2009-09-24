@@ -13,6 +13,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class DoABCTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 82;
@@ -21,6 +22,7 @@ package ghostcat.fileformat.swf.tag
 		public var flags:int;
 		public var name:String;
 		public var abcData:ByteArray;
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			var reader:ByteArrayReader = new ByteArrayReader(bytes);

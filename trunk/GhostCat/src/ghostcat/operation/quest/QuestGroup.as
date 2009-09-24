@@ -173,6 +173,10 @@ package ghostcat.operation.quest
 			dispatchEvent(event);
 		}
 		
+		/**
+		 * 销毁 
+		 * 
+		 */
 		public function destory():void
 		{
 			for each (var q:Quest in quests)

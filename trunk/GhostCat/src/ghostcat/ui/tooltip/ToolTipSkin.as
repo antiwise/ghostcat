@@ -31,7 +31,7 @@ package ghostcat.ui.tooltip
 			
 			this.enabledAdjustContextSize = true;
 		}
-		
+		/** @inheritDoc*/
 		public function show(target:DisplayObject):void
 		{
 			var toolTipSprite:ToolTipSprite = this.parent as ToolTipSprite;
@@ -42,7 +42,7 @@ package ghostcat.ui.tooltip
 			TweenUtil.removeTween(toolTipSprite);
 			TweenUtil.from(toolTipSprite,100,{alpha:0.0,y:"10"}).update();
 		}
-		
+		/** @inheritDoc*/
 		public function positionTo(target:DisplayObject):void
 		{
 			var toolTipSprite:ToolTipSprite = this.parent as ToolTipSprite;

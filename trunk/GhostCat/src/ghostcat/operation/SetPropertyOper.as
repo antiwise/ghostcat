@@ -7,8 +7,17 @@ package ghostcat.operation
 	 */
 	public class SetPropertyOper extends Oper
 	{
+		/**
+		 * 目标
+		 */
 		public var client:*;
+		/**
+		 * 属性
+		 */
 		public var property:*;
+		/**
+		 * 值
+		 */
 		public var value:*;
 		
 		public function SetPropertyOper(client:*,property:*,value:*)
@@ -19,7 +28,7 @@ package ghostcat.operation
 			this.property = property;
 			this.value = value;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();

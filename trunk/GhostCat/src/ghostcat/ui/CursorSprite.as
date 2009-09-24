@@ -14,6 +14,7 @@ package ghostcat.ui
 	import ghostcat.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.ICursorManagerClient;
+	import ghostcat.skin.cursor.CursorGroup;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Util;
 
@@ -25,10 +26,7 @@ package ghostcat.ui
 		
 	public class CursorSprite extends GBase
 	{
-		[Embed(skinClass="ghostcat.skin.cursor.CursorGroup")]
-		private static const CursorGroupClass:Class;//这里不直接导入CursorGroup而用Embed中转只是为了正常生成ASDoc
-		
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroupClass);
+		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroup);
 		
 		/*系统自带的默认Cursor定义*/
 		public static const CURSOR_ARROW:String = "arrow";
@@ -94,7 +92,7 @@ package ghostcat.ui
 				cursors[child.name] = getDefinitionByName(getQualifiedClassName(child)) as Class;
 			}
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);
@@ -236,7 +234,7 @@ package ghostcat.ui
 			}
 			return null;
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			if (stage)

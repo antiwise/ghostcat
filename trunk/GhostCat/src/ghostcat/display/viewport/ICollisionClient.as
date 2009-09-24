@@ -10,6 +10,11 @@ package ghostcat.display.viewport
 	 */
 	public interface ICollisionClient extends IEventDispatcher
 	{
+		/**
+		 * 碰撞类实例 
+		 * @return 
+		 * 
+		 */
 		function get collision():Collision;
 	}
 }

@@ -30,6 +30,7 @@ package ghostcat.fileformat.swf.tag
 	 */	
 	public class ProductInfoTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 41;
@@ -42,7 +43,7 @@ package ghostcat.fileformat.swf.tag
 		public var buildLow:uint;
 		public var buildHigh:uint;
 		public var compileDate:Date;
-		
+		/** @inheritDoc*/
 		public override function read() : void
 		{
 			productID = bytes.readUnsignedInt();

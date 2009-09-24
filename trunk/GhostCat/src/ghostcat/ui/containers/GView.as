@@ -9,10 +9,30 @@ package ghostcat.ui.containers
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.ui.layout.Layout;
 	
+	/**
+	 * 容器
+	 * 
+	 * 子容器应该加到content内而不是自身，否则无法布局。skin也会在content内，无法作为背景存在。
+	 * 这个容器并没有确切的大小
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GView extends GNoScale
 	{
+		/**
+		 * 对象容器 
+		 */
 		public var contentPane:DisplayObjectContainer;
 		
+		/**
+		 * 背景容器
+		 */
+		public var backContent:DisplayObject
+		
+		/**
+		 * 布局器
+		 */
 		public var layout:Layout;
 		
 		public function GView(skin:*=null, replace:Boolean=true)
@@ -21,9 +41,16 @@ package ghostcat.ui.containers
 				skin = new Sprite();
 			
 			super(skin, replace);
+			
 			contentPane = content as DisplayObjectContainer;
 		}
 		
+		/**
+		 * 增加对象 
+		 * @param child
+		 * @return 
+		 * 
+		 */
 		public function addObject(child:DisplayObject) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.addChild(child);
@@ -33,6 +60,13 @@ package ghostcat.ui.containers
 			return v;
 		} 
 		
+		/**
+		 * 增加对象在某个索引处 
+		 * @param child
+		 * @param index
+		 * @return 
+		 * 
+		 */
 		public function addObjectAt(child:DisplayObject, index:int) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.addChildAt(child,index);
@@ -42,6 +76,12 @@ package ghostcat.ui.containers
 			return v;
 		}
 		
+		/**
+		 * 删除对象
+		 * @param child
+		 * @return 
+		 * 
+		 */
 		public function removeObject(child:DisplayObject) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.removeChild(child);
@@ -51,6 +91,12 @@ package ghostcat.ui.containers
 			return v;
 		}
 		
+		/**
+		 * 删除索引处的对象 
+		 * @param index
+		 * @return 
+		 * 
+		 */
 		public function removeObjectAt(index:int) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.removeChildAt(index);
@@ -60,6 +106,10 @@ package ghostcat.ui.containers
 			return v;
 		}
 		
+		/**
+		 * 删除所有子对象 
+		 * 
+		 */
 		public function removeAllObject():void
 		{
 			while (contentPane.numChildren) 
@@ -82,6 +132,10 @@ package ghostcat.ui.containers
 			target.removeEventListener(Event.ADDED_TO_STAGE,invalidateLayoutHandler);
 		}
 		
+		/**
+		 * 之后更新布局
+		 * 
+		 */
 		public function invalidateLayout():void
 		{
 			if (layout)

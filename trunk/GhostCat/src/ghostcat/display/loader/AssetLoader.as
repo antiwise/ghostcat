@@ -139,7 +139,7 @@ package ghostcat.display.loader
 			for (var i:int=0;i<handlers.length;i++)
 				(handlers[i] as Handler).call();
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			super.destory();

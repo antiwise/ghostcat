@@ -21,6 +21,11 @@ package ghostcat.transfer
 			super(target);
 		}
 		
+		/**
+		 * 马赛克大小
+		 * @return 
+		 * 
+		 */
 		public function get mosaicSize():int
 		{
 			return _mosaicSize;
@@ -34,7 +39,7 @@ package ghostcat.transfer
 			_mosaicSize = v;
 			renderMosaic();
 		}
-
+		/** @inheritDoc*/
 		protected override function render():void
 		{
 			super.render();
@@ -47,12 +52,16 @@ package ghostcat.transfer
 			renderMosaic();
 		}
 		
+		/**
+		 * 更新马赛克 
+		 * 
+		 */
 		protected function renderMosaic():void
 		{
 			if (normalBitmapData)
 				mosaic(normalBitmapData,bitmapData,mosaicSize,mosaicSize);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

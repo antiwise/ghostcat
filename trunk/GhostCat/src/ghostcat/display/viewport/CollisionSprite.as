@@ -22,18 +22,18 @@ package ghostcat.display.viewport
 			_collision = new Collision(this);
 			super(skin,replace);
 		}
-
+		/** @inheritDoc*/
 		public function get collision():Collision
 		{
 			return _collision;
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*,replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			collision.refresh();
 		}
-		
+		/** @inheritDoc*/
 		protected override function init():void
 		{
 			super.init();

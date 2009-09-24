@@ -11,15 +11,30 @@ package ghostcat.ui.containers
 	
 	/**
 	 * 滚动区域
+	 * 
+	 * 标签规则：子对象中vScrollBar,hScrollBar会被转换为滚动条，所有皮肤都会在content内一起滚动
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class GScrollPanel extends GNoScale implements IScrollContent
 	{
+		/**
+		 * 横向滚动条
+		 */
 		public var hScrollBar:GScrollBar;
+		/**
+		 * 纵向滚动条
+		 */
 		public var vScrollBar:GScrollBar;
 		
+		/**
+		 * 横向滚动皮肤
+		 */
 		public var hScrollBarSkin:DisplayObject;
+		/**
+		 * 纵向滚动条皮肤
+		 */
 		public var vScrollBarSkin:DisplayObject;
 		
 		public var fields:Object = {vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
@@ -42,7 +57,7 @@ package ghostcat.ui.containers
 			
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -101,6 +116,10 @@ package ghostcat.ui.containers
 			invalidateSize();
 		}
 		
+		/**
+		 * 删除横向滚动条
+		 * 
+		 */
 		public function removeHScrollBar():void
 		{
 			if (hScrollBar)
@@ -110,6 +129,10 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		/**
+		 * 删除纵向滚动条 
+		 * 
+		 */
 		public function removeVScrollBar():void
 		{
 			if (vScrollBar)
@@ -118,7 +141,7 @@ package ghostcat.ui.containers
 				vScrollBar = null;
 			}
 		}
-		
+		/** @inheritDoc*/
 		protected override function updatePosition() : void
 		{
 			super.updatePosition();
@@ -128,7 +151,7 @@ package ghostcat.ui.containers
 			if (vScrollBar)
 				vScrollBar.x = this.x + this.width;
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
 			super.updateSize();
@@ -152,12 +175,12 @@ package ghostcat.ui.containers
 				vScrollBar.height = this.height;
 			}
 		}
-		
+		/** @inheritDoc*/
 		public function get maxScrollH():int
 		{
 			return content.width - scrollRect.width;
 		}
-		
+		/** @inheritDoc*/
 		public function get maxScrollV():int
 		{
 			return content.height - scrollRect.height;
@@ -167,7 +190,7 @@ package ghostcat.ui.containers
 		{
 			return _oldScrollH;
 		}
-		
+		/** @inheritDoc*/
 		public function get scrollH():int
 		{
 			return	-content.x;
@@ -185,7 +208,7 @@ package ghostcat.ui.containers
 		{
 			return _oldScrollV;
 		}
-		
+		/** @inheritDoc*/
 		public function get scrollV():int
 		{
 			return -content.y;
@@ -198,7 +221,7 @@ package ghostcat.ui.containers
 			_oldScrollV = -content.y;
 			content.y = -v;
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

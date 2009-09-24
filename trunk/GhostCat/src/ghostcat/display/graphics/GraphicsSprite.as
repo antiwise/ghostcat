@@ -35,10 +35,7 @@ package ghostcat.display.graphics
 			invalidateDisplayList();
 		}
 		
-		/**
-		 * 更新图像
-		 * 
-		 */
+		/** @inheritDoc*/
 		override protected function updateDisplayList() : void
 		{
 			graphics.clear();

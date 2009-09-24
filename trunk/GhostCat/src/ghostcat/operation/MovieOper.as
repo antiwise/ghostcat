@@ -11,8 +11,17 @@ package ghostcat.operation
 	 */
 	public class MovieOper extends Oper
 	{
+		/**
+		 * 动画实例
+		 */
 		public var mc:GMovieClip;
+		/**
+		 * 标签名
+		 */
 		public var labelName:String;
+		/**
+		 * 循环次数 
+		 */
 		public var loop:int;
 		
 		public function MovieOper(mc:GMovieClip,labelName:String,loop:int = 1)

@@ -6,10 +6,24 @@ package ghostcat.ui.containers
 	import ghostcat.ui.controls.GText;
 	import ghostcat.util.Util;
 	
+	/**
+	 * 警示框
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GAlert extends GMovieClipPanel
 	{
+		/**
+		 * 默认按钮 
+		 */
 		public static var defaultButtons:Array = ["确认","取消"];
 
+		/**
+		 * 文字
+		 * @return 
+		 * 
+		 */
 		public function get text():String
 		{
 			return textSprite.text;
@@ -20,6 +34,11 @@ package ghostcat.ui.containers
 			textSprite.text = v;
 		}
 
+		/**
+		 * 标题 
+		 * @return 
+		 * 
+		 */
 		public function get title():String
 		{
 			return titleSprite.text;
@@ -30,6 +49,16 @@ package ghostcat.ui.containers
 			titleSprite.text = v;
 		}
 
+		/**
+		 * 显示 
+		 * @param text	文字
+		 * @param title	标题
+		 * @param buttons	按钮
+		 * @param icon	图标
+		 * @param closeHandler	关闭事件
+		 * @return 
+		 * 
+		 */
 		public static function show(text:String,title:String = null,buttons:Array = null,icon:*=null,closeHandler:Function = null):GAlert
 		{
 			if (!buttons)
@@ -68,7 +97,7 @@ package ghostcat.ui.containers
 			
 			super(mc, replace, paused, fields);
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);

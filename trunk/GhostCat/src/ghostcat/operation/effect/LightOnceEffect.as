@@ -5,11 +5,17 @@ package ghostcat.operation.effect
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.operation.FunctionOper;
 
+	/**
+	 * 发光一次的效果
+	 * @author flashyiyi
+	 * 
+	 */
 	public class LightOnceEffect extends QueueEffect
 	{
 		private var blurProxy:FilterProxy;
 		
 		private var _target:*;
+		/** @inheritDoc*/
 		public override function get target():*
 		{
 			return _target;
@@ -30,7 +36,7 @@ package ghostcat.operation.effect
 							new FunctionOper(blurProxy.removeFilter)];
 			super(list);
 		}
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			blurProxy.applyFilter(target);

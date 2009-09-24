@@ -16,7 +16,13 @@ package ghostcat.operation
 	 */
 	public class WaitOper extends TimeoutOper
 	{
+		/**
+		 * 检测函数
+		 */
 		public var checkHandler:Handler;
+		/**
+		 * 检测间隔
+		 */
 		public var interval:Number;
 		
 		private var timer:Timer;
@@ -34,7 +40,7 @@ package ghostcat.operation
 			this.checkHandler = checkHandler;
 			this.interval = interval;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
@@ -56,7 +62,7 @@ package ghostcat.operation
 			if (checkHandler.call())
 				result();
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:*=null):void
 		{
 			if (timer)

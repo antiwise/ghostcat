@@ -9,6 +9,7 @@ package ghostcat.fileformat.swf.tag
 	 */
 	public class DebugIDTag extends Tag
 	{
+		/** @inheritDoc*/
 		public override function get type() : int
 		{
 			return 63;

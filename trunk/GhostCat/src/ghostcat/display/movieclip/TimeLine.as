@@ -19,12 +19,24 @@ package ghostcat.display.movieclip
 	 */	
 	public class TimeLine extends EventDispatcher
 	{
+		/**
+		 * 对应的动画对象
+		 */
 		public var mc:MovieClip;
 		
+		/**
+		 * 帧方法字典
+		 */
 		public var metords:Dictionary = new Dictionary();
 		
+		/**
+		 * 上一帧
+		 */
 		public var prevFrame:int = -1;
 		
+		/**
+		 * 上一个帧标签
+		 */
 		public var prevLabel:String;
 		
 		public function TimeLine(mc:MovieClip)
@@ -167,6 +179,11 @@ package ghostcat.display.movieclip
             return -1;
         }
         
+        /**
+         * 跳转到某帧
+         * @param frame
+         * 
+         */
         public function gotoAndStop(frame:Object):void
         {
         	if (frame is String)
@@ -179,6 +196,11 @@ package ghostcat.display.movieclip
         		mc.gotoAndStop(frame);
         }
         
+        /**
+         * 跳转到某帧播放 
+         * @param frame
+         * 
+         */
         public function gotoAndPlay(frame:Object):void
         {
         	if (frame is String)

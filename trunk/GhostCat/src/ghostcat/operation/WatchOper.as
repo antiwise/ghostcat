@@ -11,7 +11,13 @@ package ghostcat.operation
 	 */
 	public class WatchOper extends TimeoutOper
 	{
+		/**
+		 * 对象
+		 */
 		public var obj:EventDispatcher;
+		/**
+		 * 监听的事件 
+		 */
 		public var event:String;
 		public function WatchOper(obj:EventDispatcher,event:String)
 		{
@@ -19,13 +25,13 @@ package ghostcat.operation
 			this.obj = obj;
 			this.event = event;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();
 			obj.addEventListener(this.event,result);
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:*=null):void
 		{
 			obj.removeEventListener(this.event,result);

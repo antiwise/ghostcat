@@ -87,7 +87,7 @@ package ghostcat.display.graphics
 			_end = v;
 			invalidateDisplayList();
 		}
-
+		/** @inheritDoc*/
 		override protected function updateDisplayList() : void
 		{
 			if (start == null || end ==  null)

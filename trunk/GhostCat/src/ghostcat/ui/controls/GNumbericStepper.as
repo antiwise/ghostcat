@@ -15,6 +15,8 @@ package ghostcat.ui.controls
 	/**
 	 * 数字选择框
 	 * 
+	 * 标签规则：子对象的upArrow,downArrow将被转化为向上和向下的按钮
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -43,13 +45,13 @@ package ghostcat.ui.controls
 				
 			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 		}
-		
+		/** @inheritDoc*/
 		protected override function getTextFieldFromSkin(skin:DisplayObject) : void
 		{
 			super.getTextFieldFromSkin(skin);
 			textField.multiline = false;
 		}
-		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
@@ -63,7 +65,7 @@ package ghostcat.ui.controls
 			if (content.hasOwnProperty(downArrowField))
 				downArrow = new GButton(content[downArrowField])
 		}
-		
+		/** @inheritDoc*/
 		public override function getValue():*
 		{
 			accaptText();
@@ -71,6 +73,11 @@ package ghostcat.ui.controls
 			return super.getValue();
 		}
 		
+		/**
+		 * 时基事件 
+		 * @param event
+		 * 
+		 */
 		protected function tickHandler(event:TickEvent):void
 		{
 			if (upArrow)
@@ -87,7 +94,7 @@ package ghostcat.ui.controls
 					data += detra;
 			}
 		}
-		
+		/** @inheritDoc*/
 		protected override function textFocusInHandler(event:Event) : void
 		{
 			TweenUtil.removeTween(this);
@@ -95,13 +102,13 @@ package ghostcat.ui.controls
 		
 			super.textFocusInHandler(event);
 		}
-		
+		/** @inheritDoc*/
 		protected override function textFocusOutHandler(event:Event) : void
 		{
 			super.textFocusOutHandler(event);
 			accaptText();
 		}
-		
+		/** @inheritDoc*/
 		protected override function textKeyDownHandler(event:KeyboardEvent):void
 		{
 			super.textKeyDownHandler(event);
@@ -132,7 +139,7 @@ package ghostcat.ui.controls
 			
 			setValue(v,false);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

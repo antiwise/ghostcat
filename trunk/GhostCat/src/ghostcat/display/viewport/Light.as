@@ -24,10 +24,22 @@ package ghostcat.display.viewport
 		private var _radius:Number = 0;
 		private var _color:uint = 0xFFFFFF;
 		
+		/**
+		 * 物体数组
+		 */
 		public var items:Array = [];
+		/**
+		 * 墙壁数组
+		 */
 		public var walls:Array = [];
 		
+		/**
+		 * 光球层 
+		 */
 		public var lightSprite:Shape;
+		/**
+		 * 光球遮罩层 
+		 */
 		public var maskSprite:Sprite;
 		
 		public function Light(radius:Number,color:uint=0xFFFFFF,alpha:Number=0.5)
@@ -50,6 +62,11 @@ package ghostcat.display.viewport
 		}
 		
 		
+		/**
+		 * 光球颜色 
+		 * @return 
+		 * 
+		 */
 		public function get color():uint
 		{
 			return _color;
@@ -61,6 +78,11 @@ package ghostcat.display.viewport
 			invalidateSize();
 		}
 
+		/**
+		 * 光球半径
+		 * @return 
+		 * 
+		 */
 		public function get radius():Number
 		{
 			return _radius;
@@ -71,7 +93,7 @@ package ghostcat.display.viewport
 			_radius = v;
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateSize():void
 		{
 			super.updateSize();
@@ -83,7 +105,7 @@ package ghostcat.display.viewport
 			lightSprite.graphics.drawCircle(0,0,_radius);
 			lightSprite.graphics.endFill();
 		}
-		
+		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
 			var i:int;
@@ -99,18 +121,28 @@ package ghostcat.display.viewport
 			} 
 		}
 		
+		/**
+		 * 添加爱一个可遮挡光线的墙壁 
+		 * @param v
+		 * 
+		 */
 		public function addWall(v:Wall):void
 		{
 			var item:WallShadowItem = new WallShadowItem(v,this);
 			walls.push(item);
 		}
 		
+		/**
+		 * 添加一个可生成影子的物品 
+		 * @param v
+		 * 
+		 */
 		public function addItem(v:DisplayObject):void
 		{
 			var item:ShadowItem = new ShadowItem(v,this);
 			items.push(item);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();

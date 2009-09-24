@@ -6,6 +6,11 @@ package ghostcat.parse.display
 	import ghostcat.parse.graphics.IGraphicsFill;
 	import ghostcat.parse.graphics.IGraphicsLineStyle;
 
+	/**
+	 * 椭圆 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class EllipseParse extends ShapeParse
 	{
 		public var ellipse:GraphicsEllipse;
@@ -16,7 +21,7 @@ package ghostcat.parse.display
 			
 			this.ellipse = ellipse;
 		}
-		
+		/** @inheritDoc*/
 		protected override function parseBaseShape(target:Graphics) : void
 		{
 			super.parseBaseShape(target);

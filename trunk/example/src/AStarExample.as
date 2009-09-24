@@ -25,11 +25,11 @@ package
 	 * 
 	 */	
 	
-	[SWF(width="1000",height="500")]
+	[SWF(width="500",height="500")]
 	public class AStarExample extends Sprite
 	{
 		private const MAP_WIDTH : int = 100;
-		private const MAP_HEIGHT : int = 50;
+		private const MAP_HEIGHT : int = 100;
 		
 		private var player : Sprite;
 		private var map : Array;
@@ -64,11 +64,11 @@ package
 					
 					var tile : Sprite = DisplayParse.createSprite([new GraphicsFill(isBlock ? 0x000000 : 0xFFFFFF),new GraphicsRect(0,0,10,10)]);
 					addChild(tile);
-					tile.x = i * 10;
-					tile.y = j * 10;
+					tile.x = i * 5;
+					tile.y = j * 5;
 				}
 			}
-			player = DisplayParse.createSprite([new GraphicsFill(0xFF0000),new GraphicsRect(0,0,10,10)])
+			player = DisplayParse.createSprite([new GraphicsFill(0xFF0000),new GraphicsRect(0,0,5,5)])
 			addChild(player);
 			
 			this.mapModel.map = this.map;
@@ -77,8 +77,8 @@ package
 		
 		private function clickHandler(event : MouseEvent) : void
 		{
-			var findPiont : Point = new Point(int(this.mouseX/10), int(this.mouseY/10));
-			var playerPoint : Point = new Point(int(this.player.x/10), int(this.player.y/10));
+			var findPiont : Point = new Point(int(this.mouseX/5), int(this.mouseY/5));
+			var playerPoint : Point = new Point(int(this.player.x/5), int(this.player.y/5));
 			
 			var t:int = getTimer();
 			this.path = this.aStar.find(playerPoint, findPiont);
@@ -94,8 +94,8 @@ package
 				return;
 			
 			var note:Point = this.path.shift() as Point;
-			this.player.x = note.x * 10;
-			this.player.y = note.y * 10;
+			this.player.x = note.x * 5;
+			this.player.y = note.y * 5;
 		}
 	}
 }

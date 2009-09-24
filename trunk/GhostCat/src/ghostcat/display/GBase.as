@@ -19,6 +19,8 @@ package ghostcat.display
 	[Event(name="resize",type="ghostcat.events.ResizeEvent")]
 	
 	/**
+	 * 这个类实现了光标和提示接口，以及更新事件
+	 * 
 	 * 这个类并不是专门针对UI的。事实上，就算是普通的显示对象，一样有设置toolTip和cursor的需求，UI和非UI的区分并没有那么大。
 	 * 而这种程度的内存增加是完全可以接受的。真需要严格控制性能的时候，也应该使用Bitmap,Shape之类的东西。
 	 * 
@@ -179,7 +181,7 @@ package ghostcat.display
 		{
 			_enabled = v;
 		}
-		
+		/** @inheritDoc*/
 		public override function set visible(value:Boolean) : void
 		{
 			if (value == visible)
@@ -197,7 +199,7 @@ package ghostcat.display
 			
 			super.visible = value;
 		}
-		
+		/** @inheritDoc*/
 		public override function set x(value:Number):void
 		{
 			if (x == value)
@@ -216,7 +218,7 @@ package ghostcat.display
 		{
 			return position.x;
 		}
-		
+		/** @inheritDoc*/
 		public override function set y(value:Number):void
 		{
 			if (y == value)
@@ -236,6 +238,14 @@ package ghostcat.display
 			return position.y;
 		}
 		
+		/**
+		 * 设置坐标
+		 *  
+		 * @param x	x坐标
+		 * @param y	y坐标
+		 * @param noEvent	是否触发事件
+		 * 
+		 */
 		public function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
 		{
 			if (super.x != x)
@@ -295,6 +305,11 @@ package ghostcat.display
 //			return super.y;
 //		}
 
+		/**
+		 * 坐标 
+		 * @param v
+		 * 
+		 */
 		public function set position(v:Point):void
 		{
 			setPosition(v.x,v.y);
@@ -304,7 +319,7 @@ package ghostcat.display
 		{
 			return _position;
 		}
-		
+		/** @inheritDoc*/
 		public override function set width(value:Number):void
 		{
 			if (super.width == value)
@@ -314,7 +329,7 @@ package ghostcat.display
 				
 			invalidateSize();
 		}
-		
+		/** @inheritDoc*/
 		public override function set height(value:Number):void
 		{
 			if (super.height == value)
@@ -325,6 +340,13 @@ package ghostcat.display
 			invalidateSize();
 		}
 		
+		/**
+		 * 设置大小 
+		 * @param width	宽度
+		 * @param height	高度
+		 * @param noEvent	是否触发事件
+		 * 
+		 */
 		public function setSize(width:Number,height:Number,noEvent:Boolean = false):void
 		{
 			if (super.width != width)
@@ -336,6 +358,11 @@ package ghostcat.display
 			vaildSize(noEvent);
 		}
 		
+		/**
+		 * 大小 
+		 * @return 
+		 * 
+		 */
 		public function get size():Point
 		{
 			return new Point(width,height);
@@ -557,7 +584,7 @@ package ghostcat.display
 		{
 			invalidateDisplayList();
 		}
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			var evt:GEvent = new GEvent(GEvent.REMOVE,false,true)
