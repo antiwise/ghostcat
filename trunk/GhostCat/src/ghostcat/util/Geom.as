@@ -75,7 +75,7 @@ package ghostcat.util
 			
 			if (obj is Stage)
 			{
-				var stageRect:Rectangle = new Rectangle(0,0,(obj as Stage).stageWidth,(obj as Stage).stageHeight);
+				var stageRect:Rectangle = new Rectangle(0,0,(obj as Stage).stageWidth,(obj as Stage).stageHeight);//目标为舞台则取舞台矩形
 				if (space)
 					return localRectToContent(stageRect,obj as DisplayObject,space);
 				else
@@ -86,7 +86,14 @@ package ghostcat.util
 			{
 				if (!space)
 					space = (obj as DisplayObject).parent;
-				return obj.getRect(space);
+				
+				if (obj.width == 0 || obj.height == 0)//长框为0则只变换坐标
+				{
+					var p:Point = localToContent(new Point(),obj,space);
+					return new Rectangle(p.x,p.y,0,0);
+				}
+				else	
+					return obj.getRect(space);
 			}
 			
 			return null;

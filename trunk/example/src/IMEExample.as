@@ -37,10 +37,10 @@ package
 		{
 			RootManager.register(this,1,1);
 			
-			textInput1 = Util.createObject(TextField,{type:TextFieldType.INPUT,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
+			textInput1 = Util.createObject(TextField,{type:TextFieldType.INPUT,x:100,y:50,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput1);
-			Geom.centerIn(textInput1,stage);
-			textInput2 = Util.createObject(TextField,{type:TextFieldType.INPUT,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
+			
+			textInput2 = Util.createObject(TextField,{type:TextFieldType.INPUT,x:100,y:250,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput2);
 			
 			var skin:GText = new ToolTipSkin();

@@ -3,6 +3,8 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.display.DisplayUtil;
 	import ghostcat.display.GBase;
@@ -27,7 +29,7 @@ package ghostcat.ui.containers
 		public var ref:ClassFactory;
 		
 		public var fields:Object = {renderField:"render"};
-		public var renderSkin:DisplayObject;
+		public var renderSkin:ClassFactory;
 		
 		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null)
 		{
@@ -50,8 +52,8 @@ package ghostcat.ui.containers
 			super.setContent(skin,replace);
 			
 			var renderField:String = fields.renderField;
-			if (renderField)
-				renderSkin = content[renderField];
+			if (renderField && content.hasOwnProperty(renderField))
+				renderSkin = new ClassFactory(getDefinitionByName(getQualifiedClassName(content[renderField])) as Class);
 		}
 		/** @inheritDoc*/
 		public override function set data(v:*) : void

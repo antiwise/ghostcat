@@ -12,6 +12,7 @@ package
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.ui.containers.GAlert;
 	
 	/**
 	 * A* 算法演示
@@ -82,10 +83,11 @@ package
 			
 			var t:int = getTimer();
 			this.path = this.aStar.find(playerPoint, findPiont);
-			trace("本次用时:"+ (getTimer() - t));
 			
 			if (this.path == null || this.path.length == 0)
-				trace("无法到达");
+				GAlert.show("无法到达")
+			else
+				GAlert.show("本次用时:"+ (getTimer() - t)+"ms")
 		}
 		
 		private function enterframeHandler(event : Event) : void

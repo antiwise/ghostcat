@@ -4,6 +4,9 @@ package
 	
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.effect.ColorFlashEffect;
+	import ghostcat.operation.effect.FlashEffect;
+	import ghostcat.ui.containers.GAlert;
+	import ghostcat.ui.containers.GButtonBar;
 	import ghostcat.ui.containers.GVBox;
 	import ghostcat.ui.controls.GRadioButton;
 	import ghostcat.ui.controls.GRadioButtonGroup;
@@ -33,6 +36,16 @@ package
 			g.selectedValue = 1;
 			
 			new ColorFlashEffect(box,1000,0xFF0000).execute();
+			
+			var b:GButtonBar = new GButtonBar();
+//			b.width = 100;
+			b.x = 200;
+			b.data = ["1","2","3"];
+			addChild(b);
+			
+			new FlashEffect(b,1000).execute();
+			
+			GAlert.show("测试","测试",b.data)
 			
 		}
 	}

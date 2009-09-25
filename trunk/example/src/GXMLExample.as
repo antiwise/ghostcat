@@ -14,6 +14,8 @@ package
 	import ghostcat.manager.DragManager;
 	import ghostcat.debug.Debug;
 	import ghostcat.parse.display.TextFieldParse;
+	import ghostcat.manager.RootManager;
+	import ghostcat.ui.containers.GAlert;
 
 	[SWF(width="800",height="400")]
 	/**
@@ -29,6 +31,8 @@ package
 		public var button:DisplayObject;
 		public function GXMLExample()
 		{
+			RootManager.register(this);
+			
 			var rotation:Number = 90;
 			var xml:XML = <skin:ScrollUpButtonSkin xmlns:skin="ghostcat.skin" xmlns:fi="flash.filters"
 							id="button" x="50" y="50" on_mouseDown="mouseDownHandler">
@@ -40,6 +44,7 @@ package
 								<cursor:CursorGroup xmlns:cursor="ghostcat.skin.cursor"/>
 							</skin:ScrollUpButtonSkin>;
 			
+			GAlert.show("使用命名空间以及自定义解析器，可以用XML轻松表示出任何一种类型的对象结构","由XML创建");
 			new TextFieldParse(xml.toXMLString()).parse(this);
 			GXMLManager.instance.create(xml,new DisplaySpec(this));
 			

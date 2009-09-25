@@ -95,7 +95,7 @@ package ghostcat.ui
 		{
 			super();
 			popups = new Dictionary(true);
-			applicationDisabledFilters = [new BlurFilter(9,9),
+			applicationDisabledFilters = [new BlurFilter(4,4),
 										new ColorMatrixFilter([0.3086/2,0.6094/2,0.0820/2,0,0,
 						 										0.3086/2,0.6094/2,0.0820/2,0,0,
 						 										0.3086/2,0.6094/2,0.0820/2,0,0,
