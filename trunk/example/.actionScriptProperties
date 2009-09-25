@@ -37,7 +37,6 @@
     <application path="TrapeziumExample.as"/>
     <application path="GIFExample.as"/>
     <application path="UIComboBoxExample.as"/>
-    <application path="UINumberExample.as"/>
     <application path="ControlRectExample.as"/>
     <application path="IFrameExample.as"/>
     <application path="SkewExample.as"/>

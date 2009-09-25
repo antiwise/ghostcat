@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.text.Font;
 	
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.containers.GAlert;
