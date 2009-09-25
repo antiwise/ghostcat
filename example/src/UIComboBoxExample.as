@@ -22,7 +22,11 @@ package
 			b.data = 10;
 			b.x = 100;
 			b.y = 50;
-			b.listData = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+			
+			var arr:Array = [];
+			for (var i:int = 0;i < 1000000;i++)
+				arr.push(i.toString());
+			b.listData = arr;
 			addChild(b)
 			
 			var s:GVSilder = new GVSilder();
