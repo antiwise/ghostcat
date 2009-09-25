@@ -24,11 +24,12 @@ package ghostcat.ui.layout
 		 * @param verticalAlign
 		 * 
 		 */
-		public static function silder(obj:*,container:*,horizontalAlign:String,verticalAlign:String):void
+		public static function silder(obj:*,container:*,horizontalAlign:String = null,verticalAlign:String = null):void
 		{
 			var cRect:Rectangle = Geom.getRect(container,container);
 			var rect:Rectangle = Geom.getRect(obj,container);
-			var offest:Point = new Point(obj.x - rect.x,obj.y - rect.y);
+			var p:Point = Geom.localToContent(new Point(),obj,container);
+			var offest:Point = new Point(p.x - rect.x,p.y - rect.y);
 			switch (horizontalAlign)
 			{
 				case UIConst.LEFT:

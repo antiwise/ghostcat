@@ -10,12 +10,11 @@ package ghostcat.display.residual
 	import flash.geom.Point;
 	
 	import ghostcat.display.bitmap.GBitmap;
+	import ghostcat.util.MatrixUtil;
 	import ghostcat.util.Util;
 
 	/**
 	 * 位图实现的残影效果
-	 * 
-	 * 此对象和需要显示效果的对象必须在同一个容器的同一层内
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -133,13 +132,9 @@ package ghostcat.display.residual
 		 */
 		protected function drawItem(obj:DisplayObject):void
 		{
-			//修正缩放
-			var m1:Matrix = obj.transform.matrix;
-			var m2:Matrix = this.transform.matrix;
-			m2.invert();
-			m1.concat(m2);
+			var m:Matrix = MatrixUtil.getMatrixBetween(obj,this,this.parent);
 			
-			bitmapData.draw(obj,m1,itemColorTransform);
+			bitmapData.draw(obj,m,itemColorTransform);
 		} 
 	}
 }

@@ -26,7 +26,7 @@ package ghostcat.ui
 		{
 			var skin:DisplayObject = target.content;
 			var children:Array = SearchUtil.findChildrenByClass(skin,DisplayObject);
-			var property:Object = ReflectUtil.getPropertyTypeList(skin,true);
+			var property:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = 0;i < children.length;i++)
 			{

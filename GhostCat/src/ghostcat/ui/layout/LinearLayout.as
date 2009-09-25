@@ -2,6 +2,9 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import ghostcat.ui.UIConst;
 
@@ -23,7 +26,41 @@ package ghostcat.ui.layout
 		private var _paddingRight:Number = 0;
 		private var _paddingBottom:Number = 0;
 		
+		private var _horizontalAlign:String = UIConst.LEFT;
+		private var _verticalAlign:String = UIConst.TOP;
 		
+		/**
+		 * 横向对齐方式
+		 * @return 
+		 * 
+		 */
+		public function get horizontalAlign():String
+		{
+			return _horizontalAlign;
+		}
+
+		public function set horizontalAlign(v:String):void
+		{
+			_horizontalAlign = v;
+			invalidateLayout();
+		}
+		
+		/**
+		 * 纵向对齐方式
+		 * @return 
+		 * 
+		 */
+		public function get verticalAlign():String
+		{
+			return _verticalAlign;
+		}
+
+		public function set verticalAlign(v:String):void
+		{
+			_verticalAlign = v;
+			invalidateLayout();
+		}
+
 		/**
 		 * 方向 
 		 * @return 
@@ -139,6 +176,7 @@ package ghostcat.ui.layout
 		{
 			super(target,isRoot);
 		}
+		
 		/** @inheritDoc*/
 		protected override function layoutChildren(x:Number, y:Number, w:Number, h:Number) : void
 		{
@@ -149,19 +187,15 @@ package ghostcat.ui.layout
 				
 				if (type == UIConst.HORIZONTAL)
 				{
-					LayoutUtil.metrics(obj,target,NaN,paddingTop,NaN,paddingBottom);
+					LayoutUtil.silder(obj,target,horizontalAlign,verticalAlign);
 					if (prev)
 						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
-					else
-						LayoutUtil.metrics(obj,target,paddingLeft);
 				}
 				else if (type == UIConst.VERTICAL)
 				{
-					LayoutUtil.metrics(obj,target,paddingLeft,NaN,paddingRight,NaN);
+					LayoutUtil.silder(obj,target,horizontalAlign,verticalAlign);
 					if (prev)
 						LayoutUtil.vertical(obj,prev,target,verticalGap);
-					else
-						LayoutUtil.metrics(obj,target,NaN,paddingTop);
 					
 				}
 				prev = obj;

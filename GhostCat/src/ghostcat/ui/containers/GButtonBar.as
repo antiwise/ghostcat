@@ -3,6 +3,7 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObject;
 	
 	import ghostcat.ui.controls.GButton;
+	import ghostcat.ui.layout.LinearLayout;
 
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
 	/**
@@ -23,6 +24,9 @@ package ghostcat.ui.containers
 				ref = GButton;
 			
 			super(skin, replace,ref);
+			
+			(layout as LinearLayout).horizontalGap = 5;
+			(layout as LinearLayout).verticalGap = 5;
 		}
 		
 		/**
@@ -42,7 +46,10 @@ package ghostcat.ui.containers
 			{
 				var obj:GButton = contentPane.getChildAt(i) as GButton;
 				if (obj)
+				{
 					obj.labelField = labelField;
+					obj.data = obj.data;
+				}
 			}
 		}
 		/** @inheritDoc*/
@@ -51,6 +58,7 @@ package ghostcat.ui.containers
 			super.data = v;
 			
 			labelField = labelField;
+			layout.invalidateLayout();
 		}
 	}
 }

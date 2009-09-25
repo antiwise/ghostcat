@@ -50,7 +50,7 @@ package ghostcat.ui.controls
 		/**
 		 * 是否让文本框适应文字的体积
 		 */
-		public var enabledAdjustTextSize:Boolean = true;
+		public var enabledAdjustTextSize:Boolean = false;
 		
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
@@ -187,6 +187,7 @@ package ghostcat.ui.controls
 			{
 				this.separateTextField = true;
 				textField = TextFieldParse.createTextField("");
+				enabledAdjustTextSize = true;//新创建的文本框必须自动布局
 			
 				if (textPos)
 				{
@@ -382,7 +383,8 @@ package ghostcat.ui.controls
 				textField.removeEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
 				textField.removeEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
 				textField.removeEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
-				removeChild(textField);
+				if (textField.parent == this)
+					removeChild(textField);
 			}
 		}
 		

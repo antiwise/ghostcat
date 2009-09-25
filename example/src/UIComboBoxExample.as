@@ -34,8 +34,7 @@ package
 			s.y = 50;
 			addChild(s);
 			
-			//残影对象必须和需要生成的对象在同一层
-			s.addChild(Util.createObject(new ResidualScreen(s.width + 10,s.height + 10),{x:-5,y:-5,refreshInterval:30,fadeSpeed:0.8,blurSpeed:3,items:[s.thumb]}));
+			addChild(Util.createObject(new ResidualScreen(s.width + 10,s.height + 10),{x:45,y:45,refreshInterval:30,fadeSpeed:0.8,blurSpeed:3,items:[s.thumb]}));
 		}
 	}
 }

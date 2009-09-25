@@ -4,8 +4,10 @@ package ghostcat.ui.containers
 	import ghostcat.skin.AlertSkin;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.UIBuilder;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GImage;
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.ClassFactory;
 	
 	/**
@@ -20,7 +22,7 @@ package ghostcat.ui.containers
 		/**
 		 * 默认按钮 
 		 */
-		public static var defaultButtons:Array = ["确认","取消"];
+		public static var defaultButtons:Array = ["确认"];
 
 		/**
 		 * 文字
@@ -51,7 +53,9 @@ package ghostcat.ui.containers
 		{
 			titleTextField.text = v;
 		}
-
+		
+		public var closeHandler:Function;
+		
 		/**
 		 * 显示 
 		 * @param text	文字
@@ -70,13 +74,13 @@ package ghostcat.ui.containers
 			var alert:GAlert = new GAlert();
 			alert.title = title;
 			alert.text = text;
-			alert.iconSprite.source = icon;
+//			alert.iconSprite.source = icon;
 			alert.buttonBar.data = buttons;
+			alert.centerLayout = true;
 			
-			if (closeHandler!=null)
-				alert.buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,closeHandler,false,0,true);
+			alert.closeHandler = closeHandler;
 			
-			PopupManager.instance.showPopup(alert);
+			PopupManager.instance.queuePopup(alert);
 			
 			return alert;
 		}
@@ -95,37 +99,31 @@ package ghostcat.ui.containers
 				skin = defaultSkin;
 				
 			super(skin, replace, paused);
+			
+			buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 		}
+		
+		private function itemClickHandler(event:ItemClickEvent):void
+		{
+			if (this.closeHandler!=null)
+				this.closeHandler(event);
+			
+			close();
+		}
+		
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			
-//			var titleField:String = panelFields.titleField;
-//			var textField:String = panelFields.textField;
-//			var iconField:String = panelFields.iconField;
-//			var buttonBarField:String = panelFields.buttonBarField;
-//			
-//			if (content.hasOwnProperty(titleField))
-//				titleSprite = new GText(content[titleField])
-//			
-//			if (content.hasOwnProperty(textField))
-//				textSprite = new GText(content[textField])
-//				
-//			if (content.hasOwnProperty(iconField))
-//				iconSprite = new GImage(content[iconField])
-//			
-//			if (content.hasOwnProperty(buttonBarField))
-//			{
-//				buttonBar = new GButtonBar(content[buttonBarField])
-//				buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,closeHandler,false,0,true);
-//			}
 			UIBuilder.buildAll(this);
+			LayoutUtil.silder(buttonBar,this,UIConst.CENTER);
 		}
 		
-		private function closeHandler(event:ItemClickEvent):void
+		public override function destory() : void
 		{
-			close();
+			buttonBar.removeEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
+			super.destory();
 		}
 	}
 }

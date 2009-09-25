@@ -13,7 +13,7 @@ package
 		{	
 			RootManager.register(this);
 			
-			GAlert.show("123");
+			GAlert.show("测试文本测试文本测试文本测试文本\n测试文本测试文本测试文本","标题",["1","2"]);
 		}
 	}
 }
