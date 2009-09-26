@@ -27,7 +27,7 @@ package ghostcat.operation
 		 */
 		public var para:Array;
 		
-		public function RemoteOper(nc:NetConnection,metord:String,para:Array=null,rhandler:Function=null,fhandler:Function=null)
+		public function RemoteOper(nc:NetConnection=null,metord:String=null,para:Array=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			this.nc = nc;
 			this.metord = metord;

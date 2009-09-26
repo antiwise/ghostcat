@@ -30,7 +30,7 @@ package ghostcat.operation.effect
 		 */
 		public var toAlpha:Number;
 		
-		public function ColorFlashEffect(target:*, duration:int, color:uint = 0xFFFFFF,fromAlpha:Number = 0.0, toAlpha:Number = 0.5, loop:int = -1)
+		public function ColorFlashEffect(target:*=null, duration:int=1000, color:uint = 0xFFFFFF,fromAlpha:Number = 0.0, toAlpha:Number = 0.5, loop:int = -1)
 		{
 			super(null, loop);
 		

@@ -78,13 +78,5 @@ package ghostcat.parse.display
 			if (grid9)
 				grid9.parse(target);
 		}
-		/** @inheritDoc*/
-		public override function parseContainer(target:DisplayObjectContainer) : void
-		{
-			super.parseContainer(target);
-			
-			var s:Shape = createShape();
-			target.addChild(s);
-		}
 	}
 }

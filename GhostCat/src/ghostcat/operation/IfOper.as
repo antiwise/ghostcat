@@ -25,7 +25,7 @@ package ghostcat.operation
 		
 		private var choose:Oper;
 		
-		public function IfOper(cHandler:Function,b1:Oper,b2:Oper)
+		public function IfOper(cHandler:Function=null,b1:Oper=null,b2:Oper=null)
 		{
 			super();
 			this.cHandler = cHandler;

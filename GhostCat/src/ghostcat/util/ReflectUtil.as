@@ -132,6 +132,9 @@ package ghostcat.util
 			var result:XMLList = xml..*.accessor.(@name==property);
 			if (result.length()>0)
 				return getDefinitionByName(result[0].@type) as Class;
+			result = xml..*.variable.(@name==property);
+			if (result.length()>0)
+				return getDefinitionByName(result[0].@type) as Class;
 			return null;
 		}
 		
@@ -170,27 +173,40 @@ package ghostcat.util
 		}
 		
 		/**
-		 * 通过点操作符查找属性
+		 * 通过点操作符查找函数
 		 * 显示对象的[]操作符可以用来查询子对象
 		 * 
 		 * 诸如eval("items[0].panel.buttonBar[2].text",root)
 		 * 
+		 * 如果第一段像一个类名的话，将会自动反射，此时root属性将会无效化。
+		 * 诸如：eval("ghostcat.util::Queue.defaultQueue.commit")();
+		 * 
 		 * @param path	路径
 		 * @param root	起始对象
-		 * 不设置此参数的话，将会自动反射路径的第一段。因此唯一合法的写法是让第一段成为一个类，第二段则是这个类的某个静态属性。
-		 * 诸如：eval("Queue.defaultQueue.commit")();
+		 * 
 		 * 
 		 * @return 
 		 * 
 		 */		
 		public static function eval(value:String,root:Object=null):*
 		{	
-			var paths:Array = value.split(/\[|\]?\./);
+			//如果写了包名则反射root
+			var si:int = value.indexOf("::");
+			var li:int;
+			if (si != -1)
+			{
+				li = value.indexOf(".",si);
+				if (li == -1)
+					li = value.length;
+				root = getDefinitionByName(value.substr(0,li));
+				value = value.substr(li);
+			}
 			
+			var paths:Array = value.split(/\[|\]|\./);
 			try
 			{
-				if (root == null)
-					root = getDefinitionByName(paths.shift());
+				if (value.charAt(0) > "A" && value.charAt(0) < "Z")
+					root = getDefinitionByName(paths.shift());//处理没有写包名的情况
 					
 				for each (var path:String in paths)
 				{
@@ -202,20 +218,9 @@ package ghostcat.util
 					
 					var num:Number = Number(path);
 					if(isNaN(num))
-					{
 						root = root[path];
-					}
 					else
-					{
-						if (root is DisplayObjectContainer)
-						{
-							root = root.getChildAt(int(num));
-						}
-						else
-						{
-							root = root[num];
-						}
-					}
+						root = (root is DisplayObjectContainer)?root.getChildAt(int(num)):root[num];
 				}
 			}
 			catch (e:Error)

@@ -24,7 +24,7 @@ package ghostcat.operation
 		 */
 		public var loop:int;
 		
-		public function MovieOper(mc:GMovieClip,labelName:String,loop:int = 1)
+		public function MovieOper(mc:GMovieClip=null,labelName:String=null,loop:int = 1)
 		{
 			this.mc = mc;
 			this.labelName = labelName;

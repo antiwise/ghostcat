@@ -2,7 +2,6 @@ package ghostcat.operation
 {
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import flash.utils.clearTimeout;
 
 	/**
 	 * 此类增加超时失败功能
@@ -12,6 +11,10 @@ package ghostcat.operation
 	 */
 	public class DelayOper extends Oper
 	{
+		public function DelayOper(timeout:int = 0)
+		{
+			this.timeout = timeout;
+		}
 		/**
 		 * 延时时间，毫秒为单位
 		 */

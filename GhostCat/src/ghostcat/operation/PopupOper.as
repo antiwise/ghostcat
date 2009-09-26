@@ -15,7 +15,7 @@ package ghostcat.operation
 		public var popup:DisplayObject;
 		public var owner:DisplayObject;
 		public var modal:Boolean;
-		public function PopupOper(popup:DisplayObject,owner:DisplayObject,modal:Boolean = true)
+		public function PopupOper(popup:DisplayObject=null,owner:DisplayObject=null,modal:Boolean = true)
 		{
 			super();
 			

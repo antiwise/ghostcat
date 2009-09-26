@@ -1,15 +1,14 @@
 package
 {
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	
+	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
 	import ghostcat.text.IME;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.ui.tooltip.ToolTipSkin;
-	import ghostcat.util.Geom;
 	import ghostcat.util.Util;
 
 	[SWF(width="500",height="400")]
@@ -21,7 +20,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class IMEExample extends Sprite
+	public class IMEExample extends GSprite
 	{
 		[Embed(source = "pinyin.txt",mimeType="application/octet-stream")]
 		public var pinyin:Class;
@@ -29,13 +28,9 @@ package
 		
 		public var textInput1:TextField;
 		public var textInput2:TextField;
-		public function IMEExample()
+		protected override function init():void
 		{
-			addEventListener(Event.ADDED_TO_STAGE,init);
-		}
-		private function init(event:Event):void
-		{
-			RootManager.register(this,1,1);
+			RootManager.register(this);
 			
 			textInput1 = Util.createObject(TextField,{type:TextFieldType.INPUT,x:100,y:50,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput1);

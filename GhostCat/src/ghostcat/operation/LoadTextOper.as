@@ -41,7 +41,7 @@ package ghostcat.operation
 		 * @param fhandler	载入失败函数
 		 * 
 		 */
-		public function LoadTextOper(url:String,embedClass:Class=null,compress:Boolean=false,rhandler:Function=null,fhandler:Function=null)
+		public function LoadTextOper(url:String=null,embedClass:Class=null,compress:Boolean=false,rhandler:Function=null,fhandler:Function=null)
 		{
 			super(url,embedClass,rhandler,fhandler)
 		

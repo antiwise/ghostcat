@@ -311,6 +311,8 @@
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.util.MatrixUtil"/>
+    <classEntry path="ghostcat.display.other.BubbleCreater"/>
+    <classEntry path="ghostcat.display.other.CircleLight"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

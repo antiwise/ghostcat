@@ -1,7 +1,7 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
+	import flash.filters.DropShadowFilter;
 	
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.events.RepeatEvent;
@@ -24,18 +24,14 @@ package
 			repeater = new Tile45(TestRepeater45);
 			repeater.width = 100000;
 			repeater.height = 100000;
-			repeater.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			repeater.cursor = CursorSprite.CURSOR_DRAG;
 			
 			addChild(repeater);
 			addChild(new CursorSprite())
 			
-		}
-		
-		private function mouseDownHandler(event:MouseEvent):void
-		{
-			DragManager.startDrag(repeater);
+			DragManager.register(repeater);
+			
 		}
 		private function addRepeatItemHandler(event:RepeatEvent):void
 		{

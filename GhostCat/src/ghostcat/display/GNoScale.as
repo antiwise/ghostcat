@@ -71,6 +71,7 @@ package ghostcat.display
 			_height = v;
 			invalidateSize();
 		}
+		
 		/** @inheritDoc*/
 		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
 		{

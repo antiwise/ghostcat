@@ -19,7 +19,7 @@ package ghostcat.operation
 		 * 监听的事件 
 		 */
 		public var event:String;
-		public function WatchOper(obj:EventDispatcher,event:String)
+		public function WatchOper(obj:EventDispatcher=null,event:String=null)
 		{
 			super();
 			this.obj = obj;

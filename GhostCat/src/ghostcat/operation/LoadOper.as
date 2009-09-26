@@ -78,7 +78,7 @@
 		 * 而发布时，删除所有资源文件即可。这样可以解决很多问题。
 		 * 
 		 */		
-		public function LoadOper(url:String,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
+		public function LoadOper(url:String=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			this.url = url;
 			this.embedClass = embedClass;

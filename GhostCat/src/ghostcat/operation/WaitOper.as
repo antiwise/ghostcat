@@ -34,7 +34,7 @@ package ghostcat.operation
 		 * @param interval	检测间隔。默认则跟随ENTERFRAME发生
 		 * 
 		 */
-		public function WaitOper(checkHandler:Handler,interval:Number=NaN)
+		public function WaitOper(checkHandler:Handler=null,interval:Number=NaN)
 		{
 			super();
 			this.checkHandler = checkHandler;

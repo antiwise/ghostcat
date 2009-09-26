@@ -29,5 +29,16 @@ package ghostcat.gxml
 		{
 			return spec.createObject(xml);
 		}
+		
+		/**
+		 * 解析XMLList并执行一组XML定义
+		 * @param xml
+		 * 
+		 */
+		public function exec(xmlList:XMLList,spec:ISpec):void
+		{
+			for each (var item:XML in xmlList)
+				spec.createObject(item);
+		}
 	}
 }

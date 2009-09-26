@@ -41,7 +41,7 @@ package ghostcat.operation.effect
 			params.ease = v;
 		}
 		
-		public function ClipEffect(target:*, duration:int, direction:String, ease:Function = null, invert:Boolean = false)
+		public function ClipEffect(target:*=null, duration:int=1000, direction:String="up", ease:Function = null, invert:Boolean = false)
 		{
 			super(this, duration, {}, invert);
 			

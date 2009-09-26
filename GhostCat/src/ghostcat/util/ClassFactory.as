@@ -110,7 +110,7 @@ package ghostcat.util
 			
 		}
 		
-		private static const applyFuns:Array = [apply0,apply1,apply2,apply3,apply4,apply5,apply6,apply7,apply8,apply9];
+		private static const applyFuns:Array = [apply0,apply1,apply2,apply3,apply4,apply5,apply6,apply7,apply8,apply9,apply10,apply11,apply12];
 		private static function apply0(generator:Class,args:Array):*{return new generator()};
 		private static function apply1(generator:Class,args:Array):*{return new generator(args[0])};
 		private static function apply2(generator:Class,args:Array):*{return new generator(args[0],args[1])};
@@ -121,5 +121,8 @@ package ghostcat.util
 		private static function apply7(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6])};
 		private static function apply8(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7])};
 		private static function apply9(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8])};
+		private static function apply10(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9])};
+		private static function apply11(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10])};
+		private static function apply12(generator:Class,args:Array):*{return new generator(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11])};
 	}
 }
