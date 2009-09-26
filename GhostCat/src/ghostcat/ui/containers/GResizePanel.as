@@ -3,7 +3,6 @@ package ghostcat.ui.containers
 	import flash.display.Shape;
 	import flash.geom.Point;
 	
-	import ghostcat.display.GNoScale;
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.parse.display.RectParse;
@@ -16,7 +15,7 @@ package ghostcat.ui.containers
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GResizePanel extends GNoScale
+	public class GResizePanel extends GView
 	{
 		/**
 		 * 最小高度

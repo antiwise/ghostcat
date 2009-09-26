@@ -9,8 +9,18 @@ package
 	
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.ui.containers.GAlert;
+	import ghostcat.ui.CursorSprite;
+	import ghostcat.parse.display.TextFieldParse;
+	import ghostcat.util.RandomUtil;
 	
 	[SWF(width="600",height="600")]
+	
+	/**
+	 * 可按下Cirl+D呼出显示trace信息的窗口
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TestExample extends Sprite
 	{
 		public function TestExample()
@@ -18,13 +28,12 @@ package
 			RootManager.register(this);
 			
 			new DebugPanel(stage);
+			addChild(new CursorSprite());
 			
-			Debug.trace(null,"123123")
-			Debug.trace(null,"123123")
-			Debug.trace(null,"123123")
-			Debug.trace(null,"123123")
+			new TextFieldParse("按下Cirl+D呼出显示trace信息的窗口").parse(this);
 			
-			GAlert.show("测试文本测试文本测试文本测试文本\n测试文本测试文本测试文本","标题",["1","2"]);
+			for (var i:int = 0;i< 100;i++)
+				Debug.trace(null,RandomUtil.string(10));
 		}
 	}
 }

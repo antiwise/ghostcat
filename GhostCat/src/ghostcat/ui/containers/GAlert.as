@@ -99,8 +99,6 @@ package ghostcat.ui.containers
 				skin = defaultSkin;
 				
 			super(skin, replace, paused);
-			
-			buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 		}
 		
 		private function itemClickHandler(event:ItemClickEvent):void
@@ -132,6 +130,7 @@ package ghostcat.ui.containers
 			
 			UIBuilder.buildAll(this);
 			
+			buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 			DragManager.register(dragShape,this);
 		}
 		

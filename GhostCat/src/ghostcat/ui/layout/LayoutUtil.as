@@ -111,7 +111,7 @@ package ghostcat.ui.layout
 					obj.x -= offest.x * (1 - obj.width / rect.width);
 				}
 				else
-					obj.x = cRect.right - rect.width + offest.x;
+					obj.x = cRect.right - rect.width + offest.x - right;
 			}
 			
 			if (!isNaN(bottom))
@@ -122,7 +122,7 @@ package ghostcat.ui.layout
 					obj.y -= offest.y * (1 - obj.height / rect.height);
 				}
 				else
-					obj.y = cRect.bottom - rect.height + offest.y;
+					obj.y = cRect.bottom - rect.height + offest.y - bottom;
 			}
 		}
 		
