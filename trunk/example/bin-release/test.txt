@@ -1,0 +1,52 @@
+﻿选择题
+1.x = Math.random(), x的取值范围：(c)
+a.0 < x < 1	b.0 < x <= 1	c.0 <= x < 1	d.0 <= x <= 1
+
+2.下列说法哪一个是正确的：(b)
+a.int(-0.9)==Math.floor(-0.9)
+b.int(-0.9)==Math.ceil(-0.9)
+c.int(-0.9)==Math.round(-0.9)
+d.没有正确答案
+
+3.var n:Number = 0xFFFFFF;
+n = n << 8;
+trace(n.toString(16))的结果是？(b)
+a.fffffff b.-100 c.ffffff00 d.0
+
+4.下面那一种方法会造成内存泄露？(b)
+a.对象内，this.addEventListner(Event.ENTER_FRAME,this.enterFrameHandler),之后不做任何处理。
+b.对象内，parent.addEventListner(Event.ENTER_FRAME,this.enterFrameHandler),之后不做任何处理。
+c.对象内，parent.addEventListner(Event.ENTER_FRAME,parent.enterFrameHandler),之后不做任何处理。
+d.全都会造成内存泄露
+
+5.this.localToGlobal(new Point(this.x,this.y))得到的结果是：(d)
+a.this在舞台上的坐标
+b.this.parent在舞台上的坐标
+c.this.parent在this内部的坐标
+d.以上都不是
+
+6.比较以下三个类的读取元素的效率(Object,Array,Dictionary)：
+如果选项出现等号，表示约等于。(b)
+a.Array = Object > Dictionary
+b.Array > Object = Dictionary
+c.Array > Object > Dictionary
+d.Array = Object = Dictionary
+
+是非题
+1.NaN is Number == true（对）
+2.(NaN == undefined) == false（对）
+3.if ("") trace("OK") 这条语句不会输出任何结果（对）
+4.trace(1/0) 运行期间并不会报错（对）
+5.调用方法的代码（诸如：ExternalInterface.call()）可以写在package内的任何语句块之间（对）
+6.你想反射一个对象的属性，不要直接用 对象[属性名] 来取，因为当对象没有这个属性的时候有可能会报错。（对）
+7.for each比for,while都要快（对）
+
+填空题
+1.Array对象[15,5,0,10]使用sort()方法排序后的结果：[0,10,15,5]
+2.var arr:Array = [1,2,3,4];
+for (var i:int = 0; i < arr.length; i++)
+{
+	trace(arr.pop());	
+}
+
+这段代码的输出结果：4,3

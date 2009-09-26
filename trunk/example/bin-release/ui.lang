@@ -1,0 +1,4 @@
+﻿ok = 确认
+canel = 取消
+tipText = 提示信息：{0}
+roll = 你ROLL到的点数是：{roll}
