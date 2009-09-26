@@ -60,7 +60,7 @@ package ghostcat.operation.effect
 			contentTarget = v;
 		}
 		
-		public function AlphaClipEffect(target:*, duration:int, direction:String, ease:Function = null, invert:Boolean = false)
+		public function AlphaClipEffect(target:*=null, duration:int=1000, direction:String="up", ease:Function = null, invert:Boolean = false)
 		{
 			super(this, duration, {}, invert);
 			

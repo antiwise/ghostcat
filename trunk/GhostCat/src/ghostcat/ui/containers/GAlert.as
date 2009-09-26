@@ -1,11 +1,12 @@
 package ghostcat.ui.containers
 {
+	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
+	import ghostcat.manager.DragManager;
 	import ghostcat.skin.AlertSkin;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.UIBuilder;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.controls.GImage;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.ClassFactory;
@@ -66,7 +67,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public static function show(text:String,title:String = null,buttons:Array = null,icon:*=null,closeHandler:Function = null):GAlert
+		public static function show(text:String,title:String = null,buttons:Array = null,closeHandler:Function = null):GAlert
 		{
 			if (!buttons)
 				buttons = defaultButtons;
@@ -74,8 +75,7 @@ package ghostcat.ui.containers
 			var alert:GAlert = new GAlert();
 			alert.title = title;
 			alert.text = text;
-//			alert.iconSprite.source = icon;
-			alert.buttonBar.data = buttons;
+			alert.data = buttons;
 			alert.centerLayout = true;
 			
 			alert.closeHandler = closeHandler;
@@ -90,8 +90,8 @@ package ghostcat.ui.containers
 		
 		public var titleTextField:GText;
 		public var textTextField:GText;
-		public var iconSprite:GImage;
 		public var buttonBar:GButtonBar;
+		public var dragShape:GSprite;
 		
 		public function GAlert(skin:*=null, replace:Boolean=true, paused:Boolean=false, fields:Object=null)
 		{
@@ -112,17 +112,33 @@ package ghostcat.ui.containers
 		}
 		
 		/** @inheritDoc*/
+		public override function set data(v:*) : void
+		{
+			super.data = v;
+			
+			if (buttonBar)
+			{
+				this.buttonBar.data = v;
+				this.buttonBar.layout.vaildLayout();
+				this.buttonBar.autoSize();
+				LayoutUtil.silder(buttonBar,this,UIConst.CENTER);
+			}
+		}
+		
+		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
 			
 			UIBuilder.buildAll(this);
-			LayoutUtil.silder(buttonBar,this,UIConst.CENTER);
+			
+			DragManager.register(dragShape,this);
 		}
 		
 		public override function destory() : void
 		{
 			buttonBar.removeEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
+			DragManager.unregister(dragShape);
 			super.destory();
 		}
 	}

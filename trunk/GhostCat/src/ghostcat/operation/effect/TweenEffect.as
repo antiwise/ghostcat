@@ -9,7 +9,7 @@ package ghostcat.operation.effect
 	 */
 	public class TweenEffect extends TweenOper
 	{
-		public function TweenEffect(target:*,duration:int,params:Object,invert:Boolean = false)
+		public function TweenEffect(target:*=null,duration:int=1000,params:Object=null,invert:Boolean = false)
 		{
 			super(target,duration,params,invert);
 		}

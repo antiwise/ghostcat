@@ -25,7 +25,7 @@ package ghostcat.operation.effect
 		 */
 		public var toAlpha:Number;
 		
-		public function FlashEffect(target:*, duration:int, fromAlpha:Number = 1.0, toAlpha:Number = 0.5, loop:int = -1)
+		public function FlashEffect(target:*=null, duration:int=1000, fromAlpha:Number = 1.0, toAlpha:Number = 0.5, loop:int = -1)
 		{
 			super(null, loop);
 			

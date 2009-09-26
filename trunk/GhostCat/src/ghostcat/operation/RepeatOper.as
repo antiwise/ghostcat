@@ -23,7 +23,7 @@ package ghostcat.operation
 		 */
 		public var index:int = 0;
 		
-		public function RepeatOper(list:Array,loop:int = -1)
+		public function RepeatOper(list:Array=null,loop:int = -1)
 		{
 			this.list = list;
 			this.loop = loop;

@@ -20,7 +20,7 @@ package ghostcat.operation
 		 */
 		public var value:*;
 		
-		public function SetPropertyOper(client:*,property:*,value:*)
+		public function SetPropertyOper(client:*=null,property:*=null,value:*=null)
 		{
 			super();
 			

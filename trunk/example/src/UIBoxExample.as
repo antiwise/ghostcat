@@ -1,16 +1,19 @@
 package
 {
-	import flash.display.Sprite;
-	
+	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.effect.ColorFlashEffect;
 	import ghostcat.operation.effect.FlashEffect;
-	import ghostcat.ui.containers.GAlert;
-	import ghostcat.ui.containers.GButtonBar;
+	import ghostcat.ui.containers.GToggleButtonBar;
 	import ghostcat.ui.containers.GVBox;
+	import ghostcat.ui.controls.GNumbericStepper;
 	import ghostcat.ui.controls.GRadioButton;
 	import ghostcat.ui.controls.GRadioButtonGroup;
+	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.Util;
+	
+	[SWF(width="500",height="500")]
+	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	
 	/**
 	 * 此类稍微演示了下VBox布局和RadioButton的用法。
@@ -19,9 +22,9 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class UIBoxExample extends Sprite
+	public class UIBoxExample extends GSprite
 	{
-		public function UIBoxExample()
+		protected override function init():void
 		{
 			RootManager.register(this);
 			
@@ -37,15 +40,22 @@ package
 			
 			new ColorFlashEffect(box,1000,0xFF0000).execute();
 			
-			var b:GButtonBar = new GButtonBar();
-//			b.width = 100;
+			var b:GToggleButtonBar = new GToggleButtonBar();
 			b.x = 200;
 			b.data = ["1","2","3"];
 			addChild(b);
 			
 			new FlashEffect(b,1000).execute();
 			
-			GAlert.show("测试","测试",b.data)
+			var t:GNumbericStepper = new GNumbericStepper();
+			t.prefix = "$";
+			t.setValue(100);
+			t.editable = true;
+			t.autoSelect = true;
+			t.maxValue = 100;
+			addChild(t);
+			
+			LayoutUtil.center(t,stage,0,0);//同样可以像这样直接布局
 			
 		}
 	}

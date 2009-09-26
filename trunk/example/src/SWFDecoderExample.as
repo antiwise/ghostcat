@@ -1,12 +1,14 @@
 package 
 {
-	import flash.display.Sprite;
 	import flash.net.URLLoaderDataFormat;
 	import flash.utils.ByteArray;
 	
 	import ghostcat.debug.Debug;
+	import ghostcat.display.GSprite;
 	import ghostcat.events.OperationEvent;
 	import ghostcat.fileformat.swf.SWFDecoder;
+	import ghostcat.fileformat.swf.SWFSelf;
+	import ghostcat.fileformat.swf.tag.DebugIDTag;
 	import ghostcat.fileformat.swf.tag.DoABCTag;
 	import ghostcat.fileformat.swf.tag.ProductInfoTag;
 	import ghostcat.fileformat.swf.tag.SymbolClassTag;
@@ -18,13 +20,13 @@ package
 	/**
 	 * SWF二进制代码解析
 	 * 
-	 * @author Administrator
+	 * @author flashyiyi
 	 * 
 	 */
-	public class SWFDecoderExample extends Sprite
+	public class SWFDecoderExample extends GSprite
 	{
 		public var swfDecoder:SWFDecoder;
-		public function SWFDecoderExample()
+		protected override function init():void
 		{
 			RootManager.register(this);
 			
@@ -45,9 +47,22 @@ package
 			
 			GAlert.show((swfDecoder.getTags(SymbolClassTag)[0].symbolClasses).toString(),"SymbolClassTag");
 			
+			GAlert.show("下面是找到的类名");
+			
 			var arr:Array = swfDecoder.getTags(DoABCTag);
 			for (var i:int = 0;i < arr.length;i++)
 				GAlert.show((arr[i] as DoABCTag).name,"DoABCTag["+i+"]");
+				
+			new SWFSelf(this,rhandler2);
+			GAlert.show("开始解析自身");
+		}
+		
+		private function rhandler2(bytes:ByteArray):void
+		{
+			swfDecoder = new SWFDecoder(bytes);
+			
+			GAlert.show(swfDecoder.getTags(ProductInfoTag)[0].toString(),"ProductInfoTag");
+			GAlert.show(swfDecoder.getTags(DebugIDTag)[0].toString(),"DebugIDTag");
 		}
 	}
 }

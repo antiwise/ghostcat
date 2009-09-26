@@ -21,7 +21,7 @@ package ghostcat.operation
 		 * @param fhandler	载入失败函数
 		 * 
 		 */
-		public function LoadGIFOper(url:String,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
+		public function LoadGIFOper(url:String=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			super(url,embedClass,rhandler,fhandler)
 		

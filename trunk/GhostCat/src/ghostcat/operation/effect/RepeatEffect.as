@@ -21,7 +21,7 @@ package ghostcat.operation.effect
 			_target = v;
 		}
 		
-		public function RepeatEffect(list:Array, loop:int)
+		public function RepeatEffect(list:Array=null, loop:int=-1)
 		{
 			super(list, loop);
 		}

@@ -1,8 +1,6 @@
 package 
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
@@ -59,14 +57,9 @@ package
 			l1.addWall(w);
 			l2.addWall(w);
 			
-			r.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			DragManager.register(r);
 			
 			stage.addChild(new CursorSprite())
-		}
-		
-		private function mouseDownHandler(event:MouseEvent):void
-		{
-			DragManager.startDrag(r);
 		}
 		private function moveHanlder(event:MoveEvent):void
 		{

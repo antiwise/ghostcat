@@ -12,6 +12,7 @@ package
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.containers.GAlert;
 	
 	/**

@@ -26,7 +26,7 @@ package ghostcat.operation.effect
 			_target = v;
 		}
 		
-		public function LightOnceEffect(target:*, duration:int, color:uint = 0xFFFFFF, alpha:Number = 1.0, blurX:Number = 16, blurY:Number = 16, strength:Number = 2)
+		public function LightOnceEffect(target:*=null, duration:int=1000, color:uint = 0xFFFFFF, alpha:Number = 1.0, blurX:Number = 16, blurY:Number = 16, strength:Number = 2)
 		{
 			this.target = target;
 			this.blurProxy = new FilterProxy(new GlowFilter(color,0,0,0,strength));

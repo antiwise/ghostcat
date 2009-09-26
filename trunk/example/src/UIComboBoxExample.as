@@ -1,22 +1,22 @@
 package
 {
-	import flash.display.Sprite;
-	
+	import ghostcat.display.GSprite;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.ui.controls.GComboBox;
 	import ghostcat.ui.controls.GVSilder;
 	import ghostcat.util.Util;
 	
 	[SWF(width="600",height="600")]
+	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	/**
 	 * 演示了ComboBox的效果，顺便放了Slider上来。
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class UIComboBoxExample extends Sprite
+	public class UIComboBoxExample extends GSprite
 	{
-		public function UIComboBoxExample()
+		protected override function init():void
 		{	
 			var b:GComboBox = new GComboBox();
 			b.data = 10;

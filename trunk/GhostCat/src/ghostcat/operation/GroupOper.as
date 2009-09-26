@@ -13,11 +13,14 @@ package ghostcat.operation
 	{
 		public var group:Array;
 		
-		public function GroupOper(parms:Array)
+		public function GroupOper(parms:Array=null)
 		{
 			group = [];
-			for (var i:int = 0; i<parms.length; i++)
-				commitChild(parms[i] as Oper);
+			if (parms)
+			{
+				for (var i:int = 0; i < parms.length; i++)
+					commitChild(parms[i] as Oper);
+			}
 		}
 		
 		/**

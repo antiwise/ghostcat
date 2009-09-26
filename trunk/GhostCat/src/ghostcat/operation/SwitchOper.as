@@ -25,7 +25,7 @@ package ghostcat.operation
 		
 		private var choose:Oper;
 		
-		public function SwitchOper(cHandler:Function,list:Array,defaultOper:Oper = null)
+		public function SwitchOper(cHandler:Function=null,list:Array=null,defaultOper:Oper = null)
 		{
 			super();
 			this.cHandler = cHandler;

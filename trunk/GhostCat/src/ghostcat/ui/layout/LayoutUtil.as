@@ -28,8 +28,7 @@ package ghostcat.ui.layout
 		{
 			var cRect:Rectangle = Geom.getRect(container,container);
 			var rect:Rectangle = Geom.getRect(obj,container);
-			var p:Point = Geom.localToContent(new Point(),obj,container);
-			var offest:Point = new Point(p.x - rect.x,p.y - rect.y);
+			var offest:Point = new Point(obj.x - rect.x,obj.y - rect.y);
 			switch (horizontalAlign)
 			{
 				case UIConst.LEFT:

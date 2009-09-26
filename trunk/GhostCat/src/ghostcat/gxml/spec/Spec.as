@@ -15,6 +15,8 @@ package ghostcat.gxml.spec
 	 * 最终结果是生成一个visible=false的Sprite，下面这个也是等效的
 	 * <f:Sprite xmlns:f="flash.display" visible="false"/>
 	 * 
+	 * 构造函数参数可以当做constructor属性来定义
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -50,21 +52,64 @@ package ghostcat.gxml.spec
 			var obj:*;
 			if (xml.nodeKind()=="text")
 			{
-				obj = xml.toString();
+				obj = xml.toString().split(/[,|\s]+/);
+				for (var i:int = 0;i < obj.length;i++)
+				{
+					if (obj[i]=="null")
+						obj[i] = null;
+				}
+				if (obj.length == 1)
+					obj = obj[0];
 			}
 			else if (isClass(xml))
 			{
-				obj = ReflectXMLUtil.XMLToObject(xml,root);
+				var params:Array = getConstructorParams(xml);
+				obj = ReflectXMLUtil.XMLToObject(xml,root,params);
 				createChildren(obj,xml);
 			}
 			else
 			{
-				obj = [];//参数先暂存为数组
-				var xmlList:XMLList = xml.children();
-				for each (var child:XML in xmlList)
-					(obj as Array).push(createObject(child))
+				obj = getValue(xml);
 			}
 			
+			return obj;
+		}
+		
+		/**
+		 * 返回值的数组（由于不清楚目标类型，即使只有一个属性也会被当做数组，并在之后处理）
+		 * @return 
+		 * 
+		 */
+		protected function getValue(xml:XML):Array
+		{
+			var obj:Array = [];//值先暂存为数组
+			var xmlList:XMLList = xml.children();
+			for each (var item:XML in xmlList)
+			{
+				var v:* = createObject(item);
+				if (v is Array)
+					obj = obj.concat(v);
+				else
+					obj.push(v)
+			}
+			return obj
+		}
+		
+		/**
+		 * 获得构造函数参数
+		 * @return 
+		 * 
+		 */
+		protected function getConstructorParams(xml:XML):Array
+		{
+			var obj:Array;
+			
+			var c:XMLList = xml.constructor;
+			if (c.length()>0)
+			{
+				obj = getValue(c[0])
+				delete xml.constructor[0];
+			}
 			return obj;
 		}
 		

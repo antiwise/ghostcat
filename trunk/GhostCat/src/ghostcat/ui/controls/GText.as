@@ -147,7 +147,10 @@ package ghostcat.ui.controls
 		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
+			{
 				skin = defaultSkin;
+				enabledAdjustTextSize = true;//没有皮肤则默认激活更新大小
+			}
 			
 			if (textPos)
 				this.textPos = textPos;

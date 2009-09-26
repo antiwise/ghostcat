@@ -12,6 +12,7 @@ package ghostcat.manager
 	import ghostcat.parse.display.AlphaShapeParse;
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.Geom;
+	import ghostcat.util.Handler;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	
@@ -43,7 +44,8 @@ package ghostcat.manager
 		 */
 		public static const ALPHA_CLONE:String = "alpha_clone";
 		
-		private static var list:Dictionary = new Dictionary();
+		private static var list:Dictionary = new Dictionary();//物品对应拖动管理器的临时字典
+		private static var regObject:Dictionary = new Dictionary();//注册的拖动物品字典
 		
 		/**
 		 * 开始拖动
@@ -77,10 +79,51 @@ package ghostcat.manager
 			o.startDrag();
 		}
 		
+		/**
+		 * 停止拖动
+		 * @param obj
+		 * 
+		 */
 		public static function stopDrag(obj:DisplayObject):void
 		{
 			if (list[obj])
 				(list[obj] as DragManager).stopDrag();
+		}
+		
+		/**
+		 * 注册一个可拖动的物品
+		 * 
+		 * @param obj	触发拖动的对象
+		 * @param target	被拖动的对象
+		 * 
+		 */
+		public static function register(obj:DisplayObject,target:DisplayObject=null,bounds:Rectangle=null,stopHandler:Function=null,onHandler:Function=null,
+									type:String = DIRECT,lockCenter:Boolean = false,upWhenLeave:Boolean = false,collideByRect:Boolean = false):void
+		{
+			if (!target)
+				target = obj;
+			
+			regObject[obj] = new Handler(DragManager.startDrag,[target,bounds,stopHandler,onHandler,
+									type,lockCenter,upWhenLeave,collideByRect]);
+			obj.addEventListener(MouseEvent.MOUSE_DOWN,dragStartHandler);
+		}
+		
+		/**
+		 * 取消注册拖动，这样被拖动的物品才可以被回收
+		 * @param obj
+		 * 
+		 */
+		public static function unregister(obj:DisplayObject):void
+		{
+			obj.removeEventListener(MouseEvent.MOUSE_DOWN,dragStartHandler);
+			delete regObject[obj];
+		}
+		
+		private static function dragStartHandler(event:MouseEvent):void
+		{
+			var h:Handler = regObject[event.currentTarget];
+			if (h)
+				h.call();
 		}
 		
 		protected var obj:DisplayObject;

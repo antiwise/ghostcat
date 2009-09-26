@@ -115,7 +115,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function getFontByName(name:String,fontStyle:String = FontStyle.REGULAR, deviceFont:Boolean = false):Font
+		public function getFontByName(name:String,fontStyle:String = "regular", deviceFont:Boolean = false):Font
 		{
 			var arr:Array = Font.enumerateFonts(deviceFont);
 			for (var i:int = 0;i < arr.length;i++)

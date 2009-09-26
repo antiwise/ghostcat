@@ -42,7 +42,7 @@ package ghostcat.operation
 		 */
 		public var tween:TweenUtil;
 		
-		public function TweenOper(target:*,duration:int,params:Object,invert:Boolean = false)
+		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false)
 		{
 			super();
 			this._target = target;
@@ -66,6 +66,8 @@ package ghostcat.operation
 
 		public function set invert(v:Boolean):void
 		{
+			if (!params)
+				params = new Object()
 			this.params.invert = v;
 		}
 		/** @inheritDoc*/

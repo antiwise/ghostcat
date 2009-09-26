@@ -16,7 +16,9 @@ package
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.containers.GAlert;
+	import ghostcat.display.GSprite;
 
+	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="800",height="400")]
 	/**
 	 * 反序列化XML例子
@@ -26,10 +28,10 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GXMLExample extends Sprite
+	public class GXMLExample extends GSprite
 	{
 		public var button:DisplayObject;
-		public function GXMLExample()
+		protected override function init():void
 		{
 			RootManager.register(this);
 			

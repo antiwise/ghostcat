@@ -46,7 +46,7 @@ package ghostcat.util
 			if (new RegExp("^{.*}$").test(value.toString()))
 			{
 				var prop:String = value.toString().substring(1,value.toString().length - 1);
-				obj[key] = root[prop];
+				obj[key] = ReflectUtil.eval(prop,root);
 			}
 			else
 			{	
@@ -74,21 +74,17 @@ package ghostcat.util
 		 * 
 		 * @param v	XML对象
 		 * @param root	执行此方法的对象，是反射外部属性的依据。缺省为obj本身。
+		 * @param constructor 构造函数参数
 		 * @return 
 		 * 
 		 */
-		public static function XMLToObject(v:XML,root:*=null):Object
+		public static function XMLToObject(v:XML,root:*=null,constructor:Array=null):Object
 		{
 			var target:*;
-			try
-			{
-				var ref:Class = ReflectUtil.getDefinitionByName(v.name().toString()) as Class;
-				target = new ref();
-			}
-			catch (e:Error)
-			{
-				target = new Object();
-			}
+			
+			var ref:Class = ReflectUtil.getDefinitionByName(v.name().toString()) as Class;
+			
+			target = ClassFactory.apply(ref,constructor);
 			parseXML(v,target,root);
 			return target;
 		}
@@ -107,7 +103,7 @@ package ghostcat.util
 			var source:XMLList = v.attributes();
 			for (var i:int = 0; i < source.length(); i++)
 			{
-				setProperty(target,source[i].name(),source[i],root);
+				setProperty(target,source[i].name(),source[i].toString(),root);
 			}
 		}
 		

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="GXMLExample.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
+<actionScriptProperties mainApplicationPath="UIBuilderExampler.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
   <compiler additionalCompilerArguments="" autoRSLOrdering="true" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="1">
@@ -32,9 +32,10 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="UIBuilderExampler.as"/>
+    <application path="GXMLExample2.as"/>
     <application path="Tile45Example.as"/>
     <application path="RightClickExample.as"/>
-    <application path="TrapeziumExample.as"/>
     <application path="GIFExample.as"/>
     <application path="UIComboBoxExample.as"/>
     <application path="ControlRectExample.as"/>
@@ -49,13 +50,10 @@
     <application path="Paper3DExample.as"/>
     <application path="TestExample.as"/>
     <application path="LightExample.as"/>
-    <application path="FireExample.as"/>
     <application path="TileExample.as"/>
     <application path="UIBoxExample.as"/>
     <application path="TweenExample.as"/>
-    <application path="EditSpriteExample.as"/>
     <application path="UIScrollExample.as"/>
-    <application path="SWFDecoderExample2.as"/>
     <application path="BindingExample.as"/>
     <application path="CollisionExample.as"/>
     <application path="GXMLExample.as"/>

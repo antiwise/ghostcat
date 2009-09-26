@@ -5,7 +5,7 @@ package ghostcat.util
 	import flash.geom.Matrix;
 
 	/**
-	 * 矩阵转换类
+	 * 矩阵转换类，主要用于draw方法的矩阵转换参数
 	 * 
 	 * @author flashyiyi
 	 * 
