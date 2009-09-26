@@ -6,7 +6,6 @@ package ghostcat.ui.containers
 	import flash.events.Event;
 	
 	import ghostcat.display.GNoScale;
-	import ghostcat.events.ResizeEvent;
 	import ghostcat.ui.layout.Layout;
 	
 	/**
@@ -130,6 +129,12 @@ package ghostcat.ui.containers
 //			target.removeEventListener(ResizeEvent.RESIZE,invalidateLayoutHandler);
 			target.removeEventListener(Event.REMOVED_FROM_STAGE,invalidateLayoutHandler);
 			target.removeEventListener(Event.ADDED_TO_STAGE,invalidateLayoutHandler);
+		}
+		/** @inheritDoc*/
+		protected override function updateSize() : void
+		{
+			super.updateSize();
+			invalidateLayout();
 		}
 		
 		/**
