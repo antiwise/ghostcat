@@ -122,6 +122,7 @@ package ghostcat.ui.controls
 			if (listData.length > maxLine)
 				list.addVScrollBar();
 			
+			
 			if (listOpenEffect.step == Oper.RUN)
 				listOpenEffect.result();
 				
@@ -144,7 +145,7 @@ package ghostcat.ui.controls
 			var s:DisplayObject = event.target as DisplayObject;
 			while (s.parent && s.parent != s.stage)
 			{
-				if (s == list || s == this)
+				if (s == list || (list && s == list.vScrollBar) || s == this)
 					return;
 				s = s.parent;
 			}
@@ -156,7 +157,7 @@ package ghostcat.ui.controls
 		{
 			this.data = list.selectedData;
 			
-			hideList();
+//			hideList();
 		}
 		
 		private function hideList():void

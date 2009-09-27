@@ -25,7 +25,7 @@ package
 			
 			var arr:Array = [];
 			for (var i:int = 0;i < 1000000;i++)
-				arr.push(i.toString());
+				arr.push(i);
 			b.listData = arr;
 			addChild(b)
 			

@@ -105,6 +105,9 @@ package ghostcat.operation.effect
 		{
 			baseRect = contentTarget.getBounds(contentTarget);
 			
+			if (mask && mask.parent)
+				mask.parent.removeChild(mask);
+			
 			mask = new Shape();
 			(contentTarget as DisplayObjectContainer).addChild(mask);
 			
