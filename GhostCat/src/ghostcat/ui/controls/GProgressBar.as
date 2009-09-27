@@ -81,7 +81,7 @@ package ghostcat.ui.controls
 		protected function progressHandler(event:ProgressEvent):void
 		{
 			percent = loadHelper.loadPercent;
-			label = loadHelper.loadPercent * 100 + "%" + 
+			label = (loadHelper.loadPercent * 100).toFixed(1) + "%" + 
 					"(" + loadHelper.bytesLoaded + "/" + loadHelper.bytesTotal + ")";
 			if (showNeedTime)
 				label += "\n已用时：" + loadHelper.progressTimeString +

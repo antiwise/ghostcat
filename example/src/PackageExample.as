@@ -22,7 +22,6 @@ package
 		{
 			var loader:Loader = new Loader();
 			addChild(loader);
-			
 			loader.loadBytes(new app());
 		}
 	}
