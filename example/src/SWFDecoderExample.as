@@ -28,14 +28,14 @@ package
 		public var swfDecoder:SWFDecoder;
 		protected override function init():void
 		{
-			RootManager.register(this);
+			RootManager.register(this); 
 			
-			var loader:LoadOper = new LoadOper("Test.swf",null,rhandler);
+			var loader:LoadOper = new LoadOper("test.swf",null,rhandler);
 			loader.type = LoadOper.URLLOADER;
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
 			loader.commit();
 			
-			GAlert.show("加载进Text.swf并开始解析");
+			GAlert.show("加载进test.swf并开始解析");
 		}
 		
 		private function rhandler(event:OperationEvent):void
@@ -54,7 +54,7 @@ package
 				GAlert.show((arr[i] as DoABCTag).name,"DoABCTag["+i+"]");
 				
 			new SWFSelf(this,rhandler2);
-			GAlert.show("开始解析自身");
+			GAlert.show("开始解析自身"); 
 		}
 		
 		private function rhandler2(bytes:ByteArray):void
