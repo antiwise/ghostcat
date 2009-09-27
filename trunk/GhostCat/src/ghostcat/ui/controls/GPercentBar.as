@@ -95,7 +95,7 @@
 				return;
 			
 			_percent = v;
-			switch (_percent)
+			switch (mode)
 			{
 				case MOVIECLIP:
 					(thumb as MovieClip).gotoAndStop(minValue + v * maxValue);

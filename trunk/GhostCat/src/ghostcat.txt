@@ -1,8 +1,33 @@
-﻿类库未完成。不提供DownLoad，请自行从SVN上拉。
-如果有错误请尽快提出，我会马上修改。
+﻿如果有错误请尽快提出，我会马上修改。
 
 @author flashyiyi
 blog:http://uh.actionscript3.cn/space.php?uid=12147
+
+示例：
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/AStarExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/BindingExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/CollisionExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/ControlRectExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GIFExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GXMLExample2.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GXMLExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/IFrameExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/IMEExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/LangageExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/LightExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/Paper3DExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/RightClickExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SkewExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SmoothCurveExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SWFDecoderExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TestExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/Tile45Example.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TileExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TweenExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIBoxExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIBuilderExampler.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIComboBoxExample.html
+http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIScrollExample.html
 
 ----------------------------------------------------------
 Main Function Points 
