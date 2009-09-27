@@ -135,6 +135,15 @@ package ghostcat.manager
         {
         	return ExternalInterface.call("BrowerManager.getCookie",name);
         }
+        
+        /**
+         * 在浏览器关闭时提供确认提示
+         * 
+         */
+        public function confirmClose(text:String = "确认退出？"):void
+        {
+        	ExternalInterface.call("BrowerManager.confirmClose",text);
+        }
 	}
 }
 
