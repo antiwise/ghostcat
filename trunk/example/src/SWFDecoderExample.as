@@ -62,7 +62,7 @@ package
 			swfDecoder = new SWFDecoder(bytes);
 			
 			GAlert.show(swfDecoder.getTags(ProductInfoTag)[0].toString(),"ProductInfoTag");
-			GAlert.show(swfDecoder.getTags(DebugIDTag)[0].toString(),"DebugIDTag");
+//			GAlert.show(swfDecoder.getTags(DebugIDTag)[0].toString(),"DebugIDTag");
 		}
 	}
 }
