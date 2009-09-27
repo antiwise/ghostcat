@@ -1,4 +1,4 @@
-var BrowerManager={
+﻿var BrowerManager={
 	getURL:function (){
 		return document.location.href;
 	},
@@ -58,5 +58,13 @@ var BrowerManager={
 		var arr = document.cookie.match(new RegExp(';?' +name + '=([^;]*)'));
 		if(arr != null) return unescape(arr[1]);
 		return null;
+	},
+	confirmClose:function (text) {
+		window.onbeforeunload = onbeforeunload_handler;
+		function onbeforeunload_handler() 
+		{
+			var warning = text;
+			return warning;
+		}
 	}
 }
