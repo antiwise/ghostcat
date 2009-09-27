@@ -75,6 +75,8 @@ package ghostcat.display.movieclip
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			super(skin, replace);
+			
+			this.paused = paused;
 		}
 		
 		/**

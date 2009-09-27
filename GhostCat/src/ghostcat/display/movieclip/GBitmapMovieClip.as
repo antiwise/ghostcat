@@ -2,14 +2,11 @@ package ghostcat.display.movieclip
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	import flash.display.FrameLabel;
 	
-	import ghostcat.events.MoveEvent;
-	import ghostcat.events.MovieEvent;
 	import ghostcat.debug.Debug;
-	import ghostcat.util.Handler;
-	import ghostcat.util.Util;
+	
+	[Event(name="complete",type="flash.events.Event")]
 	
 	/**
 	 * 使用位图数组的动画剪辑，用法和GMovieClip基本相同
@@ -21,10 +18,12 @@ package ghostcat.display.movieclip
 	public class GBitmapMovieClip extends GMovieClipBase
 	{
 		
-		private var _bitmaps:Array;
+		/**
+		 * 位图数组
+		 */
+		public var bitmaps:Array;
 		
 		private var _labels:Array;
-		
 		private var _currentFrame:int = 1;
 		
 		/**
@@ -37,7 +36,7 @@ package ghostcat.display.movieclip
 		 		
 		public function GBitmapMovieClip(bitmaps:Array,labels:Array=null,paused:Boolean=false)
 		{
-			this._bitmaps = bitmaps;
+			this.bitmaps = bitmaps;
 			this._labels = labels ? labels : [];
 			
 			super(new Bitmap(bitmaps[0]),true,paused);
@@ -59,8 +58,8 @@ package ghostcat.display.movieclip
 		{
 			super.destory();
 			
-			for (var i:int = 0;i < _bitmaps.length;i++)
-				(_bitmaps[i] as BitmapData).dispose();
+			for (var i:int = 0;i < bitmaps.length;i++)
+				(bitmaps[i] as BitmapData).dispose();
 		}
 		/** @inheritDoc*/
 		public override function get curLabelName():String
@@ -85,26 +84,42 @@ package ghostcat.display.movieclip
         	if (frame > totalFrames)
         		frame = totalFrames;
         		
-        	(content as Bitmap).bitmapData = _bitmaps[frame - 1];
+        	(content as Bitmap).bitmapData = bitmaps[frame - 1];
         	
         	_currentFrame = frame;
         }
         /** @inheritDoc*/
         public override function get totalFrames():int
         {
-        	return _bitmaps.length;
+        	return bitmaps.length;
         }
+        
         /** @inheritDoc*/
         public override function get labels():Array
 		{
 			return _labels;
 		}
 		
+		public function set labels(v:Array):void
+        {
+        	_labels = v;
+        }
+        
         /** @inheritDoc*/
         public override function nextFrame():void
         {
         	currentFrame ++;
         }
+        
+        /**
+         * 回收位图资源 
+         * 
+         */
+        public function dispose():void
+        {
+        	for each (var bitmapData:BitmapData in bitmaps.length)
+        		bitmapData.dispose();
+        } 
         
         
 	}

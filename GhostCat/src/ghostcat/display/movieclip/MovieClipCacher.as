@@ -6,7 +6,7 @@ package ghostcat.display.movieclip
 	import flash.events.EventDispatcher;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
-	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
 	[Event(name="complete",type="flash.events.Event")]
@@ -27,14 +27,9 @@ package ghostcat.display.movieclip
 		public var mc:MovieClip;
 		
 		/**
-		 * 绘制偏移量
-		 */
-		public var offest:Point;
-		
-		/**
-		 * 绘制大小 
+		 * 绘制范围
 		 */		
-		public var size:Point;
+		public var rect:Rectangle;
 		
 		/**
 		 * 生成的位图数组
@@ -50,29 +45,26 @@ package ghostcat.display.movieclip
 		private var endFrame:int;//最后一帧的位置
 		private var timer:Timer;
 		
-		public function MovieClipCacher(mc:MovieClip,size:Point=null,offest:Point=null,start:int = 1,len:int = -1)
+		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1)
 		{
 			if (mc)
-				read(mc,size,offest,start,len);
+				read(mc,rect,start,len);
 		}
 		
 		/**
 		 * 缓存动画
 		 *  
 		 * @param mc		要缓存的动画
-		 * @param size		动画大小
-		 * @param offest	绘制偏移量
+		 * @param rect		绘制范围
 		 * @param start		起始帧
 		 * @param len		长度
 		 * 
 		 */
-		public function read(mc:MovieClip,size:Point=null,offest:Point=null,start:int = 1,len:int = -1):void
+		public function read(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1):void
 		{
 			this.mc = mc;
 			
-			this.offest = offest ? offest : mc.getBounds(mc).topLeft;
-			
-			this.size = size ? size : new Point(mc.width,mc.height);
+			this.rect = rect ? rect : mc.getBounds(mc)
 			
 			this.readFrame = start;
 			mc.gotoAndStop(start);
@@ -91,7 +83,7 @@ package ghostcat.display.movieclip
 			this.result = [];
 			this.readComplete = false;
 			
-			this.timer = new Timer(5,int.MAX_VALUE);
+			this.timer = new Timer(0,int.MAX_VALUE);
 			this.timer.addEventListener(TimerEvent.TIMER,timeHandler);
 			this.timer.start();
 		}
@@ -100,12 +92,12 @@ package ghostcat.display.movieclip
 		{
 			if (mc.currentFrame >= readFrame)
 			{
-				var bitmapData:BitmapData = new BitmapData(size.x,size.y,true,0);
+				var bitmapData:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 				var m:Matrix;
-				if (offest)
+				if (rect)
 				{
 					m = new Matrix();
-					m.translate(-offest.x,-offest.y);
+					m.translate(-rect.x,-rect.y);
 				}
 				bitmapData.draw(mc,m);
 				result.push(bitmapData);
@@ -131,5 +123,14 @@ package ghostcat.display.movieclip
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
+        /**
+         * 回收位图资源 
+         * 
+         */
+        public function dispose():void
+        {
+        	for each (var bitmapData:BitmapData in result.length)
+        		bitmapData.dispose();
+        }
 	}
 }

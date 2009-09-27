@@ -1,13 +1,8 @@
 package ghostcat.display.movieclip
 {
-	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-	
-	import ghostcat.events.MoveEvent;
-	import ghostcat.events.MovieEvent;
-	import ghostcat.events.TickEvent;
-	import ghostcat.util.Handler;
-	import ghostcat.util.Util;
+	import flash.events.Event;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * 动画控制类，可以通过setLabel, queueLabel将动画推入列表，实现动画的灵活控制。这种方法可以非常简单地实现多方向行走，表情动作系统。
@@ -99,6 +94,35 @@ package ghostcat.display.movieclip
         public override function nextFrame():void
         {
         	mc.nextFrame();
+        }
+        /**
+         * 将动画缓存为位图并转化为GBitmapMovieClip对象
+         * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象进行一些操作，可监听GBitmapMovieClip的complete事件
+         * 
+         * @param rect		绘制范围
+		 * @param start		起始帧
+		 * @param len		长度
+         * 
+         * @return 
+         * 
+         */
+        public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1):GBitmapMovieClip
+        {
+        	var cacher:MovieClipCacher = new MovieClipCacher(mc,rect,start,len);
+        	cacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
+        	var bitmapMC:GBitmapMovieClip = new GBitmapMovieClip([]);
+        	
+        	function cacherCompleteHandler(event:Event):void
+        	{
+        		cacher.removeEventListener(Event.COMPLETE,cacherCompleteHandler);
+        		
+        		bitmapMC.bitmaps = cacher.result;
+        		bitmapMC.labels = mc.currentLabels;
+        		bitmapMC.dispatchEvent(new Event(Event.COMPLETE));
+        		
+        	}
+        	
+        	return bitmapMC;
         }
 	}
 }
