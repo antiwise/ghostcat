@@ -3,6 +3,7 @@ package ghostcat.operation
 	import flash.events.EventDispatcher;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.util.AbstractUtil;
 	import ghostcat.util.Util;
 	
 	[Event(name="operation_start",type="ghostcat.events.OperationEvent")]
@@ -26,6 +27,11 @@ package ghostcat.operation
 		public static const WAIT:int = 1;
 		public static const RUN:int = 2;
 		public static const END:int = 3;
+		
+		public function Oper()
+		{
+			AbstractUtil.preventConstructor(this,Oper);	
+		}
 		
 		/**
 		 * 名称

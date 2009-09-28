@@ -12,6 +12,7 @@ package ghostcat.ui.controls
 	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.ClassFactory;
 	import ghostcat.util.Geom;
 	import ghostcat.util.easing.Circ;

@@ -167,6 +167,7 @@ package ghostcat.ui.controls
 		public override function set data(v:*) : void
 		{
 			super.data = v;
+			
 			if (labelTextField)
 				labelTextField.text = label;
 			else

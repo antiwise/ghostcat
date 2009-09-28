@@ -30,6 +30,21 @@ package ghostcat.display
             return screen.containsRect(displayObj.getBounds(displayObj.stage));
         }
         
+        /**
+         * 获得子对象数组 
+         * @param container
+         * 
+         */
+        public static function getChildren(container:DisplayObjectContainer):Array
+        {
+        	var result:Array = [];
+            for (var i:int = 0;i < container.numChildren;i++) 
+            {
+                result.push(container.getChildAt(i));
+            }
+        	return result;
+        }
+        
 		/**
 		 * 移除所有子对象
 		 * @param container	目标
