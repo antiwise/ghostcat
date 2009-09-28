@@ -89,7 +89,7 @@ package ghostcat.ui
 			for (var i:int;i < skin.numChildren;i++)
 			{
 				var child:DisplayObject = skin.getChildAt(i);
-				cursors[child.name] = getDefinitionByName(getQualifiedClassName(child)) as Class;
+				cursors[child.name] = child["constructor"] as Class;
 			}
 		}
 		/** @inheritDoc*/

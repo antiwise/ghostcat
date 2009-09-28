@@ -74,7 +74,7 @@ package ghostcat.parse.display
 		 * @return 
 		 * 
 		 */
-		public static function createTextField(text:String,pos:Point=null,defaultTextFormat:TextFormat=null):TextField
+		public static function createTextField(text:String="",pos:Point=null,defaultTextFormat:TextFormat=null):TextField
 		{
 			var p:TextFieldParse = new TextFieldParse(text,pos,defaultTextFormat);
 			return p.createTextField();

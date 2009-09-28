@@ -296,7 +296,7 @@ package ghostcat.util
 			else if (obj is Class)
 				return obj;
 			else	
-				return getDefinitionByName(getQualifiedClassName(obj)) as Class;
+				return obj.constructor as Class;
 		}
 		
 		/**

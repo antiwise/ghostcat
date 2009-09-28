@@ -19,12 +19,23 @@ package ghostcat.ui.controls
 	{
 		private static var groups:Dictionary = new Dictionary();
 		
-		public static function getGroupByName(name:String):GRadioButtonGroup
+		/**
+		 * 获取单选框组
+		 *  
+		 * @param groupName
+		 * @return 
+		 * 
+		 */
+		public static function getGroupByName(groupName:String):GRadioButtonGroup
 		{
-			if (!groups[name])
-				groups[name] = new GRadioButtonGroup(name);
+			if (!groups[groupName])
+			{
+				var group:GRadioButtonGroup= new GRadioButtonGroup(new PrivateClass());
+				group.groupName = groupName;
+				groups[groupName] = group;
+			}
 			
-			return groups[name];
+			return groups[groupName];
 		}
 		
 		/**
@@ -91,9 +102,8 @@ package ghostcat.ui.controls
 		 * @param groupName
 		 * 
 		 */
-		public function GRadioButtonGroup(groupName:String)
+		public function GRadioButtonGroup(privateClass:PrivateClass)
 		{
-			this.groupName = groupName;
 		}
 		
 		/**
@@ -125,3 +135,4 @@ package ghostcat.ui.controls
 		}
 	}
 }
+class PrivateClass{}
