@@ -1,9 +1,8 @@
 package ghostcat.util
 {
+	import flash.errors.IllegalOperationError;
 	import flash.events.EventDispatcher;
-	import flash.geom.Point;
 	import flash.utils.Dictionary;
-	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
     /**
@@ -18,15 +17,11 @@ package ghostcat.util
         
         public function Singleton()
         {
-        	var ref:Class = getDefinitionByName(getQualifiedClassName(this)) as Class;
+        	var ref:Class = this["constructor"] as Class;
             if (dict[ref])
-            {
-                throw new Error(getQualifiedClassName(this)+"只允许实例化一次！");
-            }
+                throw new IllegalOperationError(getQualifiedClassName(this)+" 只允许实例化一次！");
             else
-            {
             	dict[ref] = this;
-            }
         }
 		
         /**
@@ -35,7 +30,7 @@ package ghostcat.util
          */		
         public function destory():void
         {
-            var ref:Class = getDefinitionByName(getQualifiedClassName(this)) as Class;
+            var ref:Class = this["constructor"] as Class;
             delete dict[ref];
         }
         

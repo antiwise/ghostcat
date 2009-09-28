@@ -25,7 +25,7 @@ package ghostcat.filter
         {
         	var filters:Array=displayObj.filters;
         	var dirty:Boolean = false;
-        	var filterType:Class = getDefinitionByName(getQualifiedClassName(filter)) as Class;
+        	var filterType:Class = filter.constructor as Class;
         	if (filters)
         	{
         		var len:int = filters.length;

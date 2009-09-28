@@ -15,7 +15,7 @@ package ghostcat.ui.layout
 	import ghostcat.util.Util;
 	
 	/**
-	 * 布局器基类
+	 * 布局器基类，此类为抽像类
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -29,6 +29,12 @@ package ghostcat.ui.layout
 		 */
 		public var isRoot:Boolean;
 		
+		/**
+		 * 
+		 * @param target	容器
+		 * @param isRoot	是否以舞台的边框作为范围
+		 * 
+		 */
 		public function Layout(target:DisplayObjectContainer,isRoot:Boolean = false):void
 		{
 			AbstractUtil.preventConstructor(this,Layout);
@@ -76,57 +82,12 @@ package ghostcat.ui.layout
 			
 		}
 		
-//		public function addChild(child:DisplayObject):void
-//		{
-//			if (child.parent)
-//				return;
-//			
-//			_target.addChild(child);
-//			if (children.indexOf(child) == -1)
-//				children.push(child);
-//		}
-//		
-//		public function addChildAt(child:DisplayObject,index:int):void
-//		{
-//			if (child.parent)
-//				return;
-//			
-//			_target.addChildAt(child,index)
-//			if (children.indexOf(child) == -1)
-//				children.splice(index,0,child);
-//		}
-//		
-//		public function addAllChild():void
-//		{
-//			for (var i:int = 0;i < _target.numChildren;i++)
-//				addChild(_target.getChildAt(i));
-//		}
-//		
-//		public function removeChild(child:DisplayObject):void
-//		{
-//			_target.removeChild(child);
-//			Util.remove(children,child);
-//		}
-//		
-//		public function removeAllChild():void
-//		{
-//			if (!_target)
-//				return;
-//			
-//			for (var i:int = children.length - 1;i >= 0;i--)
-//				removeChild(_target.getChildAt(i))
-//				
-//			children = [];
-//		}
-		
 		/**
 		 * 销毁
 		 * 
 		 */
 		public function destory():void
 		{
-//			removeAllChild();
-			
 			setTarget(null);
 		}
 		
@@ -164,13 +125,13 @@ package ghostcat.ui.layout
 		}
 		
 		
-		/**
-		 * 根据Children决定自身体积
-		 * 
-		 */
-		protected function measureChildren():void
-		{
-		}
+//		/**
+//		 * 根据Children决定自身体积
+//		 * 
+//		 */
+//		protected function measureChildren():void
+//		{
+//		}
 		
 		/**
 		 * 对Chilren布局

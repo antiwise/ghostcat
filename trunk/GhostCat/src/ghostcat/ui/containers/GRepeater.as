@@ -53,7 +53,7 @@ package ghostcat.ui.containers
 			
 			var renderField:String = fields.renderField;
 			if (renderField && content.hasOwnProperty(renderField))
-				renderSkin = new ClassFactory(getDefinitionByName(getQualifiedClassName(content[renderField])) as Class);
+				renderSkin = new ClassFactory(content[renderField].constructor);
 		}
 		/** @inheritDoc*/
 		public override function set data(v:*) : void

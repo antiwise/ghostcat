@@ -5,7 +5,7 @@ package ghostcat.ui.layout
 	import ghostcat.util.AbstractUtil;
 
 	/**
-	 * 封装关于padding的属性。此类为抽象类。 
+	 * 封装部分关于padding的属性。此类为抽象类。 
 	 * 
 	 */
 	public class PaddingLayout extends Layout

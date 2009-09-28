@@ -54,7 +54,7 @@ package ghostcat.manager
 		 */		
 		public function remove(obj:*):void
 		{
-			var ref:Class = getDefinitionByName(getQualifiedClassName(obj)) as Class;
+			var ref:Class = obj.constructor as Class;
 			if (!dict[ref])
 				dict[ref] = [];
 			(dict[ref] as Array).push(obj);

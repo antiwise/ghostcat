@@ -71,7 +71,7 @@ package ghostcat.ui.controls
 				{
 					var t:DisplayObject = skin;
 					t.parent.removeChild(t);
-					render = new ClassFactory(getDefinitionByName(getQualifiedClassName(t)));
+					render = new ClassFactory(t["constructor"]);
 				}
 				else if (skin is Class)
 					render = new ClassFactory(skin);

@@ -32,7 +32,9 @@ package
 			layout = new EllipseLayout(this,true);
 			layout.paddingLeft = layout.paddingRight = layout.paddingTop = layout.paddingBottom = 50;
 			for (var i:int = 0;i < 10;i++)
+			{
 				addChild(TextFieldParse.createTextField(i.toString()))
+			}
 			layout.vaildLayout();
 			
 			stage.addChildAt(Util.createObject(new ResidualScreen(stage.stageWidth,stage.stageHeight),{refreshInterval:10,fadeSpeed:0.9,blurSpeed:2,items:[this]}),0);

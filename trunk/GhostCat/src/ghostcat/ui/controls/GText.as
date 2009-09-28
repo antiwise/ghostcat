@@ -189,7 +189,7 @@ package ghostcat.ui.controls
 			if (!textField)
 			{
 				this.separateTextField = true;
-				textField = TextFieldParse.createTextField("");
+				textField = TextFieldParse.createTextField();
 				enabledAdjustTextSize = true;//新创建的文本框必须自动布局
 			
 				if (textPos)
