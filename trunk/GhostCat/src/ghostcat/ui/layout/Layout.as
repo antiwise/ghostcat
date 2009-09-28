@@ -9,7 +9,9 @@ package ghostcat.ui.layout
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.ResizeEvent;
+	import ghostcat.util.AbstractUtil;
 	import ghostcat.util.CallLater;
+	import ghostcat.util.Geom;
 	import ghostcat.util.Util;
 	
 	/**
@@ -22,10 +24,14 @@ package ghostcat.ui.layout
 	{
 		private var _target:DisplayObjectContainer;
 		
+		/**
+		 * 是否以舞台的边框作为范围 
+		 */
 		public var isRoot:Boolean;
 		
 		public function Layout(target:DisplayObjectContainer,isRoot:Boolean = false):void
 		{
+			AbstractUtil.preventConstructor(this,Layout);
 			setTarget(target,isRoot);
 		}
 		
@@ -144,16 +150,17 @@ package ghostcat.ui.layout
 		 */
 		public function vaildLayout():void
 		{
+			var rect:Rectangle;
 			if (isRoot)
 			{
-				var stage:Stage = target as Stage;
-				layoutChildren(0,0,stage.stageWidth,stage.stageHeight);
+				var stage:Stage = target.stage;
+				rect = Geom.localRectToContent(new Rectangle(0,0,stage.stageWidth,stage.stageHeight),stage,_target);
 			}
 			else
 			{
-				var rect:Rectangle = _target.getRect(_target);
-				layoutChildren(rect.x,rect.y,rect.width,rect.height);
+				rect = _target.getRect(_target);
 			}
+			layoutChildren(rect.x,rect.y,rect.width,rect.height);
 		}
 		
 		

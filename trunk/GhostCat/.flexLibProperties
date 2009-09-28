@@ -313,6 +313,10 @@
     <classEntry path="ghostcat.util.MatrixUtil"/>
     <classEntry path="ghostcat.display.other.BubbleCreater"/>
     <classEntry path="ghostcat.display.other.CircleLight"/>
+    <classEntry path="ghostcat.GApplication"/>
+    <classEntry path="ghostcat.util.AbstractUtil"/>
+    <classEntry path="ghostcat.ui.layout.EllipseLayout"/>
+    <classEntry path="ghostcat.ui.layout.PaddingLayout"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,6 +1,7 @@
 package ghostcat.util
 {
 	import flash.display.MovieClip;
+	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
 	import flash.utils.getDefinitionByName;
@@ -13,7 +14,7 @@ package ghostcat.util
 	
 	/**
 	 * 和FLEX类似的二帧自加载方法，可以自行实现立即显示的Loading进度条，即使是在一个全部由代码组成的SWF中。
-	 * 这是一个原型类，并没有提供进度条相关代码。请继承此类，并在构造函数里添加进度条，并监听progress事件修改进度，在complete事件里删除进度条。
+	 * 这是一个抽象类，并没有提供进度条相关代码。请继承此类，并在构造函数里添加进度条，并监听progress事件修改进度，在complete事件里删除进度条。
 	 * 
 	 * 此类必须在支持元标签的环境内使用。在入口类上加上元标签[Frame(factoryClass="ghostcat.ui.RootLoader")]即可。你也可以自己继承此类定义进度条。
 	 * 
@@ -26,6 +27,9 @@ package ghostcat.util
 	{
 		public function RootLoaderBase()
 		{	
+			if (this["constructor"] == RootLoaderBase)  
+				throw new IllegalOperationError("RootLoaderBase 类为抽象类，不允许实例化!");
+			
 			this.gotoAndStop(1);
 			
 			root.loaderInfo.addEventListener(Event.INIT, initHandler);

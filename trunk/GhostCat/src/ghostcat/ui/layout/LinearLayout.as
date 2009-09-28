@@ -14,17 +14,12 @@ package ghostcat.ui.layout
 	 * @author flashyiyi
 	 * 
 	 */
-	public class LinearLayout extends Layout
+	public class LinearLayout extends PaddingLayout
 	{
 		private var _type:String = UIConst.HORIZONTAL
 		
 		private var _horizontalGap:Number = 0;
 		private var _verticalGap:Number = 0;
-		
-		private var _paddingLeft:Number = 0;
-		private var _paddingTop:Number = 0;
-		private var _paddingRight:Number = 0;
-		private var _paddingBottom:Number = 0;
 		
 		private var _horizontalAlign:String = UIConst.LEFT;
 		private var _verticalAlign:String = UIConst.TOP;
@@ -106,69 +101,6 @@ package ghostcat.ui.layout
 		public function set verticalGap(v:Number):void
 		{
 			_verticalGap = v;
-			invalidateLayout();
-		}
-		/**
-		 * 左边距
-		 * @return 
-		 * 
-		 */
-		public function get paddingLeft():Number
-		{
-			return _paddingLeft;
-		}
-
-		public function set paddingLeft(v:Number):void
-		{
-			_paddingLeft = v;
-			invalidateLayout();
-		}
-
-		/**
-		 * 上边距
-		 * @return 
-		 * 
-		 */
-		public function get paddingTop():Number
-		{
-			return _paddingTop;
-		}
-
-		public function set paddingTop(v:Number):void
-		{
-			_paddingTop = v;
-			invalidateLayout();
-		}
-
-		/**
-		 * 右边距
-		 * @return 
-		 * 
-		 */
-		public function get paddingRight():Number
-		{
-			return _paddingRight;
-		}
-
-		public function set paddingRight(v:Number):void
-		{
-			_paddingRight = v;
-			invalidateLayout();
-		}
-
-		/**
-		 * 下边距
-		 * @return 
-		 * 
-		 */
-		public function get paddingBottom():Number
-		{
-			return _paddingBottom;
-		}
-
-		public function set paddingBottom(v:Number):void
-		{
-			_paddingBottom = v;
 			invalidateLayout();
 		}
 		

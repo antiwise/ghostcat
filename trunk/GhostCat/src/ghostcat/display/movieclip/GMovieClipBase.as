@@ -9,6 +9,7 @@ package ghostcat.display.movieclip
 	import ghostcat.display.GTickBase;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.util.AbstractUtil;
 	import ghostcat.util.Handler;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
@@ -74,6 +75,7 @@ package ghostcat.display.movieclip
 
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
+			AbstractUtil.preventConstructor(this,GMovieClipBase);
 			super(skin, replace);
 			
 			this.paused = paused;

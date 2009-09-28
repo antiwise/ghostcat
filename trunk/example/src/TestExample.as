@@ -12,6 +12,10 @@ package
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.util.RandomUtil;
+	import ghostcat.display.movieclip.GMovieClipBase;
+	import ghostcat.display.movieclip.GMovieClip;
+	import ghostcat.operation.Oper;
+	import ghostcat.manager.BrowerManager;
 	
 	[SWF(width="600",height="600")]
 	
@@ -26,7 +30,6 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			
 			new DebugPanel(stage);
 			addChild(new CursorSprite());
 			
@@ -34,6 +37,8 @@ package
 			
 			for (var i:int = 0;i< 100;i++)
 				Debug.trace(null,RandomUtil.string(10));
+				
+			BrowerManager.instance.confirmClose();
 		}
 	}
 }
