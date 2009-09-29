@@ -10,6 +10,10 @@ package
 	import ghostcat.display.viewport.CollisionSprite;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
+	import ghostcat.parse.display.EllipseParse;
+	import ghostcat.parse.display.ShapeParse;
+	import ghostcat.parse.graphics.GraphicsEllipse;
+	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.Geom;
 	
@@ -39,14 +43,10 @@ package
 			Geom.centerIn(b,stage);
 			addChild(b);
 			
-			var s:Shape = new Shape();
-			s.graphics.beginFill(0);
-			s.graphics.drawCircle(0,0,3);
-			s.graphics.endFill();
-			point = new GBase(s);
-			DisplayUtil.setMouseEnabled(point,false);
-			
+			point = new GBase(new EllipseParse(new GraphicsEllipse(0,0,6,6),null,new GraphicsFill(0)).createShape());
 			addChild(point);
+			
+			DisplayUtil.setMouseEnabled(point,false);
 			
 			GAlert.show("这是一个碰撞示例程序，小球会跟踪鼠标移动，尽可能贴在图形的边缘\n中间的红圈是强制可通行区域","说明")
 		}

@@ -17,7 +17,7 @@ package ghostcat.community
 		/**
 		 * 数据
 		 */		
-		public var data:Array;
+		public var data:Array = [];
 		
 		/**
 		 * 执行的函数。此函数应当有两个参数，对应两个对象。可以将第二个参数设置为可选值。
@@ -113,8 +113,6 @@ package ghostcat.community
 			dirtys = new Dictionary();
 		}
 		
-		private var calculated:Dictionary;//记录是否已经计算，避免重复计算
-		
 		/**
 		 * 多对多重复遍历所有内容一次
 		 * 
@@ -127,19 +125,16 @@ package ghostcat.community
 			if (onlyCheckValues)
 				values = onlyCheckValues;
 			
-			calculated = new Dictionary();
-			
 			for (var i:int = 0; i < values.length;i++)
 			{
 				var v:* = values[i];
-				if ((!filter || dirtys[v]) && calculated[v]==null && needCalculate(v))
+				if ((!filter || dirtys[v]) && needCalculate(v))
 				{
 					delete dirtys[v];
 					calculate(v);
 				}
 			}
 			
-			calculated = null;
 		}
 		
 		/**
@@ -157,11 +152,7 @@ package ghostcat.community
 			{
 				var v2:* = data[i];
 				if (v != v2 && needCalculate(v2))
-				{
 					command(v,v2);
-					if (calculated)
-						calculated[v2] = true;
-				}
 			}
 		}
 		

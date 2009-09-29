@@ -25,7 +25,9 @@ package ghostcat.community.command
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
-			var isHighIndex:Boolean = parent.getChildIndex(d1) > parent.getChildIndex(d2); 
+			var i1:int = parent.getChildIndex(d1);
+			var i2:int = parent.getChildIndex(d2);
+			var isHighIndex:Boolean = i1 > i2; 
 			var isHighValue:Boolean = d1.y > d2.y;
 			
 			if (isHighIndex != isHighValue)
@@ -46,7 +48,9 @@ package ghostcat.community.command
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
-			var isHighIndex:Boolean = parent.getChildIndex(d1) > parent.getChildIndex(d2); 
+			var i1:int = parent.getChildIndex(d1);
+			var i2:int = parent.getChildIndex(d2);
+			var isHighIndex:Boolean = i1 > i2; 
 			var isHighValue:Boolean = d1["priority"] > d2["priority"];
 			
 			if (isHighIndex != isHighValue)
@@ -67,7 +71,9 @@ package ghostcat.community.command
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
-			var isHighIndex:Boolean = parent.getChildIndex(d1) > parent.getChildIndex(d2); 
+			var i1:int = parent.getChildIndex(d1);
+			var i2:int = parent.getChildIndex(d2);
+			var isHighIndex:Boolean = i1 > i2; 
 			var isHighValue:Boolean;
 			
 			if (d1["priority"] && d2["priority"])
