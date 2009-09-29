@@ -5,7 +5,10 @@ package
 	import flash.geom.Point;
 	import flash.text.TextFormat;
 	
+	import ghostcat.community.DisplayCommunityManager;
+	import ghostcat.community.command.DrawPriorityCommand;
 	import ghostcat.display.DisplayUtil;
+	import ghostcat.display.GBase;
 	import ghostcat.display.GTickBase;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
@@ -27,17 +30,20 @@ package
 	public class EllipseLayoutExample extends GTickBase
 	{
 		public var layout:EllipseLayout;
+		
 		protected override function init():void
 		{
 			layout = new EllipseLayout(this,true);
 			layout.paddingLeft = layout.paddingRight = layout.paddingTop = layout.paddingBottom = 50;
 			for (var i:int = 0;i < 10;i++)
-			{
 				addChild(TextFieldParse.createTextField(i.toString()))
-			}
+		
+			addChild(new TestHuman());	
 			layout.vaildLayout();
-			
+		
 			stage.addChildAt(Util.createObject(new ResidualScreen(stage.stageWidth,stage.stageHeight),{refreshInterval:10,fadeSpeed:0.9,blurSpeed:2,items:[this]}),0);
+		
+		
 		}
 		
 		protected override function tickHandler(event:TickEvent) : void
