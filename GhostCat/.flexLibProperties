@@ -317,6 +317,9 @@
     <classEntry path="ghostcat.util.AbstractUtil"/>
     <classEntry path="ghostcat.ui.layout.EllipseLayout"/>
     <classEntry path="ghostcat.ui.layout.PaddingLayout"/>
+    <classEntry path="ghostcat.community.SortManager"/>
+    <classEntry path="ghostcat.algorithm.QSort"/>
+    <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
