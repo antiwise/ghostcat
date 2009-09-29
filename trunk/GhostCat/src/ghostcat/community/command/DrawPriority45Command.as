@@ -32,10 +32,10 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function SORT45(d1:DisplayObject,d2:DisplayObject):void
+		public static function SORT45(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
-				return;
+				return false;
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
@@ -47,7 +47,11 @@ package ghostcat.community.command
 			var isHighValue:Boolean = p1.x > p2.x || p1.y > p2.y;
 			
 			if (isHighIndex != isHighValue)
-				parent.swapChildren(d1,d2);
+			{
+				parent.setChildIndex(d1,i2);
+				return true;
+			};
+			return false;
 		}
 
 	}

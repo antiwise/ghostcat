@@ -18,10 +18,10 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function SORTY(d1:DisplayObject,d2:DisplayObject):void
+		public static function SORTY(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
-				return;
+				return false;
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
@@ -31,7 +31,12 @@ package ghostcat.community.command
 			var isHighValue:Boolean = d1.y > d2.y;
 			
 			if (isHighIndex != isHighValue)
-				parent.swapChildren(d1,d2);
+			{
+				parent.setChildIndex(d1,i2);
+				return true;
+			}
+			else
+				return false;
 		}
 		
 		/**
@@ -41,10 +46,10 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function PRIORITY(d1:DisplayObject,d2:DisplayObject):void
+		public static function PRIORITY(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
-				return;
+				return false;
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
@@ -54,7 +59,11 @@ package ghostcat.community.command
 			var isHighValue:Boolean = d1["priority"] > d2["priority"];
 			
 			if (isHighIndex != isHighValue)
-				parent.swapChildren(d1,d2);
+			{
+				parent.setChildIndex(d1,i2);
+				return true;
+			}
+			return false;
 		}
 		
 		/**
@@ -64,10 +73,10 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function PRIORITY_SORTY(d1:DisplayObject,d2:DisplayObject):void
+		public static function PRIORITY_SORTY(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
-				return;
+				return false;
 			
 			var parent:DisplayObjectContainer = d1.parent;
 			
@@ -86,7 +95,12 @@ package ghostcat.community.command
 				isHighValue = d1.y > d2.y;
 			
 			if (isHighIndex != isHighValue)
-				parent.swapChildren(d1,d2);
+			{
+				parent.setChildIndex(d1,i2);
+				return true;
+			}
+			else
+				return false;
 		}
 
 	}

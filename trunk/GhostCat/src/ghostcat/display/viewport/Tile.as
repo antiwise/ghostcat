@@ -178,7 +178,7 @@ package ghostcat.display.viewport
 		
 				
 		/**
-		 * 获得屏幕上点所在的方块坐标
+		 * 获得屏幕上点所在的方块索引坐标
 		 * 
 		 * @param p
 		 * 

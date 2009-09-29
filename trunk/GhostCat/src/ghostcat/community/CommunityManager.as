@@ -35,13 +35,12 @@ package ghostcat.community
 		 */		
 		public var onlyCheckValues:Array;
 		
-		
-		
-		
-		
+		/**
+		 * 记录需要计算的对象
+		 */
+		protected var dirtys:Dictionary
 		
 		private var _setDirtyWhenEvent:String;//记录自动监听的变化事件
-		private var dirtys:Dictionary;//记录需要计算的对象
 		
 		/**
 		 * 当对象发生某个事件时，会自动触发setDirty方法。
@@ -91,9 +90,14 @@ package ghostcat.community
 				v.removeEventListener(event,dirtyHandler);
 		}
 		
-		private function dirtyHandler(event:Event):void
+		/**
+		 * 设置dirty的方法
+		 * @param event
+		 * 
+		 */
+		protected function dirtyHandler(event:Event):void
 		{
-			setDirty(event.target);
+			dirtys[event.target] = true;
 		}
 		
 		/**
@@ -109,7 +113,6 @@ package ghostcat.community
 		public function CommunityManager(command:Function)
 		{
 			this.command = command;
-			
 			dirtys = new Dictionary();
 		}
 		
@@ -129,11 +132,9 @@ package ghostcat.community
 			{
 				var v:* = values[i];
 				if ((!filter || dirtys[v]) && needCalculate(v))
-				{
-					delete dirtys[v];
 					calculate(v);
-				}
 			}
+			dirtys = new Dictionary();
 			
 		}
 		
@@ -156,6 +157,13 @@ package ghostcat.community
 			}
 		}
 		
+		/**
+		 * 是否需要计算
+		 * 
+		 * @param v
+		 * @return 
+		 * 
+		 */
 		protected function needCalculate(v:*):Boolean
 		{
 			return !(filter!=null && filter(v)==false);
@@ -173,11 +181,10 @@ package ghostcat.community
 			{
 				var v:* = data[i];
 				if ((!filter || dirtys[v]) && needCalculate(v))
-				{
-					delete dirtys[v];
 					command(v);
-				}
+				
 			}
+			dirtys = new Dictionary();
 		}
 		
 		/**
@@ -192,6 +199,8 @@ package ghostcat.community
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				registerDirty(obj,setDirtyWhenEvent);
+				
+			calculate(obj);//加入时立即计算
 		}
 		
 		/**
@@ -206,6 +215,7 @@ package ghostcat.community
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				unregisterDirty(obj,setDirtyWhenEvent);
+				
 			delete dirtys[obj];
         }
 	}

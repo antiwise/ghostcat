@@ -22,20 +22,27 @@ package ghostcat.community.command
 		 * @param v2
 		 * 
 		 */
-		private function COLLIDE(v1:DisplayObject,v2:DisplayObject):void
+		private function COLLIDE(v1:DisplayObject,v2:DisplayObject):Boolean
 		{
 			if (v1 is GBase && v1 is ICollisionClient)
 			{
 				var g1:ICollisionClient = v1 as ICollisionClient;
 				var g2:ICollisionClient = v2 as ICollisionClient;
 				if (g1.collision.hitTestObject(g2.collision))
+				{
 					g1.dispatchEvent(Util.createObject(new CollideEvent(CollideEvent.COLLIDE),{vergePosition:g1.collision.lastVergePoint,hitObject:g2}));
+					return true;
+				}
 			}
 			else
 			{
 				if (v1.hitTestObject(v2))
+				{
 					v1.dispatchEvent(Util.createObject(new CollideEvent(CollideEvent.COLLIDE),{hitObject:v2}));
+					return true;
+				}
 			}
+			return false;
 		}
 	}
 }
