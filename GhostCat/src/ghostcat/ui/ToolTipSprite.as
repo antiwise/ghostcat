@@ -10,7 +10,7 @@ package ghostcat.ui
 	import ghostcat.display.IToolTipManagerClient;
 	import ghostcat.ui.tooltip.IToolTipSkin;
 	import ghostcat.ui.tooltip.ToolTipSkin;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
 
 	/**

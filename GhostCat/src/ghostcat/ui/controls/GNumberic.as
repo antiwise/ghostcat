@@ -4,7 +4,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	
 	import ghostcat.text.TextFieldUtil;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.util.easing.Circ;
 	
 	/**

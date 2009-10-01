@@ -40,7 +40,7 @@
 		/**
 		 * 取值模式
 		 */
-		public var mode:int = 0;
+		public var mode:int = 1;
 		
 		/**
 		 * 内部元素名称
@@ -56,7 +56,7 @@
 		 * @param labelField	标签实例名
 		 * 
 		 */
-		public function GPercentBar(skin:*=null,replace:Boolean = true,mode:int = 0,fields:Object = null)
+		public function GPercentBar(skin:*=null,replace:Boolean = true,mode:int = 1,fields:Object = null)
 		{
 			if (fields)
 				this.fields = fields;

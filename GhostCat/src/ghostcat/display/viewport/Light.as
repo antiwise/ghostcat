@@ -9,7 +9,7 @@ package ghostcat.display.viewport
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 场景灯光类
@@ -159,9 +159,9 @@ package ghostcat.display.viewport
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.display.Bitmap;
-import ghostcat.display.bitmap.BitmapUtil;
+import ghostcat.util.display.BitmapUtil;
 import flash.geom.Point;
-import ghostcat.util.Geom;
+import ghostcat.util.display.Geom;
 import flash.display.DisplayObjectContainer;
 import flash.geom.Matrix;
 import flash.display.Sprite;
@@ -175,9 +175,9 @@ import flash.display.Graphics;
 import ghostcat.algorithm.bezier.Line;
 import flash.display.BitmapData;
 import flash.display.BlendMode;
-import ghostcat.util.ColorUtil;
+import ghostcat.util.display.ColorUtil;
 import flash.geom.ColorTransform;
-import ghostcat.display.bitmap.BitmapUtil;
+import ghostcat.util.display.BitmapUtil;
 
 class ShadowItem
 {

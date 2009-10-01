@@ -9,9 +9,9 @@ package ghostcat.ui.layout
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.ResizeEvent;
-	import ghostcat.util.AbstractUtil;
-	import ghostcat.util.CallLater;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.AbstractUtil;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.display.Geom;
 	import ghostcat.util.Util;
 	
 	/**

@@ -8,7 +8,7 @@ package ghostcat.display
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	

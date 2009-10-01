@@ -6,8 +6,8 @@ package ghostcat.display.graphics
 	
 	import ghostcat.display.GBase;
 	import ghostcat.skin.PointSkin;
-	import ghostcat.util.CallLater;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.ClassFactory;
 
 	/**
 	 * 可拖动操控点

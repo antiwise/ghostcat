@@ -19,12 +19,12 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import ghostcat.util.display.DisplayUtil;
 			import mx.events.ResizeEvent;
 			import ghostcat.manager.DragManager;
 			import ghostcat.util.ReflectXMLUtil;
-			import ghostcat.display.DisplayUtil;
 			import ghostcat.parse.DisplayParse;
-			import ghostcat.util.Geom;
+			import ghostcat.util.display.Geom;
 			import mx.events.ListEvent;
 			import mx.collections.ArrayCollection;
 			import ghostcat.fileformat.swf.tag.SymbolClassTag;

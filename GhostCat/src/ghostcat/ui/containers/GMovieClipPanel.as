@@ -4,7 +4,7 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.MovieEvent;
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 动画窗口

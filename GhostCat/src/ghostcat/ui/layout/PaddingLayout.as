@@ -2,7 +2,7 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObjectContainer;
 	
-	import ghostcat.util.AbstractUtil;
+	import ghostcat.util.core.AbstractUtil;
 
 	/**
 	 * 封装部分关于padding的属性。此类为抽象类。 

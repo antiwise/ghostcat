@@ -4,7 +4,7 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GTickBase;
 	import ghostcat.display.viewport.CollisionSprite;
@@ -15,7 +15,7 @@ package
 	import ghostcat.parse.graphics.GraphicsEllipse;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.ui.containers.GAlert;
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]

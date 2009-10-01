@@ -6,13 +6,13 @@ package ghostcat.ui.containers
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.layout.LinearLayout;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
 	
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]

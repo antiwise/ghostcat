@@ -3,7 +3,7 @@ package ghostcat.operation.quest
 	import flash.events.EventDispatcher;
 	import flash.utils.ByteArray;
 	
-	import ghostcat.util.BitArray;
+	import ghostcat.util.data.BitArray;
 
 	[Event(name="quest_start",type="ghostcat.operation.quest.QuestEvent")]
 	[Event(name="quest_complete",type="ghostcat.operation.quest.QuestEvent")]

@@ -3,7 +3,7 @@ package ghostcat.manager
 	import flash.net.SharedObject;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 	
 	/**
 	 * 保存到FLASH本地缓存

@@ -9,7 +9,7 @@ package ghostcat.display.loader
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
-	import ghostcat.util.Handler;
+	import ghostcat.util.core.Handler;
 
 	/**
 	 * 动态加载SWF模块

@@ -4,7 +4,7 @@ package ghostcat.display
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 
 	/**
 	 * 基类，用于对图元进行包装。replace参数为false时将不会对源图元产生影响，可作为单独的控制类使用

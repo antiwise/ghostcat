@@ -1,7 +1,7 @@
 package ghostcat.fileformat.swf.tag
 {
 	import ghostcat.fileformat.swf.SWFDecoder;
-	import ghostcat.util.ByteArrayReader;
+	import ghostcat.util.data.ByteArrayReader;
 
 	/**
 	 * 链接资源列表

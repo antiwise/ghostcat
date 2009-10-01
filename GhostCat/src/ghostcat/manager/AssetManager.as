@@ -13,7 +13,7 @@ package ghostcat.manager
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.ui.controls.GProgressBar;
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 
 	/**
 	 * 资源管理类

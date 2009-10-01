@@ -9,7 +9,7 @@ package ghostcat.ui.controls
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.ActionEvent;
 	import ghostcat.skin.ButtonSkin;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
 	
 	[Event(name="change",type="flash.events.Event")]

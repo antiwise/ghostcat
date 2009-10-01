@@ -14,6 +14,7 @@ package
 	import ghostcat.operation.TweenOper;
 	import ghostcat.parse.display.RectParse;
 	import ghostcat.parse.display.TextFieldParse;
+	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.easing.Elastic;
 	
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
@@ -109,7 +110,10 @@ package
 			
 			GXMLManager.instance.exec(xml,new ItemSpec(this));
 			f.applyFilter(s);
-			queue.execute();
+			
+			
+			GAlert.show("点击开始")
+			queue.commit();
 		}
 	}
 }

@@ -5,7 +5,7 @@ package ghostcat.ui.layout
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 圆形布局

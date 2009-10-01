@@ -7,8 +7,8 @@ package ghostcat.ui.controls
 	import flash.events.ProgressEvent;
 	
 	import ghostcat.skin.ProgressSkin;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.LoadHelper;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.load.LoadHelper;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	[Event(name="io_error",type="flash.events.IOErrorEvent")]
@@ -29,7 +29,7 @@ package ghostcat.ui.controls
 		 */
 		public var showNeedTime:Boolean = true;
 		
-		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:int=0, fields:Object=null)
+		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:int=1, fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin;

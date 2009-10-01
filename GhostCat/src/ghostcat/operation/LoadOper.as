@@ -5,6 +5,7 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -18,6 +19,7 @@
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]
+	[Event(name="progress",type="flash.events.ProgressEvent")]
 	
 	/**
 	 * 文件加载器。
@@ -112,6 +114,7 @@
 			{
 				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
+				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
 				if (useCurrentDomain)
 				{
@@ -132,6 +135,7 @@
 				var urlLoader:URLLoader = new URLLoader();
 				urlLoader.dataFormat = dataFormat;
 				urlLoader.addEventListener(Event.COMPLETE,result);
+				urlLoader.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
 				urlLoader.load(new URLRequest(url));
 				
@@ -141,7 +145,10 @@
 		
 		public override function result(event:*=null):void
 		{
+			dispatchEvent(event);
+			
 			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
+			(event.target as EventDispatcher).removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
 			super.result(event);		
@@ -149,7 +156,10 @@
 		
 		public override function fault(event:*=null):void
 		{
+			dispatchEvent(event);
+			
 			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
+			(event.target as EventDispatcher).removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
 			if (embedClass)
@@ -162,6 +172,7 @@
 				{
 					var oper:Loader = obj as Loader;
 					oper.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
+					oper.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 					oper.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
 					oper.loadBytes(byteArr,new LoaderContext(true,ApplicationDomain.currentDomain));
 				}
@@ -181,6 +192,11 @@
 			{
 				super.fault(event);
 			}			
+		}
+		
+		protected function progressHandler(event:ProgressEvent):void
+		{
+			dispatchEvent(event);
 		}
 		
 		/**

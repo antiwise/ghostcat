@@ -122,7 +122,7 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */
-		public function calculateAll(filter:Boolean = true):void
+		public function calculateAll(onlyFilter:Boolean = true):void
 		{
 			var values:Array = data;
 			if (onlyCheckValues)
@@ -131,7 +131,7 @@ package ghostcat.community
 			for (var i:int = 0; i < values.length;i++)
 			{
 				var v:* = values[i];
-				if ((!filter || dirtys[v]) && needCalculate(v))
+				if ((!onlyFilter || dirtys[v]) && !(filter!=null && filter(v)==false))
 					calculate(v);
 			}
 			dirtys = new Dictionary();
@@ -146,27 +146,15 @@ package ghostcat.community
 		 */				
 		public function calculate(v:*):void
 		{
-			if (!needCalculate(v))
+			if (filter!=null && filter(v)==false)
 				return;
 			
 			for (var i:int = 0; i < data.length;i++)
 			{
 				var v2:* = data[i];
-				if (v != v2 && needCalculate(v2))
+				if (v != v2 && !(filter!=null && filter(v2)==false))
 					command(v,v2);
 			}
-		}
-		
-		/**
-		 * 是否需要计算
-		 * 
-		 * @param v
-		 * @return 
-		 * 
-		 */
-		protected function needCalculate(v:*):Boolean
-		{
-			return !(filter!=null && filter(v)==false);
 		}
 		
 		/**
@@ -175,12 +163,12 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */		
-		public function calculateAllOnce(filter:Boolean = false):void
+		public function calculateAllOnce(onlyFilter:Boolean = false):void
 		{
 			for (var i:int = 0; i < data.length;i++)
 			{
 				var v:* = data[i];
-				if ((!filter || dirtys[v]) && needCalculate(v))
+				if ((!onlyFilter || dirtys[v]) && !(filter!=null && filter(v)==false))
 					command(v);
 				
 			}

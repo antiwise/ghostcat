@@ -5,7 +5,7 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 
 	/**
 	 * 任意变形
@@ -152,17 +152,6 @@
 				}
 			}
 		}
-		/** @inheritDoc*/
-		protected override function render():void
-		{
-			var rect: Rectangle = _target.getBounds(_target);
-			var m:Matrix = new Matrix();
-			m.translate(-rect.x, -rect.y);
-			bitmapData.fillRect(bitmapData.rect,0);
-			bitmapData.draw(_target,m);
-			
-			renderTransform();
-		}
 		
 		/**
 		 * 更新变形
@@ -205,10 +194,10 @@
 				point.sx = bx + gx * (topR.x + gy * rightV.x - bx);
 				point.sy = by + gx * (topR.y + gy * rightV.y - by);
 			}
-			renderTransform();
+			renderBitmap();
 		}
-		
-		protected function renderTransform():void
+		/** @inheritDoc*/
+		protected override function renderBitmap() : void
 		{
 			graphics.clear();
 			for (var i:int = pieceList.length - 1;i>=0;i--)

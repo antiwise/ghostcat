@@ -11,7 +11,7 @@ package ghostcat.display.bitmap
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 	import ghostcat.util.Util;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]

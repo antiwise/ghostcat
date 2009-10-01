@@ -9,7 +9,7 @@ package ghostcat.transfer
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 缩略图显示（显示当前范围方框并可以反向选择，如果要禁止此功能可以将enabled设为false）

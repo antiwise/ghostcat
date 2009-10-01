@@ -2,7 +2,7 @@ package ghostcat.filter
 {
 	import flash.filters.ColorMatrixFilter;
 	
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 	import ghostcat.debug.Debug;
 	
 	/**

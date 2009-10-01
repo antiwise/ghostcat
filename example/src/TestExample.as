@@ -2,9 +2,6 @@ package
 {
 	import flash.display.Sprite;
 	
-	import ghostcat.debug.Debug;
-	import ghostcat.debug.DebugPanel;
-	import ghostcat.manager.RootManager;
 	import ghostcat.util.easing.Elastic;Elastic;
 	
 	import ghostcat.util.ReflectUtil;
@@ -16,11 +13,16 @@ package
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.operation.Oper;
 	import ghostcat.manager.BrowerManager;
+	import ghostcat.transfer.LightSweep;
+	import ghostcat.util.easing.TweenUtil;
+	import flash.geom.Point;
+	import flash.geom.ColorTransform;
+	import ghostcat.util.encrypt.SimpleEncrypt;
+	import ghostcat.util.encrypt.ProtectedVO;
 	
 	[SWF(width="600",height="600")]
 	
 	/**
-	 * 可按下Cirl+D呼出显示trace信息的窗口
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -29,16 +31,11 @@ package
 	{
 		public function TestExample()
 		{	
-			RootManager.register(this);
-			new DebugPanel(stage);
-			addChild(new CursorSprite());
-			
-			new TextFieldParse("按下Cirl+D呼出显示trace信息的窗口").parse(this);
-			
-			for (var i:int = 0;i< 100;i++)
-				Debug.trace(null,RandomUtil.string(10));
-				
-			BrowerManager.instance.confirmClose();
+			var v:ProtectedVO = new ProtectedVO(new SimpleEncrypt());
+			v.a = 12345;
+			v.b = new Point(1,1);
+			trace(v.a);
+			trace(v.b);
 		}
 	}
 }

@@ -4,7 +4,7 @@ package ghostcat.community
 	import flash.display.DisplayObjectContainer;
 	
 	import ghostcat.events.MoveEvent;
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 
 	/**
 	 * 针对显示对象的群聚基类

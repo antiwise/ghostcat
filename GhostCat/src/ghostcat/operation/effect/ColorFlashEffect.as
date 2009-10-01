@@ -1,9 +1,8 @@
 package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
-	import flash.geom.ColorTransform;
 	
-	import ghostcat.util.ColorUtil;
+	import ghostcat.util.display.ColorUtil;
 	
 	/**
 	 * 颜色闪烁效果

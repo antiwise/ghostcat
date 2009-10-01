@@ -12,7 +12,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.classes.scroll.IScrollContent;
 	import ghostcat.ui.classes.scroll.ScrollTextContent;
 	import ghostcat.ui.containers.GScrollPanel;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.util.easing.Circ;
 	
 	/**

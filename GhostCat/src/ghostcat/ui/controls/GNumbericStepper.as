@@ -8,9 +8,9 @@ package ghostcat.ui.controls
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.skin.NumberStepperSkin;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Tick;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 数字选择框

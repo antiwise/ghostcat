@@ -8,9 +8,9 @@ package ghostcat.manager
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 	import ghostcat.util.Tick;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 声音管理类

@@ -2,7 +2,7 @@ package ghostcat.ui
 {
 	import flash.events.Event;
 	
-	import ghostcat.util.RootLoaderBase;
+	import ghostcat.util.load.RootLoaderBase;
 	import ghostcat.skin.ProgressSkin;
 	import ghostcat.ui.controls.GPercentBar;
 	import ghostcat.ui.controls.GProgressBar;
@@ -23,7 +23,7 @@ package ghostcat.ui
 		public function RootLoader()
 		{
 			super();
-			progressSprite = new GProgressBar(null,true,GPercentBar.SCALEX);
+			progressSprite = new GProgressBar();
 			progressSprite.target = this;
 			addChild(progressSprite);
 			
