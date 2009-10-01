@@ -5,11 +5,11 @@ package ghostcat.transfer
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
+	import ghostcat.util.core.CallLater;
 
 	
 	/**
@@ -106,7 +106,26 @@ package ghostcat.transfer
 			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.draw(_target,m);
 			
-			m = new Matrix();
+			renderBitmap();
+		}
+		
+		/**
+		 * 之后更新显示位图
+		 * 
+		 */
+		public function invalidateRenderBitmap():void
+		{
+			CallLater.callLater(renderBitmap,null,true);
+		}
+		
+		/**
+		 * 重绘时显示位图
+		 * 
+		 */
+		protected function renderBitmap():void
+		{
+			var rect: Rectangle = _target.getBounds(_target);
+			var m:Matrix = new Matrix();
 			m.createBox(1,1,0,rect.x,rect.y);
 			graphics.clear();
 			graphics.beginBitmapFill(bitmapData,m,false);

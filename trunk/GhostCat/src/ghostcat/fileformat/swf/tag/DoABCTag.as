@@ -3,7 +3,7 @@ package ghostcat.fileformat.swf.tag
 	import flash.utils.ByteArray;
 	
 	import ghostcat.fileformat.swf.SWFDecoder;
-	import ghostcat.util.ByteArrayReader;
+	import ghostcat.util.data.ByteArrayReader;
 
 	/**
 	 * AS3代码Tag

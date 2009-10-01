@@ -3,9 +3,9 @@ package ghostcat.ui
 	import flash.display.DisplayObject;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.ReflectUtil;
-	import ghostcat.util.SearchUtil;
+	import ghostcat.util.display.SearchUtil;
 
 	/**
 	 * 帮助快速创建界面的辅助类

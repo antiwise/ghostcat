@@ -1,7 +1,7 @@
 package ghostcat.operation
 {
 	import ghostcat.events.TweenEvent;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 
 	/**
 	 * 与内部Tween对应的Oper

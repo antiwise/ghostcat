@@ -10,7 +10,7 @@ package ghostcat.filter
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 	import ghostcat.debug.Debug;
 
 	/**

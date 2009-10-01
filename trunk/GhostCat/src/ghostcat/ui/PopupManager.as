@@ -11,7 +11,7 @@ package ghostcat.ui
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 	
 	/**
 	 * 弹出窗口管理类 

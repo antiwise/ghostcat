@@ -2,7 +2,7 @@ package ghostcat.ui.controls
 {
 	import ghostcat.skin.VSilderSkin;
 	import ghostcat.ui.UIConst;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 
 	/**
 	 * 纵向拖动块 

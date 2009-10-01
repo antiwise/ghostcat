@@ -13,8 +13,8 @@ package ghostcat.ui.controls
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GAlert;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 	import ghostcat.util.easing.Circ;
 	
 	/**

@@ -1,14 +1,12 @@
 package ghostcat.display.viewport
 {
-	import flash.display.DisplayObject;
-	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.algorithm.bezier.Line;
 	import ghostcat.display.GBase;
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 
 	/**
 	 * 场景墙壁类

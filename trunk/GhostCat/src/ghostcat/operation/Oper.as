@@ -3,7 +3,7 @@ package ghostcat.operation
 	import flash.events.EventDispatcher;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.util.AbstractUtil;
+	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.Util;
 	
 	[Event(name="operation_start",type="ghostcat.events.OperationEvent")]

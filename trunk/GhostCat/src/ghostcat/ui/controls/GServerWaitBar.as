@@ -5,7 +5,7 @@ package ghostcat.ui.controls
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	
-	import ghostcat.util.LoadHelper;
+	import ghostcat.util.load.LoadHelper;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	[Event(name="io_error",type="flash.events.IOErrorEvent")]

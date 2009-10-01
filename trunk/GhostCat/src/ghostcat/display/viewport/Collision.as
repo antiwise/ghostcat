@@ -5,8 +5,8 @@ package ghostcat.display.viewport
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.Geom;
-	import ghostcat.util.SearchUtil;
+	import ghostcat.util.display.Geom;
+	import ghostcat.util.display.SearchUtil;
 
 	/**
 	 * 碰撞检测块。

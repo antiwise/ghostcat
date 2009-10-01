@@ -4,7 +4,7 @@ package
 	
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GList;
-	import ghostcat.util.ObjectProxy;
+	import ghostcat.util.data.ObjectProxy;
 	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="400",height="400")]

@@ -12,8 +12,8 @@ package ghostcat.text
 	
 	import ghostcat.display.IGBase;
 	import ghostcat.util.ArrayUtil;
-	import ghostcat.util.CallLater;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 自制输入法系统

@@ -1,10 +1,12 @@
 package 
 {
-	import flash.display.Sprite;
-	
+	import ghostcat.display.GSprite;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
-	import ghostcat.events.OperationEvent;
+	import ghostcat.manager.RootManager;
+	import ghostcat.operation.FunctionOper;
 	import ghostcat.operation.LoadGIFOper;
+	import ghostcat.ui.containers.GAlert;
+	import ghostcat.ui.controls.GProgressBar;
 	
 	[SWF(width="500",height="400")]
 	/**
@@ -15,16 +17,29 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GIFExample extends Sprite
+	public class GIFExample extends GSprite
 	{
 		public var loader:LoadGIFOper;
-		public function GIFExample()
+		public var pBar:GProgressBar;
+		protected override function init():void
 		{
-			loader = new LoadGIFOper("dance.gif",null,rhandler);
+			RootManager.register(this);
+		
+			GAlert.show("点击开始下载图片");
+			new FunctionOper(load).commit();
+		}
+		private function load():void
+		{
+			pBar = new GProgressBar();
+			addChild(pBar);
+			
+			loader = new LoadGIFOper("dance.gif");
+			pBar.target = loader;
 			loader.commit();
+			new FunctionOper(show).commit();
 		}
 		
-		private function rhandler(event:OperationEvent):void
+		private function show():void
 		{
 			var movie:GBitmapMovieClip = new GBitmapMovieClip(loader.data as Array);
 			movie.frameRate = 10;

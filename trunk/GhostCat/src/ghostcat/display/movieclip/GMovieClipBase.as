@@ -9,8 +9,8 @@ package ghostcat.display.movieclip
 	import ghostcat.display.GTickBase;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.AbstractUtil;
-	import ghostcat.util.Handler;
+	import ghostcat.util.core.AbstractUtil;
+	import ghostcat.util.core.Handler;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 

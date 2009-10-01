@@ -7,16 +7,17 @@ package
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.DelayOper;
+	import ghostcat.operation.FunctionOper;
 	import ghostcat.operation.RepeatOper;
 	import ghostcat.operation.TweenOper;
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsRect;
 	import ghostcat.ui.containers.GAlert;
-	import ghostcat.util.TweenUtil;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.Elastic;
-	
+	import ghostcat.util.easing.TweenUtil;
+
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	
 	/**
@@ -35,6 +36,11 @@ package
 			sp = DisplayParse.createSprite([new GraphicsFill(0xFFFFFF),new GraphicsRect(0,0,100,100,10)])
 			addChild(sp);
 			
+			GAlert.show("点击开始")
+			new FunctionOper(start).commit();
+		}
+		public function start():void
+		{
 			TweenUtil.from(sp,1000,{delay:500,x:100,tint:0xFF0000,ease:Elastic.easeIn,renderOnStart:true})
 			TweenUtil.to(sp,1000,{delay:1500,x:100,tint:0x0000FF,ease:Elastic.easeOut});
 			

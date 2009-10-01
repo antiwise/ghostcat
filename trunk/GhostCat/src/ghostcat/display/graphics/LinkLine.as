@@ -6,7 +6,7 @@ package ghostcat.display.graphics
 	
 	import ghostcat.display.GBase;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
-	import ghostcat.util.Geom;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 连接线

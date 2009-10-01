@@ -3,7 +3,7 @@ package ghostcat.manager
 	import flash.external.ExternalInterface;
 	import flash.net.URLVariables;
 	
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 	
 	/**
 	 * 通过JS与浏览器通讯

@@ -6,8 +6,8 @@ package ghostcat.fileformat.swf
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.fileformat.swf.tag.Tag;
-	import ghostcat.util.BitUtil;
-	import ghostcat.util.ByteArrayReader;
+	import ghostcat.util.data.BitUtil;
+	import ghostcat.util.data.ByteArrayReader;
 
 	/**
 	 * SWF文件解析器

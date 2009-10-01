@@ -3,8 +3,8 @@ package ghostcat.display
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.CallLater;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 重写了width,height使得scale保持为1的显示对象，大部分组件类的基类

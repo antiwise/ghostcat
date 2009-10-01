@@ -13,7 +13,7 @@
     import flash.utils.getTimer;
     
     import ghostcat.events.InputEvent;
-    import ghostcat.util.Singleton;
+    import ghostcat.util.core.Singleton;
     
     /**
      * 输入设备管理类，附加功能为：

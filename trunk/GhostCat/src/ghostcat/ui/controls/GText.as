@@ -20,9 +20,9 @@ package ghostcat.ui.controls
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.Geom;
-	import ghostcat.util.SearchUtil;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
+	import ghostcat.util.display.SearchUtil;
 	import ghostcat.util.Util;
 	
 	[Event(name="text_change",type="ghostcat.events.GTextEvent")]

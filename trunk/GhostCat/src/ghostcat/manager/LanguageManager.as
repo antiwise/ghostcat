@@ -10,8 +10,8 @@ package ghostcat.manager
 	import ghostcat.operation.Queue;
 	import ghostcat.text.RegExpUtil;
 	import ghostcat.util.ReflectUtil;
-	import ghostcat.util.SearchUtil;
-	import ghostcat.util.Singleton;
+	import ghostcat.util.display.SearchUtil;
+	import ghostcat.util.core.Singleton;
 	
 	
 	/**

@@ -8,11 +8,11 @@ package ghostcat.display.viewport
 	import flash.utils.Dictionary;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 	import ghostcat.util.Util;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]

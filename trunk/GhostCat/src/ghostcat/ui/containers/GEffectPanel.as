@@ -5,8 +5,8 @@ package ghostcat.ui.containers
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.effect.TweenEffect;
-	import ghostcat.util.Geom;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.display.Geom;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 采用Effect代替的动画窗口

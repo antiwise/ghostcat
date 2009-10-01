@@ -1,6 +1,6 @@
 package ghostcat.fileformat.swf.tag
 {
-	import ghostcat.util.ByteArrayReader;
+	import ghostcat.util.data.ByteArrayReader;
 
 	/**
 	 * 防止导入密码

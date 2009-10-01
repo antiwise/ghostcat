@@ -7,7 +7,7 @@ package ghostcat.manager
 	import flash.utils.Dictionary;
 	
 	import ghostcat.text.TextUtil;
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 	import ghostcat.util.Util;
 
 	/**

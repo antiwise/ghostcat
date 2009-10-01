@@ -12,9 +12,9 @@ package ghostcat.ui.controls
 	import ghostcat.display.GNoScale;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LayoutUtil;
-	import ghostcat.util.CallLater;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.Geom;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 图片

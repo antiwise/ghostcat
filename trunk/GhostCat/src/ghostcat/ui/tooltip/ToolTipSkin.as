@@ -6,8 +6,8 @@ package ghostcat.ui.tooltip
 	
 	import ghostcat.skin.ArowSkin;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.util.ClassFactory;
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.util.easing.Back;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.ui.ToolTipSprite;

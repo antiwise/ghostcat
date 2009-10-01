@@ -1,7 +1,7 @@
 package ghostcat.gxml
 {
 	import ghostcat.gxml.spec.ISpec;
-	import ghostcat.util.Singleton;
+	import ghostcat.util.core.Singleton;
 
 	/**
 	 * XML解析类

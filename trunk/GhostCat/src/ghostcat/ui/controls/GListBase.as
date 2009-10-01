@@ -17,7 +17,7 @@ package ghostcat.ui.controls
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.skin.ListBackground;
 	import ghostcat.ui.UIConst;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
 
 	[Event(name="change",type="flash.events.Event")]

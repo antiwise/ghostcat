@@ -5,7 +5,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	
 	import ghostcat.skin.RadioButtonIconSkin;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	
 	/**
 	 * 单选框

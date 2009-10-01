@@ -11,8 +11,8 @@ package ghostcat.manager
 	import ghostcat.events.TickEvent;
 	import ghostcat.parse.display.AlphaShapeParse;
 	import ghostcat.parse.display.DrawParse;
-	import ghostcat.util.Geom;
-	import ghostcat.util.Handler;
+	import ghostcat.util.display.Geom;
+	import ghostcat.util.core.Handler;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	

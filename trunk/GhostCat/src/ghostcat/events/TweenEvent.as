@@ -2,7 +2,7 @@ package ghostcat.events
 {
 	import flash.events.Event;
 	
-	import ghostcat.util.TweenUtil;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 缓动类事件 

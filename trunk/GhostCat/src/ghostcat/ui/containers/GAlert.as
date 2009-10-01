@@ -9,7 +9,7 @@ package ghostcat.ui.containers
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.ui.layout.LayoutUtil;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	
 	/**
 	 * 警示框

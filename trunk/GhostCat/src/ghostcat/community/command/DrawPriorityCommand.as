@@ -35,8 +35,7 @@ package ghostcat.community.command
 				parent.setChildIndex(d1,i2);
 				return true;
 			}
-			else
-				return false;
+			return false;
 		}
 		
 		/**
@@ -46,7 +45,7 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function PRIORITY(d1:DisplayObject,d2:DisplayObject):Boolean
+		public static function SORTZ(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
 				return false;
@@ -73,7 +72,7 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function PRIORITY_SORTY(d1:DisplayObject,d2:DisplayObject):Boolean
+		public static function SORTZY(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
 				return false;
@@ -99,8 +98,7 @@ package ghostcat.community.command
 				parent.setChildIndex(d1,i2);
 				return true;
 			}
-			else
-				return false;
+			return false;
 		}
 
 	}

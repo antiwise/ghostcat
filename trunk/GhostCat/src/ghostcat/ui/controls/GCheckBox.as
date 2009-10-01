@@ -4,7 +4,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	
 	import ghostcat.skin.CheckBoxIconSkin;
-	import ghostcat.util.ClassFactory;
+	import ghostcat.util.core.ClassFactory;
 	
 	/**
 	 * 多选框

@@ -1,6 +1,5 @@
 package ghostcat.display.graphics
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -15,7 +14,7 @@ package ghostcat.display.graphics
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
 	import ghostcat.ui.CursorSprite;
-	import ghostcat.display.DisplayUtil;
+	import ghostcat.util.display.DisplayUtil;
 
 	/**
 	 * 图像变形控制器，点击自动选中，并可调整大小和变形

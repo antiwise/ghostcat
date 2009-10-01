@@ -5,7 +5,7 @@ package ghostcat.operation
 	import flash.utils.Timer;
 	
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.Handler;
+	import ghostcat.util.core.Handler;
 	import ghostcat.util.Tick;
 
 	/**

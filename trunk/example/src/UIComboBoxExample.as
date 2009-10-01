@@ -2,11 +2,12 @@ package
 {
 	import ghostcat.display.GSprite;
 	import ghostcat.display.residual.ResidualScreen;
+	import ghostcat.manager.RootManager;
 	import ghostcat.ui.controls.GComboBox;
 	import ghostcat.ui.controls.GVSilder;
 	import ghostcat.util.Util;
 	
-	[SWF(width="600",height="600")]
+	[SWF(width="400",height="400")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	/**
 	 * 演示了ComboBox的效果，顺便放了Slider上来。
@@ -18,6 +19,8 @@ package
 	{
 		protected override function init():void
 		{	
+			RootManager.register(this);
+			
 			var b:GComboBox = new GComboBox();
 			b.data = 10;
 			b.x = 100;

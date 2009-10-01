@@ -7,7 +7,7 @@ package ghostcat.filter
 	import flash.geom.Point;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.util.CallLater;
+	import ghostcat.util.core.CallLater;
 	import ghostcat.util.MathUtil;
 	
 	/**

@@ -1,6 +1,6 @@
 package ghostcat.operation
 {
-	import ghostcat.util.Handler;
+	import ghostcat.util.core.Handler;
 	
 	/**
 	 * 函数类

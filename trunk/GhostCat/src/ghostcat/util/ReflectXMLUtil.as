@@ -2,6 +2,8 @@ package ghostcat.util
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	
+	import ghostcat.util.core.ClassFactory;
 
 	/**
 	 * 处理XML对象序列化的操作

@@ -10,8 +10,8 @@ package ghostcat.display.residual
 	import flash.geom.Point;
 	
 	import ghostcat.display.bitmap.GBitmap;
-	import ghostcat.util.MatrixUtil;
 	import ghostcat.util.Util;
+	import ghostcat.util.display.MatrixUtil;
 
 	/**
 	 * 位图实现的残影效果
