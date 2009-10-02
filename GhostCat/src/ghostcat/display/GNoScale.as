@@ -72,6 +72,13 @@ package ghostcat.display
 			invalidateSize();
 		}
 		
+		public override function setSize(width:Number, height:Number, noEvent:Boolean=false) : void
+		{
+			_width = width;
+			_height = height;
+			vaildSize(noEvent);
+		}
+		
 		/** @inheritDoc*/
 		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
 		{

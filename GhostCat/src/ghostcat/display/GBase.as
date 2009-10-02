@@ -498,7 +498,11 @@ package ghostcat.display
 		{
 			updateSize();
 			if (!noEvent)
+			{
 				dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
+				if (parent)
+					parent.dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.CHILD_RESIZE),{size:new Point(width,height),child:this}));
+			}
 		}
 		
 		/**

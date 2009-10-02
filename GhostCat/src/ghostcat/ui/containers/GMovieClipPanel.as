@@ -18,15 +18,8 @@ package ghostcat.ui.containers
 	{
 		public var fields:Object = {create:"create",normal:"normal",close:"close",show:"show",hide:"hide"};
 		
-		/**
-		 * 是否将注册点移动到屏幕中央
-		 */
-		public var centerLayout:Boolean = true;
-		
-		public function GMovieClipPanel(mc:*=null, replace:Boolean=true, centerLayout:Boolean = true, fields:Object=null)
+		public function GMovieClipPanel(mc:*=null, replace:Boolean=true, fields:Object=null)
 		{
-			this.centerLayout = centerLayout;
-			
 			if (fields)
 				this.fields = fields;
 			
@@ -38,14 +31,13 @@ package ghostcat.ui.containers
 			super.init();
 			setLabel(fields.create,1);
 			queueLabel(fields.normal,-1);
-		
-			if (centerLayout)
-			{
-				var pRect:Rectangle = Geom.getRect(parent,parent);
-				this.x = pRect.x + pRect.width / 2;
-				this.y = pRect.y + pRect.height / 2;
-			}
 		}
+		
+		public override function set enabled(v:Boolean) : void
+		{
+			this.mouseChildren = this.mouseEnabled = super.enabled = v;
+		}
+		
 		/** @inheritDoc*/
 		public override function set visible(v:Boolean):void
 		{
@@ -54,15 +46,14 @@ package ghostcat.ui.containers
 			
 			if (v)
 			{
-				super.visible = true;
-			
+				this.enabled = super.visible = true;
 				setLabel(fields.show,1);
 				queueLabel(fields.normal,-1);
 			}
 			else
 			{
 				setLabel(fields.hide,1);
-				
+				this.enabled = false;
 				addEventListener(MovieEvent.MOVIE_END,hideMovieEndHandler);
 			}
 		}
@@ -74,6 +65,7 @@ package ghostcat.ui.containers
 		public function close() : void
 		{
 			setLabel(fields.close,1);
+			this.enabled = false;
 			
 			addEventListener(MovieEvent.MOVIE_END,closeMovieEndHandler);
 		}

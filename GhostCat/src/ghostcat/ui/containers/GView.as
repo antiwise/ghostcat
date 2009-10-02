@@ -117,6 +117,40 @@ package ghostcat.ui.containers
 			invalidateLayout();
 		}
 		
+		/**
+		 * 获得索引处的对象
+		 * @param index
+		 * @return 
+		 * 
+		 */
+		public function getObjectAt(index:int):DisplayObject
+		{
+			return contentPane.getChildAt(index);
+		}
+		
+		/**
+		 * 根据对象名获得对象
+		 * @param name
+		 * @return 
+		 * 
+		 */
+		public function getObjectByName(name:String):DisplayObject
+		{
+			return contentPane.getChildByName(name);
+		}
+		
+		/**
+		 * 获得对象的索引
+		 * @param child
+		 * @return 
+		 * 
+		 */
+		public function getObjectIndex(child:DisplayObject):int
+		{
+			return contentPane.getChildIndex(child);
+		}
+		
+		
 		private function addHandlers(target:DisplayObject):void
 		{
 //			target.addEventListener(ResizeEvent.RESIZE,invalidateLayoutHandler,false,0,true);

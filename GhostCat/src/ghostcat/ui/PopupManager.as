@@ -5,6 +5,7 @@ package ghostcat.ui
 	import flash.events.Event;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
+	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
@@ -12,6 +13,7 @@ package ghostcat.ui
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.util.core.Singleton;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 弹出窗口管理类 
@@ -134,9 +136,9 @@ package ghostcat.ui
 		 * @param obj	窗口实例
 		 * @param owner	调用者
 		 * @param modal	是否是模态窗口
-		 * 
+		 * @param center	居中模式（CenterMode）
 		 */
-		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true):DisplayObject
+		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect"):DisplayObject
 		{
 			if (!owner)
 				owner = popupLayer;
@@ -144,6 +146,18 @@ package ghostcat.ui
 			popups[obj] = owner;
 			
 			popupLayer.addChild(obj);
+			
+			if (centerMode == CenterMode.RECT)
+			{
+				Geom.centerIn(obj,obj.stage);
+			}
+			else if (centerMode == CenterMode.POINT)
+			{
+				var center:Point = popupLayer.globalToLocal(Geom.center(obj.stage));
+				obj.x = center.x;
+				obj.y = center.y;
+			}
+			
 			if (modal && applicationEnabled)
 			{
 				applicationEnabled = false;
@@ -161,9 +175,9 @@ package ghostcat.ui
 		 * @param queue	使用的队列。默认使用PopupManager指定的队列。
 		 * 
 		 */
-		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,queue:Queue = null):DisplayObject
+		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",queue:Queue = null):DisplayObject
 		{
-			var oper:PopupOper = new PopupOper(obj,owner,modal);
+			var oper:PopupOper = new PopupOper(obj,owner,modal,centerMode);
 			
 			if (queue)
 				oper.commit(queue);

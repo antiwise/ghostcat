@@ -62,11 +62,6 @@ package ghostcat.debug
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
 		}
 		
-		protected override function updateSize() : void
-		{
-			super.updateSize();
-		}
-		
 		private function keyDownHandler(event:KeyboardEvent):void
 		{
 			if (event.ctrlKey && event.keyCode == ("D").charCodeAt(0))
