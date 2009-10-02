@@ -1,9 +1,9 @@
 package ghostcat.ui.layout
 {
-	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.display.Geom;
 	
@@ -106,8 +106,10 @@ package ghostcat.ui.layout
 			{
 				if (!isNaN(left))
 				{
-					
-					obj.width = cRect.right - (obj.x - offest.x) - right;
+					if (obj is GBase)//使用setSize方法避免重复触发Resize事件
+						(obj as GBase).setSize(cRect.right - (obj.x - offest.x) - right,obj.height,true);
+					else
+						obj.width = cRect.right - (obj.x - offest.x) - right;
 					obj.x -= offest.x * (1 - obj.width / rect.width);
 				}
 				else
@@ -118,7 +120,10 @@ package ghostcat.ui.layout
 			{
 				if (!isNaN(top))
 				{
-					obj.height = cRect.bottom - (obj.y - offest.y) - bottom;
+					if (obj is GBase)
+						(obj as GBase).setSize(obj.width,cRect.bottom - (obj.y - offest.y) - bottom,true);
+					else
+						obj.height = cRect.bottom - (obj.y - offest.y) - bottom;
 					obj.y -= offest.y * (1 - obj.height / rect.height);
 				}
 				else

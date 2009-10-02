@@ -326,6 +326,9 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.community.physics.PhysicsItem"/>
     <classEntry path="ghostcat.community.physics.PhysicsManager"/>
+    <classEntry path="ghostcat.debug.DebugRect"/>
+    <classEntry path="ghostcat.ui.CenterMode"/>
+    <classEntry path="ghostcat.ui.containers.GDrawerPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

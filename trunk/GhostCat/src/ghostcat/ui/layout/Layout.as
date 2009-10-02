@@ -1,18 +1,14 @@
 package ghostcat.ui.layout
 {
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GBase;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.CallLater;
 	import ghostcat.util.display.Geom;
-	import ghostcat.util.Util;
 	
 	/**
 	 * 布局器基类，此类为抽像类
@@ -62,6 +58,7 @@ package ghostcat.ui.layout
 			if (_target)
 			{
 				_target.removeEventListener(ResizeEvent.RESIZE,resizeHandler);
+				_target.removeEventListener(ResizeEvent.CHILD_RESIZE,resizeHandler);
 				if (_target.stage)
 					_target.stage.removeEventListener(Event.RESIZE,resizeHandler);
 			}
@@ -71,6 +68,7 @@ package ghostcat.ui.layout
 			
 			if (_target)
 			{
+				_target.addEventListener(ResizeEvent.CHILD_RESIZE,resizeHandler);
 				if (isRoot)
 				{
 					if (_target.stage)

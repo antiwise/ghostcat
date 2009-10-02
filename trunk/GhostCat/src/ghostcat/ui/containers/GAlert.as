@@ -4,6 +4,7 @@ package ghostcat.ui.containers
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.skin.AlertSkin;
+	import ghostcat.ui.CenterMode;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.UIBuilder;
 	import ghostcat.ui.UIConst;
@@ -76,11 +77,10 @@ package ghostcat.ui.containers
 			alert.title = title;
 			alert.text = text;
 			alert.data = buttons;
-			alert.centerLayout = true;
 			
 			alert.closeHandler = closeHandler;
 			
-			PopupManager.instance.queuePopup(alert);
+			PopupManager.instance.queuePopup(alert,null,true,CenterMode.POINT);
 			
 			return alert;
 		}

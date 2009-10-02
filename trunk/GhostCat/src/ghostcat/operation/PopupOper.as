@@ -15,18 +15,20 @@ package ghostcat.operation
 		public var popup:DisplayObject;
 		public var owner:DisplayObject;
 		public var modal:Boolean;
-		public function PopupOper(popup:DisplayObject=null,owner:DisplayObject=null,modal:Boolean = true)
+		public var centerMode:String;
+		public function PopupOper(popup:DisplayObject=null,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect")
 		{
 			super();
 			
 			this.popup = popup;
 			this.owner = owner;
 			this.modal = modal;
+			this.centerMode = centerMode;
 		}
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
-			PopupManager.instance.showPopup(popup,owner,modal).addEventListener(Event.REMOVED_FROM_STAGE,result);;
+			PopupManager.instance.showPopup(popup,owner,modal,centerMode).addEventListener(Event.REMOVED_FROM_STAGE,result);;
 		}
 		/** @inheritDoc*/
 		public override function result(event:* = null) : void

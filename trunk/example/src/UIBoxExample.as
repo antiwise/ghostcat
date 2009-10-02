@@ -1,9 +1,13 @@
 package
 {
+	import flash.geom.Rectangle;
+	
+	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.effect.ColorFlashEffect;
 	import ghostcat.operation.effect.FlashEffect;
+	import ghostcat.ui.containers.GDrawerPanel;
 	import ghostcat.ui.containers.GToggleButtonBar;
 	import ghostcat.ui.containers.GVBox;
 	import ghostcat.ui.controls.GNumbericStepper;
@@ -11,6 +15,7 @@ package
 	import ghostcat.ui.controls.GRadioButtonGroup;
 	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.Util;
+	import ghostcat.util.easing.TweenUtil;
 	
 	[SWF(width="500",height="500")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
@@ -28,6 +33,7 @@ package
 		{
 			RootManager.register(this);
 			
+			//单选框
 			var box:GVBox = new GVBox();
 			addChild(box);
 			
@@ -40,6 +46,7 @@ package
 			
 			new ColorFlashEffect(box,1000,0xFF0000).execute();
 			
+			//按钮
 			var b:GToggleButtonBar = new GToggleButtonBar();
 			b.x = 200;
 			b.data = ["1","2","3"];
@@ -47,6 +54,7 @@ package
 			
 			new FlashEffect(b,1000).execute();
 			
+			//数字
 			var t:GNumbericStepper = new GNumbericStepper();
 			t.prefix = "$";
 			t.setValue(100);
@@ -57,6 +65,14 @@ package
 			
 			LayoutUtil.center(t,stage,0,0);//同样可以像这样直接布局
 			
+			//抽屉
+			var vbox:GVBox = new GVBox();
+			vbox.y = 200;
+			addChild(vbox);
+			
+			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0xFF0000,"抽屉1"),true,new Rectangle(0,0,100,20)));
+			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x00FF00,"抽屉2"),true,new Rectangle(0,0,100,20)));
+			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x0000FF,"抽屉3"),true,new Rectangle(0,0,100,20)));
 		}
 	}
 }
