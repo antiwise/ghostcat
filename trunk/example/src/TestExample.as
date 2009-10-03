@@ -38,6 +38,7 @@ package
 	import ghostcat.parse.graphics.GraphicsGradientFillParse;
 	import flash.display.GradientType;
 	import ghostcat.util.display.MatrixUtil;
+	import ghostcat.debug.Debug;
 	
 	[SWF(width="600",height="600",frameRate="60",backgroundColor="0x0")]
 	
@@ -51,19 +52,7 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			
-			createChildren()
-			
-			stage.addChild(Util.createObject(new ResidualScreen(600,600),{enabledTick:true,fadeSpeed:0.98,blurSpeed:2,items:[this]}));
-		}
-		
-		private function createChildren():void
-		{
-			var v:Shape = new EllipseParse(new GraphicsEllipse(0,0,50,50),null,new GraphicsGradientFillParse(GradientType.RADIAL,[0xFFFFFF,0xFFFFFF],[1.0,0],[0,255],MatrixUtil.createGradientBox(50,50,0,-25,-25))).createShape();
-			addChild(v);
-			
-			v.y = 300;
-			new RepeatEffect([new TweenOper(v,1000,{x:600}),new TweenOper(v,1000,{x:0})]).commit();
+			Debug.traceAll("123",12312,"asd");
 		}
 	}
 }
