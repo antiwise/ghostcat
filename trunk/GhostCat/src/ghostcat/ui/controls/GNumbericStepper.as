@@ -43,7 +43,7 @@ package ghostcat.ui.controls
 			
 			super(skin, replace, enabledAdjustContextSize, textPos);
 				
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			this.enabledTick = true;
 		}
 		/** @inheritDoc*/
 		protected override function getTextFieldFromSkin(skin:DisplayObject) : void
@@ -78,7 +78,7 @@ package ghostcat.ui.controls
 		 * @param event
 		 * 
 		 */
-		protected function tickHandler(event:TickEvent):void
+		protected override function tickHandler(event:TickEvent):void
 		{
 			if (upArrow)
 			{
@@ -143,8 +143,6 @@ package ghostcat.ui.controls
 		public override function destory() : void
 		{
 			super.destory();
-			
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 			
 			if (upArrow) 
 				upArrow.destory();

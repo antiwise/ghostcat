@@ -5,7 +5,7 @@ package ghostcat.display.other
 	import flash.utils.Timer;
 	
 	import ghostcat.display.GNoScale;
-	import ghostcat.display.GTickBase;
+	import ghostcat.events.TickEvent;
 	
 	/**
 	 * 泡泡生成器
@@ -14,19 +14,16 @@ package ghostcat.display.other
 	 */
 	public class BubbleCreater extends GNoScale
 	{
-		private var timer:Timer=new Timer(10);
 		public function BubbleCreater(width:Number,height:Number)
 		{
 			super();
 			
 			this.width = width;
 			this.height = height;
-			
-			timer.addEventListener(TimerEvent.TIMER,timerHandler);
-			timer.start();
+			this.enabledTick = true;
 		}
 		
-		private function timerHandler(event:TimerEvent):void
+		protected override function tickHandler(event:TickEvent):void
 		{
 			if (Math.random() < 0.3)
 				addChild(createBubble());
@@ -42,13 +39,6 @@ package ghostcat.display.other
 			
 			return bubble;
 		}
-		public override function destory():void
-		{
-			timer.removeEventListener(TimerEvent.TIMER,timerHandler);
-			timer.stop();
-		
-			super.destory();
-		}
 	}
 }
 
@@ -57,10 +47,10 @@ import flash.display.GradientType;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Matrix;
-import ghostcat.display.GTickBase;
 import ghostcat.events.TickEvent;
+import ghostcat.display.GBase;
 
-class Bubble extends GTickBase
+class Bubble extends GBase
 {
 	public var life:Number;
 	private var r:Number;
@@ -79,6 +69,8 @@ class Bubble extends GTickBase
 		
 		blendMode=BlendMode.ADD;
 		alpha=0.0;	
+		
+		enabledTick = true;
 	}
 	
 	protected override function tickHandler(event:TickEvent):void

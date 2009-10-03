@@ -6,13 +6,11 @@ package ghostcat.display.movieclip
 	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.GTickBase;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.util.Util;
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.Handler;
-	import ghostcat.util.Tick;
-	import ghostcat.util.Util;
 
 	[Event(name="movie_start",type="org.gameui.events.MovieEvent")]
 	
@@ -27,7 +25,7 @@ package ghostcat.display.movieclip
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GMovieClipBase extends GTickBase
+	public class GMovieClipBase extends GBase
 	{
 		/**
 		 * 全局默认帧频，为0时则取舞台帧频。
@@ -78,6 +76,7 @@ package ghostcat.display.movieclip
 			AbstractUtil.preventConstructor(this,GMovieClipBase);
 			super(skin, replace);
 			
+			this.enabledTick = true;
 			this.paused = paused;
 		}
 		

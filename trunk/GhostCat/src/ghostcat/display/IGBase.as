@@ -9,6 +9,30 @@ package ghostcat.display
 	public interface IGBase extends IDisplayObject,IData,ICursorManagerClient,IToolTipManagerClient
 	{
 		/**
+		 * 是否激活
+		 * @param v
+		 * 
+		 */
+		function set enabled(v:Boolean):void
+		function get enabled():Boolean;
+		
+		/**
+		 * 是否暂停
+		 * @param v
+		 * 
+		 */
+		function set paused(v:Boolean):void
+		function get paused():Boolean;
+		
+		/**
+		 * 是否激活时基
+		 * @param v
+		 * 
+		 */
+		function set enabledTick(v:Boolean):void
+		function get enabledTick():Boolean;
+		
+		/**
 		 * 在之后更新坐标
 		 */
 		function invalidatePosition():void

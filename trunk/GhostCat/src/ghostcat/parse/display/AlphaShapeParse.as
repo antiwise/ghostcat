@@ -10,7 +10,7 @@ package ghostcat.parse.display
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.parse.graphics.GradientFillParse;
+	import ghostcat.parse.graphics.GraphicsGradientFillParse;
 	import ghostcat.parse.graphics.GraphicsRect;
 	
 	/**
@@ -27,7 +27,7 @@ package ghostcat.parse.display
 			var graphicsRect:GraphicsRect = new GraphicsRect(rect.x,rect.y,rect.width,rect.height);
 			var m:Matrix = new Matrix();
 			m.createGradientBox(rect.width,rect.height,0,rect.x,rect.y);
-			var graphicsFill:GradientFillParse = new GradientFillParse(GradientType.LINEAR,[0,0,0,0],[0,alpha,alpha,0],[0,255 * alphaWidth,255 * (1 - alphaWidth),255],m);
+			var graphicsFill:GraphicsGradientFillParse = new GraphicsGradientFillParse(GradientType.LINEAR,[0,0,0,0],[0,alpha,alpha,0],[0,255 * alphaWidth,255 * (1 - alphaWidth),255],m);
 		
 			super(graphicsRect,null,graphicsFill);
 		}

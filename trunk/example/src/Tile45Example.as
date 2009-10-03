@@ -1,13 +1,13 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.filters.DropShadowFilter;
 	
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.CursorSprite;
+	import ghostcat.util.Util;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源

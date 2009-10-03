@@ -5,7 +5,7 @@ package ghostcat.parse.graphics
 	
 	import ghostcat.parse.DisplayParse;
 
-	public class GradientFillParse extends DisplayParse implements IGraphicsFill
+	public class GraphicsGradientFillParse extends DisplayParse implements IGraphicsFill
 	{
 		public var type:String;
 		public var colors:Array;
@@ -16,7 +16,7 @@ package ghostcat.parse.graphics
 		public var interpolationMethod:String="rgb";
 		public var focalPointRatio:Number=0;
 		
-		public function GradientFillParse(type:String,colors:Array,alpha:Array,ratios:Array,matrix:Matrix=null,spreadMethod:String="pad",interpolationMethod:String="rgb",focalPointRatio:Number=0)
+		public function GraphicsGradientFillParse(type:String,colors:Array,alpha:Array,ratios:Array,matrix:Matrix=null,spreadMethod:String="pad",interpolationMethod:String="rgb",focalPointRatio:Number=0)
 		{
 			this.type = type;
 			this.colors = colors;

@@ -55,5 +55,21 @@ package ghostcat.util.display
 			m1.concat(m2);
 			return m1;
 		}
+		
+		/**
+		 * 创建渐变时用的矩阵
+		 * @param width
+		 * @param height
+		 * @param rotation
+		 * @param tx
+		 * @param ty
+		 * 
+		 */
+		public static function createGradientBox(width:Number,height:Number,rotation:Number = 0,tx:Number = 0,ty:Number = 0):Matrix
+		{
+			var m:Matrix = new Matrix();
+			m.createGradientBox(width,height,rotation,tx,ty);	
+			return m;
+		}
 	}
 }

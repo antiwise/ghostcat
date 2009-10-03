@@ -27,8 +27,19 @@ package
 	import ghostcat.ui.containers.GDrawerPanel;
 	import flash.geom.Rectangle;
 	import ghostcat.ui.containers.GVBox;
+	import ghostcat.display.residual.ResidualScreen;
+	import ghostcat.util.Util;
+	import ghostcat.parse.display.EllipseParse;
+	import ghostcat.parse.graphics.GraphicsEllipse;
+	import ghostcat.parse.graphics.GraphicsFill;
+	import flash.display.Shape;
+	import ghostcat.operation.effect.RepeatEffect;
+	import ghostcat.operation.TweenOper;
+	import ghostcat.parse.graphics.GraphicsGradientFillParse;
+	import flash.display.GradientType;
+	import ghostcat.util.display.MatrixUtil;
 	
-	[SWF(width="600",height="600")]
+	[SWF(width="600",height="600",frameRate="60",backgroundColor="0x0")]
 	
 	/**
 	 * 
@@ -41,12 +52,18 @@ package
 		{	
 			RootManager.register(this);
 			
-			var vbox:GVBox = new GVBox();
-			addChild(vbox);
+			createChildren()
 			
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0xFF0000,"抽屉1"),true,new Rectangle(0,0,100,20)));
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x00FF00,"抽屉2"),true,new Rectangle(0,0,100,20)));
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x0000FF,"抽屉3"),true,new Rectangle(0,0,100,20)));
+			stage.addChild(Util.createObject(new ResidualScreen(600,600),{enabledTick:true,fadeSpeed:0.98,blurSpeed:2,items:[this]}));
+		}
+		
+		private function createChildren():void
+		{
+			var v:Shape = new EllipseParse(new GraphicsEllipse(0,0,50,50),null,new GraphicsGradientFillParse(GradientType.RADIAL,[0xFFFFFF,0xFFFFFF],[1.0,0],[0,255],MatrixUtil.createGradientBox(50,50,0,-25,-25))).createShape();
+			addChild(v);
+			
+			v.y = 300;
+			new RepeatEffect([new TweenOper(v,1000,{x:600}),new TweenOper(v,1000,{x:0})]).commit();
 		}
 	}
 }
