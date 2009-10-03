@@ -4,7 +4,7 @@ if (FLfile.exists(folderURI)) {
 	var arr = lib.items;
 	for(var i=0;i<arr.length;i++)
 	{
-		if(arr[i].linkageExportForAS && arr[i].linkageClassName!="Collision")
+		if(arr[i].linkageExportForAS)
 	    {
 	        var doc = fl.createDocument("timeline");
 			doc.addItem({x:doc.width/2,y:doc.height/2},arr[i]);

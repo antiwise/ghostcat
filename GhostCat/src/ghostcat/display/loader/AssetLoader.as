@@ -14,7 +14,7 @@ package ghostcat.display.loader
 	/**
 	 * 动态加载SWF模块
 	 * 
-	 * 依赖于AssetManager类，请参照此类说明使用。
+	 * 部分依赖于AssetManager类。
 	 * 
 	 * @see ghostcat.manager.AssetManager
 	 * 
@@ -27,6 +27,37 @@ package ghostcat.display.loader
 		 * AssetLoader的独立加载队列
 		 */		
 		public static var assetQueue:Queue = new Queue();
+		
+		/**
+		 * 通过类名来获得默认文件地址。地址始终是小写。
+		 * 这个方法用于动态加载。可以同样利用jsfl将库中的类按类名分散到各个文件里（这个jsfl已经提供），
+		 * 分散到目录的文件更容易管理，且不容易出现重名。
+		 * 大量动态资源可以先在一个FLA中编辑再散开，然后在AssetLoader可直接通过包名加载。
+		 * 
+		 * @param ref	类名
+		 * @param fileName	指定文件名
+		 * @return 
+		 * 
+		 */		
+		public function getDefaultFilePath(ref:String,fileName:String=null):String
+		{
+			var names:Array = ref.split("::");
+			var url:String;
+			if (names.length == 2)
+			{
+				if (fileName)
+					names[1] = fileName;
+				names[0] = (names[0] as String).replace(/\./g,"/");
+				url = names.join("/").toLowerCase();
+			}
+			else
+			{
+				if (fileName)
+					names[0] = fileName;
+				url = (names[0] as String).toLowerCase();
+			}
+			return AssetManager.instance.assetBase + url + ".swf";
+		}
 		
 		
 		private var _ref:String;
@@ -82,7 +113,7 @@ package ghostcat.display.loader
 				setContent(new c());
 			
 			if (url==null)
-				url = AssetManager.instance.getDefaultFilePath(ref);//未设置路径则取默认路径
+				url = getDefaultFilePath(ref);//未设置路径则取默认路径
 				
 			cls = null;
 			try

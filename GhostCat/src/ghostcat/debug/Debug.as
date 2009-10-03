@@ -1,5 +1,6 @@
 package ghostcat.debug
 {
+	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	import flash.net.sendToURL;
@@ -50,6 +51,11 @@ package ghostcat.debug
 		public static var debugTextField:TextField;
 		
 		/**
+		 * 是否激活浏览器控制台trace，信息将会被同时输出到firebug或者Chrome的控制台内。
+		 */
+		public static var enabledBrowserConsole:Boolean = true;
+		
+		/**
 		 * 是否显示时间
 		 */		
 		public static var showTime:Boolean = false;
@@ -62,7 +68,7 @@ package ghostcat.debug
 		/**
 		 * 出错时，执行的方法
 		 */		
-		public static var errorHandler:Function;
+		public static var errorHandler:Function = defaultErrorHandler;
 		
 		/**
 		 * 主方法
@@ -82,8 +88,24 @@ package ghostcat.debug
 				
 			if (debugTextField)
 				debugTextField.appendText(text+"\n");
+				
+			if (DEBUG && enabledBrowserConsole && ExternalInterface.available)
+				ExternalInterface.call("console.log",text);
+				
 		}
 		
+		public static function traceAll(...rest):void
+		{
+			trace(null,rest);
+		}
+		
+		/**
+		 * 显示一个对象的属性
+		 * 
+		 * @param channel
+		 * @param obj
+		 * 
+		 */
 		public static function traceObject(channel:String,obj:Object):void
 		{
 			var result:String = "";
@@ -116,6 +138,9 @@ package ghostcat.debug
 		 */		
 		public static function error(text:String=null):void
 		{
+			if (DEBUG && enabledBrowserConsole && ExternalInterface.available)
+				ExternalInterface.call("console.error",text);
+			
 			errorHandler(text);
 			
 			if (logUrl){
