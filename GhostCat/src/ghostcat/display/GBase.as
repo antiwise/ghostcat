@@ -8,9 +8,9 @@ package ghostcat.display
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.CallLater;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
 	
@@ -33,6 +33,8 @@ package ghostcat.display
 		private var _selected:Boolean = false;
 		
 		private var _paused:Boolean = false;
+		
+		private var _enabledTick:Boolean = false;
 		
 		private var _cursor:*;
 		
@@ -149,10 +151,7 @@ package ghostcat.display
 			_selected = v;
 		}
 		
-		/**
-		 * 是否暂停
-		 * @return 
-		 */		
+		/** @inheritDoc */	
 		public function get paused():Boolean
 		{
 			return _paused;
@@ -160,15 +159,37 @@ package ghostcat.display
 
 		public function set paused(v:Boolean):void
 		{
+			if (_paused == v)
+				return;
+			
 			_paused = v;
+			
+			if (!_paused && _enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
+		/** @inheritDoc */	
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
 		}
 
-		/**
-		 *
-		 * 是否激活 
-		 * @return 
-		 * 
-		 */
+		public function set enabledTick(v:Boolean):void
+		{
+			if (_enabledTick == v)
+				return;
+			
+			_enabledTick = v;
+			
+			if (!_paused && _enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+
+		/** @inheritDoc */
 		public function get enabled():Boolean
 		{
 			return _enabled;
@@ -540,6 +561,16 @@ package ghostcat.display
 		{
 		}
 		
+		/**
+		 * 时基事件
+		 * @param event
+		 * 
+		 */
+		protected function tickHandler(event:TickEvent):void
+		{
+			invalidateDisplayList();
+		}
+		
 		private var _refreshInterval:int = 0;
 		private var _refreshTimer:Timer;
 		
@@ -593,6 +624,8 @@ package ghostcat.display
 			
 			if (evt.isDefaultPrevented())
 				return;
+			
+			this.enabledTick = false;
 			
 			super.destory();
 		}

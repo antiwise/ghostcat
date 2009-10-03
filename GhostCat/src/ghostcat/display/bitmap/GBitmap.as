@@ -11,8 +11,10 @@ package ghostcat.display.bitmap
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
-	import ghostcat.util.core.CallLater;
+	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.CallLater;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
 	
@@ -29,6 +31,10 @@ package ghostcat.display.bitmap
 	public class GBitmap extends Bitmap implements IGBase
 	{
 		private var _enabled:Boolean = true;
+		
+		private var _paused:Boolean = false;
+		
+		private var _enabledTick:Boolean = false;
 		
 		private var _cursor:*;
 		
@@ -93,12 +99,7 @@ package ghostcat.display.bitmap
 			_data = v;
 		}
 		
-		/**
-		 *
-		 * 是否激活 
-		 * @return 
-		 * 
-		 */
+		/** @inheritDoc */
 		public function get enabled():Boolean
 		{
 			return _enabled;
@@ -107,6 +108,44 @@ package ghostcat.display.bitmap
 		public function set enabled(v:Boolean):void
 		{
 			_enabled = v;
+		}
+		
+		/** @inheritDoc */	
+		public function get paused():Boolean
+		{
+			return _paused;
+		}
+
+		public function set paused(v:Boolean):void
+		{
+			if (_paused == v)
+				return;
+			
+			_paused = v;
+			
+			if (!_paused && _enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
+		/** @inheritDoc */	
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
+		}
+
+		public function set enabledTick(v:Boolean):void
+		{
+			if (_enabledTick == v)
+				return;
+			
+			_enabledTick = v;
+			
+			if (!_paused && _enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		/** @inheritDoc*/
@@ -332,6 +371,16 @@ package ghostcat.display.bitmap
 		
 		private var _refreshInterval:int = 0;
 		private var _refreshTimer:Timer;
+		
+		/**
+		 * 时基事件
+		 * @param event
+		 * 
+		 */
+		protected function tickHandler(event:TickEvent):void
+		{
+			invalidateDisplayList();
+		}
 		
 		/**
 		 * 自动刷新间隔，默认为不刷新 

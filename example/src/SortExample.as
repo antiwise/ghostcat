@@ -11,7 +11,6 @@ package
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.display.GBase;
-	import ghostcat.display.GTickBase;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.containers.GAlert;
@@ -25,7 +24,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SortExample extends GTickBase
+	public class SortExample extends GBase
 	{
 		public var c:DisplayCommunityManager;
 		public var p:PhysicsManager;
@@ -56,6 +55,8 @@ package
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 		
 			GAlert.show("点击人物激活移动")
+			
+			this.enabledTick = true;
 		}
 		
 		private function physicsTickHandler(item:PhysicsItem,interval:int):void

@@ -29,14 +29,14 @@ package
 			repeater = new Tile(TestRepeater);
 			repeater.width = 100000;
 			repeater.height = 100000;
-			repeater.viewRect = new Rectangle(0,0,500,500);//将显示范围限定了，这样可以看到方块的动态增删
+			repeater.viewRect = new Rectangle(100,100,300,300);//将显示范围限定了，这样可以看到方块的动态增删
 			repeater.addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			repeater.cursor = CursorSprite.CURSOR_DRAG;
 			repeater.filters = [new DropShadowFilter(2,45,0,0.5,16,16)];
 			
 			addChild(repeater);
 			
-			addChild(new RectParse(new GraphicsRect(0,0,500,500),new GraphicsLineStyle(0,0xFF0000)).createShape());
+			addChild(new RectParse(new GraphicsRect(100,100,300,300),new GraphicsLineStyle(0,0xFF0000)).createShape());
 			addChild(new CursorSprite());
 			
 			DragManager.register(repeater);

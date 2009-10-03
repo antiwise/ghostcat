@@ -46,6 +46,11 @@ package ghostcat.display.residual
 		public var itemColorTransform:ColorTransform;
 		
 		/**
+		 * 全屏附加的颜色
+		 */
+		public var colorTransform:ColorTransform;
+		
+		/**
 		 * 需要应用的物品
 		 */
 		public var items:Array = [];
@@ -115,6 +120,9 @@ package ghostcat.display.residual
 			if (offest)
 				bitmapData.scroll(offest.x,offest.y);
 				
+			if (colorTransform)
+				bitmapData.colorTransform(bitmapData.rect,colorTransform);
+			
 			if (effects)
 			{
 				for each (var f:BitmapFilter in effects)

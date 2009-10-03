@@ -3,15 +3,15 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import ghostcat.display.GTickBase;
+	import ghostcat.display.GBase;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.ui.layout.EllipseLayout;
-	import ghostcat.util.display.Geom;
-	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.util.Util;
+	import ghostcat.util.display.Geom;
 	import ghostcat.util.easing.Elastic;
+	import ghostcat.util.easing.TweenUtil;
 	
 	[SWF(width="500",height="300",frameRate="60")]
 	
@@ -21,7 +21,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class EllipseLayoutExample extends GTickBase
+	public class EllipseLayoutExample extends GBase
 	{
 		public var layout:EllipseLayout;
 		
@@ -39,6 +39,8 @@ package
 			stage.addChildAt(Util.createObject(new ResidualScreen(stage.stageWidth,stage.stageHeight),{refreshInterval:10,fadeSpeed:0.9,blurSpeed:2,items:[this]}),0);
 			
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			
+			this.enabledTick = true;
 		}
 		
 		protected override function tickHandler(event:TickEvent) : void

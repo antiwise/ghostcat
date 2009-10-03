@@ -136,28 +136,29 @@ package ghostcat.community.physics
 		
 		public function tick(interval:int):void
 		{
+			var d:Number = interval / 1000;
 			for each (var item:PhysicsItem in dict)
 			{
 				if (item.acceleration)
 				{
-					item.velocity.x += item.acceleration.x * interval / 1000;
-					item.velocity.y += item.acceleration.y * interval / 1000;
+					item.velocity.x += item.acceleration.x * d;
+					item.velocity.y += item.acceleration.y * d;
 				}
 				if (gravity)
 				{
-					item.velocity.x += gravity.x * interval / 1000;
-					item.velocity.y += gravity.y * interval / 1000;
+					item.velocity.x += gravity.x * d;
+					item.velocity.y += gravity.y * d;
 				}
 				if (item.friction != 1)
 				{
 					item.velocity.x *= item.friction;
 					item.velocity.y *= item.friction;
 				}
-				item.x += item.velocity.x * interval / 1000;
-				item.y += item.velocity.y * interval / 1000;
+				item.x += item.velocity.x * d;
+				item.y += item.velocity.y * d;
 				
 				if (onTick!=null)
-					onTick(item,Infinity);
+					onTick(item,interval);
 			}
 		}
 		

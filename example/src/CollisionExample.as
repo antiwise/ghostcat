@@ -1,20 +1,17 @@
 package
 {
-	import flash.display.Shape;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
-	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
-	import ghostcat.display.GTickBase;
 	import ghostcat.display.viewport.CollisionSprite;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.EllipseParse;
-	import ghostcat.parse.display.ShapeParse;
 	import ghostcat.parse.graphics.GraphicsEllipse;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.ui.containers.GAlert;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
 	
 	
@@ -29,7 +26,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class CollisionExample extends GTickBase
+	public class CollisionExample extends GBase
 	{
 		public var b:CollisionSprite;
 		
@@ -49,6 +46,7 @@ package
 			DisplayUtil.setMouseEnabled(point,false);
 			
 			GAlert.show("这是一个碰撞示例程序，小球会跟踪鼠标移动，尽可能贴在图形的边缘\n中间的红圈是强制可通行区域","说明")
+			this.enabledTick = true;
 		}
 		
 		protected override function tickHandler(event:TickEvent):void

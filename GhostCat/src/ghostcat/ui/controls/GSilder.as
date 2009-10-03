@@ -63,7 +63,7 @@ package ghostcat.ui.controls
 			
 			super(skin, replace);
 			
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			this.enabledTick = true;
 		}
 		
 		/**
@@ -264,7 +264,7 @@ package ghostcat.ui.controls
 		 * @param event
 		 * 
 		 */
-		protected function tickHandler(event:TickEvent):void
+		protected override function tickHandler(event:TickEvent):void
 		{
 			var p:Number = percent;
 			if (upArrow)
@@ -330,8 +330,6 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-			
 			if (upArrow) 
 				upArrow.destory();
 			

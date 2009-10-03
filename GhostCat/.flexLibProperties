@@ -32,7 +32,6 @@
     <classEntry path="ghostcat.display.GBase"/>
     <classEntry path="ghostcat.display.GNoScale"/>
     <classEntry path="ghostcat.display.GSprite"/>
-    <classEntry path="ghostcat.display.GTickBase"/>
     <classEntry path="ghostcat.display.ICursorManagerClient"/>
     <classEntry path="ghostcat.display.IData"/>
     <classEntry path="ghostcat.display.IDisplayObject"/>
@@ -190,7 +189,7 @@
     <classEntry path="ghostcat.parse.display.RectParse"/>
     <classEntry path="ghostcat.parse.display.ShapeParse"/>
     <classEntry path="ghostcat.parse.display.TextFieldParse"/>
-    <classEntry path="ghostcat.parse.graphics.GradientFillParse"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsGradientFillParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsBitmapFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsClear"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsEllipse"/>

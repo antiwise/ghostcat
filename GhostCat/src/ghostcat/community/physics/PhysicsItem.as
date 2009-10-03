@@ -1,6 +1,5 @@
 package ghostcat.community.physics
 {
-	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	
 	/**
@@ -13,7 +12,7 @@ package ghostcat.community.physics
 		/**
 		 * 目标
 		 */
-		public var target:DisplayObject;
+		public var target:*;
 		
 		/**
 		 * 加速度
@@ -50,7 +49,7 @@ package ghostcat.community.physics
 			target.x = v;
 		}
 		
-		public function PhysicsItem(target:DisplayObject)
+		public function PhysicsItem(target:*)
 		{
 			this.target = target;
 		}

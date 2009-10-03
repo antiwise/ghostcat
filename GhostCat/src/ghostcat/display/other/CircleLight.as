@@ -3,9 +3,8 @@ package ghostcat.display.other
 	import flash.display.BlendMode;
 	import flash.display.GradientType;
 	import flash.geom.Matrix;
-	import flash.utils.Timer;
 	
-	import ghostcat.display.GTickBase;
+	import ghostcat.display.GBase;
 	import ghostcat.events.TickEvent;
 
 	/**
@@ -14,7 +13,7 @@ package ghostcat.display.other
 	 * @author flashyiyi
 	 * 
 	 */
-	public class CircleLight extends GTickBase
+	public class CircleLight extends GBase
 	{
 		public function CircleLight(radius:Number)
 		{
@@ -27,6 +26,8 @@ package ghostcat.display.other
 			graphics.beginGradientFill(GradientType.RADIAL,[0xFFFFFF,0xFFFFFF],[0.8,0.0],[0,0xFF],ma);
 			graphics.drawCircle(0,0,radius);
 			graphics.endFill();
+			
+			this.enabledTick = true;
 		}
 		
 		protected override function tickHandler(event:TickEvent):void
