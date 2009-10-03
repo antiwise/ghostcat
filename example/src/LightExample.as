@@ -42,9 +42,9 @@ package
 			addChild(p2);
 			
 			//创建灯光
-			l1 = Util.createObject(new Light(250),{refreshInterval:33,x:300,y:120,color:0xFF0000});
+			l1 = Util.createObject(new Light(250),{enabledTick:true,x:300,y:120,color:0xFF0000});
 			addChild(l1);
-			l2 = Util.createObject(new Light(250),{refreshInterval:33,x:420,y:300,color:0x0000FF});
+			l2 = Util.createObject(new Light(250),{enabledTick:true,x:420,y:300,color:0x0000FF});
 			addChild(l2);
 			
 			//创建人物
