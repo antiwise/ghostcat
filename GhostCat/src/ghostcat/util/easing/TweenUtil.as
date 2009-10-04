@@ -26,6 +26,7 @@ package ghostcat.util.easing
 	 * pan，将会改变声音的声道分配
 	 * tint2，将会以附加的方法增加颜色
 	 * dynamicPoint，是一个显示对象，将会以它的x,y属性作为Tween的终点。这两个值在过程中可变化追踪
+	 * startAt，可以在这里设置初值
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -177,6 +178,8 @@ package ghostcat.util.easing
 						this.fromValues[key] = new Point((target as DisplayObject).x, (target as DisplayObject).y)
 						this.toValues[key] = params[key];
 						break;
+					case "startAt":
+						break;
 					default :
 						this.fromValues[key] = target[key];
 						this.toValues[key] = params[key];
@@ -186,6 +189,16 @@ package ghostcat.util.easing
 				if (enabledRelativeValue && this.toValues[key] is String)
 					this.toValues[key] = this.fromValues[key] + Number(this.toValues[key]);
 			}
+			
+			//根据startAt属性设置初值
+			if (params.hasOwnProperty("startAt"))
+			{
+				var startValues:Object = params["startAt"];
+				for (key in startValues)
+					this.fromValues[key] = 	startValues[key];	
+			}
+			
+			//默认缓动
 			if (this.ease == null)
 				this.ease = Linear.easeOut;
 			
@@ -302,6 +315,15 @@ package ghostcat.util.easing
 									$o.ease(t, a.y, b.y -  a.y, $o.duration),
 									$o.ease(t, a.width, b.width -  a.width, $o.duration),
 									$o.ease(t, a.height, b.height -  a.height, $o.duration))
+			}
+			else if (a is Array)
+			{
+				var newArr:Array = [];
+				for (var i:int = 0;i < a.length;i++)
+				{
+					newArr.push($o.ease(t, a[i], b[i] -  a[i], $o.duration))
+				}
+				return newArr;
 			}
 			else if (key == "tint" || key == "tint2")
 			{

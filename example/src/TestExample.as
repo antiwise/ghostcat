@@ -51,11 +51,11 @@ package
 	{
 		public function TestExample()
 		{	
-			RootManager.register(this);
-			Debug.traceAll("测试输出Debug信息");
-			Debug.traceAll(1);
-			Debug.traceAll(2);
-			Debug.traceAll(3);
+			var t:DebugRect = new DebugRect(100,100);
+			addChild(t);
+			
+			TweenUtil.to(t,2000,{startAt:{x:300},x:500})
+			TweenUtil.update(0);
 		}
 	}
 }

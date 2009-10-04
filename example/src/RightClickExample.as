@@ -1,5 +1,7 @@
 package 
 {
+	import flash.display.Shape;
+	
 	import ghostcat.display.GSprite;
 	import ghostcat.display.residual.FireScreen;
 	import ghostcat.events.InputEvent;
@@ -20,14 +22,18 @@ package
 	 */
 	public class RightClickExample extends GSprite
 	{
+		public var shape:Shape;
 		protected override function init():void
 		{
 			RootManager.register(this);
 			InputManager.register(this);
 			stage.addEventListener(InputEvent.MOUSE_RIGHT,h);
 			
+			shape = new Shape();
+			addChild(shape);
+			
 			//对舞台增加一个火焰效果
-			stage.addChild(Util.createObject(new FireScreen(500,500),{items:[this]}));
+			addChild(Util.createObject(new FireScreen(500,500),{items:[shape]}));
 		
 			GAlert.show("点击右键看看吧\n可以连续点击","嘿嘿")
 		}
@@ -36,8 +42,8 @@ package
 		{
 			trace (event.localX, event.localY ,InputManager.instance.mutliRightMouse)
 			
-			graphics.beginFill(0xFF0000);
-			graphics.drawCircle(event.localX,event.localY,3 * InputManager.instance.mutliRightMouse);
+			shape.graphics.beginFill(0xFF0000);
+			shape.graphics.drawCircle(event.localX,event.localY,3 * InputManager.instance.mutliRightMouse);
 		}
 	}
 }

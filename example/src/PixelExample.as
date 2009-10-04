@@ -9,7 +9,7 @@ package
 	import ghostcat.display.residual.PixelResidualScreen;
 	import ghostcat.events.TickEvent;
 	
-	[SWF(width="200",height="200",backgroundColor="0xFFFFFF",frameRate="60")]
+	[SWF(width="200",height="200",frameRate="60")]
 	
 	public class PixelExample extends GBase
 	{
