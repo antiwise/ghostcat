@@ -15,7 +15,6 @@ package ghostcat.display.loader
 	 * 动态加载SWF模块
 	 * 
 	 * 部分依赖于AssetManager类。
-	 * 
 	 * @see ghostcat.manager.AssetManager
 	 * 
 	 * @author flashyiyi
