@@ -33,6 +33,12 @@ package ghostcat.display
 		function get enabledTick():Boolean;
 		
 		/**
+		 * 销毁方法
+		 * 
+		 */
+		function destory():void
+		
+		/**
 		 * 在之后更新坐标
 		 */
 		function invalidatePosition():void

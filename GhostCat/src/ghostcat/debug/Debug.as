@@ -10,7 +10,6 @@ package ghostcat.debug
 	
 	import ghostcat.util.Util;
 	
-
 	/**
 	 * 
 	 * 辅助类，提供了调试相关的扩展。
@@ -33,7 +32,7 @@ package ghostcat.debug
 		 * 是否处于DEBUG模式。系统可借助此属性来切换调试与非调试模式。
 		 * 在非调试模式下，将禁用trace。因为自定义trace编译不会被自动删除，此属性对于提高效率是必须的。
 		 */		
-		public static var DEBUG:Boolean = true;
+		public static var DEBUG:Boolean = isDebugSWF;
 		
 		/**
 		 * 记录日志用。实际运行时，可在程序出错后将客户端日志信息发送出去，做为服务端日志的有效补充。 
@@ -80,16 +79,19 @@ package ghostcat.debug
 		{
 			var text:String = getHeader(channel)+ (rest as Array).join(",");
 			
-			if (DEBUG && (channels==null || channel==null || channels.indexOf(channel) != -1))
-				traceExt(text);
-			
 			if (enabledLog)
 				log += text+"\n";
+			
+			if (!DEBUG)
+				return;
+			
+			if (channels==null || channel==null || channels.indexOf(channel) != -1)
+				traceExt(text);
 				
 			if (debugTextField)
 				debugTextField.appendText(text+"\n");
 				
-			if (DEBUG && enabledBrowserConsole && ExternalInterface.available)
+			if (enabledBrowserConsole && ExternalInterface.available)
 				ExternalInterface.call("console.log",text);
 				
 		}

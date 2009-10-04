@@ -30,7 +30,7 @@ package ghostcat.display.residual
 		{
 			super(width,height);
 			
-			this.refreshInterval = 33;
+			this.enabledTick = true;
 			this.fadeSpeed = 0.9;
 			this.blurSpeed = 4;
 			this.offest = new Point(0,-4);
