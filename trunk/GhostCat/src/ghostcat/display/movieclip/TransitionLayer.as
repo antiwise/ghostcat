@@ -5,7 +5,7 @@ package ghostcat.display.movieclip
 	import ghostcat.events.MovieEvent;
 
 	/**
-	 * 过渡动画类
+	 * 过渡动画类，用于处理场景切换
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -22,12 +22,12 @@ package ghostcat.display.movieclip
 		/**
 		 * 创建过渡动画到某个层
 		 * 
-		 * @param container
-		 * @param skin
-		 * @param switchHandler
-		 * @param fadeIn
-		 * @param fadeOut
-		 * @param waitAnimate
+		 * @param container	动画层所在的容器
+		 * @param skin	动画皮肤
+		 * @param switchHandler	切换时执行的函数
+		 * @param fadeIn	进入时的动画名称数组
+		 * @param fadeOut	消去时的动画名称数组
+		 * @param waitAnimate	等待时的动画名称，将会循环播放。如果设置了这个值，除非外部手动设置state属性，否则动画永远不会停止。
 		 * @return 
 		 * 
 		 */
@@ -39,6 +39,15 @@ package ghostcat.display.movieclip
 			
 			currentTransition = mc;
 			return mc;
+		}
+		
+		/**
+		 * 让动画进入到消去状态。设置了waitAnimate时可执行此方法退出等待状态
+		 * 
+		 */
+		public static function continueFadeOut():void
+		{
+			currentTransition.state = FADE_OUT;
 		}
 		
 		/**

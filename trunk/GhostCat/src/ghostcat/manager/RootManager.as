@@ -62,6 +62,12 @@ package ghostcat.manager
 			setMenuMode(menuMode);
 		}
 		
+		/**
+		 * 增加一个跳转到URL的菜单项
+		 * @param label
+		 * @param url
+		 * 
+		 */
 		public static function addURLMenu(label:String,url:String):void
 		{
 			var item:ContextMenuItem = new ContextMenuItem(label);
@@ -87,11 +93,11 @@ package ghostcat.manager
 		{
 			switch (mode)
 			{
-				case 0:
+				case MODE_NORMAL:
 					stage.scaleMode = StageScaleMode.EXACT_FIT;
 					stage.align = StageAlign.TOP;
 					break;
-				case 1:
+				case MODE_NOSCALE:
 					stage.scaleMode = StageScaleMode.NO_SCALE;
 					stage.align = StageAlign.TOP_LEFT;
 					break;
@@ -108,9 +114,9 @@ package ghostcat.manager
 			var menu:ContextMenu = new ContextMenu();
 			switch (mode)
 			{
-				case 0:
+				case MODE_NORMAL:
 					break;
-				case 1:
+				case MODE_NOSCALE:
 					menu.hideBuiltInItems();
 					break;
 			}

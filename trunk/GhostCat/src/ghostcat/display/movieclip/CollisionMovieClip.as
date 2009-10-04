@@ -21,8 +21,9 @@ package ghostcat.display.movieclip
 		
 		public function CollisionMovieClip(skin:*=null, replace:Boolean=true)
 		{
-			_collision = new Collision(this);
 			super(skin,replace);
+		
+			_collision = new Collision(this);
 		}
 		/** @inheritDoc*/
 		public function get collision():Collision

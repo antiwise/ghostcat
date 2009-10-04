@@ -76,7 +76,7 @@ package ghostcat.gxml.spec
 		}
 		
 		/**
-		 * 返回值的数组（由于不清楚目标类型，即使只有一个属性也会被当做数组，并在之后处理）
+		 * 返回XML代表的值（由于不清楚目标类型，即使只有一个属性也会被当做数组，并在之后处理）
 		 * @return 
 		 * 
 		 */
@@ -128,13 +128,13 @@ package ghostcat.gxml.spec
 				if (child is Array)
 				{
 					var ref:Class = ReflectUtil.getTypeByProperty(source,name)
-					if (ref == Array)//在这里判断是否真的是数组，不是仍然直接赋值
+					if (ref == Array)//在这里判断是否真的是数组，不是取第一个元素用原来的处理方式
 						source[name] = child;
 					else
-						ReflectXMLUtil.setProperty(source,name,child[0]);
+						ReflectXMLUtil.setProperty(source,name,child[0],root);
 				}
 				else
-					ReflectXMLUtil.setProperty(source,name,child);
+					ReflectXMLUtil.setProperty(source,name,child,root);
 			}
 		}
 		

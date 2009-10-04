@@ -40,7 +40,7 @@ package
 	import ghostcat.util.display.MatrixUtil;
 	import ghostcat.debug.Debug;
 	
-	[SWF(width="600",height="600",frameRate="60",backgroundColor="0x0")]
+	[SWF(width="600",height="600")]
 	
 	/**
 	 * 
@@ -52,7 +52,10 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			Debug.traceAll("123",12312,"asd");
+			Debug.traceAll("测试输出Debug信息");
+			Debug.traceAll(1);
+			Debug.traceAll(2);
+			Debug.traceAll(3);
 		}
 	}
 }

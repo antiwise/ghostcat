@@ -138,11 +138,11 @@ package ghostcat.display.residual
 		 * @param obj
 		 * 
 		 */
-		protected function drawItem(obj:DisplayObject):void
+		protected function drawItem(obj:*):void
 		{
-			var m:Matrix = MatrixUtil.getMatrixBetween(obj,this,this.parent);
+			var m:Matrix = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);
 			
-			bitmapData.draw(obj,m,itemColorTransform);
+			bitmapData.draw(obj as DisplayObject,m,itemColorTransform);
 		} 
 	}
 }
