@@ -4,7 +4,6 @@ package ghostcat.display.residual
 	import flash.display.DisplayObject;
 	import flash.filters.BitmapFilter;
 	import flash.filters.BlurFilter;
-	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -24,7 +23,7 @@ package ghostcat.display.residual
 		/**
 		 * 渐消滤镜
 		 */
-		protected var fadeFilter:ColorMatrixFilter;
+		protected var fadeTransform:ColorTransform;
 		/**
 		 * 模糊滤镜
 		 */
@@ -73,20 +72,18 @@ package ghostcat.display.residual
 		 */
 		public function get fadeSpeed():Number
 		{
-			return fadeFilter.matrix[18];
+			return fadeTransform.alphaMultiplier;
 		}
 
 		public function set fadeSpeed(v:Number):void
 		{
-			fadeFilter = new ColorMatrixFilter([1,0,0,0,0,
-										0,1,0,0,0,
-										0,0,1,0,0,
-										0,0,0,v,0]);
+			fadeTransform = new ColorTransform(1,1,1,v);
 		}
 
 		public function ResidualScreen(width:Number,height:Number):void
 		{
 			super(new BitmapData(width,height,true,0));
+			this.enabledTick = true;
 		}
 		
 		/**
@@ -94,7 +91,7 @@ package ghostcat.display.residual
 		 * @param obj
 		 * 
 		 */
-		public function addItem(obj:DisplayObject):void
+		public function addItem(obj:*):void
 		{
 			items.push(obj);
 		}
@@ -104,15 +101,15 @@ package ghostcat.display.residual
 		 * @param obj
 		 * 
 		 */
-		public function removeItem(obj:DisplayObject):void
+		public function removeItem(obj:*):void
 		{
 			Util.remove(items,obj);
 		}
 		
 		protected override function updateDisplayList() : void
 		{
-			if (fadeFilter)
-				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),fadeFilter);
+			if (fadeTransform)
+				bitmapData.colorTransform(bitmapData.rect,fadeTransform);
 			
 			if (blurFilter)
 				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),blurFilter);
@@ -129,8 +126,11 @@ package ghostcat.display.residual
 					bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),f);
 			}
 			
-			for each (var obj:DisplayObject in items)
+			bitmapData.lock();
+			for each (var obj:* in items)
 				drawItem(obj);
+				
+			bitmapData.unlock();
 		}
 		
 		/**

@@ -328,6 +328,8 @@
     <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.containers.GDrawerPanel"/>
+    <classEntry path="ghostcat.display.residual.PixelItem"/>
+    <classEntry path="ghostcat.display.residual.PixelResidualScreen"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

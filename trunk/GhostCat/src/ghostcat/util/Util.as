@@ -44,7 +44,7 @@ package ghostcat.util
 			{
 				index = (obj as Array).indexOf(data);
 				if (index!=-1)
-					data.splice(index, 1);
+					(obj as Array).splice(index, 1);
 			}
 			else
 			{

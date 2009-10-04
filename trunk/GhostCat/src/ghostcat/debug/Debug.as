@@ -208,6 +208,7 @@ package ghostcat.debug
 		
 	}
 }
-function traceExt(...rest):void{
+function traceExt(...rest):void
+{
 	trace(rest);
 }

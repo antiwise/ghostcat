@@ -68,7 +68,11 @@ package ghostcat.community.physics
 		 */
 		public function add(obj:*) : void
 		{
-			var item:PhysicsItem = new PhysicsItem(obj);
+			var item:PhysicsItem;
+			if (obj is PhysicsItem)
+				item = obj as PhysicsItem
+			else
+				item = new PhysicsItem(obj);
 			
 			dict[obj] = item;
 		}
@@ -113,7 +117,7 @@ package ghostcat.community.physics
 		 * @param v
 		 * 
 		 */
-		public function setAcceleration(obj:DisplayObject,v:Point):void
+		public function setAcceleration(obj:*,v:Point):void
 		{
 			(dict[obj] as PhysicsItem).acceleration = v;
 		}
@@ -124,7 +128,7 @@ package ghostcat.community.physics
 		 * @param v
 		 * 
 		 */
-		public function setVelocity(obj:DisplayObject,v:Point):void
+		public function setVelocity(obj:*,v:Point):void
 		{
 			(dict[obj] as PhysicsItem).velocity = v;
 		}
