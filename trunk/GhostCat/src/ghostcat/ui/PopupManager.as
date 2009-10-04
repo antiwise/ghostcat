@@ -3,13 +3,15 @@ package ghostcat.ui
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
-	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.RootManager;
+	import ghostcat.operation.FilterProxyOper;
+	import ghostcat.operation.Oper;
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.util.core.Singleton;
@@ -39,7 +41,20 @@ package ghostcat.ui
 		 */
 		public var queue:Queue = null;
 		
+		/**
+		 * 定义非激活状态的Filter数组
+		 */		
 		public var applicationDisabledFilters:Array;
+		
+		/**
+		 * 定义进入激活状态的Oper，用于显示过渡效果
+		 */
+		public var applicationEnabledOper:Oper;
+		
+		/**
+		 * 定义进入非激活状态的Oper，用于显示过渡效果
+		 */
+		public var applicationDisabledOper:Oper;
 		
 		/**
 		 * 主程序是否激活 
@@ -57,10 +72,27 @@ package ghostcat.ui
 			
 			application.mouseEnabled = application.mouseChildren = v;
 			
+			application.filters = v ? null : applicationDisabledFilters;
+			
 			if (v)
-				application.filters = null;
+			{
+				if (applicationEnabledOper)
+				{
+					applicationEnabledOper.addEventListener(OperationEvent.OPERATION_COMPLETE,enabledOperCompleteHandler);
+					applicationEnabledOper.execute();
+				}
+			}
 			else
-				application.filters = applicationDisabledFilters;
+			{
+				if (applicationDisabledOper)
+					applicationDisabledOper.execute();
+			}
+		}
+		
+		private function enabledOperCompleteHandler(event:Event):void
+		{
+			application.filters = null;
+			event.currentTarget.removeEventListener(OperationEvent.OPERATION_COMPLETE,enabledOperCompleteHandler);
 		}
 
 		/**
@@ -97,12 +129,31 @@ package ghostcat.ui
 		{
 			super();
 			popups = new Dictionary(true);
-			applicationDisabledFilters = [new BlurFilter(4,4),
-										new ColorMatrixFilter([0.3086/2,0.6094/2,0.0820/2,0,0,
-						 										0.3086/2,0.6094/2,0.0820/2,0,0,
-						 										0.3086/2,0.6094/2,0.0820/2,0,0,
-						 										0,0,0,1,0])
-						 				];
+		
+			applicationDisabledOper = new FilterProxyOper(application,
+														new ColorMatrixFilter([1,0,0,0,0,
+																				0,1,0,0,0,
+																				0,0,1,0,0,
+																				0,0,0,1,0])
+														,1000,
+														{matrix:[
+															0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0,0,0,1,0
+														]})
+			applicationEnabledOper = new FilterProxyOper(application,
+														new ColorMatrixFilter([
+															0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0.3086/2,0.6094/2,0.0820/2,0,0,
+						 									0,0,0,1,0
+														])
+														,500,
+														{matrix:[1,0,0,0,0,
+																0,1,0,0,0,
+																0,0,1,0,0,
+																0,0,0,1,0]})
 		}
 		
 		/**
