@@ -9,7 +9,7 @@ package
 	import ghostcat.display.residual.PixelResidualScreen;
 	import ghostcat.events.TickEvent;
 	
-	[SWF(width="200",height="200",backgroundColor="0x0",frameRate="60")]
+	[SWF(width="200",height="200",backgroundColor="0xFFFFFF",frameRate="60")]
 	
 	public class PixelExample extends GBase
 	{
@@ -40,7 +40,7 @@ package
 		
 		protected override function tickHandler(event:TickEvent) : void
 		{
-			var item:PixelItem = new PixelItem(mouseX,mouseY,0xFFFFFFFF);
+			var item:PixelItem = new PixelItem(mouseX,mouseY,0xFFFF0000);
 			s.addItem(item);
 			p.add(item);
 			p.setVelocity(item,new Point((Math.random() - 0.5)*50,-100))

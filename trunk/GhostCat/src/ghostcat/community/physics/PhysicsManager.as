@@ -1,6 +1,5 @@
 package ghostcat.community.physics
 {
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
 	import flash.geom.Point;
