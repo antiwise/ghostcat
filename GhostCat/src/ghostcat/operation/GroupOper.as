@@ -12,6 +12,10 @@ package ghostcat.operation
 	public class GroupOper extends Oper
 	{
 		public var group:Array;
+		/**
+		 * 完成数量
+		 */
+		public var finishCount:int = 0;
 		
 		public function GroupOper(parms:Array=null)
 		{
@@ -46,6 +50,9 @@ package ghostcat.operation
 		public override function execute():void
 		{
 			super.execute();
+			
+			finishCount = 0;
+			
 			for (var i:int = 0; i<group.length; i++)
 			{
 				var oper:Oper = group[i] as Oper;
@@ -69,9 +76,9 @@ package ghostcat.operation
 		{
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
-			haltChild(oper);
+			finishCount++;
 			
-			if (group.length==0)
+			if (group.length == finishCount)
 				result();
 		}
 

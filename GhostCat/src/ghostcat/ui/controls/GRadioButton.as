@@ -1,6 +1,5 @@
 package ghostcat.ui.controls
 {
-	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
@@ -100,11 +99,16 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory():void
 		{
+			if (destoryed)
+				return;
+			
 			if (groupName)
 			{
 				var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName(groupName);
 				g.removeItem(this);
 			}
+			
+			super.destory();
 		}
 	}
 }

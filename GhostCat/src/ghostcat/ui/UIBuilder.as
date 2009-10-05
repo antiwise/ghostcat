@@ -3,8 +3,9 @@ package ghostcat.ui
 	import flash.display.DisplayObject;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.util.core.ClassFactory;
+	import ghostcat.display.GSprite;
 	import ghostcat.util.ReflectUtil;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.SearchUtil;
 
 	/**
@@ -96,6 +97,29 @@ package ghostcat.ui
 			}
 			
 			return cls.newInstance(); 
+		}
+		
+		/**
+		 * 销毁子对象
+		 * @param target
+		 * @param all	是否销毁不在属性值里的对象
+		 */
+		public static function destory(target:GBase,all:Boolean = false):void
+		{
+			var skin:DisplayObject = target.content;
+			var children:Array = SearchUtil.findChildrenByClass(skin,GSprite);
+			var property:Object = ReflectUtil.getPropertyTypeList(target,true);
+			
+			for (var i:int = 0;i < children.length;i++)
+			{
+				var obj:DisplayObject = children[i] as DisplayObject;
+				if (obj is GSprite)
+				{
+					var name:String = obj.name;
+					if (all || property[name])
+						(obj as GSprite).destory();
+				}
+			}
 		}
 		
 		/**

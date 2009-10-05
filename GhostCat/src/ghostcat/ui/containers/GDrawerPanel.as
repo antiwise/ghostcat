@@ -92,9 +92,12 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
-			
+			if (destoryed)
+				return;
+		
 			removeEventListener(MouseEvent.CLICK,clickHandler);
+		
+			super.destory();
 		}
 		
 	}

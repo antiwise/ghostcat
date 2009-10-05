@@ -390,6 +390,9 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
+			if (destoryed)
+				return;
+			
 			removeEvents();
 			
 			if (labelTextField)

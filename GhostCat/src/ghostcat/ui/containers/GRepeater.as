@@ -45,6 +45,8 @@ package ghostcat.ui.containers
 			
 			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			
+			this.data = [];
+			
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
@@ -81,7 +83,11 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
+			
+			ref = null;
+			renderSkin = null;
 			
 			for (var i:int = 0; i < contentPane.numChildren;i++)
 			{
@@ -89,6 +95,8 @@ package ghostcat.ui.containers
 					(contentPane.getChildAt(i) as GSprite).destory();
 			}
 			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
+		
+			super.destory();
 		}
 		
 		/**

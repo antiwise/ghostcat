@@ -51,11 +51,11 @@ package
 	{
 		public function TestExample()
 		{	
-			var t:DebugRect = new DebugRect(100,100);
-			addChild(t);
-			
-			TweenUtil.to(t,2000,{startAt:{x:300},x:500})
-			TweenUtil.update(0);
+			RootManager.register(this);
+			var v:GAlert = new GAlert();
+			v.data = ["123"]
+			PopupManager.instance.queuePopup(v,null,true,CenterMode.POINT);
+			v.destory();
 		}
 	}
 }

@@ -3,6 +3,7 @@ package ghostcat.ui
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
@@ -11,6 +12,7 @@ package ghostcat.ui
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
+	import ghostcat.operation.GroupOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
@@ -128,32 +130,52 @@ package ghostcat.ui
 		public function PopupManager()
 		{
 			super();
+			
 			popups = new Dictionary(true);
 		
-			applicationDisabledOper = new FilterProxyOper(application,
+			applicationDisabledOper =new GroupOper([new FilterProxyOper(
+														application,
+														new BlurFilter(0,0),
+														1000,
+														{blurX:4,blurY:4}
+													),
+													new FilterProxyOper(
+														application,
 														new ColorMatrixFilter([1,0,0,0,0,
 																				0,1,0,0,0,
 																				0,0,1,0,0,
-																				0,0,0,1,0])
-														,1000,
+																				0,0,0,1,0]),
+														1000,
 														{matrix:[
 															0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0,0,0,1,0
-														]})
-			applicationEnabledOper = new FilterProxyOper(application,
+														]}
+													)
+													]);
+			applicationEnabledOper = new GroupOper([new FilterProxyOper(
+														application,
+														new BlurFilter(4,4),
+														1000,
+														{blurX:0,blurY:0}
+													),
+													new FilterProxyOper(
+														application,
 														new ColorMatrixFilter([
 															0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0,0,0,1,0
-														])
-														,500,
+														]),
+														500,
 														{matrix:[1,0,0,0,0,
 																0,1,0,0,0,
 																0,0,1,0,0,
-																0,0,0,1,0]})
+																0,0,0,1,0]}
+													)
+													]);
+													
 		}
 		
 		/**
@@ -257,10 +279,13 @@ package ghostcat.ui
 		{
 			delete popups[obj];
 			
-			if (obj is GBase)
-				(obj as GBase).destory();
-			else
-				popupLayer.removeChild(obj);
+			if (obj.parent == popupLayer)
+			{
+				if (obj is GBase)
+					(obj as GBase).destory();
+				else
+					popupLayer.removeChild(obj);
+			}
 		}
 		
 		/**

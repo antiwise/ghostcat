@@ -375,7 +375,8 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			if (_bitmap)
 				_bitmap.bitmapData.dispose();
@@ -389,6 +390,8 @@ package ghostcat.ui.controls
 				if (textField.parent == this)
 					removeChild(textField);
 			}
+			
+			super.destory();
 		}
 		
 	}

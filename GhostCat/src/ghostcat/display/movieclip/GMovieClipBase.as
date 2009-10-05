@@ -254,9 +254,9 @@ package ghostcat.display.movieclip
 		/** @inheritDoc*/
 		public override function destory():void
 		{
-			super.destory();
-			
 			paused = false;
+			
+			super.destory();
 		}
 		
 		//检测是否已经到达当前区段的尾端
