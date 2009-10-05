@@ -52,6 +52,11 @@ package ghostcat.display.bitmap
 		public var destoryWhenRemove:Boolean = false;
 		
 		/**
+		 * 是否已经被销毁
+		 */
+		public var destoryed:Boolean = false;
+		
+		/**
 		 * 是否允许缩放BitmapData
 		 */
 		public var enabledScale:Boolean = false;
@@ -453,6 +458,9 @@ package ghostcat.display.bitmap
 		 */
 		public function destory():void
 		{
+			if (destoryed)
+				return;
+			
 			if (parent)
 				parent.removeChild(this);
 			
@@ -461,6 +469,8 @@ package ghostcat.display.bitmap
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+		
+			destoryed = true;
 		}
 		
 	}

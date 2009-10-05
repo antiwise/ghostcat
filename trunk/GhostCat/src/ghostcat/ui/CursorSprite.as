@@ -237,6 +237,9 @@ package ghostcat.ui
 		/** @inheritDoc*/
 		public override function destory():void
 		{
+			if (destoryed)
+				return;
+			
 			if (stage)
 			{
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE,this.mouseMoveHandler);

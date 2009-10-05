@@ -77,11 +77,14 @@ package ghostcat.display.loader
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			stream.removeEventListener(ProgressEvent.PROGRESS,refreshProgress);
 			stream.removeEventListener(Event.COMPLETE,refreshProgress);
 			stream.close();
+			
+			super.destory();
 		}
 	}
 }

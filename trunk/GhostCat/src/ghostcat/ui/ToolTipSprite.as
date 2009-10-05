@@ -248,10 +248,14 @@ package ghostcat.ui
 		
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
+			
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
+		
+			super.destory();
 		}
 	}
 }

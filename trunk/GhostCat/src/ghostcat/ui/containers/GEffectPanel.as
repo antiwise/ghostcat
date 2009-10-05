@@ -21,15 +21,8 @@ package ghostcat.ui.containers
 		public var closeEffect:TweenEffect;
 		public var hideEffect:TweenEffect;
 	
-		/**
-		 * 是否将注册点移动到屏幕中央
-		 */
-		public var centerLayout:Boolean = true;
-		
-		public function GEffectPanel(mc:*=null, replace:Boolean=true, centerLayout:Boolean = true)
+		public function GEffectPanel(mc:*=null, replace:Boolean=true)
 		{
-			this.centerLayout = centerLayout;
-			
 			super(mc, replace);
 		}
 		/** @inheritDoc*/
@@ -43,13 +36,6 @@ package ghostcat.ui.containers
 				
 				createEffect.invert = true;
 				createEffect.execute();
-			}
-			
-			if (centerLayout)
-			{
-				var pRect:Rectangle = Geom.getRect(parent,parent);
-				this.x = pRect.x + pRect.width / 2;
-				this.y = pRect.y + pRect.height / 2;
 			}
 		}
 		/** @inheritDoc*/

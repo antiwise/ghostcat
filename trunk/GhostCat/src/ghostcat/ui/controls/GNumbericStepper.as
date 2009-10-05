@@ -142,14 +142,16 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			if (upArrow) 
 				upArrow.destory();
 			
 			if (downArrow) 
 				downArrow.destory();
-			
+		
+			super.destory();
 		}
 	}
 }

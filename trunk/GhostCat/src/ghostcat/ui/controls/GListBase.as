@@ -462,7 +462,8 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			if (data && data is IEventDispatcher)
 				(data as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler);
@@ -476,6 +477,8 @@ package ghostcat.ui.controls
 			removeEventListener(MouseEvent.CLICK,clickHandler);
 			removeEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			removeEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
+		
+			super.destory();
 		}
 	}
 }

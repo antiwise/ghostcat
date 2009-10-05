@@ -145,13 +145,16 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			var i:int;
 			for (i = 0;i<items.length;i++)
 				items[i].destory();
 			for (i = 0;i<walls.length;i++)
 				walls[i].destory();
+				
+			super.destory();
 		}
 
 	}

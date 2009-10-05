@@ -113,7 +113,6 @@ package ghostcat.ui.containers
 		public override function set data(v:*) : void
 		{
 			super.data = v;
-			
 			if (buttonBar)
 			{
 				this.buttonBar.data = v;
@@ -133,12 +132,17 @@ package ghostcat.ui.containers
 			buttonBar.addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 			DragManager.register(dragShape,this);
 		}
-		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			buttonBar.removeEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 			DragManager.unregister(dragShape);
+			
+			UIBuilder.destory(this);
+			
 			super.destory();
+			
+			PopupManager.instance.removePopup(this);
 		}
 	}
 }

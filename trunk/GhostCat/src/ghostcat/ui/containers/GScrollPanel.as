@@ -224,13 +224,16 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
-		
+			if (destoryed)
+				return;
+			
 			if (hScrollBar)
 				hScrollBar.destory();
 			
 			if (vScrollBar)
-				vScrollBar.destory()
+				vScrollBar.destory();
+		
+			super.destory();
 		}
 	}
 }

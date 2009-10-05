@@ -56,10 +56,13 @@ package ghostcat.display.movieclip
 		/** @inheritDoc*/
 		public override function destory():void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			for (var i:int = 0;i < bitmaps.length;i++)
 				(bitmaps[i] as BitmapData).dispose();
+		
+			super.destory();
 		}
 		/** @inheritDoc*/
 		public override function get curLabelName():String

@@ -77,10 +77,13 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			listContent.removeEventListener(Event.CHANGE,eventpaseHandler);
 			listContent.removeEventListener(ItemClickEvent.ITEM_CLICK,eventpaseHandler);
+		
+			super.destory();
 		}
 		
 		private function eventpaseHandler(event:Event):void

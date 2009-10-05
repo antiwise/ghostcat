@@ -484,8 +484,13 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (destoryed)
+				return;
+			
 			clear();
+			ref = null;
+		
+			super.destory();
 		}
 
 	}

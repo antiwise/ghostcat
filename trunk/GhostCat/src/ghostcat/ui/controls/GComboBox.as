@@ -183,6 +183,9 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
+			if (destoryed)
+				return;
+			
 			if (stage)
 				stage.removeEventListener(MouseEvent.MOUSE_DOWN,stageMouseDownHandler);
 			

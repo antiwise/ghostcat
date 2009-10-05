@@ -27,6 +27,11 @@ package ghostcat.display
 		public var destoryWhenRemove:Boolean = false;
 		
 		/**
+		 * 是否已经被销毁
+		 */
+		public var destoryed:Boolean = false;
+		
+		/**
 		 * 是否在第一次设置content时接受content的坐标 
 		 */		
 		public var acceptContentPosition:Boolean = true;
@@ -130,6 +135,8 @@ package ghostcat.display
 				}
 				skin.x = skin.y = 0;
 				addChild(skin);
+				
+				this.name = skin.name;
 			}
 			_content = skin;
 		}
@@ -162,6 +169,9 @@ package ghostcat.display
 		 */
 		public function destory():void
 		{
+			if (destoryed)
+				return;
+			
 			if (content is GSprite)
 				(content as GSprite).destory();
 			
@@ -170,6 +180,8 @@ package ghostcat.display
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+			
+			destoryed = true;
 		}
 	}
 }
