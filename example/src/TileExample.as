@@ -37,7 +37,7 @@ package
 			addChild(repeater);
 			
 			addChild(new RectParse(new GraphicsRect(100,100,300,300),new GraphicsLineStyle(0,0xFF0000)).createShape());
-			addChild(new CursorSprite());
+			addChild(new CursorSprite());//加入鼠标
 			
 			DragManager.register(repeater);
 		}

@@ -44,9 +44,8 @@ package
 			c = new SortYManager();
 			c.addAllChildren(this);
 			
-			p = new PhysicsManager();
+			p = new PhysicsManager(physicsTickHandler);
 			p.addAllChildren(this);
-			p.onTick = physicsTickHandler;
 		
 			debugTextField = new TextField();
 			debugTextField.mouseEnabled = false;
@@ -61,6 +60,7 @@ package
 		
 		private function physicsTickHandler(item:PhysicsItem,interval:int):void
 		{
+			//撞墙则反弹
 			if (item.x < 0 && item.velocity.x < 0)
 				item.velocity.x = -item.velocity.x;
 		
@@ -76,10 +76,13 @@ package
 		
 		private function mouseDownHandler(event:MouseEvent):void
 		{
+			//点击图元时
 			if (event.target.parent is GBase)
 			{
 				var obj:GBase = event.target.parent as GBase;
+				//修改颜色
 				obj.transform.colorTransform = new ColorTransform(1,1,1,1,0,255);
+				//给予速度
 				p.setVelocity(obj,new Point(Math.random()*500 - 250,Math.random()*500 - 250))
 			}
 		}
@@ -87,7 +90,7 @@ package
 		protected override function tickHandler(event:TickEvent):void
 		{
 			var t:int = getTimer();
-			c.calculateAll();
+			c.calculateAll();//排序全部
 			debugTextField.text = (getTimer() - t).toString();
 		}
 	}

@@ -23,7 +23,7 @@ package
 			list.width = 150;
 			list.height = 150;
 			
-			list.type = UIConst.TILE;
+			list.type = UIConst.TILE;//设置为平铺
 			
 			var arr:ObjectProxy = new ObjectProxy([]);//这里用普通Array也可以，但必须用这个才能实现动态修改数据
 			for (var i:int = 0;i < 1000000;i++)
@@ -32,14 +32,14 @@ package
 			list.data = arr;
 			
 			addChild(list);
-			
+			//加入滚动条
 			list.addVScrollBar();
 			list.vScrollBar.blur = 2;
 			list.vScrollBar.easing = Circ.easeOut;
 			
 			arr[2] = "动态修改数据";
 			
-			//也可以直接创建GScrollBar并设置target实现，但这个滚动条将不会随着容器移动
+			//也可以直接创建GScrollBar并设置target实现，但这种滚动条将不会随着容器移动
 			//如果target是普通Sprite也是可以的，它会被自动包装成ScrollPanel。
 		}
 	}

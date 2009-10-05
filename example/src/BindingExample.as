@@ -42,6 +42,7 @@ package
 			GAlert.show("第一次绑定会首先更新一次值");
 			
 			BindingUtils.bindProperty(this,"b",this,"a");
+			//以后会给属性a赋值，并查看b的同步情况
 			
 			GAlert.show("a = [1]","设置");
 			

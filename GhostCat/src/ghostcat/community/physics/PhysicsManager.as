@@ -53,9 +53,10 @@ package ghostcat.community.physics
 		}
 		
 		private var dict:Dictionary;
-		public function PhysicsManager()
+		public function PhysicsManager(onTick:Function = null)
 		{
 			this.dict = new Dictionary();
+			this.onTick = onTick;
 			
 			Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,1000);
 		}

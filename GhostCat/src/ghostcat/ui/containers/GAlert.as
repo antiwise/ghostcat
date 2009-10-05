@@ -68,7 +68,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public static function show(text:String,title:String = null,buttons:Array = null,closeHandler:Function = null):GAlert
+		public static function show(text:String,title:String = null,buttons:Array = null,closeHandler:Function = null,inQueue:Boolean = true):GAlert
 		{
 			if (!buttons)
 				buttons = defaultButtons;
@@ -80,7 +80,10 @@ package ghostcat.ui.containers
 			
 			alert.closeHandler = closeHandler;
 			
-			PopupManager.instance.queuePopup(alert,null,true,CenterMode.POINT);
+			if (inQueue)
+				PopupManager.instance.queuePopup(alert,null,true,CenterMode.POINT);
+			else
+				PopupManager.instance.showPopup(alert,null,true,CenterMode.POINT);
 			
 			return alert;
 		}
@@ -135,6 +138,9 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
+			if (destoryed)
+				return;
+			
 			buttonBar.removeEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 			DragManager.unregister(dragShape);
 			
