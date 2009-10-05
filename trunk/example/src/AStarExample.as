@@ -73,8 +73,8 @@ package
 			player = DisplayParse.createSprite([new GraphicsFill(0xFF0000),new GraphicsRect(0,0,5,5)])
 			addChild(player);
 			
-			this.mapModel.map = this.map;
-			this.aStar = new AStar(this.mapModel);
+			this.mapModel.map = this.map;//创建地图数据
+			this.aStar = new AStar(this.mapModel);//根据数据生成A*类
 		}
 		
 		private function clickHandler(event : MouseEvent) : void
@@ -83,7 +83,7 @@ package
 			var playerPoint : Point = new Point(int(this.player.x/5), int(this.player.y/5));
 			
 			var t:int = getTimer();
-			this.path = this.aStar.find(playerPoint, findPiont);
+			this.path = this.aStar.find(playerPoint, findPiont);//获得行走路径
 			
 			if (this.path == null || this.path.length == 0)
 				GAlert.show("无法到达")

@@ -36,10 +36,12 @@ package
 		{
 			RootManager.register(this);
 			
+			//建立一个支持检测碰撞的图元
 			b = new CollisionSprite(new TestCollision())
 			Geom.centerIn(b,stage);
 			addChild(b);
 			
+			//建立一个点
 			point = new GBase(new EllipseParse(new GraphicsEllipse(0,0,6,6),null,new GraphicsFill(0)).createShape());
 			addChild(point);
 			
@@ -51,9 +53,11 @@ package
 		
 		protected override function tickHandler(event:TickEvent):void
 		{
+			//控制点到达鼠标处
 			point.x = mouseX;
 			point.y = mouseY;
 			
+			//检测碰撞，并将点的位置重新设置在碰撞处
 			if (b.collision.hitTestPoint(new Point(mouseX,mouseY),point.oldPosition))
 			{
 				b.filters = [new GlowFilter(0xFFFFFF,1,30,30)];

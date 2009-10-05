@@ -30,9 +30,11 @@ package
 		}
 		private function load():void
 		{
+			//加入进度条
 			pBar = new GProgressBar();
 			addChild(pBar);
 			
+			//加载GIF
 			loader = new LoadGIFOper("dance.gif");
 			pBar.target = loader;
 			loader.commit();

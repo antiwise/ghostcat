@@ -28,7 +28,7 @@ package
 			repeater.cursor = CursorSprite.CURSOR_DRAG;
 			
 			addChild(repeater);
-			addChild(new CursorSprite())
+			addChild(new CursorSprite())//加入鼠标
 			
 			DragManager.register(repeater);
 			
