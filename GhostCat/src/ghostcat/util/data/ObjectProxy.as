@@ -6,7 +6,7 @@ package ghostcat.util.data
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 	
-	[Event(name="property_change",type="ghostcat.events.PropertyChangeEvent")]
+	[Event(name="property_change",type="ghostcat.util.data.PropertyChangeEvent")]
 	
 	/**
 	 * 改变对象属性时将会触发事件
