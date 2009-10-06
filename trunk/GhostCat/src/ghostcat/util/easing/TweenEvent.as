@@ -1,8 +1,7 @@
-package ghostcat.events
+package ghostcat.util.easing
 {
 	import flash.events.Event;
 	
-	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 缓动类事件 

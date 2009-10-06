@@ -1,6 +1,6 @@
 package ghostcat.operation
 {
-	import ghostcat.events.TweenEvent;
+	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
 
 	/**

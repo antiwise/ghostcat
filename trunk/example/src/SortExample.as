@@ -33,7 +33,7 @@ package
 		protected override function init():void
 		{
 			RootManager.register(this);
-			
+			//创建100个物品
 			for (var i:int = 0;i < 100;i++)
 			{
 				var m:GBase = new GBase(new TestHuman())
@@ -41,12 +41,15 @@ package
 				addChild(m);
 			}
 			
+			//创建排序器
 			c = new SortYManager();
 			c.addAllChildren(this);
 			
+			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
 			p.addAllChildren(this);
-		
+			
+			//创建文本显示计算时间
 			debugTextField = new TextField();
 			debugTextField.mouseEnabled = false;
 			addChild(debugTextField);

@@ -31,6 +31,7 @@ package ghostcat.debug
 		/**
 		 * 是否处于DEBUG模式。系统可借助此属性来切换调试与非调试模式。
 		 * 在非调试模式下，将禁用trace。因为自定义trace编译不会被自动删除，此属性对于提高效率是必须的。
+		 * 默认情况下，发布版本就会自动禁用trace
 		 */		
 		public static var DEBUG:Boolean = isDebugSWF;
 		
@@ -193,7 +194,7 @@ package ghostcat.debug
 		 */		
 		public static function get isDebugSWF():Boolean
 		{
-			return new Error().getStackTrace().search(/:[0-9]+]$/m) > -1;
+			return new Error().getStackTrace().search(/:[0-9]+]$/m) != -1;
 		}
 		
 		/**

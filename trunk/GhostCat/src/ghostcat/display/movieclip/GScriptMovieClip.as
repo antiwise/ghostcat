@@ -1,9 +1,10 @@
 package ghostcat.display.movieclip
 {
 	import flash.display.FrameLabel;
+	import flash.display.Sprite;
 	
 	import ghostcat.debug.Debug;
-	
+
 	/**
 	 * 使用动画剪辑模拟代码动画，可以再次继承此类来来处理特殊情况
 	 * 
@@ -11,7 +12,7 @@ package ghostcat.display.movieclip
 	 * 
 	 */	
 	
-	public class GScrpitMovieClip extends GMovieClipBase
+	public class GScriptMovieClip extends GMovieClipBase
 	{
 		/**
 		 * 渲染方法，参数为GScrpitMovieClip本身
@@ -20,6 +21,7 @@ package ghostcat.display.movieclip
 		
 		private var _labels:Array;
 		private var _currentFrame:int = 1;
+		private var _totalFrames:int = 1;
 		
 		/**
 		 * 
@@ -29,13 +31,13 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */	
-		public function GScrpitMovieClip(cmd:Function,totalFrames:int,labels:Array=null,paused:Boolean=false)
+		public function GScriptMovieClip(cmd:Function,totalFrames:int,labels:Array=null,paused:Boolean=false)
 		{
 			this.cmd = cmd;
 			this._totalFrames = totalFrames;
 			this._labels = labels ? labels : [];
 			
-			super(new Sprite()),true,paused);
+			super(new Sprite(),true,paused);
 			
 			clearQueue();
 			if (labels)

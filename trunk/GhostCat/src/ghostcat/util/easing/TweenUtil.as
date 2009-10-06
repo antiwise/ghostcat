@@ -8,15 +8,14 @@ package ghostcat.util.easing
 	import flash.media.SoundTransform;
 	
 	import ghostcat.events.TickEvent;
-	import ghostcat.events.TweenEvent;
 	import ghostcat.util.MathUtil;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.Handler;
 	import ghostcat.util.display.ColorUtil;
 
-	[Event(name="tween_start",type="ghostcat.events.TweenEvent")]
-	[Event(name="tween_end",type="ghostcat.events.TweenEvent")]
-	[Event(name="tween_update",type="ghostcat.events.TweenEvent")]
+	[Event(name="tween_start",type="ghostcat.util.easing.TweenEvent")]
+	[Event(name="tween_end",type="ghostcat.util.easing.TweenEvent")]
+	[Event(name="tween_update",type="ghostcat.util.easing.TweenEvent")]
 	
 	/**
 	 * 内部使用的Tween，用法基本和TweenLite相同

@@ -1,4 +1,4 @@
-package ghostcat.events
+package ghostcat.util.data
 {
 	import flash.events.Event;
 	
