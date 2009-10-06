@@ -23,8 +23,11 @@
     <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
     <classEntry path="ghostcat.community.filter.OnlyCheckScreenFilter"/>
+    <classEntry path="ghostcat.community.physics.PhysicsItem"/>
+    <classEntry path="ghostcat.community.physics.PhysicsManager"/>
     <classEntry path="ghostcat.debug.Debug"/>
     <classEntry path="ghostcat.debug.DebugPanel"/>
+    <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
@@ -55,6 +58,7 @@
     <classEntry path="ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GMovieClipBase"/>
+    <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="ghostcat.display.movieclip.TransitionLayer"/>
@@ -62,6 +66,8 @@
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
+    <classEntry path="ghostcat.display.residual.PixelItem"/>
+    <classEntry path="ghostcat.display.residual.PixelResidualScreen"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
@@ -81,13 +87,11 @@
     <classEntry path="ghostcat.events.MoveEvent"/>
     <classEntry path="ghostcat.events.MovieEvent"/>
     <classEntry path="ghostcat.events.OperationEvent"/>
-    <classEntry path="ghostcat.events.PropertyChangeEvent"/>
     <classEntry path="ghostcat.events.RepeatEvent"/>
     <classEntry path="ghostcat.events.ResizeEvent"/>
     <classEntry path="ghostcat.events.SelectEvent"/>
     <classEntry path="ghostcat.events.TickEvent"/>
     <classEntry path="ghostcat.events.TimeLineEvent"/>
-    <classEntry path="ghostcat.events.TweenEvent"/>
     <classEntry path="ghostcat.extend.IFrame"/>
     <classEntry path="ghostcat.extend.JSBridge"/>
     <classEntry path="ghostcat.fileformat.gif.GIFDecoder"/>
@@ -144,6 +148,7 @@
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
+    <classEntry path="ghostcat.operation.FilterProxyOper"/>
     <classEntry path="ghostcat.operation.FunctionOper"/>
     <classEntry path="ghostcat.operation.GroupOper"/>
     <classEntry path="ghostcat.operation.IOper"/>
@@ -189,12 +194,12 @@
     <classEntry path="ghostcat.parse.display.RectParse"/>
     <classEntry path="ghostcat.parse.display.ShapeParse"/>
     <classEntry path="ghostcat.parse.display.TextFieldParse"/>
-    <classEntry path="ghostcat.parse.graphics.GraphicsGradientFillParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsBitmapFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsClear"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsEllipse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsEndFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsFill"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsGradientFillParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsGradientLineStyle"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsPath"/>
@@ -221,6 +226,7 @@
     <classEntry path="ghostcat.transfer.Paper3D"/>
     <classEntry path="ghostcat.transfer.Reflector"/>
     <classEntry path="ghostcat.transfer.Skew"/>
+    <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
@@ -234,6 +240,7 @@
     <classEntry path="ghostcat.ui.containers.GBox"/>
     <classEntry path="ghostcat.ui.containers.GButtonBar"/>
     <classEntry path="ghostcat.ui.containers.GCanvas"/>
+    <classEntry path="ghostcat.ui.containers.GDrawerPanel"/>
     <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
     <classEntry path="ghostcat.ui.containers.GHBox"/>
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
@@ -275,6 +282,7 @@
     <classEntry path="ghostcat.ui.tooltip.ToolTipSkin"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
+    <classEntry path="ghostcat.util.FontEmbedHelper"/>
     <classEntry path="ghostcat.util.Guid"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.RandomUtil"/>
@@ -294,8 +302,10 @@
     <classEntry path="ghostcat.util.data.BitUtil"/>
     <classEntry path="ghostcat.util.data.ByteArrayReader"/>
     <classEntry path="ghostcat.util.data.DataCompress"/>
+    <classEntry path="ghostcat.util.data.Hash"/>
     <classEntry path="ghostcat.util.data.LocalStorage"/>
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
+    <classEntry path="ghostcat.util.data.PropertyChangeEvent"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
     <classEntry path="ghostcat.util.display.BitmapUtil"/>
     <classEntry path="ghostcat.util.display.ColorUtil"/>
@@ -317,20 +327,13 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
+    <classEntry path="ghostcat.util.easing.TweenEvent"/>
     <classEntry path="ghostcat.util.easing.TweenUtil"/>
-    <classEntry path="ghostcat.util.data.Hash"/>
-    <classEntry path="ghostcat.util.load.LoadHelper"/>
-    <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
-    <classEntry path="ghostcat.community.physics.PhysicsItem"/>
-    <classEntry path="ghostcat.community.physics.PhysicsManager"/>
-    <classEntry path="ghostcat.debug.DebugRect"/>
-    <classEntry path="ghostcat.ui.CenterMode"/>
-    <classEntry path="ghostcat.ui.containers.GDrawerPanel"/>
-    <classEntry path="ghostcat.display.residual.PixelItem"/>
-    <classEntry path="ghostcat.display.residual.PixelResidualScreen"/>
-    <classEntry path="ghostcat.operation.FilterProxyOper"/>
+    <classEntry path="ghostcat.util.load.LoadHelper"/>
+    <classEntry path="ghostcat.util.load.RootLoaderBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

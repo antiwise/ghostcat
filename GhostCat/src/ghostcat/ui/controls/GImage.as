@@ -171,7 +171,7 @@ package ghostcat.ui.controls
 		
 		public function GImage(source:*=null, replace:Boolean=true)
 		{
-			super(source as DisplayObject, replace);
+			super(null, replace);
 			this.source = source;
 		}
 		

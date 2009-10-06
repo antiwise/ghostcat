@@ -39,6 +39,7 @@ package
 	import flash.display.GradientType;
 	import ghostcat.util.display.MatrixUtil;
 	import ghostcat.debug.Debug;
+	import ghostcat.ui.controls.GImage;
 	
 	[SWF(width="600",height="600")]
 	
@@ -52,10 +53,12 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			var v:GAlert = new GAlert();
-			v.data = ["123"]
-			PopupManager.instance.queuePopup(v,null,true,CenterMode.POINT);
-			v.destory();
+			var t:TestCollision = new TestCollision();
+			addChild(t);
+			var v:GImage = new GImage(t);
+			v.scaleContent = false;
+			v.horizontalAlign = null;
+			v.verticalAlign = null;
 		}
 	}
 }
