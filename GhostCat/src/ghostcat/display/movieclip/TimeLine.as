@@ -236,6 +236,12 @@ package ghostcat.display.movieclip
 				dispatchEvent(Util.createObject(new TimeLineEvent(TimeLineEvent.TIMELINE_END),
 				{prevLabel:prevLabel,label:mc.currentLabel,prevFrame:prevFrame,frame:mc.currentFrame}))
 			}
+			
+			if (mc.currentFrame == 1)
+			{
+				dispatchEvent(Util.createObject(new TimeLineEvent(TimeLineEvent.TIMELINE_START),
+				{prevLabel:prevLabel,label:mc.currentLabel,prevFrame:prevFrame,frame:mc.currentFrame}))
+			}
 				
 			prevFrame = mc.currentFrame;
 			prevLabel = mc.currentLabel;

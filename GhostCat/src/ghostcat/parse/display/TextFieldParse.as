@@ -3,6 +3,7 @@ package ghostcat.parse.display
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
 	import ghostcat.parse.DisplayParse;
@@ -53,6 +54,7 @@ package ghostcat.parse.display
 			var textField:TextField = new TextField();
 			textField.defaultTextFormat = defaultTextFormat;
 			textField.selectable = false;
+			textField.autoSize = TextFieldAutoSize.LEFT;
 			if (text.indexOf("<html>") != -1)
 				textField.htmlText = text;
 			else

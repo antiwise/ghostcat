@@ -53,12 +53,6 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			var t:TestCollision = new TestCollision();
-			addChild(t);
-			var v:GImage = new GImage(t);
-			v.scaleContent = false;
-			v.horizontalAlign = null;
-			v.verticalAlign = null;
 		}
 	}
 }

@@ -53,11 +53,9 @@ package ghostcat.display.movieclip
 			if (mc)
 			{
 				timeLine = new TimeLine(mc);
-				//最开始的初始化，当设置了Label后，将首先在第一个Label内循环
 				mc.stop();
-				clearQueue();
-				if (labels && labels.length>0)
-					setLabel(labels[0].name,-1);
+				//最开始的初始化，当设置了Label后，将首先在第一个Label内循环
+				reset();
 			}
 		}
 		/** @inheritDoc*/
@@ -73,31 +71,35 @@ package ghostcat.display.movieclip
 		/** @inheritDoc*/
 		public override function get labels():Array
 		{
-			return timeLine.labels;
+			return timeLine ? timeLine.labels : null;
 		}
 		/** @inheritDoc*/
 		public override function get currentFrame():int
         {
-        	return mc.currentFrame;
+        	return mc ? mc.currentFrame : 0;
         }
         /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
-        	mc.gotoAndStop(frame);
+        	if (mc)
+        		mc.gotoAndStop(frame);
         }
         /** @inheritDoc*/
         public override function get totalFrames():int
         {
-        	return mc.totalFrames;
+        	return mc ? mc.totalFrames : 0;
         }
         /** @inheritDoc*/
         public override function nextFrame():void
         {
-        	mc.nextFrame();
+        	if (!mc)
+        		return;
+        	
+        	(frameRate >= 0) ? mc.nextFrame() : mc.prevFrame();
         }
         /**
          * 将动画缓存为位图并转化为GBitmapMovieClip对象
-         * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象进行一些操作，可监听GBitmapMovieClip的complete事件
+         * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象后进行一些操作，可监听GBitmapMovieClip的complete事件
          * 
          * @param rect		绘制范围
 		 * @param start		起始帧

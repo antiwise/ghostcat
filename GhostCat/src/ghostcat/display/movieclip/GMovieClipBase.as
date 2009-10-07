@@ -28,9 +28,9 @@ package ghostcat.display.movieclip
 	public class GMovieClipBase extends GBase
 	{
 		/**
-		 * 全局默认帧频，为0时则取舞台帧频。
+		 * 全局默认帧频，为NaN时则取舞台帧频
 		 */
-		public static var defaultFrameRate:int=0;
+		public static var defaultFrameRate:Number = NaN;
 		
 		/**
 		 * 保存着所有的帧上函数
@@ -61,9 +61,9 @@ package ghostcat.display.movieclip
 			registerHandler(name,new Handler(s.play,[0,loop,new SoundTransform(volume,pan)]));
 		}
 		
-		private var _frameRate:int=0;
+		private var _frameRate:Number = NaN;
 		
-		private var numLoops:int=-1;//循环次数，-1为无限循环
+		private var numLoops:int = -1;//循环次数，-1为无限循环
 		
 		private var nextLabels:Array = [];//Labels列表
         
@@ -81,13 +81,13 @@ package ghostcat.display.movieclip
 		}
 		
 		/**
-		 * 设置帧频，设为0表示使用默认帧频。
+		 * 设置帧频，设为NaN表示使用默认帧频，负值则为倒放。
 		 */		
-		public function get frameRate():int
+		public function get frameRate():Number
 		{
-			if (_frameRate > 0)
+			if (!isNaN(_frameRate))
 				return 	_frameRate;
-			else if (defaultFrameRate > 0)
+			else if (!isNaN(defaultFrameRate))
 				return defaultFrameRate;
 			else if (stage)
 				return stage.frameRate;
@@ -95,7 +95,7 @@ package ghostcat.display.movieclip
 				return 0;
 		}
 
-		public function set frameRate(v:int):void
+		public function set frameRate(v:Number):void
 		{
 			_frameRate = v;
 		}
@@ -144,7 +144,7 @@ package ghostcat.display.movieclip
 			if (index != -1)
 			{
 				numLoops = repeat;
-				currentFrame  = labels[index].frame;
+				currentFrame  = (frameRate >= 0) ? getLabelStart(index) : getLabelEnd(index);
 				curLabelIndex = index;
 				
 				dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_START),{labelName:curLabelName}))
@@ -191,6 +191,17 @@ package ghostcat.display.movieclip
         }
         
         /**
+         * 初始化动画
+         * 
+         */
+        public function reset():void
+        {
+			clearQueue();
+			if (labels && labels.length>0)
+				setLabel(labels[0].name,-1);
+        }
+        
+        /**
          * 在暂停状态下，仍然可以手动使用此方法激活tick。利用它可以处理区域调速等功能。
          * @param v
          * 
@@ -213,9 +224,7 @@ package ghostcat.display.movieclip
 				if (hasReachedLabelEnd())
 				{
 					if (numLoops > 0)
-					{
 						numLoops--;
-					}
 					
 					if (numLoops == 0)
 					{
@@ -237,38 +246,52 @@ package ghostcat.display.movieclip
 				}
 				else
 				{
-					nextFrame();
+					nextFrame()
 				}
-				frameTimer += 1000/frameRate;
+				
+				frameTimer += 1000/ Math.abs(frameRate);
 			}
 		}
 		
 		/**
-         * 回到当前动画的第一帧 
+         * 回到当前动画的第一帧（反向播放则是最后一帧）
          */
         public function loopBackToStart():void
         {
-            currentFrame = (labels.length > 0) ? labels[curLabelIndex].frame : 1;
+            currentFrame = (frameRate >= 0) ? getLabelStart(curLabelIndex) : getLabelEnd(curLabelIndex);
         }
 		
-		/** @inheritDoc*/
+		//检测是否已经到达当前区段的尾端（倒放则相反）
+		private function hasReachedLabelEnd():Boolean
+        {
+        	if (frameRate >= 0)
+        		return currentFrame >= getLabelEnd(curLabelIndex);
+        	else
+        		return currentFrame <= getLabelStart(curLabelIndex);
+        }
+        
+        //取得Label的头部
+        private function getLabelStart(labelIndex:int):int
+        {
+        	return (labels && labels.length > 0) ? labels[labelIndex].frame : 1;
+        }
+        
+        //取得Label的尾端
+        private function getLabelEnd(labelIndex:int):int
+        {
+        	if (labels && labelIndex + 1 < labels.length)
+                return labels[labelIndex + 1].frame - 1;
+            else
+            	return totalFrames;
+        }
+        
+        /** @inheritDoc*/
 		public override function destory():void
 		{
 			paused = false;
-			
 			super.destory();
 		}
 		
-		//检测是否已经到达当前区段的尾端
-		private function hasReachedLabelEnd():Boolean
-        {
-            if (curLabelIndex + 1 < labels.length)
-            {
-                return currentFrame >= labels[curLabelIndex + 1].frame - 1;
-            }
-            return currentFrame >= totalFrames;
-        }
-        
         /**
 		 * 所有标签，类型为FrameLabel
 		 * @return 
@@ -316,7 +339,7 @@ package ghostcat.display.movieclip
         }
         
         /**
-         * 下一帧
+         * 下一帧（倒放时则是上一帧）
          * 
          */
         public function nextFrame():void
