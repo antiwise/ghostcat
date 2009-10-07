@@ -65,6 +65,11 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
+		 * 是否根据宽度设置文本框的宽度
+		 */
+		public var enabledAdjustTextFieldWidth:Boolean = false;
+		
+		/**
 		 * 限定输入内容的正则表达式
 		 */
 		public var regExp:RegExp;
@@ -418,6 +423,16 @@ package ghostcat.ui.controls
 		{
 			
 		}
+		
+		/** @inheritDoc*/
+		protected override function updateSize():void
+		{
+			super.updateSize();
+			
+			if (enabledAdjustTextFieldWidth)
+				textField.width = width;
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
