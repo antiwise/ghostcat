@@ -334,6 +334,9 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.ui.html.Table"/>
+    <classEntry path="ghostcat.ui.html.TD"/>
+    <classEntry path="ghostcat.ui.html.TR"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

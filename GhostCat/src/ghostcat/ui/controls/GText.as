@@ -97,9 +97,32 @@ package ghostcat.ui.controls
 			{
 				var f:TextFormat = FontManager.instance.getTextFormat(v);
 				if (f)
-					textField.defaultTextFormat = f;
+					applyTextFormat(f,true);
 			}
 		}
+		
+		/**
+		 * 应用字体样式
+		 * 
+		 * @param f	为空则取默认字体样式
+		 * @param overwriteDefault	是否覆盖默认字体样式
+		 * 
+		 */
+		public function applyTextFormat(f:TextFormat=null,overwriteDefault:Boolean = false):void 
+		{
+			if (!textField)
+				return;
+			
+			if (!f)
+				f = textField.defaultTextFormat;
+			
+			if (length > 0)
+				textField.setTextFormat(f,0,textField.length);
+			
+			if (overwriteDefault)
+				textField.defaultTextFormat = f;
+		}
+
 
 		/**
 		 * 最大输入限制字数
