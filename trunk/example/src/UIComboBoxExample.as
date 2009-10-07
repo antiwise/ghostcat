@@ -1,6 +1,7 @@
 package
 {
 	import ghostcat.display.GSprite;
+	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.controls.GComboBox;

@@ -10,7 +10,8 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.ui.UIConst;
-	import ghostcat.util.Tick;
+	
+	[Event(name="change",type="flash.events.Event")]
 	
 	/**
 	 * 拖动块
@@ -88,8 +89,13 @@ package ghostcat.ui.controls
 
 		public function set value(v:Number):void
 		{
+			if (_value == v)
+				return;
+			
 			oldValue = value;
 			_value = v;
+			
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		/**
@@ -134,7 +140,7 @@ package ghostcat.ui.controls
 		
 		public function set percent(v:Number):void
 		{
-			_value = (_maxValue - _minValue) * v + _minValue;
+			value = (_maxValue - _minValue) * v + _minValue;
 		}
 
 		/**

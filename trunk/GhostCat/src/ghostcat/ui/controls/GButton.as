@@ -271,38 +271,34 @@ package ghostcat.ui.controls
 			
 			if (replace && skins)
 			{
-				if (skins[next]){
+				if (skins[next])
 					setPartConetent(skin[next],replace);
-				}else{
+				else
 					setPartConetent(defaultSkin,replace);
-				}
 			}
 			
 			if (replace && matrixs) 
 			{
-				if (matrixs[next]){
+				if (matrixs[next])
 					content.transform.matrix = matrixs[next];
-				}else{
+				else
 					content.transform.matrix = new Matrix();
-				}
 			}
 			
 			if (colorTransforms)
 			{
-				if (colorTransforms[next]){
+				if (colorTransforms[next])
 					content.transform.colorTransform = colorTransforms[next];
-				}else{
+				else
 					content.transform.colorTransform = new ColorTransform();
-				}
 			}
 			
 			if (filterses)
 			{
-				if (filterses[next]){
+				if (filterses[next])
 					content.filters = filterses[next];
-				}else{
+				else
 					content.filters = [];
-				}
 			}
 			
 			if (content && timeLine)

@@ -21,6 +21,11 @@ package ghostcat.events
 		public static const TIMELINE_END:String = "timeline_end";
 		
 		/**
+		 * 时间线开头
+		 */
+		public static const TIMELINE_START:String = "timeline_start";
+		
+		/**
 		 * 上一个帧标签
 		 */
 		public var prevLabel:String;

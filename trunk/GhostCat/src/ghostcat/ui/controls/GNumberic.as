@@ -112,8 +112,8 @@ package ghostcat.ui.controls
 			if (textField)
 				textField.text = prefix + v.toFixed(fix) + suffix;
 			
-			if (enabledAdjustTextSize)
-				TextFieldUtil.adjustSize(textField);
+//			if (enabledAdjustTextSize)
+//				TextFieldUtil.adjustSize(textField);
 			
 			if (enabledAdjustContextSize)
 				adjustContextSize();

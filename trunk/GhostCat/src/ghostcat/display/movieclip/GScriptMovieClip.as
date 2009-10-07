@@ -39,9 +39,7 @@ package ghostcat.display.movieclip
 			
 			super(new Sprite(),true,paused);
 			
-			clearQueue();
-			if (labels)
-				setLabel(labels[0],-1);
+			reset();
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
@@ -106,7 +104,7 @@ package ghostcat.display.movieclip
         /** @inheritDoc*/
         public override function nextFrame():void
         {
-        	currentFrame ++;
+        	(frameRate >= 0) ? currentFrame ++ : currentFrame --;
         }
 	}
 }

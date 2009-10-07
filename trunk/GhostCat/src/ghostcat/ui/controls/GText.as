@@ -10,6 +10,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
@@ -18,12 +19,11 @@ package ghostcat.ui.controls
 	import ghostcat.events.GTextEvent;
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
-	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
+	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
-	import ghostcat.util.Util;
 	
 	[Event(name="text_change",type="ghostcat.events.GTextEvent")]
 	
@@ -38,19 +38,16 @@ package ghostcat.ui.controls
 	
 	public class GText extends GBase
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(TextField);
+		public static var defaultSkin:ClassFactory = new ClassFactory(TextField,{autoSize:TextFieldAutoSize.LEFT});
 		public static var defaultTextFormat:String;
 		
 		private var _textFormat:String;
+		private var _autoSize:String;
+		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		
 		public var textField:TextField;
-		
-		/**
-		 * 是否让文本框适应文字的体积
-		 */
-		public var enabledAdjustTextSize:Boolean = false;
 		
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
@@ -83,7 +80,37 @@ package ghostcat.ui.controls
 		public var ansiMaxChars:int;
 		
 		/**
-		 * 字体
+		 * 文本框自适应文字的方式
+		 */
+		public function get autoSize():String
+		{
+			return textField ? textField.autoSize:_autoSize;
+		}
+
+		public function set autoSize(v:String):void
+		{
+			_autoSize = v;
+			if (textField)
+				textField.autoSize = v;
+		}
+		
+		/**
+		 * 是否让文本框适应文本大小
+		 * @return 
+		 * 
+		 */
+		public function get enabledAdjustTextSize():Boolean
+		{
+			return autoSize != null;
+		}
+		
+		public function set enabledAdjustTextSize(v:Boolean):void
+		{
+			autoSize = v ? TextFieldAutoSize.LEFT : null;	
+		}
+
+		/**
+		 * 字体名称
 		 */
 		public function get textFormat():String
 		{
@@ -170,10 +197,7 @@ package ghostcat.ui.controls
 		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
 			if (!skin)
-			{
 				skin = defaultSkin;
-				enabledAdjustTextSize = true;//没有皮肤则默认激活更新大小
-			}
 			
 			if (textPos)
 				this.textPos = textPos;
@@ -213,7 +237,6 @@ package ghostcat.ui.controls
 			{
 				this.separateTextField = true;
 				textField = TextFieldParse.createTextField();
-				enabledAdjustTextSize = true;//新创建的文本框必须自动布局
 			
 				if (textPos)
 				{
@@ -301,8 +324,8 @@ package ghostcat.ui.controls
 					textField.text = str;
 			}
 			
-			if (enabledAdjustTextSize)
-				TextFieldUtil.adjustSize(textField);
+//			if (autoSize)
+//				textField.autoSize = TextFieldAutoSize.LEFT;
 			
 			if (enabledAdjustContextSize)
 				adjustContextSize();
