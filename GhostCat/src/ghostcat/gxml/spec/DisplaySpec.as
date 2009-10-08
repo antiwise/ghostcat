@@ -3,7 +3,7 @@ package ghostcat.gxml.spec
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	import ghostcat.util.ReflectXMLUtil;
+	import ghostcat.ui.containers.GView;
 
 	/**
 	 * 显示对象解析器
@@ -20,13 +20,16 @@ package ghostcat.gxml.spec
 		{
 			super(root);
 		}
-		/**
-		 * @inheritDoc
-		 */
+		/** @inheritDoc */
 		public override function addChild(source:*,child:*,xml:XML):void
 		{
 			if (source is DisplayObjectContainer && isClass(xml))
-				(source as DisplayObjectContainer).addChild(child as DisplayObject);
+			{
+				if (source is GView)
+					(source as GView).addObject(child as DisplayObject);	
+				else
+					(source as DisplayObjectContainer).addChild(child as DisplayObject);
+			}
 			else
 				super.addChild(source,child,xml);
 			

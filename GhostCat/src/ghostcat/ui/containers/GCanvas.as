@@ -15,7 +15,7 @@ package ghostcat.ui.containers
 		{
 			super(skin, replace);
 			
-			layout = new AbsoluteLayout(contentPane);
+			setLayout(new AbsoluteLayout());
 		}
 		
 		/**

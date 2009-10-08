@@ -92,14 +92,11 @@ package ghostcat.util.display
 					var p:Point = localToContent(new Point(),obj,space);
 					return new Rectangle(p.x,p.y,0,0);
 				}
+				
 				if ((obj as DisplayObject).scrollRect)//scrollRect有时候不会立即确认属性
-				{
 					return localRectToContent((obj as DisplayObject).scrollRect,obj,space)
-				}
 				else
-				{
 					return obj.getRect(space);
-				}
 			}
 			
 			return null;

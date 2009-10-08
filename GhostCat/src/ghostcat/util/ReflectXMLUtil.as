@@ -64,6 +64,13 @@ package ghostcat.util
 					case Function:
 						obj[key] = ReflectUtil.eval(value) as Function;
 						break;
+					case uint:
+					case int:
+					case Number:
+						if ((/^#[\dabcdef]+$/i).test(value))
+							value = "0x"+(value as String).substr(1)
+						obj[key] = value;
+						break;
 					default:
 						obj[key] = value;
 						break;

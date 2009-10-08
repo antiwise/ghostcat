@@ -31,10 +31,11 @@ package ghostcat.ui.layout
 		 * @param isRoot	是否以舞台的边框作为范围
 		 * 
 		 */
-		public function Layout(target:DisplayObjectContainer,isRoot:Boolean = false):void
+		public function Layout(target:DisplayObjectContainer = null,isRoot:Boolean = false):void
 		{
 			AbstractUtil.preventConstructor(this,Layout);
-			setTarget(target,isRoot);
+			if (target)
+				setTarget(target,isRoot);
 		}
 		
 		/**
@@ -109,6 +110,9 @@ package ghostcat.ui.layout
 		 */
 		public function vaildLayout():void
 		{
+			if (!_target)
+				return;
+			
 			var rect:Rectangle;
 			if (isRoot)
 			{

@@ -45,6 +45,17 @@ package ghostcat.ui.containers
 		}
 		
 		/**
+		 * 设置布局对象
+		 * @param layout
+		 * 
+		 */
+		public function setLayout(layout:Layout,isRoot:Boolean = false):void
+		{
+			this.layout = layout;
+			this.layout.setTarget(contentPane,isRoot);
+		}
+		
+		/**
 		 * 增加对象 
 		 * @param child
 		 * @return 

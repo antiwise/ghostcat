@@ -83,14 +83,14 @@ package ghostcat.ui.controls
 			if (upArrow)
 			{
 				upArrow.enabled = isNaN(minValue) || data > minValue;
-				if (upArrow.mouseDown)
+				if (upArrow.enabled && upArrow.mouseDown)
 					data -= detra;
 			}
 			
 			if (downArrow)
 			{
 				downArrow.enabled = isNaN(maxValue) ||  data < maxValue;
-				if (downArrow.mouseDown)
+				if (downArrow.enabled && downArrow.mouseDown)
 					data += detra;
 			}
 		}
