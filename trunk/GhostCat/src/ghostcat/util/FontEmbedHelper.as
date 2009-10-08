@@ -40,14 +40,14 @@ package ghostcat.util
 					textArr.push(text.charCodeAt(i));
 				textArr.sort(Array.NUMERIC);
 				
-				var unicodeRange:String="";
+				var unicodeRange:String = "";
 				var prev:uint;
 				for (i = 0;i < textArr.length;i++)
 				{
 					var now:uint = textArr[i];
 					if (now != prev)
 					{
-						if (unicodeRange!="")
+						if (unicodeRange != "")
 							unicodeRange += ",";
 						unicodeRange += "U+" + TextUtil.fillZeros(now.toString(16).toUpperCase(),4);
 					}

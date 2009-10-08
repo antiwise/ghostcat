@@ -175,9 +175,16 @@ package ghostcat.gxml.spec
 		 */
 		protected function isClass(xml:XML):Boolean
 		{
-			var name:String = xml.localName().toString();
-			var firstCode:String = name.charAt(0);
-			return firstCode > "A" && firstCode < "Z";
+			var name:String = xml.localName();
+			if (name)
+			{
+				var firstCode:String = name.charAt(0);
+				return firstCode > "A" && firstCode < "Z";
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }

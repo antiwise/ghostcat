@@ -42,7 +42,7 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 		
-		public function AbsoluteLayout(target:DisplayObjectContainer,isRoot:Boolean = false)
+		public function AbsoluteLayout(target:DisplayObjectContainer=null,isRoot:Boolean = false)
 		{
 			super(target,isRoot);
 		}

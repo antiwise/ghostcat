@@ -104,7 +104,7 @@ package ghostcat.ui.layout
 			invalidateLayout();
 		}
 		
-		public function LinearLayout(target:DisplayObjectContainer,isRoot:Boolean = false)
+		public function LinearLayout(target:DisplayObjectContainer=null,isRoot:Boolean = false)
 		{
 			super(target,isRoot);
 		}
