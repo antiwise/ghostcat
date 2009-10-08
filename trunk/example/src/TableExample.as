@@ -32,7 +32,7 @@ package
 										1231232
 									</td>
 								</tr>
-								<tr width="150" height="50">
+								<tr height="50">
 									<td width="100">
 										123sdaf
 									</td>
@@ -40,7 +40,7 @@ package
 										1231232
 									</td>
 								</tr>
-								<tr width="150">
+								<tr >
 									<td width="50" borderColor="#FF0000" backgroundColor="#FF0000">
 										123sdaf
 									</td>
