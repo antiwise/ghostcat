@@ -19,6 +19,11 @@ package ghostcat.ui.html
 			super(skin, replace);
 		}
 
+		/**
+		 * 背景色
+		 * @return 
+		 * 
+		 */
 		public function get backgroundColor():uint
 		{
 			return _backgroundColor;
@@ -30,6 +35,11 @@ package ghostcat.ui.html
 			invalidateDisplayList();
 		}
 
+		/**
+		 * 边框宽度
+		 * @return 
+		 * 
+		 */
 		public function get border():int
 		{
 			return _border;
@@ -41,6 +51,11 @@ package ghostcat.ui.html
 			invalidateDisplayList();
 		}
 
+		/**
+		 * 边框颜色 
+		 * @return 
+		 * 
+		 */
 		public function get borderColor():uint
 		{
 			return _borderColor;
@@ -51,7 +66,7 @@ package ghostcat.ui.html
 			_borderColor = value;
 			invalidateDisplayList();
 		}
-
+		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
 			super.updateDisplayList();

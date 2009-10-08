@@ -26,6 +26,16 @@ package ghostcat.ui.layout
 		public var isRoot:Boolean;
 		
 		/**
+		 * 是否在子对象发生变化的时候重新布局，否则就只在添加和删除对象的时候布局
+		 */
+		public var autoLayout:Boolean = true;
+		
+		/**
+		 * 是否根据子对象的大小来确认容器的大小
+		 */
+		public var enabledMeasureChildren:Boolean = true;
+		
+		/**
 		 * 
 		 * @param target	容器
 		 * @param isRoot	是否以舞台的边框作为范围
@@ -58,8 +68,9 @@ package ghostcat.ui.layout
 		{
 			if (_target)
 			{
+				_target.removeEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				
 				_target.removeEventListener(ResizeEvent.RESIZE,resizeHandler);
-				_target.removeEventListener(ResizeEvent.CHILD_RESIZE,resizeHandler);
 				if (_target.stage)
 					_target.stage.removeEventListener(Event.RESIZE,resizeHandler);
 			}
@@ -69,7 +80,7 @@ package ghostcat.ui.layout
 			
 			if (_target)
 			{
-				_target.addEventListener(ResizeEvent.CHILD_RESIZE,resizeHandler);
+				_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
 				if (isRoot)
 				{
 					if (_target.stage)
@@ -88,6 +99,12 @@ package ghostcat.ui.layout
 		public function destory():void
 		{
 			setTarget(null);
+		}
+		
+		private function childResizeHandler(event:Event):void
+		{
+			if (autoLayout)
+				invalidateLayout();
 		}
 		
 		private function resizeHandler(event:Event):void
@@ -123,17 +140,21 @@ package ghostcat.ui.layout
 			{
 				rect = _target.getRect(_target);
 			}
+			
 			layoutChildren(rect.x,rect.y,rect.width,rect.height);
+			
+			if (enabledMeasureChildren)
+				measureChildren();
 		}
 		
 		
-//		/**
-//		 * 根据Children决定自身体积
-//		 * 
-//		 */
-//		protected function measureChildren():void
-//		{
-//		}
+		/**
+		 * 根据Children决定自身体积
+		 * 
+		 */
+		protected function measureChildren():void
+		{
+		}
 		
 		/**
 		 * 对Chilren布局

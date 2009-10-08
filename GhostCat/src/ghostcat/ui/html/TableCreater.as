@@ -6,7 +6,7 @@ package ghostcat.ui.html
 	import ghostcat.util.ReflectUtil;
 	
 	/**
-	 * Table构建器。增加了名称转换和将文本直接转化为GText
+	 * Table构建器。增加了名称转换和将文本直接转化为GText的功能
 	 * 
 	 * @author flashyiyi
 	 * 

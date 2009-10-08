@@ -56,22 +56,20 @@ package
 		public function TestExample()
 		{	
 			RootManager.register(this);
-			var v:DisplayObject = new TableCreater(this).createObject(
-				<table>
-					<tr width="100" height="50" backgroundColor="#FFFFFF">
-						<td width="50" height="50">
-							123sdaf
-						</td>
-						<td width="50" height="50" borderColor="#FF0000" backgroundColor="#FF00FF"/>
-					</tr>
-					<tr width="100">
-						<td width="50" height="50"/>
-						<td width="50" height="50"/>
-					</tr>
-				</table>
-			);
+			var xml:XML = <table>
+								<tr width="100" height="50" backgroundColor="#FFFFFF">
+									<td width="50" height="50">
+										123sdaf
+									</td>
+									<td width="50" height="50" borderColor="#FF0000" backgroundColor="#FF00FF"/>
+								</tr>
+								<tr width="100">
+									<td width="50" height="50"/>
+									<td width="50" height="50"/>
+								</tr>
+							</table>
 			
-			addChild(v);
+			addChild(new TableCreater(this).createObject(xml));
 		}
 	}
 }

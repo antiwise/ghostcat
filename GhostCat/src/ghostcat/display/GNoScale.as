@@ -46,7 +46,7 @@ package ghostcat.display
 		/** @inheritDoc*/
 		public override function get width():Number
 		{
-			return _width;
+			return _width ? _width : super.width;
 		}
 		
 		public override function set width(v:Number):void
@@ -60,7 +60,7 @@ package ghostcat.display
 		/** @inheritDoc*/
 		public override function get height():Number
 		{
-			return _height;
+			return _height ? _height : super.height;
 		}
 		
 		public override function set height(v:Number):void

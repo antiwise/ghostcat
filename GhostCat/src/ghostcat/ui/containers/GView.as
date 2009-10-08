@@ -12,7 +12,7 @@ package ghostcat.ui.containers
 	 * 容器
 	 * 
 	 * 子容器应该加到content内而不是自身，否则无法布局。skin也会在content内，无法作为背景存在。
-	 * 这个容器并没有确切的大小
+	 * 这个容器的大小是由layout控制的
 	 * 
 	 * @author flashyiyi
 	 * 
