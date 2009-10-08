@@ -2,11 +2,10 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.containers.GView;
 
 	/**
 	 * 线性布局
@@ -107,6 +106,31 @@ package ghostcat.ui.layout
 		public function LinearLayout(target:DisplayObjectContainer=null,isRoot:Boolean = false)
 		{
 			super(target,isRoot);
+		}
+		
+		/** @inheritDoc*/
+		protected override function measureChildren():void
+		{
+			var width:Number = 0;
+			var height:Number = 0;
+			for (var i:int = 0;i < target.numChildren;i++)
+			{
+				var obj:DisplayObject = target.getChildAt(i);
+				
+				if (type == UIConst.HORIZONTAL)
+				{
+					width += obj.width;
+					height = Math.max(height,obj.height);
+				}
+				else if (type == UIConst.VERTICAL)
+				{
+					height += obj.height;
+					width = Math.max(width,obj.width);
+				}
+			}
+			
+			if (target.parent is GBase)
+				(target.parent as GBase).setSize(width,height);
 		}
 		
 		/** @inheritDoc*/

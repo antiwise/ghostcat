@@ -4,6 +4,11 @@ package ghostcat.ui.html
 	import ghostcat.ui.layout.LinearLayout;
 	
 	
+	/**
+	 * 表格
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TableTag extends GFrameView
 	{
 		public function TableTag()
