@@ -90,7 +90,7 @@ package
 		private function showHandler(event:Event = null):void
 		{
 			t.removeEventListener(TweenEvent.TWEEN_END,showHandler);
-			t.tween(1000,{x:"50",y:"50",rotation:"180",scaleX:2,scaleY:2,alpha:0,ease:Circ.easeOut},100,true,null,true);
+			t.tween(1000,{x:"50",y:"50",rotation:"180",scaleX:2,scaleY:2,autoAlpha:0,ease:Circ.easeOut},100,true,null,true);
 		}
 		
 		private function mouseClickHandler(event:Event = null):void
@@ -98,7 +98,7 @@ package
 			if (t.isTweening || event.target == t)
 				return;
 			
-			t.tween(1000,{alpha:0,onStartHandler:blurHandler},10,false,null,true);
+			t.tween(1000,{autoAlpha:0,onStartHandler:blurHandler},10,false,null,true);
 			t.addEventListener(TweenEvent.TWEEN_END,showHandler);
 		}
 		
