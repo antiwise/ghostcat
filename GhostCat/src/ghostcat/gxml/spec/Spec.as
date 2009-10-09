@@ -42,7 +42,7 @@ package ghostcat.gxml.spec
 		}
 
 		/**
-		 * 创建对象
+		 * 创建对象以及值（值一般都被统一为数组类型）
 		 * 
 		 * @param source	数据源
 		 * 
@@ -50,7 +50,7 @@ package ghostcat.gxml.spec
 		public function createObject(xml:XML):*
 		{
 			var obj:*;
-			if (xml.nodeKind()=="text")
+			if (xml.nodeKind()=="text")//是普通文本
 			{
 				obj = xml.toString().split(/[,|\s]+/);
 				for (var i:int = 0;i < obj.length;i++)
@@ -61,26 +61,26 @@ package ghostcat.gxml.spec
 				if (obj.length == 1)
 					obj = obj[0];
 			}
-			else if (isClass(xml))
+			else if (isClass(xml))//是类
 			{
-				var params:Array = getConstructorParams(xml);
-				obj = ReflectXMLUtil.XMLToObject(xml,root,params);
-				createChildren(obj,xml);
+				var params:Array = getConstructorParams(xml);//获得构造函数参数
+				obj = ReflectXMLUtil.XMLToObject(xml,root,params);//创建
+				createChildren(obj,xml);//创建类的子对象
 			}
-			else
+			else//是属性
 			{
-				obj = getValue(xml);
+				obj = getPropertyValue(xml);
 			}
 			
 			return obj;
 		}
 		
 		/**
-		 * 返回XML代表的值（由于不清楚目标类型，即使只有一个属性也会被当做数组，并在之后处理）
+		 * 返回XML代表的属性的值（由于不清楚属性的类型，即使只有一个属性也会被当做数组，并在之后处理）
 		 * @return 
 		 * 
 		 */
-		protected function getValue(xml:XML):Array
+		protected function getPropertyValue(xml:XML):Array
 		{
 			var obj:Array = [];//值先暂存为数组
 			var xmlList:XMLList = xml.children();
@@ -107,7 +107,7 @@ package ghostcat.gxml.spec
 			var c:XMLList = xml.constructor;
 			if (c.length()>0)
 			{
-				obj = getValue(c[0])
+				obj = getPropertyValue(c[0])
 				delete xml.constructor[0];
 			}
 			return obj;
@@ -128,7 +128,7 @@ package ghostcat.gxml.spec
 				if (child is Array)
 				{
 					var ref:Class = ReflectUtil.getTypeByProperty(source,name)
-					if (ref == Array)//在这里判断是否真的是数组，不是取第一个元素用原来的处理方式
+					if (ref == Array)//在这里判断是否真的是数组，不是则取第一个元素用原来的处理方式
 						source[name] = child;
 					else
 						ReflectXMLUtil.setProperty(source,name,child[0],root);

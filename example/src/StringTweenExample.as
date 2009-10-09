@@ -62,10 +62,10 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends Sprite
+	public class StringTweenExample extends Sprite
 	{
 		public var t:StringTween;
-		public function TestExample()
+		public function StringTweenExample()
 		{	
 			t = new StringTween();
 			t.text = "<html>这是一个文本Tween实例，点击舞台可以重放。\n" + 

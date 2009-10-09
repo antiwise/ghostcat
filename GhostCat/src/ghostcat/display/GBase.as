@@ -367,11 +367,11 @@ package ghostcat.display
 		 */
 		public function setSize(width:Number,height:Number,noEvent:Boolean = false):void
 		{
-			if (super.width != width)
-				super.width = width;
+			if (super.width == width && super.height == height)
+				return;
 			
-			if (super.height != height)
-				super.height = height;
+			super.width = width;
+			super.height = height;
 				
 			vaildSize(noEvent);
 		}

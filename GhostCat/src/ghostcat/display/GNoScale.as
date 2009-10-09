@@ -74,8 +74,12 @@ package ghostcat.display
 		
 		public override function setSize(width:Number, height:Number, noEvent:Boolean=false) : void
 		{
+			if (_width == width && _height == height)
+				return;
+			
 			_width = width;
 			_height = height;
+			
 			vaildSize(noEvent);
 		}
 		

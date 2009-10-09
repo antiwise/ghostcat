@@ -160,13 +160,19 @@ package ghostcat.util
 		/**
 		 * 将属性值复制到另一个对象上
 		 * 
+		 * @param source	源对象
 		 * @param target	目标对象
 		 * 
 		 */		
-		public static function copy(source:*,target:*):void
+		public static function copy(source:*,target:* = null):*
 		{
+			if (!target)
+				target = new Object();
+			
 			for (var key:* in source)
 				target[key] = source[key]
+			
+			return target;
 		}
 		
 		/**
