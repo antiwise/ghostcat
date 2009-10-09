@@ -197,7 +197,7 @@ package ghostcat.text
 					m2 = !m2;
 					
 				textField.setSelection(textField.caretIndex,textField.caretIndex);
-				textField.replaceSelectedText(TextUtil.toChinesePunctuation(char,m1,m2));
+				textField.replaceSelectedText(NumberUtil.toChinesePunctuation(char,m1,m2));
 			}
 		};
 		

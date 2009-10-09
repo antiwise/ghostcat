@@ -138,6 +138,11 @@ package ghostcat.community.physics
 			tick(event.interval);
 		}
 		
+		/**
+		 * 基于时基的计算 
+		 * @param interval
+		 * 
+		 */
 		public function tick(interval:int):void
 		{
 			var d:Number = interval / 1000;

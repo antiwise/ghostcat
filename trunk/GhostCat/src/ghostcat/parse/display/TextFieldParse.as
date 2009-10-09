@@ -70,9 +70,9 @@ package ghostcat.parse.display
 		
 		/**
 		 * 创建文本框 
-		 * @param text
-		 * @param pos
-		 * @param defaultTextFormat
+		 * @param text	文本
+		 * @param pos	初始坐标
+		 * @param defaultTextFormat	字体
 		 * @return 
 		 * 
 		 */

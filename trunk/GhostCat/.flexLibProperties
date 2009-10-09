@@ -339,6 +339,8 @@
     <classEntry path="ghostcat.ui.html.TrTag"/>
     <classEntry path="ghostcat.ui.html.GFrameView"/>
     <classEntry path="ghostcat.ui.html.TableCreater"/>
+    <classEntry path="ghostcat.text.StringTween"/>
+    <classEntry path="ghostcat.text.NumberUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
