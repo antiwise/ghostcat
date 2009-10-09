@@ -43,6 +43,9 @@ package
 	import ghostcat.ui.html.GFrameView;
 	import ghostcat.ui.html.TableCreater;
 	import flash.display.DisplayObject;
+	import flash.text.TextField;
+	import ghostcat.text.TextFieldUtil;
+	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="600",height="600")]
 	
@@ -55,21 +58,10 @@ package
 	{
 		public function TestExample()
 		{	
-			RootManager.register(this);
-			var xml:XML = <table>
-								<tr width="100" height="50" backgroundColor="#FFFFFF">
-									<td width="50" height="50">
-										123sdaf
-									</td>
-									<td width="50" height="50" borderColor="#FF0000" backgroundColor="#FF00FF"/>
-								</tr>
-								<tr width="100">
-									<td width="50" height="50"/>
-									<td width="50" height="50"/>
-								</tr>
-							</table>
+			var t:TextField = TextFieldParse.createTextField("<html>aaaaasdfasdf<font color='#FF0000'>BBBBBBASDSD</font></html>")
+			addChild(t);
 			
-			addChild(new TableCreater(this).createObject(xml));
+			TextFieldUtil.tween(t,100,Circ.easeOut);
 		}
 	}
 }

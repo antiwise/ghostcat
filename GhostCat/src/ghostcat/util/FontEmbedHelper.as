@@ -1,6 +1,6 @@
 package ghostcat.util
 {
-	import ghostcat.text.TextUtil;
+	import ghostcat.text.NumberUtil;
 
 	/**
 	 * 帮组嵌入字体的类
@@ -49,7 +49,7 @@ package ghostcat.util
 					{
 						if (unicodeRange != "")
 							unicodeRange += ",";
-						unicodeRange += "U+" + TextUtil.fillZeros(now.toString(16).toUpperCase(),4);
+						unicodeRange += "U+" + NumberUtil.fillZeros(now.toString(16).toUpperCase(),4);
 					}
 					prev = now;
 				}

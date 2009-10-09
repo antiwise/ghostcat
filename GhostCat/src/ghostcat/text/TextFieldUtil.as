@@ -1,10 +1,14 @@
 package ghostcat.text
 {
+	import flash.display.DisplayObjectContainer;
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextLineMetrics;
 	import flash.utils.Timer;
+	
+	import ghostcat.util.RandomUtil;
+	import ghostcat.util.easing.TweenUtil;
 
 	/**
 	 * 文本框处理类 
@@ -52,43 +56,51 @@ package ghostcat.text
                 textField.text = textField.text.concat("...");
             }
         }
+		
+		/**
+		 * 将TextField按字打散到一个容器内
+		 *  
+		 * @param textField
+		 * @param cotainer
+		 * 
+		 */
+		public static function separate(textField:TextField,cotainer:DisplayObjectContainer = null):void
+		{
+			if (!cotainer)
+				cotainer = textField.parent;
+			
+			
+		}
         
         /**
          * 文本打字效果
          * 
          * @param textField	文本框
          * @param speed	速度
-         * 
+         * @param ease	缓动方法
+		 * @param invent	是否倒放
+		 * @param addRandomText	是否在缓动的时候增加随机尾字符
          */
-        public static function startTalk(textField:TextField,speed:Number = 100):void
+        public static function tween(textField:TextField,speed:Number = 100,ease:Function = null,invert:Boolean = false,addRandomText:Boolean = false):void
 		{
-			var timer:Timer;
-			var oldhtmltext:String;
-			var point:int;
-			timer = new Timer(speed,0);
-			point = 1;
-			oldhtmltext = textField.htmlText;
-			textField.htmlText="";
-			timer.addEventListener(TimerEvent.TIMER,timerHandler);
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE,timercompleteHandler);
-			timer.start();
+			var oldText:String = textField.htmlText;
+			var data:Object = {len : 0};
+			
+			var length:int = textField.text.length;
+			
+			TweenUtil.to(data, speed * length,{len: length,ease: ease, invert: invert,onUpdate: updateHandler,onComplete:completeHandler}).update();
 		
-			function timerHandler(event:TimerEvent):void
+			function updateHandler():void
 			{
-				var newText:String=TextUtil.subHtmlStr(oldhtmltext,0,point);
-				if (textField.htmlText==newText)
-					timer.stop();
+				if (addRandomText)
+					textField.htmlText = TextUtil.subHtmlStr(oldText,0,data.len - 1) + RandomUtil.string(1);
 				else
-				{
-					textField.htmlText = newText;
-					point++;
-				}
-				event.updateAfterEvent();
+					textField.htmlText = TextUtil.subHtmlStr(oldText,0,data.len)
 			}
-			function timercompleteHandler(event:TimerEvent):void
+			
+			function completeHandler():void
 			{
-				timer.removeEventListener(TimerEvent.TIMER,timerHandler);
-				timer.removeEventListener(TimerEvent.TIMER_COMPLETE,timercompleteHandler);
+				textField.htmlText = invert ? "" : oldText;
 			}
 		}
 	}

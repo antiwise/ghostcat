@@ -2,10 +2,12 @@ package ghostcat.util.data
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import ghostcat.text.TextUtil;
-	import ghostcat.util.Util;
-	import ghostcat.util.ReflectUtil;
 	
+	import ghostcat.text.NumberUtil;
+	import ghostcat.text.TextUtil;
+	import ghostcat.util.ReflectUtil;
+	import ghostcat.util.Util;
+
 	/**
 	 * 这个类提供了一些用于压缩数据的方法
 	 * 
@@ -64,36 +66,36 @@ package ghostcat.util.data
         	var res:String = "";
         	
         	if (obj == null)
-        		res+= "<null>";
+        		res += "<null>";
         	else if (obj is String)
-        		res+= "<String>";
+        		res += "<String>";
         	else if (obj is Boolean)
-        		res+= "<Boolean>";
+        		res += "<Boolean>";
         	else if (obj is int)
-        		res+= "<Int>";
+        		res += "<Int>";
         	else if (obj is uint)
-        		res+= "<UnsignedInt>";
+        		res += "<UnsignedInt>";
         	else if (obj is Number)
-        		res+= "<Double>";
+        		res += "<Double>";
         	else if (obj is Array)
         	{
-        		res+="[<Short>";
+        		res += "[<Short>";
         		if (obj.length>0)
-        			res+=copyToByteArrayHelper(obj[0]);
+        			res += copyToByteArrayHelper(obj[0]);
         		else
-        			res+="<null>"
-        		res+="...]";
+        			res += "<null>"
+        		res += "...]";
         	}
         	else
         	{
-        		res+="\n"+ TextUtil.fillZeros("",level,"\t") + "{\n";
+        		res += "\n" + NumberUtil.fillZeros("",level,"\t") + "{\n";
         		var v:Object = Util.unionObject(obj,ReflectUtil.getPropertyList(obj));
         		for (var key:* in v)
         		{
-        			res+=TextUtil.fillZeros("",level+1,"\t") + key + ":";
-        			res+=copyToByteArrayHelper(v[key],level+1);
+        			res += NumberUtil.fillZeros("",level+1,"\t") + key + ":";
+        			res += copyToByteArrayHelper(v[key],level+1);
         		}
-        		res+=TextUtil.fillZeros("",level,"\t") + "}";
+        		res += NumberUtil.fillZeros("",level,"\t") + "}";
         	}
         	res+="\n";
         	return res;
