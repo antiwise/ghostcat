@@ -30,21 +30,31 @@ package ghostcat.text
          * @return 
          * 
          */
-        public static function subHtmlStr(htmlText:String,startIndex:Number = 0, len:Number = 0x7fffffff):String{
-			var i:int=startIndex;
-			var n:int=0;
-			while (n < len && i< htmlText.length)
-			{
-				var presult:Array= htmlText.substr(i).match(/^<([\/\w]+).*?>/);
-				if (presult!=null)
-					i += presult[0].length;
-				else
+        public static function subHtmlStr(htmlText:String,startIndex:Number = 0, len:Number = 0x7fffffff):String
+        {
+			if ((/<.*?>/).test(htmlText))
+			{	
+				var i:int=startIndex;
+				var n:int=0;
+				while (n < len && i < htmlText.length)
 				{
-					i++;
-					n++;
+					var presult:Array= htmlText.substr(i).match(/^<([\/\w]+).*?>/);
+					if (presult!=null)
+					{
+						i += presult[0].length;
+					}
+					else
+					{
+						i++;
+						n++;
+					}
 				}
+				return htmlText.substr(startIndex,i);
 			}
-			return htmlText.substr(startIndex,i);
+			else
+			{
+				return htmlText.substr(startIndex,len);
+			}
 		}
 		
 		/**

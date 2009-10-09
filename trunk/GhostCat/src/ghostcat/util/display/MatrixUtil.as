@@ -22,13 +22,18 @@ package ghostcat.util.display
 		 */
 		public static function getMatrixAt(obj:DisplayObject,container:DisplayObjectContainer):Matrix
 		{
+			if (obj == container)
+				return new Matrix();
+			
 			var m:Matrix = obj.transform.matrix;
 			var cur:DisplayObject = obj.parent;
+				
 			while (cur != container)
 			{
-				m.concat(cur.transform.matrix);
+				if (cur)
+					m.concat(cur.transform.matrix);
 				
-				if (cur != cur.parent)
+				if (cur && cur != cur.parent)
 					cur = cur.parent;
 				else
 					throw new Error("obj不在指定的容器内！");
@@ -41,13 +46,13 @@ package ghostcat.util.display
 		 * 
 		 * @param obj1	对象1
 		 * @param obj2	对象2
-		 * @param container	共同的父容器，默认为root
+		 * @param container	共同的父容器，默认为stage
 		 * 
 		 */
 		public static function getMatrixBetween(obj1:DisplayObject,obj2:DisplayObject,container:DisplayObjectContainer=null):Matrix
 		{
 			if (!container)
-				container = obj1.root as DisplayObjectContainer;
+				container = obj1.stage as DisplayObjectContainer;
 			
 			var m1:Matrix = getMatrixAt(obj1,container);
 			var m2:Matrix = getMatrixAt(obj2,container);
@@ -69,6 +74,33 @@ package ghostcat.util.display
 		{
 			var m:Matrix = new Matrix();
 			m.createGradientBox(width,height,rotation,tx,ty);	
+			return m;
+		}
+		
+		/**
+		 * 矩阵相加
+		 * @param m1
+		 * @param m2
+		 * @return 
+		 * 
+		 */
+		public static function concat(m1:Matrix,m2:Matrix):Matrix
+		{
+			var m:Matrix = m1.clone();
+			m.concat(m2);
+			return m;
+		}
+		
+		/**
+		 * 矩阵取反
+		 * @param m
+		 * @return 
+		 * 
+		 */
+		public static function invert(m:Matrix):Matrix
+		{
+			var m:Matrix = m.clone();
+			m.invert();
 			return m;
 		}
 	}

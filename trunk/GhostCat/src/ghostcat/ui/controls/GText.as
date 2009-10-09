@@ -322,7 +322,8 @@ package ghostcat.ui.controls
 				str = TextUtil.vertical(str);
 			
 			
-			if (textField){
+			if (textField)
+			{
 				if (str.indexOf("<html>") != -1)
 					textField.htmlText = str;
 				else

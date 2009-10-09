@@ -130,7 +130,7 @@ package ghostcat.ui.layout
 			}
 			
 			if (target.parent is GBase)
-				(target.parent as GBase).setSize(width,height);
+				(target.parent as GBase).setSize(width,height);//不知道为何设置大小并没有重新触发本身的layout
 		}
 		
 		/** @inheritDoc*/

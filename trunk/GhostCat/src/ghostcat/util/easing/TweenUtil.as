@@ -156,6 +156,15 @@ package ghostcat.util.easing
 					case "onComplete":
 						this[key] = params[key];
 						break;
+					case "onStartHandler":
+						this.addEventListener(TweenEvent.TWEEN_START,params[key],false,0,true);
+						break;
+					case "onUpdateHandler":
+						this.addEventListener(TweenEvent.TWEEN_UPDATE,params[key],false,0,true);
+						break;
+					case "onCompleteHandler":
+						this.addEventListener(TweenEvent.TWEEN_END,params[key],false,0,true);
+						break;
 					case "delay":
 						this.currentTime = -params[key];
 						break;
