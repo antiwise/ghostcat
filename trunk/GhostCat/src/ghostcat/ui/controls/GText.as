@@ -193,6 +193,21 @@ package ghostcat.ui.controls
 			textField.type = v ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 		}
 		
+		/**
+		 * 是否多行显示（可激活回车换行） 
+		 * @return 
+		 * 
+		 */
+		public function get multiline():Boolean
+		{
+			return textField.multiline;
+		}
+		
+		public function set multiline(v:Boolean):void
+		{
+			textField.multiline = v;
+		}
+		
 		private var _editable:Boolean;
 		
 		private var _bitmap:Bitmap;//用于缓存的Bitmap
