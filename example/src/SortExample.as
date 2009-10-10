@@ -6,7 +6,6 @@ package
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	
-	import ghostcat.community.DisplayCommunityManager;
 	import ghostcat.community.SortYManager;
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
@@ -26,7 +25,7 @@ package
 	 */
 	public class SortExample extends GBase
 	{
-		public var c:DisplayCommunityManager;
+		public var c:SortYManager;
 		public var p:PhysicsManager;
 		public var debugTextField:TextField;
 			
