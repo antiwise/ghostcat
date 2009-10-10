@@ -78,36 +78,33 @@ package ghostcat.text
 		 * @param duration	每个字的动画持续时间
 		 * @param params	缓动参数
 		 * @param delay	每个字的缓动间隔
-		 * @param invert	是否倒放，默认为true
+		 * @param invert	是否倒放
 		 * @param container	放置打散字体的容器
 		 * @param bitmap	是否转换为位图
 		 * 
 		 */
-		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = true,container:DisplayObjectContainer = null,bitmap:Boolean = false):void
+		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = false,container:DisplayObjectContainer = null,bitmap:Boolean = false):void
 		{
 			separateText(container,bitmap);
 			
 			this.completeCount = separateTexts.length;
-			var t:int = invert ? 0 : delay * separateTexts.length;
+			var t:int = invert ? delay * separateTexts.length : 0;
 			
 			for (var i:int = 0; i < separateTexts.length;i++)
 			{
-				t += invert ? delay : -delay;
+				t += invert ? -delay : delay;
 				
 				var o:Object = Util.copy(params);
 				o.delay = t;
-				o.invert = invert;
-				if (invert)
-					o.renderOnStart = true;
 				
 				if (o.hasOwnProperty("alpha") && !bitmap)
 					(separateTexts[i] as DisplayObject).blendMode = BlendMode.LAYER;
 				
 				var tween:TweenUtil = TweenUtil.to(separateTexts[i],duration,o);
 				tween.addEventListener(TweenEvent.TWEEN_END,tweenEndHandler);
-				if (invert)
-					tween.update();
 			}
+			
+			TweenUtil.update();
 			
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
 			

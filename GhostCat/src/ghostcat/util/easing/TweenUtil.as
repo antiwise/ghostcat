@@ -182,6 +182,10 @@ package ghostcat.util.easing
 						this.fromValues[key] = (target as DisplayObject).transform.colorTransform.color & 0xFFFFFF;
 						this.toValues[key] = params[key];
 						break;
+					case "autoAlpha":
+						this.fromValues[key] = (target as DisplayObject).alpha;
+						this.toValues[key] = params[key];
+						break;
 					case "dynamicPoint":
 						this.fromValues[key] = new Point((target as DisplayObject).x, (target as DisplayObject).y)
 						this.toValues[key] = params[key];
@@ -358,6 +362,10 @@ package ghostcat.util.easing
 					var soundTrans:SoundTransform = target["soundTransform"];
 					soundTrans[key] = value;
 					target["soundTransform"] = soundTrans;
+					break;
+				case "autoAlpha":
+					(target as DisplayObject).alpha = value;
+					(target as DisplayObject).visible = value > 0;
 					break;
 				case "frame":
 					(target as MovieClip).gotoAndStop(int(value))
