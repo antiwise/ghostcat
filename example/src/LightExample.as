@@ -1,6 +1,7 @@
 package 
 {
 	import flash.display.Sprite;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
@@ -11,6 +12,7 @@ package
 	import ghostcat.manager.DragManager;
 	import ghostcat.skin.cursor.CursorDrag;
 	import ghostcat.ui.CursorSprite;
+	import ghostcat.ui.controls.GImage;
 	import ghostcat.util.Util;
 	
 	[SWF(width="500",height="400")]
@@ -30,6 +32,10 @@ package
 		public var r:GBase;
 		public function LightExample()
 		{
+			var b:GImage = new GImage("back.jpg");
+			b.transform.colorTransform = new ColorTransform(1,1,1,1,-100,-100,-100);
+			addChild(b);
+			
 			//创建墙壁和控制点
 			var p1:DragPoint = new DragPoint(new Point(100,200));
 			var p2:DragPoint = new DragPoint(new Point(200,100));
@@ -37,14 +43,16 @@ package
 			p2.addEventListener(MoveEvent.MOVE,moveHanlder);
 			
 			w = new Wall(new TestRepeater(),p1.point,p2.point,100);
+			w.transform.colorTransform = new ColorTransform(0,0,0);
 			addChild(w);
+			
 			addChild(p1);
 			addChild(p2);
 			
 			//创建灯光
-			l1 = Util.createObject(new Light(250),{enabledTick:true,x:300,y:120,color:0xFF0000});
+			l1 = Util.createObject(new Light(250),{x:300,y:120,color:0xFFFFCC});
 			addChild(l1);
-			l2 = Util.createObject(new Light(250),{enabledTick:true,x:420,y:300,color:0x0000FF});
+			l2 = Util.createObject(new Light(250),{x:420,y:300,color:0xCCCCFF});
 			addChild(l2);
 			
 			//创建人物

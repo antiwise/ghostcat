@@ -59,6 +59,8 @@ package ghostcat.display.viewport
 			this.alpha = alpha;
 			
 			this.mouseEnabled = this.mouseChildren = false;
+			
+			this.enabledTick = true;
 		}
 		
 		

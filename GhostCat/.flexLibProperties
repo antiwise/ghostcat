@@ -17,8 +17,10 @@
     <classEntry path="ghostcat.algorithm.bezier.SmoothCurve"/>
     <classEntry path="ghostcat.community.CommunityManager"/>
     <classEntry path="ghostcat.community.GBaseCommunityManager"/>
+    <classEntry path="ghostcat.community.GroupManager"/>
     <classEntry path="ghostcat.community.Sort45Manager"/>
     <classEntry path="ghostcat.community.SortYManager"/>
+    <classEntry path="ghostcat.community.TweenGroupManager"/>
     <classEntry path="ghostcat.community.command.CollideCommand"/>
     <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
@@ -213,8 +215,10 @@
     <classEntry path="ghostcat.text.ANSI"/>
     <classEntry path="ghostcat.text.FilePath"/>
     <classEntry path="ghostcat.text.IME"/>
+    <classEntry path="ghostcat.text.NumberUtil"/>
     <classEntry path="ghostcat.text.PinYin"/>
     <classEntry path="ghostcat.text.RegExpUtil"/>
+    <classEntry path="ghostcat.text.StringTween"/>
     <classEntry path="ghostcat.text.TextFieldUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
     <classEntry path="ghostcat.text.URL"/>
@@ -271,6 +275,11 @@
     <classEntry path="ghostcat.ui.controls.GText"/>
     <classEntry path="ghostcat.ui.controls.GVScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
+    <classEntry path="ghostcat.ui.html.GFrameView"/>
+    <classEntry path="ghostcat.ui.html.TableCreater"/>
+    <classEntry path="ghostcat.ui.html.TableTag"/>
+    <classEntry path="ghostcat.ui.html.TdTag"/>
+    <classEntry path="ghostcat.ui.html.TrTag"/>
     <classEntry path="ghostcat.ui.layout.AbsoluteLayout"/>
     <classEntry path="ghostcat.ui.layout.EllipseLayout"/>
     <classEntry path="ghostcat.ui.layout.Layout"/>
@@ -334,15 +343,6 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.ui.html.TableTag"/>
-    <classEntry path="ghostcat.ui.html.TdTag"/>
-    <classEntry path="ghostcat.ui.html.TrTag"/>
-    <classEntry path="ghostcat.ui.html.GFrameView"/>
-    <classEntry path="ghostcat.ui.html.TableCreater"/>
-    <classEntry path="ghostcat.text.StringTween"/>
-    <classEntry path="ghostcat.text.NumberUtil"/>
-    <classEntry path="ghostcat.community.TweenGroupManager"/>
-    <classEntry path="ghostcat.community.GroupManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

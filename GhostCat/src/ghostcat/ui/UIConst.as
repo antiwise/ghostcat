@@ -7,6 +7,10 @@ package ghostcat.ui
 	 */
 	public class UIConst
 	{
+		public static const UP:String = "up";
+		
+		public static const DOWN:String = "down";
+		
 		public static const TOP:String = "top";
 		
 		public static const BOTTOM:String = "bottom";
