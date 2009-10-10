@@ -5,6 +5,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	
+	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
 	import ghostcat.text.StringTween;
 	import ghostcat.util.easing.Circ;
@@ -25,6 +26,8 @@ package
 		public var t:StringTween;
 		public function StringTweenExample()
 		{	
+			RootManager.register(this);
+			
 			t = new StringTween();
 			t.editable = true;
 			t.multiline = true;
