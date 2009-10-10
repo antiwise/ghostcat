@@ -207,7 +207,7 @@ package ghostcat.ui.controls
 		 */
 		protected function layoutChildren():void
 		{
-			if (scaleContent)
+			if (scaleContent && width && height)
 				Geom.scaleToFit(content,this,_scaleType);
 			else
 				content.scaleX = content.scaleY = 1.0;

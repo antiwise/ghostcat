@@ -3,6 +3,7 @@ package ghostcat.ui.controls
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
@@ -46,17 +47,40 @@ package ghostcat.ui.controls
 		 */
 		public var listData:Array;
 		
+		private var _direction:String = UIConst.DOWN;
+		
 		/**
 		 * 承载List的容器
 		 */
 		public var listContainer:DisplayObjectContainer;
 		
 		/**
-		 * List展开特效
+		 * List展开特效（下）
 		 */
-		public var listOpenEffect:TweenEffect;
+		public var listOpenDownEffect:TweenEffect;
+		
+		/**
+		 * List展开特效（上）
+		 */
+		public var listOpenUpEffect:TweenEffect;
+		
+		private var listOpenEffect:TweenEffect;//当前打开特效
 		
 		private var _maxLine:int = 6;
+
+		/**
+		 * 弹出下拉框的方向（"up","down"）
+		 */
+		public function get direction():String
+		{
+			return _direction;
+		}
+
+		public function set direction(value:String):void
+		{
+			_direction = value;
+			listOpenEffect = (value == UIConst.UP) ? listOpenUpEffect : listOpenDownEffect;
+		}
 
 		/**
 		 * 最大显示List条目
@@ -102,10 +126,15 @@ package ghostcat.ui.controls
 			if (list.parent)
 				list.parent.removeChild(list);
 			
-			if (!listOpenEffect)
-				listOpenEffect = new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut);
+			if (!listOpenUpEffect)
+				listOpenUpEffect = new AlphaClipEffect(list,300,AlphaClipEffect.DOWN,Circ.easeOut);
 			else
-				listOpenEffect.target = list;
+				listOpenUpEffect.target = list;
+			
+			if (!listOpenDownEffect)
+				listOpenDownEffect = new AlphaClipEffect(list,300,AlphaClipEffect.UP,Circ.easeOut);
+			else
+				listOpenDownEffect.target = list;	
 		}
 		/** @inheritDoc*/
 		protected override function mouseDownHandler(event:MouseEvent) : void
@@ -113,22 +142,23 @@ package ghostcat.ui.controls
 			super.mouseDownHandler(event);
 		
 			var listPos:Point = Geom.localToContent(new Point(),this,listContainer)
-			list.x = listPos.x;
-			list.y = listPos.y + content.height;
 			list.data = listData;
 			list.addEventListener(Event.CHANGE,listChangeHandler);
+			list.x = listPos.x;
+			list.y = listPos.y + ((direction == UIConst.UP) ? -list.height : content.height);
 			
 			this.listContainer.addChild(list);
 			
-			if (listData.length > maxLine)
+			if (listData.length > maxLine || listData.length == 0)//listData有时候会莫名其妙length = 0，暂时这样处理
 				list.addVScrollBar();
 			
+			listOpenEffect = (direction == UIConst.UP) ? listOpenUpEffect : listOpenDownEffect;
 			
 			if (listOpenEffect.step == Oper.RUN)
 				listOpenEffect.result();
 				
 			listOpenEffect.invert = true;
-			listOpenEffect.execute();
+			listOpenEffect.execute();	
 		}
 		/** @inheritDoc*/
 		protected override function init():void
@@ -173,7 +203,7 @@ package ghostcat.ui.controls
 		
 		private function hideListCompleteHandler(event:OperationEvent):void
 		{
-			(event.currentTarget as AlphaClipEffect).removeEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
+			(event.currentTarget as EventDispatcher).removeEventListener(OperationEvent.OPERATION_COMPLETE,hideListCompleteHandler);
 			if (list.parent == listContainer)
 			{
 				list.removeVScrollBar();
