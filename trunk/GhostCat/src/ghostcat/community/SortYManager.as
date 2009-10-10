@@ -13,7 +13,7 @@ package ghostcat.community
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SortYManager extends DisplayCommunityManager
+	public class SortYManager extends GBaseCommunityManager
 	{
 		public function SortYManager()
 		{
