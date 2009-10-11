@@ -345,6 +345,7 @@
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
+    <classEntry path="ghostcat.display.bitmap.ShapeScreen"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

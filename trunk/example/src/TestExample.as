@@ -1,7 +1,5 @@
 package
 {
-	import flash.display.Sprite;
-	
 	import ghostcat.util.easing.Elastic;Elastic;
 	
 	import ghostcat.util.ReflectUtil;
@@ -63,6 +61,11 @@ package
 	import ghostcat.skin.ScrolDownButtonSkin;
 	import ghostcat.skin.AlertSkin;
 	import ghostcat.util.Tick;
+	import ghostcat.display.bitmap.BitmapCacher;
+	import ghostcat.parse.display.DrawParse;
+	import ghostcat.display.bitmap.GBitmap;
+	import ghostcat.events.TickEvent;
+	import ghostcat.display.bitmap.ShapeScreen;
 	
 	[SWF(width="600",height="600")]
 	
@@ -71,22 +74,87 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends Sprite
+	public class TestExample extends GBase
 	{
 		public function TestExample()
 		{	
-			var v:BitmapScreen = new BitmapScreen(600,600,false);
-			addChild(v);
-//			v.addChild(new PixelItem(5,5,0xFF0000));
-//			var o:BitmapDataContainer = new BitmapDataContainer(new TestCollision());
-//			o.x = 50;
-//			o.y = 50;
-//			o.addChild(new BitmapDataContainer(new TestHuman()));
-//			v.addChild(o);
-//			GMovieClipBase.defaultFrameRate = 25;
-//			var m:GBitmapMovieClip = new GBitmapMovieClip();
-//			m.createFromMovieClip(new AlertSkin());
-//			v.addChild(m);
+			for (var i:int = 0;i < 1000;i++)
+			{
+				var m:GBitmap = new GBitmap(DrawParse.createBitmap(new TestHuman()).bitmapData);
+				m.x = Math.random() * 600;
+				m.y = Math.random() * 600;
+				
+				addChild(m);
+			}
+			this.enabledTick = true;
 		}
+		
+		protected override function tickHandler(event:TickEvent) : void
+		{
+			for (var i:int = 0;i < numChildren;i++)
+			{
+				var m:GBitmap = getChildAt(i) as GBitmap
+				m.x = Math.random() * 600;
+				m.y = Math.random() * 600;
+			}
+		}
+		
+//copyPixel		
+//		public var v:BitmapScreen;
+//		public function TestExample()
+//		{	
+//			v = new BitmapScreen(600,600,false);
+//			addChild(v);
+//			for (var i:int = 0;i < 1000;i++)
+//			{
+//				var m:GBitmap = new GBitmap(DrawParse.createBitmap(new TestHuman()).bitmapData);
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//				
+//				v.addChild(m);
+//			}
+//			this.enabledTick = true;
+//		}
+//		
+//		
+//		protected override function tickHandler(event:TickEvent) : void
+//		{
+//			for (var i:int = 0;i < v.children.length;i++)
+//			{
+//				var m:GBitmap = v.children[i] as GBitmap
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//			}
+//		}
+//		
+//beginBitmapFill
+//		
+//		public var v:ShapeScreen;
+//		public function TestExample()
+//		{	
+//			v = new ShapeScreen(600,600,false);
+//			addChild(v);
+//			for (var i:int = 0;i < 1000;i++)
+//			{
+//				var m:GBitmap = new GBitmap(DrawParse.createBitmap(new TestHuman()).bitmapData);
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//				
+//				v.addShapeChild(m);
+//			}
+//			this.enabledTick = true;
+//		}
+//		
+//		
+//		protected override function tickHandler(event:TickEvent) : void
+//		{
+//			for (var i:int = 0;i < v.children.length;i++)
+//			{
+//				var m:GBitmap = v.children[i] as GBitmap
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//			}
+//		}		
+
 	}
 }
