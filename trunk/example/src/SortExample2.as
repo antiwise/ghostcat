@@ -1,58 +1,64 @@
 package
 {
 	import flash.events.MouseEvent;
-	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.text.TextField;
-	import flash.utils.getTimer;
 	
 	import ghostcat.community.SortYManager;
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Light;
-	import ghostcat.display.viewport.Wall;
+	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.bitmap.GBitmap;
+	import ghostcat.display.bitmap.ShapeScreen;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.ui.containers.GAlert;
-	import ghostcat.util.Util;
 	
 	
-	[SWF(width="400",height="400")]
+	[SWF(width="400",height="400",frameRate="120")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	/**
-	 * 
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SortExample extends GBase
+	public class SortExample2 extends GBase
 	{
+		public var s:BitmapScreen;
 		public var c:SortYManager;
 		public var p:PhysicsManager;
 		public var debugTextField:TextField;
-			
+		
 		protected override function init():void
 		{
 			RootManager.register(this);
 			
+			stage.addChild(new FPS());
+			
+			s = new BitmapScreen(400,400,false);
+			addChild(s);
 			
 			//创建100个物品
-			for (var i:int = 0;i < 100;i++)
+			for (var i:int = 0;i < 300;i++)
 			{
-				var m:GBase = new GBase(new TestHuman())
+				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
 				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
-				addChild(m);
+				m.enabledDelayUpdate = false;
+				s.addChild(m);
+//				addChild(m);
 			}
-			
-			//创建排序器
-			c = new SortYManager();
-			c.addAllChildren(this);
+//			s.enabledTick = false;
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
-			p.addAllChildren(this);
+			for (i = 0;i < 300;i++)
+			{
+				p.add(s.children[i]);
+				p.setVelocity(s.children[i],new Point(Math.random()*500 - 250,Math.random()*500 - 250))
+			}
 			
 			//创建文本显示计算时间
 			debugTextField = new TextField();
@@ -84,22 +90,12 @@ package
 		
 		private function mouseDownHandler(event:MouseEvent):void
 		{
-			//点击图元时
-			if (event.target.parent is GBase)
-			{
-				var obj:GBase = event.target.parent as GBase;
-				//修改颜色
-				obj.transform.colorTransform = new ColorTransform(1,1,1,1,0,255);
-				//给予速度
-				p.setVelocity(obj,new Point(Math.random()*500 - 250,Math.random()*500 - 250))
-			}
+			var obj:GBitmap = getChildAt(Math.random() * numChildren) as GBitmap
 		}
 		
 		protected override function tickHandler(event:TickEvent):void
 		{
-			var t:int = getTimer();
-			c.calculateAll();//排序全部
-			debugTextField.text = (getTimer() - t).toString();
+			
 		}
 	}
 }

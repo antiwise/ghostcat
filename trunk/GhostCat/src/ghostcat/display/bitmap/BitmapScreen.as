@@ -9,7 +9,7 @@ package ghostcat.display.bitmap
 	import ghostcat.util.display.MatrixUtil;
 	
 	/**
-	 * 容纳位图显示的对象
+	 * 位图高速缓存，适用于同屏大量活动对象的情景
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -39,29 +39,18 @@ package ghostcat.display.bitmap
 		public var itemColorTransform:ColorTransform;
 		
 		/**
-		 * 是否使用透明通道
-		 * @return 
-		 * 
-		 */
-		public function get alphaMultiplier():Boolean
-		{
-			return _alphaMultiplier;
-		}
-		
-		/**
 		 * 
 		 * @param width
 		 * @param height
-		 * @param alphaMultiplier	是否使用透明通道2
+		 * @param transparent	是否使用透明通道
 		 * @param backgroundColor	背景色
 		 * 
 		 */
-		public function BitmapScreen(width:Number,height:Number,alphaMultiplier:Boolean = true,backgroundColor:uint = 0xFFFFFF):void
+		public function BitmapScreen(width:Number,height:Number,transparent:Boolean = true,backgroundColor:uint = 0xFFFFFF):void
 		{
-			this._alphaMultiplier = alphaMultiplier;
 			this.backgroundColor = backgroundColor;
 			
-			super(new BitmapData(width,height,alphaMultiplier,backgroundColor));
+			super(new BitmapData(width,height,transparent,backgroundColor));
 			
 			this.enabledTick = true;
 		}
@@ -110,7 +99,7 @@ package ghostcat.display.bitmap
 		{
 			if (obj is IBitmapDataDrawer)
 			{
-				(obj as IBitmapDataDrawer).drawBitmapData(bitmapData);
+				(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData);
 			}
 			else if (obj is DisplayObject)
 			{

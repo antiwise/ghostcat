@@ -50,6 +50,50 @@ package ghostcat.parse.display
 		}
 		
 		/**
+		 * 创建Bitmap
+		 * 
+		 * @param para
+		 * @return 
+		 * 
+		 */
+		public function createBitmap():Bitmap
+		{
+			var displayObj:DisplayObject = source as DisplayObject;
+			if (!displayObj)
+				return null;
+			var bounds:Rectangle = displayObj.getBounds(displayObj);
+			var width:int = Math.ceil(bounds.width);
+			var height:int = Math.ceil(bounds.height);
+			if (width == 0 || height == 0)
+				return null;
+			if (!matrix)
+			{
+				matrix = new Matrix();
+				matrix.tx -= bounds.x;
+				matrix.ty -= bounds.y;
+			}
+			var bitmap:Bitmap = BitmapParse.createBitmap(width,height);
+			if (source is DisplayObject)
+			{
+				bitmap.x = (source as DisplayObject).x + bounds.x;
+				bitmap.y = (source as DisplayObject).y + bounds.y;
+			}
+			this.parse(bitmap);
+			return bitmap;
+		}
+		
+		/**
+		 * 创建BitmapData
+		 * 
+		 * @return 
+		 * 
+		 */
+		public function createBitmapData():BitmapData
+		{
+			return createBitmap().bitmapData;
+		}
+		
+		/**
 		 * 根据图形创建一个位图 
 		 * @param source
 		 * @param matrix

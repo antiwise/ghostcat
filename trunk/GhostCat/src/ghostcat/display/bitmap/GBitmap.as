@@ -30,7 +30,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmap extends Bitmap implements IGBase,IBitmapDataDrawer,IShapeDrawer
+	public class GBitmap extends Bitmap implements IGBase
 	{
 		private var _enabled:Boolean = true;
 		
@@ -46,6 +46,14 @@ package ghostcat.display.bitmap
 		
 		private var _data:Object;
 		
+		/**
+		 * 是否激活移动缩放事件（取消可增加性能）
+		 */
+		public var enabledDelayUpdate:Boolean = true;
+		
+		/**
+		 * 是否延迟更新坐标
+		 */
 		public var delayUpatePosition:Boolean = false;
 		
 		/**
@@ -63,10 +71,7 @@ package ghostcat.display.bitmap
 		 */
 		public var enabledScale:Boolean = false;
 		
-		/**
-		 * 旧的位置坐标 
-		 */		
-		public var oldPosition:Point = new Point();
+		private var _oldPosition:Point = new Point();
 		
 		private var _position:Point = new Point();
 		
@@ -86,10 +91,12 @@ package ghostcat.display.bitmap
 		private var _width:Number;
 		private var _height:Number;
 		
+		private var _bitmapData:BitmapData;
+		
 		/** @inheritDoc*/
 		public override function set bitmapData(value:BitmapData) : void
 		{
-			super.bitmapData = value;
+			_bitmapData = super.bitmapData = value;
 			
 			_width = bitmapData.width;
 			_height = bitmapData.height;
@@ -161,13 +168,14 @@ package ghostcat.display.bitmap
 			if (x == value)
 				return;
 			
-			oldPosition.x = super.x;
+			_oldPosition.x = super.x;
 			position.x = value;
 			
 			if (!delayUpatePosition)
 				super.x = value;
-			
-			invalidatePosition();
+				
+			if (enabledDelayUpdate)
+				invalidatePosition();
 		}
 		
 		public override function get x() : Number
@@ -181,13 +189,15 @@ package ghostcat.display.bitmap
 			if (y == value)
 				return;
 			
-			oldPosition.y = super.y;
+			_oldPosition.y = super.y;
 			position.y = value;
 		
 			if (!delayUpatePosition)
 				super.y = value;
-				
-			invalidatePosition();
+			
+			if (enabledDelayUpdate)
+				invalidatePosition();
+			
 		}
 		
 		public override function get y() : Number
@@ -209,6 +219,45 @@ package ghostcat.display.bitmap
 		public function get position():Point
 		{
 			return _position;
+		}
+		
+		/**
+		 * 旧的位置坐标 
+		 */		
+		public function get oldPosition():Point
+		{
+			return _oldPosition;
+		}
+		
+		/**
+		 * 设置坐标
+		 *  
+		 * @param x	x坐标
+		 * @param y	y坐标
+		 * @param noEvent	是否触发事件
+		 * 
+		 */
+		public function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
+		{
+			if (super.x != x)
+			{
+				_oldPosition.x = super.x;
+				position.x = x;
+				
+				if (!delayUpatePosition)
+					super.x = x;
+			}
+			if (super.y != y)
+			{
+				_oldPosition.y = super.y;
+				position.y = y;
+				
+				if (!delayUpatePosition)
+					super.y = y;
+			}
+			
+			if (enabledDelayUpdate)
+				vaildPosition(noEvent); 
 		}
 		
 		/** @inheritDoc */
@@ -257,7 +306,8 @@ package ghostcat.display.bitmap
 				return;
 			
 			_width = v;
-			invalidateSize();
+			if (enabledDelayUpdate)
+				invalidateSize();
 		}
 
 		/** @inheritDoc */
@@ -273,7 +323,8 @@ package ghostcat.display.bitmap
 				return;
 				
 			_height = v;
-			invalidateSize();
+			if (enabledDelayUpdate)
+				invalidateSize();
 		}
 		
 		/**
@@ -314,8 +365,8 @@ package ghostcat.display.bitmap
 			updatePosition();
 			
 			if (!noEvent)
-				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
-			oldPosition = position.clone();
+				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:_oldPosition,newPosition:position}));
+			_oldPosition = position.clone();
 		}
 		
 		/**
@@ -454,7 +505,7 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawBitmapData(target:BitmapData):void
+		public function drawToBitmapData(target:BitmapData):void
 		{
 			if (bitmapData)
 				target.copyPixels(bitmapData,bitmapData.rect,position);

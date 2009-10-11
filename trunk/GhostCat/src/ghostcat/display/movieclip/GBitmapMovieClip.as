@@ -3,8 +3,10 @@ package ghostcat.display.movieclip
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.FrameLabel;
+	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.debug.Debug;
@@ -155,11 +157,25 @@ package ghostcat.display.movieclip
 		}
 		
 		/** @inheritDoc*/
-		public function drawBitmapData(target:BitmapData):void
+		public override function drawToBitmapData(target:BitmapData):void
 		{
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			if (bitmapData)
 				target.copyPixels(bitmapData,bitmapData.rect,position);
+		}
+		
+		/** @inheritDoc*/
+		public override function drawToShape(target:Graphics):void
+		{
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
+			if (bitmapData)
+			{
+				var m:Matrix = new Matrix();
+				m.translate(x,y);
+				target.beginBitmapFill(bitmapData,m,false,false);
+				target.drawRect(x,y,bitmapData.width,bitmapData.height);
+				target.endFill();
+			}
 		}
 	}
 }

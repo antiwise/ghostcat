@@ -4,7 +4,7 @@ package ghostcat.community
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.display.IGBase;
 
 	/**
 	 * 针对45度景深排序做了优化
@@ -14,7 +14,7 @@ package ghostcat.community
 	public class Sort45Manager extends SortYManager
 	{
 		/** @inheritDoc*/
-		protected override function getDeepOffest(g:GBase):Number
+		protected override function getDeepOffest(g:IGBase):Number
 		{
 			if (g.position.equals(g.oldPosition))
 				return 0;

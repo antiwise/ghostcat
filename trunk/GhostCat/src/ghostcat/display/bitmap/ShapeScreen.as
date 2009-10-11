@@ -10,7 +10,8 @@ package ghostcat.display.bitmap
 	import ghostcat.util.display.MatrixUtil;
 	
 	/**
-	 * 容纳位图显示的对象
+	 * 另一种位图高速缓存，适用于同屏大量活动对象的情景
+	 * 它在FP10下的性能远高于BitmapScreen，但在FP9下性能非常糟糕。
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -18,7 +19,7 @@ package ghostcat.display.bitmap
 	public class ShapeScreen extends GBase
 	{
 		/**
-		 * 是否每次重绘（每次重绘将会忽略所有特效）
+		 * 是否每次重绘
 		 */
 		public var redraw:Boolean = true;
 		
@@ -69,7 +70,6 @@ package ghostcat.display.bitmap
 			for each (var obj:* in children)
 				drawChild(obj);
 			
-			
 			super.updateDisplayList();
 		}
 		
@@ -81,14 +81,7 @@ package ghostcat.display.bitmap
 		protected function drawChild(obj:*):void
 		{
 			if (obj is IShapeDrawer)
-			{
 				(obj as IShapeDrawer).drawToShape(graphics);
-			}
-//			else if (obj is DisplayObject)
-//			{
-//				var m:Matrix = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);
-//				bitmapData.draw(obj as DisplayObject,m,itemColorTransform);
-//			}
 		} 
 	}
 }
