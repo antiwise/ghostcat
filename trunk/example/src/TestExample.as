@@ -132,7 +132,7 @@ package
 //		public var v:ShapeScreen;
 //		public function TestExample()
 //		{	
-//			v = new ShapeScreen(600,600,false);
+//			v = new ShapeScreen();
 //			addChild(v);
 //			for (var i:int = 0;i < 1000;i++)
 //			{
