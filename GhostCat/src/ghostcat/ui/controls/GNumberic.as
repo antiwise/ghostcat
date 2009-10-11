@@ -118,8 +118,8 @@ package ghostcat.ui.controls
 			if (enabledAdjustContextSize)
 				adjustContextSize();
 			
-			if (asBitmap)
-				reRenderBitmap();
+			if (asTextBitmap)
+				reRenderTextBitmap();
 		}
 		
 	}

@@ -28,7 +28,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmap extends Bitmap implements IGBase
+	public class GBitmap extends Bitmap implements IGBase,IBitmapDataDrawer
 	{
 		private var _enabled:Boolean = true;
 		
@@ -371,7 +371,6 @@ package ghostcat.display.bitmap
 		 */
 		protected function updateDisplayList(): void
 		{
-			
 		}
 		
 		private var _refreshInterval:int = 0;
@@ -450,6 +449,13 @@ package ghostcat.display.bitmap
 		 */		
 		protected function init():void
 		{
+		}
+		
+		/** @inheritDoc*/
+		public function drawBitmapData(target:BitmapData):void
+		{
+			if (bitmapData)
+				target.copyPixels(bitmapData,bitmapData.rect,position);
 		}
 		
 		/**

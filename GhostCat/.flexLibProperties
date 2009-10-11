@@ -68,8 +68,7 @@
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
-    <classEntry path="ghostcat.display.residual.PixelItem"/>
-    <classEntry path="ghostcat.display.residual.PixelResidualScreen"/>
+    <classEntry path="ghostcat.display.bitmap.PixelItem"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
@@ -343,6 +342,9 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
+    <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

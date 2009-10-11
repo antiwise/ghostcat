@@ -97,6 +97,7 @@ package ghostcat.display.movieclip
         	
         	(frameRate >= 0) ? mc.nextFrame() : mc.prevFrame();
         }
+		
         /**
          * 将动画缓存为位图并转化为GBitmapMovieClip对象
          * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象后进行一些操作，可监听GBitmapMovieClip的complete事件
@@ -110,21 +111,9 @@ package ghostcat.display.movieclip
          */
         public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1):GBitmapMovieClip
         {
-        	var cacher:MovieClipCacher = new MovieClipCacher(mc,rect,start,len);
-        	cacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
-        	var bitmapMC:GBitmapMovieClip = new GBitmapMovieClip([]);
-        	
-        	function cacherCompleteHandler(event:Event):void
-        	{
-        		cacher.removeEventListener(Event.COMPLETE,cacherCompleteHandler);
-        		
-        		bitmapMC.bitmaps = cacher.result;
-        		bitmapMC.labels = mc.currentLabels;
-        		bitmapMC.dispatchEvent(new Event(Event.COMPLETE));
-        		
-        	}
-        	
-        	return bitmapMC;
+			var v:GBitmapMovieClip = new GBitmapMovieClip();
+			v.createFromMovieClip(mc,rect,start,len);
+			return v;
         }
 	}
 }
