@@ -2,8 +2,10 @@ package ghostcat.display.bitmap
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
@@ -28,7 +30,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmap extends Bitmap implements IGBase,IBitmapDataDrawer
+	public class GBitmap extends Bitmap implements IGBase,IBitmapDataDrawer,IShapeDrawer
 	{
 		private var _enabled:Boolean = true;
 		
@@ -456,6 +458,19 @@ package ghostcat.display.bitmap
 		{
 			if (bitmapData)
 				target.copyPixels(bitmapData,bitmapData.rect,position);
+		}
+		
+		/** @inheritDoc*/
+		public function drawToShape(target:Graphics):void
+		{
+			if (bitmapData)
+			{
+				var m:Matrix = new Matrix();
+				m.translate(x,y);
+				target.beginBitmapFill(bitmapData,m,false,false);
+				target.drawRect(x,y,bitmapData.width,bitmapData.height);
+				target.endFill();
+			}
 		}
 		
 		/**
