@@ -44,7 +44,7 @@ package ghostcat.display.bitmap
         	var tmp:Rectangle = rect.clone();
             tmp.inflate((precision - 1) * rect.width, (precision - 1) * rect.height);
             
-            var data:BitmapData = new BitmapData(rect.width * precision, rect.height * precision);
+            var data:BitmapData = new BitmapData(Math.ceil(rect.width * precision), Math.ceil(rect.height * precision));
             data.draw(content, new Matrix(precision, 0, 0, precision, -rect.x * precision, -rect.y * precision), 
             		  null, null, null,true);
            

@@ -54,6 +54,15 @@ package
 	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.operation.FilterProxyOper;
 	import flash.filters.BlurFilter;
+	import ghostcat.display.GBase;
+	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.bitmap.PixelItem;
+	import ghostcat.display.bitmap.BitmapDataContainer;
+	import ghostcat.manager.DragManager;
+	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import ghostcat.skin.ScrolDownButtonSkin;
+	import ghostcat.skin.AlertSkin;
+	import ghostcat.util.Tick;
 	
 	[SWF(width="600",height="600")]
 	
@@ -64,48 +73,20 @@ package
 	 */
 	public class TestExample extends Sprite
 	{
-		public var t:StringTween;
 		public function TestExample()
 		{	
-			t = new StringTween();
-			t.text = "<html>这是一个文本Tween实例，点击舞台可以重放。\n" + 
-					"它依然可以保持文本框的基本属性，在非tween状态并不会消耗多余的性能。\n" + 
-					"核心方法：<font color='#AA0000'>tween()</font>\n" + 
-					"<b>参数：</b>\n" + 
-					"duration 每个字的动画持续时间\n" + 
-					"params 缓动参数\n" + 
-					"delay 每个字的缓动间隔\n" + 
-					"invert 是否倒放，默认为true\n" + 
-		 			"container 放置打散字体的容器\n" + 
-		 			"bitmap 是否转换为位图\n\n" + 
-		 			"<i>单纯打字效果使用此类性能并不好，应当使用简化版的TextFieldUtil.tween()</i>" + 
-					"</html>";
-			addChild(t);
-			
-			showHandler();
-			
-			stage.addEventListener(MouseEvent.CLICK,mouseClickHandler);
-		}
-		
-		private function showHandler(event:Event = null):void
-		{
-			t.removeEventListener(TweenEvent.TWEEN_END,showHandler);
-			t.tween(1000,{x:"50",y:"50",rotation:"180",scaleX:2,scaleY:2,alpha:0,ease:Circ.easeOut},100,true,null,true);
-		}
-		
-		private function mouseClickHandler(event:Event = null):void
-		{
-			if (t.isTweening || event.target == t)
-				return;
-			
-			t.tween(1000,{alpha:0,onStartHandler:blurHandler},10,false,null,true);
-			t.addEventListener(TweenEvent.TWEEN_END,showHandler);
-		}
-		
-		private function blurHandler(event:TweenEvent):void
-		{
-			//由于TweenUtil不支持滤镜缓动，因此只能用这种变通的方法
-			new FilterProxyOper((event.currentTarget as TweenUtil).target,new BlurFilter(0,0),1000,{blurX:25,blurY:25}).execute();
+			var v:BitmapScreen = new BitmapScreen(600,600,false);
+			addChild(v);
+//			v.addChild(new PixelItem(5,5,0xFF0000));
+//			var o:BitmapDataContainer = new BitmapDataContainer(new TestCollision());
+//			o.x = 50;
+//			o.y = 50;
+//			o.addChild(new BitmapDataContainer(new TestHuman()));
+//			v.addChild(o);
+//			GMovieClipBase.defaultFrameRate = 25;
+//			var m:GBitmapMovieClip = new GBitmapMovieClip();
+//			m.createFromMovieClip(new AlertSkin());
+//			v.addChild(m);
 		}
 	}
 }

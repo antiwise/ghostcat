@@ -1,7 +1,11 @@
 package ghostcat.display
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.TimerEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
 	import ghostcat.events.GEvent;
@@ -571,6 +575,62 @@ package ghostcat.display
 			invalidateDisplayList();
 		}
 		
+		private var _bitmap:Bitmap;
+		private var _asBitmap:Boolean = false;
+		
+		/**
+		 * 将content替换成Bitmap,增加性能
+		 * 
+		 */		
+		public function set asBitmap(v:Boolean):void
+		{
+			if (v)
+			{
+				content.visible = false;
+				reRenderBitmap();	
+			}
+			else
+			{
+				content.visible = true;
+				if (_bitmap)
+				{
+					_bitmap.bitmapData.dispose();
+					_bitmap.parent.removeChild(_bitmap);
+					_bitmap = null;
+				}
+			}
+		}
+		
+		public function get asBitmap():Boolean
+		{
+			return _asBitmap;
+		}
+		
+		/**
+		 * 更新缓存位图
+		 * 
+		 */			
+		public function reRenderBitmap():void
+		{
+			var oldRect:Rectangle = _bitmap ? _bitmap.getBounds(this) : null;
+			var rect:Rectangle = content.getBounds(this);
+			if (!rect.equals(oldRect))
+			{
+				if (_bitmap)
+				{
+					removeChild(_bitmap);
+					_bitmap.bitmapData.dispose();
+				}
+				_bitmap = new Bitmap(new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0));
+				_bitmap.x = rect.x;
+				_bitmap.y = rect.y;
+				addChild(_bitmap);
+			}
+			var m:Matrix = new Matrix();
+			m.translate(-rect.x,-rect.y);
+			_bitmap.bitmapData.draw(content,m);
+		}
+		
 		private var _refreshInterval:int = 0;
 		private var _refreshTimer:Timer;
 		
@@ -616,9 +676,13 @@ package ghostcat.display
 		{
 			invalidateDisplayList();
 		}
+		
 		/** @inheritDoc*/
 		public override function destory():void
 		{
+			if (destoryed)
+				return;
+			
 			var evt:GEvent = new GEvent(GEvent.REMOVE,false,true)
 			dispatchEvent(evt);
 			
@@ -626,6 +690,8 @@ package ghostcat.display
 				return;
 			
 			this.enabledTick = false;
+			this.refreshInterval = 0;
+			this.asBitmap = false;
 			
 			super.destory();
 		}

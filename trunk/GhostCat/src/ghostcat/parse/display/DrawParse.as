@@ -65,8 +65,8 @@ package ghostcat.parse.display
 			if (!displayObj)
 				return null;
 			var bounds:Rectangle = displayObj.getBounds(displayObj);
-			var width:int = bounds.width;
-			var height:int = bounds.height;
+			var width:int = Math.ceil(bounds.width);
+			var height:int = Math.ceil(bounds.height);
 			if (width == 0 || height == 0)
 				return null;
 			if (!matrix)

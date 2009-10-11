@@ -212,7 +212,7 @@ package ghostcat.ui.controls
 		
 		private var _bitmap:Bitmap;//用于缓存的Bitmap
 		
-		private var _asBitmap:Boolean = false;
+		private var _asTextBitmap:Boolean = false;
 		
 		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
@@ -351,8 +351,8 @@ package ghostcat.ui.controls
 			if (enabledAdjustContextSize)
 				adjustContextSize();
 			
-			if (asBitmap)
-				reRenderBitmap();
+			if (asTextBitmap)
+				reRenderTextBitmap();
 			
 			dispatchEvent(Util.createObject(new GTextEvent(GTextEvent.TEXT_CHANGE),{gText:this}));//只在设置属性的时候才替换语言，而不是文本变化时就换
 		}
@@ -361,15 +361,18 @@ package ghostcat.ui.controls
 		 * 将TextField替换成Bitmap，以实现设备文本的平滑旋转缩放效果
 		 * 
 		 */		
-		
-		public function set asBitmap(v:Boolean):void
+		public function set asTextBitmap(v:Boolean):void
 		{
-			if (v){
+			if (v)
+			{
 				textField.visible = false;
-				reRenderBitmap();	
-			}else{
+				reRenderTextBitmap();	
+			}
+			else
+			{
 				textField.visible = true;
-				if (_bitmap){
+				if (_bitmap)
+				{
 					_bitmap.bitmapData.dispose();
 					_bitmap.parent.removeChild(_bitmap);
 					_bitmap = null;
@@ -377,23 +380,27 @@ package ghostcat.ui.controls
 			}
 		}
 		
-		public function get asBitmap():Boolean
+		public function get asTextBitmap():Boolean
 		{
-			return _asBitmap;
+			return _asTextBitmap;
 		}
 		
 		/**
 		 * 更新位图文字
 		 * 
 		 */			
-		public function reRenderBitmap():void
+		public function reRenderTextBitmap():void
 		{
-			if (!_bitmap){
-				_bitmap = new Bitmap(new BitmapData(textField.width,textField.height,true,0x00FFFFFF));
-				_bitmap.x = textField.x;
-				_bitmap.y = textField.y;
-				textField.parent.addChild(_bitmap);
+			if (_bitmap)
+			{
+				_bitmap.parent.removeChild(_bitmap);
+				_bitmap.bitmapData.dispose();
 			}
+			
+			_bitmap = new Bitmap(new BitmapData(Math.ceil(textField.width),Math.ceil(textField.height),true,0));
+			_bitmap.x = textField.x;
+			_bitmap.y = textField.y;
+			textField.parent.addChild(_bitmap);
 			
 			_bitmap.bitmapData.draw(textField);
 		}
