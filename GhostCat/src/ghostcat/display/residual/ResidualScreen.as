@@ -90,7 +90,7 @@ package ghostcat.display.residual
 		{
 			if (!redraw)
 			{
-				if (fadeTransform && alphaMultiplier)
+				if (fadeTransform)
 					bitmapData.colorTransform(bitmapData.rect,fadeTransform);
 				
 				if (blurFilter)

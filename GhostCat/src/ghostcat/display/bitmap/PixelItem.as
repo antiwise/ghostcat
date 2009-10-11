@@ -22,7 +22,7 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawBitmapData(bitmapData:BitmapData):void
+		public function drawToBitmapData(bitmapData:BitmapData):void
 		{
 			bitmapData.setPixel32(x,y,color);
 		}

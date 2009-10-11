@@ -4,7 +4,7 @@ package ghostcat.community
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.display.IGBase;
 	
 
 	/**
@@ -26,7 +26,7 @@ package ghostcat.community
 		 * @return 
 		 * 
 		 */
-		protected function getDeepOffest(g:GBase):Number
+		protected function getDeepOffest(g:IGBase):Number
 		{
 			return g.y - g.oldPosition.y;
 		}
@@ -63,9 +63,9 @@ package ghostcat.community
 			if (filter!=null && filter(v)==false)
 				return;
 			
-			var g:GBase = v as GBase;
+			var g:IGBase = v as IGBase;
 			var dy:Number = getDeepOffest(g);
-			var index:int = g.parent.getChildIndex(g);
+			var index:int = g.parent.getChildIndex(g as DisplayObject);
 			var len:int = g.parent.numChildren;
 			var i:int;
 			var v2:*;
@@ -100,8 +100,8 @@ package ghostcat.community
 		
 		public override function add(obj:*):void
 		{
-			if (!(obj is GBase))
-				throw new Error("只能加入继承于GBase的对象")
+			if (!(obj is IGBase))
+				throw new Error("只能加入实现了IGBase的对象")
 			
 			data.push(obj);
 			

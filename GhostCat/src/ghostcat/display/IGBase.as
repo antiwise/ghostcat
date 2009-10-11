@@ -1,12 +1,17 @@
 package ghostcat.display
 {
+	import flash.geom.Point;
+	
+	import ghostcat.display.bitmap.IBitmapDataDrawer;
+	import ghostcat.display.bitmap.IShapeDrawer;
+
 	/**
 	 * GBase接口 
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public interface IGBase extends IDisplayObject,IData,ICursorManagerClient,IToolTipManagerClient
+	public interface IGBase extends IDisplayObject,IData,ICursorManagerClient,IToolTipManagerClient,IBitmapDataDrawer,IShapeDrawer
 	{
 		/**
 		 * 是否激活
@@ -31,6 +36,27 @@ package ghostcat.display
 		 */
 		function set enabledTick(v:Boolean):void
 		function get enabledTick():Boolean;
+		
+		/**
+		 * 当前坐标
+		 * 
+		 */
+		function get position():Point
+		
+		/**
+		 * 当前坐标
+		 * 
+		 */
+		function get oldPosition():Point
+			
+		/**
+		 * 设置坐标
+		 * @param x
+		 * @param y
+		 * @param noEvent	是否触发MOVE事件
+		 * 
+		 */
+		function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
 		
 		/**
 		 * 销毁方法

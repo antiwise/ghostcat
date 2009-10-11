@@ -15,6 +15,6 @@ package ghostcat.display.bitmap
 		 * @param target
 		 * 
 		 */
-		function drawBitmapData(target:BitmapData):void;
+		function drawToBitmapData(target:BitmapData):void;
 	}
 }

@@ -2,6 +2,7 @@ package ghostcat.display.bitmap
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
 	import flash.display.IBitmapDrawable;
 	import flash.events.EventDispatcher;
 	import flash.geom.Matrix;
@@ -16,7 +17,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class BitmapDataContainer extends EventDispatcher implements IBitmapDataDrawer
+	public class BitmapDataContainer extends EventDispatcher implements IBitmapDataDrawer,IShapeDrawer
 	{
 		public var x:Number = 0;
 		public var y:Number = 0;
@@ -107,9 +108,8 @@ package ghostcat.display.bitmap
 			return p;
 		}
 		
-		
 		/** @inheritDoc*/
-		public function drawBitmapData(target:BitmapData):void
+		public function drawToBitmapData(target:BitmapData):void
 		{
 			target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition());
 			
@@ -117,7 +117,28 @@ package ghostcat.display.bitmap
 			if (children)
 			{
 				for (var i:int = 0;i < children.length;i++)
-					(children[i] as BitmapDataContainer).drawBitmapData(target);
+					(children[i] as BitmapDataContainer).drawToBitmapData(target);
+			}
+		}
+		
+		/** @inheritDoc*/
+		public function drawToShape(target:Graphics):void
+		{
+			if (bitmapData)
+			{
+				var p:Point = getGlobalPosition();
+				var m:Matrix = new Matrix();
+				m.translate(p.x,p.y);
+				target.beginBitmapFill(bitmapData,m,false,false);
+				target.drawRect(x,y,bitmapData.width,bitmapData.height);
+				target.endFill();
+			}
+			
+			var children:Array = this.children;
+			if (children)
+			{
+				for (var i:int = 0;i < children.length;i++)
+					(children[i] as BitmapDataContainer).drawToShape(target);
 			}
 		}
 		

@@ -2,6 +2,7 @@ package ghostcat.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -51,9 +52,14 @@ package ghostcat.display
 		/**
 		 * 旧的位置坐标 
 		 */		
-		public var oldPosition:Point = new Point();
+		private var _oldPosition:Point = new Point();
 		
 		private var _position:Point = new Point();
+		
+		/**
+		 * 是否激活移动缩放事件（取消可增加性能）
+		 */
+		public var enabledDelayUpdate:Boolean = true;
 		
 		/**
 		 * 是否延迟更新坐标。如果延迟更新，将不会出现设置了属性值屏幕却不能立即看到表现导致错位的情况，
@@ -227,13 +233,14 @@ package ghostcat.display
 			if (x == value)
 				return;
 			
-			oldPosition.x = super.x;
+			_oldPosition.x = super.x;
 			position.x = value;
 			
 			if (!delayUpatePosition)
 				super.x = value;
 			
-			invalidatePosition();
+			if (enabledDelayUpdate)
+				invalidatePosition();
 		}
 		
 		public override function get x() : Number
@@ -246,13 +253,14 @@ package ghostcat.display
 			if (y == value)
 				return;
 			
-			oldPosition.y = super.y;
+			_oldPosition.y = super.y;
 			position.y = value;
 		
 			if (!delayUpatePosition)
 				super.y = value;
 				
-			invalidatePosition();
+			if (enabledDelayUpdate)
+				invalidatePosition();
 		}
 		
 		public override function get y() : Number
@@ -272,7 +280,7 @@ package ghostcat.display
 		{
 			if (super.x != x)
 			{
-				oldPosition.x = super.x;
+				_oldPosition.x = super.x;
 				position.x = x;
 			
 				if (!delayUpatePosition)
@@ -280,14 +288,15 @@ package ghostcat.display
 			}
 			if (super.y != y)
 			{
-				oldPosition.y = super.y;
+				_oldPosition.y = super.y;
 				position.y = y;
 				
 				if (!delayUpatePosition)
 					super.y = y;
 			}
 			
-			vaildPosition(noEvent); 
+			if (enabledDelayUpdate)
+				vaildPosition(noEvent); 
 		}
 		
 //		/**
@@ -341,6 +350,27 @@ package ghostcat.display
 		{
 			return _position;
 		}
+		
+		/**
+		 * 旧坐标
+		 * @return 
+		 * 
+		 */
+		public function get oldPosition():Point
+		{
+			return _oldPosition;
+		}
+		
+		/**
+		 * 坐标变化位移
+		 * @return 
+		 * 
+		 */
+		public function get positionOffest():Point
+		{
+			return position.subtract(_oldPosition);
+		}
+		
 		/** @inheritDoc*/
 		public override function set width(value:Number):void
 		{
@@ -349,7 +379,8 @@ package ghostcat.display
 			
 			super.width = value;
 				
-			invalidateSize();
+			if (enabledDelayUpdate)
+				invalidateSize();
 		}
 		/** @inheritDoc*/
 		public override function set height(value:Number):void
@@ -359,7 +390,8 @@ package ghostcat.display
 				
 			super.height = value;
 				
-			invalidateSize();
+			if (enabledDelayUpdate)
+				invalidateSize();
 		}
 		
 		/**
@@ -511,8 +543,8 @@ package ghostcat.display
 			updatePosition();
 			
 			if (!noEvent)
-				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:oldPosition,newPosition:position}));
-			oldPosition = position.clone();
+				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:_oldPosition,newPosition:position}));
+			_oldPosition = position.clone();
 		}
 		
 		/**
@@ -675,6 +707,17 @@ package ghostcat.display
 		private function refreshHandler(event:TimerEvent):void
 		{
 			invalidateDisplayList();
+		}
+		
+		/** @inheritDoc*/
+		public function drawToBitmapData(target:BitmapData):void
+		{
+			target.draw(content);
+		}
+		
+		/** @inheritDoc*/
+		public function drawToShape(target:Graphics):void
+		{
 		}
 		
 		/** @inheritDoc*/
