@@ -11,7 +11,6 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.BitmapScreen;
 	import ghostcat.display.bitmap.GBitmap;
-	import ghostcat.display.bitmap.ShapeScreen;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.DrawParse;
@@ -39,6 +38,7 @@ package
 			stage.addChild(new FPS());
 			
 			s = new BitmapScreen(400,400,false);
+			s.mode = BitmapScreen.MODE_SHAPE;
 			addChild(s);
 			
 			//创建100个物品
@@ -47,10 +47,8 @@ package
 				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
 				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
 				m.enabledDelayUpdate = false;
-				s.addChild(m);
-//				addChild(m);
+				s.addObject(m);
 			}
-//			s.enabledTick = false;
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
@@ -59,17 +57,6 @@ package
 				p.add(s.children[i]);
 				p.setVelocity(s.children[i],new Point(Math.random()*500 - 250,Math.random()*500 - 250))
 			}
-			
-			//创建文本显示计算时间
-			debugTextField = new TextField();
-			debugTextField.mouseEnabled = false;
-			addChild(debugTextField);
-			
-			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-		
-			GAlert.show("点击人物激活移动")
-			
-			this.enabledTick = true;
 		}
 		
 		private function physicsTickHandler(item:PhysicsItem,interval:int):void
@@ -86,16 +73,6 @@ package
 			
 			if (item.y > stage.stageHeight && item.velocity.y > 0)
 				item.velocity.y = -item.velocity.y;
-		}
-		
-		private function mouseDownHandler(event:MouseEvent):void
-		{
-			var obj:GBitmap = getChildAt(Math.random() * numChildren) as GBitmap
-		}
-		
-		protected override function tickHandler(event:TickEvent):void
-		{
-			
 		}
 	}
 }

@@ -35,6 +35,7 @@ package ghostcat.util.display
 			bitmap.draw(displayObj,m);
 			return bitmap;
 		}
+		
 		/**
 		 * 切分位图为一组较小的位图
 		 * 

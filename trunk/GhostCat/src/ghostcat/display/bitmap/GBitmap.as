@@ -17,6 +17,7 @@ package ghostcat.display.bitmap
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	import ghostcat.util.core.CallLater;
+	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
 	
@@ -30,7 +31,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GBitmap extends Bitmap implements IGBase
+	public class GBitmap extends Bitmap implements IGBase,IBitmapDataDrawer
 	{
 		private var _enabled:Boolean = true;
 		
@@ -514,14 +515,7 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics):void
 		{
-			if (bitmapData)
-			{
-				var m:Matrix = new Matrix();
-				m.translate(x,y);
-				target.beginBitmapFill(bitmapData,m,false,false);
-				target.drawRect(x,y,bitmapData.width,bitmapData.height);
-				target.endFill();
-			}
+			GraphicsUtil.drawBitmpData(target,bitmapData,new Point(x,y));
 		}
 		
 		/**

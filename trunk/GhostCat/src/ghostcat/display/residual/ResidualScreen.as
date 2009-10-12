@@ -1,5 +1,6 @@
 package ghostcat.display.residual
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.filters.BitmapFilter;
@@ -82,12 +83,16 @@ package ghostcat.display.residual
 			super(width,height,alphaMultiplier,backgroundColor);
 			
 			this.redraw = false;
-			this.enabledTick = true;
+			this.mouseEnabled = this.mouseChildren = false;
 		}
 		
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
+			if (mode != MODE_BITMAP)
+				return;
+			
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			if (!redraw)
 			{
 				if (fadeTransform)

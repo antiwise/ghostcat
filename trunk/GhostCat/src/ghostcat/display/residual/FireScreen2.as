@@ -1,5 +1,6 @@
 package ghostcat.display.residual
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.BitmapDataChannel;
 	import flash.display.DisplayObject;
@@ -69,14 +70,15 @@ package ghostcat.display.residual
 		{
 			super.updateSize();
 			
-			if (!enabledScale)
-			{
-				createMaskBitmapDatas();
-			}
+			createMaskBitmapDatas();
 		}
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
+			if (mode != MODE_BITMAP)
+				return;
+			
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			super.updateDisplayList();
 			
 			maskIndex++;

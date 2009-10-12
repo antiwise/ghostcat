@@ -1,9 +1,6 @@
 package ghostcat.display
 {
 	import flash.geom.Point;
-	
-	import ghostcat.display.bitmap.IBitmapDataDrawer;
-	import ghostcat.display.bitmap.IShapeDrawer;
 
 	/**
 	 * GBase接口 
@@ -11,7 +8,7 @@ package ghostcat.display
 	 * @author flashyiyi
 	 * 
 	 */
-	public interface IGBase extends IDisplayObject,IData,ICursorManagerClient,IToolTipManagerClient,IBitmapDataDrawer,IShapeDrawer
+	public interface IGBase extends IDisplayObject,IData,ICursorManagerClient,IToolTipManagerClient
 	{
 		/**
 		 * 是否激活

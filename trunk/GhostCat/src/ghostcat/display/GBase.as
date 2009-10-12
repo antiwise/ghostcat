@@ -2,6 +2,7 @@ package ghostcat.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
@@ -16,6 +17,7 @@ package ghostcat.display
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	import ghostcat.util.core.CallLater;
+	import ghostcat.util.display.MatrixUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
 	
@@ -299,42 +301,10 @@ package ghostcat.display
 				vaildPosition(noEvent); 
 		}
 		
-//		/**
-//		 * 设置这组属性不会延迟显示和触发updatePosition,以及MOVE事件
-//		 * @param v
-//		 * 
-//		 */
-//		public function set $x(value:Number):void
-//		{
-//			if ($x == value)
-//				return;
-//			
-//			oldPosition.x = super.x;
-//			position.x = value;
-//			
-//			super.x = value;
-//		}
-//		
-//		public function get $x():Number
-//		{
-//			return super.x;
-//		}
-//		
-//		public function set $y(value:Number):void
-//		{
-//			if ($y == value)
-//				return;
-//			
-//			oldPosition.y = super.y;
-//			position.y = value;
-//		
-//			super.y = value;
-//		}
-//		
-//		public function get $y():Number
-//		{
-//			return super.y;
-//		}
+		public function $getChildIndex(child:DisplayObject):int
+		{
+			return super.getChildIndex(child);
+		}
 
 		/**
 		 * 坐标 
@@ -656,7 +626,7 @@ package ghostcat.display
 				_bitmap = new Bitmap(new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0));
 				_bitmap.x = rect.x;
 				_bitmap.y = rect.y;
-				addChild(_bitmap);
+				$addChild(_bitmap);
 			}
 			var m:Matrix = new Matrix();
 			m.translate(-rect.x,-rect.y);
@@ -707,17 +677,6 @@ package ghostcat.display
 		private function refreshHandler(event:TimerEvent):void
 		{
 			invalidateDisplayList();
-		}
-		
-		/** @inheritDoc*/
-		public function drawToBitmapData(target:BitmapData):void
-		{
-			target.draw(content);
-		}
-		
-		/** @inheritDoc*/
-		public function drawToShape(target:Graphics):void
-		{
 		}
 		
 		/** @inheritDoc*/

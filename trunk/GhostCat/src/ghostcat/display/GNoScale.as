@@ -27,7 +27,6 @@ package ghostcat.display
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
-			
 			autoSize();
 		}
 		

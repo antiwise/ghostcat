@@ -25,10 +25,7 @@ package ghostcat.gxml.spec
 		{
 			if (source is DisplayObjectContainer && isClass(xml))
 			{
-				if (source is GView)
-					(source as GView).addObject(child as DisplayObject);	
-				else
-					(source as DisplayObjectContainer).addChild(child as DisplayObject);
+				(source as DisplayObjectContainer).addChild(child as DisplayObject);
 			}
 			else
 				super.addChild(source,child,xml);
