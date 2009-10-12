@@ -419,6 +419,9 @@ package ghostcat.ui.controls
 			if (labelTextField)
 				labelTextField.destory();
 			
+			if (movie)
+				movie.destory();
+			
 			super.destory();
 		}
 	}
