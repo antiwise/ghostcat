@@ -7,6 +7,7 @@ package ghostcat.ui.controls
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
@@ -26,7 +27,7 @@ package ghostcat.ui.controls
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class GBitmapButton extends GButtonBase
+	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
 		public var bitmaps:Array;
 		public var labels:Array;
@@ -42,6 +43,20 @@ package ghostcat.ui.controls
 		protected override function createMovieClip() : void
 		{
 			movie = new GBitmapMovieClip(bitmaps,labels);
+		}
+		
+		/** @inheritDoc*/
+		public function drawToBitmapData(target:BitmapData):void
+		{
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
+			if (bitmapData)
+				target.copyPixels(bitmapData,bitmapData.rect,position);
+		}
+		
+		/** @inheritDoc*/
+		public function drawToShape(target:Graphics):void
+		{
+			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y));
 		}
 	}
 }
