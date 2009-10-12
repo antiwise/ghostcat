@@ -115,8 +115,10 @@ package ghostcat.display.bitmap
 			this.width = width;
 			this.height = height;
 			
-			this.mode = MODE_BITMAP;
 			this.enabledTick = true;
+			this.enabledAutoSize = false;
+			
+			this.mode = MODE_BITMAP;
 		}
 		
 		/**
