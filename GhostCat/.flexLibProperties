@@ -345,7 +345,8 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.display.GraphicsUtil"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
+    <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

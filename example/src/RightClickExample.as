@@ -10,7 +10,7 @@ package
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.Util;
 	
-	[SWF(width="500",height="500")]
+	[SWF(width="350",height="350")]
 	
 	/**
 	 * 右键演示
@@ -33,7 +33,7 @@ package
 			addChild(shape);
 			
 			//对舞台增加一个火焰效果
-			addChild(Util.createObject(new FireScreen(500,500),{items:[shape]}));
+			addChild(Util.createObject(new FireScreen(350,350),{children:[shape]}));
 		
 			GAlert.show("点击右键看看吧\n可以连续点击","嘿嘿")
 		}
