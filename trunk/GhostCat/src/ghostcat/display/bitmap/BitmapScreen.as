@@ -3,20 +3,27 @@ package ghostcat.display.bitmap
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
-	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
 	
 	/**
 	 * 位图高速缓存，适用于同屏大量活动对象的情景
+	 * 
+	 * MODE_SRPITE 普通渲染方式，作为对比组，
+	 * 当物体不动时效率很高，但大量物体运动时渲染速度较慢
+	 * 
+	 * MODE_BITMAP 采用copyPixels像素的方式将位图复制到一个Bitmap上，
+	 * 无论物体是否运动速度都一样，因此在大量物体运动时效率较高，但只有少量物品运动则相对较低
+	 * 
+	 * MODE_SHAPE 采用beginBitmapFill方法将位图绘制到一个Shape上，
+	 * 这种方法在FP9时很慢，但在FP10内，渲染数据源为同一个位图时，比同等情况的copyPixels快很多，而且支持Matrix缩放
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -120,6 +127,8 @@ package ghostcat.display.bitmap
 		public function addObject(obj:*):void
 		{
 			children.push(obj);
+			if (mode == MODE_SPRITE && obj is DisplayObject)
+				(content as Sprite).addChild(obj as DisplayObject)
 		}
 		
 		/**
@@ -130,6 +139,8 @@ package ghostcat.display.bitmap
 		public function removeObject(obj:*):void
 		{
 			Util.remove(children,obj);
+			if (mode == MODE_SPRITE && obj is DisplayObject)
+				(content as Sprite).removeChild(obj as DisplayObject)
 		}
 		
 		/** @inheritDoc*/
@@ -209,8 +220,8 @@ package ghostcat.display.bitmap
 			}
 			else if (mode == MODE_SPRITE)
 			{
-				if (obj is DisplayObject && (obj as DisplayObject).stage == null)
-					(content as Sprite).addChild(obj as DisplayObject);
+				if (obj is DisplayObject && (obj as DisplayObject).parent != content)
+					(content as Sprite).addChild(obj as DisplayObject)
 			}
 		}
 		

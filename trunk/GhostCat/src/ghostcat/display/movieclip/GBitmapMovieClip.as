@@ -6,11 +6,11 @@ package ghostcat.display.movieclip
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.debug.Debug;
+	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -33,6 +33,11 @@ package ghostcat.display.movieclip
 		private var _currentFrame:int = 1;
 		
 		/**
+		 * 鼠标事件对象
+		 */
+		public var bitmapMouseChecker:BitmapMouseChecker;
+		
+		/**
 		 * 
 		 * @param bitmaps	源位图数组
 		 * @param labels	标签数组，内容为FrameLabel类型
@@ -51,7 +56,17 @@ package ghostcat.display.movieclip
 			super(new Bitmap(bitmaps[0]),true,paused);
 			
 			reset();
+			
+			this.mouseEnabled = this.mouseChildren = false;
 		}
+		
+		/** @inheritDoc*/
+		protected override function init() : void
+		{
+			bitmapMouseChecker = new BitmapMouseChecker(content as Bitmap);
+			super.init();
+		}
+		
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
 		{
@@ -60,17 +75,7 @@ package ghostcat.display.movieclip
 			else
 				super.setContent(skin,replace);
 		}
-		/** @inheritDoc*/
-		public override function destory():void
-		{
-			if (destoryed)
-				return;
-			
-			for (var i:int = 0;i < bitmaps.length;i++)
-				(bitmaps[i] as BitmapData).dispose();
 		
-			super.destory();
-		}
 		/** @inheritDoc*/
 		public override function get curLabelName():String
 		{
@@ -130,7 +135,20 @@ package ghostcat.display.movieclip
         	for each (var bitmapData:BitmapData in bitmaps.length)
         		bitmapData.dispose();
         } 
-        
+		
+		/** @inheritDoc*/
+		public override function destory():void
+		{
+			if (destoryed)
+				return;
+			
+			dispose();
+			bitmapMouseChecker.destory();
+			
+			super.destory();
+		}
+		
+		
 		/**
 		 * 从一个MovieClip生成
 		 * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象后进行一些操作，可监听GBitmapMovieClip的complete事件

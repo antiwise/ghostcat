@@ -21,8 +21,9 @@ package
 	
 	[SWF(width="400",height="400")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
+	
 	/**
-	 * 
+	 * 排序测试，这里使用的是基于GBase的排序器，会根据“是否移动”，“移动方向”来减少遍历次数。
 	 * 
 	 * @author flashyiyi
 	 * 

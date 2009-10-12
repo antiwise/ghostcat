@@ -4,8 +4,8 @@ package ghostcat.display.bitmap
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
@@ -20,10 +20,16 @@ package ghostcat.display.bitmap
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
-	
+	[Event(name="click",type="ghostcat.events.MoveEvent")]
 	[Event(name="move",type="ghostcat.events.MoveEvent")]
-	
 	[Event(name="resize",type="ghostcat.events.ResizeEvent")]
+	[Event(name="rollOver",type="flash.events.MouseEvent")]
+	[Event(name="rollOut",type="flash.events.MouseEvent")]
+	[Event(name="mouseOver",type="flash.events.MouseEvent")]
+	[Event(name="mouseOut",type="flash.events.MouseEvent")]
+	[Event(name="mouseDown",type="flash.events.MouseEvent")]
+	[Event(name="mouseUp",type="flash.events.MouseEvent")]
+	
 	
 	/**
 	 * 此类默认会在修改大小后会自动调整Bitmapdata的大小，采用裁剪而不是缩放
@@ -72,9 +78,16 @@ package ghostcat.display.bitmap
 		 */
 		public var enabledScale:Boolean = false;
 		
+		private var _enableMouseEvent:Boolean = true;
+		
 		private var _oldPosition:Point = new Point();
 		
 		private var _position:Point = new Point();
+		
+		/**
+		 * 鼠标事件对象
+		 */
+		public var bitmapMouseChecker:BitmapMouseChecker;
 		
 		public function GBitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false)
 		{
@@ -94,6 +107,23 @@ package ghostcat.display.bitmap
 		
 		private var _bitmapData:BitmapData;
 		
+		/**
+		 * 是否激活鼠标事件
+		 * @return 
+		 * 
+		 */
+		public function get enableMouseEvent():Boolean
+		{
+			return _enableMouseEvent;
+		}
+
+		public function set enableMouseEvent(value:Boolean):void
+		{
+			_enableMouseEvent = value;
+			if (bitmapMouseChecker)
+				bitmapMouseChecker.enabled = value;
+		}
+
 		/** @inheritDoc*/
 		public override function set bitmapData(value:BitmapData) : void
 		{
@@ -486,7 +516,6 @@ package ghostcat.display.bitmap
 		private function addedToStageHandler(event:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler)
-			
 			init();
 		}
 		
@@ -503,6 +532,8 @@ package ghostcat.display.bitmap
 		 */		
 		protected function init():void
 		{
+			bitmapMouseChecker = new BitmapMouseChecker(this); 
+			bitmapMouseChecker.enabled = _enableMouseEvent;
 		}
 		
 		/** @inheritDoc*/
@@ -527,15 +558,17 @@ package ghostcat.display.bitmap
 			if (destoryed)
 				return;
 			
-			if (parent)
-				parent.removeChild(this);
-			
 			if (bitmapData)
 				bitmapData.dispose();
+			
+			bitmapMouseChecker.destory();
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
 		
+			if (parent)
+				parent.removeChild(this);
+			
 			destoryed = true;
 		}
 		

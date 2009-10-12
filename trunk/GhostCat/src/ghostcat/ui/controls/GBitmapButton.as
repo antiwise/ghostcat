@@ -1,20 +1,20 @@
 package ghostcat.ui.controls
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Graphics;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
-	import ghostcat.display.movieclip.GMovieClip;
-	import ghostcat.display.movieclip.GMovieClipBase;
-	import ghostcat.events.ActionEvent;
-	import ghostcat.skin.ButtonSkin;
-	import ghostcat.util.Util;
-	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.GraphicsUtil;
+	
+	[Event(name="complete",type="flash.events.Event")]
 	
 	/**
 	 * 位图按钮
@@ -29,21 +29,65 @@ package ghostcat.ui.controls
 	 */	
 	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
-		public var bitmaps:Array;
-		public var labels:Array;
 		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPos:Point=null)
 		{
-			this.bitmaps = bitmaps;
-			this.labels = labels;
+			movie = new GBitmapMovieClip(bitmaps,labels);
 			
-			super(null, false, false,textPos);
+			super(movie.content, true, true,textPos);
+			
+			this.mouseEnabled = false;
 		}
 		
 		/** @inheritDoc*/
-		protected override function createMovieClip() : void
+		protected override function init() : void
 		{
-			movie = new GBitmapMovieClip(bitmaps,labels);
+			(movie as GBitmapMovieClip).bitmapMouseChecker = new BitmapMouseChecker(content as Bitmap);
+			super.init();
 		}
+		
+		/**
+		 * 从一个MovieClip生成
+		 * 注意这个缓存是需要时间的，如果要在完全生成GBitmapButton对象后进行一些操作，可监听GBitmapButton的complete事件
+		 * 
+		 * @param mc	要转换的电影剪辑
+		 * @param rect	绘制范围
+		 * @param start	起始帧
+		 * @param len	长度
+		 * @return 
+		 * 
+		 */
+		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1):void
+		{
+			movie.addEventListener(Event.COMPLETE,renderCompleteHandler);
+			(movie as GBitmapMovieClip).createFromMovieClip(mc,rect,start,len);
+		}
+		
+		private function renderCompleteHandler(event:Event):void
+		{
+			movie.removeEventListener(Event.COMPLETE,renderCompleteHandler);
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
+		/** @inheritDoc*/
+		protected override function addEvents():void
+		{
+			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			addEventListener(MouseEvent.MOUSE_OVER,rollOverHandler);
+			addEventListener(MouseEvent.MOUSE_OUT,rollOutHandler);
+			addEventListener(MouseEvent.CLICK,clickHandler);
+		}
+		
+		/** @inheritDoc*/
+		protected override function removeEvents():void
+		{
+			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			removeEventListener(MouseEvent.MOUSE_OVER,rollOverHandler);
+			removeEventListener(MouseEvent.MOUSE_OUT,rollOutHandler);
+			removeEventListener(MouseEvent.CLICK,clickHandler);
+		}
+		
 		
 		/** @inheritDoc*/
 		public function drawToBitmapData(target:BitmapData):void
