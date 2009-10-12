@@ -71,6 +71,7 @@ package ghostcat.display.graphics
 			
 			super(skin,replace);
 		}
+		
 		/** @inheritDoc*/
 		protected override function init() : void
 		{
@@ -78,6 +79,7 @@ package ghostcat.display.graphics
 			this.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 		}
+		
 		/** @inheritDoc*/
 		public override function set selected(v:Boolean):void
 		{
