@@ -28,7 +28,7 @@ package
 			p.y = 50;
 			addChild(p);
 			
-			addChild(Util.createObject(new ResidualScreen(200,200),{refreshInterval:30,fadeSpeed:0.95,blurSpeed:6,items:[p]}));
+			addChild(Util.createObject(new ResidualScreen(200,200),{fadeSpeed:0.95,blurSpeed:6,children:[p]}));
 			
 			new RepeatOper([new TweenOper(p,5000,{rotationY:180,ease:Back.easeInOut}),new TweenOper(p,5000,{rotationY:0,ease:Back.easeInOut})]).execute();
 		}

@@ -10,6 +10,8 @@ package ghostcat.display.bitmap
 	import flash.geom.Rectangle;
 	
 	import ghostcat.util.Util;
+	import ghostcat.util.display.BitmapUtil;
+	import ghostcat.util.display.GraphicsUtil;
 	
 	/**
 	 * 位图数据的模拟容器
@@ -17,7 +19,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class BitmapDataContainer extends EventDispatcher implements IBitmapDataDrawer,IShapeDrawer
+	public class BitmapDataContainer extends EventDispatcher implements IBitmapDataDrawer
 	{
 		public var x:Number = 0;
 		public var y:Number = 0;
@@ -124,15 +126,7 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics):void
 		{
-			if (bitmapData)
-			{
-				var p:Point = getGlobalPosition();
-				var m:Matrix = new Matrix();
-				m.translate(p.x,p.y);
-				target.beginBitmapFill(bitmapData,m,false,false);
-				target.drawRect(x,y,bitmapData.width,bitmapData.height);
-				target.endFill();
-			}
+			GraphicsUtil.drawBitmpData(target,bitmapData,getGlobalPosition());
 			
 			var children:Array = this.children;
 			if (children)

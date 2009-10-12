@@ -38,7 +38,7 @@ package
 			s.y = 50;
 			addChild(s);
 			//给拖动条的方块提供效果
-			addChild(Util.createObject(new ResidualScreen(s.width + 10,s.height + 10),{x:45,y:45,refreshInterval:30,fadeSpeed:0.8,blurSpeed:3,items:[s.thumb]}));
+			addChild(Util.createObject(new ResidualScreen(s.width + 10,s.height + 10),{x:45,y:45,fadeSpeed:0.8,blurSpeed:3,children:[s.thumb]}));
 		}
 	}
 }

@@ -92,7 +92,7 @@ package ghostcat.display.movieclip
 			else if (stage)
 				return stage.frameRate;
 			else
-				return 0;
+				return NaN;
 		}
 
 		public function set frameRate(v:Number):void

@@ -61,7 +61,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function addObject(child:DisplayObject) : DisplayObject
+		public override function addChild(child:DisplayObject) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.addChild(child);
 			addHandlers(v);
@@ -77,7 +77,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function addObjectAt(child:DisplayObject, index:int) : DisplayObject
+		public override function addChildAt(child:DisplayObject, index:int) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.addChildAt(child,index);
 			addHandlers(v);
@@ -92,7 +92,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function removeObject(child:DisplayObject) : DisplayObject
+		public override function removeChild(child:DisplayObject) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.removeChild(child);
 			removeHandlers(v);
@@ -107,7 +107,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function removeObjectAt(index:int) : DisplayObject
+		public override function removeChildAt(index:int) : DisplayObject
 		{
 			var v:DisplayObject = contentPane.removeChildAt(index);
 			removeHandlers(v);
@@ -134,7 +134,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function getObjectAt(index:int):DisplayObject
+		public override function getChildAt(index:int):DisplayObject
 		{
 			return contentPane.getChildAt(index);
 		}
@@ -145,7 +145,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function getObjectByName(name:String):DisplayObject
+		public override function getChildByName(name:String):DisplayObject
 		{
 			return contentPane.getChildByName(name);
 		}
@@ -156,7 +156,7 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function getObjectIndex(child:DisplayObject):int
+		public override function getChildIndex(child:DisplayObject):int
 		{
 			return contentPane.getChildIndex(child);
 		}

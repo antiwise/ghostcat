@@ -45,7 +45,7 @@ package
 		{
 			//新建点
 			var item:PixelItem = new PixelItem(mouseX,mouseY,0xFFFF0000);
-			s.addChild(item);//加入显示
+			s.addObject(item);//加入显示
 			p.add(item);//加入物理
 			p.setVelocity(item,new Point((Math.random() - 0.5)*50,-100));//给予初速度
 		}

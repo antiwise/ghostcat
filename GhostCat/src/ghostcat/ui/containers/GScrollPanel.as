@@ -91,7 +91,7 @@ package ghostcat.ui.containers
 				skin = hScrollBarSkin;
 				
 			hScrollBar = new GHScrollBar(skin);
-			addChild(hScrollBar);
+			$addChild(hScrollBar);
 			hScrollBar.target = this;
 			
 			invalidateSize();
@@ -110,7 +110,7 @@ package ghostcat.ui.containers
 				skin = vScrollBarSkin;
 			
 			vScrollBar = new GVScrollBar(skin);
-			addChild(vScrollBar);
+			$addChild(vScrollBar);
 			vScrollBar.target = this;
 			
 			invalidateSize();

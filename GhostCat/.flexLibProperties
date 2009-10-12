@@ -44,8 +44,12 @@
     <classEntry path="ghostcat.display.IGBase"/>
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
     <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
+    <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
+    <classEntry path="ghostcat.display.bitmap.PixelItem"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
     <classEntry path="ghostcat.display.graphics.DragPoint"/>
     <classEntry path="ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -68,7 +72,6 @@
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
-    <classEntry path="ghostcat.display.bitmap.PixelItem"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
@@ -342,10 +345,7 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
-    <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
-    <classEntry path="ghostcat.display.bitmap.ShapeScreen"/>
+    <classEntry path="ghostcat.util.display.GraphicsUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

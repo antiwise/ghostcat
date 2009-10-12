@@ -41,7 +41,7 @@ package
 			layout.vaildLayout();
 			
 			//加入特效
-			stage.addChildAt(Util.createObject(new ResidualScreen(stage.stageWidth,stage.stageHeight),{refreshInterval:10,fadeSpeed:0.9,blurSpeed:2,items:[this]}),0);
+			stage.addChildAt(Util.createObject(new ResidualScreen(stage.stageWidth,stage.stageHeight),{fadeSpeed:0.9,blurSpeed:2,children:[this]}),0);
 			
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			this.enabledTick = true;

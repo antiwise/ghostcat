@@ -1,5 +1,6 @@
 package ghostcat.display.residual
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.BitmapDataChannel;
 	import flash.display.DisplayObject;
@@ -38,22 +39,26 @@ package ghostcat.display.residual
 		/** @inheritDoc*/
 		protected override function updateSize():void
 		{
+			if (mode != MODE_BITMAP)
+				return;
+			
 			super.updateSize();
 			
-			if (!enabledScale)
+			var newBitmapData:BitmapData = new BitmapData(width,height);
+			if (maskBitmapData)
 			{
-				var newBitmapData:BitmapData = new BitmapData(width,height);
-				if (maskBitmapData)
-				{
-					newBitmapData.copyPixels(maskBitmapData,maskBitmapData.rect,new Point());
-					maskBitmapData.dispose();
-				}
-				maskBitmapData = newBitmapData;
+				newBitmapData.copyPixels(maskBitmapData,maskBitmapData.rect,new Point());
+				maskBitmapData.dispose();
 			}
+			maskBitmapData = newBitmapData;
 		}
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
+			if (mode != MODE_BITMAP)
+				return;
+			
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			super.updateDisplayList();
 			
 			maskBitmapData.perlinNoise(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest])

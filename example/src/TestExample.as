@@ -65,7 +65,6 @@ package
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.events.TickEvent;
-	import ghostcat.display.bitmap.ShapeScreen;
 	import ghostcat.debug.FPS;
 	
 	[SWF(width="600",height="600",frameRate="120")]
@@ -102,43 +101,12 @@ package
 //		}
 		
 //copyPixel		
-//		public var v:BitmapScreen;
-//		public function TestExample()
-//		{	
-//			stage.addChild(new FPS());
-//			
-//			v = new BitmapScreen(600,600,false);
-//			addChild(v);
-//			for (var i:int = 0;i < 500;i++)
-//			{
-//				var m:GBitmap = new GBitmap(DrawParse.createBitmap(new TestHuman()).bitmapData);
-//				m.x = Math.random() * 600;
-//				m.y = Math.random() * 600;
-//				
-//				v.addChild(m);
-//			}
-//			this.enabledTick = true;
-//		}
-//		
-//		
-//		protected override function tickHandler(event:TickEvent) : void
-//		{
-//			for (var i:int = 0;i < v.children.length;i++)
-//			{
-//				var m:GBitmap = v.children[i] as GBitmap
-//				m.x = Math.random() * 600;
-//				m.y = Math.random() * 600;
-//			}
-//		}
-//		
-//beginBitmapFill
-//		
-		public var v:ShapeScreen;
+		public var v:BitmapScreen;
 		public function TestExample()
 		{	
 			stage.addChild(new FPS());
 			
-			v = new ShapeScreen();
+			v = new BitmapScreen(600,600,false);
 			addChild(v);
 			for (var i:int = 0;i < 500;i++)
 			{
@@ -146,7 +114,7 @@ package
 				m.x = Math.random() * 600;
 				m.y = Math.random() * 600;
 				
-				v.addShapeChild(m);
+				v.addChild(m);
 			}
 			this.enabledTick = true;
 		}
@@ -160,7 +128,38 @@ package
 				m.x = Math.random() * 600;
 				m.y = Math.random() * 600;
 			}
-		}		
+		}
+//		
+//beginBitmapFill
+//		
+//		public var v:ShapeScreen;
+//		public function TestExample()
+//		{	
+//			stage.addChild(new FPS());
+//			
+//			v = new ShapeScreen();
+//			addChild(v);
+//			for (var i:int = 0;i < 500;i++)
+//			{
+//				var m:GBitmap = new GBitmap(DrawParse.createBitmap(new TestHuman()).bitmapData);
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//				
+//				v.addShapeChild(m);
+//			}
+//			this.enabledTick = true;
+//		}
+//		
+//		
+//		protected override function tickHandler(event:TickEvent) : void
+//		{
+//			for (var i:int = 0;i < v.children.length;i++)
+//			{
+//				var m:GBitmap = v.children[i] as GBitmap
+//				m.x = Math.random() * 600;
+//				m.y = Math.random() * 600;
+//			}
+//		}		
 
 	}
 }

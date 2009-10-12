@@ -47,22 +47,22 @@ package ghostcat.ui.containers
 			leftEdge.cursor = CursorSprite.CURSOR_H_DRAG;
 			leftEdge.lockY = true;
 			leftEdge.addEventListener(MoveEvent.MOVE,leftEdgeHandler);
-			addChild(leftEdge);
+			$addChild(leftEdge);
 			rightEdge = new DragPoint(null,new Shape());
 			rightEdge.cursor = CursorSprite.CURSOR_H_DRAG;
 			rightEdge.lockY = true;
 			rightEdge.addEventListener(MoveEvent.MOVE,rightEdgeHandler);
-			addChild(rightEdge);
+			$addChild(rightEdge);
 			topEdge = new DragPoint(null,new Shape());
 			topEdge.cursor = CursorSprite.CURSOR_V_DRAG;
 			topEdge.lockX = true;
 			topEdge.addEventListener(MoveEvent.MOVE,topEdgeHandler);
-			addChild(topEdge);
+			$addChild(topEdge);
 			bottomEdge = new DragPoint(null,new Shape());
 			bottomEdge.cursor = CursorSprite.CURSOR_V_DRAG;
 			bottomEdge.lockX = true;
 			bottomEdge.addEventListener(MoveEvent.MOVE,bottomEdgeHandler);
-			addChild(bottomEdge);
+			$addChild(bottomEdge);
 		}
 		/** @inheritDoc*/
 		protected override function updateSize() : void

@@ -31,7 +31,7 @@ package
 			f = new Skew(new TestCollision(),10,10);
 			addChild(f);
 			
-			addChild(Util.createObject(new ResidualScreen(300,300),{enabledTick:true,fadeSpeed:0.9,blurSpeed:12,offest:new Point(0,-4),items:[f]}));
+			addChild(Util.createObject(new ResidualScreen(300,300),{fadeSpeed:0.9,blurSpeed:12,offest:new Point(0,-4),children:[f]}));
 			
 			addChild(p1);
 			addChild(p2);

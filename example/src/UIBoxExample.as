@@ -37,9 +37,9 @@ package
 			var box:GVBox = new GVBox();
 			addChild(box);
 			
-			box.addObject(Util.createObject(new GRadioButton(),{label:"1",value:1,groupName:"a"}));
-			box.addObject(Util.createObject(new GRadioButton(),{label:"2",value:2,groupName:"a"}));
-			box.addObject(Util.createObject(new GRadioButton(),{label:"3",value:3,groupName:"a"}));
+			box.addChild(Util.createObject(new GRadioButton(),{label:"1",value:1,groupName:"a"}));
+			box.addChild(Util.createObject(new GRadioButton(),{label:"2",value:2,groupName:"a"}));
+			box.addChild(Util.createObject(new GRadioButton(),{label:"3",value:3,groupName:"a"}));
 			
 			var g:GRadioButtonGroup = GRadioButtonGroup.getGroupByName("a");
 			g.selectedValue = 1;
@@ -70,9 +70,9 @@ package
 			vbox.y = 200;
 			addChild(vbox);
 			
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0xFF0000,"抽屉1"),true,new Rectangle(0,0,100,20)));
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x00FF00,"抽屉2"),true,new Rectangle(0,0,100,20)));
-			vbox.addObject(new GDrawerPanel(new DebugRect(100,100,0x0000FF,"抽屉3"),true,new Rectangle(0,0,100,20)));
+			vbox.addChild(new GDrawerPanel(new DebugRect(100,100,0xFF0000,"抽屉1"),true,new Rectangle(0,0,100,20)));
+			vbox.addChild(new GDrawerPanel(new DebugRect(100,100,0x00FF00,"抽屉2"),true,new Rectangle(0,0,100,20)));
+			vbox.addChild(new GDrawerPanel(new DebugRect(100,100,0x0000FF,"抽屉3"),true,new Rectangle(0,0,100,20)));
 		}
 	}
 }

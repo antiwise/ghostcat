@@ -134,7 +134,7 @@ package ghostcat.display
 					}
 				}
 				skin.x = skin.y = 0;
-				addChild(skin);
+				$addChild(skin);
 				
 				this.name = skin.name;
 			}
@@ -182,6 +182,36 @@ package ghostcat.display
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
 			
 			destoryed = true;
+		}
+		
+		public function $addChild(v:DisplayObject):DisplayObject
+		{
+			return super.addChild(v);
+		}
+		
+		public function $addChildAt(v:DisplayObject,index:int):DisplayObject
+		{
+			return super.addChildAt(v,index);
+		}
+		
+		public function $removeChild(v:DisplayObject):DisplayObject
+		{
+			return super.removeChild(v);
+		}
+		
+		public function $removeChildAt(index:int):DisplayObject
+		{
+			return super.removeChildAt(index);
+		}
+		
+		public function $getChildAt(index:int):DisplayObject
+		{
+			return super.getChildAt(index);
+		}
+		
+		public function $getChildByName(name:String):DisplayObject
+		{
+			return super.getChildByName(name);
 		}
 	}
 }

@@ -4,6 +4,8 @@ package ghostcat.display.movieclip
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.skin.ButtonSkin;
+	
 	/**
 	 * 动画控制类，可以通过setLabel, queueLabel将动画推入列表，实现动画的灵活控制。这种方法可以非常简单地实现多方向行走，表情动作系统。
 	 * frameRate可以设置播放速度。采用了getTimer的机制，播放速度不会受到浏览器和机器配置的影响。
@@ -94,7 +96,7 @@ package ghostcat.display.movieclip
         {
         	if (!mc)
         		return;
-        	
+			
         	(frameRate >= 0) ? mc.nextFrame() : mc.prevFrame();
         }
 		

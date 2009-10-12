@@ -1,6 +1,7 @@
 package ghostcat.display.bitmap
 {
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
 	import flash.geom.Point;
 
 	/**
@@ -25,6 +26,11 @@ package ghostcat.display.bitmap
 		public function drawToBitmapData(bitmapData:BitmapData):void
 		{
 			bitmapData.setPixel32(x,y,color);
+		}
+		
+		/** @inheritDoc*/
+		public function drawToShape(target:Graphics):void
+		{
 		}
 	}
 }
