@@ -47,6 +47,7 @@ package
 				m.enableMouseEvent = false;
 				s.addObject(m); 
 			}
+			s.enabledTick = false;
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
@@ -55,6 +56,7 @@ package
 				p.add(s.children[i]);
 				p.setVelocity(s.children[i],new Point(Math.random()*500 - 250,Math.random()*500 - 250))
 			}
+			p.paused = true;
 			
 			addChild(new FPS());
 			
@@ -63,6 +65,7 @@ package
 			addChild(vbox);
 			var checkBox:GCheckBox = new GCheckBox();
 			checkBox.label = "暂停";
+			checkBox.selected = true;
 			vbox.addChild(checkBox);
 			checkBox.addEventListener(Event.CHANGE,checkChangeHandler);
 			

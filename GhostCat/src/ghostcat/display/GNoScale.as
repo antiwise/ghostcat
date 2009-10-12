@@ -17,6 +17,8 @@ package ghostcat.display
 		private var _height:Number;
 		private var _width:Number;
 		
+		public var enabledAutoSize:Boolean = true;
+		
 		public function GNoScale(skin:*=null,replace:Boolean=true)
 		{
 			super(skin,replace);
@@ -27,7 +29,9 @@ package ghostcat.display
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
-			autoSize();
+			
+			if (enabledAutoSize)
+				autoSize();
 		}
 		
 		/**
