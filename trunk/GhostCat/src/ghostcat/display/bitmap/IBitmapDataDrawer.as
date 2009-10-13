@@ -23,5 +23,13 @@ package ghostcat.display.bitmap
 		 * 
 		 */
 		function drawToShape(target:Graphics):void;
+		
+		/**
+		 * 检查鼠标当前点，并返回接受事件的对象
+		 * @param pos
+		 * @return 
+		 * 
+		 */
+		function checkMouseEvent(pos:Point):IBitmapDataDrawer;
 	}
 }

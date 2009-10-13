@@ -136,6 +136,12 @@ package ghostcat.display.bitmap
 			}
 		}
 		
+		/** @inheritDoc*/
+		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		{
+			return this;
+		}
+		
 		/**
 		 * 销毁方法
 		 * 

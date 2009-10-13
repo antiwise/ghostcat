@@ -18,7 +18,7 @@ package
 	import ghostcat.ui.controls.GRadioButtonGroup;
 	
 	
-	[SWF(width="400",height="400",frameRate="120",backgroundColor="0xFFFFFF")]
+	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	/**
 	 * 
@@ -39,7 +39,7 @@ package
 			addChild(s);
 			
 			//创建100个物品
-			for (var i:int = 0;i < 300;i++)
+			for (var i:int = 0;i < 1000;i++)
 			{
 				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
 				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
@@ -51,7 +51,7 @@ package
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
-			for (i = 0;i < 300;i++)
+			for (i = 0;i < 1000;i++)
 			{
 				p.add(s.children[i]);
 				p.setVelocity(s.children[i],new Point(Math.random()*500 - 250,Math.random()*500 - 250))

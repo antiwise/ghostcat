@@ -102,5 +102,11 @@ package ghostcat.ui.controls
 		{
 			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y));
 		}
+		
+		/** @inheritDoc*/
+		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		{
+			return this;
+		}
 	}
 }
