@@ -5,7 +5,6 @@ package ghostcat.display.bitmap
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -49,7 +48,7 @@ package ghostcat.display.bitmap
 		
 		private var _mode:String = MODE_BITMAP;
 		
-		private var sort:SortYAllManager;//用于Sprite的渲染器
+		private var sort:SortYAllManager;//用于Sprite的排序器
 		
 		/**
 		 * 鼠标是否按下 
@@ -204,8 +203,6 @@ package ghostcat.display.bitmap
 			}
 		}
 		
-		private var topMouseObject:EventDispatcher;//位于鼠标下最高层的对象
-		
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
@@ -257,9 +254,7 @@ package ghostcat.display.bitmap
 			{
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 				if (obj is IBitmapDataDrawer)
-				{
 					(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData);
-				}
 				else if (obj is DisplayObject)
 				{
 					m = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);
