@@ -2,8 +2,9 @@ package ghostcat.filter
 {
 	import flash.filters.ConvolutionFilter;
 	
-	import ghostcat.util.core.CallLater;
 	import ghostcat.debug.Debug;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	
 	/**
 	 * Convolution滤镜
@@ -28,6 +29,8 @@ package ghostcat.filter
 		
 		private var _type:int = 0;
 		
+		private var updateCall:UniqueCall = new UniqueCall(update);
+		
 		public function ConvolutionFilterProxy(type:int)
 		{
 			super(new ConvolutionFilter())
@@ -47,7 +50,7 @@ package ghostcat.filter
 		public function set type(v:int):void
 		{
 			_type = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 			
 		private function update():void

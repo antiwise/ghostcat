@@ -83,8 +83,6 @@ package ghostcat.util.display
         		refreshFilterImmediy(displayObj);
         	else
         		CallLater.callLater(refreshFilterImmediy,[displayObj],true,displayObj);
-        		
-        	
         }
         
         private static function refreshFilterImmediy(displayObj:DisplayObject):void

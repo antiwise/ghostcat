@@ -17,6 +17,7 @@ package ghostcat.display.bitmap
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
@@ -358,13 +359,18 @@ package ghostcat.display.bitmap
 				invalidateSize();
 		}
 		
+		protected var positionCall:UniqueCall = new UniqueCall(vaildPosition,true);
+		protected var sizeCall:UniqueCall = new UniqueCall(vaildSize,true);
+		protected var displayListCall:UniqueCall = new UniqueCall(vaildDisplayList);
+		
 		/**
 		 * 在之后更新坐标
 		 * 
 		 */
 		public function invalidatePosition():void
 		{
-			CallLater.callLaterNextFrame(vaildPosition,null,true);
+//			CallLater.callLaterNextFrame(vaildPosition,null,true);
+			positionCall.invalidate();
 		}
 		
 
@@ -373,7 +379,8 @@ package ghostcat.display.bitmap
 		 */
 		public function invalidateSize():void
 		{
-			CallLater.callLater(updateSize,null,true);
+//			CallLater.callLater(updateSize,null,true);
+			sizeCall.invalidate();
 		}
 		
 		/**
@@ -381,7 +388,8 @@ package ghostcat.display.bitmap
 		 */
 		public function invalidateDisplayList():void
 		{
-			CallLater.callLater(updateDisplayList,null,true);
+//			CallLater.callLater(updateDisplayList,null,true);
+			displayListCall.invalidate();
 		}
 		
 		/**

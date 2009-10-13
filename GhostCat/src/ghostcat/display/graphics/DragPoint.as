@@ -6,7 +6,6 @@ package ghostcat.display.graphics
 	
 	import ghostcat.display.GBase;
 	import ghostcat.skin.PointSkin;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.ClassFactory;
 
 	/**
@@ -86,6 +85,7 @@ package ghostcat.display.graphics
 			this.cursor = "drag";
 			enabled = enabled;
 			
+			this.positionCall.frame = false;
 //			this.delayUpatePosition = true;//设置此属性是为了消除闪烁
 		}
 
@@ -131,11 +131,6 @@ package ghostcat.display.graphics
 		public override function set enabled(value : Boolean) : void
 		{
 			mouseEnabled = super.enabled = value;
-		}
-		/** @inheritDoc*/
-		public override function invalidatePosition() : void
-		{
-			CallLater.callLater(vaildPosition,null,true);
 		}
 	}
 }
