@@ -8,6 +8,7 @@ package ghostcat.ui.layout
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.Geom;
 	
 	/**
@@ -34,6 +35,11 @@ package ghostcat.ui.layout
 		 * 是否根据子对象的大小来确认容器的大小
 		 */
 		public var enabledMeasureChildren:Boolean = true;
+		
+		/**
+		 * 布局执行器 
+		 */
+		protected var vaildLayoutCall:UniqueCall = new UniqueCall(vaildLayout);
 		
 		/**
 		 * 
@@ -113,12 +119,12 @@ package ghostcat.ui.layout
 		}
 		
 		/**
-		 * 在一次更新布局 
+		 * 在下一次更新布局 
 		 * 
 		 */
 		public function invalidateLayout():void
 		{
-			CallLater.callLater(vaildLayout,null,true);
+			vaildLayoutCall.invalidate();
 		}
 		
 		/**

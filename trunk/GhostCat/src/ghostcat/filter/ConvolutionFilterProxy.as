@@ -3,7 +3,6 @@ package ghostcat.filter
 	import flash.filters.ConvolutionFilter;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.UniqueCall;
 	
 	/**
