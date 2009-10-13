@@ -100,7 +100,10 @@ package ghostcat.display.bitmap
 			
 			var o:Boolean = isMouseOver();
 			if (o)
+			{
+				mouseDown = true;
 				bitmap.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN,true,false,bitmap.mouseX,bitmap.mouseY,null,event.ctrlKey,event.altKey,event.shiftKey,event.buttonDown))
+			}
 		}
 		
 		private function mouseUpHandler(event:MouseEvent):void

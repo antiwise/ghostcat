@@ -8,7 +8,6 @@ package ghostcat.filter
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.util.MathUtil;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.UniqueCall;
 	
 	/**

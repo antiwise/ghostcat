@@ -16,7 +16,6 @@ package ghostcat.display.bitmap
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -369,7 +368,6 @@ package ghostcat.display.bitmap
 		 */
 		public function invalidatePosition():void
 		{
-//			CallLater.callLaterNextFrame(vaildPosition,null,true);
 			positionCall.invalidate();
 		}
 		
@@ -379,7 +377,6 @@ package ghostcat.display.bitmap
 		 */
 		public function invalidateSize():void
 		{
-//			CallLater.callLater(updateSize,null,true);
 			sizeCall.invalidate();
 		}
 		
@@ -388,7 +385,6 @@ package ghostcat.display.bitmap
 		 */
 		public function invalidateDisplayList():void
 		{
-//			CallLater.callLater(updateDisplayList,null,true);
 			displayListCall.invalidate();
 		}
 		

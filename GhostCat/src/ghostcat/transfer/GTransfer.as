@@ -9,7 +9,6 @@ package ghostcat.transfer
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.UniqueCall;
 
 	

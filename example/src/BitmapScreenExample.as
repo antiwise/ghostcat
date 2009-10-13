@@ -43,7 +43,7 @@ package
 			{
 				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
 				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
-//				m.enabledDelayUpdate = false;
+				m.enabledDelayUpdate = false;
 				m.enableMouseEvent = false;
 				s.addObject(m); 
 			}

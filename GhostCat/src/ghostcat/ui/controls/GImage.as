@@ -14,6 +14,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.Geom;
 	
 	/**
@@ -49,6 +50,8 @@ package ghostcat.ui.controls
 		
 		private var _horizontalAlign:String = UIConst.CENTER;
 		private var _verticalAlign:String = UIConst.MIDDLE;
+		
+		protected var layoutChildrenCall:UniqueCall = new UniqueCall(layoutChildren);
 		
 		/**
 		 * 垂直对齐
@@ -198,7 +201,7 @@ package ghostcat.ui.controls
 		 */
 		public function invalidateLayout():void
 		{
-			CallLater.callLater(layoutChildren,null,true);
+			layoutChildrenCall.invalidate();
 		}
 		
 		/**

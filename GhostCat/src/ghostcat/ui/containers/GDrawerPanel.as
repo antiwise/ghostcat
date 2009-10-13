@@ -4,7 +4,6 @@ package ghostcat.ui.containers
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenUtil;
 	
