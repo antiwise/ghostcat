@@ -5,12 +5,14 @@ package ghostcat.display.bitmap
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.community.sort.SortYAllManager;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
@@ -47,6 +49,8 @@ package ghostcat.display.bitmap
 		
 		private var _mode:String = MODE_BITMAP;
 		
+		private var sort:SortYAllManager;//用于Sprite的渲染器
+		
 		/**
 		 * 鼠标是否按下 
 		 */
@@ -72,6 +76,7 @@ package ghostcat.display.bitmap
 			{
 				case MODE_SPRITE:
 					setContent(new Sprite());
+					sort.target = content as Sprite;
 					break;
 				case MODE_BITMAP:
 					setContent(new Bitmap(new BitmapData(width,height,transparent,backgroundColor)));
@@ -113,6 +118,15 @@ package ghostcat.display.bitmap
 		public var sortFields:Array;
 		
 		/**
+		 * 激活Y轴排序
+		 * 
+		 */
+		public function enabledSortY():void
+		{
+			sortFields = ["y"];
+		}
+		
+		/**
 		 * 
 		 * @param width
 		 * @param height
@@ -134,6 +148,8 @@ package ghostcat.display.bitmap
 			this.enabledAutoSize = false;
 			
 			this.mode = MODE_BITMAP;
+			
+			this.sort = new SortYAllManager();
 		}
 		
 		protected override function init() : void
@@ -188,6 +204,8 @@ package ghostcat.display.bitmap
 			}
 		}
 		
+		private var topMouseObject:EventDispatcher;//位于鼠标下最高层的对象
+		
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
@@ -219,6 +237,8 @@ package ghostcat.display.bitmap
 			{
 				for each (obj in children)
 					drawChild(obj);	
+				
+				sort.calculate();
 			}
 			
 			super.updateDisplayList();
@@ -237,7 +257,9 @@ package ghostcat.display.bitmap
 			{
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 				if (obj is IBitmapDataDrawer)
+				{
 					(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData);
+				}
 				else if (obj is DisplayObject)
 				{
 					m = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);

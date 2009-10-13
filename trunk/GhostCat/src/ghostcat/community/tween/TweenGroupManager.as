@@ -1,9 +1,10 @@
-package ghostcat.community
+package ghostcat.community.tween
 {
 	import flash.display.DisplayObject;
 	
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenUtil;
+	import ghostcat.community.GroupManager;
 
 	/**
 	 * Tween群组执行

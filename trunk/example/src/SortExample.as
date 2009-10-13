@@ -6,20 +6,17 @@ package
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	
-	import ghostcat.community.SortYManager;
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
+	import ghostcat.community.sort.SortYManager;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Light;
-	import ghostcat.display.viewport.Wall;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.containers.GAlert;
-	import ghostcat.util.Util;
 	
 	
-	[SWF(width="400",height="400")]
+	[SWF(width="400",height="400",frameRate="60")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	
 	/**
@@ -37,7 +34,7 @@ package
 		protected override function init():void
 		{
 			RootManager.register(this);
-			
+			stage.addChild(new FPS());
 			
 			//创建100个物品
 			for (var i:int = 0;i < 100;i++)
