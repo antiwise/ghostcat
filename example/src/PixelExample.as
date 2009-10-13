@@ -36,7 +36,7 @@ package
 			//落下屏幕则删除
 			if (v.y > 500)
 			{
-				s.removeChild(v.target);
+				s.removeObject(v.target);
 				p.remove(v.target);
 			}
 		}

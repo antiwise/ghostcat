@@ -164,7 +164,7 @@ package ghostcat.community
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				registerDirty(obj,setDirtyWhenEvent);
 			
-			calculate(obj);//加入时立即计算
+//			calculate(obj);//加入时立即计算
 		}
 		
 		/**

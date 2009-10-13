@@ -16,6 +16,7 @@ package
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GRadioButton;
 	import ghostcat.ui.controls.GRadioButtonGroup;
+	import ghostcat.util.display.ColorUtil;
 	
 	
 	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
@@ -27,6 +28,8 @@ package
 	 */
 	public class BitmapScreenExample extends GBase
 	{
+		public const COUNT:int = 1000;
+		
 		public var s:BitmapScreen;
 		public var p:PhysicsManager;
 		
@@ -35,11 +38,12 @@ package
 			RootManager.register(this);
 			
 			s = new BitmapScreen(400,400,false);
+			s.enabledSortY();
 			s.mode = BitmapScreen.MODE_BITMAP;
 			addChild(s);
 			
 			//创建100个物品
-			for (var i:int = 0;i < 1000;i++)
+			for (var i:int = 0;i < COUNT;i++)
 			{
 				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
 				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
@@ -51,10 +55,10 @@ package
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
-			for (i = 0;i < 1000;i++)
+			for (i = 0;i < COUNT;i++)
 			{
 				p.add(s.children[i]);
-				p.setVelocity(s.children[i],new Point(Math.random()*500 - 250,Math.random()*500 - 250))
+				p.setVelocity(s.children[i],new Point(Math.random()*50 - 25,Math.random()*50 - 25))
 			}
 			p.paused = true;
 			
@@ -88,6 +92,8 @@ package
 			vbox.addChild(radioButton);
 			var group:GRadioButtonGroup = GRadioButtonGroup.getGroupByName("a");
 			group.addEventListener(Event.CHANGE,radioChangeHandler);
+			
+			this.enabledTick = true;
 		}
 		
 		private function checkChangeHandler(event:Event):void
@@ -102,7 +108,7 @@ package
 			switch (group.selectedItem.label)
 			{
 				case "普通":
-					s.mode = BitmapScreen.MODE_SPRITE
+					s.mode = BitmapScreen.MODE_SPRITE;
 					break;
 				case "copyPixel":
 					s.mode = BitmapScreen.MODE_BITMAP;

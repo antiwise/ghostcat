@@ -1,10 +1,11 @@
-package ghostcat.community
+package ghostcat.community.sort
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
 	
 	import ghostcat.display.IGBase;
+	import ghostcat.community.GBaseCommunityManager;
 	
 
 	/**
