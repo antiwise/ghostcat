@@ -2,6 +2,7 @@ package ghostcat.display.bitmap
 {
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
+	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 
 	/**
@@ -9,7 +10,7 @@ package ghostcat.display.bitmap
 	 * @author flashyiyi
 	 * 
 	 */
-	public class PixelItem implements IBitmapDataDrawer
+	public class PixelItem extends EventDispatcher implements IBitmapDataDrawer
 	{
 		public var x:Number;
 		public var y:Number;
@@ -31,6 +32,13 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics):void
 		{
+		}
+		
+		
+		/** @inheritDoc*/
+		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		{
+			return this;
 		}
 	}
 }

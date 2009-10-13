@@ -5,9 +5,11 @@ package ghostcat.display.bitmap
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
@@ -43,9 +45,17 @@ package ghostcat.display.bitmap
 		 */
 		public static const MODE_SHAPE:String = "shape";
 		
-		private var _alphaMultiplier:Boolean;
-		
 		private var _mode:String = MODE_BITMAP;
+		
+		/**
+		 * 鼠标是否按下 
+		 */
+		private var mouseDown:Boolean = false;
+		
+		/**
+		 * 记录子对象的鼠标状态
+		 */
+		private var isMouseOver:Dictionary = new Dictionary();
 		
 		public function get mode():String
 		{
@@ -126,6 +136,14 @@ package ghostcat.display.bitmap
 			this.mode = MODE_BITMAP;
 		}
 		
+		protected override function init() : void
+		{
+			super.init();
+			
+			this.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+		}
+		
 		/**
 		 * 添加
 		 * @param obj
@@ -146,6 +164,9 @@ package ghostcat.display.bitmap
 		public function removeObject(obj:*):void
 		{
 			Util.remove(children,obj);
+			
+			delete isMouseOver[obj];
+			
 			if (mode == MODE_SPRITE && obj is DisplayObject)
 				(content as Sprite).removeChild(obj as DisplayObject)
 		}
@@ -235,10 +256,23 @@ package ghostcat.display.bitmap
 			}
 		}
 		
+		protected function mouseDownHandler(event:MouseEvent):void
+		{
+			this.mouseDown = true;
+		}
+		
+		protected function mouseUpHandler(event:MouseEvent):void
+		{
+			this.mouseDown = false;
+		}
+		
 		public override function destory() : void
 		{
 			if (destoryed)
 				return;
+			
+			this.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			
 			if (content is Bitmap)
 			{

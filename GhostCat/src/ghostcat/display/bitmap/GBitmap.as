@@ -553,6 +553,13 @@ package ghostcat.display.bitmap
 			GraphicsUtil.drawBitmpData(target,bitmapData,new Point(x,y));
 		}
 		
+		
+		/** @inheritDoc*/
+		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		{
+			return this;
+		}
+		
 		/**
 		 * 销毁方法 
 		 * 
