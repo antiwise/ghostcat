@@ -5,7 +5,7 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 
 	/**
 	 * 任意变形
@@ -28,6 +28,8 @@
 		private var _topRight:Point;
 		private var _bottomLeft:Point;
 		private var _bottomRight:Point;
+		
+		protected var setTransformCall:UniqueCall = new UniqueCall(setTransform);
 		
 		/**
 		 * 
@@ -159,7 +161,7 @@
 		 */
 		public function invalidateTransform():void
 		{
-			CallLater.callLater(setTransform,[_topLeft,_topRight,_bottomLeft,_bottomRight],true);
+			setTransformCall.invalidate(_topLeft,_topRight,_bottomLeft,_bottomRight);
 		}
 		
 		/**

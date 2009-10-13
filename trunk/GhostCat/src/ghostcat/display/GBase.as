@@ -16,7 +16,7 @@ package ghostcat.display
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
-	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.MatrixUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
@@ -300,11 +300,6 @@ package ghostcat.display
 			if (enabledDelayUpdate)
 				vaildPosition(noEvent); 
 		}
-		
-		public function $getChildIndex(child:DisplayObject):int
-		{
-			return super.getChildIndex(child);
-		}
 
 		/**
 		 * 坐标 
@@ -473,13 +468,17 @@ package ghostcat.display
 			vaildDisplayList();
 		}
 		
+		protected var positionCall:UniqueCall = new UniqueCall(vaildPosition,true);
+		protected var sizeCall:UniqueCall = new UniqueCall(vaildSize,true);
+		protected var displayListCall:UniqueCall = new UniqueCall(vaildDisplayList);
+		
 		/**
 		 * 在之后更新坐标
 		 * 
 		 */
 		public function invalidatePosition():void
 		{
-			CallLater.callLaterNextFrame(vaildPosition,null,true);
+			positionCall.invalidate();
 		}
 		
 		/**
@@ -488,7 +487,7 @@ package ghostcat.display
 		 */
 		public function invalidateSize():void
 		{
-			CallLater.callLaterNextFrame(vaildSize,null,true);
+			sizeCall.invalidate();
 		}
 		
 		/**
@@ -497,7 +496,7 @@ package ghostcat.display
 		 */
 		public function invalidateDisplayList():void
 		{
-			CallLater.callLater(vaildDisplayList,null,true);
+			displayListCall.invalidate();
 		}
 		
 		
@@ -574,7 +573,7 @@ package ghostcat.display
 		 */
 		protected function tickHandler(event:TickEvent):void
 		{
-			invalidateDisplayList();
+			vaildDisplayList();
 		}
 		
 		private var _bitmap:Bitmap;
@@ -676,7 +675,7 @@ package ghostcat.display
 		
 		private function refreshHandler(event:TimerEvent):void
 		{
-			invalidateDisplayList();
+			vaildDisplayList();
 		}
 		
 		/** @inheritDoc*/

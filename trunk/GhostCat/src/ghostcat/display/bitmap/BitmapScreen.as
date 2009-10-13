@@ -98,6 +98,11 @@ package ghostcat.display.bitmap
 		public var itemColorTransform:ColorTransform;
 		
 		/**
+		 * 排序依据字段
+		 */
+		public var sortFields:Array;
+		
+		/**
 		 * 
 		 * @param width
 		 * @param height
@@ -165,6 +170,9 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
+			if (sortFields)
+				children.sortOn(sortFields, [Array.NUMERIC]);
+
 			if (mode == MODE_BITMAP)
 			{
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;

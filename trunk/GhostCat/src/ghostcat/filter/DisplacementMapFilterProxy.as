@@ -10,8 +10,8 @@ package ghostcat.filter
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
-	import ghostcat.util.core.CallLater;
 	import ghostcat.debug.Debug;
+	import ghostcat.util.core.UniqueCall;
 
 	/**
 	 * 偏移滤镜
@@ -42,6 +42,9 @@ package ghostcat.filter
 		
 		private var _type:int;
 		
+		private var updateCall:UniqueCall = new UniqueCall(update);
+		private var updateMaskCall:UniqueCall = new UniqueCall(updateMask);
+		
 		public function DisplacementMapFilterProxy(type:int)
 		{
 			super(new DisplacementMapFilter());
@@ -61,7 +64,7 @@ package ghostcat.filter
 		public function set deep(v:Number):void
 		{
 			_deep = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 
 		/**
@@ -77,7 +80,7 @@ package ghostcat.filter
 		public function set pos(v:Point):void
 		{
 			_pos = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 
 		/**
@@ -93,8 +96,8 @@ package ghostcat.filter
 		public function set cycle(v:int):void
 		{
 			_cycle = v;
-			CallLater.callLater(updateMask,null,true);
-			CallLater.callLater(update,null,true);
+			updateMaskCall.invalidate();
+			updateCall.invalidate();
 		}
 
 		/**
@@ -110,8 +113,8 @@ package ghostcat.filter
 		public function set radius(v:Number):void
 		{
 			_radius = v;
-			CallLater.callLater(updateMask,null,true);
-			CallLater.callLater(update,null,true);
+			updateMaskCall.invalidate();
+			updateCall.invalidate();
 			
 		}
 
@@ -128,8 +131,8 @@ package ghostcat.filter
 		public function set type(v:int):void
 		{
 			_type = v;
-			CallLater.callLater(updateMask,null,true);
-			CallLater.callLater(update,null,true);
+			updateMaskCall.invalidate();
+			updateCall.invalidate();
 		}
 		
 		private var _radius:Number = 128;

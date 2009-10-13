@@ -7,8 +7,9 @@ package ghostcat.filter
 	import flash.geom.Point;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.MathUtil;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	
 	/**
 	 * 梯形翻转滤镜
@@ -25,6 +26,10 @@ package ghostcat.filter
 		private var _rotation:Number = 0;
 		
 		public var mask:BitmapData;
+		
+		private var updateCall:UniqueCall = new UniqueCall(update);
+		private var updateMaskCall:UniqueCall = new UniqueCall(updateMask);
+		
 		public function TrapeziumFilterProxy(type:int)
 		{
 			super(new DisplacementMapFilter());
@@ -44,7 +49,7 @@ package ghostcat.filter
 		public function set rotation(v:Number):void
 		{
 			_rotation = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 
 		/**
@@ -60,8 +65,8 @@ package ghostcat.filter
 		public function set type(v:int):void
 		{
 			_type = v;
-			CallLater.callLater(updateMask,null,true);
-			CallLater.callLater(update,null,true);
+			updateMaskCall.invalidate();
+			updateCall.invalidate();
 		}
 
 		public override function applyFilter(target:*) : void

@@ -105,8 +105,54 @@ package ghostcat.util.display
 				var bitmap:BitmapData = source[i];
 				result.copyPixels(bitmap,new Rectangle(0,0,bitmap.width,bitmap.height),new Point(0,y));
 				
-				y += bitmap.width;
+				y += bitmap.height;
 			}	
+			return result;
+		}
+		
+		/**
+		 * 在一个限定的宽度内拼合位图
+		 * 
+		 * @param source	位图数据源
+		 * @param maxWidth	最大宽度
+		 * @param resultRect	结果矩形区域数据
+		 * @return 
+		 * 
+		 */
+		public static function concatBitmapDataLimitWidth(source:Array,maxWidth:int,resultRects:Array = null):BitmapData
+		{
+			if (!resultRects)
+				resultRects = [];
+				
+			var x:int = 0;
+			var y:int = 0;
+			var mh:int = 0;
+			for (var i:int = 0;i < source.length;i++)
+			{
+				var bitmap:BitmapData = source[i];
+				if (x + bitmap.width <= maxWidth)
+				{
+					if (bitmap.height > mh)
+						mh = bitmap.height;
+				}
+				else
+				{
+					x = 0;
+					y += mh;
+					mh = 0;
+				}
+				resultRects.push(new Rectangle(x,y,bitmap.width,bitmap.height))
+				x += bitmap.width;
+			}
+			
+			var result:BitmapData = new BitmapData(maxWidth,y + mh,true,0);
+			
+			for (i = 0;i < resultRects.length;i++)
+			{
+				bitmap = source[i];
+				result.copyPixels(bitmap,bitmap.rect,(resultRects[i] as Rectangle).topLeft);
+			}
+			
 			return result;
 		}
 		
@@ -176,7 +222,11 @@ package ghostcat.util.display
 					(item as BitmapData).dispose();
 					
 				if (item is Bitmap)
+				{
 					(item as Bitmap).bitmapData.dispose();
+					if ((item as Bitmap).parent)
+						(item as Bitmap).parent.removeChild(item as Bitmap);
+				}
 			}
 		}
 	}

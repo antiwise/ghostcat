@@ -10,6 +10,7 @@ package ghostcat.transfer
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 
 	
 	/**
@@ -23,6 +24,8 @@ package ghostcat.transfer
 		protected var _target:DisplayObject;
 		
 		protected var bitmapData:BitmapData;
+		
+		protected var renderBitmapCall:UniqueCall = new UniqueCall(renderBitmap);
 		
 		public function GTransfer(target:DisplayObject=null):void
 		{
@@ -115,7 +118,7 @@ package ghostcat.transfer
 		 */
 		public function invalidateRenderBitmap():void
 		{
-			CallLater.callLater(renderBitmap,null,true);
+			renderBitmapCall.invalidate();
 		}
 		
 		/**

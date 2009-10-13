@@ -2,8 +2,9 @@ package ghostcat.filter
 {
 	import flash.filters.ColorMatrixFilter;
 	
-	import ghostcat.util.core.CallLater;
 	import ghostcat.debug.Debug;
+	import ghostcat.util.core.CallLater;
+	import ghostcat.util.core.UniqueCall;
 	
 	/**
 	 * 色彩变换滤镜
@@ -37,6 +38,8 @@ package ghostcat.filter
 		private var _type:int;
 		private var _n:int;
 		
+		private var updateCall:UniqueCall = new UniqueCall(update);
+		
 		public function ColorMatrixFilterProxy(type:int,n:int)
 		{
 			super(new ColorMatrixFilter())
@@ -57,7 +60,7 @@ package ghostcat.filter
 		public function set n(v:int):void
 		{
 			_n = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 
 		/**
@@ -73,7 +76,7 @@ package ghostcat.filter
 		public function set type(v:int):void
 		{
 			_type = v;
-			CallLater.callLater(update,null,true);
+			updateCall.invalidate();
 		}
 		private function update():void
 		{

@@ -213,5 +213,10 @@ package ghostcat.display
 		{
 			return super.getChildByName(name);
 		}
+		
+		public function $getChildIndex(child:DisplayObject):int
+		{
+			return super.getChildIndex(child);
+		}
 	}
 }

@@ -3,7 +3,6 @@ package ghostcat.display
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.display.Geom;
 	
 	/**
@@ -23,6 +22,7 @@ package ghostcat.display
 		{
 			super(skin,replace);
 			
+			this.sizeCall.frame = false;
 			invalidateSize();
 		}
 		/** @inheritDoc*/
@@ -90,11 +90,6 @@ package ghostcat.display
 		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
 		{
 			return Geom.localRectToContent(new Rectangle(0,0,width,height),this,targetCoordinateSpace);
-		}
-		/** @inheritDoc*/
-		override public function invalidateSize() : void
-		{
-			CallLater.callLater(updateSize,null,true);
 		}
 		/** @inheritDoc*/
 		override protected function updateSize() : void
