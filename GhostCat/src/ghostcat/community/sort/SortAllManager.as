@@ -10,11 +10,11 @@ package ghostcat.community.sort
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SortYAllManager extends EventDispatcher
+	public class SortAllManager extends EventDispatcher
 	{
 		public var target:DisplayObjectContainer;
 		private var data:Array = [];
-		public function SortYAllManager(target:DisplayObjectContainer=null)
+		public function SortAllManager(target:DisplayObjectContainer=null)
 		{
 			this.target = target;
 		}
@@ -26,19 +26,21 @@ package ghostcat.community.sort
 				data.push(target.getChildAt(i));
 		}
 		
-		public function calculate() : void
+		public function calculate(sortFields:Array = null) : void
 		{
 			if (!target)
 				return;
 			
-//			if (!data || data.length != target.numChildren)
-			refreshChildren();
+			if (!sortFields)
+				sortFields = ["y"];
 			
-			var result:Array = data.sortOn(["y"],Array.NUMERIC|Array.RETURNINDEXEDARRAY);
-			for (var i:int = 0; i < data.length; i++)
+			if (!data || data.length != target.numChildren)
+				refreshChildren();
+			
+			var result:Array = data.sortOn(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
+			for (var i:int = 0; i < result.length; i++)
 			{
-				var index:int = result.indexOf(i);
-				var v:DisplayObject = data[index] as DisplayObject;
+				var v:DisplayObject = data[result[i]] as DisplayObject;
 				target.setChildIndex(v,i);
 			}
 		}
