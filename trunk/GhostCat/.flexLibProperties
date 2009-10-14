@@ -18,15 +18,16 @@
     <classEntry path="ghostcat.community.CommunityManager"/>
     <classEntry path="ghostcat.community.GBaseCommunityManager"/>
     <classEntry path="ghostcat.community.GroupManager"/>
-    <classEntry path="ghostcat.community.sort.Sort45Manager"/>
-    <classEntry path="ghostcat.community.sort.SortYManager"/>
-    <classEntry path="ghostcat.community.tween.TweenGroupManager"/>
     <classEntry path="ghostcat.community.command.CollideCommand"/>
     <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
     <classEntry path="ghostcat.community.filter.OnlyCheckScreenFilter"/>
     <classEntry path="ghostcat.community.physics.PhysicsItem"/>
     <classEntry path="ghostcat.community.physics.PhysicsManager"/>
+    <classEntry path="ghostcat.community.sort.Sort45Manager"/>
+    <classEntry path="ghostcat.community.sort.SortAllManager"/>
+    <classEntry path="ghostcat.community.sort.SortYManager"/>
+    <classEntry path="ghostcat.community.tween.TweenGroupManager"/>
     <classEntry path="ghostcat.debug.Debug"/>
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
@@ -46,6 +47,7 @@
     <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
@@ -257,7 +259,9 @@
     <classEntry path="ghostcat.ui.containers.GVBox"/>
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
+    <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
+    <classEntry path="ghostcat.ui.controls.GButtonBase"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="ghostcat.ui.controls.GComboBox"/>
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
@@ -308,6 +312,7 @@
     <classEntry path="ghostcat.util.core.Handler"/>
     <classEntry path="ghostcat.util.core.HashMap"/>
     <classEntry path="ghostcat.util.core.Singleton"/>
+    <classEntry path="ghostcat.util.core.UniqueCall"/>
     <classEntry path="ghostcat.util.core.WeakReference"/>
     <classEntry path="ghostcat.util.data.BitArray"/>
     <classEntry path="ghostcat.util.data.BitUtil"/>
@@ -323,6 +328,7 @@
     <classEntry path="ghostcat.util.display.DisplayUtil"/>
     <classEntry path="ghostcat.util.display.FilterUtil"/>
     <classEntry path="ghostcat.util.display.Geom"/>
+    <classEntry path="ghostcat.util.display.GraphicsUtil"/>
     <classEntry path="ghostcat.util.display.HitTest"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
@@ -345,9 +351,7 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
-    <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
-    <classEntry path="ghostcat.community.sort.SortAllManager"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

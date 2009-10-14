@@ -15,7 +15,6 @@ package ghostcat.display.bitmap
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -108,7 +107,7 @@ package ghostcat.display.bitmap
 		private var _bitmapData:BitmapData;
 		
 		/**
-		 * 是否激活鼠标事件
+		 * 是否激活模拟鼠标事件
 		 * @return 
 		 * 
 		 */
@@ -577,9 +576,9 @@ package ghostcat.display.bitmap
 		
 		
 		/** @inheritDoc*/
-		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
-			return this;
+			return (uint(bitmapData.getPixel32(mouseX - x,mouseY - y) >> 24) > 0) ? [this] : null;
 		}
 		
 		/**

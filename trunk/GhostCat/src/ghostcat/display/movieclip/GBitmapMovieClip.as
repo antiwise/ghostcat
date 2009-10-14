@@ -191,9 +191,10 @@ package ghostcat.display.movieclip
 		}
 		
 		/** @inheritDoc*/
-		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
-			return this;
+			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
+			return (uint(bitmapData.getPixel32(mouseX - x,mouseY - y) >> 24) > 0) ? [this] : null;
 		}
 	}
 }

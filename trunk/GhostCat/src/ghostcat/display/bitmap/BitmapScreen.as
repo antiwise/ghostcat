@@ -5,6 +5,7 @@ package ghostcat.display.bitmap
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -51,14 +52,14 @@ package ghostcat.display.bitmap
 		private var sort:SortAllManager;//用于Sprite的排序器
 		
 		/**
-		 * 鼠标是否按下 
+		 * 是否激活模拟鼠标事件
 		 */
-		private var mouseDown:Boolean = false;
+		public var enabledMouseCheck:Boolean = true;
 		
-		/**
-		 * 记录子对象的鼠标状态
-		 */
-		private var isMouseOver:Dictionary = new Dictionary();
+		private var mouseDown:Boolean = false;//鼠标是否按下 
+		private var isMouseOver:Dictionary = new Dictionary();//记录子对象的鼠标触发状态
+		private var isMouseDown:Dictionary = new Dictionary();//记录子对象的鼠标按下状态
+		private var mouseOverList:Array;//位于鼠标上的对象
 		
 		public function get mode():String
 		{
@@ -208,7 +209,9 @@ package ghostcat.display.bitmap
 		{
 			if (sortFields && mode != MODE_SPRITE)
 				children.sortOn(sortFields, [Array.NUMERIC]);
-
+			
+			mouseOverList = [];
+			
 			if (mode == MODE_BITMAP)
 			{
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;
@@ -239,6 +242,44 @@ package ghostcat.display.bitmap
 					sort.calculate(sortFields);
 			}
 			
+			//处理鼠标事件
+			if (enabledMouseCheck)
+			{
+				for each (obj in mouseOverList)
+				{
+					if (isMouseOver[obj]!=true)
+					{
+						isMouseOver[obj] = true;
+						obj.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OVER));
+						obj.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER));
+					}
+					
+					if (mouseDown && isMouseDown[obj]!=true)
+					{
+						isMouseDown[obj] = true;
+						obj.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN));
+					}
+				}
+				
+				for (obj in isMouseOver)
+				{
+					if (mouseOverList.indexOf(obj) == -1)
+					{
+						delete isMouseOver[obj];
+						obj.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OUT));
+						obj.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OUT));
+					}
+				}
+				if (!mouseDown)
+				{
+					for (obj in isMouseDown)
+					{
+						delete isMouseDown[obj];
+						obj.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP));
+					}
+				}
+			}
+			
 			super.updateDisplayList();
 		}
 		
@@ -250,12 +291,15 @@ package ghostcat.display.bitmap
 		protected function drawChild(obj:*):void
 		{
 			var source:BitmapData;
+			//绘制
 			var m:Matrix;
 			if (mode == MODE_BITMAP)
 			{
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 				if (obj is IBitmapDataDrawer)
+				{
 					(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData);
+				}
 				else if (obj is DisplayObject)
 				{
 					m = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);
@@ -271,6 +315,22 @@ package ghostcat.display.bitmap
 			{
 				if (obj is DisplayObject && (obj as DisplayObject).parent != content)
 					(content as Sprite).addChild(obj as DisplayObject)
+			}
+			
+			//判断是否在鼠标下
+			if (enabledMouseCheck)
+			{
+				if (obj is IBitmapDataDrawer)
+				{
+					var mouseObjs:Array = (obj as IBitmapDataDrawer).getBitmapUnderMouse(mouseX,mouseY);
+					if (mouseObjs)
+						mouseOverList = mouseOverList.concat(mouseObjs);
+				}
+//				else if (obj is DisplayObject && (obj as DisplayObject).parent == null)
+//				{
+//					if ((obj as DisplayObject).hitTestPoint(stage.mouseX,stage.mouseY),true)
+//						mouseOverList.push(obj);
+//				}
 			}
 		}
 		
