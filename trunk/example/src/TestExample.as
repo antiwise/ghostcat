@@ -69,6 +69,9 @@ package
 	import flash.display.InteractiveObject;
 	import ghostcat.ui.controls.GBitmapButton;
 	import ghostcat.skin.ButtonSkin;
+	import flash.net.URLRequest;
+	import flash.display.Loader;
+	import flash.events.IOErrorEvent;
 	
 	[SWF(width="600",height="600")]
 	

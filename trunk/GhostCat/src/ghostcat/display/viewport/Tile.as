@@ -8,12 +8,12 @@ package ghostcat.display.viewport
 	import flash.utils.Dictionary;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
-	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.display.Geom;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.DisplayUtil;
+	import ghostcat.util.display.Geom;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
 	
@@ -399,8 +399,12 @@ package ghostcat.display.viewport
 				addChildAt(s,0);
 			else
 				addChild(s);
-				
-			dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j),addToLow:low}));
+			
+			var e:RepeatEvent = new RepeatEvent(RepeatEvent.ADD_REPEAT_ITEM);
+			e.repeatObj = s;
+			e.repeatPos = new Point(i,j);
+			e.addToLow = low;
+			dispatchEvent(e);
 		
 			return s;
 		}
@@ -421,7 +425,11 @@ package ghostcat.display.viewport
 				delete contents[i + ":" +j];
 				removeChild(s);
 				unuseContents.push(s);
-				dispatchEvent(Util.createObject(new RepeatEvent(RepeatEvent.REMOVE_REPEAT_ITEM),{repeatObj:s,repeatPos:new Point(i,j)}));
+				
+				var e:RepeatEvent = new RepeatEvent(RepeatEvent.REMOVE_REPEAT_ITEM);
+				e.repeatObj = s;
+				e.repeatPos = new Point(i,j);
+				dispatchEvent(e);
 			}
 			return s;
 		}

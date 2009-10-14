@@ -3,8 +3,8 @@ package ghostcat.operation
 	import flash.events.EventDispatcher;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.AbstractUtil;
 	
 	[Event(name="operation_start",type="ghostcat.events.OperationEvent")]
 	[Event(name="operation_complete",type="ghostcat.events.OperationEvent")]
@@ -59,9 +59,17 @@ package ghostcat.operation
 		 */		
 		public function execute():void
 		{
-			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_START),{oper:this}));
-			if (queue) 
-				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_START),{oper:queue,childOper:this}));
+			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_START);
+			e.oper = this;
+			dispatchEvent(e);
+			
+			if (queue)
+			{
+				e = new OperationEvent(OperationEvent.CHILD_OPERATION_START);
+				e.oper = queue;
+				e.childOper = this;
+				queue.dispatchEvent(e);
+			}
 			
 			step = RUN;
 		}
@@ -74,9 +82,19 @@ package ghostcat.operation
 		{
 			lastResult = event;
 			
-			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_COMPLETE),{oper:this,result:event}));
-			if (queue) 
-				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE),{oper:queue,childOper:this,result:event}));
+			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
+			e.oper = this;
+			e.result = event;
+			dispatchEvent(e);
+			
+			if (queue)
+			{
+				e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
+				e.oper = queue;
+				e.childOper = this;
+				e.result = event;
+				dispatchEvent(e);
+			}
 			
 			step = END;
 		}
@@ -89,9 +107,19 @@ package ghostcat.operation
 		{
 			lastResult = event;
 			
-			dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.OPERATION_ERROR),{oper:this,result:event}));
-			if (queue) 
-				queue.dispatchEvent(Util.createObject(new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR),{oper:queue,childOper:this,result:event}));
+			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_ERROR);
+			e.oper = this;
+			e.result = event;
+			dispatchEvent(e);
+			
+			if (queue)
+			{
+				e = new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR);
+				e.oper = queue;
+				e.childOper = this;
+				e.result = event;
+				dispatchEvent(e);
+			}
 			
 			step = END;
 		}

@@ -30,7 +30,10 @@ package ghostcat.community.command
 				var g2:ICollisionClient = v2 as ICollisionClient;
 				if (g1.collision.hitTestObject(g2.collision))
 				{
-					g1.dispatchEvent(Util.createObject(new CollideEvent(CollideEvent.COLLIDE),{vergePosition:g1.collision.lastVergePoint,hitObject:g2}));
+					var e:CollideEvent = new CollideEvent(CollideEvent.COLLIDE);
+					e.vergePosition = g1.collision.lastVergePoint;
+					e.hitObject = g2;
+					g1.dispatchEvent(e);
 					return true;
 				}
 			}
@@ -38,7 +41,9 @@ package ghostcat.community.command
 			{
 				if (v1.hitTestObject(v2))
 				{
-					v1.dispatchEvent(Util.createObject(new CollideEvent(CollideEvent.COLLIDE),{hitObject:v2}));
+					e = new CollideEvent(CollideEvent.COLLIDE);
+					e.hitObject = v2;
+					v1.dispatchEvent(e);
 					return true;
 				}
 			}

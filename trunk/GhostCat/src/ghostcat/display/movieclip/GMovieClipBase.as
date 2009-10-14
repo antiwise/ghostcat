@@ -147,15 +147,23 @@ package ghostcat.display.movieclip
 				currentFrame  = (frameRate >= 0) ? getLabelStart(index) : getLabelEnd(index);
 				curLabelIndex = index;
 				
-				dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_START),{labelName:curLabelName}))
+				var e:MovieEvent = new MovieEvent(MovieEvent.MOVIE_START);
+				e.labelName = labelName;
+				dispatchEvent(e);
 				
 				if (GMovieClipBase.labelHandlers[labelName])
 					(GMovieClipBase.labelHandlers[labelName] as Handler).call();
         	}
         	else
         	{
-        		dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_END),{labelName:labelName}));
-        		dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_ERROR),{labelName:labelName}));
+				e = new MovieEvent(MovieEvent.MOVIE_END);
+				e.labelName = labelName;
+				dispatchEvent(e);
+				
+				e = new MovieEvent(MovieEvent.MOVIE_ERROR);
+				e.labelName = labelName;
+				dispatchEvent(e);
+				
 //				if (nextLabels.length > 0)
 //				{
 //					setLabel(nextLabels[0][0], nextLabels[0][1]);
@@ -228,7 +236,10 @@ package ghostcat.display.movieclip
 					
 					if (numLoops == 0)
 					{
-						dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_END),{labelName:curLabelName}));
+						var e:MovieEvent = new MovieEvent(MovieEvent.MOVIE_END);
+						e.labelName = curLabelName;
+						dispatchEvent(e);
+						
 						if (nextLabels.length > 0)
 						{
 							setLabel(nextLabels[0][0], nextLabels[0][1]);
@@ -236,7 +247,9 @@ package ghostcat.display.movieclip
 						}
 						else 
 						{
-							dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_EMPTY),{labelName:curLabelName}));
+							e = new MovieEvent(MovieEvent.MOVIE_EMPTY);
+							e.labelName = curLabelName;
+							dispatchEvent(e);
 						}
 					}
 					else 

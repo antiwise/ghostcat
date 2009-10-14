@@ -32,6 +32,8 @@ package ghostcat.util.core
 		 */
 		protected var para:Array;
 		
+		private var tick:Tick = Tick.instance;//缓存Tick实例
+		
 		/**
 		 * 
 		 * @param handler	执行的函数
@@ -54,7 +56,7 @@ package ghostcat.util.core
 			if (!frame)
 				setTimeout(vaildNow,0);
 			else
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);	
+				tick.addEventListener(TickEvent.TICK,tickHandler);	
 		}
 		
 		public function vaildNow():void
@@ -70,7 +72,7 @@ package ghostcat.util.core
 		
 		private function tickHandler(event:TickEvent):void
 		{
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+			tick.removeEventListener(TickEvent.TICK,tickHandler);
 			vaildNow();
 		}
 	}

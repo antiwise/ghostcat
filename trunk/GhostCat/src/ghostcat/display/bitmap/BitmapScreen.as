@@ -206,7 +206,7 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
-			if (sortFields)
+			if (sortFields && mode != MODE_SPRITE)
 				children.sortOn(sortFields, [Array.NUMERIC]);
 
 			if (mode == MODE_BITMAP)

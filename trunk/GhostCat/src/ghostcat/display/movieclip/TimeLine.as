@@ -225,22 +225,36 @@ package ghostcat.display.movieclip
 					(mList[i] as Function).call(this.mc);
 			}
 			
+			var e:TimeLineEvent;
+			
 			if (mc.currentLabel != prevLabel)
 			{
-				dispatchEvent(Util.createObject(new TimeLineEvent(TimeLineEvent.LABEL_CHANGED),
-				{prevLabel:prevLabel,label:mc.currentLabel,prevFrame:prevFrame,frame:mc.currentFrame}))
+				e = new TimeLineEvent(TimeLineEvent.LABEL_CHANGED);
+				e.prevLabel = prevLabel;
+				e.label = mc.currentLabel;
+				e.prevFrame = prevFrame;
+				e.frame = mc.currentFrame;
+				dispatchEvent(e);
 			}
 			
 			if (mc.currentFrame == mc.totalFrames)
 			{
-				dispatchEvent(Util.createObject(new TimeLineEvent(TimeLineEvent.TIMELINE_END),
-				{prevLabel:prevLabel,label:mc.currentLabel,prevFrame:prevFrame,frame:mc.currentFrame}))
+				e = new TimeLineEvent(TimeLineEvent.TIMELINE_END);
+				e.prevLabel = prevLabel;
+				e.label = mc.currentLabel;
+				e.prevFrame = prevFrame;
+				e.frame = mc.currentFrame;
+				dispatchEvent(e);
 			}
 			
 			if (mc.currentFrame == 1)
 			{
-				dispatchEvent(Util.createObject(new TimeLineEvent(TimeLineEvent.TIMELINE_START),
-				{prevLabel:prevLabel,label:mc.currentLabel,prevFrame:prevFrame,frame:mc.currentFrame}))
+				e = new TimeLineEvent(TimeLineEvent.TIMELINE_START);
+				e.prevLabel = prevLabel;
+				e.label = mc.currentLabel;
+				e.prevFrame = prevFrame;
+				e.frame = mc.currentFrame;
+				dispatchEvent(e);
 			}
 				
 			prevFrame = mc.currentFrame;

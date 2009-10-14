@@ -11,10 +11,10 @@ package ghostcat.manager
 	import ghostcat.events.TickEvent;
 	import ghostcat.parse.display.AlphaShapeParse;
 	import ghostcat.parse.display.DrawParse;
-	import ghostcat.util.display.Geom;
-	import ghostcat.util.core.Handler;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.Handler;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * FLASH自带的拖动功能缺乏扩展性，因此必要时只能重新实现。
@@ -143,10 +143,11 @@ package ghostcat.manager
 	
 		protected function startDrag():void
 		{
-			var evt:DragEvent = Util.createObject(new DragEvent(DragEvent.DRAG_START,false,true),{dragObj:obj});
-			obj.dispatchEvent(evt)
+			var e:DragEvent = new DragEvent(DragEvent.DRAG_START,false,true);
+			e.dragObj = obj;
+			obj.dispatchEvent(e)
 			
-			if (evt.isDefaultPrevented())
+			if (e.isDefaultPrevented())
 				return;
 			
 			list[obj] = this;
@@ -180,10 +181,11 @@ package ghostcat.manager
 		
 		protected function stopDrag():void
 		{
-			var evt:DragEvent = Util.createObject(new DragEvent(DragEvent.DRAG_STOP,false,true),{dragObj:obj});
-			obj.dispatchEvent(evt)
+			var e:DragEvent = new DragEvent(DragEvent.DRAG_STOP,false,true);
+			e.dragObj = obj;
+			obj.dispatchEvent(e)
 			
-			if (evt.isDefaultPrevented())
+			if (e.isDefaultPrevented())
 				return;
 			
 			Tick.instance.removeEventListener(TickEvent.TICK,enterFrameHandler);
@@ -233,7 +235,10 @@ package ghostcat.manager
 				else
 					out = Geom.forcePointInside(obj,bounds);
 			}
-			obj.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_ON,false,false),{dragObj:obj}));
+			
+			var e:DragEvent = new DragEvent(DragEvent.DRAG_ON,false,false);
+			e.dragObj = obj;
+			obj.dispatchEvent(e);
 			
 			if (out && upWhenLeave)
 				stopDrag();
@@ -245,23 +250,31 @@ package ghostcat.manager
 			
 			if (dragContainer)
 			{
-				dragContainer.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_DROP,true,false),{dragObj:obj}));
+				var e:DragEvent = new DragEvent(DragEvent.DRAG_DROP,true,false);
+				e.dragObj = obj;
+				dragContainer.dispatchEvent(e);
 				dragContainer = null;
 			}
 			
-			obj.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_COMPLETE,false,false),{dragObj:obj}));
+			e = new DragEvent(DragEvent.DRAG_COMPLETE,false,false);
+			e.dragObj = obj;
+			obj.dispatchEvent(e);
 		}
 		
 		private function mouseOverHandler(event:MouseEvent):void
 		{
 			dragContainer = event.target as DisplayObject;
 			
-			event.target.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_OVER,true,false),{dragObj:obj}));
+			var e:DragEvent = new DragEvent(DragEvent.DRAG_OVER,true,false);
+			e.dragObj = obj;
+			event.target.dispatchEvent(e);
 		}
 		
 		private function mouseOutHandler(event:MouseEvent):void
 		{
-			event.target.dispatchEvent(Util.createObject(new DragEvent(DragEvent.DRAG_OUT,true,false),{dragObj:obj}));
+			var e:DragEvent = new DragEvent(DragEvent.DRAG_OUT,true,false);
+			e.dragObj = obj;
+			event.target.dispatchEvent(e);
 		}
 	}
 }
