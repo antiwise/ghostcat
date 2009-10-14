@@ -10,11 +10,10 @@ package ghostcat.display.bitmap
 	import flash.geom.Rectangle;
 	
 	import ghostcat.util.Util;
-	import ghostcat.util.display.BitmapUtil;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	/**
-	 * 位图数据的模拟容器
+	 * 位图数据的模拟容器，可加入BitmapScreen显示，并有拥有模拟容器的概念
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -132,14 +131,29 @@ package ghostcat.display.bitmap
 			if (children)
 			{
 				for (var i:int = 0;i < children.length;i++)
-					(children[i] as BitmapDataContainer).drawToShape(target);
+					(children[i] as IBitmapDataDrawer).drawToShape(target);
 			}
 		}
 		
 		/** @inheritDoc*/
-		public function checkMouseEvent(pos:Point):IBitmapDataDrawer
+		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
-			return this;
+			var p:Point = getGlobalPosition();
+			var mouseOverList:Array;
+			if (uint(bitmapData.getPixel32(mouseX - p.x,mouseY - p.y) >> 24) > 0)
+				mouseOverList = [this];
+			
+			var children:Array = this.children;
+			if (children)
+			{
+				for (var i:int = 0;i < children.length;i++)
+				{
+					var mouseObjs:Array = (children[i] as IBitmapDataDrawer).getBitmapUnderMouse(mouseX,mouseY);
+					if (mouseObjs)
+						mouseOverList = mouseOverList.concat(mouseObjs);
+				}
+			}
+			return null;
 		}
 		
 		/**

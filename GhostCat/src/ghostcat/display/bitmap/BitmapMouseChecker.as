@@ -7,7 +7,7 @@ package ghostcat.display.bitmap
 	import ghostcat.util.Tick;
 	
 	/**
-	 * 为位图提供鼠标事件
+	 * 为位图提供模拟鼠标事件
 	 * @author flashyiyi
 	 * 
 	 */

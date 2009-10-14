@@ -2,14 +2,14 @@ package ghostcat.display.bitmap
 {
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
-	import flash.geom.Point;
+	import flash.events.IEventDispatcher;
 	
 	/**
 	 * 能够被BitmapScreen绘制的对象需要实现的接口
 	 * @author tangwei
 	 * 
 	 */
-	public interface IBitmapDataDrawer
+	public interface IBitmapDataDrawer extends IEventDispatcher
 	{
 		/**
 		 * 采用copyPixel绘制到位图上
@@ -25,11 +25,11 @@ package ghostcat.display.bitmap
 		function drawToShape(target:Graphics):void;
 		
 		/**
-		 * 检查鼠标当前点，并返回接受事件的对象
+		 * 检查鼠标当前点，并返回接受事件的对象组
 		 * @param pos
 		 * @return 
 		 * 
 		 */
-		function checkMouseEvent(pos:Point):IBitmapDataDrawer;
+		function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array;
 	}
 }

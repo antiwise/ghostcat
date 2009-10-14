@@ -9,7 +9,7 @@ package ghostcat.display.bitmap
 	import flash.utils.Dictionary;
 
 	/**
-	 * 位图缓存类。
+	 * 位图切换缓存静态类。
 	 * 
 	 * 这个类缓存的是静态图形，动画缓存可使用MovieClipCacher类
 	 * @see ghostcat.display.movieclip.MovieClipCacher
@@ -34,7 +34,7 @@ package ghostcat.display.bitmap
          * @param precision	这个参数是缩放的时候使用的。当放大图形的时候，位图会变得模糊，将这个值设置为最大缩放比，将会以缩放到最大
          * 时的图形精度来缓存位图，这样即使放大位图仍然可以保持图像清晰。
          * 
-         * @return	返回生成的位图。因此，这个方法也可以顺带作为截屏方法使用。
+         * @return	返回生成的位图
          */        
         public function swapContentForBitmap(content:DisplayObjectContainer,rect:Rectangle=null,precision:Number=1.0):Bitmap
         {

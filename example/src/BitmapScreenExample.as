@@ -1,6 +1,7 @@
 package
 {
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import ghostcat.community.physics.PhysicsItem;
@@ -16,7 +17,7 @@ package
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GRadioButton;
 	import ghostcat.ui.controls.GRadioButtonGroup;
-	import ghostcat.util.display.ColorUtil;
+	import ghostcat.util.Util;
 	
 	
 	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
@@ -39,6 +40,7 @@ package
 			
 			s = new BitmapScreen(400,400,false);
 			s.mode = BitmapScreen.MODE_BITMAP;
+			s.enabledMouseCheck = false;
 			addChild(s);
 			
 			//创建100个物品
@@ -62,19 +64,15 @@ package
 			p.paused = true;
 			
 			//创建UI
-			addChild(new FPS());
-			
 			var vbox:GVBox = new GVBox();
 			vbox.y = 30;
 			addChild(vbox);
-			var checkBox:GCheckBox = new GCheckBox();
-			checkBox.label = "暂停";
-			checkBox.selected = true;
+			
+			var checkBox:GCheckBox = Util.createObject(GCheckBox,{label:"暂停",selected:true});
 			vbox.addChild(checkBox);
 			checkBox.addEventListener(Event.CHANGE,checkChangeHandler);
-			var checkBox2:GCheckBox = new GCheckBox();
-			checkBox2.label = "排序";
-			checkBox2.selected = false;
+			
+			var checkBox2:GCheckBox = Util.createObject(GCheckBox,{label:"排序",selected:false});
 			vbox.addChild(checkBox2);
 			checkBox2.addEventListener(Event.CHANGE,check2ChangeHandler);
 			
@@ -82,21 +80,14 @@ package
 			space.setSize(100,10);
 			vbox.addChild(space);
 			
-			var radioButton:GRadioButton = new GRadioButton();
-			radioButton.label = "普通";
-			radioButton.groupName = "a";
-			vbox.addChild(radioButton);
-			radioButton = new GRadioButton();
-			radioButton.label = "copyPixel";
-			radioButton.groupName = "a";
-			radioButton.selected = true;
-			vbox.addChild(radioButton);
-			radioButton = new GRadioButton();
-			radioButton.label = "beginBitmapFill";
-			radioButton.groupName = "a";
-			vbox.addChild(radioButton);
+			vbox.addChild(Util.createObject(GRadioButton,{label:"普通",groupName:"a"}));
+			vbox.addChild(Util.createObject(GRadioButton,{label:"copyPixel",groupName:"a",selected:true}));
+			vbox.addChild(Util.createObject(GRadioButton,{label:"beginBitmapFill",groupName:"a"}));
+			
 			var group:GRadioButtonGroup = GRadioButtonGroup.getGroupByName("a");
 			group.addEventListener(Event.CHANGE,radioChangeHandler);
+			
+			addChild(new FPS());
 		}
 		
 		private function checkChangeHandler(event:Event):void
