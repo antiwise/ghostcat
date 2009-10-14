@@ -59,7 +59,7 @@ package ghostcat.display
 		private var _position:Point = new Point();
 		
 		/**
-		 * 是否激活移动缩放事件（取消可增加性能）
+		 * 是否激活各种Vaild事件（取消可大幅增加性能）
 		 */
 		public var enabledDelayUpdate:Boolean = true;
 		
@@ -242,7 +242,7 @@ package ghostcat.display
 				super.x = value;
 			
 			if (enabledDelayUpdate)
-				invalidatePosition();
+				positionCall.invalidate();
 		}
 		
 		public override function get x() : Number
@@ -262,7 +262,7 @@ package ghostcat.display
 				super.y = value;
 				
 			if (enabledDelayUpdate)
-				invalidatePosition();
+				positionCall.invalidate();
 		}
 		
 		public override function get y() : Number
@@ -345,7 +345,7 @@ package ghostcat.display
 			super.width = value;
 				
 			if (enabledDelayUpdate)
-				invalidateSize();
+				sizeCall.invalidate();
 		}
 		/** @inheritDoc*/
 		public override function set height(value:Number):void
@@ -356,7 +356,7 @@ package ghostcat.display
 			super.height = value;
 				
 			if (enabledDelayUpdate)
-				invalidateSize();
+				sizeCall.invalidate();
 		}
 		
 		/**
@@ -506,13 +506,21 @@ package ghostcat.display
 		 */
 		public function vaildPosition(noEvent:Boolean = false):void
 		{
-			super.x = position.x;
-			super.y = position.y;			
-		
+			if (super.x != position.x)
+				super.x = position.x;
+			
+			if (super.y != position.y)
+				super.y = position.y;			
+			
 			updatePosition();
 			
 			if (!noEvent)
-				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:_oldPosition,newPosition:position}));
+			{
+				var e:MoveEvent = new MoveEvent(MoveEvent.MOVE);
+				e.oldPosition = _oldPosition;
+				e.newPosition = position;
+				dispatchEvent(e);
+			}
 			_oldPosition = position.clone();
 		}
 		
@@ -523,11 +531,20 @@ package ghostcat.display
 		public function vaildSize(noEvent:Boolean = false):void
 		{
 			updateSize();
+			
 			if (!noEvent)
 			{
-				dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
+				var e:ResizeEvent = new ResizeEvent(ResizeEvent.RESIZE);
+				e.size = new Point(width,height)
+				dispatchEvent(e);
+				
 				if (parent)
-					parent.dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.CHILD_RESIZE),{size:new Point(width,height),child:this}));
+				{
+					e = new ResizeEvent(ResizeEvent.CHILD_RESIZE);
+					e.size = new Point(width,height);
+					e.child = this;
+					parent.dispatchEvent(e);
+				}
 			}
 		}
 		
@@ -538,6 +555,7 @@ package ghostcat.display
 		public function vaildDisplayList(noEvent:Boolean = false):void
 		{
 			updateDisplayList();
+			
 			if (!noEvent)
 				dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
 		}

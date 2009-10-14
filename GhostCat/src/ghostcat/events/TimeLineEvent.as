@@ -38,12 +38,12 @@ package ghostcat.events
 		/**
 		 * 上一帧
 		 */		
-		public var prevFrame:String
+		public var prevFrame:int;
 		
 		/**
 		 * 当前帧
 		 */
-		public var frame:String;
+		public var frame:int;
 		
 		public function TimeLineEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

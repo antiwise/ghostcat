@@ -54,7 +54,7 @@ package ghostcat.display.bitmap
 		private var _data:Object;
 		
 		/**
-		 * 是否激活移动缩放事件（取消可增加性能）
+		 * 是否激活各种Vaild事件（取消可大幅增加性能）
 		 */
 		public var enabledDelayUpdate:Boolean = true;
 		
@@ -204,9 +204,9 @@ package ghostcat.display.bitmap
 			
 			if (!delayUpatePosition)
 				super.x = value;
-				
+			
 			if (enabledDelayUpdate)
-				invalidatePosition();
+				positionCall.invalidate();
 		}
 		
 		public override function get x() : Number
@@ -227,7 +227,7 @@ package ghostcat.display.bitmap
 				super.y = value;
 			
 			if (enabledDelayUpdate)
-				invalidatePosition();
+				positionCall.invalidate();
 			
 		}
 		
@@ -338,7 +338,7 @@ package ghostcat.display.bitmap
 			
 			_width = v;
 			if (enabledDelayUpdate)
-				invalidateSize();
+				sizeCall.invalidate();
 		}
 
 		/** @inheritDoc */
@@ -355,7 +355,7 @@ package ghostcat.display.bitmap
 				
 			_height = v;
 			if (enabledDelayUpdate)
-				invalidateSize();
+				sizeCall.invalidate();
 		}
 		
 		protected var positionCall:UniqueCall = new UniqueCall(vaildPosition,true);
@@ -394,13 +394,21 @@ package ghostcat.display.bitmap
 		 */
 		public function vaildPosition(noEvent:Boolean = false):void
 		{
-			super.x = position.x;
-			super.y = position.y;			
+			if (super.x != position.x)
+				super.x = position.x;
+			
+			if (super.y != position.y)
+				super.y = position.y;			
 		
 			updatePosition();
 			
 			if (!noEvent)
-				dispatchEvent(Util.createObject(new MoveEvent(MoveEvent.MOVE),{oldPosition:_oldPosition,newPosition:position}));
+			{
+				var e:MoveEvent = new MoveEvent(MoveEvent.MOVE);
+				e.oldPosition = _oldPosition;
+				e.newPosition = position;
+				dispatchEvent(e);
+			}
 			_oldPosition = position.clone();
 		}
 		
@@ -410,9 +418,22 @@ package ghostcat.display.bitmap
 		 */
 		public function vaildSize(noEvent:Boolean = false):void
 		{
+			updateSize();
+			
 			if (!noEvent)
-				updateSize();
-			dispatchEvent(Util.createObject(new ResizeEvent(ResizeEvent.RESIZE),{size:new Point(width,height)}));
+			{
+				var e:ResizeEvent = new ResizeEvent(ResizeEvent.RESIZE);
+				e.size = new Point(width,height)
+				dispatchEvent(e);
+				
+				if (parent)
+				{
+					e = new ResizeEvent(ResizeEvent.CHILD_RESIZE);
+					e.size = new Point(width,height);
+					e.child = this;
+					parent.dispatchEvent(e);
+				}
+			}
 		}
 		
 		/**
@@ -423,6 +444,7 @@ package ghostcat.display.bitmap
 		{
 			if (!noEvent)
 				updateDisplayList();
+			
 			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
 		}
 		

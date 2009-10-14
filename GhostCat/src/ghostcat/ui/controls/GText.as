@@ -354,7 +354,9 @@ package ghostcat.ui.controls
 			if (asTextBitmap)
 				reRenderTextBitmap();
 			
-			dispatchEvent(Util.createObject(new GTextEvent(GTextEvent.TEXT_CHANGE),{gText:this}));//只在设置属性的时候才替换语言，而不是文本变化时就换
+			var e:GTextEvent = new GTextEvent(GTextEvent.TEXT_CHANGE);
+			e.gText = this;
+			dispatchEvent(e);//只在设置属性的时候才替换语言，而不是文本变化时就换
 		}
 		
 		/**

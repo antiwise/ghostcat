@@ -12,13 +12,23 @@ package ghostcat.community.sort
 	 */
 	public class SortAllManager extends EventDispatcher
 	{
+		/**
+		 * 全部对象所在的容器
+		 */
 		public var target:DisplayObjectContainer;
-		private var data:Array = [];
+		/**
+		 * 子对象列表
+		 */
+		public var data:Array = [];
 		public function SortAllManager(target:DisplayObjectContainer=null)
 		{
 			this.target = target;
 		}
 		
+		/**
+		 * 刷新子对象列表
+		 * 
+		 */
 		public function refreshChildren():void
 		{
 			data = [];
@@ -26,6 +36,11 @@ package ghostcat.community.sort
 				data.push(target.getChildAt(i));
 		}
 		
+		/**
+		 * 排序
+		 * @param sortFields	排序依据
+		 * 
+		 */
 		public function calculate(sortFields:Array = null) : void
 		{
 			if (!target)
@@ -41,7 +56,8 @@ package ghostcat.community.sort
 			for (var i:int = 0; i < result.length; i++)
 			{
 				var v:DisplayObject = data[result[i]] as DisplayObject;
-				target.setChildIndex(v,i);
+				if (target.getChildIndex(v) != i)
+					target.setChildIndex(v,i);
 			}
 		}
 	}

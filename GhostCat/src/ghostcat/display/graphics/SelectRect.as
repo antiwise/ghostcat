@@ -67,7 +67,9 @@ package ghostcat.display.graphics
 			var maxY:Number = Math.max(start.y,end.y);
 			var rect:Rectangle = new Rectangle(minX,minY,maxX - minX,maxY - minY);
 			
-			dispatchEvent(Util.createObject(new SelectEvent(SelectEvent.SELECT),{rect:rect}))
+			var e:SelectEvent = new SelectEvent(SelectEvent.SELECT);
+			e.rect = rect;
+			dispatchEvent(e);
 			
 			start = end = null;
 			

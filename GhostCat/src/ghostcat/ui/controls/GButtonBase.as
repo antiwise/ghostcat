@@ -406,7 +406,11 @@ package ghostcat.ui.controls
 				selected = !selected;
 		
 			if (this.action)
-				dispatchEvent(Util.createObject(new ActionEvent(ActionEvent.ACTION),{action:this.action}))
+			{
+				var e:ActionEvent = new ActionEvent(ActionEvent.ACTION);
+				e.action = this.action;
+				dispatchEvent(e)
+			}
 		}
 		/** @inheritDoc*/
 		public override function destory() : void

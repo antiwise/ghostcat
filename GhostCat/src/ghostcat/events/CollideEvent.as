@@ -4,6 +4,8 @@ package ghostcat.events
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	import ghostcat.display.viewport.ICollisionClient;
+	
 	/**
 	 * 碰撞事件
 	 * @author flashyiyi
@@ -21,7 +23,7 @@ package ghostcat.events
 		/**
 		 * 碰撞的对象
 		 */		
-		public var hitObject:DisplayObject;
+		public var hitObject:*;
 		
 		public function CollideEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

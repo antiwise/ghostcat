@@ -61,6 +61,7 @@ package
 			}
 			p.paused = true;
 			
+			//创建UI
 			addChild(new FPS());
 			
 			var vbox:GVBox = new GVBox();
@@ -96,8 +97,6 @@ package
 			vbox.addChild(radioButton);
 			var group:GRadioButtonGroup = GRadioButtonGroup.getGroupByName("a");
 			group.addEventListener(Event.CHANGE,radioChangeHandler);
-			
-			this.enabledTick = true;
 		}
 		
 		private function checkChangeHandler(event:Event):void

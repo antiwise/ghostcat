@@ -1,19 +1,20 @@
 package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.layout.LinearLayout;
-	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.DisplayUtil;
 	
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
 	/**
@@ -114,7 +115,12 @@ package ghostcat.ui.containers
 				o = o.parent;
 			
 			if (ref.isClass(o))
-				dispatchEvent(Util.createObject(new ItemClickEvent(ItemClickEvent.ITEM_CLICK),{item:(o as GBase).data,relatedObject:o}));
+			{
+				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
+				e.item = (o as GBase).data;
+				e.relatedObject = o as InteractiveObject;
+				dispatchEvent(e);
+			}
 		}
 		
 	}

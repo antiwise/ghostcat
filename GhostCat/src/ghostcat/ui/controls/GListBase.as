@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
@@ -401,7 +402,10 @@ package ghostcat.ui.controls
 			if (ref.isClass(o))
 			{
 				selectedItem = o;
-				dispatchEvent(Util.createObject(new ItemClickEvent(ItemClickEvent.ITEM_CLICK),{item:(o as GBase).data,relatedObject:o}));
+				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
+				e.item = (o as GBase).data;
+				e.relatedObject = o as InteractiveObject;
+				dispatchEvent(e);
 			}
 		}
 		

@@ -59,11 +59,14 @@ package ghostcat.util
 			if (!pause)
 			{
 				var interval:int;
-				if (prevTime == 0){
+				if (prevTime == 0)
 					interval = 0;
-				}else{
+				else
+				{
 					interval = nextTime - prevTime;
-					dispatchEvent(Util.createObject(new TickEvent(TickEvent.TICK),{interval:interval * speed}));
+					var e:TickEvent = new TickEvent(TickEvent.TICK);
+					e.interval = interval * speed;
+					dispatchEvent(e);
 				}
 			}
 			prevTime = nextTime;
