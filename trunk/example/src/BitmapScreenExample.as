@@ -38,7 +38,6 @@ package
 			RootManager.register(this);
 			
 			s = new BitmapScreen(400,400,false);
-			s.enabledSortY();
 			s.mode = BitmapScreen.MODE_BITMAP;
 			addChild(s);
 			
@@ -72,6 +71,11 @@ package
 			checkBox.selected = true;
 			vbox.addChild(checkBox);
 			checkBox.addEventListener(Event.CHANGE,checkChangeHandler);
+			var checkBox2:GCheckBox = new GCheckBox();
+			checkBox2.label = "排序";
+			checkBox2.selected = false;
+			vbox.addChild(checkBox2);
+			checkBox2.addEventListener(Event.CHANGE,check2ChangeHandler);
 			
 			var space:GNoScale = new GNoScale();
 			space.setSize(100,10);
@@ -100,6 +104,12 @@ package
 		{
 			p.paused = !p.paused;
 			s.enabledTick = !s.enabledTick;
+		}
+		
+		private function check2ChangeHandler(event:Event):void
+		{
+			var b:Boolean = (event.currentTarget as GCheckBox).selected;
+			s.sortFields = b? ["y"]:null;
 		}
 		
 		private function radioChangeHandler(event:Event):void

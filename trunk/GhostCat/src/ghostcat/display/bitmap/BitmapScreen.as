@@ -11,7 +11,7 @@ package ghostcat.display.bitmap
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.community.sort.SortYAllManager;
+	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
@@ -48,7 +48,7 @@ package ghostcat.display.bitmap
 		
 		private var _mode:String = MODE_BITMAP;
 		
-		private var sort:SortYAllManager;//用于Sprite的排序器
+		private var sort:SortAllManager;//用于Sprite的排序器
 		
 		/**
 		 * 鼠标是否按下 
@@ -148,7 +148,7 @@ package ghostcat.display.bitmap
 			
 			this.mode = MODE_BITMAP;
 			
-			this.sort = new SortYAllManager();
+			this.sort = new SortAllManager();
 		}
 		
 		protected override function init() : void
@@ -235,7 +235,8 @@ package ghostcat.display.bitmap
 				for each (obj in children)
 					drawChild(obj);	
 				
-				sort.calculate();
+				if (sortFields)
+					sort.calculate(sortFields);
 			}
 			
 			super.updateDisplayList();
