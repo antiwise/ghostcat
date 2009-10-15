@@ -47,7 +47,7 @@ package ghostcat.ui.controls
 		/**
 		 * 旧值 
 		 */
-		protected var oldValue:Number;
+		protected var oldValue:Number = 0;
 		
 		/**
 		 * 方向
@@ -89,10 +89,10 @@ package ghostcat.ui.controls
 
 		public function set value(v:Number):void
 		{
+			oldValue = value;
+			
 			if (_value == v)
 				return;
-			
-			oldValue = value;
 			_value = v;
 			
 			dispatchEvent(new Event(Event.CHANGE));

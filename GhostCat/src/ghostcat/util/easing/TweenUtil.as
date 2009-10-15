@@ -141,6 +141,9 @@ package ghostcat.util.easing
 		
 		public function TweenUtil(target:Object, duration:int, params:Object)
 		{
+			if (!params)
+				params = new Object();
+			
 			this.target = target;
 			this.duration = duration;
 			
