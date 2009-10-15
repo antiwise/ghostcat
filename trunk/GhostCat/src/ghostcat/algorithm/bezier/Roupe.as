@@ -58,13 +58,12 @@ package ghostcat.algorithm.bezier
 				stepPoint.x += gravity.x;//附加重力矢量
 				stepPoint.x *= friction;//速度比例衰减
 				
-				curPoint.x += stepPoint.x;//应用速度
-				
 				var targetY:Number = (prevPoint.y + nextPoint.y)/2;
 				stepPoint.y += (targetY - curPoint.y) * elasticity;
 				stepPoint.y += gravity.y;
 				stepPoint.y *= friction;
 				
+				curPoint.x += stepPoint.x;
 				curPoint.y += stepPoint.y;
 			}
 			

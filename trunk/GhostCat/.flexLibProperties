@@ -352,6 +352,7 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -103,7 +103,7 @@ package ghostcat.util.easing
 		 */
 		public var target:* = target;
 		/**
-		 * 开始时间
+		 * 当前时间
 		 */
 		public var currentTime:int;
 		/**
@@ -296,9 +296,8 @@ package ghostcat.util.easing
 					this.onUpdate(this.currentTime/this.duration);
 				else
 					this.onUpdate();
-				
-				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
 			}
+			this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
 			
 			//如果已经结束则执行结束回调函数并删除
 			if (this.currentTime >= this.duration)
