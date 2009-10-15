@@ -72,6 +72,8 @@ package
 	import flash.net.URLRequest;
 	import flash.display.Loader;
 	import flash.events.IOErrorEvent;
+	import ghostcat.display.bitmap.BitmapDataSource;
+	import flash.display.Bitmap;
 	
 	[SWF(width="600",height="600")]
 	
@@ -82,25 +84,16 @@ package
 	 */
 	public class TestExample extends GBase
 	{
-		public var v:BitmapScreen;
+		[Embed(source="back.jpg")]
+		public var ImageSource:Class;
+		public var s:BitmapDataSource;
 		public function TestExample()
 		{	
-			var v:GBitmapButton = new GBitmapButton();
-			addChild(v);
-			v.createFromMovieClip(new ButtonSkin());
-			
-			v.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
-			v.addEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
-		}
-		
-		private function mouseOverHandler(event:MouseEvent):void
-		{
-			trace("OVER")
-		}
-		
-		private function mouseOutHandler(event:MouseEvent):void
-		{
-			trace("OUT")
+			s = new BitmapDataSource(500,500);
+			var b:Bitmap = new ImageSource();
+			s.copyPixels(b.bitmapData,b.bitmapData.rect);
+			b.bitmapData = s.getBitmapData(new Rectangle(0,0,200,200));
+			addChild(b);
 		}
 
 	}
