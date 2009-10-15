@@ -15,7 +15,10 @@ package ghostcat.display.bitmap
 	 */
 	public class BitmapDataSource extends EventDispatcher
 	{
-		private var MAX_SIZE:int = 10;
+		/**
+		 * 位图最大宽高
+		 */
+		public var MAX_SIZE:int = 2880;
 		
 		/**
 		 * 位图数组

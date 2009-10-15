@@ -16,16 +16,28 @@ package ghostcat.algorithm.bezier
 		/**
 		 * 曲线段数组
 		 */
-		protected var beziers:Array = [];
+		public var beziers:Array = [];
 		
+		private var _start:Point;
+
 		/**
 		 * 起始点
 		 */
-		public var start:Point;
+		public function get start():Point
+		{
+			return _start;
+		}
+
+		private var _end:Point;
+
 		/**
 		 * 结束点
 		 */
-		public var end:Point;
+		public function get end():Point
+		{
+			return _end;
+		}
+
 		
 		/**
 		 * 创建一条平滑曲线
@@ -37,15 +49,15 @@ package ghostcat.algorithm.bezier
 		 */		
 		public function SmoothCurve (startPoint:Point=null, endPoint:Point=null, seqNum:int = 0)
 		{
-			this.start = startPoint;
-			this.end = endPoint;
+			this._start = startPoint;
+			this._end = endPoint;
 			
 			for (var i:int = seqNum - 1;i >= 0;i--)
 				insert(Point.interpolate(startPoint,endPoint,1.0/(seqNum+1)*(i+1)))
 		}
 		
 		/**
-		 * 插入中间节点
+		 * 在末尾之前插入控制点（控制点不能是尾节点）
 		 * 
 		 * @param flashyiyi
 		 * 
@@ -57,12 +69,31 @@ package ghostcat.algorithm.bezier
 			{
 				var lastBezier:Bezier = beziers[beziers.length - 1];
 				lastBezier.end = new Point();
-				newBezier = new Bezier(lastBezier.end, control, end);
+				newBezier = new Bezier(lastBezier.end, control, _end);
 			}
 			else
-				newBezier = new Bezier(start, control, end);
+				newBezier = new Bezier(_start, control, _end);
 			
 			beziers.push(newBezier);
+		}
+		
+		/**
+		 * 修改节点的控制点，更改曲线形态
+		 * 
+		 * @param index
+		 * @param x
+		 * @param y
+		 * 
+		 */
+		public function modifyControl(index:int,x:Number = NaN,y:Number = NaN):void
+		{
+			var bezier:Bezier = beziers[index];
+			
+			if (!isNaN(x))
+				bezier.control.x = x;
+		
+			if (!isNaN(y))
+				bezier.control.y = y;
 		}
 		
 		/**
@@ -102,11 +133,11 @@ package ghostcat.algorithm.bezier
 		public function getPointByDistance(distance:Number):Point
 		{
 			if (distance <= 0)
-				return start.clone();
+				return _start.clone();
 			
 			var curveLength:Number = length;
 			if (distance >= curveLength)
-				return end.clone();
+				return _end.clone();
 			
 			var distanceFromStart:Number=0;
 			var len:uint = beziers.length;
@@ -116,7 +147,7 @@ package ghostcat.algorithm.bezier
 				var bezier:Bezier = beziers[i] as Bezier;
 				var bezierLength:Number = bezier.length;
 				
-				if (distanceFromStart + bezierLength>distance)
+				if (distanceFromStart + bezierLength > distance)
 				{
 					var difference:Number = distance - distanceFromStart;
 					var time:Number = bezier.getTimeByDistance(difference);
@@ -129,7 +160,7 @@ package ghostcat.algorithm.bezier
 		}
 		
 		/**
-		 * 更新 
+		 * 更新曲线
 		 * 
 		 */
 		public function refresh():void
@@ -157,11 +188,11 @@ package ghostcat.algorithm.bezier
 			
 			super.parseGraphics(target);
 			
-			target.moveTo(start.x, start.y);
+			target.moveTo(_start.x, _start.y);
 			var len:uint = beziers.length;
 			if (len == 0)
 			{
-				target.lineTo(end.x, end.y);
+				target.lineTo(_end.x, _end.y);
 				return;
 			}
 			var bezier:Bezier = beziers[0] as Bezier;
