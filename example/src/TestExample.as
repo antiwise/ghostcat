@@ -74,6 +74,7 @@ package
 	import flash.events.IOErrorEvent;
 	import ghostcat.display.bitmap.BitmapDataSource;
 	import flash.display.Bitmap;
+	import ghostcat.text.URL;
 	
 	[SWF(width="600",height="600")]
 	
@@ -89,11 +90,7 @@ package
 		public var s:BitmapDataSource;
 		public function TestExample()
 		{	
-			s = new BitmapDataSource(500,500);
-			var b:Bitmap = new ImageSource();
-			s.copyPixels(b.bitmapData,b.bitmapData.rect);
-			b.bitmapData = s.getBitmapData(new Rectangle(0,0,200,200));
-			addChild(b);
+			trace(new URL(loaderInfo.url).pathname.extension)
 		}
 
 	}

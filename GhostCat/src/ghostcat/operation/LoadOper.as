@@ -16,6 +16,7 @@
 	import flash.utils.ByteArray;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.text.URL;
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]
@@ -104,7 +105,7 @@
 			
 			var isLoader:Boolean;
 			if (this.type == AUTO)
-				isLoader = (LOADER_TYPE.indexOf(url.substr(url.length - 4)) != -1);
+				isLoader = (LOADER_TYPE.indexOf(new URL(url).pathname.extension) != -1);
 			else if (this.type == LOADER)
 				isLoader = true;
 			else
