@@ -176,6 +176,7 @@
     <classEntry path="ghostcat.operation.TweenOper"/>
     <classEntry path="ghostcat.operation.WaitOper"/>
     <classEntry path="ghostcat.operation.WatchOper"/>
+    <classEntry path="ghostcat.operation.ZoomOper"/>
     <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
@@ -353,6 +354,8 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
+    <classEntry path="ghostcat.display.viewport.Display45Util"/>
+    <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -2,7 +2,8 @@ package ghostcat.community.command
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.geom.Point;
+	
+	import ghostcat.display.viewport.Display45Util;
 
 	/**
 	 * 45度角景深排序
@@ -12,8 +13,6 @@ package ghostcat.community.command
 	 */
 	public final class DrawPriority45Command
 	{
-		private static var wh:Number = 1;
-		
 		/**
 		 * 设置单个格子的大小
 		 * @param w
@@ -22,7 +21,7 @@ package ghostcat.community.command
 		 */
 		public static function setContentSize(w:Number,h:Number):void
 		{
-			wh = w / h;
+			Display45Util.setContentSize(w,h);
 		}
 		
 		/**
@@ -45,9 +44,7 @@ package ghostcat.community.command
 			var i1:int = parent.getChildIndex(d1);
 			var i2:int = parent.getChildIndex(d2);
 			var isHighIndex:Boolean = i1 > i2; 
-			var p1:Point = new Point(d1.x + d1.y * wh,d1.y - d1.x/wh)
-			var p2:Point = new Point(d2.x + d2.y * wh,d2.y - d2.x/wh)
-			var isHighValue:Boolean = p1.x > p2.x || p1.y > p2.y;
+			var isHighValue:Boolean = Display45Util.SORT_45(d1,d2) > 0;
 			
 			if (isHighIndex != isHighValue)
 			{

@@ -102,7 +102,7 @@ package ghostcat.community.sort
 		public override function add(obj:*):void
 		{
 			if (!(obj is IGBase))
-				throw new Error("只能加入实现了IGBase的对象")
+				return;
 			
 			data.push(obj);
 			

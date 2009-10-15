@@ -1,16 +1,15 @@
 package ghostcat.display.viewport
 {
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
@@ -88,10 +87,16 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		protected function get contentRect():Rectangle
+		public function get contentRect():Rectangle
 		{
 			return _contentRect;
 		}
+		
+		public function set contentRect(v:Rectangle):void
+		{
+			_contentRect = v;
+		}
+		
 		/** @inheritDoc*/
 		public override function set width(value:Number) : void
 		{
@@ -127,7 +132,7 @@ package ghostcat.display.viewport
 			return Geom.localRectToContent(rect,this,targetCoordinateSpace);
 		}
 		
-		public function Tile(itemClass:*)
+		public function Tile(itemClass:*=null)
 		{
 			super(null);
 			
@@ -154,12 +159,11 @@ package ghostcat.display.viewport
 							
 			clear();
 			
+			curRect = new Rectangle();
 			if (this.ref)
 			{
-				curRect = new Rectangle();
-				
 				var s:DisplayObject = this.ref.newInstance();
-				_contentRect = s.getRect(s);
+				contentRect = s.getRect(s);
 			}
 		}
 
@@ -390,9 +394,9 @@ package ghostcat.display.viewport
 			
 			var s:DisplayObject = unuseContents.pop();
 			if (!s)
-				s = ref.newInstance();
-			s.x = i * contentRect.width;
-			s.y = j * contentRect.height;
+				s = ref ? ref.newInstance() : new Shape();
+			
+			setItemPosition(s,i,j);
 			contents[i + ":" +j] = s;
 			
 			if (low)
@@ -407,6 +411,16 @@ package ghostcat.display.viewport
 			dispatchEvent(e);
 		
 			return s;
+		}
+		
+		/**
+		 * 设置显示物体的坐标
+		 * 
+		 */
+		protected function setItemPosition(s:DisplayObject,i:int,j:int):void
+		{
+			s.x = i * contentRect.width;
+			s.y = j * contentRect.height;
 		}
 		
 		/**

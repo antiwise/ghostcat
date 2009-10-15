@@ -5,13 +5,13 @@ package ghostcat.display.bitmap
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
@@ -113,9 +113,9 @@ package ghostcat.display.bitmap
 		public var itemColorTransform:ColorTransform;
 		
 		/**
-		 * 排序依据字段
+		 * 排序依据字段（数组或者函数）
 		 */
-		public var sortFields:Array;
+		public var sortFields:*;
 		
 		/**
 		 * 激活Y轴排序
@@ -123,7 +123,13 @@ package ghostcat.display.bitmap
 		 */
 		public function enabledSortY():void
 		{
-			sortFields = ["y"];
+			sortFields = SortAllManager.SORT_Y;
+		}
+		
+		public function enabledSort45(width:Number,height:Number):void
+		{
+			Display45Util.setContentSize(width,height);
+			sortFields = SortAllManager.SORT_45;
 		}
 		
 		/**

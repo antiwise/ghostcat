@@ -21,10 +21,16 @@ package ghostcat.display.viewport
 		 * @param tranSourceTo45	是否将源图像由矩形转换成菱形
 		 * 
 		 */
-		public function Tile45(itemClass:*,tranSourceTo45:Boolean = false)
+		public function Tile45(itemClass:*=null,tranSourceTo45:Boolean = false)
 		{
 			this.tranSourceTo45 = tranSourceTo45;
 			super(itemClass);
+		}
+		
+		public override function set contentRect(v:Rectangle):void
+		{
+			super.contentRect = v;
+			wh = v.width / v.height;
 		}
 		
 		/**
@@ -68,7 +74,6 @@ package ghostcat.display.viewport
 			{
 				if (tranSourceTo45)
 					_contentRect = new Rectangle(_contentRect.x,_contentRect.y,_contentRect.width * 2,_contentRect.height);
-				wh = _contentRect.width/_contentRect.height;
 			}
 		}
 		
@@ -93,16 +98,14 @@ package ghostcat.display.viewport
 		}
 		
 		/** @inheritDoc*/
-		override protected function addItem(i:int,j:int,lowest:Boolean=false):DisplayObject
+		override protected function setItemPosition(s:DisplayObject,i:int,j:int):void
 		{
-			var s:DisplayObject = super.addItem(i,j,lowest);
+			super.setItemPosition(s,i,j);
 			var p:Point = itemToDisplay(new Point(s.x,s.y));
 			s.x = p.x;
 			s.y = p.y;
 			if (tranSourceTo45)
 				shapeTo45(s);
-				
-			return s;
 		}
 	}
 }

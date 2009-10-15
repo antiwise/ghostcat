@@ -5,6 +5,7 @@ package ghostcat.community.sort
 	import flash.geom.Point;
 	
 	import ghostcat.display.IGBase;
+	import ghostcat.display.viewport.Display45Util;
 
 	/**
 	 * 针对45度景深排序做了优化
@@ -19,16 +20,8 @@ package ghostcat.community.sort
 			if (g.position.equals(g.oldPosition))
 				return 0;
 			
-			var d1:Point = g.position;
-			var d2:Point = g.oldPosition;
-			
-			var p1:Point = new Point(d1.x + d1.y * wh,d1.y - d1.x/wh)
-			var p2:Point = new Point(d2.x + d2.y * wh,d2.y - d2.x/wh)
-			return (p1.x > p2.x || p1.y > p2.y) ? 1 : -1;
-			return g.y - g.oldPosition.y;
+			return Display45Util.SORT_45(g.position,g.oldPosition);
 		}
-		
-		private var wh:Number = 1;
 		
 		/**
 		 * 设置单个格子的大小
@@ -38,7 +31,7 @@ package ghostcat.community.sort
 		 */
 		public function setContentSize(w:Number,h:Number):void
 		{
-			wh = w / h;
+			Display45Util.setContentSize(w,h);
 		}
 		/** @inheritDoc*/
 		protected override function sortCommand(d1:DisplayObject,d2:DisplayObject):Boolean
@@ -51,9 +44,7 @@ package ghostcat.community.sort
 			var i1:int = parent.getChildIndex(d1);
 			var i2:int = parent.getChildIndex(d2);
 			var isHighIndex:Boolean = i1 > i2; 
-			var p1:Point = new Point(d1.x + d1.y * wh,d1.y - d1.x/wh)
-			var p2:Point = new Point(d2.x + d2.y * wh,d2.y - d2.x/wh)
-			var isHighValue:Boolean = p1.x > p2.x || p1.y > p2.y;
+			var isHighValue:Boolean = Display45Util.SORT_45(d1,d2) > 0;
 			
 			if (isHighIndex != isHighValue)
 			{

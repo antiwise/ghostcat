@@ -225,7 +225,7 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		protected override function get contentRect():Rectangle
+		public override function get contentRect():Rectangle
 		{
 			var rect:Rectangle = super.contentRect.clone();
 			

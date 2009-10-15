@@ -3,6 +3,9 @@ package ghostcat.community.sort
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
+	import flash.geom.Point;
+	
+	import ghostcat.display.viewport.Display45Util;
 
 	/**
 	 * 采用全部排序的方法来处理景深
@@ -12,6 +15,21 @@ package ghostcat.community.sort
 	 */
 	public class SortAllManager extends EventDispatcher
 	{
+		public static const SORT_Y:Array = ["y"];
+		
+		public static const SORT_45:Function = Display45Util.SORT_45;
+		
+		/**
+		 * 设置单个格子的大小（SORT_45用）
+		 * @param w
+		 * @param h
+		 * 
+		 */
+		public static function setContentSize(w:Number,h:Number):void
+		{
+			Display45Util.setContentSize(w,h);
+		}
+		
 		/**
 		 * 全部对象所在的容器
 		 */
@@ -20,6 +38,7 @@ package ghostcat.community.sort
 		 * 子对象列表
 		 */
 		public var data:Array = [];
+		
 		public function SortAllManager(target:DisplayObjectContainer=null)
 		{
 			this.target = target;
@@ -41,18 +60,25 @@ package ghostcat.community.sort
 		 * @param sortFields	排序依据
 		 * 
 		 */
-		public function calculate(sortFields:Array = null) : void
+		public function calculate(sortFields:* = null) : void
 		{
 			if (!target)
 				return;
 			
 			if (!sortFields)
-				sortFields = ["y"];
+				sortFields = SORT_Y;
 			
 			if (!data || data.length != target.numChildren)
 				refreshChildren();
 			
-			var result:Array = data.sortOn(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
+			var result:Array;
+			if (sortFields is Array) 
+				result = data.sortOn(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
+			else if (sortFields is Function)
+				result = data.sort(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
+			else
+				return;
+				
 			for (var i:int = 0; i < result.length; i++)
 			{
 				var v:DisplayObject = data[result[i]] as DisplayObject;
