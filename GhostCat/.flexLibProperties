@@ -47,6 +47,7 @@
     <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
@@ -351,7 +352,6 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

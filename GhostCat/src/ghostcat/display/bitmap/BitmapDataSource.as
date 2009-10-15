@@ -15,12 +15,12 @@ package ghostcat.display.bitmap
 	 */
 	public class BitmapDataSource extends EventDispatcher
 	{
-		private var MAX_SIZE:int = 2880;
+		private var MAX_SIZE:int = 10;
 		
 		/**
 		 * 位图数组
 		 */
-		protected var bitmapDatas:Array;
+		public var bitmapDatas:Array;
 		
 		private var _width:int;
 		private var _height:int;
@@ -108,8 +108,9 @@ package ghostcat.display.bitmap
 			{
 				for (i = 0;i < lx;i++)
 					bitmapDatas.push(new BitmapData(MAX_SIZE,ey,transparent,fillColor));
-			}
-			bitmapDatas.push(new BitmapData(ex,ey,transparent,fillColor));
+				
+				bitmapDatas.push(new BitmapData(ex,ey,transparent,fillColor));
+			}			
 		}
 		
 		/**
@@ -133,8 +134,9 @@ package ghostcat.display.bitmap
 				rect = rect.intersection(sourceRect);
 				if (!rect.isEmpty())
 				{
+					var localPoint:Point = offest.subtract(sourceRect.topLeft);
 					rect.offset(-offest.x,-offest.y)
-					target.copyPixels(bitmap,rect,destPoint);
+					target.copyPixels(bitmap,rect,localPoint);
 				}
 			}
 		}
@@ -147,7 +149,7 @@ package ghostcat.display.bitmap
 		 * @return 
 		 * 
 		 */
-		public function getBitmapData(target:BitmapData,sourceRect:Rectangle):BitmapData
+		public function getBitmapData(sourceRect:Rectangle):BitmapData
 		{
 			var bitmap:BitmapData = new BitmapData(sourceRect.width,sourceRect.height,transparent,fillColor);
 			copyPixelsTo(bitmap,sourceRect);
@@ -200,7 +202,8 @@ package ghostcat.display.bitmap
 				var bitmap:BitmapData = bitmapDatas[i] as BitmapData;
 				var rect:Rectangle = getBitmapRect(i);
 				var m:Matrix = new Matrix();
-				m.concat(matrix);
+				if (matrix)
+					m.concat(matrix);
 				m.translate(-rect.x,-rect.y)
 				bitmap.draw(source,m,colorTransform,blendMode,clipRect,smoothing);
 			}
@@ -214,8 +217,8 @@ package ghostcat.display.bitmap
 		 */
 		protected function getBitmapRect(index:int):Rectangle
 		{
-			var x:int = index % (lx + ex ? 1 : 0);
-			var y:int = index / (ly + ey ? 1 : 0);
+			var x:int = index % (lx + (ex ? 1 : 0));
+			var y:int = index / (ly + (ey ? 1 : 0));
 			
 			var bitmap:BitmapData = bitmapDatas[index] as BitmapData;
 			var rect:Rectangle = bitmap.rect;
