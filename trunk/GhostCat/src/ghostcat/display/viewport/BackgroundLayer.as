@@ -85,7 +85,7 @@ package ghostcat.display.viewport
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:Item = items[i] as Item;
-				item.skin.x = (value / item.divider) % item.contentSize.x;
+				item.skin.x = (value * item.divider) % item.contentSize.x;
 			};
 		}
 		
