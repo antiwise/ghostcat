@@ -9,20 +9,33 @@ package ghostcat.display.viewport
 		 */
 		public static var maxi:int = 10000;
 		
+		private static var _wh:Number;
+		private static var _width:Number;
+		private static var _height:Number;
+		
 		/**
-		 * 45度格子长宽比
+		 * 格子长宽比
 		 */
-		public static var wh:Number;
+		public static function get wh():Number
+		{
+			return _wh
+		}
 		
 		/**
 		 * 格子宽度
 		 */
-		public static var width:Number;
+		public static function get width():Number
+		{
+			return _width;
+		}
 		
 		/**
 		 * 格子高度
 		 */
-		public static var height:Number;
+		public static function get height():Number
+		{
+			return _height;
+		}
 		
 		
 		/**
@@ -33,9 +46,9 @@ package ghostcat.display.viewport
 		 */
 		public static function setContentSize(w:Number,h:Number):void
 		{
-			width = w;
-			height = h;
-			wh = w / h;
+			_width = w;
+			_height = h;
+			_wh = w / h;
 		}
 		/**
 		 * 排序函数
@@ -59,8 +72,13 @@ package ghostcat.display.viewport
 				return -1;
 		}
 		
-		public static function getItemPointAtPoint(p:Point,width:Number,height:Number):Point
+		public static function getItemPointAtPoint(p:Point,width:Number = NaN,height:Number = NaN):Point
 		{
+			if (isNaN(height))
+				width = Display45Util.width;
+			if (isNaN(height))
+				height = Display45Util.height;
+			
 			p = trans45To90(p,width / height);
 			return new Point(Math.round(p.x / width) - 1 , Math.round(p.y / height)); 
 		}
@@ -71,8 +89,10 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function trans45To90(p:Point,wh:Number):Point
+		public static function trans45To90(p:Point,wh:Number = NaN):Point
 		{
+			if (isNaN(wh))
+				wh = Display45Util.wh;
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
 		
@@ -82,8 +102,10 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function trans90To45(p:Point,wh:Number):Point
+		public static function trans90To45(p:Point,wh:Number = NaN):Point
 		{
+			if (isNaN(wh))
+				wh = Display45Util.wh;
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
 		}
 	}

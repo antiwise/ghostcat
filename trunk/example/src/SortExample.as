@@ -34,7 +34,6 @@ package
 		protected override function init():void
 		{
 			RootManager.register(this);
-			stage.addChild(new FPS());
 			
 			//创建100个物品
 			for (var i:int = 0;i < 100;i++)
@@ -46,11 +45,11 @@ package
 			
 			//创建排序器
 			c = new SortYManager();
-			c.addAllChildren(this);
+			c.addAll(this);
 			
 			//创建物理
 			p = new PhysicsManager(physicsTickHandler);
-			p.addAllChildren(this);
+			p.addAll(this);
 			
 			//创建文本显示计算时间
 			debugTextField = new TextField();

@@ -8,16 +8,17 @@ package ghostcat.community
 	import ghostcat.util.Util;
 	
 	/**
-	 * 二维的遍历，command将具有两个参数
+	 * 二维的遍历
+	 * command将具有两个参数,分别指向两个物体
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
 	public class CommunityManager extends GroupManager
 	{
-		
 		public function CommunityManager(command:Function)
 		{
+			tickWithFilter = true;
 			super(command);
 		}
 		
@@ -27,7 +28,7 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */
-		public function calculateAll(onlyFilter:Boolean = true):void
+		public override function calculateAll(onlyFilter:Boolean = true):void
 		{
 			var values:Array = data;
 			if (onlyCheckValues)

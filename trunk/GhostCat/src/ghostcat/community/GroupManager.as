@@ -3,9 +3,10 @@ package ghostcat.community
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	
 	/**
@@ -14,7 +15,7 @@ package ghostcat.community
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GroupManager extends EventDispatcher
+	public class GroupManager extends EventDispatcher implements IGroupManager
 	{
 		/**
 		 * 执行的函数
@@ -27,20 +28,59 @@ package ghostcat.community
 		public var data:Array = [];
 		
 		/**
+		 * 子对象容器
+		 */
+		public var container:DisplayObjectContainer;
+		
+		/**
 		 * 过滤函数，参数为对象，返回值为是否可用的布尔值
 		 */		
 		public var filter:Function;
 		
 		/**
-		 * 限制进行遍历的首对象，但不限制这个对象对其他对象的二次遍历
-		 * 
+		 * 限制进行遍历的首对象
 		 */		
 		public var onlyCheckValues:Array;
 		
 		/**
+		 * Tick执行优先级
+		 */
+		public var priority:int = 0;
+		
+		/**
+		 * 是否在tick事件中根据Filter遍历
+		 */
+		public var tickWithFilter:Boolean = false;
+		
+		private var _paused:Boolean = true;
+		
+		/**
+		 * 是否暂停
+		 * @return 
+		 * 
+		 */
+		public function get paused():Boolean
+		{
+			return _paused;
+		}
+		
+		public function set paused(v:Boolean):void
+		{
+			if (_paused == v)
+				return;
+			
+			_paused = v;
+			
+			if (!v)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,priority);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
+		/**
 		 * 记录需要计算的对象
 		 */
-		protected var dirtys:Dictionary
+		protected var dirtys:Dictionary;
 		
 		private var _setDirtyWhenEvent:String;//记录自动监听的变化事件
 		
@@ -116,7 +156,7 @@ package ghostcat.community
 		 * @param command	带一个参数的函数
 		 * 
 		 */
-		public function GroupManager(command:Function)
+		public function GroupManager(command:Function = null)
 		{
 			this.command = command;
 			dirtys = new Dictionary();
@@ -130,7 +170,8 @@ package ghostcat.community
 		 */				
 		public function calculate(v:*):void
 		{
-			command(v);
+			if (command != null)
+				command(v);
 		}
 		
 		/**
@@ -139,7 +180,7 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */		
-		public function calculateAllOnce(onlyFilter:Boolean = false):void
+		public function calculateAll(onlyFilter:Boolean = true):void
 		{
 			for (var i:int = 0; i < data.length;i++)
 			{
@@ -163,8 +204,6 @@ package ghostcat.community
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				registerDirty(obj,setDirtyWhenEvent);
-			
-//			calculate(obj);//加入时立即计算
 		}
 		
 		/**
@@ -184,27 +223,69 @@ package ghostcat.community
 		}
 		
 		/**
-		 * 添加一个显示对象的所有子对象
+		 * 添加全部
 		 * 
 		 * @param target
 		 * 
 		 */
-		public function addAllChildren(target:DisplayObjectContainer):void
+		public function addAll(v:*):void
 		{
-			for (var i:int = 0;i < target.numChildren;i++)
-				add(target.getChildAt(i));
+			if (v is DisplayObjectContainer)
+			{
+				container = v as DisplayObjectContainer;
+				for (var i:int = 0;i < container.numChildren;i++)
+					add(container.getChildAt(i));
+			}
+			else if (v is Array)
+			{
+				for (i = 0;i < v.length;i++)
+					add(v[i]);
+			}
 		}
 		
 		/**
-		 * 删除一个显示对象的所有子对象
+		 * 删除全部
 		 * 
 		 * @param target
 		 * 
 		 */
-		public function removeAllChildren(target:DisplayObjectContainer):void
+		public function removeAll(v:*=null):void
 		{
-			for (var i:int = 0;i < target.numChildren;i++)
-				remove(target.getChildAt(i));
+			if (v is DisplayObjectContainer)
+			{
+				container = v as DisplayObjectContainer;
+				for (var i:int = 0;i < container.numChildren;i++)
+					remove(container.getChildAt(i));
+			}
+			else if (v is Array)
+			{
+				for (i = 0;i < v.length;i++)
+					remove(v[i]);
+			}
+			else if (v == null)
+			{
+				while (data.length > 0)
+					remove(data[0]);
+			}
+		}
+		
+		/**
+		 * 时基事件
+		 * @param event
+		 * 
+		 */
+		protected function tickHandler(event:TickEvent):void
+		{
+			calculateAll(tickWithFilter);
+		}
+		
+		/**
+		 * 销毁
+		 * 
+		 */
+		public function destoty():void
+		{
+			paused = true;
 		}
 	}
 }

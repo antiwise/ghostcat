@@ -154,6 +154,8 @@ package ghostcat.display.bitmap
 			_enabled = v;
 		}
 		
+		public var priority:int = 0;
+		
 		/** @inheritDoc */	
 		public function get paused():Boolean
 		{
@@ -168,7 +170,7 @@ package ghostcat.display.bitmap
 			_paused = v;
 			
 			if (!_paused && _enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,priority);
 			else
 				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}

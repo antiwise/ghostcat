@@ -356,6 +356,7 @@
     <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
     <classEntry path="ghostcat.display.viewport.Display45Util"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
+    <classEntry path="ghostcat.community.IGroupManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

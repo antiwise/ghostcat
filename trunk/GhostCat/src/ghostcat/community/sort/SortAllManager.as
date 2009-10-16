@@ -2,9 +2,8 @@ package ghostcat.community.sort
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.events.EventDispatcher;
-	import flash.geom.Point;
 	
+	import ghostcat.community.GroupManager;
 	import ghostcat.display.viewport.Display45Util;
 
 	/**
@@ -13,35 +12,18 @@ package ghostcat.community.sort
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SortAllManager extends EventDispatcher
+	public class SortAllManager extends GroupManager
 	{
 		public static const SORT_Y:Array = ["y"];
 		
 		public static const SORT_45:Function = Display45Util.SORT_45;
 		
-		/**
-		 * 全部对象所在的容器
-		 */
-		public var target:DisplayObjectContainer;
-		/**
-		 * 子对象列表
-		 */
-		public var data:Array = [];
+		public var sortFields:*;
 		
-		public function SortAllManager(target:DisplayObjectContainer=null)
+		public function SortAllManager(sortFields:*)
 		{
-			this.target = target;
-		}
-		
-		/**
-		 * 刷新子对象列表
-		 * 
-		 */
-		public function refreshChildren():void
-		{
-			data = [];
-			for (var i:int = 0;i < target.numChildren;i++)
-				data.push(target.getChildAt(i));
+			this.sortFields = sortFields;
+			super();
 		}
 		
 		/**
@@ -49,16 +31,10 @@ package ghostcat.community.sort
 		 * @param sortFields	排序依据
 		 * 
 		 */
-		public function calculate(sortFields:* = null) : void
+		public override function calculateAll(onlyFilter:Boolean = true) : void
 		{
-			if (!target)
+			if (!container)
 				return;
-			
-			if (!sortFields)
-				sortFields = SORT_Y;
-			
-			if (!data || data.length != target.numChildren)
-				refreshChildren();
 			
 			var result:Array;
 			if (sortFields is Array) 
@@ -71,8 +47,8 @@ package ghostcat.community.sort
 			for (var i:int = 0; i < result.length; i++)
 			{
 				var v:DisplayObject = data[result[i]] as DisplayObject;
-				if (target.getChildIndex(v) != i)
-					target.setChildIndex(v,i);
+				if (v.parent == container && container.getChildIndex(v) != i)
+					container.setChildIndex(v,i);
 			}
 		}
 	}
