@@ -23,7 +23,7 @@ package ghostcat.display
 			super(skin,replace);
 			
 			this.sizeCall.frame = false;
-			invalidateSize();
+//			invalidateSize();
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
