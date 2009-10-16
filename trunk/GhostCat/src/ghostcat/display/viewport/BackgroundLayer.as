@@ -1,7 +1,9 @@
 package ghostcat.display.viewport
 {
     import flash.display.*;
+    import flash.geom.Matrix;
     import flash.geom.Point;
+    import flash.geom.Rectangle;
     
     import ghostcat.display.GNoScale;
     import ghostcat.events.TickEvent;
@@ -68,6 +70,11 @@ package ghostcat.display.viewport
 			}
 		}
 
+		/**
+		 * 内部坐标x
+		 * @return 
+		 * 
+		 */
 		public function get contentX():Number
 		{
 			return _positionX;
@@ -79,10 +86,18 @@ package ghostcat.display.viewport
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:Item = items[i] as Item;
-				item.layer.x = (value * item.divider) % item.contentSize.x;
+				if (this.enabledTileX)
+					item.layer.x = (value * item.divider) % item.contentSize.x - item.contentSize.x;
+				else
+					item.layer.x = value;
 			};
 		}
 		
+		/**
+		 * 内部坐标y 
+		 * @return 
+		 * 
+		 */
 		public function get contentY():Number
 		{
 			return _positionY;
@@ -94,7 +109,10 @@ package ghostcat.display.viewport
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:Item = items[i] as Item;
-				item.layer.y = (value / item.divider) % item.contentSize.y;
+				if (this.enabledTileY)
+					item.layer.y = (value / item.divider) % item.contentSize.y - item.contentSize.y;
+				else
+					item.layer.y = value;
 			};
 		}
 		/** @inheritDoc*/
@@ -110,16 +128,20 @@ package ghostcat.display.viewport
 		 * 添加层
 		 * 
 		 * @param skin	皮肤
+		 * @param offest	坐标偏移量
 		 * @param divider	移动速度比
 		 * @param asBitmap	是否缓存为位图
 		 * 
 		 */
-		public function addLayer(skin:Class, divider:Number = 1.0,asBitmap:Boolean = false):void
+		public function addLayer(skin:Class, divider:Number = 1.0,offest:Point = null,asBitmap:Boolean = false):void
 		{
+			if (!offest)
+				offest = new Point();
+			
 			var layer:Sprite = new Sprite();
             var child:DisplayObject = new skin() as DisplayObject;
 			var contentSize:Point = new Point(child.width,child.height);
-			var item:Item = new Item(skin,layer,contentSize,divider,asBitmap);
+			var item:Item = new Item(skin,layer,contentSize,offest,divider,asBitmap);
 			items.push(item);
 			addChild(layer);
 			
@@ -133,8 +155,8 @@ package ghostcat.display.viewport
 		 */
 		protected function render(item:Item):void
 		{
-			var lw:int = Math.ceil(width / item.contentSize.x) + 2;
-			var lh:int = Math.ceil(height / item.contentSize.y) + 2;
+			var lw:int = Math.ceil(width / item.contentSize.x) + 1;
+			var lh:int = Math.ceil(height / item.contentSize.y) + 1;
 			
 			if (!enabledTileX)
 				lw = 1;
@@ -147,9 +169,12 @@ package ghostcat.display.viewport
 					item.bitmapData.dispose();
 				
 				var child:DisplayObject = new (item.skin)() as DisplayObject;
+				var drawPos:Point = child.getBounds(child).topLeft.add(item.offest);
 				item.bitmapData = new DrawParse(child).createBitmapData();
-				item.layer.graphics.beginBitmapFill(item.bitmapData);
-				item.layer.graphics.drawRect(-child.width,-child.height,child.width * lw,child.height * lh);
+				var m:Matrix = new Matrix();
+				m.translate(drawPos.x,drawPos.y);
+				item.layer.graphics.beginBitmapFill(item.bitmapData,m);
+				item.layer.graphics.drawRect(drawPos.x,drawPos.y,child.width * lw,child.height * lh);
 				item.layer.graphics.endFill();
 			}
 			else
@@ -160,8 +185,8 @@ package ghostcat.display.viewport
 					for (var i:int = 0;i < lw;i++)
 					{
 						child = new (item.skin)() as DisplayObject;
-						child.x = i * child.width - child.width;
-						child.y = j * child.height - child.height;
+						child.x = i * child.width + item.offest.x;
+						child.y = j * child.height + item.offest.y;
 						item.layer.addChild(child);
 					}
 				}
@@ -190,17 +215,40 @@ import flash.geom.Point;
 
 class Item
 {
+	/**
+	 * 皮肤类型
+	 */
 	public var skin:Class
+	/**
+	 * 层实例
+	 */
 	public var layer:Sprite;
+	/**
+	 * 皮肤大小
+	 */
 	public var contentSize:Point;
+	/**
+	 * 坐标偏移量
+	 */
+	public var offest:Point;
+	/**
+	 * 移动倍率
+	 */
 	public var divider:Number;
+	/**
+	 * 是否缓存为位图 
+	 */
 	public var asBitmap:Boolean;
+	/**
+	 * 缓存的位图
+	 */
 	public var bitmapData:BitmapData;
-	public function Item(skin:Class,layer:Sprite,contentSize:Point,divider:Number,asBitmap:Boolean):void
+	public function Item(skin:Class,layer:Sprite,contentSize:Point,offest:Point,divider:Number,asBitmap:Boolean):void
 	{
 		this.skin = skin;
 		this.layer = layer;
 		this.contentSize = contentSize;
+		this.offest = offest;
 		this.divider = divider;
 		this.asBitmap = asBitmap;
 	}
