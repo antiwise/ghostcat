@@ -14,17 +14,6 @@ package ghostcat.community.command
 	public final class DrawPriority45Command
 	{
 		/**
-		 * 设置单个格子的大小
-		 * @param w
-		 * @param h
-		 * 
-		 */
-		public static function setContentSize(w:Number,h:Number):void
-		{
-			Display45Util.setContentSize(w,h);
-		}
-		
-		/**
 		 * 45度角排序
 		 *  
 		 * @param d1

@@ -23,16 +23,6 @@ package ghostcat.community.sort
 			return Display45Util.SORT_45(g.position,g.oldPosition);
 		}
 		
-		/**
-		 * 设置单个格子的大小
-		 * @param w
-		 * @param h
-		 * 
-		 */
-		public function setContentSize(w:Number,h:Number):void
-		{
-			Display45Util.setContentSize(w,h);
-		}
 		/** @inheritDoc*/
 		protected override function sortCommand(d1:DisplayObject,d2:DisplayObject):Boolean
 		{

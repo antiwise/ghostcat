@@ -50,20 +50,19 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		override public function getItemPointAtPoint(p:Point):Point
 		{
-			p = displayToItem(p);
-			return new Point(Math.round(p.x / contentRect.width) - 1 , Math.round(p.y / contentRect.height)); 
+			return Display45Util.getItemPointAtPoint(p,contentRect.width,contentRect.height);
 		}
 		
 		/** @inheritDoc*/
 		override public function displayToItem(p:Point):Point
 		{
-			return new Point(p.x + p.y * wh,p.y - p.x/wh);
+			return Display45Util.trans45To90(p,wh);
 		}
 		
 		/** @inheritDoc*/
 		override public function itemToDisplay(p:Point):Point
 		{
-			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
+			return Display45Util.trans90To45(p,wh);
 		}
 		
 		/** @inheritDoc*/

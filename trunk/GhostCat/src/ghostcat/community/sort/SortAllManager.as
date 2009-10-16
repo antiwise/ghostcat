@@ -20,17 +20,6 @@ package ghostcat.community.sort
 		public static const SORT_45:Function = Display45Util.SORT_45;
 		
 		/**
-		 * 设置单个格子的大小（SORT_45用）
-		 * @param w
-		 * @param h
-		 * 
-		 */
-		public static function setContentSize(w:Number,h:Number):void
-		{
-			Display45Util.setContentSize(w,h);
-		}
-		
-		/**
 		 * 全部对象所在的容器
 		 */
 		public var target:DisplayObjectContainer;
