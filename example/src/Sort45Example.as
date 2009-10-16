@@ -43,9 +43,11 @@ package
 		public function Sort45Example()
 		{
 			var v:TestRepeater45 = new TestRepeater45();
-			
 			var contentLayer:Sprite = new Sprite();
 			addChild(contentLayer);
+			
+			Display45Util.setContentSize(v.width,v.height);
+			sort = new CommunityManager(DrawPriority45Command.SORT45);
 			
 			topLayer = new Sprite();
 			contentLayer.addChild(topLayer);
@@ -59,9 +61,6 @@ package
 			
 			man = new GBase(new TestHuman())
 			topLayer.addChild(man);
-			Display45Util.setContentSize(v.width,v.height);
-			sort = new CommunityManager(DrawPriority45Command.SORT45);
-			sort.addAllChildren(topLayer);
 			
 			DragManager.register(map,contentLayer);
 			DragManager.register(man);
@@ -83,6 +82,8 @@ package
 					topLayer.addChildAt(v,0);
 				else
 					topLayer.addChild(v);
+				
+				sort.add(v);
 			}
 		}
 		
@@ -91,6 +92,8 @@ package
 			var v:DisplayObject = dict[event.repeatPos.x + ":" + event.repeatPos.y];
 			if (v)
 				topLayer.removeChild(v);
+			
+			sort.remove(v);
 		}
 		
 		protected override function tickHandler(event:TickEvent) : void
