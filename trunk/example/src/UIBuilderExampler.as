@@ -19,6 +19,7 @@ package
 			addChild(new CircleLight(250));
 			
 			PopupManager.instance.applicationDisabledOper = null;
+			PopupManager.instance.applicationEnabledOper = null;
 			
 			GAlert.show("UIBuilder是GhostCat非常重要的一个创新点。具体用法可参照系统里的GAlert和GDebugPanel组件，这里不再提供示例。","创新点")
 			GAlert.show("您只需要在自定义组件里按约定的名称写上子组件的属性，大部分时候只需要执行UIBuilder.buildAll就可以自动完成所有组件转化工作，之后你只需要设置事件和处理组件逻辑就可以了。不需要XML定义，也不需要设置大小和位置。","使用反射进行简化");

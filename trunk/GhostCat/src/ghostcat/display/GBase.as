@@ -603,6 +603,9 @@ package ghostcat.display
 		 */		
 		public function set asBitmap(v:Boolean):void
 		{
+			if (!content)
+				return;
+				
 			if (v)
 			{
 				content.visible = false;

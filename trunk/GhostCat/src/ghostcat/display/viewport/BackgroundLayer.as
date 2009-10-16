@@ -1,12 +1,12 @@
 package ghostcat.display.viewport
 {
     import flash.display.*;
-    import flash.geom.Matrix;
     import flash.geom.Point;
     
-    import ghostcat.display.GBase;
+    import ghostcat.display.GNoScale;
     import ghostcat.events.TickEvent;
     import ghostcat.parse.display.DrawParse;
+    import ghostcat.util.display.DisplayUtil;
 
 	/**
 	 * 错位分层并自动Tile内容，实时更新，适用于无差异的循环背景
@@ -14,7 +14,7 @@ package ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-    public class BackgroundLayer extends GBase
+    public class BackgroundLayer extends GNoScale
 	{
         private var items:Array = [];
 		
@@ -38,8 +38,8 @@ package ghostcat.display.viewport
 		
         public function BackgroundLayer(width:Number,height:Number,enabledTileX:Boolean = true,enabledTileY:Boolean = true)
 		{
-			this._width = width;
-			this._height = height;
+			this.setSize(width,height);
+			
 			this.enabledTileX = enabledTileX;
 			this.enabledTileY = enabledTileY;
         }
@@ -55,15 +55,9 @@ package ghostcat.display.viewport
 		public function set autoMove(value:Point):void
 		{
 			_autoMove = value;
-			if (value)
-			{
-				enabledTick = true;
-			}
-			else
-			{
-				enabledTick = false;
-			}
+			enabledTick = (value != null);
 		}
+		
 		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent) : void
 		{
@@ -85,7 +79,7 @@ package ghostcat.display.viewport
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:Item = items[i] as Item;
-				item.skin.x = (value * item.divider) % item.contentSize.x;
+				item.layer.x = (value * item.divider) % item.contentSize.x;
 			};
 		}
 		
@@ -100,91 +94,114 @@ package ghostcat.display.viewport
 			for (var i:int = 0;i < items.length;i++)
 			{
 				var item:Item = items[i] as Item;
-				item.skin.y = (value / item.divider) % item.contentSize.y;
+				item.layer.y = (value / item.divider) % item.contentSize.y;
 			};
 		}
 		/** @inheritDoc*/
-		public override function get width():Number
+		protected override function updateSize() : void
 		{
-			return _width;
+			super.updateSize();
+			
+			for each (var i:Item in items)
+				render(i);
 		}
 		
-		public override function get height():Number
-		{
-			return _height;
-		}
-		
-		 /**
-		  * 添加层
-		  * 
-		  * @param skin	皮肤
-		  * @param divider	移动速度比
-		  * @param bitmap	是否缓存为位图
-		  * 
-		  */
-		public function addLayer(skin:Class, divider:Number = 1.0,bitmap:Boolean = false):void
+		/**
+		 * 添加层
+		 * 
+		 * @param skin	皮肤
+		 * @param divider	移动速度比
+		 * @param asBitmap	是否缓存为位图
+		 * 
+		 */
+		public function addLayer(skin:Class, divider:Number = 1.0,asBitmap:Boolean = false):void
 		{
 			var layer:Sprite = new Sprite();
             var child:DisplayObject = new skin() as DisplayObject;
 			var contentSize:Point = new Point(child.width,child.height);
-			var lw:int = Math.ceil(width / child.width) + 2;
-			var lh:int = Math.ceil(height / child.height) + 2;
+			var item:Item = new Item(skin,layer,contentSize,divider,asBitmap);
+			items.push(item);
+			addChild(layer);
+			
+			render(item);
+		};
+		
+		/**
+		 * 渲染
+		 * @param item
+		 * 
+		 */
+		protected function render(item:Item):void
+		{
+			var lw:int = Math.ceil(width / item.contentSize.x) + 2;
+			var lh:int = Math.ceil(height / item.contentSize.y) + 2;
+			
 			if (!enabledTileX)
 				lw = 1;
 			if (!enabledTileY)
 				lh = 1;
 			
-			var item:Item = new Item(layer,contentSize,divider);
-			items.push(item);
-			
-			if (bitmap)
+			if (item.asBitmap)
 			{
-				item.bitmap = new DrawParse(child).createBitmapData();
-				layer.graphics.beginBitmapFill(item.bitmap);
-				layer.graphics.drawRect(-child.width,-child.height,child.width * lw,child.height * lh);
-				layer.graphics.endFill();
+				if (item.bitmapData)
+					item.bitmapData.dispose();
+				
+				var child:DisplayObject = new (item.skin)() as DisplayObject;
+				item.bitmapData = new DrawParse(child).createBitmapData();
+				item.layer.graphics.beginBitmapFill(item.bitmapData);
+				item.layer.graphics.drawRect(-child.width,-child.height,child.width * lw,child.height * lh);
+				item.layer.graphics.endFill();
 			}
 			else
 			{
+				DisplayUtil.removeAllChildren(item.layer);
 				for (var j:int = 0;j < lh;j++)
 				{
 					for (var i:int = 0;i < lw;i++)
 					{
-						child = new skin() as DisplayObject;
+						child = new (item.skin)() as DisplayObject;
 						child.x = i * child.width - child.width;
 						child.y = j * child.height - child.height;
-						layer.addChild(child);
+						item.layer.addChild(child);
 					}
 				}
 			}
-            addChild(layer);
         }
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
+			if (destoryed)
+				return;
+			
 			for each (var i:Item in items)
 			{
-				if (i.bitmap)
-					i.bitmap.dispose();
+				if (i.bitmapData)
+					i.bitmapData.dispose();
 			}
+			super.destory();
 		}
 
     }
 }
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
+import flash.display.Sprite;
 import flash.geom.Point;
 
 class Item
 {
-	public var skin:DisplayObject;
+	public var skin:Class
+	public var layer:Sprite;
 	public var contentSize:Point;
 	public var divider:Number;
-	public var bitmap:BitmapData;
-	public function Item(skin:DisplayObject,contentSize:Point,divider:Number):void
+	public var asBitmap:Boolean;
+	public var bitmapData:BitmapData;
+	public function Item(skin:Class,layer:Sprite,contentSize:Point,divider:Number,asBitmap:Boolean):void
 	{
 		this.skin = skin;
+		this.layer = layer;
 		this.contentSize = contentSize;
 		this.divider = divider;
+		this.asBitmap = asBitmap;
 	}
 }
