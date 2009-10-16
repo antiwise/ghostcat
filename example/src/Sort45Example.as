@@ -5,12 +5,15 @@ package
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.community.CommunityManager;
+	import ghostcat.community.command.DrawPriority45Command;
 	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.manager.CommandManager;
 	import ghostcat.manager.DragManager;
 	
 
@@ -35,7 +38,7 @@ package
 		public var dict:Dictionary = new Dictionary();
 		
 		public var man:GBase;
-		public var sort:SortAllManager;
+		public var sort:CommunityManager;
 		
 		public function Sort45Example()
 		{
@@ -57,7 +60,8 @@ package
 			man = new GBase(new TestHuman())
 			topLayer.addChild(man);
 			Display45Util.setContentSize(v.width,v.height);
-			sort = new SortAllManager(topLayer);
+			sort = new CommunityManager(DrawPriority45Command.SORT45);
+			sort.addAllChildren(topLayer);
 			
 			DragManager.register(map,contentLayer);
 			DragManager.register(man);
@@ -70,14 +74,15 @@ package
 			var d:int = (event.repeatPos.y < 4) ? mapData[event.repeatPos.y][event.repeatPos.x] : null;
 			if (d)
 			{
-				var v:MovieClip = new TileObj();
-				v.gotoAndStop(d);
+				var v:GBase = new GBase(new TileObj());
+				(v.content as MovieClip).gotoAndStop(d);
+				v.content.y = 50;
 				v.x = event.repeatObj.x;
-				v.y = event.repeatObj.y + 50;
+				v.y = event.repeatObj.y;
 				if (event.addToLow)
-					topLayer.addChildAt(new GBase(v),0);
+					topLayer.addChildAt(v,0);
 				else
-					topLayer.addChild(new GBase(v));
+					topLayer.addChild(v);
 			}
 		}
 		
@@ -90,7 +95,7 @@ package
 		
 		protected override function tickHandler(event:TickEvent) : void
 		{
-//			sort.calculate(SortAllManager.SORT_45);
+			sort.calculate(man);
 		}
 
 	}

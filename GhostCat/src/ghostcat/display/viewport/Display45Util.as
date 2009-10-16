@@ -5,9 +5,25 @@ package ghostcat.display.viewport
 	public final class Display45Util
 	{
 		/**
+		 * 最大横坐标
+		 */
+		public static var maxi:int = 10000;
+		
+		/**
 		 * 45度格子长宽比
 		 */
 		public static var wh:Number;
+		
+		/**
+		 * 格子宽度
+		 */
+		public static var width:Number;
+		
+		/**
+		 * 格子高度
+		 */
+		public static var height:Number;
+		
 		
 		/**
 		 * 设置单个格子的大小
@@ -17,6 +33,8 @@ package ghostcat.display.viewport
 		 */
 		public static function setContentSize(w:Number,h:Number):void
 		{
+			width = w;
+			height = h;
 			wh = w / h;
 		}
 		/**
@@ -27,18 +45,24 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function SORT_45(d1:*, d2:*):int
+		public static function SORT_45(v1:*, v2:*):int
 		{
 			if (!wh)
-				throw new Error("请先执行setContentSize方法");
+				throw new Error("请先执行Display45Util.setContentSize方法");
 			
-			var p1:Point = new Point(d1.x + d1.y * wh,d1.y - d1.x/wh)
-			var p2:Point = new Point(d2.x + d2.y * wh,d2.y - d2.x/wh)
+			var p1:Point = getItemPointAtPoint(new Point(v1.x,v1.y),width,height);
+			var p2:Point = getItemPointAtPoint(new Point(v2.x,v2.y),width,height);
 			
-			if (p1.x > p2.x || p1.y > p2.y)
+			if (p1.x + p1.y * maxi > p2.x + p2.y * maxi)
 				return 1;
 			else
 				return -1;
+		}
+		
+		public static function getItemPointAtPoint(p:Point,width:Number,height:Number):Point
+		{
+			p = trans45To90(p,width / height);
+			return new Point(Math.round(p.x / width) - 1 , Math.round(p.y / height)); 
 		}
 		
 		/**
@@ -47,7 +71,7 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public function trans45To90(p:Point):Point
+		public static function trans45To90(p:Point,wh:Number):Point
 		{
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
@@ -58,7 +82,7 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public function trans90Ti45(p:Point):Point
+		public static function trans90To45(p:Point,wh:Number):Point
 		{
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
 		}
