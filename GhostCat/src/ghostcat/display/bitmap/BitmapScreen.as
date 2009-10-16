@@ -11,9 +11,9 @@ package ghostcat.display.bitmap
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GNoScale;
+	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
 	
@@ -76,7 +76,6 @@ package ghostcat.display.bitmap
 			{
 				case MODE_SPRITE:
 					setContent(new Sprite());
-					sort.target = content as Sprite;
 					break;
 				case MODE_BITMAP:
 					setContent(new Bitmap(new BitmapData(width,height,transparent,backgroundColor)));
@@ -84,6 +83,22 @@ package ghostcat.display.bitmap
 				case MODE_SHAPE:
 					setContent(new Shape());
 					break;
+			}
+			
+			if (value == MODE_SPRITE)
+			{
+				sort = new SortAllManager(SortAllManager.SORT_Y);
+				sort.container = content as Sprite;
+				sort.addAll(children);
+			}
+			else
+			{
+				if (sort)
+				{
+					sort.removeAll();
+					sort.container = null;
+					sort = null;
+				}
 			}
 		}
 		
@@ -126,9 +141,8 @@ package ghostcat.display.bitmap
 			sortFields = SortAllManager.SORT_Y;
 		}
 		
-		public function enabledSort45(width:Number,height:Number):void
+		public function enabledSort45():void
 		{
-			Display45Util.setContentSize(width,height);
 			sortFields = SortAllManager.SORT_45;
 		}
 		
@@ -154,8 +168,6 @@ package ghostcat.display.bitmap
 			this.enabledAutoSize = false;
 			
 			this.mode = MODE_BITMAP;
-			
-			this.sort = new SortAllManager();
 		}
 		
 		protected override function init() : void
@@ -213,8 +225,13 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
-			if (sortFields && mode != MODE_SPRITE)
-				children.sortOn(sortFields, [Array.NUMERIC]);
+			if (sortFields)
+			{
+				if (mode == MODE_SPRITE)
+					sort.calculateAll();
+				else
+					children.sortOn(sortFields, [Array.NUMERIC]);
+			}
 			
 			mouseOverList = [];
 			
@@ -243,9 +260,6 @@ package ghostcat.display.bitmap
 			{
 				for each (obj in children)
 					drawChild(obj);	
-				
-				if (sortFields)
-					sort.calculate(sortFields);
 			}
 			
 			//处理鼠标事件
@@ -320,7 +334,7 @@ package ghostcat.display.bitmap
 			else if (mode == MODE_SPRITE)
 			{
 				if (obj is DisplayObject && (obj as DisplayObject).parent != content)
-					(content as Sprite).addChild(obj as DisplayObject)
+					(content as Sprite).addChild(obj as DisplayObject);
 			}
 			
 			//判断是否在鼠标下
@@ -332,11 +346,6 @@ package ghostcat.display.bitmap
 					if (mouseObjs)
 						mouseOverList = mouseOverList.concat(mouseObjs);
 				}
-//				else if (obj is DisplayObject && (obj as DisplayObject).parent == null)
-//				{
-//					if ((obj as DisplayObject).hitTestPoint(stage.mouseX,stage.mouseY),true)
-//						mouseOverList.push(obj);
-//				}
 			}
 		}
 		

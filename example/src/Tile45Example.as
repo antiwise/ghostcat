@@ -1,13 +1,14 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.CursorSprite;
-	import ghostcat.util.Util;
 
 	/**
 	 * 这个类生成了一个100000 x 100000的重复区域，但Repeater类的实际体积其实只有屏幕大小，因此并不消耗资源
@@ -32,10 +33,18 @@ package
 			
 			DragManager.register(repeater);
 			
+			repeater.addEventListener(MouseEvent.CLICK,clickHandler);
+			
 		}
 		private function addRepeatItemHandler(event:RepeatEvent):void
 		{
 			(event.repeatObj as TestRepeater45).point.text = event.repeatPos.toString();
+		}
+		
+		private function clickHandler(event:MouseEvent):void
+		{
+			var p:Point = repeater.getItemPointAtPoint(new Point(repeater.mouseX,repeater.mouseY));
+			trace(p);
 		}
 	}
 }

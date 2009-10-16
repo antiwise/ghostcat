@@ -1,64 +1,34 @@
 package ghostcat.community.physics
 {
-	import flash.display.DisplayObjectContainer;
-	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.community.GroupManager;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 	
 	/**
 	 * 物理管理类
+	 * （command参数为PhysicsItem对象和更新间隔毫秒数）
 	 * @author flashyiyi
-	 * 
 	 */
-	public class PhysicsManager extends EventDispatcher
+	public class PhysicsManager extends GroupManager
 	{
 		/**
 		 * 全局加速度（像素/秒*秒）
 		 */
 		public var gravity:Point;
 		
-		/**
-		 * 更新属性回调方法，参数为PhysicsItem对象和更新间隔毫秒数
-		 */
-
-		public var onTick:Function;
-		
-		private var _paused:Boolean = false;
-		
-		/**
-		 * 是否暂停
-		 * @return 
-		 * 
-		 */
-		public function get paused():Boolean
-		{
-			return _paused;
-		}
-
-		public function set paused(v:Boolean):void
-		{
-			if (_paused == v)
-				return;
-				
-			_paused = v;
-			
-			if (!v)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,1000);
-			else
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-			
-		}
-		
 		private var dict:Dictionary;
-		public function PhysicsManager(onTick:Function = null)
+		
+		public function PhysicsManager(command:Function = null)
 		{
+			this.priority = 1000;
 			this.dict = new Dictionary();
-			this.onTick = onTick;
 			
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,1000);
+			super(command);
+			
+			this.paused = false;
 		}
 		
 		/**
@@ -66,7 +36,7 @@ package ghostcat.community.physics
 		 * @param obj
 		 * 
 		 */
-		public function add(obj:*) : void
+		public override function add(obj:*) : void
 		{
 			var item:PhysicsItem;
 			if (obj is PhysicsItem)
@@ -75,6 +45,8 @@ package ghostcat.community.physics
 				item = new PhysicsItem(obj);
 			
 			dict[obj] = item;
+			
+			super.add(item);
 		}
 		
 		/**
@@ -82,33 +54,11 @@ package ghostcat.community.physics
 		 * @param obj
 		 * 
 		 */
-		public function remove(obj:*) : void
+		public override function remove(obj:*) : void
 		{
 			delete dict[obj];
-		}
-		
-		/**
-		 * 添加一个显示对象的所有子对象
-		 * 
-		 * @param target
-		 * 
-		 */
-		public function addAllChildren(target:DisplayObjectContainer):void
-		{
-			for (var i:int = 0;i < target.numChildren;i++)
-				add(target.getChildAt(i));
-		}
-		
-		/**
-		 * 删除一个显示对象的所有子对象
-		 * 
-		 * @param target
-		 * 
-		 */
-		public function removeAllChildren(target:DisplayObjectContainer):void
-		{
-			for (var i:int = 0;i < target.numChildren;i++)
-				remove(target.getChildAt(i));
+			
+			super.remove(obj);
 		}
 		
 		/**
@@ -133,7 +83,8 @@ package ghostcat.community.physics
 			(dict[obj] as PhysicsItem).velocity = v;
 		}
 		
-		private function tickHandler(event:TickEvent):void
+		/** @inheritDoc*/
+		protected override function tickHandler(event:TickEvent):void
 		{
 			tick(event.interval);
 		}
@@ -166,18 +117,9 @@ package ghostcat.community.physics
 				item.x += item.velocity.x * d;
 				item.y += item.velocity.y * d;
 				
-				if (onTick!=null)
-					onTick(item,interval);
+				if (command!=null)
+					command(item,interval);
 			}
-		}
-		
-		/**
-		 * 销毁方法
-		 * 
-		 */
-		public function destory():void
-		{
-			paused = true;
 		}
 	}
 }

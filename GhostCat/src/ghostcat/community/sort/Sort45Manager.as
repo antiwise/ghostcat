@@ -8,7 +8,7 @@ package ghostcat.community.sort
 	import ghostcat.display.viewport.Display45Util;
 
 	/**
-	 * 针对45度景深排序做了优化
+	 * 针对45度景深排序做了优化（暂时还有问题）
 	 * @author flashyiyi
 	 * 
 	 */

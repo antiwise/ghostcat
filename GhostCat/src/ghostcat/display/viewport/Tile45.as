@@ -14,7 +14,6 @@ package ghostcat.display.viewport
 	public class Tile45 extends Tile
 	{
 		private var tranSourceTo45:Boolean = false;
-		private var wh:Number;//方块长宽比
 		/**
 		 * 
 		 * @param base	源图像
@@ -26,11 +25,11 @@ package ghostcat.display.viewport
 			this.tranSourceTo45 = tranSourceTo45;
 			super(itemClass);
 		}
-		
+		/** @inheritDoc*/
 		public override function set contentRect(v:Rectangle):void
 		{
 			super.contentRect = v;
-			wh = v.width / v.height;
+			Display45Util.setContentSize(v.width,v.height);
 		}
 		
 		/**
@@ -50,19 +49,19 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		override public function getItemPointAtPoint(p:Point):Point
 		{
-			return Display45Util.getItemPointAtPoint(p,contentRect.width,contentRect.height);
+			return Display45Util.getItemPointAtPoint(p);
 		}
 		
 		/** @inheritDoc*/
 		override public function displayToItem(p:Point):Point
 		{
-			return Display45Util.trans45To90(p,wh);
+			return Display45Util.trans45To90(p);
 		}
 		
 		/** @inheritDoc*/
 		override public function itemToDisplay(p:Point):Point
 		{
-			return Display45Util.trans90To45(p,wh);
+			return Display45Util.trans90To45(p);
 		}
 		
 		/** @inheritDoc*/
@@ -84,7 +83,7 @@ package ghostcat.display.viewport
 			var nRect:Rectangle = new Rectangle();
 			nRect.x = sRect.x;
 			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
-			nRect.width = sRect.width + sRect.height * wh /2 + contentRect.width;
+			nRect.width = sRect.width + sRect.height * (contentRect.width / contentRect.height) /2 + contentRect.width;
 			nRect.height = sRect.height + contentRect.height;
 			return nRect;
 		}
