@@ -29,6 +29,7 @@ package ghostcat.display
 	 * 这个类实现了光标和提示接口，以及属性变化事件
 	 * 
 	 * 建议全部可视对象都以此类作为基类，而不仅仅是组件。
+	 * 如果不需要Vaild事件，可将enabledDelayUpdate设为false,便不会占用多余的性能。
 	 * 
 	 * @author flashyiyi
 	 * 

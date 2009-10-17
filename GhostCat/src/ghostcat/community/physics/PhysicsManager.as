@@ -5,7 +5,6 @@ package ghostcat.community.physics
 	
 	import ghostcat.community.GroupManager;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.Tick;
 	
 	/**
 	 * 物理管理类
@@ -87,6 +86,11 @@ package ghostcat.community.physics
 		protected override function tickHandler(event:TickEvent):void
 		{
 			tick(event.interval);
+		}
+		
+		public override function calculateAll(onlyFilter:Boolean=true) : void
+		{
+			throw new Error("calculateAll不能在这里使用，应用tick方法代替")
 		}
 		
 		/**

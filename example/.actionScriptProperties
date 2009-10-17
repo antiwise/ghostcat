@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="Sort45Example.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
+<actionScriptProperties mainApplicationPath="TileGameLayerExample.as" projectUUID="ef7582a9-85e0-4179-9f17-accc0cc47d5c" version="6">
   <compiler additionalCompilerArguments="" autoRSLOrdering="true" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="1">
@@ -32,7 +32,6 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="Sort45Example.as"/>
     <application path="GXMLExample.as"/>
     <application path="UIBoxExample.as"/>
     <application path="IMEExample.as"/>
@@ -48,15 +47,16 @@
     <application path="BindingExample.as"/>
     <application path="BitmapScreenExample.as"/>
     <application path="UIBuilderExampler.as"/>
+    <application path="TileGameLayerExample.as"/>
     <application path="LangageExample.as"/>
-    <application path="EllipseLayoutExample.as"/>
-    <application path="GIFExample.as"/>
     <application path="SortExample.as"/>
+    <application path="GIFExample.as"/>
+    <application path="EllipseLayoutExample.as"/>
     <application path="SWFDecoderExample.as"/>
     <application path="Tile45Example.as"/>
     <application path="CollisionExample.as"/>
-    <application path="AStarExample.as"/>
     <application path="SkewExample.as"/>
+    <application path="AStarExample.as"/>
     <application path="RightClickExample.as"/>
     <application path="SmoothCurveExample.as"/>
     <application path="TestExample.as"/>
