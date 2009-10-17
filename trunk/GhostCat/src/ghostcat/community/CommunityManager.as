@@ -37,7 +37,7 @@ package ghostcat.community
 			for (var i:int = 0; i < values.length;i++)
 			{
 				var v:* = values[i];
-				if ((!onlyFilter || dirtys[v]) && !(filter!=null && filter(v)==false))
+				if (!onlyFilter || dirtys[v])
 					calculate(v);
 			}
 			dirtys = new Dictionary();

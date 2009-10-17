@@ -245,28 +245,6 @@ package ghostcat.display.viewport
 			return contain;
 		}
 		
-		/**
-		 * 
-		 * @return 获得可显示范围（本坐标系内）
-		 * 
-		 */
-		protected function getLocalScreen():Rectangle
-		{
-			if (!scrollRectContainer)
-				return null;
-				
-			var sRect:Rectangle; 
-			if (viewRect)
-				sRect = viewRect;
-			else if (scrollRectContainer is Stage)
-				sRect = Geom.getRect(scrollRectContainer);
-			else
-				sRect = scrollRectContainer.scrollRect;
-			
-			return Geom.localRectToContent(sRect,scrollRectContainer,this);
-			
-		}
-		
 		public function clear():void
 		{
 			DisplayUtil.removeAllChildren(this);
@@ -286,6 +264,27 @@ package ghostcat.display.viewport
 			render();
 		}
 		
+		/**
+		 * 
+		 * @return 获得可显示范围（本坐标系内）
+		 * 
+		 */
+		public function getLocalScreen():Rectangle
+		{
+			if (!scrollRectContainer)
+				return null;
+			
+			var sRect:Rectangle; 
+			if (viewRect)
+				sRect = viewRect;
+			else if (scrollRectContainer is Stage)
+				sRect = Geom.getRect(scrollRectContainer);
+			else
+				sRect = scrollRectContainer.scrollRect;
+			
+			return Geom.localRectToContent(sRect,scrollRectContainer,this);
+			
+		}
 		/**
 		 * 通过范围获得需要显示的方块
 		 * 

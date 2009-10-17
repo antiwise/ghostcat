@@ -25,10 +25,14 @@ package ghostcat.display.viewport
 			this.tranSourceTo45 = tranSourceTo45;
 			super(itemClass);
 		}
+		
 		/** @inheritDoc*/
 		public override function set contentRect(v:Rectangle):void
 		{
+			if (tranSourceTo45)
+				v = new Rectangle(v.x,v.y,v.width * 2,v.height);
 			super.contentRect = v;
+			
 			Display45Util.setContentSize(v.width,v.height);
 		}
 		
@@ -65,26 +69,15 @@ package ghostcat.display.viewport
 		}
 		
 		/** @inheritDoc*/
-		override public function setContentClass(ref:*) : void
-		{
-			super.setContentClass(ref);
-			if (this.ref)//使用经过变换后的大小
-			{
-				if (tranSourceTo45)
-					_contentRect = new Rectangle(_contentRect.x,_contentRect.y,_contentRect.width * 2,_contentRect.height);
-			}
-		}
-		
-		/** @inheritDoc*/
-		override protected function getLocalScreen():Rectangle
+		override public function getLocalScreen():Rectangle
 		{
 			//扩大显示范围
 			var sRect:Rectangle = super.getLocalScreen();
 			var nRect:Rectangle = new Rectangle();
 			nRect.x = sRect.x;
 			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
-			nRect.width = sRect.width + sRect.height * (contentRect.width / contentRect.height) /2 + contentRect.width;
-			nRect.height = sRect.height + contentRect.height;
+			nRect.width = (sRect.width + sRect.height * (contentRect.width / contentRect.height) /2 + contentRect.width) * 2;
+			nRect.height = (sRect.height + contentRect.height) * 2;
 			return nRect;
 		}
 		
@@ -92,7 +85,7 @@ package ghostcat.display.viewport
 		override protected function getItemRect(viewport:Rectangle):Rectangle
 		{
 			var r:Rectangle = super.getItemRect(viewport);
-			return new Rectangle(r.x + r.y,r.y - r.x,r.width*2,r.height*2);
+			return new Rectangle(r.x + r.y,r.y - r.x,r.width,r.height);
 		}
 		
 		/** @inheritDoc*/

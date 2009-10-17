@@ -357,6 +357,7 @@
     <classEntry path="ghostcat.display.viewport.Display45Util"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.community.IGroupManager"/>
+    <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

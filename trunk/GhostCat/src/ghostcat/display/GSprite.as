@@ -133,7 +133,10 @@ package ghostcat.display
 						this.y = skin.y;
 					}
 				}
-				skin.x = skin.y = 0;
+				
+				if (acceptContentPosition)
+					skin.x = skin.y = 0;
+				
 				$addChild(skin);
 				
 				this.name = skin.name;
