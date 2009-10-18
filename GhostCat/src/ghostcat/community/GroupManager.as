@@ -180,7 +180,7 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */		
-		public function calculateAll(onlyFilter:Boolean = true):void
+		public function calculateAll(onlyFilter:Boolean = false):void
 		{
 			for (var i:int = 0; i < data.length;i++)
 			{
@@ -204,6 +204,7 @@ package ghostcat.community
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				registerDirty(obj,setDirtyWhenEvent);
+			
 		}
 		
 		/**
@@ -283,7 +284,7 @@ package ghostcat.community
 		 * 销毁
 		 * 
 		 */
-		public function destoty():void
+		public function destory():void
 		{
 			paused = true;
 		}

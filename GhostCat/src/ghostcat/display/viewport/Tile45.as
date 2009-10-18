@@ -77,7 +77,7 @@ package ghostcat.display.viewport
 			nRect.x = sRect.x;
 			nRect.y = sRect.y - sRect.width/2 - contentRect.height;
 			nRect.width = (sRect.width + sRect.height * (contentRect.width / contentRect.height) /2 + contentRect.width) * 2;
-			nRect.height = (sRect.height + contentRect.height) * 2;
+			nRect.height = sRect.height * 2;
 			return nRect;
 		}
 		

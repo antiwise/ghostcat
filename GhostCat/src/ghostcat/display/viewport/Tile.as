@@ -26,10 +26,10 @@ package ghostcat.display.viewport
 	 */		
 	public class Tile extends GBase
 	{
-		protected const LEFT:int = 0;
-		protected const RIGHT:int = 1;
-		protected const UP:int = 2;
-		protected const DOWN:int = 3;
+		protected const LEFT:String = "left";
+		protected const RIGHT:String = "right";
+		protected const UP:String = "up";
+		protected const DOWN:String = "down";
 		
 		/**
 		 * 图形
@@ -194,6 +194,17 @@ package ghostcat.display.viewport
 		}
 		
 		/**
+		 * 获得屏幕上方块的索引坐标
+		 * 
+		 * @param p
+		 * 
+		 */
+		public function getItemPointAtItem(v:DisplayObject):Point
+		{
+			return getItemPointAtPoint(new Point(v.x + contentRect.width/2,v.y + contentRect.height/2));
+		}
+		
+		/**
 		 * 由显示坐标转换为内部坐标
 		 * 
 		 * @param p
@@ -306,7 +317,11 @@ package ghostcat.display.viewport
 			return screen;
 		}
 		
-		private function render():void
+		/**
+		 * 处理格子增减
+		 * 
+		 */
+		public function render():void
 		{
 			//获得屏幕内应当显示的格子
 			var screen:Rectangle = getItemRect(getLocalScreen());
@@ -323,9 +338,6 @@ package ghostcat.display.viewport
 			{
 				if (curRect.x > screen.x)
 					addItems(new Rectangle(screen.x,curRect.y,Math.min(screen.width,curRect.x - screen.x),curRect.height),LEFT)
-					//这里增加元素时，如果跨屏较多，在向回卷的时候体积将会很大，删除时很费时间，因此要在下面进行补偿处理
-					//形成这个问题是原因是向回跨屏时是先增加再删除，会同时存在两块分离的区域，暂时先这样解决
-					//实际上，就算不做任何处理，这种拖慢也要等到百万级的数据集才能体现出来
 				else
 					removeItems(new Rectangle(curRect.x,curRect.y,Math.min(curRect.width,screen.x - curRect.x),curRect.height));
 					
@@ -339,6 +351,9 @@ package ghostcat.display.viewport
 					addItems(new Rectangle(curRect.right,curRect.y,Math.min(screen.width,screen.right - curRect.right),curRect.height),RIGHT)
 				else
 				{
+					//增加元素时，如果跨屏较多，在向回卷的时候体积将会很大，删除时很费时间，因此要在下面进行补偿处理
+					//形成这个问题是原因是向回跨屏时是先增加再删除，会同时存在两块分离的区域，暂时先这样解决
+					//实际上，就算不做任何处理，这种拖慢也要等到百万级的数据集才能体现出来
 					//当屏幕向回卷有大跨度时，只删除最下面的一部分，暂时先这样特殊处理一下
 					if (curRect.width > 5000)
 						removeItems(new Rectangle(screen.x + curRect.width - screen.width - 1,curRect.y,screen.width + 1,curRect.height));
@@ -383,10 +398,11 @@ package ghostcat.display.viewport
 		 * 
 		 * @param i	横坐标序号
 		 * @param j	纵坐标序号
+		 * @param direct	方向
 		 * @param lowest 是否加在底层
 		 * 
 		 */		
-		protected function addItem(i:int,j:int,low:Boolean=false):DisplayObject
+		protected function addItem(i:int,j:int,direct:String):DisplayObject
 		{
 			if (contents[i + ":" +j])
 				return contents[i + ":" +j];
@@ -398,6 +414,7 @@ package ghostcat.display.viewport
 			setItemPosition(s,i,j);
 			contents[i + ":" +j] = s;
 			
+			var low:Boolean = (direct == LEFT || direct == UP);
 			if (low)
 				addChildAt(s,0);
 			else
@@ -407,6 +424,7 @@ package ghostcat.display.viewport
 			e.repeatObj = s;
 			e.repeatPos = new Point(i,j);
 			e.addToLow = low;
+			e.repeatIndex = getChildIndex(s);
 			dispatchEvent(e);
 		
 			return s;
@@ -454,7 +472,7 @@ package ghostcat.display.viewport
 		 * @param direct	方向	
 		 * 
 		 */
-		protected function addItems(rect:Rectangle,direct:int):void
+		protected function addItems(rect:Rectangle,direct:String):void
 		{
 			var fi:int = rect.x;
 			var fj:int = rect.y;
@@ -467,22 +485,22 @@ package ghostcat.display.viewport
 				case LEFT:
 					for (i = ei - 1;i >= fi;i--)
 						for (j = ej - 1;j >= fj;j--)
-							addItem(i,j,true);
+							addItem(i,j,direct);
 					break;
 				case RIGHT:
 					for (i = fi;i < ei;i++)
 						for (j = fj;j < ej;j++)
-							addItem(i,j,false);
+							addItem(i,j,direct);
 					break;
 				case UP:
 					for (j = ej - 1;j >= fj;j--)
 						for (i = ei - 1;i >= fi;i--)
-							addItem(i,j,true);
+							addItem(i,j,direct);
 					break;
 				case DOWN:
 					for (j = fj;j < ej;j++)
 						for (i = fi;i < ei;i++)
-							addItem(i,j,false);
+							addItem(i,j,direct);
 					break;
 			}			
 		}

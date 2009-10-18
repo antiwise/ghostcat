@@ -1,10 +1,11 @@
 package ghostcat.community.sort
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
 	import ghostcat.display.viewport.Display45Util;
+	import ghostcat.util.Util;
 
 	/**
 	 * 采用全部排序的方法来处理景深
@@ -36,6 +37,9 @@ package ghostcat.community.sort
 			if (!container)
 				return;
 			
+			if (Util.isEmpty(dirtys) && onlyFilter)
+				return;
+			
 			var result:Array;
 			if (sortFields is Array) 
 				result = data.sortOn(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
@@ -50,6 +54,8 @@ package ghostcat.community.sort
 				if (v.parent == container && container.getChildIndex(v) != i)
 					container.setChildIndex(v,i);
 			}
+			
+			dirtys = new Dictionary();
 		}
 	}
 }

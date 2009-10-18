@@ -66,12 +66,23 @@ package ghostcat.display.viewport
 			var p1:Point = getItemPointAtPoint(new Point(v1.x,v1.y),width,height);
 			var p2:Point = getItemPointAtPoint(new Point(v2.x,v2.y),width,height);
 			
-			if (p1.x + p1.y * maxi > p2.x + p2.y * maxi)
+			var d:int = (p1.x + p1.y * maxi) - (p2.x + p2.y * maxi);
+			if (d > 0)
 				return 1;
-			else
+			else if (d < 0)
 				return -1;
+			else
+				return (v1.y > v2.y) ? 1 : -1;
 		}
 		
+		/**
+		 * 获得屏幕上点的方块索引坐标 
+		 * @param p
+		 * @param width
+		 * @param height
+		 * @return 
+		 * 
+		 */
 		public static function getItemPointAtPoint(p:Point,width:Number = NaN,height:Number = NaN):Point
 		{
 			if (isNaN(height))
@@ -79,8 +90,8 @@ package ghostcat.display.viewport
 			if (isNaN(height))
 				height = Display45Util.height;
 			
-			p = trans45To90(p,width / height);
-			return new Point(Math.round(p.x / width) - 1 , Math.round(p.y / height)); 
+			p = trans45To90(p);
+			return new Point(int(p.x / width), int(p.y / height)); 
 		}
 		
 		/**

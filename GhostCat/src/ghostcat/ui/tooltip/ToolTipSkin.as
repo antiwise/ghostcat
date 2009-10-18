@@ -5,12 +5,10 @@ package ghostcat.ui.tooltip
 	import flash.geom.Point;
 	
 	import ghostcat.skin.ArowSkin;
+	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.easing.TweenUtil;
-	import ghostcat.util.easing.Back;
-	import ghostcat.util.easing.Circ;
-	import ghostcat.ui.ToolTipSprite;
 	
 	/**
 	 * IToolTipSkin的默认实现
@@ -28,9 +26,9 @@ package ghostcat.ui.tooltip
 				skin = defaultSkin;
 				
 			super(skin,true,true,new Point(2,2));
-			
 			this.enabledAdjustContextSize = true;
 		}
+		
 		/** @inheritDoc*/
 		public function show(target:DisplayObject):void
 		{
@@ -45,6 +43,7 @@ package ghostcat.ui.tooltip
 		/** @inheritDoc*/
 		public function positionTo(target:DisplayObject):void
 		{
+			TweenUtil.removeTween(toolTipSprite);
 			var toolTipSprite:ToolTipSprite = this.parent as ToolTipSprite;
 			toolTipSprite.x = toolTipSprite.parent.mouseX + 10;
 			toolTipSprite.y = toolTipSprite.parent.mouseY + 10;

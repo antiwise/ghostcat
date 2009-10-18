@@ -10,5 +10,6 @@ package ghostcat.community
 		function removeAll(v:*=null):void
 		function calculate(v:*):void
 		function calculateAll(onlyFilter:Boolean = true):void
+		function destory():void
 	}
 }

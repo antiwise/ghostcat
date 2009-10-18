@@ -36,6 +36,11 @@ package ghostcat.events
 		 */
 		public var addToLow:Boolean = false;
 		
+		/**
+		 * 在Tile容器中的索引
+		 */
+		public var repeatIndex:int;
+		
 		public function RepeatEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
@@ -47,6 +52,7 @@ package ghostcat.events
 			evt.repeatObj = this.repeatObj;
 			evt.repeatPos = this.repeatPos;
 			evt.addToLow = this.addToLow;
+			evt.repeatIndex = this.repeatIndex;
 			return evt;
 		}
 		
