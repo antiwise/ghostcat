@@ -19,7 +19,7 @@ package ghostcat.community
 			
 			this.setDirtyWhenEvent = MoveEvent.MOVE;//当发布MOVE事件的时候自动setDirty
 		}
-		
+		/** @inheritDoc*/
 		public override function add(obj:*):void
 		{
 			if (!(obj is IGBase))
@@ -29,7 +29,7 @@ package ghostcat.community
 			
 			setDirty(obj);//加入时立即计算
 		}
-		
+		/** @inheritDoc*/
 		public override function calculateAll(onlyFilter:Boolean = true):void
 		{
 			super.calculateAll(onlyFilter);

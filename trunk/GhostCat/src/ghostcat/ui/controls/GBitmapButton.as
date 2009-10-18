@@ -90,17 +90,17 @@ package ghostcat.ui.controls
 		
 		
 		/** @inheritDoc*/
-		public function drawToBitmapData(target:BitmapData):void
+		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,position);
+				target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics):void
+		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y));
+			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y).add(offest));
 		}
 		
 		/** @inheritDoc*/

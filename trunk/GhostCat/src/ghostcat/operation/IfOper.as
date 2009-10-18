@@ -32,7 +32,7 @@ package ghostcat.operation
 			this.b1 = b1;
 			this.b2 = b2;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();
@@ -45,13 +45,13 @@ package ghostcat.operation
 			addHandlers();
 			choose.execute();
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:*=null):void
 		{
 			super.result(event);
 			removeHandlers()
 		}
-		
+		/** @inheritDoc*/
 		public override function fault(event:*=null):void
 		{
 			super.fault(event);

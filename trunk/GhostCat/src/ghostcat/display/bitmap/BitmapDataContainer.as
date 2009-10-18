@@ -110,7 +110,7 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawToBitmapData(target:BitmapData):void
+		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition());
 			
@@ -118,20 +118,20 @@ package ghostcat.display.bitmap
 			if (children)
 			{
 				for (var i:int = 0;i < children.length;i++)
-					(children[i] as BitmapDataContainer).drawToBitmapData(target);
+					(children[i] as BitmapDataContainer).drawToBitmapData(target,offest);
 			}
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics):void
+		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,bitmapData,getGlobalPosition());
+			GraphicsUtil.drawBitmpData(target,bitmapData,getGlobalPosition().add(offest));
 			
 			var children:Array = this.children;
 			if (children)
 			{
 				for (var i:int = 0;i < children.length;i++)
-					(children[i] as IBitmapDataDrawer).drawToShape(target);
+					(children[i] as IBitmapDataDrawer).drawToShape(target,offest);
 			}
 		}
 		

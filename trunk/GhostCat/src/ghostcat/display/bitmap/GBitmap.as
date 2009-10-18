@@ -2,6 +2,7 @@ package ghostcat.display.bitmap
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -14,6 +15,7 @@ package ghostcat.display.bitmap
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
@@ -88,9 +90,15 @@ package ghostcat.display.bitmap
 		 */
 		public var bitmapMouseChecker:BitmapMouseChecker;
 		
-		public function GBitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false)
+		public function GBitmap(source:*=null, pixelSnapping:String="auto", smoothing:Boolean=false)
 		{
-			super(bitmapData, pixelSnapping, smoothing);
+			if (source is Bitmap)
+				source = (source as Bitmap).bitmapData;
+			else if (source is DisplayObject)
+				source = new DrawParse(source as DisplayObject).createBitmapData();
+			
+			super(source, pixelSnapping, smoothing);
+			
 			if (bitmapData)
 			{
 				_width = bitmapData.width;
@@ -564,16 +572,16 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawToBitmapData(target:BitmapData):void
+		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,position);
+				target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics):void
+		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,bitmapData,new Point(x,y));
+			GraphicsUtil.drawBitmpData(target,bitmapData,new Point(x,y).add(offest));
 		}
 		
 		
@@ -595,7 +603,8 @@ package ghostcat.display.bitmap
 			if (bitmapData)
 				bitmapData.dispose();
 			
-			bitmapMouseChecker.destory();
+			if (bitmapMouseChecker)
+				bitmapMouseChecker.destory();
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);

@@ -116,7 +116,7 @@ package ghostcat.display
 				return;
 			
 			if (_content && _content.parent == this)
-				removeChild(_content);
+				$removeChild(_content);
 			
 			
 			if (replace && skin)
