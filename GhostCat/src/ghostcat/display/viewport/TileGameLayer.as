@@ -125,7 +125,7 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 处理排序的物体
+		 * 需要处理排序的物体
 		 * @return 
 		 * 
 		 */
@@ -246,10 +246,11 @@ package ghostcat.display.viewport
 				if (engines)
 				{
 					for each (var e:GroupManager in engines)
-					e.remove(v);
+						e.remove(v);
 				}
 			}
 		}
+		
 		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent) : void
 		{
@@ -266,6 +267,8 @@ package ghostcat.display.viewport
 					{
 						gameLayer.addChild(item);
 						sortEngine.add(item);
+						
+						sortBeforeAddItemCall.invalidate();//如果这里不重排似乎会出问题
 					}
 				}
 				else
