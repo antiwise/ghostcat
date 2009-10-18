@@ -5,10 +5,10 @@ package
 	import flash.geom.Point;
 	import flash.text.TextField;
 	
-	import ghostcat.community.sort.SortAllManager;
+	import ghostcat.community.GBaseCommunityManager;
+	import ghostcat.community.command.DrawPriority45Command;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.display.viewport.TileGameLayer;
 	import ghostcat.manager.DragManager;
@@ -20,6 +20,7 @@ package
 	[SWF(width="600",height="600",frameRate="60")]
 	
 	/**
+	 * 45度场景
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -48,7 +49,7 @@ package
 					mapData[i].push((Math.random() < 0.5) ? 0 : 1)
 			}
 			
-			game = new TileGameLayer(mapData,new Tile45(TestRepeater45),createTileItemHandler,new SortAllManager(Display45Util.SORT_45));
+			game = new TileGameLayer(mapData,new Tile45(TestRepeater45),createTileItemHandler);
 			addChild(game);
 			game.tileLayer.cursor = CursorSprite.CURSOR_DRAG;
 			DragManager.register(game.tileLayer,game);
@@ -80,6 +81,7 @@ package
 		{
 			var v:DisplayObject = event.target as DisplayObject;
 			debugText.text = game.tileLayer.getItemPointAtPoint(new Point(game.mouseX,game.mouseY)).toString();
+			debugText.appendText("\n目前实例数:"+game.sortEngine.data.length)
 		}
 		
 	}
