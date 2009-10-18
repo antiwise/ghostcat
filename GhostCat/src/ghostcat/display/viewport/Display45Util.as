@@ -2,6 +2,11 @@ package ghostcat.display.viewport
 {
 	import flash.geom.Point;
 
+	/**
+	 * 45度场景相关
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class Display45Util
 	{
 		/**

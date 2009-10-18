@@ -1,6 +1,7 @@
 package ghostcat.community.sort
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
@@ -21,9 +22,10 @@ package ghostcat.community.sort
 		
 		public var sortFields:*;
 		
-		public function SortAllManager(sortFields:*)
+		public function SortAllManager(sortFields:*,cotainer:DisplayObjectContainer = null)
 		{
 			this.sortFields = sortFields;
+			this.container = cotainer;
 			super();
 		}
 		
@@ -35,7 +37,7 @@ package ghostcat.community.sort
 		public override function calculateAll(onlyFilter:Boolean = true) : void
 		{
 			if (!container)
-				return;
+				throw new Error("未设置container属性")
 			
 			if (Util.isEmpty(dirtys) && onlyFilter)
 				return;

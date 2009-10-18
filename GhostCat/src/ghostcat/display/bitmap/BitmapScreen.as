@@ -13,7 +13,6 @@ package ghostcat.display.bitmap
 	
 	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GNoScale;
-	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
 	
@@ -87,8 +86,7 @@ package ghostcat.display.bitmap
 			
 			if (value == MODE_SPRITE)
 			{
-				sort = new SortAllManager(SortAllManager.SORT_Y);
-				sort.container = content as Sprite;
+				sort = new SortAllManager(SortAllManager.SORT_Y,content as Sprite);
 				sort.addAll(children);
 			}
 			else

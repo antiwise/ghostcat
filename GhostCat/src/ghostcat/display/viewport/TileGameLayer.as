@@ -6,8 +6,11 @@ package ghostcat.display.viewport
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.community.GBaseCommunityManager;
 	import ghostcat.community.GroupManager;
+	import ghostcat.community.command.DrawPriority45Command;
 	import ghostcat.community.filter.OnlyCheckScreenFilter;
+	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.display.IGBase;
@@ -15,6 +18,7 @@ package ghostcat.display.viewport
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.UniqueCall;
 	
 	/**
 	 * 动态双层游戏场景类
@@ -50,9 +54,14 @@ package ghostcat.display.viewport
 		public var mapItems:Dictionary = new Dictionary();
 		
 		/**
-		 * 排序引型
+		 * 排序器，将在物品移动位置的时候对单个物品排序。
 		 */
 		public var sortEngine:GroupManager;
+		
+		/**
+		 * 屏幕滚动添加物品时的特殊排序器，每次滚动屏幕时将会所有物品执行一次全排
+		 */
+		public var tileSortEngine:SortAllManager;
 		
 		/**
 		 * 引型数组
@@ -69,18 +78,26 @@ package ghostcat.display.viewport
 		 * @param mapData	地图数据
 		 * @param tileLayer	Tile对象
 		 * @param createTileItemHandler	根据数据创建Item的方法
-		 * @param sortEngine	排序引型
+		 * @param sortEngine	物品移动后的单物品排序器
+		 * @param tileSortEngine	屏幕滚动后的全排器
 		 * @param engines	其他引型
 		 * 
 		 */
-		public function TileGameLayer(mapData:Array,tileLayer:Tile,createTileItemHandler:Function,sortEngine:GroupManager,engines:Array = null)
+		public function TileGameLayer(mapData:Array,tileLayer:Tile,createTileItemHandler:Function,sortEngine:GroupManager=null,tileSortEngine:SortAllManager=null,engines:Array = null)
 		{
 			super(new Sprite());
+		
+			if (!sortEngine)
+				sortEngine = new GBaseCommunityManager(DrawPriority45Command.SORT_45)
+			
+			if (!tileSortEngine)
+				tileSortEngine = new SortAllManager(Display45Util.SORT_45);
 			
 			this.mapData = mapData;
 			this.tileLayer = tileLayer;
 			this.createTileItemHandler = createTileItemHandler;
 			this.sortEngine = sortEngine;
+			this.tileSortEngine = tileSortEngine;
 			this.engines = engines;
 		}
 		
@@ -98,9 +115,11 @@ package ghostcat.display.viewport
 			
 			sortEngine.onlyCheckValues = [];
 			sortEngine.container = gameLayer;
-//			sortEngine.filter = OnlyCheckScreenFilter.onlyCheckScreenHandler;
+			sortEngine.filter = OnlyCheckScreenFilter.onlyCheckScreenHandler;
 			if (!sortEngine.setDirtyWhenEvent)
 				sortEngine.setDirtyWhenEvent = MoveEvent.MOVE;
+			
+			tileSortEngine.container = gameLayer;
 			
 			this.enabledTick = true;
 		}
@@ -174,6 +193,14 @@ package ghostcat.display.viewport
 			Util.remove(sortOnlyItems,v);
 		}
 		
+		//延迟排序
+		private var sortBeforeAddItemCall:UniqueCall = new UniqueCall(sortBeforeAddItem);
+		private function sortBeforeAddItem():void
+		{
+			tileSortEngine.data = sortEngine.data;
+			tileSortEngine.calculateAll(false);
+		}
+		
 		/**
 		 * 添加重复区域
 		 * @param event
@@ -200,6 +227,7 @@ package ghostcat.display.viewport
 						e.add(v);
 				}
 			}
+			sortBeforeAddItemCall.invalidate();
 		}
 		
 		/**
@@ -279,6 +307,8 @@ package ghostcat.display.viewport
 			
 			tileLayer.destory();
 			sortEngine.destory();
+			tileSortEngine.destory();
+			
 			if (engines)
 			{
 				for each (var e:GroupManager in engines)
