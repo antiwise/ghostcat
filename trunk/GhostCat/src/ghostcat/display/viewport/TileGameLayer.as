@@ -231,8 +231,8 @@ package ghostcat.display.viewport
 					for each (var e:GroupManager in engines)
 						e.add(v);
 				}
+				sortBeforeAddItemCall.invalidate();
 			}
-			sortBeforeAddItemCall.invalidate();
 		}
 		
 		/**

@@ -82,7 +82,6 @@
     <classEntry path="ghostcat.display.viewport.Light"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
     <classEntry path="ghostcat.display.viewport.Tile45"/>
-    <classEntry path="ghostcat.display.viewport.TileItemManager"/>
     <classEntry path="ghostcat.display.viewport.Wall"/>
     <classEntry path="ghostcat.events.ActionEvent"/>
     <classEntry path="ghostcat.events.CollideEvent"/>
