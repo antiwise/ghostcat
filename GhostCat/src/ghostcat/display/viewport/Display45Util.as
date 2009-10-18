@@ -1,9 +1,12 @@
 package ghostcat.display.viewport
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.display.Geom;
 
 	/**
@@ -72,8 +75,8 @@ package ghostcat.display.viewport
 			if (!wh)
 				throw new Error("请先执行Display45Util.setContentSize方法");
 			
-			var p1:Point = getItemPointAtPoint(new Point(v1.x,v1.y),width,height);
-			var p2:Point = getItemPointAtPoint(new Point(v2.x,v2.y),width,height);
+			var p1:Point = getItemPointAtPoint(new Point(v1.x,v1.y));
+			var p2:Point = getItemPointAtPoint(new Point(v2.x,v2.y));
 			
 			var d:int = (p1.x + p1.y * maxi) - (p2.x + p2.y * maxi);
 			if (d > 0)
@@ -120,13 +123,8 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function getItemPointAtPoint(p:Point,width:Number = NaN,height:Number = NaN):Point
+		public static function getItemPointAtPoint(p:Point):Point
 		{
-			if (isNaN(height))
-				width = Display45Util.width;
-			if (isNaN(height))
-				height = Display45Util.height;
-			
 			p = trans45To90(p);
 			return new Point(int(p.x / width), int(p.y / height)); 
 		}
@@ -137,10 +135,8 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function trans45To90(p:Point,wh:Number = NaN):Point
+		public static function trans45To90(p:Point):Point
 		{
-			if (isNaN(wh))
-				wh = Display45Util.wh;
 			return new Point(p.x + p.y * wh,p.y - p.x/wh);
 		}
 		
@@ -150,11 +146,93 @@ package ghostcat.display.viewport
 		 * @return 
 		 * 
 		 */
-		public static function trans90To45(p:Point,wh:Number = NaN):Point
+		public static function trans90To45(p:Point):Point
 		{
-			if (isNaN(wh))
-				wh = Display45Util.wh;
 			return new Point((p.x - p.y * wh)/2,(p.x / wh + p.y)/2);
+		}
+		
+		/**
+		 * 转换图像为45角
+		 * @param p
+		 * 
+		 */
+		public static function shapeTo45(p:DisplayObject):void
+		{
+			var m:Matrix = new Matrix();
+			m.b = m.c = -Math.tan(1/3);
+			m.rotate(Math.PI/4);
+			m.tx = p.x;
+			m.ty = p.y;
+			p.transform.matrix = m;
+		}
+		
+		/**
+		 * 根据skin的大小自动判断占用的格子范围（skin的注册点在底面顶点）
+		 * 
+		 * @param skin
+		 * @return 
+		 * 
+		 */
+		public static function getDefaultTileRect(skin:DisplayObject):Point
+		{
+			var cRect:Rectangle = skin.getRect(skin);
+			return new Point(cRect.right / (width / 2),-cRect.left / (width / 2));
+		}
+		
+		/**
+		 * 根据skin的大小判断图形的高度
+		 * 
+		 * @param skin
+		 * @return 
+		 * 
+		 */
+		public static function getTileHeight(skin:DisplayObject):Number
+		{
+			var rect:Rectangle = skin.getRect(skin);
+			return -rect.y;
+		}
+		
+		/**
+		 * 转换位图后并按45度分割图片
+		 * 
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public static function divImage(v:DisplayObject):Array
+		{
+			var cRect:Rectangle = v.getRect(v);
+			var w:int = int(cRect.right / (width / 2));
+			var h:int = int(-cRect.left / (width / 2));
+			var startPoint:Point = new Point(-cRect.left,-cRect.top);
+			var bitmap:BitmapData = new DrawParse(v).createBitmapData();
+			
+			var result:Array = [];
+			
+			for (var j:int = 0;j < h;j++)
+			{
+				result.push([]);
+				for (var i:int = 0;i < w;i++)
+				{
+					var p:Point = new Point(startPoint.x + i * width / 2,startPoint.y + (i + j) * height / 2);
+					result[j].push(getDivBitmapData(bitmap,p))
+				}
+			}
+			bitmap.dispose();
+			return result;
+		}
+		private static function getDivBitmapData(v:BitmapData,p:Point):BitmapData
+		{
+			var bitmap:BitmapData = new BitmapData(width,height,true,0);
+			for (var j:int = 0;j < height;j++)
+			{
+				for (var i:int = 0;i < width;i++)
+				{
+					if (Math.abs(width - i * 2) / width + Math.abs(height - j * 2) / height <= 1)
+						bitmap.setPixel32(j,i,v.getPixel32(i + p.x,j + p.y))
+				}
+			}
+			return bitmap;
 		}
 	}
 }

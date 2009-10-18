@@ -5,10 +5,9 @@ package
 	import flash.geom.Point;
 	import flash.text.TextField;
 	
-	import ghostcat.debug.DebugRect;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
-	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.display.viewport.TileGameLayer;
 	import ghostcat.manager.DragManager;
@@ -70,6 +69,8 @@ package
 			DragManager.register(man);
 			
 			stage.addChild(new CursorSprite())//加入鼠标
+				
+			Display45Util.getDefaultTileRect(new TileObj())
 		}
 		
 		protected function createTileItemHandler(d:*):GBase

@@ -13,7 +13,6 @@ package ghostcat.display.viewport
 	 */
 	public class Tile45 extends Tile
 	{
-		private var tranSourceTo45:Boolean = false;
 		/**
 		 * 
 		 * @param base	源图像
@@ -22,34 +21,16 @@ package ghostcat.display.viewport
 		 */
 		public function Tile45(itemClass:*=null,tranSourceTo45:Boolean = false)
 		{
-			this.tranSourceTo45 = tranSourceTo45;
 			super(itemClass);
 		}
 		
 		/** @inheritDoc*/
 		public override function set contentRect(v:Rectangle):void
 		{
-			if (tranSourceTo45)
-				v = new Rectangle(v.x,v.y,v.width * 2,v.height);
 			super.contentRect = v;
-			
 			Display45Util.setContentSize(v.width,v.height);
 		}
 		
-		/**
-		 * 转换图像为45角
-		 * @param p
-		 * 
-		 */
-		public static function shapeTo45(p:DisplayObject):void
-		{
-			var m:Matrix = new Matrix();
-            m.b = m.c = -Math.tan(1/3);
-            m.rotate(Math.PI/4);
-            m.tx = p.x;
-            m.ty = p.y;
-            p.transform.matrix = m;
-		}
 		/** @inheritDoc*/
 		override public function getItemPointAtPoint(p:Point):Point
 		{
@@ -95,8 +76,6 @@ package ghostcat.display.viewport
 			var p:Point = itemToDisplay(new Point(s.x,s.y));
 			s.x = p.x;
 			s.y = p.y;
-			if (tranSourceTo45)
-				shapeTo45(s);
 		}
 	}
 }
