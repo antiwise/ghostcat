@@ -28,7 +28,7 @@ package ghostcat.community
 		 * @param filter	是否只遍历已经注册变化的对象。设为true时，只有执行过setDirty()方法的对象会被遍历
 		 * 
 		 */
-		public override function calculateAll(onlyFilter:Boolean = true):void
+		public override function calculateAll(onlyFilter:Boolean = false):void
 		{
 			var values:Array = data;
 			if (onlyCheckValues)

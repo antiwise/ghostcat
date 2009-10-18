@@ -7,7 +7,9 @@ package ghostcat.display.viewport
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
+	import ghostcat.community.filter.OnlyCheckScreenFilter;
 	import ghostcat.display.GBase;
+	import ghostcat.display.GNoScale;
 	import ghostcat.display.IGBase;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.RepeatEvent;
@@ -20,8 +22,13 @@ package ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TileGameLayer extends GBase
+	public class TileGameLayer extends GNoScale
 	{
+		/**
+		 * 地图数据
+		 */
+		public var mapData:Array = [];
+		
 		/**
 		 * 地图背景层
 		 */
@@ -31,11 +38,6 @@ package ghostcat.display.viewport
 		 * 游戏层
 		 */
 		public var gameLayer:Sprite;
-		
-		/**
-		 * 地图数据
-		 */
-		public var mapData:Array = [[]];
 		
 		/**
 		 * 当前存在的游戏物品实例
@@ -48,10 +50,13 @@ package ghostcat.display.viewport
 		public var mapItems:Dictionary = new Dictionary();
 		
 		/**
-		 * 排序类
+		 * 排序引型
 		 */
 		public var sortEngine:GroupManager;
 		
+		/**
+		 * 引型数组
+		 */
 		public var engines:Array;
 		
 		/**
@@ -78,6 +83,7 @@ package ghostcat.display.viewport
 			this.sortEngine = sortEngine;
 			this.engines = engines;
 		}
+		
 		/** @inheritDoc*/
 		protected override function init():void
 		{
@@ -91,6 +97,8 @@ package ghostcat.display.viewport
 			contentLayer.addChildAt(tileLayer,0);
 			
 			sortEngine.onlyCheckValues = [];
+			sortEngine.container = gameLayer;
+//			sortEngine.filter = OnlyCheckScreenFilter.onlyCheckScreenHandler;
 			if (!sortEngine.setDirtyWhenEvent)
 				sortEngine.setDirtyWhenEvent = MoveEvent.MOVE;
 			
@@ -177,6 +185,7 @@ package ghostcat.display.viewport
 			var v:GBase = createTileItemHandler(d);
 			if (v)
 			{
+				mapItems[event.repeatPos.x + ":" + event.repeatPos.y] = v;
 				v.x = event.repeatObj.x;
 				v.y = event.repeatObj.y;
 				if (event.addToLow)
@@ -202,13 +211,15 @@ package ghostcat.display.viewport
 		{
 			var v:DisplayObject = mapItems[event.repeatPos.x + ":" + event.repeatPos.y];
 			if (v)
-				gameLayer.removeChild(v);
-			
-			sortEngine.remove(v);
-			if (engines)
 			{
-				for each (var e:GroupManager in engines)
+				gameLayer.removeChild(v);
+				
+				sortEngine.remove(v);
+				if (engines)
+				{
+					for each (var e:GroupManager in engines)
 					e.remove(v);
+				}
 			}
 		}
 		/** @inheritDoc*/
@@ -218,7 +229,9 @@ package ghostcat.display.viewport
 			var localScreen:Rectangle = tileLayer.getLocalScreen();
 			for each (var item:GBase in gameItems)
 			{
-				var itemRect:Rectangle = item.getBounds(this.gameLayer);
+				var itemRect:Rectangle = item.getBounds(item);
+				itemRect.x += item.x;
+				itemRect.y += item.y;
 				if (itemRect.intersects(localScreen))
 				{
 					if (item.parent != gameLayer)
@@ -244,14 +257,33 @@ package ghostcat.display.viewport
 					e.calculateAll();
 			}
 		}
+		
+		/** @inheritDoc*/
+		override protected function updatePosition() : void
+		{
+			super.updatePosition();
+			tileLayer.render();
+		}
+		
+		/** @inheritDoc*/
+		override protected function updateSize() : void
+		{
+			super.updateSize();
+			tileLayer.render();
+		}
 		/** @inheritDoc*/
 		public override function destory():void
 		{
 			if (destoryed)
 				return;
 			
-			sortEngine.destoty();
 			tileLayer.destory();
+			sortEngine.destory();
+			if (engines)
+			{
+				for each (var e:GroupManager in engines)
+					e.destory();
+			}
 			
 			for each (var v:GBase in gameItems)
 			{

@@ -3,7 +3,9 @@ package ghostcat.community.command
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.Display45Util;
+	import ghostcat.util.display.ColorUtil;
 
 	/**
 	 * 45度角景深排序
@@ -20,7 +22,7 @@ package ghostcat.community.command
 		 * @param d2
 		 * 
 		 */
-		public static function SORT45(d1:DisplayObject,d2:DisplayObject):Boolean
+		public static function SORT_45(d1:DisplayObject,d2:DisplayObject):Boolean
 		{
 			if (d1.parent != d2.parent)
 				return false;

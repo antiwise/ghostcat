@@ -110,7 +110,6 @@ package ghostcat.community.sort
 				registerDirty(obj,setDirtyWhenEvent);
 				
 			super.calculate(obj);//加入时立即计算
-			
 		}
 	}
 }
