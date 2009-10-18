@@ -49,7 +49,7 @@ package ghostcat.algorithm
 		 * @param o
 		 * 
 		 */
-		public function modify(o : *):void
+		public function modify(o:*):void
 		{
 			var index:int = data.indexOf(o);
 			if (index > 0)

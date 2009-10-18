@@ -9,6 +9,7 @@ package ghostcat.community.physics
 	/**
 	 * 物理管理类
 	 * （command参数为PhysicsItem对象和更新间隔毫秒数）
+	 * 
 	 * @author flashyiyi
 	 */
 	public class PhysicsManager extends GroupManager

@@ -36,7 +36,8 @@ package ghostcat.util.display
 				if (cur && cur != cur.parent)
 					cur = cur.parent;
 				else
-					throw new Error("obj不在指定的容器内！");
+					break;
+//					throw new Error("obj不在指定的容器内！");
 			}
 			return m;
 		}

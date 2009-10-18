@@ -3,6 +3,7 @@ package ghostcat.display.bitmap
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.events.EventDispatcher;
+	import flash.geom.Point;
 
 	/**
 	 * 像素对象
@@ -23,16 +24,16 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawToBitmapData(bitmapData:BitmapData):void
+		public function drawToBitmapData(bitmapData:BitmapData,offest:Point):void
 		{
-			bitmapData.setPixel32(x,y,color);
+			bitmapData.setPixel32(x + offest.x,y + offest.y,color);
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics):void
+		public function drawToShape(target:Graphics,offest:Point):void
 		{
 			target.beginFill(color & 0xFFFFFF,uint(color >> 24)/0xFF);
-			target.drawRect(int(x),int(y),1,1);
+			target.drawRect(int(x + offest.x),int(y + offest.y),1,1);
 			target.endFill();
 		}
 		

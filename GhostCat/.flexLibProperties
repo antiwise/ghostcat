@@ -358,6 +358,9 @@
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.community.IGroupManager"/>
     <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
+    <classEntry path="ghostcat.operation.FrameCommandOper"/>
+    <classEntry path="ghostcat.community.MutiGroupManager"/>
+    <classEntry path="ghostcat.util.display.ScaleType"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

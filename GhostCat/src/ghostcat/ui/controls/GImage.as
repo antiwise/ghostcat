@@ -12,10 +12,10 @@ package ghostcat.ui.controls
 	import ghostcat.display.GNoScale;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LayoutUtil;
-	import ghostcat.util.core.CallLater;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.Geom;
+	import ghostcat.util.display.ScaleType;
 	
 	/**
 	 * 图片
@@ -28,17 +28,17 @@ package ghostcat.ui.controls
 		/**
 		 * 等比例缩放，但不会超过容器的范围
 		 */
-		public static const UNIFORM:String = Geom.UNIFORM;
+		public static const UNIFORM:String = ScaleType.UNIFORM;
 		
 		/**
 		 * 等比例填充，多余的部分会被裁切
 		 */
-		public static const CROP:String = Geom.CROP;
+		public static const CROP:String = ScaleType.CROP;
 		
 		/**
 		 * 非等比例填充
 		 */
-		public static const FILL:String = Geom.FILL;
+		public static const FILL:String = ScaleType.FILL;
 		
 		/**
 		 * 载入时使用的loaderContext

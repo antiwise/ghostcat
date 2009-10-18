@@ -51,6 +51,11 @@ package ghostcat.display.bitmap
 		private var sort:SortAllManager;//用于Sprite的排序器
 		
 		/**
+		 * 绘制全局偏移量
+		 */
+		public var drawOffest:Point = new Point(0,0);
+		
+		/**
 		 * 是否激活模拟鼠标事件
 		 */
 		public var enabledMouseCheck:Boolean = true;
@@ -146,8 +151,8 @@ package ghostcat.display.bitmap
 		
 		/**
 		 * 
-		 * @param width
-		 * @param height
+		 * @param width	宽度
+		 * @param height	高度
 		 * @param transparent	是否使用透明通道
 		 * @param backgroundColor	背景色
 		 * 
@@ -181,11 +186,25 @@ package ghostcat.display.bitmap
 		 * @param obj
 		 * 
 		 */
-		public function addObject(obj:*):void
+		public function addObject(obj:*):*
 		{
 			children.push(obj);
 			if (mode == MODE_SPRITE && obj is DisplayObject)
 				(content as Sprite).addChild(obj as DisplayObject)
+			return obj;
+		}
+		
+		/**
+		 * 添加到某索引
+		 * @param obj
+		 * 
+		 */
+		public function addObjectAt(obj:*,index:int):*
+		{
+			children.splice(index,0,obj);
+			if (mode == MODE_SPRITE && obj is DisplayObject)
+				(content as Sprite).addChild(obj as DisplayObject)
+			return obj;
 		}
 		
 		/**
@@ -193,7 +212,7 @@ package ghostcat.display.bitmap
 		 * @param obj
 		 * 
 		 */
-		public function removeObject(obj:*):void
+		public function removeObject(obj:*):*
 		{
 			Util.remove(children,obj);
 			
@@ -201,6 +220,26 @@ package ghostcat.display.bitmap
 			
 			if (mode == MODE_SPRITE && obj is DisplayObject)
 				(content as Sprite).removeChild(obj as DisplayObject)
+					
+			return obj;
+		}
+		
+		/** @inheritDoc*/
+		public override function addChild(child:DisplayObject) : DisplayObject
+		{
+			return addObject(child);
+		}
+		
+		/** @inheritDoc*/
+		public override function addChildAt(child:DisplayObject,index:int) : DisplayObject
+		{
+			return addObjectAt(child,index);
+		}
+		
+		/** @inheritDoc*/
+		public override function removeChild(child:DisplayObject) : DisplayObject
+		{
+			return removeObject(child);
 		}
 		
 		/** @inheritDoc*/
@@ -226,7 +265,7 @@ package ghostcat.display.bitmap
 			if (sortFields)
 			{
 				if (mode == MODE_SPRITE)
-					sort.calculateAll();
+					sort.calculateAll(false);
 				else
 					children.sortOn(sortFields, [Array.NUMERIC]);
 			}
@@ -316,18 +355,20 @@ package ghostcat.display.bitmap
 				var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 				if (obj is IBitmapDataDrawer)
 				{
-					(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData);
+					(obj as IBitmapDataDrawer).drawToBitmapData(bitmapData,drawOffest);
 				}
 				else if (obj is DisplayObject)
 				{
 					m = MatrixUtil.getMatrixBetween(obj as DisplayObject,this,this.parent);
+					if (drawOffest)
+						m.translate(drawOffest.x,drawOffest.y);
 					bitmapData.draw(obj as DisplayObject,m,itemColorTransform);
 				}
 			}
 			else if (mode == MODE_SHAPE)
 			{
 				if (obj is IBitmapDataDrawer)
-					(obj as IBitmapDataDrawer).drawToShape((content as Shape).graphics);
+					(obj as IBitmapDataDrawer).drawToShape((content as Shape).graphics,drawOffest);
 			}
 			else if (mode == MODE_SPRITE)
 			{
@@ -340,7 +381,7 @@ package ghostcat.display.bitmap
 			{
 				if (obj is IBitmapDataDrawer)
 				{
-					var mouseObjs:Array = (obj as IBitmapDataDrawer).getBitmapUnderMouse(mouseX,mouseY);
+					var mouseObjs:Array = (obj as IBitmapDataDrawer).getBitmapUnderMouse(mouseX + drawOffest.x,mouseY + drawOffest.y);
 					if (mouseObjs)
 						mouseOverList = mouseOverList.concat(mouseObjs);
 				}

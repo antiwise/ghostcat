@@ -200,7 +200,8 @@ package ghostcat.community
 		 */		
 		public function add(obj:*):void
 		{
-			data.push(obj);
+			if (data.indexOf(obj) == -1)
+				data.push(obj);
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)
 				registerDirty(obj,setDirtyWhenEvent);

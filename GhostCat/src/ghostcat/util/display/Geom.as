@@ -7,8 +7,6 @@ package ghostcat.util.display
 
     /**
      * 主要是一些处理矩形区域的方法
-     * 
-     * 显示对象与矩形的转换可以用getRect(obj)和scaleToFit(obj,rect)方法来承担。
      * 这个类的无类型参数可能的类型都是矩形或者显示对象
      * 
      * 其中坐标系若不作说明指的都是父对象坐标系
@@ -21,15 +19,15 @@ package ghostcat.util.display
     	/**
 		 * 等比例缩放，但不会超过容器的范围
 		 */
-		public static const UNIFORM:String = "uniform";
+		public static const UNIFORM:String = ScaleType.UNIFORM;
 		/**
 		 * 等比例填充，多余的部分会被裁切
 		 */
-		public static const CROP:String = "crop";
+		public static const CROP:String = ScaleType.CROP;
 		/**
 		 * 非等比例填充
 		 */
-		public static const FILL:String = "fill";
+		public static const FILL:String = ScaleType.FILL;
 		
 		/**
 		 * 拉伸对象到充满到某个区域
@@ -39,7 +37,7 @@ package ghostcat.util.display
 		 * @param equal	是否保持长宽比
 		 * 
 		 */		
-		public static function scaleToFit(displayObj:DisplayObject, container:*, type:String = UNIFORM):void
+		public static function scaleToFit(displayObj:DisplayObject, container:*, type:String = "uniform"):void
         {
         	var rect:Rectangle = getRect(container);
         	
@@ -312,7 +310,7 @@ package ghostcat.util.display
         }
         
         /**
-         * 将一个点包括在矩形内
+         * 扩展一个矩形的范围，将一个点包括在矩形内
          * 
          * @param source
          * @param x
@@ -347,6 +345,46 @@ package ghostcat.util.display
 				}
         	}
         }
+		
+		/**
+		 * 获得第一个矩形相对与第二个矩形的位置
+		 * 
+		 * @param v1
+		 * @param v2
+		 * @return 返回值为九宫格方向，即：
+		 * 0.左上 1.上 2.右上 
+		 * 3.左 4.中 5.右 
+		 * 6.左下 7.下 8.右下
+		 * 
+		 * 边界优先级为 角线>边线>包含
+		 * 
+		 */
+		public static function getRelativeLocation(v1:*,v2:*):int
+		{
+			var r1:Rectangle = getRect(v1);
+			var r2:Rectangle = getRect(v2);
+			return (r1.left < r2.left ? 0 : r1.right > r2.right ? 2 : 1) +
+					(r1.top < r2.top ? 0 : r1.bottom > r2.bottom ? 6 : 3)
+		}
+		
+		/**
+		 * 与getRelativeLocation在边界上判断有所差异
+		 * 边界优先级为 包含>边线>角线
+		 * 
+		 * 两个方法综合便可判断出所有情况
+		 * 
+		 * @param v1
+		 * @param v2
+		 * @return 
+		 * 
+		 */
+		public static function getRelativeLocation2(v1:*,v2:*):int
+		{
+			var r1:Rectangle = getRect(v1);
+			var r2:Rectangle = getRect(v2);
+			return (r1.right <= r2.left ? 0 : r1.left >= r2.right ? 2 : 1) +
+					(r1.bottom <= r2.top ? 0 : r1.top >= r2.bottom ? 6 : 3);
+		}
     }
 }
 

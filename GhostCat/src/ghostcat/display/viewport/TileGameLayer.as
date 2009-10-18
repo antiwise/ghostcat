@@ -14,6 +14,7 @@ package ghostcat.display.viewport
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.display.IGBase;
+	import ghostcat.display.bitmap.BitmapScreen;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
@@ -41,7 +42,7 @@ package ghostcat.display.viewport
 		/**
 		 * 游戏层
 		 */
-		public var gameLayer:Sprite;
+		public var gameLayer:DisplayObjectContainer;
 		
 		/**
 		 * 当前存在的游戏物品实例
@@ -76,17 +77,21 @@ package ghostcat.display.viewport
 		/**
 		 * 
 		 * @param mapData	地图数据
-		 * @param tileLayer	Tile对象
+		 * @param tileLayer	Tile对象（Tile或者Tile45）
 		 * @param createTileItemHandler	根据数据创建Item的方法
-		 * @param sortEngine	物品移动后的单物品排序器
-		 * @param tileSortEngine	屏幕滚动后的全排器
+		 * @param gameLayer	游戏物品层（Sprite或者BitmapScreen）
+		 * @param sortEngine	物品移动后的单物品排序器（默认是GBaseCommunityManager）
+		 * @param tileSortEngine	屏幕滚动后的全排器（必须是SortAllManager）
 		 * @param engines	其他引型
 		 * 
 		 */
-		public function TileGameLayer(mapData:Array,tileLayer:Tile,createTileItemHandler:Function,sortEngine:GroupManager=null,tileSortEngine:SortAllManager=null,engines:Array = null)
+		public function TileGameLayer(mapData:Array,tileLayer:Tile,createTileItemHandler:Function,gameLayer:DisplayObjectContainer=null,sortEngine:GroupManager=null,tileSortEngine:SortAllManager=null,engines:Array = null)
 		{
 			super(new Sprite());
 		
+			if (!gameLayer)
+				gameLayer = new Sprite();
+			
 			if (!sortEngine)
 				sortEngine = new GBaseCommunityManager(DrawPriority45Command.SORT_45)
 			
@@ -95,6 +100,7 @@ package ghostcat.display.viewport
 			
 			this.mapData = mapData;
 			this.tileLayer = tileLayer;
+			this.gameLayer = gameLayer;
 			this.createTileItemHandler = createTileItemHandler;
 			this.sortEngine = sortEngine;
 			this.tileSortEngine = tileSortEngine;
@@ -104,7 +110,6 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		protected override function init():void
 		{
-			gameLayer = new Sprite();
 			contentLayer.addChild(gameLayer);
 			
 			tileLayer.width = mapWidth * tileLayer.contentRect.width;
@@ -175,7 +180,7 @@ package ghostcat.display.viewport
 		 * @param sort	是否排序
 		 * 
 		 */
-		public function addItem(v:GBase,sort:Boolean = true):void
+		public function addItem(v:IGBase,sort:Boolean = true):void
 		{
 			gameItems.push(v);
 			if (sort)
@@ -187,7 +192,7 @@ package ghostcat.display.viewport
 		 * @param v
 		 * 
 		 */
-		public function removeItem(v:GBase):void
+		public function removeItem(v:IGBase):void
 		{
 			Util.remove(gameItems,v);
 			Util.remove(sortOnlyItems,v);
@@ -209,7 +214,7 @@ package ghostcat.display.viewport
 		protected function addHandler(event:RepeatEvent):void
 		{
 			var d:int = mapData[event.repeatPos.y][event.repeatPos.x];
-			var v:GBase = createTileItemHandler(d);
+			var v:DisplayObject = createTileItemHandler(d);
 			if (v)
 			{
 				mapItems[event.repeatPos.x + ":" + event.repeatPos.y] = v;
@@ -241,6 +246,8 @@ package ghostcat.display.viewport
 			if (v)
 			{
 				gameLayer.removeChild(v);
+				if (v is IGBase)
+					(v as IGBase).destory();
 				
 				sortEngine.remove(v);
 				if (engines)
@@ -254,9 +261,22 @@ package ghostcat.display.viewport
 		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent) : void
 		{
+			//同步层间坐标
+			if (gameLayer is BitmapScreen)
+			{
+				var bs:BitmapScreen = gameLayer as BitmapScreen; 
+				bs.drawOffest.x = tileLayer.x;
+				bs.drawOffest.y = tileLayer.y;
+			}
+			else
+			{
+				gameLayer.x = tileLayer.x;
+				gameLayer.y = tileLayer.y;
+			}
+			
 			//处理游戏物品隐藏
 			var localScreen:Rectangle = tileLayer.getLocalScreen();
-			for each (var item:GBase in gameItems)
+			for each (var item:DisplayObject in gameItems)
 			{
 				var itemRect:Rectangle = item.getBounds(item);
 				itemRect.x += item.x;
@@ -268,7 +288,7 @@ package ghostcat.display.viewport
 						gameLayer.addChild(item);
 						sortEngine.add(item);
 						
-						sortBeforeAddItemCall.invalidate();//如果这里不重排似乎会出问题
+						sortBeforeAddItemCall.invalidate();//如果这里不重排似乎会出有问题
 					}
 				}
 				else

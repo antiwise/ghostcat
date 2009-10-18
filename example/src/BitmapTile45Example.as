@@ -3,17 +3,21 @@ package
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
 	import ghostcat.debug.DebugRect;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.display.viewport.Tile45;
 	import ghostcat.display.viewport.TileGameLayer;
 	import ghostcat.manager.DragManager;
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.ui.CursorSprite;
+	import ghostcat.util.Util;
 	
 	
 	
@@ -25,15 +29,15 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class Tile45Example extends GBase
+	public class BitmapTile45Example extends GBase
 	{
 		public const MAX_SIZE:int = 1000;
 		public var mapData:Array;
-		public var man:GBase;
+		public var man:GBitmap;
 		public var game:TileGameLayer;
 		public var debugText:TextField;
 		
-		public function Tile45Example()
+		public function BitmapTile45Example()
 		{
 			stage.addChild(new FPS())
 			
@@ -49,20 +53,23 @@ package
 					mapData[i].push((Math.random() < 0.5) ? 0 : 1)
 			}
 			
-			game = new TileGameLayer(mapData,new Tile45(TestRepeater45),createTileItemHandler);
+			game = new TileGameLayer(mapData,Util.createObject(new Tile45(),{contentRect:new Rectangle(0,0,200,100)}),createTileItemHandler,new BitmapScreen(600,600,false));
 			addChild(game);
 			game.tileLayer.cursor = CursorSprite.CURSOR_DRAG;
 			
-			DragManager.register(game.tileLayer,game);
+			var v:DebugRect = new DebugRect(600,600,0);
+			v.alpha = 0;
+			addChild(v);
+			DragManager.register(v,game.tileLayer);
 			
-			man = new GBase(new TestHuman())
+			man = new GBitmap(new TestHuman())
 			game.addItem(man);
 			man.x = 50;
 			man.y = 50;
 			man.cursor = CursorSprite.CURSOR_DRAG;
 			DragManager.register(man);
 			
-			man = new GBase(new TestHuman())
+			man = new GBitmap(new TestHuman())
 			game.addItem(man);
 			man.x = 100;
 			man.y = 100;
@@ -72,9 +79,15 @@ package
 			stage.addChild(new CursorSprite())//加入鼠标
 		}
 		
-		protected function createTileItemHandler(d:*):GBase
+		protected function createTileItemHandler(d:*):GBitmap
 		{
-			return d ? new GBase(new TileObj()) : null;
+			if (d)
+			{
+				var v:GBitmap = new GBitmap(new TileObj());
+				return v;
+			}
+			else
+				return null
 		}
 		
 		protected function moveMoveHandler(event:MouseEvent):void

@@ -1,6 +1,10 @@
 package ghostcat.display.viewport
 {
+	import flash.display.DisplayObject;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 45度场景相关
@@ -56,7 +60,7 @@ package ghostcat.display.viewport
 			_wh = w / h;
 		}
 		/**
-		 * 排序函数
+		 * 排序函数（根据所在格子判断）
 		 * 
 		 * @param d1
 		 * @param d2
@@ -75,6 +79,34 @@ package ghostcat.display.viewport
 			if (d > 0)
 				return 1;
 			else if (d < 0)
+				return -1;
+			else
+				return (v1.y > v2.y) ? 1 : -1;
+		}
+		
+		/**
+		 * 排序函数（根据体积判断）
+		 * 
+		 * @param d1
+		 * @param d2
+		 * @return 
+		 * 
+		 */
+		public static function SORT_SIZE_45(v1:DisplayObject, v2:DisplayObject):int
+		{
+			if (!wh)
+				throw new Error("请先执行Display45Util.setContentSize方法");
+			
+			var p1:Point = trans45To90(new Point(v1.x,v1.y));
+			var p2:Point = trans45To90(new Point(v2.x,v2.y));
+			var r1:Rectangle = v1.getRect(v1);
+			var r2:Rectangle = v2.getRect(v2);
+			r1 = new Rectangle(p1.x,p1.y,r1.right,r1.bottom);
+			r2 = new Rectangle(p2.x,p2.y,r2.right,r2.bottom);
+			var d:int = Geom.getRelativeLocation(r1,r2);
+			if (d > 4)
+				return 1;
+			else if (d < 4)
 				return -1;
 			else
 				return (v1.y > v2.y) ? 1 : -1;
