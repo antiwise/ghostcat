@@ -8,10 +8,7 @@ package
 	import ghostcat.manager.DragManager;
 	import ghostcat.util.display.Geom;
 	
-
-	
 	[SWF(width="600",height="600")]
-	
 	/**
 	 * 
 	 * @author flashyiyi

@@ -18,6 +18,8 @@
     <classEntry path="ghostcat.community.CommunityManager"/>
     <classEntry path="ghostcat.community.GBaseCommunityManager"/>
     <classEntry path="ghostcat.community.GroupManager"/>
+    <classEntry path="ghostcat.community.IGroupManager"/>
+    <classEntry path="ghostcat.community.MutiGroupManager"/>
     <classEntry path="ghostcat.community.command.CollideCommand"/>
     <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
@@ -76,12 +78,15 @@
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
+    <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
+    <classEntry path="ghostcat.display.viewport.Display45Util"/>
     <classEntry path="ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="ghostcat.display.viewport.Light"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
     <classEntry path="ghostcat.display.viewport.Tile45"/>
+    <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
     <classEntry path="ghostcat.display.viewport.Wall"/>
     <classEntry path="ghostcat.events.ActionEvent"/>
     <classEntry path="ghostcat.events.CollideEvent"/>
@@ -155,6 +160,7 @@
     <classEntry path="ghostcat.manager.SoundManager"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FilterProxyOper"/>
+    <classEntry path="ghostcat.operation.FrameCommandOper"/>
     <classEntry path="ghostcat.operation.FunctionOper"/>
     <classEntry path="ghostcat.operation.GroupOper"/>
     <classEntry path="ghostcat.operation.IOper"/>
@@ -170,6 +176,7 @@
     <classEntry path="ghostcat.operation.RepeatOper"/>
     <classEntry path="ghostcat.operation.RetryOper"/>
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
+    <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
     <classEntry path="ghostcat.operation.SwitchOper"/>
     <classEntry path="ghostcat.operation.TimeoutOper"/>
     <classEntry path="ghostcat.operation.TweenOper"/>
@@ -332,6 +339,7 @@
     <classEntry path="ghostcat.util.display.GraphicsUtil"/>
     <classEntry path="ghostcat.util.display.HitTest"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
+    <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
     <classEntry path="ghostcat.util.easing.Back"/>
     <classEntry path="ghostcat.util.easing.Bounce"/>
@@ -352,14 +360,6 @@
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
-    <classEntry path="ghostcat.display.viewport.Display45Util"/>
-    <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
-    <classEntry path="ghostcat.community.IGroupManager"/>
-    <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
-    <classEntry path="ghostcat.operation.FrameCommandOper"/>
-    <classEntry path="ghostcat.community.MutiGroupManager"/>
-    <classEntry path="ghostcat.util.display.ScaleType"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

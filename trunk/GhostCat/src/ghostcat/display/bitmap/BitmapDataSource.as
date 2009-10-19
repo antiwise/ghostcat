@@ -230,6 +230,15 @@ package ghostcat.display.bitmap
 		}
 		
 		/**
+		 * 清除数据
+		 */
+		public function clear():void
+		{
+			for each(var bitmap:BitmapData in bitmapDatas)
+				bitmap.fillRect(new Rectangle(0, 0, bitmap.width, bitmap.height), fillColor);
+		}
+		
+		/**
 		 * 回收位图内存
 		 * 
 		 */
