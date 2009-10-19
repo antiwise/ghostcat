@@ -1,12 +1,11 @@
 package
 {
-	import flash.text.TextField;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	
-	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GBase;
-	import ghostcat.events.TickEvent;
-	import ghostcat.manager.DragManager;
-	import ghostcat.util.display.Geom;
+	import ghostcat.display.viewport.Display45Util;
 	
 	[SWF(width="600",height="600")]
 	/**
@@ -16,32 +15,24 @@ package
 	 */
 	public class TestExample extends GBase
 	{
-		public var v1:DebugRect;
-		public var v2:DebugRect;
-		public var t:TextField;
-		
 		public function TestExample()
 		{
-			v1 = new DebugRect(100,100);
-			v1.x = 100;
-			v1.y = 100;
-			addChild(v1);
+			var v:DisplayObject = new TileObj();
+			Display45Util.setContentSize(100,50);
 			
-			v2 = new DebugRect(50,50);
-			addChild(v2);
+			var r:Array = Display45Util.divShape(v,true)
 			
-			DragManager.register(v2);
+//			addChild(new Bitmap(r[0][0]))
+				
+			for (var j:int = 0;j < r.length;j++)
+				for (var i:int = 0;i < r[j].length;i++)
+				{
+					v = new Bitmap(r[j][i] as BitmapData);
+					v.x = i * 100;
+					v.y = j * 100;
+					addChild(v);
+				}
 			
-			t = new TextField();
-			t.mouseEnabled = false;
-			addChild(t);
-			
-			this.enabledTick = true;
-		}
-		
-		protected override function tickHandler(event:TickEvent) : void
-		{
-			t.text = Geom.getRelativeLocation(v2,v1).toString();
 		}
 	}
 }
