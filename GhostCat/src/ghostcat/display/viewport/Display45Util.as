@@ -2,7 +2,6 @@ package ghostcat.display.viewport
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
@@ -225,7 +224,7 @@ package ghostcat.display.viewport
 					result.push([]);
 					for (var i:int = 0;i < w;i++)
 					{
-						var p:Point = new Point(startPoint.x + (i - j) * width / 2,startPoint.y + (i + j) * height / 2);
+						var p:Point = new Point((i - j) * width / 2,(i + j) * height / 2);
 						result[j].push(getDivShape(v,p,deep))
 					}
 				}
@@ -263,15 +262,15 @@ package ghostcat.display.viewport
 		
 		private static function getDivBitmapData(v:BitmapData,p:Point,deep:int):BitmapData
 		{
-			var bitmap:BitmapData = new BitmapData(width,height,true,0);
-			for (var j:int = -deep;j < height;j++)
+			var bitmap:BitmapData = new BitmapData(width,height + deep,true,0);
+			for (var j:int = 0;j < height + deep;j++)
 			{
 				for (var i:int = 0;i < width;i++)
 				{
 					var dx:Number = Math.abs(width / 2 - i);
 					var dy:Number = (j < height / 2) ? (height / 2 - j) : (j - (height / 2 + deep));
 					if (dx / (width / 2) + dy / (height / 2) <= 1)
-						bitmap.setPixel32(i,j,v.getPixel32(i + p.x,j + p.y))
+						bitmap.setPixel32(i,j,v.getPixel32(i + p.x - width/2,j + p.y - deep))
 				}
 			}
 			return bitmap;
@@ -280,20 +279,20 @@ package ghostcat.display.viewport
 		private static function getDivShape(v:DisplayObject,p:Point,deep:int):Sprite
 		{
 			var container:Sprite = new Sprite();
-			var shape:DisplayObject = v["constructor"]() as DisplayObject;
+			var shape:DisplayObject = new v["constructor"]() as DisplayObject;
 			shape.x = -p.x;
 			shape.y = -p.y;
 			container.addChild(shape);
 			var mask:Shape = new Shape();
 			mask.graphics.beginFill(0);
-			mask.graphics.moveTo(0,0);
-			mask.graphics.lineTo(width / 2,height / 2);
+			mask.graphics.moveTo(0,-deep);
+			mask.graphics.lineTo(width / 2,height / 2 - deep);
 			if (deep)
-				mask.graphics.lineTo(width / 2,height / 2 + deep);
-			mask.graphics.lineTo(0,height + deep);
-			mask.graphics.lineTo(-width / 2,height / 2 + deep);
+				mask.graphics.lineTo(width / 2,height / 2);
+			mask.graphics.lineTo(0,height);
+			mask.graphics.lineTo(-width / 2,height / 2);
 			if (deep)
-				mask.graphics.lineTo(-width / 2,height / 2);
+				mask.graphics.lineTo(-width / 2,height / 2 - deep);
 			mask.graphics.endFill();
 			container.addChild(mask);
 			shape.mask = mask;
