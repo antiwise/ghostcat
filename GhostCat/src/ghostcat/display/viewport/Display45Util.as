@@ -2,6 +2,9 @@ package ghostcat.display.viewport
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -193,20 +196,56 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 转换位图后并按45度分割图片
+		 * 45度分割图形
 		 * 
 		 * @param v
+		 * @param asBitmap	是否转化为位图
 		 * @return 
 		 * 
 		 */
-		public static function divImage(v:DisplayObject):Array
+		public static function divShape(v:DisplayObject,asBitmap:Boolean):Array
 		{
 			var cRect:Rectangle = v.getRect(v);
 			var w:int = int(cRect.right / (width / 2));
 			var h:int = int(-cRect.left / (width / 2));
+			var deep:int = int(-cRect.y);
 			var startPoint:Point = new Point(-cRect.left,-cRect.top);
-			var bitmap:BitmapData = new DrawParse(v).createBitmapData();
 			
+			if (asBitmap)
+			{
+				var bitmap:BitmapData = new DrawParse(v).createBitmapData();
+				return divBitmapData(bitmap,w,h,deep,startPoint);
+			}
+			else
+			{
+				var result:Array = [];
+				
+				for (var j:int = 0;j < h;j++)
+				{
+					result.push([]);
+					for (var i:int = 0;i < w;i++)
+					{
+						var p:Point = new Point(startPoint.x + (i - j) * width / 2,startPoint.y + (i + j) * height / 2);
+						result[j].push(getDivShape(v,p,deep))
+					}
+				}
+				return result;
+			}
+		}
+		
+		/**
+		 * 按45度分割图片
+		 * 
+		 * @param bitmap	位图
+		 * @param w	占用格子宽度
+		 * @param h	占用格子高度
+		 * @param deep	物品高度
+		 * @param startPoint	物品底部区域最上的顶点
+		 * @return 
+		 * 
+		 */
+		public static function divBitmapData(bitmap:BitmapData,w:int,h:int,deep:int,startPoint:Point):Array
+		{
 			var result:Array = [];
 			
 			for (var j:int = 0;j < h;j++)
@@ -214,25 +253,51 @@ package ghostcat.display.viewport
 				result.push([]);
 				for (var i:int = 0;i < w;i++)
 				{
-					var p:Point = new Point(startPoint.x + i * width / 2,startPoint.y + (i + j) * height / 2);
-					result[j].push(getDivBitmapData(bitmap,p))
+					var p:Point = new Point(startPoint.x + (i - j) * width / 2,startPoint.y + (i + j) * height / 2);
+					result[j].push(getDivBitmapData(bitmap,p,deep))
 				}
 			}
 			bitmap.dispose();
 			return result;
 		}
-		private static function getDivBitmapData(v:BitmapData,p:Point):BitmapData
+		
+		private static function getDivBitmapData(v:BitmapData,p:Point,deep:int):BitmapData
 		{
 			var bitmap:BitmapData = new BitmapData(width,height,true,0);
-			for (var j:int = 0;j < height;j++)
+			for (var j:int = -deep;j < height;j++)
 			{
 				for (var i:int = 0;i < width;i++)
 				{
-					if (Math.abs(width - i * 2) / width + Math.abs(height - j * 2) / height <= 1)
-						bitmap.setPixel32(j,i,v.getPixel32(i + p.x,j + p.y))
+					var dx:Number = Math.abs(width / 2 - i);
+					var dy:Number = (j < height / 2) ? (height / 2 - j) : (j - (height / 2 + deep));
+					if (dx / (width / 2) + dy / (height / 2) <= 1)
+						bitmap.setPixel32(i,j,v.getPixel32(i + p.x,j + p.y))
 				}
 			}
 			return bitmap;
+		}
+		
+		private static function getDivShape(v:DisplayObject,p:Point,deep:int):Sprite
+		{
+			var container:Sprite = new Sprite();
+			var shape:DisplayObject = v["constructor"]() as DisplayObject;
+			shape.x = -p.x;
+			shape.y = -p.y;
+			container.addChild(shape);
+			var mask:Shape = new Shape();
+			mask.graphics.beginFill(0);
+			mask.graphics.moveTo(0,0);
+			mask.graphics.lineTo(width / 2,height / 2);
+			if (deep)
+				mask.graphics.lineTo(width / 2,height / 2 + deep);
+			mask.graphics.lineTo(0,height + deep);
+			mask.graphics.lineTo(-width / 2,height / 2 + deep);
+			if (deep)
+				mask.graphics.lineTo(-width / 2,height / 2);
+			mask.graphics.endFill();
+			container.addChild(mask);
+			shape.mask = mask;
+			return container;
 		}
 	}
 }
