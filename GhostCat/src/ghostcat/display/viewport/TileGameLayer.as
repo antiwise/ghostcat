@@ -120,7 +120,7 @@ package ghostcat.display.viewport
 			
 			sortEngine.onlyCheckValues = [];
 			sortEngine.container = gameLayer;
-			sortEngine.filter = OnlyCheckScreenFilter.onlyCheckScreenHandler;
+//			sortEngine.filter = OnlyCheckScreenFilter.onlyCheckScreenHandler;
 			if (!sortEngine.setDirtyWhenEvent)
 				sortEngine.setDirtyWhenEvent = MoveEvent.MOVE;
 			
