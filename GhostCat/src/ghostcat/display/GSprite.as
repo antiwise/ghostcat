@@ -1,5 +1,7 @@
 package ghostcat.display
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -114,6 +116,9 @@ package ghostcat.display
 			
 			if (_content == skin)
 				return;
+			
+			if (skin is BitmapData)
+				skin = new Bitmap(skin as BitmapData)
 			
 			if (_content && _content.parent == this)
 				$removeChild(_content);
