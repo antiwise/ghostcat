@@ -132,7 +132,7 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 从45度显示坐标换算为90度
+		 * 从45度显示坐标换算为90度数据坐标
 		 * @param p
 		 * @return 
 		 * 
@@ -143,7 +143,7 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 从90度换算为45度显示坐标
+		 * 从90度数据坐标换算为45度显示坐标
 		 * @param p
 		 * @return 
 		 * 

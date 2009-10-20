@@ -378,10 +378,6 @@ package ghostcat.util.easing
 				case "tint2":
 					(target as DisplayObject).transform.colorTransform = ColorUtil.getColorTransform2(value as uint);
 					break;
-				case "autoAlpha":
-					(target as DisplayObject).alpha = value;
-					(target as DisplayObject).visible = (value > 0);
-					break;
 				case "dynamicPoint":
 					(target as DisplayObject).x = value.x;
 					(target as DisplayObject).y = value.y;
