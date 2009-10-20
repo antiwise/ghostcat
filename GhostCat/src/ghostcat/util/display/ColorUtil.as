@@ -3,8 +3,8 @@ package ghostcat.util.display
 	import flash.display.BitmapData;
 	import flash.display.GradientType;
 	import flash.display.Shape;
-	import flash.geom.Matrix;
 	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	
 	/**
 	 * 
@@ -254,6 +254,29 @@ package ghostcat.util.display
 			
 			bitmap.dispose();
 			return result;
+		}
+		
+		/**
+		 * 获得两个颜色的中间值
+		 * 
+		 * @param rgb1	第一个颜色
+		 * @param rgb2	第二个颜色
+		 * @param ratio	第二个颜色的比例
+		 * 
+		 */
+		public static function getColorBetween(rgb1:uint,rgb2:uint,ratio:Number):uint
+		{
+			var r1:Number = (rgb1 >> 16) & 0xFF;
+			var g1:Number = (rgb1 >> 8) & 0xFF;
+			var b1:Number = rgb1 & 0xFF;
+			
+			var r2:Number = (rgb2 >> 16) & 0xFF;
+			var g2:Number = (rgb2 >> 8) & 0xFF;
+			var b2:Number = rgb2 & 0xFF;
+			
+			return ((r1 + (r2 - r1) * ratio) << 16) |
+				((g1 + (g2 - g1) * ratio) << 8) |
+				((b1 + (b2 - b1) * ratio));
 		}
 	}
 }

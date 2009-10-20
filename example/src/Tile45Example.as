@@ -69,7 +69,7 @@ package
 			DragManager.register(man);
 			
 			stage.addChild(new CursorSprite())//加入鼠标
-				
+			
 			Display45Util.getDefaultTileRect(new TileObj())
 		}
 		

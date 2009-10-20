@@ -3,7 +3,6 @@ package ghostcat.operation
 	import flash.events.EventDispatcher;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.AbstractUtil;
 	
 	[Event(name="operation_start",type="ghostcat.events.OperationEvent")]
@@ -54,6 +53,11 @@ package ghostcat.operation
 		public var lastResult:*;
 		
 		/**
+		 * 是否不等待而立即执行下一个Oper
+		 */
+		public var immediately:Boolean = false;
+		
+		/**
 		 * 立即执行
 		 * 
 		 */		
@@ -72,6 +76,21 @@ package ghostcat.operation
 			}
 			
 			step = RUN;
+			
+			if (immediately)//立即执行则立即触发完成事件
+			{
+				e = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
+				e.oper = this;
+				dispatchEvent(e);
+				
+				if (queue)
+				{
+					e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
+					e.oper = queue;
+					e.childOper = this;
+					dispatchEvent(e);
+				}
+			}
 		}
 		
 		/**

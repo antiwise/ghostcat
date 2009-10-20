@@ -205,7 +205,7 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 由显示坐标转换为内部坐标
+		 * 由显示坐标转换为数据坐标
 		 * 
 		 * @param p
 		 * @return 
@@ -217,7 +217,7 @@ package ghostcat.display.viewport
 		}
 		
 		/**
-		 * 由内部坐标转换为显示坐标
+		 * 由数据坐标转换为显示坐标
 		 * 
 		 * @param p
 		 * @return 

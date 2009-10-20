@@ -13,16 +13,16 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends GBase
+	public class SoundExample extends GBase
 	{
-		public function TestExample()
+		public function SoundExample()
 		{
 			RootManager.register(this);
 			
 			GAlert.show("音乐开始");
 			
 			var oper:SoundOper = new SoundOper("f8i746.MP3");
-			oper.immediately = true;
+			oper.immediately = true;//让播放声音后面的Oper立即执行
 			oper.commit();
 			
 			new TweenOper(oper,1000,{volume:0},true).commit();

@@ -361,7 +361,6 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.display.viewport.Divide45Util"/>
-    <classEntry path="ghostcat.display.movieclip.GMutiMovieClip"/>
     <classEntry path="ghostcat.operation.SoundOper"/>
   </includeClasses>
   <includeResources/>
