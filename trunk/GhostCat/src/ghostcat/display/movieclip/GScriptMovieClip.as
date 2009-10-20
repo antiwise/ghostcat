@@ -41,14 +41,7 @@ package ghostcat.display.movieclip
 			
 			reset();
 		}
-		/** @inheritDoc*/
-		public override function setContent(skin:*, replace:Boolean=true):void
-		{
-			if (content)
-				Debug.error("不允许执行setContent方法")
-			else
-				super.setContent(skin,replace);
-		}
+		
 		/** @inheritDoc*/
 		public override function get curLabelName():String
 		{

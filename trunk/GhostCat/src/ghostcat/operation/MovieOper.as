@@ -30,7 +30,7 @@ package ghostcat.operation
 			this.labelName = labelName;
 			this.loop = loop;
 		}
-		
+		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();
@@ -39,14 +39,14 @@ package ghostcat.operation
 			
 			mc.setLabel(labelName,loop);
 		}
-		
+		/** @inheritDoc*/
 		public override function result(event:* = null) : void
 		{
 			super.result(event);
 			
 			mc.removeEventListener(MovieEvent.MOVIE_END,result);
 		}
-		
+		/** @inheritDoc*/
 		public override function fault(event:* = null) : void
 		{
 			super.fault(event);

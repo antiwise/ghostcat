@@ -22,7 +22,7 @@ package ghostcat.display.movieclip
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class GBitmapMovieClip extends GMovieClipBase implements IBitmapDataDrawer
+	public class GBitmapMovieClip extends GScriptMovieClip implements IBitmapDataDrawer
 	{
 		/**
 		 * 位图数组
@@ -51,11 +51,12 @@ package ghostcat.display.movieclip
 				bitmaps = [];
 			
 			this.bitmaps = bitmaps;
-			this._labels = labels ? labels : [];
 			
-			super(new Bitmap(bitmaps[0]),true,paused);
+			super(changeContent,0,labels,paused);
 			
-			reset();
+			setContent(new Bitmap());
+			if (bitmaps && bitmaps.length > 0)
+				(content as Bitmap).bitmapData = bitmaps[0];
 			
 			this.mouseEnabled = this.mouseChildren = false;
 		}
@@ -67,65 +68,17 @@ package ghostcat.display.movieclip
 			super.init();
 		}
 		
-		/** @inheritDoc*/
-		public override function setContent(skin:*, replace:Boolean=true):void
+		protected function changeContent(v:GScriptMovieClip):void
 		{
-			if (content)
-				Debug.error("不允许执行setContent方法")
-			else
-				super.setContent(skin,replace);
+			(content as Bitmap).bitmapData = bitmaps[v.currentFrame - 1];
 		}
 		
 		/** @inheritDoc*/
-		public override function get curLabelName():String
-		{
-			for (var i:int = labels.length - 1;i>=0;i--)
-        	{
-        		if ((labels[i] as FrameLabel).frame <= currentFrame)
-        			return (labels[i] as FrameLabel).name;
-        	}
-        	return null;
-		}
-		/** @inheritDoc*/
-		public override function get currentFrame():int
-        {
-        	return _currentFrame;
-        }
-        /** @inheritDoc*/
-        public override function set currentFrame(frame:int):void
-        {
-        	if (frame < 1)
-        		frame = 1;
-        	if (frame > totalFrames)
-        		frame = totalFrames;
-        		
-        	(content as Bitmap).bitmapData = bitmaps[frame - 1];
-        	
-        	_currentFrame = frame;
-        }
-        /** @inheritDoc*/
         public override function get totalFrames():int
         {
         	return bitmaps.length;
         }
         
-        /** @inheritDoc*/
-        public override function get labels():Array
-		{
-			return _labels;
-		}
-		
-		public function set labels(v:Array):void
-        {
-        	_labels = v;
-        }
-        
-        /** @inheritDoc*/
-        public override function nextFrame():void
-        {
-        	(frameRate >= 0) ? currentFrame ++ : currentFrame --;
-        }
-
         /**
          * 回收位图资源 
          * 
