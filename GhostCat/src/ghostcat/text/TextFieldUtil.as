@@ -60,6 +60,31 @@ package ghostcat.text
         }
 		
 		/**
+		 * 从索引处截取一个字
+		 * 
+		 * @param textField
+		 * @param index
+		 * @return 
+		 * 
+		 */
+		public static function getTextFieldAtIndex(textField:TextField,index:int):TextField
+		{
+			var t:TextField = new TextField();
+			t.selectable = false;
+			t.embedFonts = textField.embedFonts;
+			t.text = textField.text.charAt(index);
+			t.setTextFormat(textField.getTextFormat(index,index+1),0,1);
+			var rect:Rectangle = textField.getCharBoundaries(index);
+			var tRect:Rectangle = t.getCharBoundaries(0);
+			if (rect && tRect)
+			{
+				t.x = rect.x - tRect.x;
+				t.y = rect.y - tRect.y;
+			}
+			return t;
+		}
+		
+		/**
 		 * 将TextField按字打散到一个容器内
 		 *  
 		 * @param textField
@@ -76,19 +101,8 @@ package ghostcat.text
 			
 			for (var i:int = 0;i < textField.text.length;i++)
 			{
-				var t:TextField = new TextField();
-				t.selectable = false;
-				t.embedFonts = textField.embedFonts;
-				t.text = textField.text.charAt(i);
-				t.setTextFormat(textField.getTextFormat(i,i+1),0,1);
-				var rect:Rectangle = textField.getCharBoundaries(i);
-				var tRect:Rectangle = t.getCharBoundaries(0);
-				if (rect && tRect)
-				{
-					t.x = rect.x - tRect.x;
-					t.y = rect.y - tRect.y;
-					t.transform.matrix = MatrixUtil.concat(m,t.transform.matrix);
-				}
+				var t:TextField = getTextFieldAtIndex(textField,i);
+				t.transform.matrix = MatrixUtil.concat(m,t.transform.matrix);
 				
 				if (bitmap)
 				{

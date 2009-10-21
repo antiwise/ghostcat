@@ -1,7 +1,9 @@
 package
 {
 	import ghostcat.display.GBase;
-	import ghostcat.extend.RadioPlayer;
+	import ghostcat.display.movieclip.GConcatMovieClip;
+	import ghostcat.skin.ScrolDownButtonSkin;
+	import ghostcat.skin.ScrolLeftButtonSkin;
 	
 	[SWF(width="600",height="600")]
 	/**
@@ -13,7 +15,7 @@ package
 	{
 		public function TestExample()
 		{
-			RadioPlayer.play("mms://live.hitfm.cn/fm887");
+			
 		}
 	}
 }

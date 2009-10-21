@@ -8,7 +8,7 @@ package ghostcat.display.movieclip
 	import ghostcat.skin.ButtonSkin;
 	
 	/**
-	 * 动画首尾拼接 
+	 * 动画首尾拼接类 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -139,11 +139,6 @@ package ghostcat.display.movieclip
 		public override function get labels():Array
 		{
 			return _labels;
-		}
-		
-		public function set labels(v:Array):void
-		{
-			_labels = v;
 		}
 		
 		/** @inheritDoc*/

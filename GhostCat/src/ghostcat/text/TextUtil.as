@@ -38,10 +38,10 @@ package ghostcat.text
 				var n:int=0;
 				while (n < len && i < htmlText.length)
 				{
-					var presult:Array= htmlText.substr(i).match(/^<([\/\w]+).*?>/);
-					if (presult!=null)
+					var result:Array= htmlText.substr(i).match(/^<([\/\w]+).*?>/);
+					if (result!=null)
 					{
-						i += presult[0].length;
+						i += result[0].length;
 					}
 					else
 					{

@@ -50,7 +50,7 @@ package ghostcat.display.loader
 		}
 		
 		/**
-		 * 或者加载器 
+		 * 获得加载器 
 		 * @return 
 		 * 
 		 */

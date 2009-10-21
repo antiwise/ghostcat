@@ -210,9 +210,12 @@ package ghostcat.ui.controls
 		
 		private var _editable:Boolean;
 		
-		private var _bitmap:Bitmap;//用于缓存的Bitmap
+		/**
+		 * 用于缓存的Bitmap
+		 */
+		protected var textBitmap:Bitmap;
 		
-		private var _asTextBitmap:Boolean = false;
+		private var _asTextBitmap:Boolean;
 		
 		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
 		{
@@ -365,6 +368,8 @@ package ghostcat.ui.controls
 		 */		
 		public function set asTextBitmap(v:Boolean):void
 		{
+			_asTextBitmap = v;
+			
 			if (v)
 			{
 				textField.visible = false;
@@ -373,11 +378,11 @@ package ghostcat.ui.controls
 			else
 			{
 				textField.visible = true;
-				if (_bitmap)
+				if (textBitmap)
 				{
-					_bitmap.bitmapData.dispose();
-					_bitmap.parent.removeChild(_bitmap);
-					_bitmap = null;
+					textBitmap.bitmapData.dispose();
+					textBitmap.parent.removeChild(textBitmap);
+					textBitmap = null;
 				}
 			}
 		}
@@ -393,18 +398,18 @@ package ghostcat.ui.controls
 		 */			
 		public function reRenderTextBitmap():void
 		{
-			if (_bitmap)
+			if (textBitmap)
 			{
-				_bitmap.parent.removeChild(_bitmap);
-				_bitmap.bitmapData.dispose();
+				textBitmap.parent.removeChild(textBitmap);
+				textBitmap.bitmapData.dispose();
 			}
 			
-			_bitmap = new Bitmap(new BitmapData(Math.ceil(textField.width),Math.ceil(textField.height),true,0));
-			_bitmap.x = textField.x;
-			_bitmap.y = textField.y;
-			textField.parent.addChild(_bitmap);
+			textBitmap = new Bitmap(new BitmapData(Math.ceil(textField.width),Math.ceil(textField.height),true,0));
+			textBitmap.x = textField.x;
+			textBitmap.y = textField.y;
+			textField.parent.addChild(textBitmap);
 			
-			_bitmap.bitmapData.draw(textField);
+			textBitmap.bitmapData.draw(textField);
 		}
 		
 		private function getANSILength(data:String):int
@@ -464,8 +469,8 @@ package ghostcat.ui.controls
 			if (destoryed)
 				return;
 			
-			if (_bitmap)
-				_bitmap.bitmapData.dispose();
+			if (textBitmap)
+				textBitmap.bitmapData.dispose();
 				
 			if (textField)
 			{
