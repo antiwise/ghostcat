@@ -51,7 +51,7 @@ package ghostcat.operation
 		/**
 		 * 声音缓动数组
 		 */
-		public var tweenOpers:Array = [];
+		public var tweenOpers:Array;
 		
 		private var _soundTransform:SoundTransform;
 		
@@ -76,13 +76,14 @@ package ghostcat.operation
 				return _soundTransform;
 		}
 		
-		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,volume:Number = 1.0,panning:Number = 0.5)
+		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,volume:Number = 1.0,panning:Number = 0.5,tweenOpers:Array = null)
 		{
 			this.source = source;
+			this.playWhenComplete = playWhenComplete;
 			this.startTime = startTime;
 			this.loops = loops;
 			this.soundTransform = new SoundTransform(volume,panning);
-			this.playWhenComplete = playWhenComplete;
+			this.tweenOpers = tweenOpers;
 		}
 		
 		/**
@@ -97,6 +98,9 @@ package ghostcat.operation
 		 */
 		public function addTween(delay:int = 0,duration:int = 1000,volume:Number = NaN,pan:Number = NaN,ease:Function = null):void
 		{
+			if (!tweenOpers)
+				tweenOpers = [];
+			
 			var o:Object = new Object();
 			if (delay > 0)
 				o.delay = delay;
@@ -167,8 +171,11 @@ package ghostcat.operation
 			channel = s.play(startTime,(loops >= 0) ? loops : int.MAX_VALUE,soundTransform);
 			channel.addEventListener(Event.SOUND_COMPLETE,result);
 			
-			for each (var tween:TweenOper in tweenOpers)
-				tween.execute();
+			if (tweenOpers)
+			{
+				for each (var tween:TweenOper in tweenOpers)
+					tween.execute();
+			}
 			
 			return channel;
 		}
