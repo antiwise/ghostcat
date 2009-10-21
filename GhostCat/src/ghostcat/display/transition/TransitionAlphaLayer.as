@@ -3,7 +3,7 @@ package ghostcat.display.transition
 	import flash.display.Shape;
 
 	/**
-	 * 透明渐变过渡
+	 * 白屏渐变过渡
 	 * 
 	 * @author flashyiyi
 	 * 

@@ -8,8 +8,10 @@ package ghostcat.display.transition
 	import ghostcat.operation.TweenOper;
 
 	/**
-	 * 显示一个过渡动画对象的渐变过渡
+	 * 显示一个过渡对象的透明渐变过渡
 	 * 
+	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
+	 *
 	 * @author flashyiyi
 	 * 
 	 */
