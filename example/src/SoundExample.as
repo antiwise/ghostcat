@@ -1,6 +1,7 @@
 package
 {
 	import flash.events.Event;
+	import flash.media.SoundTransform;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
@@ -25,14 +26,10 @@ package
 			
 			GAlert.show("音乐开始");
 			
-			var oper:SoundOper = new SoundOper("f8i746.MP3");
-			oper.immediately = true;//让播放声音后面的Oper立即执行
+			var oper:SoundOper = new SoundOper("f8i746.MP3",true,0,1,0);
+			oper.addTween(0,1000,1);
+			oper.addTween(3000,2000,0,1);
 			oper.commit();
-			
-			new WatchOper(oper,Event.COMPLETE).commit();
-			new TweenOper(oper,1000,{volume:0},true).commit();
-			new DelayOper(2000).commit();
-			new TweenOper(oper,1000,{volume:0,pan:1}).commit();
 			
 			GAlert.show("音乐结束");
 		}

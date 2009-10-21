@@ -10,6 +10,7 @@ package ghostcat.operation
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.debug.Debug;
+	import ghostcat.util.easing.TweenUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	
@@ -47,6 +48,11 @@ package ghostcat.operation
 		 */
 		public var playWhenComplete:Boolean;
 		
+		/**
+		 * 声音缓动数组
+		 */
+		public var tweenOpers:Array = [];
+		
 		private var _soundTransform:SoundTransform;
 		
 		/**
@@ -70,14 +76,40 @@ package ghostcat.operation
 				return _soundTransform;
 		}
 		
-		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,sndTransform:SoundTransform = null)
+		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,volume:Number = 1.0,panning:Number = 0.5)
 		{
 			this.source = source;
 			this.startTime = startTime;
 			this.loops = loops;
-			this.soundTransform = sndTransform ? sndTransform : new SoundTransform();
+			this.soundTransform = new SoundTransform(volume,panning);
 			this.playWhenComplete = playWhenComplete;
 		}
+		
+		/**
+		 * 增加一个声音缓动
+		 * 
+		 * @param delay	起始时间
+		 * @param duration	持续时间
+		 * @param volume	音量
+		 * @param pan	声道均衡
+		 * @param ease	缓动函数
+		 * 
+		 */
+		public function addTween(delay:int = 0,duration:int = 1000,volume:Number = NaN,pan:Number = NaN,ease:Function = null):void
+		{
+			var o:Object = new Object();
+			if (delay > 0)
+				o.delay = delay;
+			if (!isNaN(volume))
+				o.volume = volume;
+			if (!isNaN(pan))
+				o.pan = pan;
+			if (ease != null)
+				o.ease = ease;
+			
+			tweenOpers.push(new TweenOper(this,duration,o));
+		}
+		
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
@@ -134,6 +166,10 @@ package ghostcat.operation
 		{
 			channel = s.play(startTime,(loops >= 0) ? loops : int.MAX_VALUE,soundTransform);
 			channel.addEventListener(Event.SOUND_COMPLETE,result);
+			
+			for each (var tween:TweenOper in tweenOpers)
+				tween.execute();
+			
 			return channel;
 		}
 		/** @inheritDoc*/
