@@ -8,7 +8,7 @@ package ghostcat.display.transition
 	import ghostcat.operation.Oper;
 
 	/**
-	 * 过渡动画类，用于处理场景切换
+	 * 过渡动画类，根据帧标签播放动画决定过渡形态
 	 * 
 	 * 当设置了wait属性后，将会一直重复播放这段动画，此时只能用continueFadeOut方法继续
 	 * 

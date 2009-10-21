@@ -8,7 +8,6 @@ package ghostcat.display.transition
 	import ghostcat.operation.Oper;
 	import ghostcat.util.core.AbstractUtil;
 	
-	
 	/**
 	 * 过渡动画基类，用于处理场景切换
 	 * 
