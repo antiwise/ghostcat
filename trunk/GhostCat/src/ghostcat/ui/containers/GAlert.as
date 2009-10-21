@@ -60,6 +60,7 @@ package ghostcat.ui.containers
 		
 		/**
 		 * 显示 
+		 * 
 		 * @param text	文字
 		 * @param title	标题
 		 * @param buttons	按钮
@@ -86,6 +87,22 @@ package ghostcat.ui.containers
 				PopupManager.instance.showPopup(alert,null,true,CenterMode.POINT);
 			
 			return alert;
+		}
+		
+		/**
+		 * 排队显示
+		 *  
+		 * @param text
+		 * @param title
+		 * @param buttons
+		 * @param closeHandler
+		 * @param inQueue
+		 * @return 
+		 * 
+		 */
+		public static function commit(text:String,title:String = null,buttons:Array = null,closeHandler:Function = null,inQueue:Boolean = true):GAlert
+		{
+			return show(text,title,buttons,closeHandler,true)
 		}
 		
 		private var _title:String;
