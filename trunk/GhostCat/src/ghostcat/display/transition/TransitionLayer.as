@@ -7,6 +7,7 @@ package ghostcat.display.transition
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.Oper;
 	import ghostcat.util.core.AbstractUtil;
+	import ghostcat.util.core.Handler;
 	
 	/**
 	 * 过渡动画基类，用于处理场景切换
@@ -50,7 +51,7 @@ package ghostcat.display.transition
 		/**
 		 * 切换屏幕时执行的方法
 		 */
-		public var switchHandler:Function;
+		public var switchHandler:Handler;
 		
 		private var _state:String;
 		
@@ -77,7 +78,8 @@ package ghostcat.display.transition
 					break;
 				case WAIT:
 					playAnimate(wait,FADE_OUT);
-					switchHandler();
+					if (switchHandler)
+						switchHandler.call();
 					break;
 				case FADE_OUT:
 					playAnimate(fadeOut,END);
@@ -111,7 +113,7 @@ package ghostcat.display.transition
 			}
 		}
 		
-		public function TransitionLayer(switchHandler:Function,fadeIn:Oper = null, fadeOut:Oper = null, wait:Oper = null)
+		public function TransitionLayer(switchHandler:Handler,fadeIn:Oper = null, fadeOut:Oper = null, wait:Oper = null)
 		{
 			AbstractUtil.preventConstructor(this,TransitionLayer);
 			

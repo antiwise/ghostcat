@@ -13,11 +13,11 @@ package ghostcat.display.transition
 	 */
 	public class TransitionFadeToLayer extends TransitionDisplayLayer
 	{
-		public function TransitionFadeToLayer(switchHandler:Function,target:DisplayObject,fadeOut:String = null,fadeOutDuration:int = 1000, wait:Boolean=false)
+		public function TransitionFadeToLayer(switchHandler:Function,target:DisplayObject,fadeOut:String = null,fadeOutDuration:int = 1000, wait:Boolean=false,easeIn:Function = null, easeOut:Function = null)
 		{
 			var bitmap:Bitmap = new DrawParse(target).createBitmap();
 			
-			super(switchHandler,bitmap,null,0,fadeOut,fadeOutDuration,wait);
+			super(switchHandler,bitmap,null,0,fadeOut,fadeOutDuration,wait,easeIn,easeOut);
 			bitmap.alpha = 1.0;
 		}
 	}
