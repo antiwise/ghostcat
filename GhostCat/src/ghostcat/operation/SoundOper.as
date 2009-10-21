@@ -10,7 +10,9 @@ package ghostcat.operation
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.debug.Debug;
-
+	
+	[Event(name="complete",type="flash.events.Event")]
+	
 	/**
 	 * 播放声音
 	 * @author flashyiyi
@@ -40,6 +42,11 @@ package ghostcat.operation
 		 */
 		public var loops:int;
 		
+		/**
+		 * 是否在全部下载完毕后才播放
+		 */
+		public var playWhenComplete:Boolean;
+		
 		private var _soundTransform:SoundTransform;
 		
 		/**
@@ -63,13 +70,13 @@ package ghostcat.operation
 				return _soundTransform;
 		}
 		
-		public function SoundOper(source:* = null,immediately:Boolean = true,startTime:int = 0,loops:int = 1,sndTransform:SoundTransform = null)
+		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,sndTransform:SoundTransform = null)
 		{
 			this.source = source;
 			this.startTime = startTime;
 			this.loops = loops;
 			this.soundTransform = sndTransform ? sndTransform : new SoundTransform();
-			this.immediately = immediately;
+			this.playWhenComplete = playWhenComplete;
 		}
 		/** @inheritDoc*/
 		public override function execute() : void
@@ -92,14 +99,28 @@ package ghostcat.operation
 			{
 				var s:Sound = new Sound();
 				s.addEventListener(IOErrorEvent.IO_ERROR,fault);
+				s.addEventListener(Event.COMPLETE,loadSoundComplete);
 				s.load(new URLRequest(urlBase + source),new SoundLoaderContext(1000,true));
 				source = s;
+				if (playWhenComplete)
+					return;
 			}
 			
 			if (source is Sound)
 				playSound(source as Sound)
 			else
 				Debug.error("数据源格式错误")	
+		}
+		
+		private function loadSoundComplete(event:Event):void
+		{
+			event.currentTarget.removeEventListener(IOErrorEvent.IO_ERROR,fault);
+			event.currentTarget.removeEventListener(Event.COMPLETE,loadSoundComplete);
+			
+			dispatchEvent(event);
+			
+			if (playWhenComplete)
+				playSound(source as Sound);
 		}
 		
 		/**
@@ -125,6 +146,7 @@ package ghostcat.operation
 		public override function fault(event:* = null):void
 		{
 			event.currentTarget.removeEventListener(IOErrorEvent.IO_ERROR,fault);
+			event.currentTarget.removeEventListener(Event.COMPLETE,loadSoundComplete);
 			if (channel)
 				channel.removeEventListener(Event.SOUND_COMPLETE,result);
 			
