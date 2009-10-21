@@ -110,12 +110,15 @@ package ghostcat.display.movieclip
 		 * @param rect	绘制范围
 		 * @param start	起始帧
 		 * @param len	长度
+		 * @param immediately 是否立即显示
 		 * @return 
 		 * 
 		 */
-		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1):void
+		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,immediately:Boolean = false):void
 		{
 			var cacher:MovieClipCacher = new MovieClipCacher(mc,rect,start,len);
+			if (immediately)
+				cacher.result = bitmaps;
 			cacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
 		}
 		

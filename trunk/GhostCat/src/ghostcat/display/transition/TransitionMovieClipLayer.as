@@ -1,8 +1,9 @@
-package ghostcat.display.movieclip
+package ghostcat.display.transition
 {
 	import flash.display.DisplayObjectContainer;
 	
 	import ghostcat.events.MovieEvent;
+	import ghostcat.display.movieclip.GMovieClip;
 
 	/**
 	 * 过渡动画类，用于处理场景切换
@@ -10,14 +11,14 @@ package ghostcat.display.movieclip
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionLayer extends GMovieClip
+	public class TransitionMovieClipLayer extends GMovieClip
 	{
 		public static const FADE_IN:String = "fade_in";
 		public static const FADE_OUT:String = "fade_out";
 		public static const WAIT:String = "wait";
 		public static const END:String = "end";
 		
-		public static var currentTransition:TransitionLayer;
+		public static var currentTransition:TransitionMovieClipLayer;
 		
 		/**
 		 * 创建过渡动画到某个层
@@ -31,9 +32,9 @@ package ghostcat.display.movieclip
 		 * @return 
 		 * 
 		 */
-		public static function createTo(container:DisplayObjectContainer,skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null):TransitionLayer
+		public static function createTo(container:DisplayObjectContainer,skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null):TransitionMovieClipLayer
 		{
-			var mc:TransitionLayer = new TransitionLayer(skin,switchHandler,fadeIn,fadeOut,waitAnimate);
+			var mc:TransitionMovieClipLayer = new TransitionMovieClipLayer(skin,switchHandler,fadeIn,fadeOut,waitAnimate);
 			container.addChild(mc);
 			mc.start();
 			
@@ -109,7 +110,7 @@ package ghostcat.display.movieclip
 			}
 		}
 
-		public function TransitionLayer(skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null)
+		public function TransitionMovieClipLayer(skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null)
 		{
 			super(skin);
 			
