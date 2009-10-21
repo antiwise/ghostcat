@@ -8,6 +8,7 @@ package ghostcat.display.viewport
     import ghostcat.display.GNoScale;
     import ghostcat.events.TickEvent;
     import ghostcat.parse.display.DrawParse;
+    import ghostcat.util.core.ClassFactory;
     import ghostcat.util.display.DisplayUtil;
 
 	/**
@@ -133,13 +134,19 @@ package ghostcat.display.viewport
 		 * @param asBitmap	是否缓存为位图
 		 * 
 		 */
-		public function addLayer(skin:Class, divider:Number = 1.0,offest:Point = null,asBitmap:Boolean = false):void
+		public function addLayer(skin:*, divider:Number = 1.0,offest:Point = null,asBitmap:Boolean = false):void
 		{
+			if (skin is DisplayObject)
+				skin = skin["constructor"] as Class;
+				
+			if (skin is Class)
+				skin = new ClassFactory(skin);
+			
 			if (!offest)
 				offest = new Point();
 			
 			var layer:Sprite = new Sprite();
-            var child:DisplayObject = new skin() as DisplayObject;
+            var child:DisplayObject = (skin as ClassFactory).newInstance() as DisplayObject;
 			var contentSize:Point = new Point(child.width,child.height);
 			var item:Item = new Item(skin,layer,contentSize,offest,divider,asBitmap);
 			items.push(item);
@@ -168,7 +175,7 @@ package ghostcat.display.viewport
 				if (item.bitmapData)
 					item.bitmapData.dispose();
 				
-				var child:DisplayObject = new (item.skin)() as DisplayObject;
+				var child:DisplayObject = item.skin.newInstance() as DisplayObject;
 				var drawPos:Point = child.getBounds(child).topLeft.add(item.offest);
 				item.bitmapData = new DrawParse(child).createBitmapData();
 				var m:Matrix = new Matrix();
@@ -184,7 +191,7 @@ package ghostcat.display.viewport
 				{
 					for (var i:int = 0;i < lw;i++)
 					{
-						child = new (item.skin)() as DisplayObject;
+						child = item.skin.newInstance() as DisplayObject;
 						child.x = i * child.width + item.offest.x;
 						child.y = j * child.height + item.offest.y;
 						item.layer.addChild(child);
@@ -213,12 +220,14 @@ import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.geom.Point;
 
+import ghostcat.util.core.ClassFactory;
+
 class Item
 {
 	/**
 	 * 皮肤类型
 	 */
-	public var skin:Class
+	public var skin:ClassFactory
 	/**
 	 * 层实例
 	 */
@@ -243,7 +252,7 @@ class Item
 	 * 缓存的位图
 	 */
 	public var bitmapData:BitmapData;
-	public function Item(skin:Class,layer:Sprite,contentSize:Point,offest:Point,divider:Number,asBitmap:Boolean):void
+	public function Item(skin:ClassFactory,layer:Sprite,contentSize:Point,offest:Point,divider:Number,asBitmap:Boolean):void
 	{
 		this.skin = skin;
 		this.layer = layer;

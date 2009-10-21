@@ -6,6 +6,7 @@ package ghostcat.display.transition
 	import ghostcat.operation.DelayOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
+	import ghostcat.util.core.Handler;
 
 	/**
 	 * 显示一个过渡对象的透明渐变过渡
@@ -29,7 +30,7 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
-		public function TransitionDisplayLayer(switchHandler:Function,displayObj:DisplayObject,fadeIn:String = null,fadeInDuration:int = 1000,fadeOut:String = null,fadeOutDuration:int = 1000, wait:Boolean=false)
+		public function TransitionDisplayLayer(switchHandler:Handler,displayObj:DisplayObject,fadeIn:int = 1000,fadeOut:int = 1000, wait:Boolean=false, easeIn:Function = null, easeOut:Function = null)
 		{
 			this.displayObj = displayObj;
 			displayObj.alpha = 0.0;
@@ -39,9 +40,9 @@ package ghostcat.display.transition
 			var waitOper:Oper;
 			
 			if (fadeIn)
-				fadeInOper = new TweenOper(displayObj,fadeInDuration,{autoAlpha:1.0});
+				fadeInOper = new TweenOper(displayObj,fadeIn,{autoAlpha:1.0,ease:easeIn});
 			if (fadeOut)
-				fadeOutOper = new TweenOper(displayObj,fadeOutDuration,{autoAlpha:0});
+				fadeOutOper = new TweenOper(displayObj,fadeOut,{autoAlpha:0,ease:easeOut});
 			if (wait)
 				waitOper = new DelayOper(-1);
 			
