@@ -143,9 +143,6 @@ package ghostcat.util.load
 			return (min>0)?(min.toString()+"分"):""+sec.toString()+"秒";
 		}
 		
-		
-		
-		
 		private function openHandler(event:Event):void
 		{
 			startTime = getTimer();

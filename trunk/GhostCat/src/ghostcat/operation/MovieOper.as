@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import ghostcat.display.movieclip.GMovieClip;
+	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.events.MovieEvent;
 
 	/**
@@ -14,7 +15,7 @@ package ghostcat.operation
 		/**
 		 * 动画实例
 		 */
-		public var mc:GMovieClip;
+		public var mc:GMovieClipBase;
 		/**
 		 * 标签名
 		 */
@@ -24,7 +25,7 @@ package ghostcat.operation
 		 */
 		public var loop:int;
 		
-		public function MovieOper(mc:GMovieClip=null,labelName:String=null,loop:int = 1)
+		public function MovieOper(mc:GMovieClipBase=null,labelName:String=null,loop:int = 1)
 		{
 			this.mc = mc;
 			this.labelName = labelName;

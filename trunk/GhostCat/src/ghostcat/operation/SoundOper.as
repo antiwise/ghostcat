@@ -10,7 +10,6 @@ package ghostcat.operation
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.util.easing.TweenUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	
@@ -49,9 +48,9 @@ package ghostcat.operation
 		public var playWhenComplete:Boolean;
 		
 		/**
-		 * 声音缓动数组
+		 * 声音缓动队列
 		 */
-		public var tweenOpers:Array;
+		public var tweenQueue:Queue;
 		
 		private var _soundTransform:SoundTransform;
 		
@@ -76,14 +75,13 @@ package ghostcat.operation
 				return _soundTransform;
 		}
 		
-		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,volume:Number = 1.0,panning:Number = 0.5,tweenOpers:Array = null)
+		public function SoundOper(source:* = null,playWhenComplete:Boolean = true,startTime:int = 0,loops:int = 1,volume:Number = 1.0,panning:Number = 0.5)
 		{
 			this.source = source;
 			this.playWhenComplete = playWhenComplete;
 			this.startTime = startTime;
 			this.loops = loops;
 			this.soundTransform = new SoundTransform(volume,panning);
-			this.tweenOpers = tweenOpers;
 		}
 		
 		/**
@@ -96,14 +94,12 @@ package ghostcat.operation
 		 * @param ease	缓动函数
 		 * 
 		 */
-		public function addTween(delay:int = 0,duration:int = 1000,volume:Number = NaN,pan:Number = NaN,ease:Function = null):void
+		public function addTween(duration:int = 1000,volume:Number = NaN,pan:Number = NaN,ease:Function = null):void
 		{
-			if (!tweenOpers)
-				tweenOpers = [];
+			if (!tweenQueue)
+				tweenQueue = new Queue();
 			
 			var o:Object = new Object();
-			if (delay > 0)
-				o.delay = delay;
 			if (!isNaN(volume))
 				o.volume = volume;
 			if (!isNaN(pan))
@@ -111,7 +107,7 @@ package ghostcat.operation
 			if (ease != null)
 				o.ease = ease;
 			
-			tweenOpers.push(new TweenOper(this,duration,o));
+			tweenQueue.data.push(new TweenOper(this,duration,o));
 		}
 		
 		/** @inheritDoc*/
@@ -171,11 +167,8 @@ package ghostcat.operation
 			channel = s.play(startTime,(loops >= 0) ? loops : int.MAX_VALUE,soundTransform);
 			channel.addEventListener(Event.SOUND_COMPLETE,result);
 			
-			if (tweenOpers)
-			{
-				for each (var tween:TweenOper in tweenOpers)
-					tween.execute();
-			}
+			if (tweenQueue)
+				tweenQueue.execute();
 			
 			return channel;
 		}

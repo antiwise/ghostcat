@@ -26,9 +26,10 @@ package
 			
 			GAlert.show("音乐开始");
 			
-			var oper:SoundOper = new SoundOper("f8i746.MP3",true,0,1,0);
-			oper.addTween(0,1000,1);
-			oper.addTween(3000,2000,0,1);
+			var oper:SoundOper = new SoundOper("f8i746.MP3",true,0,1,0,0);
+			oper.addTween(2000,1,0.5);
+			oper.addTween(1000,1);
+			oper.addTween(2000,0,1);
 			oper.commit();
 			
 			GAlert.show("音乐结束");

@@ -72,7 +72,6 @@
     <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.other.BubbleCreater"/>
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
@@ -363,8 +362,11 @@
     <classEntry path="ghostcat.display.viewport.Divide45Util"/>
     <classEntry path="ghostcat.operation.SoundOper"/>
     <classEntry path="ghostcat.extend.RadioPlayer"/>
-    <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
+    <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.ui.controls.GBitmapText"/>
+    <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
+    <classEntry path="ghostcat.display.transition.TransitionLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

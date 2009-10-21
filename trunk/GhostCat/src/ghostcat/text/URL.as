@@ -55,7 +55,13 @@ package ghostcat.text
 		 */
 		public var fragment:String;
     	
-    	public function URL(v:String)
+		/**
+		 * 
+		 * @param v
+		 * @param hasPath	是否拥有路径名
+		 * 
+		 */
+    	public function URL(v:String,hasPath:Boolean = true)
 		{
 			var data:Array = regex.exec(v);
 			protocol = data[2];
@@ -66,6 +72,12 @@ package ghostcat.text
 			pathname = data[8] ? new FilePath(data[8]) : null;
 			queryString = data[9] ? new URLVariables(data[9]) : null;
 			fragment = data[10];
+			
+			if (hasPath && !pathname && host)//只有文件名的时候将会产生混淆，取host的值
+			{
+				pathname = new FilePath(host);
+				host = null;
+			}
 		}
 		
 		public function toString():String

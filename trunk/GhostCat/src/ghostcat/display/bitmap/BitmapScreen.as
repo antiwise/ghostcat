@@ -144,6 +144,10 @@ package ghostcat.display.bitmap
 			sortFields = SortAllManager.SORT_Y;
 		}
 		
+		/**
+		 * 激活45度排序 
+		 * 
+		 */
 		public function enabledSort45():void
 		{
 			sortFields = SortAllManager.SORT_45;

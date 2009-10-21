@@ -1,159 +1,59 @@
 package ghostcat.display.transition
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.MovieClip;
 	
-	import ghostcat.events.MovieEvent;
 	import ghostcat.display.movieclip.GMovieClip;
+	import ghostcat.operation.MovieOper;
+	import ghostcat.operation.Oper;
 
 	/**
 	 * 过渡动画类，用于处理场景切换
 	 * 
+	 * 当设置了wait属性后，将会一直重复播放这段动画，此时只能用continueFadeOut方法继续
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionMovieClipLayer extends GMovieClip
+	public class TransitionMovieClipLayer extends TransitionLayer
 	{
-		public static const FADE_IN:String = "fade_in";
-		public static const FADE_OUT:String = "fade_out";
-		public static const WAIT:String = "wait";
-		public static const END:String = "end";
-		
-		public static var currentTransition:TransitionMovieClipLayer;
-		
 		/**
-		 * 创建过渡动画到某个层
-		 * 
-		 * @param container	动画层所在的容器
-		 * @param skin	动画皮肤
-		 * @param switchHandler	切换时执行的函数
-		 * @param fadeIn	进入时的动画名称数组
-		 * @param fadeOut	消去时的动画名称数组
-		 * @param waitAnimate	等待时的动画名称，将会循环播放。如果设置了这个值，除非外部手动设置state属性，否则动画永远不会停止。
-		 * @return 
-		 * 
+		 * 动画对象
 		 */
-		public static function createTo(container:DisplayObjectContainer,skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null):TransitionMovieClipLayer
+		public var mc:GMovieClip;
+		
+		/** @inheritDoc*/
+		public override function createTo(container:DisplayObjectContainer):TransitionLayer
 		{
-			var mc:TransitionMovieClipLayer = new TransitionMovieClipLayer(skin,switchHandler,fadeIn,fadeOut,waitAnimate);
 			container.addChild(mc);
-			mc.start();
+			return super.createTo(container);
+		}
+		
+		public function TransitionMovieClipLayer(switchHandler:Function,skin:MovieClip,fadeIn:String = null,fadeOut:String = null,wait:String=null)
+		{
+			mc = new GMovieClip(skin);
 			
-			currentTransition = mc;
-			return mc;
-		}
-		
-		/**
-		 * 让动画进入到消去状态。设置了waitAnimate时可执行此方法退出等待状态
-		 * 
-		 */
-		public static function continueFadeOut():void
-		{
-			currentTransition.state = FADE_OUT;
-		}
-		
-		/**
-		 * 切换屏幕时执行的方法
-		 */
-		public var switchHandler:Function;
-		
-		/**
-		 * 进入时的动画名称数组
-		 */
-		public var fadeIn:Array;
-		
-		/**
-		 * 等待时的动画名称，将会循环播放。如果设置了这个值，除非外部手动设置state属性，否则动画永远不会停止。
-		 */
-		public var waitAnimate:String;
-		
-		/**
-		 * 消去时的动画名称数组，完毕后将会删除自身
-		 */
-		public var fadeOut:Array;
-		
-		private var _state:String;
-		
-		/**
-		 * 当前状态 
-		 * @return 
-		 * 
-		 */
-		public function get state():String
-		{
-			return _state;
-		}
-
-		public function set state(v:String):void
-		{
-			if (_state == v)
-				return;
+			var fadeInOper:Oper;
+			var fadeOutOper:Oper;
+			var waitOper:Oper;
 			
-			_state = v;
-			switch (_state)
-			{
-				case FADE_IN:
-					playAnimate(fadeIn,WAIT);
-					break;
-				case WAIT:
-					if (waitAnimate)
-						setLabel(waitAnimate,-1);
-					else
-						state = FADE_OUT;
-					switchHandler();
-					break;
-				case FADE_OUT:
-					playAnimate(fadeOut,END);
-					break;
-				case END:
-					destory();
-					break;
-			}
-		}
-
-		public function TransitionMovieClipLayer(skin:*,switchHandler:Function,fadeIn:Array = null,fadeOut:Array = null,waitAnimate:String=null)
-		{
-			super(skin);
+			if (fadeIn)
+				fadeInOper = new MovieOper(mc,fadeIn,1);
+			if (fadeOut)
+				fadeOutOper = new MovieOper(mc,fadeOut,1);
+			if (wait)
+				waitOper = new MovieOper(mc,wait,-1);
 			
-			this.fadeIn = fadeIn;
-			this.fadeOut = fadeOut;
-			this.waitAnimate = waitAnimate;
+			super(switchHandler,fadeInOper,fadeOutOper,waitOper);
 		}
 		
-		private function playAnimate(list:Array,nextState:String):void
-		{
-			if (list)
-			{
-				setLabel(list[0],1);
-				for (var i:int = 1;i < list.length; i++)
-					queueLabel(list[i],1);
-				
-				addEventListener(MovieEvent.MOVIE_EMPTY,animateEmptyHandler);
-			}
-			else
-				state = nextState;
-		
-			function animateEmptyHandler(event:MovieEvent):void
-			{
-				removeEventListener(MovieEvent.MOVIE_EMPTY,animateEmptyHandler);
-				state = nextState;
-			}
-		}
-		
-		/**
-		 * 开始播放
-		 * 
-		 */
-		public function start():void
-		{
-			state = FADE_IN;
-		}
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
-			super.destory();
+			if (mc)
+				mc.destory();
 			
-			if (currentTransition == this)
-				currentTransition = null;
+			super.destory();
 		}
 	}
 }
