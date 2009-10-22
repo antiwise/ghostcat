@@ -175,6 +175,9 @@ package ghostcat.gxml.spec
 		 */
 		protected function isClass(xml:XML):Boolean
 		{
+			if (xml.nodeKind()=="text")
+				return false;
+				
 			var name:String = xml.localName();
 			if (name)
 			{
