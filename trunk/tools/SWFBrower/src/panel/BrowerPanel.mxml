@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panel:PanelBase label="SWF显示" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panel="panel.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			import flash.filesystem.File;
+			import mx.controls.Image;
+			override protected function doWithSource(v:File) : void
+			{
+				if (v.isDirectory)
+				{
+					currentState = "directory";
+					var list:Array = v.getDirectoryListing();
+					var pathList:Array = [];
+					for (var i:int = 0; i < list.length; i++)
+					{
+						if (!(list[i] as File).isDirectory)
+						{
+					    	var url:String=(list[i] as File).nativePath;
+							if (url.substr(url.length - 4)==".swf")
+								pathList.push(url);
+						}
+					}
+					directory.dataProvider = pathList;
+				}
+				else
+				{
+					currentState = "file";
+					swfLoader.load(v.nativePath);
+				}
+			}
+
+			protected function directory_itemDoubleClickHandler(event:ListEvent):void
+			{
+				currentState = "file";
+				swfLoader.load(directory.selectedItem)
+			}
+
+		]]>
+	</mx:Script>
+	<panel:states>
+		<mx:State name="file">
+			<mx:SetProperty target="{swfLoader}" name="visible" value="true"/>
+		</mx:State>
+		<mx:State name="directory">
+			<mx:SetProperty target="{directory}" name="visible" value="true"/>
+		</mx:State>
+	</panel:states>
+	
+	<mx:SWFLoader id="swfLoader" width="100%" height="100%" visible="false"/>
+	<mx:TileList id="directory" width="100%" height="100%" visible="false"
+		rowHeight="100" columnWidth="100"
+		itemRenderer="mx.controls.Image"
+		itemClick="directory_itemDoubleClickHandler(event)"/>
+</panel:PanelBase>

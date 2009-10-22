@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panel:CheckSWFPanelBase label="检测碰撞区域" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panel="panel.*">
+	<mx:Script>
+		<![CDATA[
+			import flash.desktop.Clipboard;
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			import flash.filesystem.File;
+			import mx.controls.Image;
+			
+			public const COLLISION_RECT:Rectangle = new Rectangle(0,0,64.5,121.85);
+			
+			override protected function checkHandler(loader:Loader):void
+			{
+				var url:String = loader.contentLoaderInfo.url;
+				var cls:Class;
+				//检测Collision
+				try
+				{
+					cls = loader.contentLoaderInfo.applicationDomain.getDefinition("Collision") as Class;
+				}
+				catch (e:Error)
+				{}
+				
+				if (cls)
+				{
+					var s:Sprite = new cls();
+					var rect:Rectangle = s.getBounds(s);
+				
+					if (!rect.equals(COLLISION_RECT))
+						pathList.addItem(url);
+				}
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				System.setClipboard(getList());
+			}
+
+		]]>
+	</mx:Script>
+	
+	<mx:Label text="Collision大小应当为{COLLISION_RECT.toString()}"/>
+	<mx:Button right="0" label="复制到剪贴版" click="button1_clickHandler(event)"/>
+	
+	<mx:List id="list" y="26" width="100%" height="100%" dataProvider="{pathList}"/>
+</panel:CheckSWFPanelBase>

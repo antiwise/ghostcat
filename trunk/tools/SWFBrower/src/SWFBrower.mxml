@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" fontSize="12" width="800" height="600" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" xmlns:panel="panel.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.IndexChangedEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import panel.IFilePanelBase;
+			import panel.PanelBase;
+			import mx.managers.BrowserManager;
+			import mx.controls.Alert;
+			import mx.events.FileEvent;
+			import mx.events.ItemClickEvent;
+			
+			private function swfFilterFunction(file:File):Boolean
+			{
+				if (file.isDirectory)
+					return true;
+				else
+				{
+					var url:String=file.nativePath;
+					return (url.substr(url.length - 4)==".swf")
+					
+				}
+			}
+			
+			protected function fileTree_changeHandler(event:ListEvent):void
+			{
+				(tabNav.selectedChild as IFilePanelBase).source = fileTree.selectedItem as File;
+			}
+
+			protected function tabNav_changeHandler(event:IndexChangedEvent):void
+			{
+				(tabNav.selectedChild as IFilePanelBase).source = fileTree.selectedItem as File;
+			}
+
+		]]>
+	</mx:Script>
+	<mx:HDividedBox creationPolicy="queued" width="100%" height="100%">
+		<mx:FileSystemTree id="fileTree" width="250" height="100%" selectedPath="D:\" 
+			filterFunction="swfFilterFunction" 
+			change="fileTree_changeHandler(event)"
+			itemClick="fileTree_changeHandler(event)"
+			/>
+		
+		<mx:TabNavigator id="tabNav" width="100%" height="100%" paddingTop="0" historyManagementEnabled="false"
+			change="tabNav_changeHandler(event)">
+			<panel:BrowerPanel/>
+			<panel:CollisionPanel/>
+			<panel:CheckNamePanel/>
+		</mx:TabNavigator>
+	</mx:HDividedBox>
+</mx:WindowedApplication>
