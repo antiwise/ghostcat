@@ -1,3 +1,16 @@
-FontConverterLocal是Kevin Cao制作的嵌入字体工具
+FontConverterLocal
 
+是Kevin Cao制作的嵌入字体工具
 http://kevincao.com/
+
+GhostCatTool
+
+一个可以查看SWF库内容的程序，同时也可以用来编辑阅读压缩后的文本文件
+
+SWFBrower
+
+浏览多SWF的AIR程序，另外附加一些特殊功能
+
+FlexLite
+
+库工程，提供绑定功能
