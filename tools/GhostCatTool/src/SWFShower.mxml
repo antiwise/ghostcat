@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo">
+
+	<mx:HDividedBox width="100%" height="100%">
+		<mx:DataGrid id="list" width="150" height="100%" dataProvider="{symbolList}" change="list_changeHandler(event)">
+			<mx:columns>
+				<mx:DataGridColumn headerText="类名"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
+			<mx:Canvas clipContent="true" id="imageCanvas" label="图象" width="100%" height="100%" resize="image_resizeHandler(event)">
+				<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
+			</mx:Canvas>
+			<mx:Canvas id="treeCanvas" label="结构" width="100%" height="100%">
+				<mx:Tree id="tree" width="100%" height="100%" labelFunction="treeLabelFuntion"/>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:HDividedBox>
+	
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.util.display.DisplayUtil;
+			import mx.events.ResizeEvent;
+			import ghostcat.manager.DragManager;
+			import ghostcat.util.ReflectXMLUtil;
+			import ghostcat.parse.DisplayParse;
+			import ghostcat.util.display.Geom;
+			import mx.events.ListEvent;
+			import mx.collections.ArrayCollection;
+			import ghostcat.fileformat.swf.tag.SymbolClassTag;
+			import ghostcat.fileformat.swf.SWFDecoder;
+			
+			private var _source:ByteArray;
+			
+			private var loader:Loader = new Loader();
+			
+			
+			[Bindable]
+			private var symbolList:ArrayCollection;
+			
+			[Bindable]
+			public function get source():ByteArray
+			{
+				return _source;
+			}
+
+			public function set source(v:ByteArray):void
+			{
+				_source = v;
+				
+				if (v)
+				{
+					loader.loadBytes(v);
+					
+					var swf:SWFDecoder = new SWFDecoder();
+					swf.read(v);
+					var a:SymbolClassTag = swf.getTags(SymbolClassTag)[0];
+					symbolList = new ArrayCollection(a.symbolClasses);
+				}
+			}
+			
+			protected function list_changeHandler(event:ListEvent):void
+			{
+				var itemName:String = list.selectedItem.toString();
+				
+				SoundMixer.stopAll();
+				
+				var c:Class;
+				if (loader.content)
+					c = loader.contentLoaderInfo.applicationDomain.getDefinition(itemName) as Class
+				else
+					return;
+				
+				var o:Object = new c();
+				
+				DisplayUtil.removeAllChildren(image);
+				
+				if (o is DisplayObject)
+				{
+					var displayObj:DisplayObject = o as DisplayObject;
+					image.addChild(displayObj);
+				
+					var rect:Rectangle = displayObj.getRect(displayObj);
+					displayObj.x = -rect.x;
+					displayObj.y = -rect.y;
+					
+					image.x = Math.max(0,(imageCanvas.width - rect.width)/2);
+					image.y = Math.max(0,(imageCanvas.height - rect.height)/2);
+					image.width = rect.width;
+					image.height = rect.height;
+					
+					var sh:Shape = new Shape();
+					sh.x = -rect.x;
+					sh.y = -rect.y;
+					sh.graphics.lineStyle(0,0);
+					sh.graphics.moveTo(-5,0);
+					sh.graphics.lineTo(5,0);
+					sh.graphics.moveTo(0,-5);
+					sh.graphics.lineTo(0,5);
+					sh.graphics.endFill();
+					sh.blendMode = BlendMode.INVERT;
+					
+					image.addChild(sh);
+					
+					tree.dataProvider = ReflectXMLUtil.getChildXML(displayObj);
+					tree.validateNow();
+					tree.expandChildrenOf(tree.firstVisibleItem,true);
+				}
+				else if (o is Sound)
+				{
+					(o as Sound).play();
+					
+					tree.dataProvider = null;
+				}
+				else if (o is BitmapData)
+				{
+					tree.dataProvider = null;
+				}
+				else if (o is ByteArray)
+				{
+					var file:FileReference = new FileReference()
+					file.save(o as ByteArray,itemName.replace(".","_")+".swf");
+				}
+			}
+			
+			private function treeLabelFuntion(item:Object):String
+			{
+				var xml:XML = (item as XML).copy();
+				delete xml.*;
+				return xml.toXMLString();
+			}
+
+
+			protected function image_mouseDownHandler(event:MouseEvent):void
+			{
+				DragManager.startDrag(image)
+			}
+
+
+			protected function image_resizeHandler(event:ResizeEvent):void
+			{
+				image.x *= event.target.width / event.oldWidth;
+				image.y *= event.target.height / event.oldHeight;
+			}
+
+		]]>
+	</fx:Script>
+</s:HGroup>
