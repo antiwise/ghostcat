@@ -153,6 +153,25 @@ package ghostcat.ui.controls
 			
 			if (overwriteDefault)
 				textField.defaultTextFormat = f;
+			
+			if (asTextBitmap)
+				reRenderTextBitmap();
+		}
+		
+		/**
+		 * 设置字体样式 
+		 * @param f
+		 * 
+		 */
+		public function setTextFormat(f:TextFormat,beginIndex:int = -1,endIndex:int = -1):void
+		{
+			if (!textField)
+				return;
+			
+			textField.setTextFormat(f,beginIndex,endIndex);
+			
+			if (asTextBitmap)
+				reRenderTextBitmap();
 		}
 
 
