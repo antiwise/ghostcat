@@ -1,5 +1,7 @@
 package ghostcat.ui.html
 {
+	import flash.utils.getDefinitionByName;
+	
 	import ghostcat.debug.Debug;
 	import ghostcat.gxml.spec.DisplaySpec;
 	import ghostcat.ui.controls.GText;
@@ -16,29 +18,14 @@ package ghostcat.ui.html
 		public function TableCreater(root:* = null)
 		{
 			super(root);
-		}
-		/** @inheritDoc */
-		public override function createObject(xml:XML) : *
-		{
-			if (xml.nodeKind()!="text")
-			{
-				var name:String = xml.localName().toString().toLowerCase();
-				switch (name)
-				{
-					case "td":
-						xml.setName(ReflectUtil.getQName(TdTag));
-						break;
-					case "tr":
-						xml.setName(ReflectUtil.getQName(TrTag));
-						break;
-					case "table":
-						xml.setName(ReflectUtil.getQName(TableTag));
-						break;
-				}
-			}
 			
-			return super.createObject(xml);
+			this.classNames = {
+				td:TdTag,
+				tr:TrTag,
+				table:TableTag
+			}
 		}
+		
 		/** @inheritDoc */
 		public override function addChild(source:*, child:*, xml:XML) : void
 		{

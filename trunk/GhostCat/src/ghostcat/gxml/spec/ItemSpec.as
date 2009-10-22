@@ -1,10 +1,15 @@
 package ghostcat.gxml.spec
 {
 	import flash.events.IEventDispatcher;
+	import flash.utils.getDefinitionByName;
+	
+	import ghostcat.util.ReflectUtil;
 
 	/**
 	 * 这个解析器在Spec的基础上增加了设置外部ID和自动监听事件的功能（事件都是弱引用）
 	 * 初始化的时候需要将作为反射依据的对象写入构造函数
+	 * 
+	 * 提供替换类名的功能
 	 * 
 	 * <f:Sprite xmlns:f="flash.display" id="skin" on_click="clickHandler"/>
 	 * 
@@ -17,9 +22,42 @@ package ghostcat.gxml.spec
 		{
 			super(root);
 		}
+		
+		/**
+		 * 类名转换
+		 */
+		public var classNames:Object;
+		
+		/**
+		 * 替换类名
+		 * 
+		 * @param xml
+		 * 
+		 */
+		public function replaceClassName(xml:XML):void
+		{
+			if (classNames && xml.nodeKind() != "text")
+			{
+				var name:String = xml.localName().toString().toLowerCase();
+				for (var replacer:String in classNames)
+				{
+					if (replacer == name)
+					{
+						var o:* = classNames[replacer];
+						if (o is String)
+							o = getDefinitionByName(o);
+						
+						xml.setName(ReflectUtil.getQName(o as Class));
+					}
+				}
+			}
+		}
+		
 		/** @inheritDoc*/
 		public override function createObject(xml:XML):*
 		{
+			replaceClassName(xml);
+			
 			var id:String;
 			var handlers:Object = {};
 			for each (var item:XML in xml.attributes())
