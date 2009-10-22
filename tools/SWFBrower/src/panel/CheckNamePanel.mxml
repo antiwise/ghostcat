@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panel:CheckSWFPanelBase label="检测名称" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panel="panel.*">
+	<mx:Script>
+		<![CDATA[
+			import ghostcat.text.PinYin;
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			import flash.filesystem.File;
+			
+			override protected function checkHandler(loader:Loader):void
+			{
+				var url:String = loader.contentLoaderInfo.url;
+				var cls:Class;
+				try
+				{
+					var a:Array = url.split(/\/|\./);
+					if (a.length>0)
+					{
+						var fileName:String = a[a.length - 2];
+						fileName = PinYin.toPinyin(fileName);
+						cls = loader.contentLoaderInfo.applicationDomain.getDefinition(fileName) as Class;
+					}
+				}
+				catch (e:Error)
+				{}
+					
+				if (!cls)
+				{
+					pathList.addItem(url);
+				}
+					
+				loader.unload();
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				System.setClipboard(getList());
+			}
+		]]>
+	</mx:Script>
+	<mx:Button right="0" label="复制到剪贴版" click="button1_clickHandler(event)"/>
+	<mx:List id="list" y="26" width="100%" height="100%" dataProvider="{pathList}"/>
+</panel:CheckSWFPanelBase>
