@@ -67,8 +67,10 @@
     <classEntry path="ghostcat.display.loader.StreamTextLoader"/>
     <classEntry path="ghostcat.display.movieclip.CollisionMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GBitmapMovieClip"/>
+    <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GMovieClipBase"/>
+    <classEntry path="ghostcat.display.movieclip.GMutiMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
@@ -77,10 +79,13 @@
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
+    <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="ghostcat.display.viewport.Display45Util"/>
+    <classEntry path="ghostcat.display.viewport.Divide45Util"/>
     <classEntry path="ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="ghostcat.display.viewport.Light"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
@@ -104,6 +109,7 @@
     <classEntry path="ghostcat.events.TimeLineEvent"/>
     <classEntry path="ghostcat.extend.IFrame"/>
     <classEntry path="ghostcat.extend.JSBridge"/>
+    <classEntry path="ghostcat.extend.RadioPlayer"/>
     <classEntry path="ghostcat.fileformat.gif.GIFDecoder"/>
     <classEntry path="ghostcat.fileformat.gif.GIFEncoder"/>
     <classEntry path="ghostcat.fileformat.gif.LZWEncoder"/>
@@ -176,6 +182,7 @@
     <classEntry path="ghostcat.operation.RetryOper"/>
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
     <classEntry path="ghostcat.operation.SmoothCurveTweenOper"/>
+    <classEntry path="ghostcat.operation.SoundOper"/>
     <classEntry path="ghostcat.operation.SwitchOper"/>
     <classEntry path="ghostcat.operation.TimeoutOper"/>
     <classEntry path="ghostcat.operation.TweenOper"/>
@@ -267,6 +274,7 @@
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
+    <classEntry path="ghostcat.ui.controls.GBitmapText"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GButtonBase"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
@@ -357,16 +365,9 @@
     <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
+    <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.viewport.Divide45Util"/>
-    <classEntry path="ghostcat.operation.SoundOper"/>
-    <classEntry path="ghostcat.extend.RadioPlayer"/>
-    <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
-    <classEntry path="ghostcat.ui.controls.GBitmapText"/>
-    <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
-    <classEntry path="ghostcat.display.transition.TransitionLayer"/>
-    <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

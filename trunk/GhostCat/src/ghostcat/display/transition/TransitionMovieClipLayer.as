@@ -6,6 +6,7 @@ package ghostcat.display.transition
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.operation.MovieOper;
 	import ghostcat.operation.Oper;
+	import ghostcat.util.core.Handler;
 
 	/**
 	 * 过渡动画类，根据帧标签播放动画决定过渡形态
@@ -29,7 +30,7 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
-		public function TransitionMovieClipLayer(switchHandler:Function,skin:MovieClip,fadeIn:String = null,fadeOut:String = null,wait:String=null)
+		public function TransitionMovieClipLayer(switchHandler:Handler,skin:MovieClip,fadeIn:String = null,fadeOut:String = null,wait:String=null)
 		{
 			mc = new GMovieClip(skin);
 			
