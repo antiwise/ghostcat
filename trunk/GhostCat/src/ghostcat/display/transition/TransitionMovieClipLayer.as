@@ -3,7 +3,9 @@ package ghostcat.display.transition
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.display.movieclip.GMovieClip;
+	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.operation.MovieOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.util.core.Handler;
@@ -21,7 +23,7 @@ package ghostcat.display.transition
 		/**
 		 * 动画对象
 		 */
-		public var mc:GMovieClip;
+		public var mc:GMovieClipBase;
 		
 		/** @inheritDoc*/
 		public override function createTo(container:DisplayObjectContainer):TransitionLayer
@@ -39,9 +41,14 @@ package ghostcat.display.transition
 		 * @param wait	等待时的帧标签
 		 * 
 		 */
-		public function TransitionMovieClipLayer(switchHandler:Handler,skin:MovieClip,fadeIn:String = null,fadeOut:String = null,wait:String=null)
+		public function TransitionMovieClipLayer(switchHandler:Handler,skin:*,fadeIn:String = null,fadeOut:String = null,wait:String=null)
 		{
-			mc = new GMovieClip(skin);
+			if (skin is MovieClip)
+				this.mc = new GMovieClip(skin);
+			else if (skin is GMovieClipBase)
+				this.mc = skin as GMovieClipBase;
+			else
+				Debug.error("skin参数必须是MovieClip,GMovieClipBase之一")
 			
 			var fadeInOper:Oper;
 			var fadeOutOper:Oper;
