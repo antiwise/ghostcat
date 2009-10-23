@@ -38,7 +38,10 @@ package ghostcat.operation
 			
 			mc.addEventListener(MovieEvent.MOVIE_END,result);
 			
-			mc.setLabel(labelName,loop);
+			if (mc.hasLabels())
+				mc.setLabel(labelName,loop);
+			else
+				mc.currentFrame = 1;
 		}
 		/** @inheritDoc*/
 		public override function result(event:* = null) : void

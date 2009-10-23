@@ -305,6 +305,16 @@ package ghostcat.display.movieclip
 			super.destory();
 		}
 		
+		/**
+		 * 是否有帧标签 
+		 * @return 
+		 * 
+		 */
+		public function hasLabels():Boolean
+		{
+			return labels && labels.length > 0;
+		}
+		
         /**
 		 * 所有标签，类型为FrameLabel
 		 * @return 
