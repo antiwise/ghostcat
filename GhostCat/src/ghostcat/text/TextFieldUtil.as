@@ -96,7 +96,7 @@ package ghostcat.text
 			if (!cotainer)
 				cotainer = textField.parent;
 				
-			var m:Matrix = MatrixUtil.getMatrixBetween(textField,cotainer);
+			var m:Matrix = MatrixUtil.getMatrixAt(textField,cotainer);
 			var result:Array = [];
 			
 			for (var i:int = 0;i < textField.text.length;i++)

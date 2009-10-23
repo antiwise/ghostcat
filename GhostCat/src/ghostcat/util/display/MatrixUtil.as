@@ -13,7 +13,7 @@ package ghostcat.util.display
 	public final class MatrixUtil
 	{
 		/**
-		 * 获得对象到某个父容器的Matrix
+		 * 获得对象到另一个对象的Matrix
 		 *  
 		 * @param obj
 		 * @param contain
@@ -25,42 +25,32 @@ package ghostcat.util.display
 			if (obj == container)
 				return new Matrix();
 			
-			var m:Matrix = obj.transform.matrix;
-			var cur:DisplayObject = obj.parent;
-				
-			while (cur != container)
-			{
-				if (cur)
-					m.concat(cur.transform.matrix);
-				
-				if (cur && cur != cur.parent)
-					cur = cur.parent;
-				else
-					break;
-//					throw new Error("obj不在指定的容器内！");
-			}
-			return m;
-		}
-		/**
-		 * 获得两个对象之间的Matrix，
-		 * 求出的是对象1到对象2的Matrix
-		 * 
-		 * @param obj1	对象1
-		 * @param obj2	对象2
-		 * @param container	共同的父容器，默认为stage
-		 * 
-		 */
-		public static function getMatrixBetween(obj1:DisplayObject,obj2:DisplayObject,container:DisplayObjectContainer=null):Matrix
-		{
-			if (!container)
-				container = obj1.stage as DisplayObjectContainer;
-			
-			var m1:Matrix = getMatrixAt(obj1,container);
-			var m2:Matrix = getMatrixAt(obj2,container);
+			var m1:Matrix = obj.transform.concatenatedMatrix;
+			var m2:Matrix = container.transform.concatenatedMatrix;
 			m2.invert();
 			m1.concat(m2);
 			return m1;
 		}
+//		/**
+//		 * 获得两个对象之间的Matrix，
+//		 * 求出的是对象1到对象2的Matrix
+//		 * 
+//		 * @param obj1	对象1
+//		 * @param obj2	对象2
+//		 * @param container	共同的父容器，默认为stage
+//		 * 
+//		 */
+//		public static function getMatrixBetween(obj1:DisplayObject,obj2:DisplayObject,container:DisplayObjectContainer=null):Matrix
+//		{
+//			if (!container)
+//				container = obj1.stage as DisplayObjectContainer;
+//			
+//			var m1:Matrix = getMatrixAt(obj1,container);
+//			var m2:Matrix = getMatrixAt(obj2,container);
+//			m2.invert();
+//			m1.concat(m2);
+//			return m1;
+//		}
 		
 		/**
 		 * 创建渐变时用的矩阵
