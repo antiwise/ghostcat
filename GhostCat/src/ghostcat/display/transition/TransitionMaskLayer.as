@@ -54,13 +54,20 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
-		public function TransitionMaskLayer(switchHandler:Handler,maskMovieClip:GMovieClipBase,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
+		public function TransitionMaskLayer(switchHandler:Handler,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
 		{
 			var bitmap:Bitmap = new DrawParse(target).createBitmap();
 			
 			var fadeOutOper:Oper;
 			var waitOper:Oper;
 			
+			if (maskMovieClip is MovieClip)
+				this.maskMovieClip = new GMovieClip(maskMovieClip);
+			else if (skin is GMovieClipBase)
+				this.maskMovieClip = maskMovieClip as GMovieClipBase;
+			else
+				Debug.error("maskMovieClip参数必须是MovieClip,GMovieClipBase之一")
+					
 			this.maskMovieClip = maskMovieClip;
 			
 			if (fadeOut)
