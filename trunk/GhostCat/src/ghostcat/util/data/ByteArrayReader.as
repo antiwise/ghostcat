@@ -13,6 +13,7 @@ package ghostcat.util.data
 		public var data:ByteArray;
 		
 		private var bitPos:int = 0;//在一个Byte型里从左到右的位的坐标
+		
 		/**
 		 * 开始读取时的位置
 		 */
@@ -41,7 +42,7 @@ package ghostcat.util.data
 		 * @return 
 		 * 
 		 */
-		public function readBits (n:uint):int
+		public function readBits(n:uint):int
 		{
 			var temp:int = 0;
 			var loop:int = Math.ceil((n + bitPos) / 8);

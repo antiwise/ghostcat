@@ -8,10 +8,7 @@ package ghostcat.ui.tooltip
 	import ghostcat.skin.ArowSkin;
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.util.easing.Back;
-	import ghostcat.util.easing.Circ;
 
 	/**
 	 * 根据位置弹出不同方向的ToolTip

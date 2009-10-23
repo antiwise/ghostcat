@@ -9,11 +9,11 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.classes.scroll.IScrollContent;
-	import ghostcat.ui.classes.scroll.ScrollTextContent;
 	import ghostcat.ui.containers.GScrollPanel;
-	import ghostcat.util.easing.TweenUtil;
+	import ghostcat.ui.scroll.IScrollContent;
+	import ghostcat.ui.scroll.ScrollTextContent;
 	import ghostcat.util.easing.Circ;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 滚动条 
@@ -144,7 +144,6 @@ package ghostcat.ui.controls
 		{
 			return _scrollContent;
 		}
-		
 		/**
 		 * 设置目标
 		 * 

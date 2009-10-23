@@ -80,6 +80,10 @@
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionDisplayLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionFadeToLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
@@ -255,9 +259,6 @@
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
     <classEntry path="ghostcat.ui.UIBuilder"/>
     <classEntry path="ghostcat.ui.UIConst"/>
-    <classEntry path="ghostcat.ui.classes.scroll.IScrollContent"/>
-    <classEntry path="ghostcat.ui.classes.scroll.RollContent"/>
-    <classEntry path="ghostcat.ui.classes.scroll.ScrollTextContent"/>
     <classEntry path="ghostcat.ui.containers.GAlert"/>
     <classEntry path="ghostcat.ui.containers.GBox"/>
     <classEntry path="ghostcat.ui.containers.GButtonBar"/>
@@ -307,6 +308,9 @@
     <classEntry path="ghostcat.ui.layout.LayoutUtil"/>
     <classEntry path="ghostcat.ui.layout.LinearLayout"/>
     <classEntry path="ghostcat.ui.layout.PaddingLayout"/>
+    <classEntry path="ghostcat.ui.scroll.IScrollContent"/>
+    <classEntry path="ghostcat.ui.scroll.RollContent"/>
+    <classEntry path="ghostcat.ui.scroll.ScrollTextContent"/>
     <classEntry path="ghostcat.ui.tooltip.ArowToolTipSkin"/>
     <classEntry path="ghostcat.ui.tooltip.IToolTipSkin"/>
     <classEntry path="ghostcat.ui.tooltip.ToolTipSkin"/>
@@ -339,6 +343,7 @@
     <classEntry path="ghostcat.util.data.PropertyChangeEvent"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
     <classEntry path="ghostcat.util.display.BitmapUtil"/>
+    <classEntry path="ghostcat.util.display.ColorConvertUtil"/>
     <classEntry path="ghostcat.util.display.ColorUtil"/>
     <classEntry path="ghostcat.util.display.DisplayUtil"/>
     <classEntry path="ghostcat.util.display.FilterUtil"/>
@@ -368,7 +373,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.display.ColorConvertUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

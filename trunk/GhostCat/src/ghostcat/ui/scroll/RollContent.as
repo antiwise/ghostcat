@@ -1,10 +1,10 @@
-package ghostcat.ui.classes.scroll
+package ghostcat.ui.scroll
 {
 	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	
 	/**
-	 * 不设置滚动区域的方式
+	 * 不设置ScrollRect的方式，同时亦不需要分层
 	 * 
 	 * @author flashyiyi
 	 * 

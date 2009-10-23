@@ -3,7 +3,6 @@ package ghostcat.community.command
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.Display45Util;
 	import ghostcat.util.display.ColorUtil;
 
