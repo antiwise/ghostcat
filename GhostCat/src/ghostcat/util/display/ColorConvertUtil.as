@@ -37,37 +37,35 @@ package ghostcat.util.display
 		 */		
 		public static function fromHSL(v:uint):uint
 		{
-			var A:int = (v >> 24) & 0xFF;
-			var H:int = (v >> 16) & 0xFF;
-			var S:int = (v >> 8) & 0xFF;
-			var L:int = v & 0xFF;
+			var A:Number = ((v >> 24) & 0xFF) / 0xFF;
+			var H:Number = ((v >> 16) & 0xFF) / 0xFF;
+			var S:Number = ((v >> 8) & 0xFF) / 0xFF;
+			var L:Number = (v & 0xFF) / 0xFF;
 			
-			var R:int;
-			var G:int;
-			var B:int;
-			var var_1:int;
-			var var_2:int;
+			var R:Number;
+			var G:Number;
+			var B:Number;
+			var v2:Number;
+			var v1:Number;
 			
 			if (S == 0) 
 			{
-				R = L * 0xFF;
-				G = L * 0xFF;
-				B = L * 0xFF;
+				R = G = B = L;
 			}
 			else
 			{
 				if (L < 0.5)
-					var_2 = L * (1 + S);
+					v1 = L * (1 + S);
 				else
-					var_2 = (L + S) - (S * L);
+					v1 = (L + S) - (S * L);
 				
-				var_1 = 2 * L - var_2;
+				v2 = 2 * L - v1;
 				
-				R = 0xFF * Hue2RGB(var_1, var_2, H + 1 / 3);
-				G = 0xFF * Hue2RGB(var_1, var_2, H);
-				B = 0xFF * Hue2RGB(var_1, var_2, H - 1 / 3);
+				R = Hue2RGB(v2, v1, H + 1 / 3);
+				G = Hue2RGB(v2, v1, H);
+				B = Hue2RGB(v2, v1, H - 1 / 3);
 			}
-			return (A << 24) | (R << 16) | (G << 8) | B;	
+			return ((A * 0xFF) << 24) | ((R * 0xFF) << 16) | ((G * 0xFF) << 8) | (B * 0xFF);	
 		}
 		
 		private static function Hue2RGB(v1:Number, v2:Number, vH:Number):Number
@@ -77,11 +75,11 @@ package ghostcat.util.display
 			if (vH > 1) 
 				vH -= 1;
 			if (6 * vH < 1) 
-				return v1 + (v2 - v1) * 6.0 * vH;
+				return v1 + (v2 - v1) * 6 * vH;
 			if (2 * vH < 1) 
 				return v2;
 			if (3 * vH < 2) 
-				return v1 + (v2 - v1) * (2 / 3 - vH) * 6.0;
+				return v1 + (v2 - v1) * (2 / 3 - vH) * 6;
 			return v1;
 		}
 		
@@ -90,19 +88,19 @@ package ghostcat.util.display
 		 */		
 		public static function toHSL(v:uint):uint
 		{
-			var A:int = (v >> 24) & 0xFF;
-			var R:int = (v >> 16) & 0xFF;
-			var G:int = (v >> 8) & 0xFF;
-			var B:int = v & 0xFF;
+			var A:Number = ((v >> 24) & 0xFF) / 0xFF;
+			var R:Number = ((v >> 16) & 0xFF) / 0xFF;
+			var G:Number = ((v >> 8) & 0xFF) / 0xFF;
+			var B:Number = (v & 0xFF) / 0xFF;
 			
-			var Min:int = Math.min(R, Math.min(G, B));
-			var Max:int = Math.max(R, Math.max(G, B)); 
+			var Min:Number = Math.min(R, Math.min(G, B));
+			var Max:Number = Math.max(R, Math.max(G, B)); 
 			
-			var H:int;
-			var S:int;
-			var L:int = (Max + Min) / 2;
+			var H:Number;
+			var S:Number;
+			var L:Number = (Max + Min) / 2;
 			
-			var del_Max:int = Max - Min;
+			var del_Max:Number = Max - Min;
 			if (del_Max == 0) 
 			{
 				H = S = 0;
@@ -131,7 +129,7 @@ package ghostcat.util.display
 				if (H > 1)
 					H -= 1;
 			}
-			return (A << 24) | (H << 16) | (S << 8) | L;	
+			return ((A * 0xFF) << 24) | ((H * 0xFF) << 16) | ((S * 0xFF) << 8) | (L * 0xFF);	
 		}
 	}
 }
