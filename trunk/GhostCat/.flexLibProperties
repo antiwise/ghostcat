@@ -373,6 +373,9 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.ui.validators.GValidator"/>
+    <classEntry path="ghostcat.ui.validators.GRegexpValidator"/>
+    <classEntry path="ghostcat.ui.validators.GEmailValidator"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
