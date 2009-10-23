@@ -31,26 +31,6 @@ package ghostcat.util.display
 			m1.concat(m2);
 			return m1;
 		}
-//		/**
-//		 * 获得两个对象之间的Matrix，
-//		 * 求出的是对象1到对象2的Matrix
-//		 * 
-//		 * @param obj1	对象1
-//		 * @param obj2	对象2
-//		 * @param container	共同的父容器，默认为stage
-//		 * 
-//		 */
-//		public static function getMatrixBetween(obj1:DisplayObject,obj2:DisplayObject,container:DisplayObjectContainer=null):Matrix
-//		{
-//			if (!container)
-//				container = obj1.stage as DisplayObjectContainer;
-//			
-//			var m1:Matrix = getMatrixAt(obj1,container);
-//			var m2:Matrix = getMatrixAt(obj2,container);
-//			m2.invert();
-//			m1.concat(m2);
-//			return m1;
-//		}
 		
 		/**
 		 * 创建渐变时用的矩阵

@@ -356,20 +356,20 @@ package ghostcat.util.display
 		 * 3.左 4.中 5.右 
 		 * 6.左下 7.下 8.右下
 		 * 
-		 * 边界优先级为 角线>边线>包含
+		 * 边界优先级为 包含>边线>角线
 		 * 
 		 */
 		public static function getRelativeLocation(v1:*,v2:*):int
 		{
 			var r1:Rectangle = getRect(v1);
 			var r2:Rectangle = getRect(v2);
-			return (r1.left < r2.left ? 0 : r1.right > r2.right ? 2 : 1) +
-					(r1.top < r2.top ? 0 : r1.bottom > r2.bottom ? 6 : 3)
+			return (r1.right <= r2.left ? 0 : r1.left >= r2.right ? 2 : 1) +
+				(r1.bottom <= r2.top ? 0 : r1.top >= r2.bottom ? 6 : 3);
 		}
 		
 		/**
 		 * 与getRelativeLocation在边界上判断有所差异
-		 * 边界优先级为 包含>边线>角线
+		 * 边界优先级为 角线>边线>包含
 		 * 
 		 * 两个方法综合便可判断出所有情况
 		 * 
@@ -382,8 +382,8 @@ package ghostcat.util.display
 		{
 			var r1:Rectangle = getRect(v1);
 			var r2:Rectangle = getRect(v2);
-			return (r1.right <= r2.left ? 0 : r1.left >= r2.right ? 2 : 1) +
-					(r1.bottom <= r2.top ? 0 : r1.top >= r2.bottom ? 6 : 3);
+			return (r1.left < r2.left ? 0 : r1.right > r2.right ? 2 : 1) +
+				(r1.top < r2.top ? 0 : r1.bottom > r2.bottom ? 6 : 3)
 		}
     }
 }

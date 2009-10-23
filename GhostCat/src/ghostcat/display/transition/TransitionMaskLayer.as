@@ -6,19 +6,14 @@ package ghostcat.display.transition
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
-	import ghostcat.events.MovieEvent;
 	import ghostcat.operation.DelayOper;
-	import ghostcat.operation.FunctionOper;
 	import ghostcat.operation.MovieOper;
 	import ghostcat.operation.Oper;
-	import ghostcat.operation.TweenOper;
+	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.core.Handler;
-	
-	import mx.core.MovieClipLoaderAsset;
-	
-	import org.gameui.events.MovieEvent;
 
 	/**
 	 * 显示一个动画对象作为Mask的过渡
@@ -38,7 +33,7 @@ package ghostcat.display.transition
 		/**
 		 * Mask动画
 		 */
-		public var maskMovieClip:GMovieClip;
+		public var maskMovieClip:GMovieClipBase;
 		
 		private var displayObj:Sprite;
 		
@@ -54,7 +49,7 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
-		public function TransitionMaskLayer(switchHandler:Handler,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
+		public function TransitionMaskLayer(switchHandler:Handler,target:DisplayObject,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
 		{
 			var bitmap:Bitmap = new DrawParse(target).createBitmap();
 			
@@ -63,7 +58,7 @@ package ghostcat.display.transition
 			
 			if (maskMovieClip is MovieClip)
 				this.maskMovieClip = new GMovieClip(maskMovieClip);
-			else if (skin is GMovieClipBase)
+			else if (maskMovieClip is GMovieClipBase)
 				this.maskMovieClip = maskMovieClip as GMovieClipBase;
 			else
 				Debug.error("maskMovieClip参数必须是MovieClip,GMovieClipBase之一")

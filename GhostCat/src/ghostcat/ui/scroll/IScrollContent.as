@@ -1,4 +1,4 @@
-package ghostcat.ui.classes.scroll
+package ghostcat.ui.scroll
 {
 	import flash.display.DisplayObject;
 	import flash.events.IEventDispatcher;

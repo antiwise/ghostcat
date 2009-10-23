@@ -11,14 +11,9 @@ package ghostcat.util.data
     public class LocalStorage {
 
         /**
-         * 名称
-         */
-        public var name:String;
-        
-        /**
          * 是否自动更新
          */
-        public var autoFlush:Boolean;
+        public var autoFlush:Boolean = true;
         
         /**
          * 最小占用空间 
