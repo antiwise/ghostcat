@@ -1,3 +1,6 @@
+/**
+ * 修改自开源项目：http://code.google.com/p/bezier/
+ */
 package ghostcat.algorithm.bezier
 {
 	import flash.geom.Point;
