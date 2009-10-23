@@ -13,14 +13,12 @@ package ghostcat.ui.controls
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
-	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.GTextEvent;
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextUtil;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
@@ -431,12 +429,16 @@ package ghostcat.ui.controls
 			textBitmap.bitmapData.draw(textField);
 		}
 		
+		/**
+		 * 获得ANSI长度（中文按两个字符计算）
+		 * @param data
+		 * @return 
+		 * 
+		 */
 		private function getANSILength(data:String):int
   		{
-			var byte:ByteArray = new ByteArray();
-			byte.writeMultiByte(data,"gb2312");
-			return byte.length;
-  		}
+			return TextUtil.getANSILength(data);
+		}
 		
 		/**
 		 * 键入文字事件 

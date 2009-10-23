@@ -1,5 +1,7 @@
 package ghostcat.text
 {
+	import flash.utils.ByteArray;
+
 	/**
 	 * 关于文本处理的静态方法
 	 * 
@@ -86,6 +88,19 @@ package ghostcat.text
 					result += "\r";
 			}
 			return result;
+		}
+		
+		/**
+		 * 获得ANSI长度（中文按两个字符计算）
+		 * @param data
+		 * @return 
+		 * 
+		 */
+		public static function getANSILength(data:String):int
+		{
+			var byte:ByteArray = new ByteArray();
+			byte.writeMultiByte(data,"gb2312");
+			return byte.length;
 		}
         
 	}
