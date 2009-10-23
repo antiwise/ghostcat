@@ -1,5 +1,6 @@
 package ghostcat.display.transition
 {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
@@ -9,7 +10,7 @@ package ghostcat.display.transition
 	import ghostcat.util.core.Handler;
 
 	/**
-	 * 显示一个过渡对象的透明渐变过渡
+	 * 过渡过程会先渐变到一个过渡对象，然后再进入另一个结果状态
 	 * 
 	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
 	 *
@@ -47,6 +48,18 @@ package ghostcat.display.transition
 				waitOper = new DelayOper(-1);
 			
 			super(switchHandler,fadeInOper,fadeOutOper,waitOper);
+		}
+		
+		/** @inheritDoc*/
+		public override function destory() : void
+		{
+			if (displayObj)
+				displayObj.parent.removeChild(displayObj);
+			
+			if (displayObj is Bitmap)
+				(displayObj as Bitmap).bitmapData.dispose();
+			
+			super.destory();
 		}
 	}
 }

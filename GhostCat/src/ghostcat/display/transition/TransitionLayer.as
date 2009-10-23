@@ -12,6 +12,8 @@ package ghostcat.display.transition
 	/**
 	 * 过渡动画基类，用于处理场景切换
 	 * 
+	 * 此类无法实例化
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */

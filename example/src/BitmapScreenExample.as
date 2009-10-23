@@ -19,9 +19,9 @@ package
 	import ghostcat.ui.controls.GRadioButtonGroup;
 	import ghostcat.util.Util;
 	
-	
 	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
+	
 	/**
 	 * 
 	 * @author flashyiyi

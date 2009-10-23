@@ -6,7 +6,7 @@ package ghostcat.display.transition
 	import ghostcat.parse.display.DrawParse;
 
 	/**
-	 * 两个场景透明直接渐变
+	 * 两个场景透明度直接渐变
 	 * 
 	 * @author flashyiyi
 	 * 

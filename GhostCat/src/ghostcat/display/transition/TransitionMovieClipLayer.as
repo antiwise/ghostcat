@@ -30,6 +30,15 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
+		/**
+		 * 
+		 * @param switchHandler	切换函数
+		 * @param skin	动画
+		 * @param fadeIn	进入时的帧标签
+		 * @param fadeOut	退出时的帧标签
+		 * @param wait	等待时的帧标签
+		 * 
+		 */
 		public function TransitionMovieClipLayer(switchHandler:Handler,skin:MovieClip,fadeIn:String = null,fadeOut:String = null,wait:String=null)
 		{
 			mc = new GMovieClip(skin);
