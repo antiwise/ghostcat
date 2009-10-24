@@ -9,6 +9,7 @@ package
 		public function GhostCatMVCExample()
 		{
 			GhostCatMVC.instance.load(M2,V,V2,C,C2);
+			
 			addChild(new V());
 			addChild(new V2());
 		}

@@ -12,7 +12,7 @@ package
 		
 		public function result(v:String):void
 		{
-			GhostCatMVC.instance.call(this,"v","setText",v);
+			GhostCatMVC.instance.call("test","v","setText",v);
 		}
 	}
 }

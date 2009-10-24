@@ -23,7 +23,7 @@ package
 		
 		public function clickHandler(event:MouseEvent):void
 		{
-			GhostCatMVC.instance.call(this,"c","execute",textField.text);
+			GhostCatMVC.instance.call("test","c","execute",textField.text);
 		}
 		
 		public function setText(v:String):void
