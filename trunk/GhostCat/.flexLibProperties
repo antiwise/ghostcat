@@ -376,6 +376,7 @@
     <classEntry path="ghostcat.ui.validators.GValidator"/>
     <classEntry path="ghostcat.ui.validators.GRegexpValidator"/>
     <classEntry path="ghostcat.ui.validators.GEmailValidator"/>
+    <classEntry path="ghostcat.ui.layout.Padding"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

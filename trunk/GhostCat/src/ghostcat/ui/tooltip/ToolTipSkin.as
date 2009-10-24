@@ -2,11 +2,11 @@ package ghostcat.ui.tooltip
 {
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
-	import flash.geom.Point;
 	
 	import ghostcat.skin.ArowSkin;
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.easing.TweenUtil;
 	
@@ -25,7 +25,7 @@ package ghostcat.ui.tooltip
 			if (!skin)
 				skin = defaultSkin;
 				
-			super(skin,true,true,new Point(2,2));
+			super(skin,true,true,new Padding(2,2,2,2));
 			this.enabledAdjustContextSize = true;
 		}
 		
@@ -40,6 +40,7 @@ package ghostcat.ui.tooltip
 			TweenUtil.removeTween(toolTipSprite);
 			TweenUtil.from(toolTipSprite,100,{alpha:0.0,y:"10"}).update();
 		}
+		
 		/** @inheritDoc*/
 		public function positionTo(target:DisplayObject):void
 		{

@@ -1,17 +1,8 @@
 package ghostcat.ui.controls
 {
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	
-	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClip;
-	import ghostcat.display.movieclip.GMovieClipBase;
-	import ghostcat.events.ActionEvent;
 	import ghostcat.skin.ButtonSkin;
-	import ghostcat.util.Util;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	
 	/**
@@ -29,12 +20,12 @@ package ghostcat.ui.controls
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ButtonSkin)
 		
-		public function GButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			if (!skin)
 				skin = GButton.defaultSkin;
 			
-			super(skin, replace,separateTextField,textPos);
+			super(skin, replace,separateTextField,textPadding);
 		}
 		/** @inheritDoc*/
 		protected override function createMovieClip() : void

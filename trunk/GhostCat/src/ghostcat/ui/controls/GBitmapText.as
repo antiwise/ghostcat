@@ -2,8 +2,9 @@ package ghostcat.ui.controls
 {
 	import flash.display.BitmapData;
 	import flash.filters.BitmapFilter;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import ghostcat.ui.layout.Padding;
 	
 	/**
 	 * 位图字体，可以对单字使用filter
@@ -17,9 +18,9 @@ package ghostcat.ui.controls
 		 */
 		protected var normalBitmapData:BitmapData;
 		
-		public function GBitmapText(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GBitmapText(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
-			super(skin, replace, separateTextField, textPos);
+			super(skin, replace, separateTextField, textPadding);
 			
 			this.asTextBitmap = true;
 		}

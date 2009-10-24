@@ -2,9 +2,10 @@ package ghostcat.ui.validators
 {
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
-	import flash.geom.Point;
 	
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.Padding;
+	import ghostcat.util.core.AbstractUtil;
 	
 	/**
 	 * 数据验证器基类
@@ -95,12 +96,14 @@ package ghostcat.ui.validators
 		}
 
 		
-		public function GValidator(skin:*=null, source:Object=null, property:String=null, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GValidator(skin:*=null, source:Object=null, property:String=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
+			AbstractUtil.preventConstructor(this,GValidator);
+			
 			this.source = source;
 			this.property = property;
 			
-			super(skin, replace, separateTextField, textPos);
+			super(skin, replace, separateTextField, textPadding);
 			
 			trigger.addEventListener(triggerEvent,triggerHandler);
 		}

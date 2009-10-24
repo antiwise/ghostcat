@@ -8,7 +8,7 @@ package ghostcat.ui.tooltip
 	import ghostcat.skin.ArowSkin;
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.util.easing.Back;
+	import ghostcat.ui.layout.Padding;
 
 	/**
 	 * 根据位置弹出不同方向的ToolTip
@@ -20,7 +20,7 @@ package ghostcat.ui.tooltip
 	{
 		public function ArowToolTipSkin()
 		{
-			super(new ArowSkin(),true,true,new Point(2,2));
+			super(new ArowSkin(),true,true,new Padding(2,2,2,2));
 			
 			this.enabledAdjustContextSize = true;
 		}

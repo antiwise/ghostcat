@@ -13,7 +13,7 @@ package ghostcat.ui.controls
 	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.containers.GAlert;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.easing.Circ;
@@ -99,7 +99,7 @@ package ghostcat.ui.controls
 				list.height = list.rowHeight * maxLine;
 		}
 		
-		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null,fields:Object=null)
+		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -107,7 +107,7 @@ package ghostcat.ui.controls
 			if (fields)
 				this.fields = fields;
 				
-			super(skin, replace, separateTextField, textPos);
+			super(skin, replace, separateTextField, textPadding);
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void

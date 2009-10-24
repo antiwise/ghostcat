@@ -3,13 +3,12 @@ package ghostcat.ui.controls
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
-	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.skin.NumberStepperSkin;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.Tick;
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**
@@ -33,7 +32,7 @@ package ghostcat.ui.controls
 		public var minValue:Number;
 		public var detra:int = 1;
 		
-		public function GNumbericStepper(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean=false, textPos:Point=null, fields:Object=null)
+		public function GNumbericStepper(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean=false, textPadding:Padding=null, fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -41,7 +40,7 @@ package ghostcat.ui.controls
 			if (fields)
 				this.fields = fields;
 			
-			super(skin, replace, enabledAdjustContextSize, textPos);
+			super(skin, replace, enabledAdjustContextSize, textPadding);
 				
 			this.enabledTick = true;
 		}

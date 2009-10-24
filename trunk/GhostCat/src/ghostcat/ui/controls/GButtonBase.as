@@ -4,16 +4,12 @@ package ghostcat.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
-	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.events.ActionEvent;
-	import ghostcat.skin.ButtonSkin;
-	import ghostcat.util.Util;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.AbstractUtil;
-	import ghostcat.util.core.ClassFactory;
 	
 	[Event(name="change",type="flash.events.Event")]
 	
@@ -71,7 +67,7 @@ package ghostcat.ui.controls
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
 		 */
-		public var textPos:Point;
+		public var textPadding:Padding;
 		
 		/**
 		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
@@ -134,12 +130,12 @@ package ghostcat.ui.controls
 			return _mouseOver;
 		}
 		
-		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			AbstractUtil.preventConstructor(this,GButtonBase);
 			
-			if (textPos)
-				this.textPos = textPos;
+			if (textPadding)
+				this.textPadding = textPadding;
 			
 			this.separateTextField = separateTextField;
 			
@@ -200,7 +196,7 @@ package ghostcat.ui.controls
 			if (labelTextField)
 				labelTextField.destory();
 			
-			labelTextField = new GText(content,false,separateTextField,textPos);
+			labelTextField = new GText(content,false,separateTextField,textPadding);
 			labelTextField.enabledAdjustContextSize = enabledAdjustContextSize;
 			addChild(labelTextField)
 			

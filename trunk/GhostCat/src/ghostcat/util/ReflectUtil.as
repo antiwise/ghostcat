@@ -308,11 +308,11 @@ package ghostcat.util
 		public static function getQName(obj:*):QName
 		{
 			var names:Array = getQualifiedClassName(obj).split("::");
-			if (names.length == 2){
+			if (names.length == 2)
 				return new QName(names[0],names[1]);
-			}else{
+			else
 				return new QName(null,names[0]);
-			}
+			
 			return null;
 		}
 	}

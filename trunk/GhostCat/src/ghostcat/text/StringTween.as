@@ -5,9 +5,9 @@ package ghostcat.text
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
-	import flash.geom.Point;
 	
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
@@ -39,9 +39,9 @@ package ghostcat.text
 			return completeCount > 0;
 		}
 		
-		public function StringTween(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function StringTween(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
-			super(skin, replace, separateTextField, textPos);
+			super(skin, replace, separateTextField, textPadding);
 		}
 		
 		//将文本打散成块

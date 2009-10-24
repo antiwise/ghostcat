@@ -19,6 +19,7 @@ package ghostcat.ui.controls
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextUtil;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
@@ -50,7 +51,7 @@ package ghostcat.ui.controls
 		/**
 		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
 		 */
-		public var textPos:Point = new Point();
+		public var textPadding:Padding;
 		
 		/**
 		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
@@ -63,14 +64,14 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
-		 * 是否根据宽度设置文本框的宽度
-		 */
-		public var enabledAdjustTextFieldWidth:Boolean = false;
-		
-		/**
 		 * 限定输入内容的正则表达式
 		 */
 		public var regExp:RegExp;
+		
+		/**
+		 * 在输入文字的时候也发布Change事件
+		 */
+		public var changeWhenInput:Boolean = false;
 		
 		/**
 		 * 文字是否竖排
@@ -234,13 +235,13 @@ package ghostcat.ui.controls
 		
 		private var _asTextBitmap:Boolean;
 		
-		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
-			if (textPos)
-				this.textPos = textPos;
+			if (textPadding)
+				this.textPadding = textPadding;
 			
 			this.separateTextField = separateTextField;
 			
@@ -278,12 +279,10 @@ package ghostcat.ui.controls
 				this.separateTextField = true;
 				textField = TextFieldParse.createTextField();
 			
-				if (textPos)
-				{
-					textField.x = textPos.x;
-					textField.y = textPos.y;
-				}
 				addChild(textField);
+				
+				if (textPadding)
+					textPadding.adjectRect(textField,this);
 			}
 			else
 			{
@@ -334,9 +333,16 @@ package ghostcat.ui.controls
 		{
 			if (content)
 			{
-				var rect:Rectangle = getBounds(this);
-				content.width = textField.width - rect.x;
-				content.height = textField.height - rect.y;
+				if (textPadding)
+				{
+					textPadding.invent().adjectRectBetween(content,textField);
+				}
+				else
+				{
+					var rect:Rectangle = getBounds(this);
+					content.width = textField.width - rect.x;
+					content.height = textField.height - rect.y;
+				}
 			}
 		}
 		/** @inheritDoc*/
@@ -377,6 +383,8 @@ package ghostcat.ui.controls
 			var e:GTextEvent = new GTextEvent(GTextEvent.TEXT_CHANGE);
 			e.gText = this;
 			dispatchEvent(e);//只在设置属性的时候才替换语言，而不是文本变化时就换
+			
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -452,6 +460,9 @@ package ghostcat.ui.controls
 			
 			if (ansiMaxChars && getANSILength(textField.text + event.text) > ansiMaxChars)
 				event.preventDefault();
+			
+			if (changeWhenInput)
+				dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -467,7 +478,7 @@ package ghostcat.ui.controls
 		
 		protected function textFocusOutHandler(event:Event):void
 		{
-			
+			this.data = data;
 		}
 		
 		protected function textKeyDownHandler(event:KeyboardEvent):void
@@ -480,8 +491,8 @@ package ghostcat.ui.controls
 		{
 			super.updateSize();
 			
-			if (enabledAdjustTextFieldWidth)
-				textField.width = width;
+			if (textPadding)
+				textPadding.adjectRect(textField,this);
 		}
 		
 		/** @inheritDoc*/

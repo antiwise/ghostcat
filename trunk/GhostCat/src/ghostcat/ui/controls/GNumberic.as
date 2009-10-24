@@ -1,11 +1,10 @@
 package ghostcat.ui.controls
 {
 	import flash.events.Event;
-	import flash.geom.Point;
 	
-	import ghostcat.text.TextFieldUtil;
-	import ghostcat.util.easing.TweenUtil;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.easing.Circ;
+	import ghostcat.util.easing.TweenUtil;
 	
 	/**
 	 * 数值显示
@@ -46,9 +45,9 @@ package ghostcat.ui.controls
 		 */
 		public var fix:int = 0;
 		
-		public function GNumberic(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GNumberic(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
-			super(skin, replace, separateTextField, textPos);
+			super(skin, replace, separateTextField, textPadding);
 		}
 		
 		/**

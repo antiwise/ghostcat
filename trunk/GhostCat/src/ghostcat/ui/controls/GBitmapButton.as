@@ -12,6 +12,7 @@ package ghostcat.ui.controls
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
@@ -29,11 +30,11 @@ package ghostcat.ui.controls
 	 */	
 	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
-		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPos:Point=null)
+		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null)
 		{
 			movie = new GBitmapMovieClip(bitmaps,labels);
 			
-			super(movie.content, true, true,textPos);
+			super(movie.content, true, true,textPadding);
 			
 			this.mouseEnabled = false;
 		}

@@ -1,11 +1,8 @@
 package ghostcat.ui.html
 {
-	import flash.utils.getDefinitionByName;
-	
-	import ghostcat.debug.Debug;
 	import ghostcat.gxml.spec.DisplaySpec;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.util.ReflectUtil;
+	import ghostcat.ui.layout.Padding;
 	
 	/**
 	 * Table构建器。增加了名称转换和将文本直接转化为GText的功能
@@ -31,8 +28,7 @@ package ghostcat.ui.html
 		{
 			if (xml.nodeKind()=="text" && source is TdTag)//如果父标签是TD则转换为GText
 			{
-				var ui:GText = new GText();
-				ui.enabledAdjustTextFieldWidth = true;
+				var ui:GText = new GText(null,true,true,new Padding(2,2,2,2));
 				ui.text = child;
 				super.addChild(source,ui,<GText/>);
 			}
