@@ -7,7 +7,8 @@ package
 	{
 		public function execute(v:String):void
 		{
-			(GhostCatMVC.instance.getM(this) as M2).value = String(int(v) + 1);
+			var m:M2 = GhostCatMVC.instance.getM(this) as M2;
+			m.value = String(int(v) + 1);
 		}
 	}
 }
