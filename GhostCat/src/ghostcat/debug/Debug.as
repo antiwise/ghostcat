@@ -128,9 +128,9 @@ package ghostcat.debug
 			{
 				var date:Date = new Date();
 				result = "[" + date.hours +":"+ date.minutes+":"+ date.seconds +":"+ date.milliseconds + "]";
-				if (channel)
-					result += "[" + channel + "]"
 			}
+			if (channel)
+				result += "[" + channel + "]"
 			return result;
 		}
 		

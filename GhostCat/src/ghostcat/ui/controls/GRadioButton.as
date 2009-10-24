@@ -1,9 +1,9 @@
 package ghostcat.ui.controls
 {
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	
 	import ghostcat.skin.RadioButtonIconSkin;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	
 	/**
@@ -28,15 +28,15 @@ package ghostcat.ui.controls
 		
 		private var _value:*;
 		
-		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
-			if (!textPos)
-				textPos = new Point(15,0);
+			if (!textPadding)
+				textPadding = new Padding(15,0);
 			
-			super(skin, replace,separateTextField,textPos);
+			super(skin, replace,separateTextField,textPadding);
 		}
 		
 		

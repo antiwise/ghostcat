@@ -6,7 +6,7 @@ package ghostcat.ui.validators
 	import ghostcat.text.RegExpUtil;
 	
 	/**
-	 * 正则数据验证器 
+	 * 数字验证器 
 	 * 
 	 * @author flashyiyi
 	 * 

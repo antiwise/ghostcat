@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" version="3">
   <includeClasses>
     <classEntry path="ghostcat.mvc.GhostCatMVC"/>
+    <classEntry path="ghostcat.mvc.InsCotainer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

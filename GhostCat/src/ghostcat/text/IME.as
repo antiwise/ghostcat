@@ -19,7 +19,7 @@ package ghostcat.text
 	 * 自制输入法系统
 	 * Shift键切换中英文
 	 * 
-	 * 这个东西其实是个玩具- -如果想解决firework透明模式下不能输入中文的问题，请参考这个东西
+	 * 处理输入法问题也可以通过JS，请参考：
 	 * http://blog.sebastian-martens.de/2009/05/swfinputs-solving-mozilla-transparent-mode-win-special-chars-within-inputs/
 	 * 
 	 * @author flashyiyi
@@ -44,6 +44,22 @@ package ghostcat.text
 		 * 是否激活 
 		 */
 		public var enabled:Boolean = true;
+		
+		/**
+		 * 一次显示几个词
+		 */
+		public var charNum:int = 5;
+		
+		/**
+		 * 输入框与录入提示的间距
+		 */
+		public var offest:Point = new Point(5,5);
+		
+		private var text:String = "";
+		private var list:Array;
+		private var page:int = 0;
+		private var inputBeginIndex:int;
+		private var inputEndIndex:int;
 		
 		/**
 		 * 
@@ -111,21 +127,6 @@ package ghostcat.text
 			input.removeEventListener(FocusEvent.FOCUS_OUT,resetHandler);
 			input.removeEventListener(MouseEvent.MOUSE_DOWN,resetHandler);
 		}
-		
-		private var text:String = "";
-		private var list:Array;
-		private var page:int = 0;
-		private var inputBeginIndex:int;
-		private var inputEndIndex:int;
-		
-		/**
-		 * 一次显示几个词
-		 */
-		public var charNum:int = 5;
-		/**
-		 * 输入框与录入提示的间距
-		 */
-		public var offest:Point = new Point(5,5);
 		
 		private function textInputHandler(event:TextEvent):void
 		{
@@ -222,7 +223,7 @@ package ghostcat.text
 				return;
 			
 			var textField:TextField = event.currentTarget as TextField;
-			if (ArrayUtil.hasShare([event.keyCode],[Keyboard.ESCAPE,Keyboard.ENTER,Keyboard.LEFT,Keyboard.RIGHT]).length>0)
+			if (([Keyboard.ESCAPE,Keyboard.ENTER,Keyboard.LEFT,Keyboard.RIGHT]).indexOf(event.keyCode) != -1)
 			{
 				acceptText(textField,null);
 			}
@@ -264,7 +265,7 @@ package ghostcat.text
 			if (skin)
 			{
 				var text:String = ""; 
-				for (var i:int = 0;i<data.length;i++)
+				for (var i:int = 0;i < data.length;i++)
 				{	
 					if (i != 0)
 						text += " ";

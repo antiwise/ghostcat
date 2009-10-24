@@ -1,8 +1,8 @@
 package
 {
-	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
+	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
@@ -22,7 +22,7 @@ package
 	 */
 	public class IMEExample extends GSprite
 	{
-		[Embed(source = "pinyin.txt",mimeType="application/octet-stream")]
+		[Embed(source = "pinyin.dat",mimeType="application/octet-stream")]
 		public var pinyin:Class;
 		public var ime:IME;
 		
@@ -32,16 +32,23 @@ package
 		{
 			RootManager.register(this);
 			
+			//创建两个文本框
 			textInput1 = Util.createObject(TextField,{type:TextFieldType.INPUT,x:100,y:50,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput1);
 			
 			textInput2 = Util.createObject(TextField,{type:TextFieldType.INPUT,x:100,y:250,width:300,height:50,background:true,border:true,wordWrap:true,multiline:true}) as TextField;
 			addChild(textInput2);
 			
+			//创建输入法皮肤
 			var skin:GText = new ToolTipSkin();
 			addChild(skin);
 			
-			ime = new IME(new pinyin().toString(),skin);
+			//转换词库
+			var bytes:ByteArray = new pinyin() as ByteArray;
+			bytes.uncompress();
+			
+			//生成输入法类并注册文本框
+			ime = new IME(bytes.toString(),skin);
 			ime.register(textInput1);
 			ime.register(textInput2);
 		}

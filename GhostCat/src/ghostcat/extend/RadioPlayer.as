@@ -5,7 +5,7 @@ package ghostcat.extend
 	/**
 	 * 调用JS实现的音乐播放器
 	 * 
-	 * 它可以不受沙箱限制播放各种音频（mid,mp3,wmv,rm），以及实时流音频（rstp,mms），
+	 * 它可以不受沙箱限制播放各种音频（mid,mp3,wmv,rm），以及实时音频流（rstp,mms），
 	 * 将会受到浏览器以及已安装的浏览器插件影响
 	 * 
 	 * @author flashyiyi

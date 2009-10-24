@@ -1,7 +1,8 @@
 package ghostcat.ui.validators
 {
 	import flash.events.Event;
-	import flash.geom.Point;
+	
+	import ghostcat.ui.layout.Padding;
 	
 	/**
 	 * 正则数据验证器 
@@ -37,10 +38,10 @@ package ghostcat.ui.validators
 		}
 
 		
-		public function GRegexpValidator(skin:*=null, source:Object=null, property:String=null, expression:RegExp = null, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GRegexpValidator(skin:*=null, source:Object=null, property:String=null, expression:RegExp = null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
 			this.expression = expression;
-			super(skin, source, property, replace, separateTextField, textPos);
+			super(skin, source, property, replace, separateTextField, textPadding);
 		}
 		/** @inheritDoc*/
 		protected override function triggerHandler(event:Event) : void

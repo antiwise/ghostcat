@@ -6,15 +6,15 @@ package ghostcat.ui.validators
 	import ghostcat.text.TextUtil;
 	
 	/**
-	 * 正则数据验证器 
+	 * 字符串验证器 
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class GStringValidator extends GValidator
 	{
-		public static var defaultTooLongError:String = "数据格式不符合要求";
-		public static var defaultTooShortError:String = "数据格式不符合要求";
+		public static var defaultTooLongError:String = "字符串长度太长";
+		public static var defaultTooShortError:String = "字符串长度太短";
 		
 		/**
 		 * 最小值

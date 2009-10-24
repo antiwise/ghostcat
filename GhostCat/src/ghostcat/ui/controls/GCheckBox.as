@@ -1,9 +1,7 @@
 package ghostcat.ui.controls
 {
-	import flash.display.MovieClip;
-	import flash.geom.Point;
-	
 	import ghostcat.skin.CheckBoxIconSkin;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	
 	/**
@@ -23,17 +21,17 @@ package ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GCheckBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPos:Point=null)
+		public function GCheckBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 				
-			if (!textPos)
-				textPos = new Point(15,0);
+			if (!textPadding)
+				textPadding = new Padding(15,0);
 			
 			this.toggle = true;
 			
-			super(skin, replace,separateTextField,textPos);
+			super(skin, replace,separateTextField,textPadding);
 		}
 	}
 }
