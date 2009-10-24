@@ -219,7 +219,7 @@ package ghostcat.mvc
 		}
 		
 		/**
-		 * 当M属性变化时，同步一个数据
+		 * 当属性变化时，同步一个数据
 		 *  
 		 * @param site	需要被同步的对象
 		 * @param prop	需要同步的属性
@@ -228,14 +228,15 @@ package ghostcat.mvc
 		 * @return 
 		 * 
 		 */
-		public function bindMProperty(site:Object,prop:String,host:Object,chain:Object):ChangeWatcher
+		public function bindProperty(site:Object,prop:String,target:Object,type:String,chain:Object):ChangeWatcher
 		{
-			host = getM(host ? host : site);
+			var o:InsCotainer = getIns(target ? target : site,type);
+			var host:Object = o.getIns();
 			return BindingUtils.bindProperty(site,prop,host,chain);
 		}
 		
 		/**
-		 * 当M属性变化时触发事件
+		 * 当属性变化时触发事件
 		 *  
 		 * @param setter	绑定的事件
 		 * @param host	M的标示
@@ -243,9 +244,10 @@ package ghostcat.mvc
 		 * @return 
 		 * 
 		 */
-		public function bindMSetter(setter:Function,host:Object,chain:Object):ChangeWatcher
+		public function bindSetter(setter:Function,target:Object,type:String,chain:Object):ChangeWatcher
 		{
-			host = getM(host);
+			var o:InsCotainer = getIns(target,type);
+			var host:Object = o.getIns();
 			return BindingUtils.bindSetter(setter,host,chain);
 		}
 		

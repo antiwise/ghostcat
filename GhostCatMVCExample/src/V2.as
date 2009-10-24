@@ -19,7 +19,7 @@ package
 			
 			addEventListener(MouseEvent.CLICK,clickHandler);
 			
-			GhostCatMVC.instance.bindMSetter(setText,this,"value");
+			GhostCatMVC.instance.bindSetter(setText,this,"m","value");
 		}
 		
 		public function clickHandler(event:MouseEvent):void
