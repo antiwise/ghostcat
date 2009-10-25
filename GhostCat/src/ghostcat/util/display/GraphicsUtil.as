@@ -28,5 +28,29 @@ package ghostcat.util.display
 				target.endFill();
 			}
 		}
+		
+		public static function drawSector(target:Graphics,x:Number,y:Number,radius:Number,fromAngle:Number,toAngle:Number):void
+		{
+			target.moveTo(x,y);
+			var angle:Number = (toAngle - fromAngle) / 180 * Math.PI;
+			var n:Number = Math.ceil(Math.abs(angle) / (Math.PI / 4));
+			var angleS:Number = angle / n;
+			
+			var start:Number = fromAngle / 180 * Math.PI;
+			target.lineTo(x + radius * Math.cos(start),y + radius * Math.sin(start));
+			
+			for (var i:int = 1;i <= n;i++)
+			{
+				start += angleS;
+				var angleMid:Number = start - angleS / 2;
+				var bx:Number = x + radius / Math.cos(angleS / 2) * Math.cos(angleMid);
+				var by:Number = y + radius / Math.cos(angleS / 2) * Math.sin(angleMid);
+				var cx:Number = x + radius * Math.cos(start);
+				var cy:Number = y + radius * Math.sin(start);
+				target.curveTo(bx,by,cx,cy);
+			}
+			if (angle != 360)
+				target.lineTo(x,y);
+		}
 	}
 }

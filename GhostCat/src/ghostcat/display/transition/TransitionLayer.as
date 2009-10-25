@@ -79,9 +79,9 @@ package ghostcat.display.transition
 					playAnimate(fadeIn,WAIT);
 					break;
 				case WAIT:
-					playAnimate(wait,FADE_OUT);
 					if (switchHandler)
 						switchHandler.call();
+					playAnimate(wait,FADE_OUT);
 					break;
 				case FADE_OUT:
 					playAnimate(fadeOut,END);

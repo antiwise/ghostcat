@@ -190,7 +190,7 @@ package ghostcat.mvc
 				var o:InsCotainer = getIns(target,type);
 				var dispatcher:IEventDispatcher = o.getIns() as IEventDispatcher;
 				if (dispatcher)
-					addEventListener(e,handler,false,0,true);
+					dispatcher.addEventListener(e,handler,false,0,true);
 			}
 			else
 				addEventListener(e,handler,false,0,true);

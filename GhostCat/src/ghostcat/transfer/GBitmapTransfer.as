@@ -95,10 +95,10 @@ package ghostcat.transfer
 		}
 		
 		/**
-		 * 渲染 
+		 * 从源图渲染 
 		 * 
 		 */
-		protected function render():void
+		public function render():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();

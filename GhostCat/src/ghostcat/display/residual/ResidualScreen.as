@@ -29,6 +29,7 @@ package ghostcat.display.residual
 		 * 模糊滤镜
 		 */
 		protected var blurFilter:BlurFilter;
+		
 		/**
 		 * 位移速度 
 		 */

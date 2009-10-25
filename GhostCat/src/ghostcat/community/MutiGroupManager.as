@@ -3,7 +3,7 @@ package ghostcat.community
 	import flash.utils.Dictionary;
 
 	/**
-	 * 合并GroupManaegr
+	 * 合并GroupManager
 	 * @author flashyiyi
 	 * 
 	 */

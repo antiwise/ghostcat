@@ -19,10 +19,6 @@ package ghostcat.display.movieclip
 		 */
 		public var cmd:Function;
 		
-		private var _labels:Array;
-		private var _currentFrame:int = 1;
-		private var _totalFrames:int = 1;
-		
 		/**
 		 * 
 		 * @param cmd	渲染方法
@@ -41,22 +37,6 @@ package ghostcat.display.movieclip
 			
 			reset();
 		}
-		
-		/** @inheritDoc*/
-		public override function get curLabelName():String
-		{
-			for (var i:int = labels.length - 1;i>=0;i--)
-        	{
-        		if ((labels[i] as FrameLabel).frame <= currentFrame)
-        			return (labels[i] as FrameLabel).name;
-        	}
-        	return null;
-		}
-		/** @inheritDoc*/
-		public override function get currentFrame():int
-        {
-        	return _currentFrame;
-        }
         /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
@@ -70,34 +50,19 @@ package ghostcat.display.movieclip
         		
         	_currentFrame = frame;
         
-        	cmd.call(null,this) 
-        }
-        /** @inheritDoc*/
-        public override function get totalFrames():int
-        {
-        	return _totalFrames;
-        }
+        	cmd.call(null,this);
+			
+			super.currentFrame = frame;
+		}
         
         public function set totalFrames(v:int):void
         {
         	_totalFrames = v;
         }
         
-        /** @inheritDoc*/
-        public override function get labels():Array
-		{
-			return _labels;
-		}
-		
 		public function set labels(v:Array):void
         {
         	_labels = v;
-        }
-        
-        /** @inheritDoc*/
-        public override function nextFrame():void
-        {
-        	(frameRate >= 0) ? currentFrame ++ : currentFrame --;
         }
 	}
 }
