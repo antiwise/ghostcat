@@ -233,12 +233,17 @@ class ShadowItem
 	public function pointTo():void
 	{
 		var p:Point = Geom.localToContent(new Point(),this.item,light);
-		var angle:Number = Math.atan2(p.y,p.x);
 		var len:Number = p.length;
 		
-//		if (len <= light.radius)
-//			this.item.transform.colorTransform = ColorUtil.getColorTransform2(light.color,1 - len / light.radius);
+		if (len > light.radius)
+		{
+			shadow.visible = false;
+			return;
+		}
+		else
+			shadow.visible = true;
 		
+		var angle:Number = Math.atan2(p.y,p.x);
 		var rect:Rectangle = item.getBounds(item);
 		var m:Matrix = new Matrix();
 		m.translate(rect.x,rect.y);

@@ -2,10 +2,6 @@ package ghostcat.display.movieclip
 {
 	import flash.display.FrameLabel;
 	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.geom.Rectangle;
-	
-	import ghostcat.skin.ButtonSkin;
 	
 	/**
 	 * 动画首尾拼接类 
@@ -18,9 +14,6 @@ package ghostcat.display.movieclip
 		
 		private var mcStartFrame:Array;
 		
-		private var _labels:Array;
-		private var _currentFrame:int = 1;
-		private var _totalFrames:int = 1;
 		
 		/**
 		 * 
@@ -80,21 +73,7 @@ package ghostcat.display.movieclip
 			if (mc)
 				mc.stop();
 		}
-		/** @inheritDoc*/
-		public override function get curLabelName():String
-		{
-			for (var i:int = labels.length - 1;i>=0;i--)
-			{
-				if ((labels[i] as FrameLabel).frame <= currentFrame)
-					return (labels[i] as FrameLabel).name;
-			}
-			return null;
-		}
-		/** @inheritDoc*/
-		public override function get currentFrame():int
-		{
-			return _currentFrame;
-		}
+		
 		/** @inheritDoc*/
 		public override function set currentFrame(frame:int):void
 		{
@@ -122,29 +101,19 @@ package ghostcat.display.movieclip
 			if (curMc != content)
 				setContent(curMc);
 			
-			mc.gotoAndStop(frame - curStartFrame);
-		}
-		/** @inheritDoc*/
-		public override function get totalFrames():int
-		{
-			return _totalFrames;
-		}
-		
-		public function set totalFrames(v:int):void
-		{
-			_totalFrames = v;
-		}
-		
-		/** @inheritDoc*/
-		public override function get labels():Array
-		{
-			return _labels;
-		}
-		
-		/** @inheritDoc*/
-		public override function nextFrame():void
-		{
-			(frameRate >= 0) ? currentFrame ++ : currentFrame --;
+			var mcFrame:int = frame - curStartFrame;
+			
+			if (mc)
+			{
+				if (mcFrame == currentFrame + 1) 
+					mc.nextFrame();
+				else if (mcFrame == currentFrame - 1)
+					mc.prevFrame();
+				else
+					mc.gotoAndStop(mcFrame);
+			}
+			
+			super.currentFrame = frame;
 		}
 	}
 }

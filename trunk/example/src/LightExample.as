@@ -32,10 +32,6 @@ package
 		public var r:GBase;
 		public function LightExample()
 		{
-			var b:GImage = new GImage("back.jpg");
-			b.transform.colorTransform = new ColorTransform(1,1,1,1,-100,-100,-100);
-			addChild(b);
-			
 			//创建墙壁和控制点
 			var p1:DragPoint = new DragPoint(new Point(100,200));
 			var p2:DragPoint = new DragPoint(new Point(200,100));
@@ -50,13 +46,13 @@ package
 			addChild(p2);
 			
 			//创建灯光
-			l1 = Util.createObject(new Light(250),{x:300,y:120,color:0xFFFFCC});
+			l1 = Util.createObject(new Light(250),{x:300,y:120});
 			addChild(l1);
-			l2 = Util.createObject(new Light(250),{x:420,y:300,color:0xCCCCFF});
+			l2 = Util.createObject(new Light(250),{x:420,y:300});
 			addChild(l2);
 			
 			//创建人物
-			r = Util.createObject(new GBase(new TestHuman()),{cursor:CursorDrag,x:250,y:150});
+			r = Util.createObject(new GBase(new TestHuman()),{cursor:CursorDrag,x:200,y:130});
 			addChild(r);
 			
 			//将物品加入灯光中

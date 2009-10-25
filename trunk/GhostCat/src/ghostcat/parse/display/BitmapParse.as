@@ -8,6 +8,11 @@ package ghostcat.parse.display
 	
 	import ghostcat.parse.DisplayParse;
 	
+	/**
+	 * 创建位图 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BitmapParse extends DisplayParse
 	{
 		public var width:int;

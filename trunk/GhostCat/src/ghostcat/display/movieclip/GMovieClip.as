@@ -83,21 +83,29 @@ package ghostcat.display.movieclip
         /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
-        	if (mc)
-        		mc.gotoAndStop(frame);
-        }
+			if (frame < 1)
+				frame = 1;
+			if (frame > totalFrames)
+				frame = totalFrames;
+			
+			if (currentFrame == frame)
+				return;
+			
+			if (mc)
+			{
+				if (frame == currentFrame + 1) 
+					mc.nextFrame();
+				else if (frame == currentFrame - 1)
+					mc.prevFrame();
+				else
+        			mc.gotoAndStop(frame);
+			}
+			super.currentFrame = frame;
+		}
         /** @inheritDoc*/
         public override function get totalFrames():int
         {
         	return mc ? mc.totalFrames : 0;
-        }
-        /** @inheritDoc*/
-        public override function nextFrame():void
-        {
-        	if (!mc)
-        		return;
-			
-        	(frameRate >= 0) ? mc.nextFrame() : mc.prevFrame();
         }
 		
         /**

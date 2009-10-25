@@ -59,7 +59,7 @@ package ghostcat.parse.display
 			if (parses)
 			{
 				for (var i:int = 0;i < parses.length;i++)
-					(parse[i] as DisplayParse).parse(target);
+					(parses[i] as DisplayParse).parse(target);
 			}
 		}
 		/** @inheritDoc*/

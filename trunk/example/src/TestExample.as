@@ -1,18 +1,13 @@
 package
 {
-	import flash.filters.BlurFilter;
-	import flash.filters.GlowFilter;
-	import flash.geom.Point;
-	import flash.text.TextFormat;
+	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.transition.TransitionDisplayLayer;
-	import ghostcat.display.transition.TransitionLayer;
-	import ghostcat.display.viewport.BackgroundLayer;
-	import ghostcat.ui.controls.GBitmapText;
+	import ghostcat.display.transition.TransitionCacheTransferLayer;
+	import ghostcat.transfer.MosaicTransfer;
 	import ghostcat.util.core.Handler;
-	import ghostcat.util.display.ColorConvertUtil;
-	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="600",height="600")]
 	/**
@@ -22,9 +17,22 @@ package
 	 */
 	public class TestExample extends GBase
 	{
+		[Embed(source="back.jpg")]
+		public var ref:Class;
+		
+		public var t:TransitionCacheTransferLayer;
 		public function TestExample()
 		{
-			trace(ColorConvertUtil.toHSL(0xFF0000).toString(16));
+			var s:DisplayObject = new ref();
+			addChild(s);
+			
+			t = new TransitionCacheTransferLayer(new Handler(f),new MosaicTransfer(s));
+			t.createTo(this);
+		}
+		
+		public function f():void
+		{
+			(t.transfer.target as Bitmap).bitmapData.noise(0);
 		}
 	}
 }

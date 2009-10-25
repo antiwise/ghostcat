@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
@@ -23,7 +24,7 @@ package
 		
 		public function clickHandler(event:MouseEvent):void
 		{
-			GhostCatMVC.instance.call("test","c","execute",textField.text);
+			GhostCatMVC.instance.call(this,"c","execute",textField.text);
 		}
 		
 		public function setText(v:String):void

@@ -2,14 +2,12 @@ package ghostcat.display.movieclip
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.FrameLabel;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.debug.Debug;
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.util.display.GraphicsUtil;
@@ -29,8 +27,10 @@ package ghostcat.display.movieclip
 		 */
 		public var bitmaps:Array;
 		
-		private var _labels:Array;
-		private var _currentFrame:int = 1;
+		/**
+		 * 是否在销毁的时候自动回收位图
+		 */
+		public var disposeWhenDestory:Boolean = true;
 		
 		/**
 		 * 鼠标事件对象
@@ -95,8 +95,11 @@ package ghostcat.display.movieclip
 			if (destoryed)
 				return;
 			
-			dispose();
-			bitmapMouseChecker.destory();
+			if (disposeWhenDestory)
+				dispose();
+			
+			if (bitmapMouseChecker)
+				bitmapMouseChecker.destory();
 			
 			super.destory();
 		}

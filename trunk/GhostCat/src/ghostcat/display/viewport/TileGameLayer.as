@@ -82,7 +82,7 @@ package ghostcat.display.viewport
 		 * @param gameLayer	游戏物品层（Sprite或者BitmapScreen）
 		 * @param sortEngine	物品移动后的单物品排序器（默认是GBaseCommunityManager）
 		 * @param tileSortEngine	屏幕滚动后的全排器（必须是SortAllManager）
-		 * @param engines	其他引型
+		 * @param engines	其他引擎
 		 * 
 		 */
 		public function TileGameLayer(mapData:Array,tileLayer:Tile,createTileItemHandler:Function,gameLayer:DisplayObjectContainer=null,sortEngine:GroupManager=null,tileSortEngine:SortAllManager=null,engines:Array = null)

@@ -9,20 +9,46 @@ package ghostcat.mvc
 	 */
 	public class InsCotainer
 	{
+		/**
+		 * 立即创建
+		 */
 		static public const CREATE:String = "create";
+		/**
+		 * 单例
+		 */
 		static public const SINGLE:String = "single";
+		/**
+		 * 不做处理
+		 */
 		static public const NONE:String = "none";
 		
+		/**
+		 * 类型(m,v,c) 
+		 */
 		public var type:String;
 		
+		/**
+		 * 实例化模式 
+		 */
 		public var mode:String;
 		
-		private var _ref:Class;
-		
+		/**
+		 * 名称标示 
+		 */
 		public var name:String;
 		
+		/**
+		 * 实例 
+		 */
 		public var ins:*;
 
+		private var _ref:Class;
+		
+		/**
+		 * 类 
+		 * @return 
+		 * 
+		 */
 		public function get ref():Class
 		{
 			return _ref;
@@ -76,6 +102,11 @@ package ghostcat.mvc
 				this[child.@key.toString()] = child.@value.toString();
 		}
 		
+		/**
+		 * 获得实例
+		 * @return 
+		 * 
+		 */
 		public function getIns():*
 		{
 			switch (this.mode)
@@ -94,6 +125,10 @@ package ghostcat.mvc
 			}
 		}
 		
+		/**
+		 * 销毁
+		 * 
+		 */
 		public function destory():void
 		{
 			delete GhostCatMVC.instance[this.type][this.name];

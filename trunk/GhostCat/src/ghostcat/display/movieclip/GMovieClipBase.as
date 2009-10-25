@@ -27,6 +27,10 @@ package ghostcat.display.movieclip
 	 */
 	public class GMovieClipBase extends GBase
 	{
+		protected var _labels:Array;
+		protected var _currentFrame:int = 1;
+		protected var _totalFrames:int = 1;
+		
 		/**
 		 * 全局默认帧频，为NaN时则取舞台帧频
 		 */
@@ -71,6 +75,11 @@ package ghostcat.display.movieclip
         
         private var frameTimer:int=0;//记时器，小于0则需要播放，直到大于0
 
+		/**
+		 * 连接到自己的MovieClip对象
+		 */
+		public var linkMovieClips:Array;
+		
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			AbstractUtil.preventConstructor(this,GMovieClipBase);
@@ -322,7 +331,7 @@ package ghostcat.display.movieclip
 		 */
 		public function get labels():Array
 		{
-			return null;
+			return _labels;
 		}
 		
 		/**
@@ -332,6 +341,11 @@ package ghostcat.display.movieclip
 		 */	
 		public function get curLabelName():String
 		{
+			for (var i:int = labels.length - 1;i>=0;i--)
+			{
+				if ((labels[i] as FrameLabel).frame <= currentFrame)
+					return (labels[i] as FrameLabel).name;
+			}
 			return null;
 		}
 		
@@ -343,11 +357,16 @@ package ghostcat.display.movieclip
 		 */
 		public function get currentFrame():int
         {
-        	return -1;
+        	return _currentFrame;
         }
         
         public function set currentFrame(frame:int):void
         {
+			if (linkMovieClips)
+			{
+				for each (var mc:GMovieClipBase in linkMovieClips)
+					mc.currentFrame = frame;
+			}
         }
         
         /**
@@ -358,7 +377,7 @@ package ghostcat.display.movieclip
          */
         public function get totalFrames():int
         {
-        	return -1;
+        	return _totalFrames;
         }
         
         /**
@@ -367,6 +386,35 @@ package ghostcat.display.movieclip
          */
         public function nextFrame():void
         {
-        }
+			(frameRate >= 0) ? currentFrame ++ : currentFrame --;
+		}
+		
+		/**
+		 * 连接到另一个动画，由目标动画控制自己的帧跳转
+		 * @param target
+		 * 
+		 */
+		public function linkTo(target:GMovieClipBase):void
+		{
+			this.paused = true;
+			if (!target.linkMovieClips)
+				target.linkMovieClips = [];
+			
+			target.linkMovieClips.push(this);
+		}
+		
+		/**
+		 * 解除动画连接 
+		 * @param target
+		 * 
+		 */
+		public function removeLinkFrom(target:GMovieClipBase):void
+		{
+			this.paused = false;
+			Util.remove(target.linkMovieClips,this);
+			
+			if (target.linkMovieClips.length == 0)
+				target.linkMovieClips = null;
+		}
 	}
 }
