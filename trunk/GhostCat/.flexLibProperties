@@ -385,6 +385,7 @@
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.GBitmapEffect"/>
     <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
+    <classEntry path="ghostcat.display.movieclip.maskmovie.AlphaMaskHandler"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
