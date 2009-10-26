@@ -13,6 +13,7 @@ package ghostcat.display.transition
 
 	/**
 	 * 过渡过程会先渐变到一个过渡对象，然后再进入另一个结果状态
+	 * 此类兼容位图特效
 	 * 
 	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
 	 *
