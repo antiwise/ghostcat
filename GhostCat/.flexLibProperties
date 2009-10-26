@@ -383,8 +383,9 @@
     <classEntry path="ghostcat.parse.graphics.GraphicsSector"/>
     <classEntry path="ghostcat.parse.display.BitmapDataParse"/>
     <classEntry path="ghostcat.display.residual.ResidualShapeScreen"/>
-    <classEntry path="ghostcat.display.transition.TransitionCacheTransferLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
+    <classEntry path="ghostcat.display.transition.TransitionTransferLayer2"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

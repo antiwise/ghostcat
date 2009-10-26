@@ -1,6 +1,6 @@
 package ghostcat.display.transition
 {
-	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
 	import ghostcat.operation.DelayOper;
@@ -10,14 +10,14 @@ package ghostcat.display.transition
 	import ghostcat.util.core.Handler;
 
 	/**
-	 * 使用位图特效过渡（马赛克，溶解）来显示过渡效果
+	 * 使用位图特效过渡（马赛克，溶解）来显示过渡效果，会首先过渡到白屏，再重新显示
 	 * 
 	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
 	 *
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionCacheTransferLayer extends TransitionLayer
+	public class TransitionTransferLayer2 extends TransitionLayer
 	{
 		/**
 		 * 遮挡对象
@@ -52,19 +52,19 @@ package ghostcat.display.transition
 			super.state = v;
 		}
 		
-		public function TransitionCacheTransferLayer(switchHandler:Handler,displayObj:GBitmapCacheTransfer,fadeIn:int = 1000,fadeOut:int = 1000, wait:Boolean=false, easeIn:Function = null, easeOut:Function = null)
+		public function TransitionTransferLayer2(switchHandler:Handler,transferClass:Class,target:DisplayObject,fadeIn:int = 1000,fadeOut:int = 1000, wait:Boolean=false, easeIn:Function = null, easeOut:Function = null)
 		{
-			this.transfer = displayObj;
-			displayObj.deep = 0.0;
+			this.transfer = new transferClass(target);
+			transfer.deep = 0.0;
 			
 			var fadeInOper:Oper;
 			var fadeOutOper:Oper;
 			var waitOper:Oper;
 			
 			if (fadeIn)
-				fadeInOper = new TweenOper(displayObj,fadeIn,{deep:1.0,ease:easeIn});
+				fadeInOper = new TweenOper(transfer,fadeIn,{deep:1.0,ease:easeIn});
 			if (fadeOut)
-				fadeOutOper = new TweenOper(displayObj,fadeOut,{deep:0.0,ease:easeOut});
+				fadeOutOper = new TweenOper(transfer,fadeOut,{deep:0.0,ease:easeOut});
 			if (wait)
 				waitOper = new DelayOper(-1);
 			
