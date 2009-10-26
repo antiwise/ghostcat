@@ -1,13 +1,12 @@
 package
 {
 	import flash.display.Bitmap;
-	import flash.display.DisplayObject;
-	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.transition.TransitionCacheTransferLayer;
+	import ghostcat.display.transition.TransitionTransferLayer2;
 	import ghostcat.transfer.MosaicTransfer;
 	import ghostcat.util.core.Handler;
+	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="600",height="600")]
 	/**
@@ -20,19 +19,20 @@ package
 		[Embed(source="back.jpg")]
 		public var ref:Class;
 		
-		public var t:TransitionCacheTransferLayer;
+		public var t:TransitionTransferLayer2;
+		public var s:Bitmap;
 		public function TestExample()
 		{
-			var s:DisplayObject = new ref();
+			s = new ref();
 			addChild(s);
 			
-			t = new TransitionCacheTransferLayer(new Handler(f),new MosaicTransfer(s));
+			t = new TransitionTransferLayer2(new Handler(f),MosaicTransfer,s,500,500,false,Circ.easeIn,Circ.easeOut);
 			t.createTo(this);
 		}
 		
 		public function f():void
 		{
-			(t.transfer.target as Bitmap).bitmapData.noise(0);
+			s.bitmapData.noise(0);
 		}
 	}
 }

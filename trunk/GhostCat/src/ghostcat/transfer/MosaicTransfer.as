@@ -44,7 +44,7 @@ package ghostcat.transfer
 			
 			result.fillRect(result.rect,0);
 			
-			var temp:BitmapData = new BitmapData(source.width / size,source.height / size,source.transparent,0);
+			var temp:BitmapData = new BitmapData(Math.ceil(source.width / size),Math.ceil(source.height / size),source.transparent,0);
 			var m:Matrix;
 			m = new Matrix();
 			m.scale(1/size,1/size);
