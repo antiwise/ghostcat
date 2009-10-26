@@ -1,4 +1,4 @@
-﻿package ghostcat.transfer
+﻿package ghostcat.display.transfer
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Matrix;

@@ -1,14 +1,21 @@
 package
 {
-	import flash.display.Bitmap;
+	import flash.geom.Point;
+	import flash.utils.getTimer;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.transition.TransitionTransferLayer2;
-	import ghostcat.transfer.MosaicTransfer;
-	import ghostcat.util.core.Handler;
-	import ghostcat.util.easing.Circ;
+	import ghostcat.display.transfer.GBitmapEffect;
+	import ghostcat.display.transfer.effect.DissolveHandler;
+	import ghostcat.display.transfer.effect.MosaicHandler;
+	import ghostcat.display.transfer.effect.ThresholdHandler;
+	import ghostcat.display.transition.TransitionFadeLayer;
+	import ghostcat.display.transition.TransitionLayerBase;
+	import ghostcat.display.transition.TransitionObjectLayer;
+	import ghostcat.display.transition.TransitionTransferLayer;
+	import ghostcat.display.viewport.BackgroundLayer;
+	import ghostcat.ui.controls.GImage;
 	
-	[SWF(width="600",height="600")]
+	[SWF(width="600",height="450",backgroundColor="0xFFFFFF")]
 	/**
 	 * 
 	 * @author flashyiyi
@@ -16,23 +23,55 @@ package
 	 */
 	public class TestExample extends GBase
 	{
-		[Embed(source="back.jpg")]
-		public var ref:Class;
+		[Embed(source="p1.jpg")]
+		public var p1:Class;
+		[Embed(source="p2.jpg")]
+		public var p2:Class;
 		
-		public var t:TransitionTransferLayer2;
-		public var s:Bitmap;
+		public var t:TransitionLayerBase;
+		public var s:GImage;
+		
+		public var step:int = 0;
+		
 		public function TestExample()
 		{
-			s = new ref();
+			s = new GImage();
 			addChild(s);
+			s.source = p1;
 			
-			t = new TransitionTransferLayer2(new Handler(f),MosaicTransfer,s,500,500,false,Circ.easeIn,Circ.easeOut);
-			t.createTo(this);
+			this.refreshInterval = 3000;
+			invalidateDisplayList();
 		}
 		
-		public function f():void
+		protected override function updateDisplayList() : void
 		{
-			s.bitmapData.noise(0);
+			switch (int(Math.random() * 5))
+			{
+				case 0:
+					new TransitionTransferLayer(f,new GBitmapEffect(s,new ThresholdHandler())).createTo(this);
+					break;
+				case 1:
+					new TransitionTransferLayer(f,new GBitmapEffect(s,new DissolveHandler(getTimer()))).createTo(this);
+					break;
+				case 2:
+					new TransitionObjectLayer(f,new GBitmapEffect(s,new MosaicHandler()),s,500,500).createTo(this);
+					break;
+				case 3:
+					var r:BackgroundLayer = new BackgroundLayer(600,450);
+					r.addLayer(new TestRepeater(),1,null,true);
+					r.autoMove = new Point(50,50);
+					new TransitionObjectLayer(f,r).createTo(this);
+					break;
+				case 4:
+					new TransitionFadeLayer(f,s).createTo(this);
+					break;
+			}
+		}
+		
+		protected function f():void
+		{
+			step++;
+			s.source = (step % 2 == 0)? p1 : p2;
 		}
 	}
 }

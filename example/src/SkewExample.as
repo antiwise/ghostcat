@@ -6,7 +6,7 @@ package
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
-	import ghostcat.transfer.Skew;
+	import ghostcat.display.transfer.Skew;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.util.Util;
 	

@@ -1,9 +1,8 @@
 package ghostcat.display.movieclip
 {
-	import flash.display.FrameLabel;
 	import flash.display.Sprite;
 	
-	import ghostcat.debug.Debug;
+	import ghostcat.util.core.Handler;
 
 	/**
 	 * 使用动画剪辑模拟代码动画，可以再次继承此类来来处理特殊情况
@@ -17,7 +16,7 @@ package ghostcat.display.movieclip
 		/**
 		 * 渲染方法，参数为GScrpitMovieClip本身
 		 */
-		public var cmd:Function;
+		public var command:Handler;
 		
 		/**
 		 * 
@@ -27,9 +26,12 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */	
-		public function GScriptMovieClip(cmd:Function,totalFrames:int,labels:Array=null,paused:Boolean=false)
+		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,paused:Boolean=false)
 		{
-			this.cmd = cmd;
+			if (command is Function)
+				command = new Handler(command);
+			
+			this.command = command;
 			this._totalFrames = totalFrames;
 			this._labels = labels ? labels : [];
 			
@@ -50,7 +52,7 @@ package ghostcat.display.movieclip
         		
         	_currentFrame = frame;
         
-        	cmd.call(null,this);
+        	command.call(this);
 			
 			super.currentFrame = frame;
 		}
@@ -64,5 +66,16 @@ package ghostcat.display.movieclip
         {
         	_labels = v;
         }
+		
+		public override function destory():void
+		{
+			if (destoryed)
+				return;
+			
+			if (command)
+				command.destory();
+			
+			super.destory();
+		}
 	}
 }

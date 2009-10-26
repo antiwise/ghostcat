@@ -34,10 +34,17 @@ package ghostcat.display.bitmap
 			if (!bitmap.bitmapData)
 				return false;
 			
-			if (maskHitArea)
-				return uint(bitmap.bitmapData.getPixel32(bitmap.mouseX,bitmap.mouseY) >> 24) > 0;
-			else
-				return bitmap.bitmapData.rect.contains(bitmap.mouseX,bitmap.mouseY);
+			try
+			{
+				if (maskHitArea)
+					return uint(bitmap.bitmapData.getPixel32(bitmap.mouseX,bitmap.mouseY) >> 24) > 0;
+				else
+					return bitmap.bitmapData.rect.contains(bitmap.mouseX,bitmap.mouseY);
+			}
+			catch(e:Error)
+			{
+			}
+			return false;
 		}
 		
 		public function BitmapMouseChecker(bitmap:Bitmap)

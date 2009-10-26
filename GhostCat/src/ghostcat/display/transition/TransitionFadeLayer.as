@@ -12,13 +12,13 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionFadeToLayer extends TransitionDisplayLayer
+	public class TransitionFadeLayer extends TransitionObjectLayer
 	{
-		public function TransitionFadeToLayer(switchHandler:Handler,target:DisplayObject,fadeOut:int = 1000, wait:Boolean=false,easeIn:Function = null, easeOut:Function = null)
+		public function TransitionFadeLayer(switchHandler:*,target:DisplayObject,fadeOut:int = 1000, wait:Boolean=false,easeOut:Function = null)
 		{
 			var bitmap:Bitmap = new DrawParse(target).createBitmap();
 			
-			super(switchHandler,bitmap,0,fadeOut,wait,easeIn,easeOut);
+			super(switchHandler,bitmap,null,0,fadeOut,wait,null,easeOut);
 			bitmap.alpha = 1.0;
 		}
 	}

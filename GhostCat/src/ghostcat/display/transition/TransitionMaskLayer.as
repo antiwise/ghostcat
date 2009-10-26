@@ -1,6 +1,7 @@
 package ghostcat.display.transition
 {
 	import flash.display.Bitmap;
+	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -23,7 +24,7 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionMaskLayer extends TransitionLayer
+	public class TransitionMaskLayer extends TransitionLayerBase
 	{
 		/**
 		 * 缓存对象
@@ -39,9 +40,10 @@ package ghostcat.display.transition
 		
 		
 		/** @inheritDoc*/
-		public override function createTo(container:DisplayObjectContainer):TransitionLayer
+		public override function createTo(container:DisplayObjectContainer):TransitionLayerBase
 		{
 			displayObj = new Sprite();
+			displayObj.blendMode = BlendMode.LAYER;
 			displayObj.addChild(bitmap);
 			
 			container.addChild(displayObj);
@@ -49,7 +51,7 @@ package ghostcat.display.transition
 			return super.createTo(container);
 		}
 		
-		public function TransitionMaskLayer(switchHandler:Handler,target:DisplayObject,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
+		public function TransitionMaskLayer(switchHandler:*,target:DisplayObject,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
 		{
 			var bitmap:Bitmap = new DrawParse(target).createBitmap();
 			
@@ -64,6 +66,7 @@ package ghostcat.display.transition
 				Debug.error("maskMovieClip参数必须是MovieClip,GMovieClipBase之一")
 					
 			this.maskMovieClip = maskMovieClip;
+			this.maskMovieClip.blendMode = BlendMode.ALPHA;
 			
 			if (fadeOut)
 				fadeOutOper = new MovieOper(maskMovieClip,maskLabel);
@@ -81,6 +84,9 @@ package ghostcat.display.transition
 				bitmap.parent.removeChild(bitmap);
 				bitmap.bitmapData.dispose();
 			}
+			
+			if (maskMovieClip)
+				maskMovieClip.destory();
 			
 			if (displayObj)
 				displayObj.parent.removeChild(displayObj);

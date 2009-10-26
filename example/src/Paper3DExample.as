@@ -6,7 +6,7 @@ package
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.RepeatOper;
 	import ghostcat.operation.TweenOper;
-	import ghostcat.transfer.Paper3D;
+	import ghostcat.display.transfer.Paper3D;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.Back;
 	

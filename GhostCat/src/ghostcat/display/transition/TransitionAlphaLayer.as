@@ -10,7 +10,7 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionAlphaLayer extends TransitionDisplayLayer
+	public class TransitionAlphaLayer extends TransitionObjectLayer
 	{
 		public function TransitionAlphaLayer(switchHandler:Handler,width:Number,height:Number,color:uint = 0xFFFFFF,fadeIn:int = 1000,fadeOut:int = 1000, wait:Boolean=false,easeIn:Function = null, easeOut:Function = null)
 		{
@@ -19,7 +19,7 @@ package ghostcat.display.transition
 			shape.graphics.drawRect(0,0,width,height);
 			shape.graphics.endFill();
 			
-			super(switchHandler,shape,fadeIn,fadeOut,wait,easeIn,easeOut);
+			super(switchHandler,shape,null,fadeIn,fadeOut,wait,easeIn,easeOut);
 		}
 	}
 }

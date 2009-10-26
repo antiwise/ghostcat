@@ -18,7 +18,7 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionMovieClipLayer extends TransitionLayer
+	public class TransitionMovieClipLayer extends TransitionLayerBase
 	{
 		/**
 		 * 动画对象
@@ -26,7 +26,7 @@ package ghostcat.display.transition
 		public var mc:GMovieClipBase;
 		
 		/** @inheritDoc*/
-		public override function createTo(container:DisplayObjectContainer):TransitionLayer
+		public override function createTo(container:DisplayObjectContainer):TransitionLayerBase
 		{
 			container.addChild(mc);
 			return super.createTo(container);
@@ -41,7 +41,7 @@ package ghostcat.display.transition
 		 * @param wait	等待时的帧标签
 		 * 
 		 */
-		public function TransitionMovieClipLayer(switchHandler:Handler,skin:*,fadeIn:String = null,fadeOut:String = null,wait:String=null)
+		public function TransitionMovieClipLayer(switchHandler:*,skin:*,fadeIn:String = null,fadeOut:String = null,wait:String=null)
 		{
 			if (skin is MovieClip)
 				this.mc = new GMovieClip(skin);
