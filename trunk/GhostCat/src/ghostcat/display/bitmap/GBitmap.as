@@ -600,11 +600,12 @@ package ghostcat.display.bitmap
 			if (destoryed)
 				return;
 			
+			if (bitmapMouseChecker)
+				bitmapMouseChecker.destory();
+			
 			if (bitmapData)
 				bitmapData.dispose();
 			
-			if (bitmapMouseChecker)
-				bitmapMouseChecker.destory();
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);

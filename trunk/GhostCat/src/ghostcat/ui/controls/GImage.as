@@ -158,7 +158,7 @@ package ghostcat.ui.controls
 				v = new ClassFactory(v);
 			
 			if (v is ClassFactory)
-				v = new ClassFactory().newInstance();
+				v = (v as ClassFactory).newInstance();
 				
 			if (v is ByteArray)
 			{

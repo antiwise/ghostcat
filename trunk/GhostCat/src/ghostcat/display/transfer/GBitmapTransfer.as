@@ -1,4 +1,4 @@
-package ghostcat.transfer
+package ghostcat.display.transfer
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -144,10 +144,14 @@ package ghostcat.transfer
 		/** @inheritDoc*/
 		public override function destory():void
 		{
-			super.destory();
+			if (destoryed)
+				return;
 			
 			removeTargetEvents();
-			bitmapData && bitmapData.dispose();
+			if (bitmapData)
+				bitmapData.dispose();
+			
+			super.destory();
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package ghostcat.transfer
+package ghostcat.display.transfer
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

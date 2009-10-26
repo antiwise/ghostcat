@@ -17,14 +17,14 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TransitionLayer extends EventDispatcher
+	public class TransitionLayerBase extends EventDispatcher
 	{
 		public static const FADE_IN:String = "fade_in";
 		public static const FADE_OUT:String = "fade_out";
 		public static const WAIT:String = "wait";
 		public static const END:String = "end";
 		
-		public static var currentTransition:TransitionLayer;
+		public static var currentTransition:TransitionLayerBase;
 		
 		/**
 		 * 让当前动画进入到消去状态。设置wait为无限循环时可执行此方法退出等待状态
@@ -115,11 +115,15 @@ package ghostcat.display.transition
 			}
 		}
 		
-		public function TransitionLayer(switchHandler:Handler,fadeIn:Oper = null, fadeOut:Oper = null, wait:Oper = null)
+		public function TransitionLayerBase(switchHandler:*,fadeIn:Oper = null, fadeOut:Oper = null, wait:Oper = null)
 		{
-			AbstractUtil.preventConstructor(this,TransitionLayer);
+			AbstractUtil.preventConstructor(this,TransitionLayerBase);
 			
-			this.switchHandler = switchHandler;
+			if (switchHandler is Function)
+				this.switchHandler = new Handler(switchHandler);
+			else
+				this.switchHandler = switchHandler;
+			
 			this.fadeIn = fadeIn;
 			this.fadeOut = fadeOut;
 			this.wait = wait;
@@ -132,7 +136,7 @@ package ghostcat.display.transition
 		 * @return 
 		 * 
 		 */
-		public function createTo(container:DisplayObjectContainer):TransitionLayer
+		public function createTo(container:DisplayObjectContainer):TransitionLayerBase
 		{
 			this.state = FADE_IN;
 			

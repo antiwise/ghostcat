@@ -79,10 +79,9 @@
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
-    <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
-    <classEntry path="ghostcat.display.transition.TransitionDisplayLayer"/>
-    <classEntry path="ghostcat.display.transition.TransitionFadeToLayer"/>
-    <classEntry path="ghostcat.display.transition.TransitionLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionObjectLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionFadeLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionLayerBase"/>
     <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
@@ -244,14 +243,13 @@
     <classEntry path="ghostcat.text.TextFieldUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
     <classEntry path="ghostcat.text.URL"/>
-    <classEntry path="ghostcat.transfer.GBitmapTransfer"/>
-    <classEntry path="ghostcat.transfer.GTransfer"/>
-    <classEntry path="ghostcat.transfer.LightSweep"/>
-    <classEntry path="ghostcat.transfer.MiniMap"/>
-    <classEntry path="ghostcat.transfer.MosaicTransfer"/>
-    <classEntry path="ghostcat.transfer.Paper3D"/>
-    <classEntry path="ghostcat.transfer.Reflector"/>
-    <classEntry path="ghostcat.transfer.Skew"/>
+    <classEntry path="ghostcat.display.transfer.GBitmapTransfer"/>
+    <classEntry path="ghostcat.display.transfer.GTransfer"/>
+    <classEntry path="ghostcat.display.transfer.LightSweep"/>
+    <classEntry path="ghostcat.display.transfer.MiniMap"/>
+    <classEntry path="ghostcat.display.transfer.Paper3D"/>
+    <classEntry path="ghostcat.display.transfer.Reflector"/>
+    <classEntry path="ghostcat.display.transfer.Skew"/>
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
@@ -376,16 +374,17 @@
     <classEntry path="ghostcat.ui.validators.GRegexpValidator"/>
     <classEntry path="ghostcat.ui.validators.GEmailValidator"/>
     <classEntry path="ghostcat.ui.layout.Padding"/>
-    <classEntry path="ghostcat.transfer.ThresholdTransfer"/>
-    <classEntry path="ghostcat.transfer.DissolveTransfer"/>
     <classEntry path="ghostcat.display.viewport.TileGameItem"/>
     <classEntry path="ghostcat.display.viewport.ViewportCamera"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsSector"/>
     <classEntry path="ghostcat.parse.display.BitmapDataParse"/>
     <classEntry path="ghostcat.display.residual.ResidualShapeScreen"/>
-    <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
-    <classEntry path="ghostcat.display.transition.TransitionTransferLayer2"/>
+    <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
+    <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
+    <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
+    <classEntry path="ghostcat.display.transfer.GBitmapEffect"/>
+    <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

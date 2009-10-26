@@ -33,9 +33,12 @@ package ghostcat.util.core
 		 * @return 
 		 * 
 		 */
-		public function call() : *
+		public function call(...params) : *
 		{
-			return (this.handler as Function).apply(this.caller,this.para);
+			if (params && params.length > 0)
+				return this.handler.apply(this.caller,params);
+			else
+				return this.handler.apply(this.caller,this.para);
 		}
 		
 		/**
