@@ -1,6 +1,7 @@
 package ghostcat.display.movieclip
 {
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.util.core.Handler;
 
@@ -19,6 +20,11 @@ package ghostcat.display.movieclip
 		public var command:Handler;
 		
 		/**
+		 * 代码动画的虚拟大小
+		 */
+		public var bounds:Rectangle;
+		
+		/**
 		 * 
 		 * @param cmd	渲染方法
 		 * @param totalFrames	动画长度
@@ -26,7 +32,7 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */	
-		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,paused:Boolean=false)
+		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,paused:Boolean=false,bounds:Rectangle = null)
 		{
 			if (command is Function)
 				command = new Handler(command);
@@ -34,6 +40,7 @@ package ghostcat.display.movieclip
 			this.command = command;
 			this._totalFrames = totalFrames;
 			this._labels = labels ? labels : [];
+			this.bounds = bounds;
 			
 			super(new Sprite(),true,paused);
 			

@@ -20,7 +20,7 @@ package ghostcat.display.movieclip
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class GBitmapMovieClip extends GScriptMovieClip implements IBitmapDataDrawer
+	public class GBitmapMovieClip extends GMovieClipBase implements IBitmapDataDrawer
 	{
 		/**
 		 * 位图数组
@@ -51,10 +51,10 @@ package ghostcat.display.movieclip
 				bitmaps = [];
 			
 			this.bitmaps = bitmaps;
+			this.labels = labels;
 			
-			super(changeContent,0,labels,paused);
+			super(new Bitmap(),true,paused);
 			
-			setContent(new Bitmap());
 			if (bitmaps && bitmaps.length > 0)
 				(content as Bitmap).bitmapData = bitmaps[0];
 			
@@ -68,9 +68,22 @@ package ghostcat.display.movieclip
 			super.init();
 		}
 		
-		protected function changeContent(v:GScriptMovieClip):void
+		/** @inheritDoc*/
+		public override function set currentFrame(frame:int):void
 		{
-			(content as Bitmap).bitmapData = bitmaps[v.currentFrame - 1];
+			if (frame < 1)
+				frame = 1;
+			if (frame > totalFrames)
+				frame = totalFrames;
+			
+			if (_currentFrame == frame)
+				return;
+			
+			_currentFrame = frame;
+			
+			(content as Bitmap).bitmapData = bitmaps[frame - 1];
+				
+			super.currentFrame = frame;
 		}
 		
 		/** @inheritDoc*/
@@ -78,6 +91,12 @@ package ghostcat.display.movieclip
         {
         	return bitmaps.length;
         }
+		
+		/** @inheritDoc*/
+		public function set labels(v:Array):void
+		{
+			_labels = v;
+		}
         
         /**
          * 回收位图资源 
