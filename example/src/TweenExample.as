@@ -36,7 +36,7 @@ package
 			sp = DisplayParse.createSprite([new GraphicsFill(0xFFFFFF),new GraphicsRect(0,0,100,100,10)])
 			addChild(sp);
 			
-			GAlert.show("点击开始")
+			GAlert.commit("点击开始")
 			new FunctionOper(start).commit();
 		}
 		public function start():void
@@ -50,15 +50,10 @@ package
 			f.applyFilter(sp);
 			
 			//利用Operation机制实现的顺序以及循环Tween
-			(Util.createObject(DelayOper,{timeout:2000}) as DelayOper).commit();
-			
-			GAlert.show("可以在Tween效果中插入其他的Oper，例如这个对话框。\n点击确认则继续播放下面的循环Tween")
+			new DelayOper(2000).commit();
+			GAlert.commit("可以在Tween效果中插入其他的Oper，例如这个对话框。\n点击确认则继续播放下面的循环Tween")
 			
 			new RepeatOper([new TweenOper(f,1000,{blurX:20,blurY:20}),new TweenOper(f,1000,{blurX:0,blurY:0})]).commit();
-			
-			
-			
-			
 			
 			TweenUtil.update();//手动更新缓动，主要为了处理倒放时第一帧的空位问题
 		}

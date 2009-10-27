@@ -17,7 +17,7 @@ package ghostcat.display.movieclip.maskmovie
 		public var color:uint;
 		public var startAlpha:Number;
 		public var endAlpha:Number;
-		public function AlphaMaskHandler(color:int = 0xFFFFFF,startAlpha:Number = 0.0,endAlpha:Number = 1.0)
+		public function AlphaMaskHandler(color:int = 0xFFFFFF,startAlpha:Number = 1.0,endAlpha:Number = 0.0)
 		{
 			this.color = color;
 			this.startAlpha = startAlpha;
@@ -34,7 +34,10 @@ package ghostcat.display.movieclip.maskmovie
 			var bounds:Rectangle = mc.bounds;
 			
 			graphics.clear();
-			graphics.beginFill(color,startAlpha + (endAlpha - startAlpha) / mc.totalFrames * mc.currentFrame);
+			var alpha:Number = startAlpha + (endAlpha - startAlpha) / mc.totalFrames * mc.currentFrame;
+			if (alpha == 0.0)
+				alpha = 0.01;//完全透明时Mask会失效
+			graphics.beginFill(color,alpha);
 			graphics.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
 			graphics.endFill();
 		}

@@ -101,7 +101,8 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y).add(offest));
+			var p:Point = new Point(x,y).add(offest);
+			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
 		}
 		
 		/** @inheritDoc*/

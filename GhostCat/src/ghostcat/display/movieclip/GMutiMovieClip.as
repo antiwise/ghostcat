@@ -31,7 +31,7 @@ package ghostcat.display.movieclip
 			
 			this.displayObjects = displayObjects;
 			
-			super(changeContent,0,labels,paused);
+			super(changeContent,0,labels,null,paused);
 			if (displayObjects && displayObjects.length > 0)
 				setContent(displayObjects[0]);
 		}

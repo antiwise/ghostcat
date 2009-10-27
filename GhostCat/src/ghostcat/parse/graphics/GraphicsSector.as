@@ -15,9 +15,13 @@ package ghostcat.parse.graphics
 		public var x:Number;
 		public var y:Number;
 		/**
-		 * 半径 
+		 * x轴半径 
 		 */
-		public var radius:Number;
+		public var wradius:Number;
+		/**
+		 * y轴半径 
+		 */
+		public var hradius:Number;
 		/**
 		 * 起始角度(0-360)
 		 */
@@ -27,11 +31,12 @@ package ghostcat.parse.graphics
 		 */
 		public var toAngle:Number;
 		
-		public function GraphicsSector(x:Number,y:Number,radius:Number,fromAngle:Number = 0,toAngle:Number = 360)
+		public function GraphicsSector(x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number = 0,toAngle:Number = 360)
 		{
 			this.x = x;
 			this.y = y;
-			this.radius = radius;
+			this.wradius = wradius;
+			this.hradius = hradius;
 			this.fromAngle = fromAngle;
 			this.toAngle = toAngle;
 		}
@@ -40,7 +45,7 @@ package ghostcat.parse.graphics
 		{
 			super.parseGraphics(target);
 			
-			GraphicsUtil.drawSector(target,x,y,radius,fromAngle,toAngle);
+			GraphicsUtil.drawSector(target,x,y,wradius,hradius,fromAngle,toAngle);
 		}
 	}
 }
