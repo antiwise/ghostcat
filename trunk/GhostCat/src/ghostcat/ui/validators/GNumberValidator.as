@@ -4,6 +4,7 @@ package ghostcat.ui.validators
 	import flash.geom.Point;
 	
 	import ghostcat.text.RegExpUtil;
+	import ghostcat.ui.layout.Padding;
 	
 	/**
 	 * 数字验证器 
@@ -111,13 +112,13 @@ package ghostcat.ui.validators
 		}
 			
 
-		public function GNumberValidator(skin:*=null, source:Object=null, property:String=null, minValue:Number = NaN, maxValue:Number = NaN, precision:Number= NaN, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GNumberValidator(skin:*=null, source:Object=null, property:String=null, minValue:Number = NaN, maxValue:Number = NaN, precision:Number= NaN, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
 			this.minValue = minValue;
 			this.maxValue = maxValue;
 			this.precision = precision;
 			
-			super(skin, source, property, replace, separateTextField, textPos);
+			super(skin, source, property, replace, separateTextField, textPadding);
 		}
 		/** @inheritDoc*/
 		protected override function triggerHandler(event:Event) : void
@@ -140,7 +141,7 @@ package ghostcat.ui.validators
 				this.data = exceedsMaxError;
 				return;
 			}
-			if (!isNaN(precision) && !RegExpUtil.isNumber(v,precision))
+			if (!isNaN(precision) && !RegExpUtil.isNumber(v.toString(),precision))
 				this.data = precisionError;
 				
 		}
