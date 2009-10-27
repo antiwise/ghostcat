@@ -4,6 +4,7 @@ package ghostcat.ui.validators
 	import flash.geom.Point;
 	
 	import ghostcat.text.TextUtil;
+	import ghostcat.ui.layout.Padding;
 	
 	/**
 	 * 字符串验证器 
@@ -67,12 +68,12 @@ package ghostcat.ui.validators
 		}
 
 		
-		public function GStringValidator(skin:*=null, source:Object=null, property:String=null, minLength:Number = NaN, maxLength:Number = NaN, replace:Boolean=true, separateTextField:Boolean=false, textPos:Point=null)
+		public function GStringValidator(skin:*=null, source:Object=null, property:String=null, minLength:Number = NaN, maxLength:Number = NaN, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
 			this.minLength = minLength;
 			this.maxLength = maxLength;
 			
-			super(skin, source, property, replace, separateTextField, textPos);
+			super(skin, source, property, replace, separateTextField, textPadding);
 		}
 		/** @inheritDoc*/
 		protected override function triggerHandler(event:Event) : void
