@@ -125,7 +125,8 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,bitmapData,getGlobalPosition().add(offest));
+			var p:Point = getGlobalPosition().add(offest);
+			GraphicsUtil.drawBitmpData(target,bitmapData,p.x,p.y);
 			
 			var children:Array = this.children;
 			if (children)

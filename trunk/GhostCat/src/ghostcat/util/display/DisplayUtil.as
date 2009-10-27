@@ -1,7 +1,10 @@
 package ghostcat.util.display
 {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -54,7 +57,8 @@ package ghostcat.util.display
             while (container.numChildren) 
                 container.removeChildAt(0);
         }
-        /**
+		
+		/**
          * 将显示对象移至顶端
          * @param displayObj	目标
          * 

@@ -46,6 +46,9 @@ package ghostcat.display.transition
 			displayObj.blendMode = BlendMode.LAYER;
 			displayObj.addChild(bitmap);
 			
+			maskMovieClip.blendMode = BlendMode.ALPHA;
+			displayObj.addChild(maskMovieClip);
+			
 			container.addChild(displayObj);
 			
 			return super.createTo(container);
@@ -53,7 +56,7 @@ package ghostcat.display.transition
 		
 		public function TransitionMaskLayer(switchHandler:*,target:DisplayObject,maskMovieClip:*,maskLabel:String = null, fadeOut:int = 1000, wait:Boolean=false)
 		{
-			var bitmap:Bitmap = new DrawParse(target).createBitmap();
+			this.bitmap = new DrawParse(target).createBitmap();
 			
 			var fadeOutOper:Oper;
 			var waitOper:Oper;
@@ -66,7 +69,6 @@ package ghostcat.display.transition
 				Debug.error("maskMovieClip参数必须是MovieClip,GMovieClipBase之一")
 					
 			this.maskMovieClip = maskMovieClip;
-			this.maskMovieClip.blendMode = BlendMode.ALPHA;
 			
 			if (fadeOut)
 				fadeOutOper = new MovieOper(maskMovieClip,maskLabel);

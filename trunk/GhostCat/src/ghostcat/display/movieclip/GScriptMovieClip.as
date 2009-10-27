@@ -32,17 +32,17 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */	
-		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,paused:Boolean=false,bounds:Rectangle = null)
+		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,bounds:Rectangle = null,paused:Boolean=false)
 		{
 			if (command is Function)
 				command = new Handler(command);
+			
+			super(new Sprite(),true,paused);
 			
 			this.command = command;
 			this._totalFrames = totalFrames;
 			this._labels = labels ? labels : [];
 			this.bounds = bounds;
-			
-			super(new Sprite(),true,paused);
 			
 			reset();
 		}

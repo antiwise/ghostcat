@@ -80,6 +80,11 @@ package ghostcat.display.movieclip
 		 */
 		public var linkMovieClips:Array;
 		
+		/**
+		 * 是否在动画结束后暂停 
+		 */
+		public var playOnce:Boolean = true;
+		
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			AbstractUtil.preventConstructor(this,GMovieClipBase);
@@ -139,6 +144,16 @@ package ghostcat.display.movieclip
         }
 		
 		/**
+		 * 设置循环次数 
+		 * @param loop
+		 * 
+		 */
+		public function setLoop(loop:int):void
+		{
+			this.numLoops = loop;
+		}
+		
+		/**
 		 * 设置当前动画 
 		 * @param labelName		动画名称
 		 * @param repeat		动画循环次数，设为-1为无限循环
@@ -172,16 +187,6 @@ package ghostcat.display.movieclip
 				e = new MovieEvent(MovieEvent.MOVIE_ERROR);
 				e.labelName = labelName;
 				dispatchEvent(e);
-				
-//				if (nextLabels.length > 0)
-//				{
-//					setLabel(nextLabels[0][0], nextLabels[0][1]);
-//					nextLabels.splice(0, 1);
-//				}
-//				else 
-//				{
-//					dispatchEvent(Util.createObject(new MovieEvent(MovieEvent.MOVIE_EMPTY),{labelName:curLabelName}));
-//				}
         	}
         }
         
@@ -214,7 +219,7 @@ package ghostcat.display.movieclip
         public function reset():void
         {
 			clearQueue();
-			if (labels && labels.length>0)
+			if (labels && labels.length > 0)
 				setLabel(labels[0].name,-1);
         }
         

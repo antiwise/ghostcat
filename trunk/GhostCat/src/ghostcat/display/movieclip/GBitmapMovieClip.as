@@ -50,10 +50,10 @@ package ghostcat.display.movieclip
 			if (!bitmaps)
 				bitmaps = [];
 			
+			super(new Bitmap(),true,paused);
+			
 			this.bitmaps = bitmaps;
 			this.labels = labels;
-			
-			super(new Bitmap(),true,paused);
 			
 			if (bitmaps && bitmaps.length > 0)
 				(content as Bitmap).bitmapData = bitmaps[0];
@@ -165,7 +165,8 @@ package ghostcat.display.movieclip
 		/** @inheritDoc*/
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
-			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,new Point(x,y).add(offest));
+			var p:Point = new Point(x,y).add(offest);
+			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
 		}
 		
 		/** @inheritDoc*/

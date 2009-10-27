@@ -93,7 +93,7 @@
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
     <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
-    <classEntry path="ghostcat.display.transition.TransitionFadeLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionLayerBase"/>
     <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
