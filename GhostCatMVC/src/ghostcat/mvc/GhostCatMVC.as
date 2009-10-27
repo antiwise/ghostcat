@@ -91,37 +91,37 @@ package ghostcat.mvc
 		
 		/**
 		 * 获取一个M的实例 
-		 * @param v
+		 * @param target
 		 * @return 
 		 * 
 		 */
-		public function getM(v:*):*
+		public function getM(target:*):*
 		{
-			var o:InsCotainer = getIns(v,"m");
+			var o:InsCotainer = getIns(target,"m");
 			return o ? o.getIns() : null;
 		}
 		
 		/**
 		 * 获取一个V的实例 
-		 * @param v
+		 * @param target
 		 * @return 
 		 * 
 		 */
-		public function getV(v:*):*
+		public function getV(target:*):*
 		{
-			var o:InsCotainer = getIns(v,"v");
+			var o:InsCotainer = getIns(target,"v");
 			return o ? o.getIns() : null;
 		}
 		
 		/**
 		 * 获取一个C的实例 
-		 * @param v
+		 * @param target
 		 * @return 
 		 * 
 		 */
-		public function getC(v:*):*
+		public function getC(target:*):*
 		{
-			var o:InsCotainer = getIns(v,"c");
+			var o:InsCotainer = getIns(target,"c");
 			return o ? o.getIns() : null;
 		}
 		
@@ -131,11 +131,11 @@ package ghostcat.mvc
 		 * @param type	目标类型（m,v,c）为空则不做限制
 		 * 
 		 */
-		public function register(v:*):InsCotainer
+		public function register(target:*):InsCotainer
 		{
-			var o:InsCotainer = getIns(v);
+			var o:InsCotainer = getIns(target);
 			if (o)
-				o.ins = v;
+				o.ins = target;
 			return o;
 		}
 		
@@ -145,9 +145,9 @@ package ghostcat.mvc
 		 * @param type	目标类型（m,v,c）为空则不做限制
 		 * 
 		 */
-		public function unregister(v:*):InsCotainer
+		public function unregister(target:*):InsCotainer
 		{
-			var o:InsCotainer = getIns(v);
+			var o:InsCotainer = getIns(target);
 			if (o)
 				o.ins = null;
 			return o;
@@ -183,7 +183,7 @@ package ghostcat.mvc
 		 * @param type	目标类型（m,v,c）为空则不做限制
 		 * 
 		 */
-		public function recive(e:String, handler:Function, target:* = null, type:String = null):void
+		public function receive(e:String, handler:Function, target:* = null, type:String = null):void
 		{
 			if (target)
 			{
@@ -228,7 +228,7 @@ package ghostcat.mvc
 		 * @return 
 		 * 
 		 */
-		public function bindProperty(site:Object,prop:String,target:Object,type:String,chain:Object):ChangeWatcher
+		public function bindProperty(site:Object,prop:String,target:*,type:String,chain:Object):ChangeWatcher
 		{
 			var o:InsCotainer = getIns(target ? target : site,type);
 			var host:Object = o.getIns();
@@ -244,7 +244,7 @@ package ghostcat.mvc
 		 * @return 
 		 * 
 		 */
-		public function bindSetter(setter:Function,target:Object,type:String,chain:Object):ChangeWatcher
+		public function bindSetter(setter:Function,target:*,type:String,chain:Object):ChangeWatcher
 		{
 			var o:InsCotainer = getIns(target,type);
 			var host:Object = o.getIns();
