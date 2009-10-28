@@ -109,16 +109,21 @@ package ghostcat.debug
 		 * @param obj
 		 * 
 		 */
-		public static function traceObject(channel:String,obj:Object):void
+		public static function traceObject(channel:String,obj:Object,...filters):void
 		{
-			var result:String = "";
-			for (var key:* in obj)
+			var result:String = getQualifiedClassName(obj);
+			var key:*;
+			if (filters && filters.length > 0)
 			{
-				if (result.length > 0)
-					result += ", ";
-				result += key + ":" + obj[key];
+				for each (key in filters)
+					result += " " + key + "=" + obj[key];
 			}
-			trace(channel,"{"+result+"}");
+			else
+			{
+				for (key in obj)
+					result += " " + key + "=" + obj[key];
+			}
+			trace(channel,"["+result+"]");
 		}
 		
 		private static function getHeader(channel:String):String
