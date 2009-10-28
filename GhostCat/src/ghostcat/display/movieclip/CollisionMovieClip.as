@@ -9,7 +9,7 @@ package ghostcat.display.movieclip
 	/**
 	 * 支持不规则碰撞的动画显示对象
 	 * 
-	 * @author Administrator
+	 * @author flashyiyi
 	 * 
 	 */
 	public class CollisionMovieClip extends GMovieClip implements ICollisionClient

@@ -32,7 +32,7 @@ package ghostcat.display.movieclip
 		 * @param paused	是否暂停
 		 * 
 		 */	
-		public function GScriptMovieClip(command:*,totalFrames:int,labels:Array=null,bounds:Rectangle = null,paused:Boolean=false)
+		public function GScriptMovieClip(command:*,bounds:Rectangle,totalFrames:int = 30,labels:Array=null,paused:Boolean=false)
 		{
 			if (command is Function)
 				command = new Handler(command);
@@ -63,17 +63,17 @@ package ghostcat.display.movieclip
 			
 			super.currentFrame = frame;
 		}
-        
+		/** @inheritDoc*/
         public function set totalFrames(v:int):void
         {
         	_totalFrames = v;
         }
-        
+		/** @inheritDoc*/
 		public function set labels(v:Array):void
         {
         	_labels = v;
         }
-		
+		/** @inheritDoc*/
 		public override function destory():void
 		{
 			if (destoryed)

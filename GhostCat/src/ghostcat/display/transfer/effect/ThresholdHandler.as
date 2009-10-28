@@ -15,7 +15,7 @@ package ghostcat.display.transfer.effect
 	{
 		public function ThresholdHandler():void
 		{
-			super(null);
+			super();
 		}
 		
 		public override function call(...params):*

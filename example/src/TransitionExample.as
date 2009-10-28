@@ -1,28 +1,31 @@
 package
 {
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GScriptMovieClip;
-	import ghostcat.display.movieclip.maskmovie.AlphaMaskHandler;
 	import ghostcat.display.transfer.GBitmapEffect;
 	import ghostcat.display.transfer.effect.DissolveHandler;
 	import ghostcat.display.transfer.effect.MosaicHandler;
+	import ghostcat.display.transfer.effect.SegmentHandler;
 	import ghostcat.display.transfer.effect.ThresholdHandler;
 	import ghostcat.display.transition.TransitionCacheLayer;
 	import ghostcat.display.transition.TransitionLayerBase;
 	import ghostcat.display.transition.TransitionMaskLayer;
 	import ghostcat.display.transition.TransitionObjectLayer;
 	import ghostcat.display.transition.TransitionTransferLayer;
+	import ghostcat.display.transition.maskmovie.DissolveMaskHandler;
+	import ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler;
+	import ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler;
+	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
 	import ghostcat.display.viewport.BackgroundLayer;
 	import ghostcat.ui.controls.GImage;
-	import ghostcat.util.easing.Back;
 	import ghostcat.util.easing.Circ;
-	import ghostcat.util.easing.Elastic;
 	
-	[SWF(width="600",height="450",backgroundColor="0xFFFFFF")]
+	[SWF(width="600",height="450",backgroundColor="0xFFFFFF",frameRate="60")]
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	/**
 	 * 
@@ -53,36 +56,46 @@ package
 		
 		protected override function updateDisplayList() : void
 		{
-			var v:int = 6;
+			var v:int =  Math.random() * 11;
 			switch (v)
 			{
-				case 0:
+				case 0://差异值渐变
 					new TransitionTransferLayer(f,new GBitmapEffect(s,new ThresholdHandler())).createTo(this);
 					break;
-				case 1:
+				case 1://溶解渐变
 					new TransitionTransferLayer(f,new GBitmapEffect(s,new DissolveHandler(getTimer()))).createTo(this);
 					break;
-				case 2:
+				case 2://切割渐变
+					new TransitionTransferLayer(f,new GBitmapEffect(s,new SegmentHandler(int(Math.random() * 2)))).createTo(this);
+					break;
+				case 3://马赛克渐变
 					new TransitionObjectLayer(f,new GBitmapEffect(s,new MosaicHandler()),s,500,500).createTo(this);
 					break;
-				case 3:
+				case 4://循环图元渐变
 					var r:BackgroundLayer = new BackgroundLayer(600,450);
-					r.addLayer(new TestRepeater(),1,null,true);
+					var mat:Matrix = new Matrix();
+					mat.scale(0.5,0.5);
+					r.addLayer((step % 2 == 0)? new p1() : new p2(),mat);
 					r.autoMove = new Point(50,50);
-					new TransitionObjectLayer(f,r).createTo(this);
+					new TransitionObjectLayer(f,r,null,500,500).createTo(this);
 					break;
-				case 4:
+				case 5://过渡渐变
 					new TransitionCacheLayer(f,s).createTo(this);
 					break;
-				case 5:
-					var ps:Array = [new Point(600,450),new Point(600,-450),new Point(-600,450),new Point(-600,-450)];
-					var p:Point = p[int(Math.random() * 4)];
-					new TransitionCacheLayer(f,s,1000,{x:p.x,y:p.y,ease:Circ.easeIn}).createTo(this);
+				case 6://滑动渐变
+					new TransitionCacheLayer(f,s,1000,{x:600 * ((Math.random() < 0.5)? 1 : -1),y:450 * ((Math.random() < 0.5)? 1 : -1),ease:Circ.easeIn}).createTo(this);
 					break;
-				case 6:
-					var m:GScriptMovieClip = new GScriptMovieClip(new AlphaMaskHandler(0xFFFFFF),15,null,new Rectangle(0,0,600,450));
-					m.setLoop(1);
-					new TransitionMaskLayer(f,s,m).createTo(this);
+				case 7://方格渐变
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new DissolveMaskHandler(20),new Rectangle(0,0,600,450))).createTo(this);
+					break;
+				case 8://百叶窗渐变
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterMaskHandler(),new Rectangle(0,0,600,450))).createTo(this);
+					break;
+				case 9://百叶窗打开渐变
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterDirectMaskHandler(50,Math.random() * 4),new Rectangle(0,0,600,450))).createTo(this);
+					break;
+				case 10://方向性过度渐变
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new GradientAlphaMaskHandler(Math.random() * 360),new Rectangle(0,0,600,450))).createTo(this);
 					break;
 			}
 		}

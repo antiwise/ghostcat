@@ -68,7 +68,7 @@ package ghostcat.display.transition
 			else
 				Debug.error("maskMovieClip参数必须是MovieClip,GMovieClipBase之一")
 					
-			this.maskMovieClip = maskMovieClip;
+			this.maskMovieClip.setLoop(1);//只播放一次
 			
 			if (fadeOut)
 				fadeOutOper = new MovieOper(maskMovieClip,maskLabel);

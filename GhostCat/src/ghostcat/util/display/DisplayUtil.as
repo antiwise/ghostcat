@@ -3,8 +3,6 @@ package ghostcat.util.display
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Shape;
-	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -19,7 +17,6 @@ package ghostcat.util.display
 	{
 	    /**
          * 检测对象是否在屏幕中
-         * 
          * @param displayObj	显示对象
          * 
          */
@@ -81,6 +78,22 @@ package ghostcat.util.display
         {
         	displayObj.mouseChildren = displayObj.mouseEnabled = v;
         }
+		
+		/**
+		 * 复制显示对象
+		 * @param v
+		 * 
+		 */
+		public static function cloneDisplayObject(v:DisplayObject):DisplayObject
+		{
+			var result:DisplayObject = v["constructor"]();
+			result.filters = result.filters;
+			result.transform.colorTransform = v.transform.colorTransform;
+			result.transform.matrix = v.transform.matrix;
+			if (result is Bitmap)
+				(result as Bitmap).bitmapData = (v as Bitmap).bitmapData;
+			return result;
+		}
         
         /**
          * 获取舞台Rotation

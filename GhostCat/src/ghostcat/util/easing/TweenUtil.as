@@ -252,7 +252,9 @@ package ghostcat.util.easing
 			if (this.invert && this.renderOnStart)
 			{	
 				for (key in this.toValues)
+				{
 					updateValue(this.target,key,this.toValues[key])
+				}
 				this.renderOnStart = false;
 			}
 			

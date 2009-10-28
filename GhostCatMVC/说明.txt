@@ -1,4 +1,5 @@
 ﻿这是一个GhostCat的衍生品，可以导入下面的SWC独立使用。
+http://code.google.com/p/ghostcat/source/browse/trunk/GhostCatMVC/bin/GhostCatMVC.swc
 
 GhostCatMVC的使用成本非常低，它基本上只完成了通信方面的辅助，并没有任何强制性的措施。
 使用方法很简单：首先，你需要为Model,Command,View分别建立不同的类（起码的……）
@@ -35,5 +36,7 @@ View默认是none模式，因此如果希望外部能够访问到它，就一定
 
 
 下面是一个示例文件：创建了两个文本框，用两种不同的方法让Command将当前值+1并回馈到View上。
+http://ghostcat.googlecode.com/files/GhostCatMVCExample.rar
+
 
 GhostCat项目地址：http://ghostcat.googlecode.com/

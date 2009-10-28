@@ -15,7 +15,7 @@ package ghostcat.display.transfer.effect
 	{
 		public function MosaicHandler():void
 		{
-			super(null);
+			super();
 		}
 		
 		/** @inheritDoc*/
