@@ -13,9 +13,11 @@ package ghostcat.display.transfer.effect
 	 */
 	public class ThresholdHandler extends Handler
 	{
-		public function ThresholdHandler():void
+		public var channel:int;
+		public function ThresholdHandler(channel:uint = 0xFFFFFF):void
 		{
 			super();
+			this.channel = channel;
 		}
 		
 		public override function call(...params):*
@@ -24,7 +26,7 @@ package ghostcat.display.transfer.effect
 			var bitmapData:BitmapData = params[1];
 			var deep:Number = params[2];
 			
-			bitmapData.threshold(normalBitmapData, normalBitmapData.rect, new Point(), ">", (1 - deep) * 255, 0, 255, true);
+			bitmapData.threshold(normalBitmapData, normalBitmapData.rect, new Point(), ">", (1 - deep) * channel, 0, channel, true);
 		}
 	}
 }

@@ -1,12 +1,12 @@
 package
 {
-	import flash.geom.Rectangle;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.movieclip.GScriptMovieClip;
-	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
+	import ghostcat.util.display.BitmapUtil;
 
-	[SWF(width="600",height="450",backgroundColor="0xFFFFFF")]
+	[SWF(width="600",height="450")]
 	/**
 	 * 
 	 * @author flashyiyi
@@ -14,12 +14,17 @@ package
 	 */
 	public class TestExample extends GBase
 	{
+		[Embed(source="p1.jpg")]
+		public var p1:Class;
+		[Embed(source="p2.jpg")]
+		public var p2:Class;
+		
+		public var bitmap:Bitmap = new p1();
+		
 		public function TestExample()
 		{
-			
-			var v:GScriptMovieClip = new GScriptMovieClip(new ShutterMaskHandler(),25,null,new Rectangle(0,0,600,450))
-			v.setLoop(1);
-			addChild(v);
+			var bd:BitmapData = bitmap.bitmapData;
+			addChild(new Bitmap(BitmapUtil.getTransparentBitmapData(bd)));
 		}
 	}
 }

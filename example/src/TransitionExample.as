@@ -56,7 +56,7 @@ package
 		
 		protected override function updateDisplayList() : void
 		{
-			var v:int =  Math.random() * 11;
+			var v:int =  0;
 			switch (v)
 			{
 				case 0://差异值渐变

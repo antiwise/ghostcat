@@ -5,6 +5,7 @@ package ghostcat.util.display
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	/**
@@ -87,7 +88,7 @@ package ghostcat.util.display
 		/**
 		 * 获得一个位图的平均颜色
 		 * 
-		 * @param source
+		 * @param source	位图源
 		 * @return 
 		 * 
 		 */
@@ -100,6 +101,20 @@ package ghostcat.util.display
 			var c:uint = bitmap.getPixel32(0,0);
 			bitmap.dispose();
 			return c;
+		}
+		
+		/**
+		 * 将一个不透明的位图设置某个透明色并返回透明位图
+		 * 
+		 * @param source	位图源
+		 * @param c	32位颜色值
+		 * 
+		 */
+		public static function getTransparentBitmapData(source:BitmapData,transparentColor:uint=0xFFFFFFFF):BitmapData
+		{
+			var result:BitmapData = new BitmapData(source.width,source.height,true,0);
+			result.threshold(source,source.rect,new Point(),"==",transparentColor,0,0xFFFFFFFF,true);
+			return result;
 		}
 		
 		/**
