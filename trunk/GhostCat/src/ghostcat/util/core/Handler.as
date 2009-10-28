@@ -21,7 +21,7 @@ package ghostcat.util.core
 		 * @param caller	调用者
 		 * 
 		 */
-		public function Handler(handler:Function,para:Array=null,caller:*=null)
+		public function Handler(handler:Function=null,para:Array=null,caller:*=null)
 		{
 			this.handler = handler;
 			this.para = para;

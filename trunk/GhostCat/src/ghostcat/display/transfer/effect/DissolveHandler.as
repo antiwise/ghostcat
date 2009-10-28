@@ -16,7 +16,7 @@ package ghostcat.display.transfer.effect
 		/**
 		 * 随机因子 
 		 */
-		public var randSeed:int = new Date().getTime();
+		public var randSeed:int;
 		
 		public function DissolveHandler(randSeed:int = 0):void
 		{
@@ -24,7 +24,7 @@ package ghostcat.display.transfer.effect
 				randSeed = new Date().getTime();
 			this.randSeed = randSeed;
 			
-			super(null);
+			super();
 		}
 		
 		/** @inheritDoc*/
