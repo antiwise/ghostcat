@@ -86,38 +86,6 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * 获得一个位图的平均颜色
-		 * 
-		 * @param source	位图源
-		 * @return 
-		 * 
-		 */
-		public static function getAvgColor(source:BitmapData):uint
-		{
-			var m:Matrix = new Matrix();
-			m.scale(1/source.width,1/source.height);
-			var bitmap:BitmapData = new BitmapData(1,1,true,0);
-			bitmap.draw(source,m);
-			var c:uint = bitmap.getPixel32(0,0);
-			bitmap.dispose();
-			return c;
-		}
-		
-		/**
-		 * 将一个不透明的位图设置某个透明色并返回透明位图
-		 * 
-		 * @param source	位图源
-		 * @param c	32位颜色值
-		 * 
-		 */
-		public static function getTransparentBitmapData(source:BitmapData,transparentColor:uint=0xFFFFFFFF):BitmapData
-		{
-			var result:BitmapData = new BitmapData(source.width,source.height,true,0);
-			result.threshold(source,source.rect,new Point(),"==",transparentColor,0,0xFFFFFFFF,true);
-			return result;
-		}
-		
-		/**
 		 * 回收一个数组内所有的BitmapData
 		 *  
 		 * @param bitmapDatas

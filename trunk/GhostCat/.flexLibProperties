@@ -401,6 +401,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
