@@ -27,13 +27,13 @@ package ghostcat.ui
 		{
 			var skin:DisplayObject = target.content;
 			var children:Array = SearchUtil.findChildrenByClass(skin,DisplayObject);
-			var property:Object = ReflectUtil.getPropertyTypeList(target,true);
+			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = 0;i < children.length;i++)
 			{
 				var obj:DisplayObject = children[i] as DisplayObject;
 				var name:String = obj.name;
-				if (property[name])
+				if (types[name])
 				{
 					var ref:ClassFactory;
 					if (params)
@@ -46,10 +46,10 @@ package ghostcat.ui
 								ref = params[name] as ClassFactory;
 						}
 						else if (!limitIn)
-							ref = new ClassFactory(property[name] as Class);
+							ref = new ClassFactory(types[name] as Class);
 					}
 					else
-						ref = new ClassFactory(property[name] as Class)
+						ref = new ClassFactory(types[name] as Class)
 					
 					
 					if (ref)
@@ -100,7 +100,7 @@ package ghostcat.ui
 		}
 		
 		/**
-		 * 销毁子对象
+		 * 销毁子对象（注意，它并不会自动销毁GBitmap对象）
 		 * @param target
 		 * @param all	是否销毁不在属性值里的对象
 		 */
@@ -108,7 +108,7 @@ package ghostcat.ui
 		{
 			var skin:DisplayObject = target.content;
 			var children:Array = SearchUtil.findChildrenByClass(skin,GSprite);
-			var property:Object = ReflectUtil.getPropertyTypeList(target,true);
+			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = 0;i < children.length;i++)
 			{
@@ -116,7 +116,7 @@ package ghostcat.ui
 				if (obj is GSprite)
 				{
 					var name:String = obj.name;
-					if (all || property[name])
+					if (all || types[name])
 						(obj as GSprite).destory();
 				}
 			}

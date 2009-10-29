@@ -92,7 +92,7 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function getPropertyList(obj:*,writeable:Boolean=false):Object
+		public static function getPropertyList(obj:*,onlyWriteable:Boolean=false):Object
 		{
 			var xml:XML;
 			var child:XML;
@@ -104,7 +104,7 @@ package ghostcat.util
 			
 			for each(child in xml..accessor)
 			{
-				if (child.@access=="readonly" && writeable)
+				if (child.@access=="readonly" && onlyWriteable)
 					continue;
 				name = child.@name.toString();
 				if (obj.hasOwnProperty(name))
@@ -146,7 +146,7 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function getPropertyTypeList(obj:*,writeable:Boolean=false):Object
+		public static function getPropertyTypeList(obj:*,onlyWriteable:Boolean=false):Object
 		{
 			var xml:XML;
 			var child:XML;
@@ -158,7 +158,7 @@ package ghostcat.util
 			
 			for each(child in xml..accessor)
 			{
-				if (child.@access=="readonly" && writeable)
+				if (child.@access=="readonly" && onlyWriteable)
 					continue;
 				name = child.@name.toString();
 				if (obj.hasOwnProperty(name))
