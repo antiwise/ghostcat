@@ -15,9 +15,12 @@ package ghostcat.algorithm.bezier
 		protected static const PRECISION : Number = 1e-10;
 
 		private var _start : Point;
-		public var control : Point;
 		private var _end : Point;
-		public var isSegment : Boolean = true;
+		
+		/**
+		 * 控制点 
+		 */
+		public var control : Point;
 
 		/** 
 		 * @param start	起点

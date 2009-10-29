@@ -8,6 +8,7 @@ package ghostcat.display.movieclip
 	import ghostcat.display.GBase;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.Handler;
@@ -30,11 +31,6 @@ package ghostcat.display.movieclip
 		protected var _labels:Array;
 		protected var _currentFrame:int = 1;
 		protected var _totalFrames:int = 1;
-		
-		/**
-		 * 全局默认帧频，为NaN时则取舞台帧频
-		 */
-		public static var defaultFrameRate:Number = NaN;
 		
 		/**
 		 * 保存着所有的帧上函数
@@ -101,8 +97,8 @@ package ghostcat.display.movieclip
 		{
 			if (!isNaN(_frameRate))
 				return 	_frameRate;
-			else if (!isNaN(defaultFrameRate))
-				return defaultFrameRate;
+			else if (!isNaN(Tick.frameRate))
+				return Tick.frameRate;
 			else if (stage)
 				return stage.frameRate;
 			else
