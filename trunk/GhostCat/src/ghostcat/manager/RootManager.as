@@ -10,6 +10,8 @@ package ghostcat.manager
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
+	import ghostcat.util.Tick;
+	
 	/**
 	 * 舞台对象相关扩展。
 	 * 
@@ -60,6 +62,8 @@ package ghostcat.manager
 			_root = root;
 			setMode(mode);
 			setMenuMode(menuMode);
+			
+			Tick.frameRate = root.stage.frameRate;
 		}
 		
 		/**

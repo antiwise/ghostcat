@@ -1,6 +1,7 @@
 package ghostcat.util.display
 {
 	import flash.display.BitmapData;
+	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 
@@ -44,19 +45,19 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * 魔术棒
+		 * 魔术套索
 		 *  
 		 * @param source
 		 * @param x
 		 * @param y
-		 * @param offest	模糊范围
+		 * @param offest	取色容错范围
 		 * @param near	是否连续
-		 * @return 
+		 * @return 返回的是一个白色位图，非透明区域即是选择区域
 		 * 
 		 */
-		public static function magicChoose(source:BitmapData,x:int,y:int,offest:int = 0,near:Boolean = true):BitmapData
+		public static function magicPole(source:BitmapData,x:int,y:int,offest:int = 0,near:Boolean = true):BitmapData
 		{
-			var c:uint = source.getPixel32(0,0);
+			var c:uint = source.getPixel32(x,y);
 			var c1:uint = offestColor(c,-offest);
 			var c2:uint = offestColor(c,offest);
 			var temp:BitmapData = new BitmapData(source.width,source.height,true,0xFFFFFFFF);
@@ -65,15 +66,15 @@ package ghostcat.util.display
 			if (near)
 			{
 				temp.floodFill(x,y,0xFFFF0000);
-				temp.threshold(source,source.rect,new Point(),"!=",0xFFFF0000,0x0);
-				temp.threshold(source,source.rect,new Point(),"==",0xFFFF0000,0xFFFFFFFF);
+				temp.threshold(temp,temp.rect,new Point(),"!=",0xFFFF0000,0x0);
+				temp.colorTransform(temp.rect,new ColorTransform(1,1,1,1,0,255,255));
 			}
 			return temp;
 		}
 		
 		private static function offestColor(rgb:uint, brite:Number):uint
 		{
-			var a:Number = Math.max(Math.min(((rgb >> 24) & 0xFF) + brite, 255), 0);
+			var a:Number = (rgb >> 24) & 0xFF;
 			var r:Number = Math.max(Math.min(((rgb >> 16) & 0xFF) + brite, 255), 0);
 			var g:Number = Math.max(Math.min(((rgb >> 8) & 0xFF) + brite, 255), 0);
 			var b:Number = Math.max(Math.min((rgb & 0xFF) + brite, 255), 0);

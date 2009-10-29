@@ -33,6 +33,11 @@ package ghostcat.util
 		}
 		
 		/**
+		 * 全局默认帧频
+		 */
+		static public var frameRate:Number = NaN;
+		
+		/**
 		 * 速度系数
 		 * 可由此实现慢速播放
 		 *

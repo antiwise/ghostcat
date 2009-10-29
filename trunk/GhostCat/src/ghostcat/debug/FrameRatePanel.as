@@ -1,0 +1,85 @@
+package ghostcat.debug
+{
+	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
+	import ghostcat.display.GBase;
+	import ghostcat.skin.FrameRateSkin;
+	import ghostcat.ui.UIBuilder;
+	import ghostcat.ui.controls.GButton;
+	import ghostcat.ui.controls.GCheckBox;
+	import ghostcat.ui.controls.GHSilder;
+	import ghostcat.ui.controls.GText;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
+	
+	public class FrameRatePanel extends GBase
+	{
+		public static var defaultSkin:ClassFactory = new ClassFactory(FrameRateSkin)
+			
+		public var silder:GHSilder;
+		public var frameRateDisplayText:GText;
+		public var closeButton:GButton;
+		public var checkBox:GCheckBox;
+		public function FrameRatePanel(skin:*=null)
+		{
+			if (!skin)
+				skin = defaultSkin;
+			
+			super(skin);
+			
+			UIBuilder.buildAll(this);
+			
+			silder.addEventListener(Event.CHANGE,silderChangeHandler);
+			silder.minValue = 1;
+			silder.maxValue = 120;
+			
+			checkBox.addEventListener(Event.CHANGE,checkBoxChangeHandler);
+			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
+			
+		}
+		
+		public static function show(target:DisplayObjectContainer):void
+		{
+			var v:FrameRatePanel = new FrameRatePanel();
+			target.addChild(v);
+			Geom.centerIn(v,target);
+		}
+		
+		protected override function init() : void
+		{
+			super.init();
+			
+			silder.value = stage.frameRate;
+		}
+		
+		private function silderChangeHandler(event:Event):void
+		{
+			stage.frameRate = int(silder.value);
+			frameRateDisplayText.text = stage.frameRate.toString();
+		}
+		
+		private function checkBoxChangeHandler(event:Event):void
+		{
+			trace(checkBox.selected)
+		}
+		
+		private function closeButtonClickHandler(event:MouseEvent):void
+		{
+			destory();
+		}
+		
+		public override function destory() : void
+		{
+			if (destoryed)
+				return;
+			
+			silder.removeEventListener(Event.CHANGE,silderChangeHandler);
+			checkBox.removeEventListener(Event.CHANGE,checkBoxChangeHandler);
+			closeButton.removeEventListener(MouseEvent.CLICK,closeButtonClickHandler);
+				
+			super.destory();
+		}
+	}
+}

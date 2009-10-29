@@ -39,7 +39,6 @@
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
     <classEntry path="ghostcat.display.GNoScale"/>
-    <classEntry path="ghostcat.display.GSimpleBase"/>
     <classEntry path="ghostcat.display.GSprite"/>
     <classEntry path="ghostcat.display.ICursorManagerClient"/>
     <classEntry path="ghostcat.display.IData"/>
@@ -75,7 +74,9 @@
     <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="ghostcat.display.movieclip.maskmovie.AlphaMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.DissolveMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.RectMaskHandler"/>
     <classEntry path="ghostcat.display.other.BubbleCreater"/>
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
@@ -92,7 +93,6 @@
     <classEntry path="ghostcat.display.transfer.Skew"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
-    <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
     <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
@@ -101,13 +101,6 @@
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionObjectLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.DissolveMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.RectMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
@@ -349,7 +342,6 @@
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
-    <classEntry path="ghostcat.util.XMLUtil"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
     <classEntry path="ghostcat.util.core.Asyn"/>
     <classEntry path="ghostcat.util.core.CallLater"/>
@@ -394,14 +386,19 @@
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.util.easing.TweenEvent"/>
     <classEntry path="ghostcat.util.easing.TweenUtil"/>
-    <classEntry path="ghostcat.util.encrypt.HackChecker"/>
     <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
+    <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
+    <classEntry path="ghostcat.debug.FrameRatePanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
