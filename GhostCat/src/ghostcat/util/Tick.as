@@ -71,6 +71,5 @@ package ghostcat.util
 			}
 			prevTime = nextTime;
 		}
-		
 	}
 }

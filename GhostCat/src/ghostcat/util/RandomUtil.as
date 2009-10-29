@@ -137,6 +137,30 @@ package ghostcat.util
 			}
 			return arr;
 		}
+		
+		/**
+		 * 另一种切分数字的方式，对数量无限制 
+		 * @param amount
+		 * @param n
+		 * @return 
+		 * 
+		 */
+		public static function randomSeparate2(amount:Number,n:int):Array
+		{
+			var r:Array = [];
+			var c:Number = 0;
+			for (var i:int = 0;i < n;i++)
+			{
+				var v:Number = Math.random();
+				r.push(v);
+				c += v;
+			}
+			
+			for (i = 0;i < n;i++)
+				r[i] = r[i] * amount / c;
+			
+			return r;
+		}
 	
 	}
 }
