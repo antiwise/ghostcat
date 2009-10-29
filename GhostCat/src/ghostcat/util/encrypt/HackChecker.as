@@ -13,6 +13,11 @@ package ghostcat.util.encrypt
 		private static var prevDate:Number;//上次记录的时间
 		private static var prevTime:int;//上次记录的Time
 		
+		/**
+		 * 验证出错函数 
+		 */
+		public static var hackHandler:Function = defaultHackHandler;
+		
 		public static function enabledCheckSpeedUp(interval:int = 1000):void
 		{
 			var nextTime:int = getTimer();
@@ -31,10 +36,15 @@ package ghostcat.util.encrypt
 			var interval:int = nextTime - prevTime;
 			
 			if (!isNaN(prevDate) && interval - (newDate - prevDate) > 20)
-				throw new Error("时间验证出错，请不要使用作弊工具（"+(newDate - prevDate).toString()+"-"+interval.toString()+")");
+				hackHandler();
 			
 			prevDate = newDate;
 			prevTime = nextTime;
+		}
+		
+		public static function defaultHackHandler():void
+		{
+			throw new Error("请不要使用作弊工具!");
 		}
 	}
 }
