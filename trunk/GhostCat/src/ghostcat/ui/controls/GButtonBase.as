@@ -255,7 +255,8 @@ package ghostcat.ui.controls
 		protected function addEvents():void
 		{
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			if (stage)
+				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			addEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			addEventListener(MouseEvent.CLICK,clickHandler);
@@ -268,7 +269,8 @@ package ghostcat.ui.controls
 		protected function removeEvents():void
 		{
 			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			if (stage)
+				stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			removeEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			removeEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			removeEventListener(MouseEvent.CLICK,clickHandler);

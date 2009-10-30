@@ -14,6 +14,7 @@ package ghostcat.debug
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GHSilder;
 	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.AbsoluteLayout;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
@@ -57,7 +58,7 @@ package ghostcat.debug
 		public var closeButton:GButton;
 		public var checkBox:GCheckBox;
 		
-		
+		public var layout:AbsoluteLayout;
 		
 		public function FrameRatePanel(skin:*=null)
 		{
@@ -90,6 +91,9 @@ package ghostcat.debug
 			super.init();
 			
 			silder.value = stage.frameRate;
+			
+			layout = new AbsoluteLayout(stage,true);
+			layout.setCenter(this,0,0);
 		}
 		
 		private function silderChangeHandler(event:Event):void
@@ -113,10 +117,14 @@ package ghostcat.debug
 			if (destoryed)
 				return;
 			
+			layout.destory();
+			
 			silder.removeEventListener(Event.CHANGE,silderChangeHandler);
 			checkBox.removeEventListener(Event.CHANGE,checkBoxChangeHandler);
 			closeButton.removeEventListener(MouseEvent.CLICK,closeButtonClickHandler);
-				
+			
+			UIBuilder.destory(this);
+			
 			super.destory();
 		}
 	}
