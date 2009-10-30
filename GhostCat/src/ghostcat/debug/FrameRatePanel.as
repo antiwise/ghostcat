@@ -33,6 +33,9 @@ package ghostcat.debug
 		private static var oldFrameRate:int = 0;
 		private static function inactiveHandler(event:TimerEvent):void
 		{
+			if (!checkInactive)
+				return;
+				
 			var ins:InputManager = InputManager.instance;
 			if (!ins)
 				return;
