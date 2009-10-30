@@ -18,108 +18,128 @@ package ghostcat.util.display
 	 */
 	public class HitTest
 	{
-		/**
-		 * 不规则物品碰撞检测
-		 * 
-		 * @param target1	物品1
-		 * @param target2	物品2
-		 * @param accurracy	检测精度
-		 * @return 
-		 * 
-		 */
-		public static function complexHitTestObject(target1:DisplayObject, target2:DisplayObject, accurracy:Number = 1):Boolean
+		public static var tileSize:int=20;
+		public static function complexHitTestObject(target1:DisplayObject, target2:DisplayObject):Boolean
 		{
-			return complexIntersectionRectangle(target1,target2,accurracy).width != 0;
-		}
-		                
-		/**
-		 * 获得两个不规则物品的交叠矩形
-		 *  
-		 * @param target1	物品1
-		 * @param target2	物品2
-		 * @param accurracy	检测精度
-		 * @return 
-		 * 
-		 */
-		public static function complexIntersectionRectangle(target1:DisplayObject,target2:DisplayObject, accurracy:Number = 1):Rectangle
-		{                     
-			if (accurracy <= 0) 
-				Debug.error("精度必须大于0");
-			
-			if (!target1.hitTestObject(target2)) 
+			var scaleX:Number = (target1.width < target2.width ? target1.width : target2.width) / tileSize 
+			var scaleY:Number = (target1.height < target2.height ? target1.height : target2.height) / tileSize 
+			scaleX = scaleX < 1 ? 1 : scaleX
+			scaleY = scaleY < 1 ? 1 : scaleY
+			var pt:Point=new Point()
+			var ct:ColorTransform=new ColorTransform();		
+			ct.color=0xFF00000F			
+			var oldHitRectangle:Rectangle=intersectionRectangle(target1, target2)
+			var hitRectangle:Rectangle= new Rectangle();
+			return complexIntersectionRectangle(target1, target2 , scaleX , scaleY , pt , ct , oldHitRectangle,hitRectangle,tileSize,tileSize).width != 0;
+		}		
+		
+		public static function intersectionRectangle(target1:DisplayObject, target2:DisplayObject):Rectangle
+		{
+			if (!target1.root || !target2.root || !target1.hitTestObject(target2))
 				return new Rectangle();
 			
-			var hitRectangle:Rectangle = intersectionRectangle( target1, target2 );
-			if (hitRectangle.width * accurracy < 1 || hitRectangle.height * accurracy < 1) 
-				return new Rectangle();
-			
-			try
-			{                        
-				var bitmapData:BitmapData = new BitmapData(hitRectangle.width * accurracy, hitRectangle.height * accurracy, false, 0x000000); 
-			}
-			catch(e:Error)
-			{
-				return new Rectangle();
-			}
-			
-			bitmapData.draw(target1, getDrawMatrix( target1, hitRectangle, accurracy ), new ColorTransform( 1, 1, 1, 1, 255, -255, -255, 255 ) );
-			bitmapData.draw(target2, getDrawMatrix( target2, hitRectangle, accurracy ), new ColorTransform( 1, 1, 1, 1, 255, 255, 255, 255 ), BlendMode.DIFFERENCE );
-			
-			var intersection:Rectangle = bitmapData.getColorBoundsRect( 0xFFFFFFFF,0xFF00FFFF );
-			bitmapData.dispose();
-			
-			if (accurracy != 1)
-			{
-				intersection.x /= accurracy;
-				intersection.y /= accurracy;
-				intersection.width /= accurracy;
-				intersection.height /= accurracy;
-			}
-			
-			intersection.x += hitRectangle.x;
-			intersection.y += hitRectangle.y;
-			
+			var bounds1:Rectangle = target1.getBounds(target1.root);
+			var bounds2:Rectangle = target2.getBounds(target2.root);
+			var intersection:Rectangle = new Rectangle();
+			intersection.x = Math.max(bounds1.x, bounds2.x);
+			intersection.y = Math.max(bounds1.y, bounds2.y);
+			intersection.width = Math.min((bounds1.x + bounds1.width) - intersection.x, (bounds2.x + bounds2.width) - intersection.x);
+			intersection.height = Math.min((bounds1.y + bounds1.height) - intersection.y, (bounds2.y + bounds2.height) - intersection.y);
 			return intersection;
 		}
 		
-		//修正绘制位图时的大小问题
-		private static function getDrawMatrix(target:DisplayObject, hitRectangle:Rectangle, accurracy:Number):Matrix
-		{
-			var localToGlobal:Point;;
-			var matrix:Matrix;
-			                        
-			var rootConcatenatedMatrix:Matrix = target.stage.transform.concatenatedMatrix;
-			                        
-			localToGlobal = target.localToGlobal(new Point());
-			matrix = target.transform.concatenatedMatrix;
-			matrix.tx = localToGlobal.x - hitRectangle.x;
-			matrix.ty = localToGlobal.y - hitRectangle.y;
-			
-			matrix.a = matrix.a / rootConcatenatedMatrix.a;
-			matrix.d = matrix.d / rootConcatenatedMatrix.d;
-			if (accurracy != 1) 
-				matrix.scale( accurracy, accurracy );
-			
-			return matrix;
-		}
-		
-		/**
-		 * 获得两个矩形物体的交叠矩形（比complexIntersectionRectangle要快）
-		 * 
-		 * @param target1
-		 * @param target2
-		 * @return 
-		 * 
-		 */
-		public static function intersectionRectangle(target1:DisplayObject, target2:DisplayObject):Rectangle
-		{
-			if (!target1.stage || !target2.stage) 
+		public static function complexIntersectionRectangle(target1:DisplayObject, target2:DisplayObject, scaleX:Number , scaleY:Number , pt:Point , ct:ColorTransform ,oldhitRectangle:Rectangle,hitRectangle:Rectangle,nowW:int,nowH:int):Rectangle
+		{		
+			if (!target1.hitTestObject(target2))
 				return new Rectangle();
 			
-			var bounds1:Rectangle = target1.getBounds(target1.stage);
-			var bounds2:Rectangle = target2.getBounds(target2.stage);
-			 
-			return bounds1.intersection(bounds2);
+			hitRectangle.x = oldhitRectangle.x
+			hitRectangle.y = oldhitRectangle.y
+			hitRectangle.width = oldhitRectangle.width / scaleX
+			hitRectangle.height = oldhitRectangle.height / scaleY
+			//trace(hitRectangle)
+			var bitmapData:BitmapData=new BitmapData(nowW,nowH, true, 0);			
+			
+			bitmapData.draw(target1, getDrawMatrix(target1, hitRectangle , scaleX , scaleY ),ct);
+			if (scaleX!=1&&scaleY!=1)
+				bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0,0xFF00000F)
+			//
+			bitmapData.draw(target2, getDrawMatrix(target2, hitRectangle , scaleX , scaleY ),ct, BlendMode.ADD);
+			var hits:int=bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0xFF00000F,0xFFFF0000)
+			//
+			var intersection:Rectangle=bitmapData.getColorBoundsRect(0xFFFFFFFF, 0xFFFF0000);
+			
+			bitmapData=bitmapData			
+			/*trace("sx=",scaleX,"sy=",scaleY)
+			trace("未压缩检测区域",oldhitRectangle)
+			trace("压缩后检测面积",hitRectangle)
+			trace("碰撞检测结果",intersection)
+			trace("碰撞像素数",hits)
+			trace("----------------------------------------")*/
+			bitmapData = null
+			if(intersection.width!=0){				
+				if(scaleX>1||scaleY>1){
+					if(hits<=(scaleX+scaleY)*1.5){				
+						var xadd:int=.5
+						var yadd:int=.5
+						var nextW:int=nextW=tileSize
+						var nextH:int=nextW=tileSize
+						if(intersection.width!=nowW){
+							nextW=tileSize					
+						}else{
+							nextW=nowW*2
+						}				
+						if(intersection.height!=nowH){
+							nextH=tileSize
+						}else{
+							nextH=nowH*2
+						}
+						//if(intersection.width==nowW&&)
+						oldhitRectangle.x += (intersection.x - xadd) * scaleX
+						oldhitRectangle.y += (intersection.y - yadd) * scaleY
+						oldhitRectangle.width = (intersection.width + xadd*2) * scaleX
+						oldhitRectangle.height = (intersection.height + yadd*2)  * scaleY
+						scaleX = (oldhitRectangle.width / nextW) 
+						scaleY = (oldhitRectangle.height / nextH) 
+						scaleX = scaleX < 2 ? 1 : scaleX
+						scaleY = scaleY < 2 ? 1 : scaleY
+						intersection=complexIntersectionRectangle(target1,target2, scaleX , scaleY ,pt,ct,oldhitRectangle,hitRectangle,nextW,nextH)							
+					}
+				}
+			}
+			
+			
+			return intersection;
+			
+		}
+		
+		protected static function getDrawMatrix(target:DisplayObject, hitRectangle:Rectangle , scaleX:Number , scaleY:Number ):Matrix
+			
+		{
+			
+			var localToGlobal:Point;
+			var matrix:Matrix;
+			var rootConcatenatedMatrix:Matrix=target.root.transform.concatenatedMatrix;
+			
+			
+			
+			localToGlobal=target.localToGlobal(new Point());
+			
+			matrix=target.transform.concatenatedMatrix;
+			
+			matrix.tx=(localToGlobal.x - hitRectangle.x) / scaleX;
+			
+			matrix.ty=(localToGlobal.y - hitRectangle.y) / scaleY;			
+			
+			//matrix.rotate(LiiMath.r360(target.rotation)/LiiMath.PIM180)
+			matrix.a=matrix.a / rootConcatenatedMatrix.a / scaleX ;
+			matrix.d=matrix.d / rootConcatenatedMatrix.d / scaleY;
+			
+			//matrix.scale(1/scaleX,1/scaleY)
+			
+			
+			return matrix;
+			
 		}
 		
 		/**

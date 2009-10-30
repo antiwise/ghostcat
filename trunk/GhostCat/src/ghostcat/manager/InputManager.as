@@ -225,7 +225,7 @@
          */        
         public function get inactive():Boolean
         {
-        	return getTimer() - lastTime > inactiveTime;
+        	return (getTimer() - lastTime > inactiveTime) && mouseLeave;
         }
         
         private function refreshLastTime():void
