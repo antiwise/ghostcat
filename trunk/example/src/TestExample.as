@@ -7,6 +7,7 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.TickEvent;
+	import ghostcat.manager.InputManager;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.RepeatOper;
 	import ghostcat.operation.TweenOper;
@@ -26,6 +27,8 @@ package
 		public function TestExample()
 		{
 			RootManager.register(this);
+			InputManager.register(this);
+			InputManager.instance.inactiveTime = 1000;
 			
 			FrameRatePanel.show(stage);
 			
@@ -37,10 +40,6 @@ package
 			addChild(new FPS());
 			
 			new RepeatOper([new TweenOper(v,3000,{x:"300",ease:Circ.easeInOut}),new TweenOper(v,3000,{x:"-300",ease:Circ.easeInOut})]).commit();
-		}
-		
-		protected override function tickHandler(event:TickEvent) : void
-		{
 		}
 	}
 }
