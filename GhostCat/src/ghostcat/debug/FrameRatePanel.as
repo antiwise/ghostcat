@@ -3,25 +3,59 @@ package ghostcat.debug
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.manager.InputManager;
 	import ghostcat.skin.FrameRateSkin;
 	import ghostcat.ui.UIBuilder;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GHSilder;
 	import ghostcat.ui.controls.GText;
+	import ghostcat.util.Tick;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	
 	public class FrameRatePanel extends GBase
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(FrameRateSkin)
+		/**
+		 * 是否处理暂离 
+		 */
+		public static var checkInactive:Boolean = false;
+		
+		private static var timer:Timer = new Timer(1000);
+		timer.addEventListener(TimerEvent.TIMER,inactiveHandler);
+		timer.start();
+		
+		private static var oldFrameRate:int = 0;
+		private static function inactiveHandler(event:TimerEvent):void
+		{
+			var ins:InputManager = InputManager.instance;
+			if (!ins)
+				return;
 			
+			if (ins.inactive && oldFrameRate == 0)
+			{
+				oldFrameRate = ins.stage.frameRate;
+				ins.stage.frameRate = 1;
+			}
+			if (!ins.inactive && oldFrameRate != 0)
+			{
+				ins.stage.frameRate = oldFrameRate;
+				oldFrameRate = 0;
+			}
+		}
+		
 		public var silder:GHSilder;
 		public var frameRateDisplayText:GText;
 		public var closeButton:GButton;
 		public var checkBox:GCheckBox;
+		
+		
+		
 		public function FrameRatePanel(skin:*=null)
 		{
 			if (!skin)
@@ -36,8 +70,9 @@ package ghostcat.debug
 			silder.maxValue = 120;
 			
 			checkBox.addEventListener(Event.CHANGE,checkBoxChangeHandler);
-			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
+			checkBox.selected = checkInactive;
 			
+			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
 		}
 		
 		public static function show(target:DisplayObjectContainer):void
@@ -62,7 +97,7 @@ package ghostcat.debug
 		
 		private function checkBoxChangeHandler(event:Event):void
 		{
-			trace(checkBox.selected)
+			checkInactive = checkBox.selected;
 		}
 		
 		private function closeButtonClickHandler(event:MouseEvent):void
