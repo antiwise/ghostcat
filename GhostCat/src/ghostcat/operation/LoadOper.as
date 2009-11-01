@@ -30,28 +30,38 @@
 	 */	
 	public class LoadOper extends RetryOper
 	{
-		public static const AUTO:int = 0;
-		public static const URLLOADER:int = 1;
-		public static const LOADER:int = 2;
+		public static const AUTO:String = "auto";
+		public static const URLLOADER:String = "urlloader";
+		public static const LOADER:String = "loader";
 		
+		/**
+		 * 使用Loader的扩展名
+		 */
 		public static var LOADER_TYPE:Array = [".swf",".gif",".png",".jpg"];
 		
 		/**
 		 * 路径
 		 */		
-		public var url:String;
+		public var request:URLRequest;
 		
 		/**
 		 * 载入方式
 		 */
-		public var type:int = 0;
+		public var type:String = AUTO;
 		
 		/**
 		 * 载入格式
 		 */		
 		public var dataFormat:String = URLLoaderDataFormat.TEXT;
 		
+		/**
+		 * 对象
+		 */
 		protected var obj:*;
+		
+		/**
+		 * 陷入资源
+		 */
 		protected var embedClass:Class;
 		
 		/**
@@ -81,9 +91,12 @@
 		 * 而发布时，删除所有资源文件即可。这样可以解决很多问题。
 		 * 
 		 */		
-		public function LoadOper(url:String=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
+		public function LoadOper(url:*=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
-			this.url = url;
+			if (url is String)
+				url = new URLRequest(url);
+			
+			this.request = url;
 			this.embedClass = embedClass;
 			
 			if (embedClass)
@@ -105,7 +118,7 @@
 			
 			var isLoader:Boolean;
 			if (this.type == AUTO)
-				isLoader = (LOADER_TYPE.indexOf(new URL(url).pathname.extension) != -1);
+				isLoader = (LOADER_TYPE.indexOf(new URL(request.url).pathname.extension) != -1);
 			else if (this.type == LOADER)
 				isLoader = true;
 			else
@@ -123,11 +136,11 @@
 					if (Security.sandboxType == Security.REMOTE)
 						loaderContext.securityDomain = SecurityDomain.currentDomain;
 						
-					loader.load(new URLRequest(url),loaderContext);
+					loader.load(request,loaderContext);
 				}
 				else
 				{
-					loader.load(new URLRequest(url));
+					loader.load(request);
 				}
 				obj = loader;
 			}
@@ -138,7 +151,7 @@
 				urlLoader.addEventListener(Event.COMPLETE,result);
 				urlLoader.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
-				urlLoader.load(new URLRequest(url));
+				urlLoader.load(request);
 				
 				obj = urlLoader;
 			}

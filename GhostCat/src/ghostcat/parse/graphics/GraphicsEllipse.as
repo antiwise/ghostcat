@@ -19,6 +19,7 @@ package ghostcat.parse.graphics
 			this.height = height;
 		}
 		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);

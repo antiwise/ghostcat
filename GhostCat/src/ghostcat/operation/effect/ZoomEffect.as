@@ -4,10 +4,10 @@ package ghostcat.operation.effect
 	
 	import ghostcat.operation.TweenOper;
 	import ghostcat.util.display.Geom;
-
 	
 	/**
 	 * 缩放
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */

@@ -15,6 +15,7 @@ package ghostcat.parse
 		private var _parent:IParse;
 		private var _children:Array = [];
 		
+		/** @inheritDoc*/
 		public function parse(target:*):void
 		{
 			var children:Array = this.children;

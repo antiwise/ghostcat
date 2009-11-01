@@ -397,7 +397,7 @@
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
-    <classEntry path="ghostcat.debug.FrameRatePanel"/>
+    <classEntry path="ghostcat.debug.FrameRateControl"/>
     <classEntry path="ghostcat.operation.TransitionOper"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
   </includeClasses>

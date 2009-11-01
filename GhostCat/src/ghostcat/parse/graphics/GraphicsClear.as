@@ -6,10 +6,7 @@ package ghostcat.parse.graphics
 	
 	public class GraphicsClear extends DisplayParse
 	{
-		public function GraphicsClear()
-		{
-		}
-		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);

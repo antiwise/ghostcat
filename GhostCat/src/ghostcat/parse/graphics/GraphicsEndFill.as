@@ -6,11 +6,7 @@ package ghostcat.parse.graphics
 	
 	public class GraphicsEndFill extends DisplayParse
 	{
-		public function GraphicsEndFill()
-		{
-			
-		}
-		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
