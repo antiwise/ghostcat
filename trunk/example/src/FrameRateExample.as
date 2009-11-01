@@ -4,7 +4,7 @@ package
 	import flash.geom.Point;
 	
 	import ghostcat.debug.FPS;
-	import ghostcat.debug.FrameRatePanel;
+	import ghostcat.debug.FrameRateControl;
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.manager.InputManager;
@@ -27,10 +27,12 @@ package
 		public function FrameRateExample()
 		{
 			RootManager.register(this);
+			
 			InputManager.register(this);
 			InputManager.instance.inactiveTime = 1000;
 			
-			FrameRatePanel.show(stage);
+			FrameRateControl.register(stage);
+			FrameRateControl.showPanel();
 			
 			var v:GMovieClip = new GMovieClip(mc);
 			v.x = 150;
@@ -39,7 +41,7 @@ package
 			
 			addChild(new FPS());
 			
-			new TextFieldParse("GhostCat的动画和缓动效果都是和帧数无关的，因此可以通过上面的面板来调整播放器的参数以控制性能。\n在相当大的一个范围内动画的播放速度都是相同的。\n\n为了方便演示，暂离降帧时间设成了1秒（默认是60秒），这样可以解决挂机时游戏占用系统资源的问题。",new Point(20,320)).parse(this);
+			new TextFieldParse("GhostCat的动画和缓动效果都是和帧数无关的，因此可以通过上面的面板来调整播放器的帧数以控制性能。\n在相当大的一个范围内动画的播放速度都是相同的。\n\n为了方便演示，暂离降帧时间设成了1秒（默认是60秒），这样可以解决挂机时游戏占用系统资源的问题。",new Point(20,320)).parse(this);
 			
 			new RepeatOper([new TweenOper(v,3000,{x:"300",ease:Circ.easeInOut}),new TweenOper(v,3000,{x:"-300",ease:Circ.easeInOut})]).commit();
 		}
