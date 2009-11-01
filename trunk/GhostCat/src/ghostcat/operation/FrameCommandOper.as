@@ -67,22 +67,10 @@ package ghostcat.operation
 			Tick.instance.addEventListener(TickEvent.TICK, tickHandler);
 		}
 		/** @inheritDoc*/
-		public override function halt() : void
+		protected override function end(event:* = null) : void
 		{
 			Tick.instance.removeEventListener(TickEvent.TICK, tickHandler);
-			super.halt();
-		}
-		/** @inheritDoc*/
-		public override function result(event:*=null) : void
-		{
-			Tick.instance.removeEventListener(TickEvent.TICK, tickHandler);
-			super.result(event);
-		}
-		/** @inheritDoc*/
-		public override function fault(event:*=null) : void
-		{
-			Tick.instance.removeEventListener(TickEvent.TICK, tickHandler);
-			super.fault(event);
+			super.end();
 		}
 
 		/**

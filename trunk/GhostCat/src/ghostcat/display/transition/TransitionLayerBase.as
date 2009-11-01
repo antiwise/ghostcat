@@ -9,6 +9,8 @@ package ghostcat.display.transition
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.Handler;
 	
+	[Event(name="complete",type="flash.events.Event")]
+	
 	/**
 	 * 过渡动画基类，用于处理场景切换
 	 * 
@@ -55,6 +57,11 @@ package ghostcat.display.transition
 		 */
 		public var switchHandler:Handler;
 		
+		/**
+		 * 是否在动画结束后执行result
+		 */
+		public var resultAtEnd:Boolean = true;
+		
 		private var _state:String;
 		
 		/**
@@ -81,6 +88,10 @@ package ghostcat.display.transition
 				case WAIT:
 					if (switchHandler)
 						switchHandler.call();
+					
+					if (!resultAtEnd)
+						dispatchEvent(new Event(Event.COMPLETE));
+					
 					playAnimate(wait,FADE_OUT);
 					break;
 				case FADE_OUT:
@@ -171,6 +182,9 @@ package ghostcat.display.transition
 		{
 			if (currentTransition == this)
 				currentTransition = null;
+			
+			if (resultAtEnd)
+				dispatchEvent(new Event(Event.COMPLETE));
 		}
 	}
 }

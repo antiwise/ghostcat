@@ -4,6 +4,7 @@ package ghostcat.operation.effect
 	
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.operation.FunctionOper;
+	import ghostcat.operation.TweenOper;
 
 	/**
 	 * 发光一次的效果
@@ -31,8 +32,8 @@ package ghostcat.operation.effect
 			this.target = target;
 			this.blurProxy = new FilterProxy(new GlowFilter(color,0,0,0,strength));
 			
-			var list:Array = [new TweenEffect(blurProxy,duration,{alpha:alpha,blurX:blurX,blurY:blurX}),
-							new TweenEffect(blurProxy,duration,{alpha:0,blurX:0,blurY:0}),
+			var list:Array = [new TweenOper(blurProxy,duration,{alpha:alpha,blurX:blurX,blurY:blurX}),
+							new TweenOper(blurProxy,duration,{alpha:0,blurX:0,blurY:0}),
 							new FunctionOper(blurProxy.removeFilter)];
 			super(list);
 		}

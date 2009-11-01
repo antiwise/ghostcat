@@ -13,7 +13,7 @@ package ghostcat.operation
 		/**
 		 * 操作列表
 		 */
-		public var list:Array;
+		public var children:Array;
 		/**
 		 * 循环次数 
 		 */
@@ -23,9 +23,9 @@ package ghostcat.operation
 		 */
 		public var index:int = 0;
 		
-		public function RepeatOper(list:Array=null,loop:int = -1)
+		public function RepeatOper(children:Array=null,loop:int = -1)
 		{
-			this.list = list;
+			this.children = children;
 			this.loop = loop;
 		}
 		
@@ -33,40 +33,26 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			addHandlers();
-			
-			index = 0;
-			var oper:Oper = list[index] as Oper;
-			oper.execute();
-		}
-		
-		public override function result(event:* = null) : void
-		{
-			super.result(event);
-			removeHandlers();
-		}
-		
-		public override function fault(event:* = null) : void
-		{
-			super.fault(event);
-			removeHandlers();
-		}
-		
-		private function addHandlers():void
-		{
-			for (var i:int = 0;i < list.length;i++)
+			for (var i:int = 0;i < children.length;i++)
 			{
-				var oper:Oper = list[i] as Oper;
+				var oper:Oper = children[i] as Oper;
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,nextOperation);
 				oper.addEventListener(OperationEvent.OPERATION_ERROR,fault);
-			}
+			};
+			
+			this.index = 0;
+			
+			if (children && children.length > 0)
+				(children[0]).execute();
 		}
 		
-		private function removeHandlers():void
+		protected override function end(event:* = null) : void
 		{
-			for (var i:int = 0;i < list.length;i++)
+			super.end(event);
+			
+			for (var i:int = 0;i < children.length;i++)
 			{
-				var oper:Oper = list[i] as Oper;
+				var oper:Oper = children[i] as Oper;
 				oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nextOperation);
 				oper.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
 			}
@@ -75,7 +61,7 @@ package ghostcat.operation
 		private function nextOperation(event:OperationEvent):void
 		{
 			index++;
-			if (index > list.length - 1)
+			if (index > children.length - 1)
 			{
 				loop--;
 				index = 0;
@@ -86,7 +72,7 @@ package ghostcat.operation
 				}
 			}
 			
-			var oper:Oper = list[index];
+			var oper:Oper = children[index];
 			oper.execute();
 		}		
 	}

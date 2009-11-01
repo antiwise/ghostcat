@@ -63,8 +63,10 @@ package ghostcat.operation
 				result();
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null):void
+		protected override function end(event:*=null):void
 		{
+			super.end(event);
+			
 			if (timer)
 			{
 				timer.removeEventListener(TimerEvent.TIMER,tick);
@@ -73,8 +75,6 @@ package ghostcat.operation
 			}
 			else
 				Tick.instance.removeEventListener(TickEvent.TICK,tick);
-			
-			super.result(event);
 		}
 	}
 }

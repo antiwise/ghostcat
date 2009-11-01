@@ -107,7 +107,7 @@ package ghostcat.operation
 			if (ease != null)
 				o.ease = ease;
 			
-			tweenQueue.data.push(new TweenOper(this,duration,o));
+			tweenQueue.children.push(new TweenOper(this,duration,o));
 		}
 		
 		/** @inheritDoc*/

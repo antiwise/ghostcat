@@ -2,6 +2,8 @@ package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
+	
+	import ghostcat.operation.TweenOper;
 
 	/**
 	 * 裁切效果
@@ -9,7 +11,7 @@ package ghostcat.operation.effect
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ClipEffect extends TweenEffect
+	public class ClipEffect extends TweenOper
 	{
 		public static const UP:String = "up";
 		public static const DOWN:String = "down";
@@ -39,6 +41,17 @@ package ghostcat.operation.effect
 		public function set ease(v:Function):void
 		{
 			params.ease = v;
+		}
+		
+		/** @inheritDoc*/
+		public override function get target():*
+		{
+			return contentTarget;
+		}
+		
+		public override function set target(v:*):void
+		{
+			contentTarget = v;
 		}
 		
 		public function ClipEffect(target:*=null, duration:int=1000, direction:String="up", ease:Function = null, invert:Boolean = false)

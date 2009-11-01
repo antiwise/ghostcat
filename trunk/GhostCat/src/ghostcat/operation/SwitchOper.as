@@ -50,30 +50,15 @@ package ghostcat.operation
 			if (choose == null)
 				choose = defaultOper;
 			
-			addHandlers();
+			choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
+			choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
 			choose.execute();
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null):void
+		protected override function end(event:*=null):void
 		{
-			super.result(event);
-			removeHandlers()
-		}
-		/** @inheritDoc*/
-		public override function fault(event:*=null):void
-		{
-			super.fault(event);
-			removeHandlers()
-		}
+			super.end(event);
 		
-		private function addHandlers():void
-		{
-			choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
-			choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
-		}
-		
-		private function removeHandlers():void
-		{
 			choose.removeEventListener(OperationEvent.OPERATION_COMPLETE,result);
 			choose.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
 		}

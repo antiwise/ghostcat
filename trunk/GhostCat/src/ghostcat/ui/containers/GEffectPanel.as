@@ -1,11 +1,8 @@
 package ghostcat.ui.containers
 {
-	import flash.geom.Rectangle;
-	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.effect.TweenEffect;
-	import ghostcat.util.display.Geom;
+	import ghostcat.operation.TweenOper;
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**
@@ -16,10 +13,10 @@ package ghostcat.ui.containers
 	 */
 	public class GEffectPanel extends GBase
 	{
-		public var createEffect:TweenEffect;
-		public var showEffect:TweenEffect;
-		public var closeEffect:TweenEffect;
-		public var hideEffect:TweenEffect;
+		public var createEffect:TweenOper;
+		public var showEffect:TweenOper;
+		public var closeEffect:TweenOper;
+		public var hideEffect:TweenOper;
 	
 		public function GEffectPanel(mc:*=null, replace:Boolean=true)
 		{

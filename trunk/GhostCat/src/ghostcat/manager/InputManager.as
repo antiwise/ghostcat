@@ -316,6 +316,8 @@
         	
         	if (mouseDown)
         		mousePath.push(new Point(event.stageX,event.stageY));
+			
+			_mouseLeave = false;
         }
         
         private function mouseOverHandler(event:MouseEvent):void

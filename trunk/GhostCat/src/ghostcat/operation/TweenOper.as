@@ -1,5 +1,6 @@
 package ghostcat.operation
 {
+	import ghostcat.operation.effect.IEffect;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
 
@@ -9,7 +10,7 @@ package ghostcat.operation
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TweenOper extends Oper
+	public class TweenOper extends Oper implements IEffect
 	{
 		private var _target:*;
 
@@ -38,6 +39,11 @@ package ghostcat.operation
 		public var params:Object;
 		
 		/**
+		 * 是否在倒放开始的时候立即确认属性
+		 */
+		public var updateWhenInvent:Boolean = true;
+		
+		/**
 		 * 缓动实例 
 		 */
 		public var tween:TweenUtil;
@@ -61,7 +67,7 @@ package ghostcat.operation
 		 */
 		public function get invert():Boolean
 		{
-			return this.params.invert;
+			return this.params ? this.params.invert : false;
 		}
 
 		public function set invert(v:Boolean):void
@@ -76,12 +82,15 @@ package ghostcat.operation
 			super.execute();
 			tween = new TweenUtil(_target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
+			
+			if (invert && updateWhenInvent)
+				tween.update();//执行update确认属性
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null):void
+		protected override function end(event:*=null):void
 		{
+			super.end(event);
 			tween.removeEventListener(TweenEvent.TWEEN_END,result);
-			super.result(event);
 		}
 	}
 }

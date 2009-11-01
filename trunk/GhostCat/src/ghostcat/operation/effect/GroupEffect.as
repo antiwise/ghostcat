@@ -1,13 +1,13 @@
 package ghostcat.operation.effect
 {
-	import ghostcat.operation.Queue;
+	import ghostcat.operation.GroupOper;
 	
 	/**
-	 * 队列效果 
+	 * 组效果 
 	 * @author Administrator
 	 * 
 	 */
-	public class QueueEffect extends Queue implements IEffect
+	public class GroupEffect extends GroupOper implements IEffect
 	{
 		/** @inheritDoc*/
 		public function get target():*
@@ -24,9 +24,9 @@ package ghostcat.operation.effect
 			}
 		}
 		
-		public function QueueEffect(data:Array=null)
+		public function GroupEffect(children:Array=null)
 		{
-			super(data);
+			super(children);
 		}
 	}
 }

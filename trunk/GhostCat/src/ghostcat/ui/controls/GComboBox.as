@@ -9,8 +9,8 @@ package ghostcat.ui.controls
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.Oper;
+	import ghostcat.operation.TweenOper;
 	import ghostcat.operation.effect.AlphaClipEffect;
-	import ghostcat.operation.effect.TweenEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.Padding;
@@ -57,14 +57,14 @@ package ghostcat.ui.controls
 		/**
 		 * List展开特效（下）
 		 */
-		public var listOpenDownEffect:TweenEffect;
+		public var listOpenDownEffect:TweenOper;
 		
 		/**
 		 * List展开特效（上）
 		 */
-		public var listOpenUpEffect:TweenEffect;
+		public var listOpenUpEffect:TweenOper;
 		
-		private var listOpenEffect:TweenEffect;//当前打开特效
+		private var listOpenEffect:TweenOper;//当前打开特效
 		
 		private var _maxLine:int = 6;
 

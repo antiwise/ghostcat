@@ -8,8 +8,6 @@ package ghostcat.util.display
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
-	import ghostcat.debug.Debug;
 
 	        
 	/**
@@ -57,44 +55,37 @@ package ghostcat.util.display
 			hitRectangle.y = oldhitRectangle.y
 			hitRectangle.width = oldhitRectangle.width / scaleX
 			hitRectangle.height = oldhitRectangle.height / scaleY
-			//trace(hitRectangle)
 			var bitmapData:BitmapData=new BitmapData(nowW,nowH, true, 0);			
 			
 			bitmapData.draw(target1, getDrawMatrix(target1, hitRectangle , scaleX , scaleY ),ct);
 			if (scaleX!=1&&scaleY!=1)
 				bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0,0xFF00000F)
-			//
+			
 			bitmapData.draw(target2, getDrawMatrix(target2, hitRectangle , scaleX , scaleY ),ct, BlendMode.ADD);
 			var hits:int=bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0xFF00000F,0xFFFF0000)
-			//
 			var intersection:Rectangle=bitmapData.getColorBoundsRect(0xFFFFFFFF, 0xFFFF0000);
-			
-			bitmapData=bitmapData			
-			/*trace("sx=",scaleX,"sy=",scaleY)
-			trace("未压缩检测区域",oldhitRectangle)
-			trace("压缩后检测面积",hitRectangle)
-			trace("碰撞检测结果",intersection)
-			trace("碰撞像素数",hits)
-			trace("----------------------------------------")*/
-			bitmapData = null
-			if(intersection.width!=0){				
-				if(scaleX>1||scaleY>1){
-					if(hits<=(scaleX+scaleY)*1.5){				
-						var xadd:int=.5
-						var yadd:int=.5
-						var nextW:int=nextW=tileSize
-						var nextH:int=nextW=tileSize
-						if(intersection.width!=nowW){
+					
+			if(intersection.width!=0)
+			{				
+				if(scaleX>1||scaleY>1)
+				{
+					if(hits<=(scaleX+scaleY)*1.5)
+					{				
+						var xadd:int = 0.5;
+						var yadd:int = 0.5;
+						var nextW:int = nextW = tileSize;
+						var nextH:int = nextW = tileSize;
+						
+						if (intersection.width != nowW)
 							nextW=tileSize					
-						}else{
+						else
 							nextW=nowW*2
-						}				
-						if(intersection.height!=nowH){
+						
+						if (intersection.height != nowH)
 							nextH=tileSize
-						}else{
+						else
 							nextH=nowH*2
-						}
-						//if(intersection.width==nowW&&)
+						
 						oldhitRectangle.x += (intersection.x - xadd) * scaleX
 						oldhitRectangle.y += (intersection.y - yadd) * scaleY
 						oldhitRectangle.width = (intersection.width + xadd*2) * scaleX
@@ -107,39 +98,24 @@ package ghostcat.util.display
 					}
 				}
 			}
-			
-			
 			return intersection;
-			
 		}
 		
 		protected static function getDrawMatrix(target:DisplayObject, hitRectangle:Rectangle , scaleX:Number , scaleY:Number ):Matrix
-			
 		{
-			
 			var localToGlobal:Point;
 			var matrix:Matrix;
 			var rootConcatenatedMatrix:Matrix=target.root.transform.concatenatedMatrix;
 			
-			
-			
 			localToGlobal=target.localToGlobal(new Point());
 			
 			matrix=target.transform.concatenatedMatrix;
-			
 			matrix.tx=(localToGlobal.x - hitRectangle.x) / scaleX;
-			
 			matrix.ty=(localToGlobal.y - hitRectangle.y) / scaleY;			
-			
-			//matrix.rotate(LiiMath.r360(target.rotation)/LiiMath.PIM180)
 			matrix.a=matrix.a / rootConcatenatedMatrix.a / scaleX ;
 			matrix.d=matrix.d / rootConcatenatedMatrix.d / scaleY;
 			
-			//matrix.scale(1/scaleX,1/scaleY)
-			
-			
 			return matrix;
-			
 		}
 		
 		/**

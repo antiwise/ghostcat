@@ -210,7 +210,7 @@
     <classEntry path="ghostcat.operation.TweenOper"/>
     <classEntry path="ghostcat.operation.WaitOper"/>
     <classEntry path="ghostcat.operation.WatchOper"/>
-    <classEntry path="ghostcat.operation.ZoomOper"/>
+    <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
@@ -219,7 +219,6 @@
     <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
-    <classEntry path="ghostcat.operation.effect.TweenEffect"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
@@ -399,6 +398,8 @@
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
     <classEntry path="ghostcat.debug.FrameRatePanel"/>
+    <classEntry path="ghostcat.operation.TransitionOper"/>
+    <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
