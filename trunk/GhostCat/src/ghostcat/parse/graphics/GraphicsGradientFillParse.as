@@ -27,6 +27,7 @@ package ghostcat.parse.graphics
 			this.interpolationMethod = interpolationMethod;
 			this.focalPointRatio = focalPointRatio;
 		}
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);

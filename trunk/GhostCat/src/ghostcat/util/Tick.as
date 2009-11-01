@@ -60,7 +60,6 @@ package ghostcat.util
 		private function enterFrameHandler(event:Event):void
 		{
 			var nextTime:int = getTimer();
-			
 			if (!pause)
 			{
 				var interval:int;

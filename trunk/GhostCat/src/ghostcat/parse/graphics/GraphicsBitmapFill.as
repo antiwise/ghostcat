@@ -20,7 +20,8 @@ package ghostcat.parse.graphics
 			this.smooth = smooth;
 		}
 		
-		public override function parseGraphics(target:Graphics) : void
+		/** @inheritDoc*/
+		public override function parseGraphics(target:Graphics):void
 		{
 			super.parseGraphics(target);
 			target.beginBitmapFill(bitmap,matrix,repeat,smooth);

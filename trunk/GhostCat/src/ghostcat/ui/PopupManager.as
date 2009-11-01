@@ -2,10 +2,13 @@ package ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
@@ -30,6 +33,35 @@ package ghostcat.ui
 		static public function get instance():PopupManager
 		{
 			return Singleton.getInstanceOrCreate(PopupManager) as PopupManager;
+		}
+		
+		/**
+		 * 显示一个临时的背景遮罩在对象后面作为遮挡，并会和对象一起被删除
+		 * 
+		 * @param v - 目标
+		 * @param color	- 颜色
+		 * @param alpha	- 透明度
+		 * @param mouseEnabled	- 是否遮挡下面的鼠标事件
+		 * 
+		 */
+		static public function createTempCover(v:DisplayObject,color:uint = 0x0,alpha:Number = 0.5,mouseEnabled:Boolean = false):void
+		{
+			var parent:DisplayObjectContainer = v.parent;
+			//背景遮罩
+			var back:Sprite = new Sprite();
+			var rect:Rectangle = Geom.localRectToContent(new Rectangle(0,0,parent.stage.stageWidth,parent.stage.stageHeight),parent.stage,parent);
+			back.graphics.beginFill(color,alpha);
+			back.graphics.drawRect(rect.x,rect.y,rect.width,rect.height);
+			back.graphics.endFill();
+			back.mouseEnabled = mouseEnabled;
+			parent.addChildAt(back,parent.getChildIndex(v));
+			
+			v.addEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
+			function removeHandler(event:Event):void
+			{
+				parent.removeEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
+				parent.removeChild(back);	
+			}
 		}
 		
 		private var _popupLayer:DisplayObjectContainer;

@@ -16,6 +16,7 @@ package ghostcat.parse
 	 */
 	public class DisplayParse extends Parse
 	{
+		/** @inheritDoc*/
 		public override function parse(target:*):void
 		{
 			super.parse(target);

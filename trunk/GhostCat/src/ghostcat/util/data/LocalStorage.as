@@ -3,29 +3,27 @@ package ghostcat.util.data
 	import flash.net.SharedObject;
 
     /**
-     * 本地缓存对象
+     * 单值本地缓存对象
      * 
      * @author flashyiyi
      * 
      */
-    public class LocalStorage {
-
-        /**
-         * 是否自动更新
-         */
-        public var autoFlush:Boolean = true;
-        
+    public class LocalStorage
+	{
+		
         /**
          * 最小占用空间 
          */
         public var minDiskSpace:int = 0;
 
         /**
-         * 本地储存对象 
+         * 本地储存对象实例 
          */
         public var sharedObject:SharedObject;
         
-        public function LocalStorage(name:String):void
+		private var field:String;
+		
+		public function LocalStorage(name:String,field:String = "value"):void
         {
             sharedObject = SharedObject.getLocal(name);
         }
@@ -36,13 +34,12 @@ package ghostcat.util.data
          * @param data
          * 
          */
-        public function save(name:String, data:*):void
+        public function setValue(data:*):void
         {
             try 
             {
-                sharedObject.setProperty(name, data);
-                if (autoFlush)
-                	sharedObject.flush(minDiskSpace);
+                sharedObject.setProperty(field, data);
+                sharedObject.flush(minDiskSpace);
             } 
             catch(e:Error) {};
         }
@@ -53,24 +50,14 @@ package ghostcat.util.data
          * @return 
          * 
          */
-        public function load(name:String):*
+        public function getValue():*
         {
             try 
             {
-                return (sharedObject.data[name]);
+                return (sharedObject.data[field]);
             } 
             catch(e:Error) {};
             return null;
-        }
-        
-        /**
-         * 更新
-         * @param minDiskSpace
-         * 
-         */
-        public function flush(minDiskSpace:int = 0):void
-        {
-        	sharedObject.flush(minDiskSpace);
         }
 
     }

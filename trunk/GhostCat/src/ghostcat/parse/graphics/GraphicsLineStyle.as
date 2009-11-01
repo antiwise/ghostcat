@@ -26,6 +26,7 @@ package ghostcat.parse.graphics
 			this.miterLimit = miterLimit;
 		}
 		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);

@@ -37,11 +37,7 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			if (cHandler())
-				choose = b1;
-			else
-				choose = b2;
-			
+			choose = cHandler() ? b1 : b2;
 			choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
 			choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
 			choose.execute();
@@ -50,6 +46,7 @@ package ghostcat.operation
 		protected override function end(event:*=null):void
 		{
 			super.end(event);
+			
 			choose.removeEventListener(OperationEvent.OPERATION_COMPLETE,result);
 			choose.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
 		}

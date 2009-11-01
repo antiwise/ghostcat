@@ -43,6 +43,7 @@ package ghostcat.parse.graphics
 			this.arowFrom = arowFrom;
 		}
 		
+		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
 			super.parseGraphics(target);
@@ -66,14 +67,11 @@ package ghostcat.parse.graphics
 			arowTo:Point=null,arowWidth:Number=10,arowFrom:Point=null):void
 		{
 			var minSize:Number = Math.min(width * 2,height * 2);
-			if (isNaN(topLeftRadius)) topLeftRadius = 0;
-			if (isNaN(topRightRadius)) topRightRadius = 0;
-			if (isNaN(bottomLeftRadius)) bottomLeftRadius = 0;
-			if (isNaN(bottomRightRadius)) bottomRightRadius = 0;
-			topLeftRadius = Math.min(topLeftRadius , minSize);
-			topRightRadius = Math.min(topRightRadius , minSize);
-			bottomLeftRadius = Math.min(bottomLeftRadius , minSize);
-			bottomRightRadius = Math.min(bottomRightRadius , minSize);
+			
+			topLeftRadius = Math.min(isNaN(topLeftRadius) ? topLeftRadius : 0, minSize);
+			topRightRadius = Math.min(isNaN(topRightRadius) ? topRightRadius : 0, minSize);
+			bottomLeftRadius = Math.min(isNaN(bottomLeftRadius) ? bottomLeftRadius : 0, minSize);
+			bottomRightRadius = Math.min(isNaN(bottomRightRadius) ? bottomRightRadius : 0, minSize);
 			
 			var xw:Number = x + width;
 			var yh:Number = y + height;
@@ -81,6 +79,7 @@ package ghostcat.parse.graphics
 			var direct:int = -1;
 			if (!arowFrom && arowTo)
 				arowFrom = arowTo.clone();
+			
 			if (arowFrom)
 			{
 				if (arowFrom.y > yh)

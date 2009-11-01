@@ -64,7 +64,7 @@ package ghostcat.manager
 		private function completeHandler(event:Event):void
 		{
 			var oper:LoadOper = event.currentTarget as LoadOper;
-			var urlSpit:Array = RegExpUtil.splitUrl(oper.url);
+			var urlSpit:Array = RegExpUtil.splitUrl(oper.request.url);
 			var textType:String = urlSpit[urlSpit.length - 2];
 			resource[textType]=new Object();
 					
