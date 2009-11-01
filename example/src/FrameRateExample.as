@@ -28,7 +28,7 @@ package
 		{
 			RootManager.register(this);
 			
-			InputManager.register(this);
+			InputManager.register(this,false);
 			InputManager.instance.inactiveTime = 1000;
 			
 			FrameRateControl.register(stage);
