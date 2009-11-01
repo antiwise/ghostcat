@@ -22,6 +22,7 @@ package ghostcat.operation
 		
 		private var timer:Timer;
 		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
@@ -34,20 +35,12 @@ package ghostcat.operation
 			timer.start();
 		}
 		
-		public override function result(event:*=null):void
+		/** @inheritDoc*/
+		protected override function end(event:*=null):void
 		{
+			super.end(event);
 			timer.removeEventListener(TimerEvent.TIMER_COMPLETE,result);
 			timer.stop();
-			
-			super.result(event);
-		}
-		
-		public override function fault(event:*=null):void
-		{
-			timer.removeEventListener(TimerEvent.TIMER_COMPLETE,result);
-			timer.stop();
-			
-			super.fault(event);
 		}
 	}
 }

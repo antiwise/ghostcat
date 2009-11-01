@@ -1,9 +1,10 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	
 	import ghostcat.manager.RootManager;
-	import ghostcat.ui.containers.GAlert;
+	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.ui.html.TableCreater;
 	
 	[SWF(width="600",height="600")]
@@ -51,6 +52,8 @@ package
 							</table>
 			
 			addChild(new TableCreater().createObject(xml));
+		
+			new TextFieldParse(xml.toXMLString(),new Point(0,100)).parse(this);
 		}
 	}
 }

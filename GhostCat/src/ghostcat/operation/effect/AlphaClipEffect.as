@@ -5,9 +5,10 @@ package ghostcat.operation.effect
 	import flash.display.DisplayObjectContainer;
 	import flash.display.GradientType;
 	import flash.display.Shape;
-	import flash.display.SpreadMethod;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	
+	import ghostcat.operation.TweenOper;
 
 	/**
 	 * 透明渐变裁切
@@ -15,7 +16,7 @@ package ghostcat.operation.effect
 	 * @author flashyiyi
 	 * 
 	 */
-	public class AlphaClipEffect extends TweenEffect
+	public class AlphaClipEffect extends TweenOper
 	{
 		public static const UP:String = "up";
 		public static const DOWN:String = "down";

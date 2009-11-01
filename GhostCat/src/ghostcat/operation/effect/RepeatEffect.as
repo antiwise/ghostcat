@@ -9,21 +9,24 @@ package ghostcat.operation.effect
 	 */
 	public class RepeatEffect extends RepeatOper implements IEffect
 	{
-		private var _target:*;
 		/** @inheritDoc*/
 		public function get target():*
 		{
-			return _target;
+			return (children && children.length > 0) ? children[0] : null;
 		}
 		
 		public function set target(v:*):void
 		{
-			_target = v;
+			for each (var oper:* in children)
+			{
+				if (oper is IEffect)
+					(oper as IEffect).target = v;
+			}
 		}
 		
-		public function RepeatEffect(list:Array=null, loop:int=-1)
+		public function RepeatEffect(children:Array=null, loop:int=-1)
 		{
-			super(list, loop);
+			super(children, loop);
 		}
 	}
 }

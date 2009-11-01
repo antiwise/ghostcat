@@ -101,6 +101,8 @@ package ghostcat.operation
 		{
 			lastResult = event;
 			
+			end(event);
+			
 			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
 			e.oper = this;
 			e.result = event;
@@ -125,6 +127,8 @@ package ghostcat.operation
 		public function fault(event:*=null):void
 		{
 			lastResult = event;
+			
+			end(event);
 			
 			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_ERROR);
 			e.oper = this;
@@ -158,11 +162,23 @@ package ghostcat.operation
 		}
 		
 		/**
+		 * 结束方法 
+		 * @param event
+		 * 
+		 */
+		protected function end(event:*=null):void
+		{
+			
+		}
+		
+		/**
 		 * 中断队列 
 		 * 
 		 */
 		public function halt():void
 		{
+			end();
+			
 			if (queue)
 				queue.haltChild(this);
 		}

@@ -1,15 +1,17 @@
-package ghostcat.operation
+package ghostcat.operation.effect
 {
 	import flash.geom.Point;
 	
+	import ghostcat.operation.TweenOper;
 	import ghostcat.util.display.Geom;
 
+	
 	/**
 	 * 缩放
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ZoomOper extends TweenOper
+	public class ZoomEffect extends TweenOper
 	{
 		/**
 		 * 中心点（父节点坐标系）
@@ -31,7 +33,7 @@ package ghostcat.operation
 		 * @param invert
 		 * 
 		 */
-		public function ZoomOper(target:*=null, center:Point = null, scale:Number = 1.0, duration:int=100, params:Object=null, invert:Boolean=false)
+		public function ZoomEffect(target:*=null, center:Point = null, scale:Number = 1.0, duration:int=100, params:Object=null, invert:Boolean=false)
 		{
 			if (!center)
 				center = Geom.center(target);

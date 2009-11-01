@@ -32,10 +32,10 @@ package ghostcat.operation
 			obj.addEventListener(this.event,result);
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null):void
+		protected override function end(event:*=null):void
 		{
+			super.end(event);
 			obj.removeEventListener(this.event,result);
-			super.result(event);
 		}
 	}
 }

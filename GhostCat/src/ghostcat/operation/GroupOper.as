@@ -11,20 +11,20 @@ package ghostcat.operation
 	 */	
 	public class GroupOper extends Oper
 	{
-		public var group:Array;
+		public var children:Array;
 		/**
 		 * 完成数量
 		 */
 		public var finishCount:int = 0;
 		
-		public function GroupOper(parms:Array=null)
+		public function GroupOper(children:Array=null)
 		{
-			group = [];
-			if (parms)
-			{
-				for (var i:int = 0; i < parms.length; i++)
-					commitChild(parms[i] as Oper);
-			}
+			super();
+			
+			if (!children)
+				children = [];
+			
+			this.children = children;
 		}
 		
 		/**
@@ -33,7 +33,7 @@ package ghostcat.operation
 		 */			
 		public function commitChild(obj:Oper):void
 		{
-			group.push(obj);
+			children.push(obj);
 		}
 		
 		/**
@@ -42,8 +42,8 @@ package ghostcat.operation
 		 */
 		public function haltChild(obj:Oper):void
 		{
-			Util.remove(group,obj);
-			if (group.length==0)
+			Util.remove(children,obj);
+			if (children.length==0)
 				result();
 		}
 		
@@ -53,9 +53,9 @@ package ghostcat.operation
 			
 			finishCount = 0;
 			
-			for (var i:int = 0; i<group.length; i++)
+			for (var i:int = 0; i<children.length; i++)
 			{
-				var oper:Oper = group[i] as Oper;
+				var oper:Oper = children[i] as Oper;
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);
 				oper.addEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
 				oper.execute();
@@ -78,7 +78,7 @@ package ghostcat.operation
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
 			finishCount++;
 			
-			if (group.length == finishCount)
+			if (children.length == finishCount)
 				result();
 		}
 

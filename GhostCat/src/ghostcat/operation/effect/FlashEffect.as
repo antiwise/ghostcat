@@ -2,7 +2,7 @@ package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
 	
-	import ghostcat.operation.RepeatOper;
+	import ghostcat.operation.TweenOper;
 
 	/**
 	 * 透明度闪烁效果
@@ -17,7 +17,7 @@ package ghostcat.operation.effect
 		 */
 		public var duration:int;
 		/**
-		 * 其实透明度
+		 * 起始透明度
 		 */
 		public var fromAlpha:Number;
 		/**
@@ -39,8 +39,8 @@ package ghostcat.operation.effect
 		{
 			(target as DisplayObject).alpha = fromAlpha;
 			
-			this.list = [new TweenEffect(target,duration,{alpha:toAlpha}),
-							new TweenEffect(target,duration,{alpha:fromAlpha})];
+			this.children = [new TweenOper(target,duration,{alpha:toAlpha}),
+							new TweenOper(target,duration,{alpha:fromAlpha})];
 			
 			super.execute();
 		}

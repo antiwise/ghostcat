@@ -86,7 +86,7 @@ package ghostcat.operation.quest
 		 */
 		public function get finish():Boolean
 		{
-			return queue && queue.data.length == 0;
+			return queue && queue.children.length == 0;
 		}
 		
 		/**

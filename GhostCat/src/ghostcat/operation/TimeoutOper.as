@@ -35,16 +35,10 @@ package ghostcat.operation
 			}
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null):void
+		protected override function end(event:*=null):void
 		{
+			super.end(event);
 			clearTimeout(timeId);
-			super.result(event);
-		}
-		/** @inheritDoc*/
-		public override function fault(event:*=null):void
-		{
-			clearTimeout(timeId);
-			super.fault(event);
 		}
 	}
 }

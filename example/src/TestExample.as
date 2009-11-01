@@ -1,18 +1,10 @@
 package
 {
-	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	
-	import ghostcat.debug.FPS;
-	import ghostcat.debug.FrameRatePanel;
 	import ghostcat.display.GBase;
-	import ghostcat.display.movieclip.GMovieClip;
-	import ghostcat.events.TickEvent;
-	import ghostcat.manager.InputManager;
 	import ghostcat.manager.RootManager;
-	import ghostcat.operation.RepeatOper;
-	import ghostcat.operation.TweenOper;
-	import ghostcat.skin.AlertSkin;
-	import ghostcat.util.easing.Circ;
+	import ghostcat.operation.effect.ShakeEffect;
 
 	[SWF(width="600",height="450")]
 	/**
@@ -22,24 +14,13 @@ package
 	 */
 	public class TestExample extends GBase
 	{
-		public var maskBitmap:Bitmap = new Bitmap();
-		
 		public function TestExample()
 		{
 			RootManager.register(this);
-			InputManager.register(this);
-			InputManager.instance.inactiveTime = 1000;
+			var v:DisplayObject = new TestCollision();
+			addChild(v);
 			
-			FrameRatePanel.show(stage);
-			
-			var v:GMovieClip = new GMovieClip(new AlertSkin());
-			v.x = 150;
-			v.y = 100;
-			addChild(v)
-			
-			addChild(new FPS());
-			
-			new RepeatOper([new TweenOper(v,3000,{x:"300",ease:Circ.easeInOut}),new TweenOper(v,3000,{x:"-300",ease:Circ.easeInOut})]).commit();
+			new ShakeEffect(v).execute();
 		}
 	}
 }

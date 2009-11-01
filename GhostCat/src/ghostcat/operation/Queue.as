@@ -24,19 +24,24 @@ package ghostcat.operation
 		{
 			if (!_defaultQueue)
 				_defaultQueue = new Queue();
+			
 			return _defaultQueue;
 		}
 		
-		public var data:Array = [];
+		/**
+		 * 子Oper数组 
+		 */
+		public var children:Array = [];
 		
 		
-		public function Queue(data:Array=null)
+		public function Queue(children:Array=null)
 		{
 			super();
 			
-			if (!data)
-				data = [];
-			this.data = data;
+			if (!children)
+				children = [];
+			
+			this.children = children;
 		}
 		
 		/**
@@ -48,8 +53,8 @@ package ghostcat.operation
 			obj.queue = this;
 			obj.step = Oper.WAIT;
 			
-			data.push(obj);
-			if (data.length == 1)
+			children.push(obj);
+			if (children.length == 1)
 				doLoad();
 		}
 		
@@ -62,21 +67,21 @@ package ghostcat.operation
 			obj.queue = null;
 			obj.step = Oper.NONE;
 			
-			var index:int = data.indexOf(obj);
+			var index:int = children.indexOf(obj);
 			if (index == -1)
 				return;
 			
 			if (index == 0)//如果正在加载，而跳到下一个
 				nexthandler();
 			else
-				data.splice(index,1);
+				children.splice(index,1);
 		}
 		
 		private function doLoad():void
 		{
-			if (data.length > 0)
+			if (children.length > 0)
 			{
-				var oper:Oper = data[0];
+				var oper:Oper = children[0];
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 				oper.addEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 				oper.execute();
@@ -89,11 +94,11 @@ package ghostcat.operation
 		
 		private function nexthandler(event:Event=null):void
 		{
-			var loader:Oper = data[0] as Oper;
+			var loader:Oper = children[0] as Oper;
 			loader.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 			loader.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 			
-			data.shift();
+			children.shift();
 		
 			doLoad();
 		}

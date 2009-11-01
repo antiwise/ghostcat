@@ -44,17 +44,9 @@ package ghostcat.operation
 				mc.currentFrame = 1;
 		}
 		/** @inheritDoc*/
-		public override function result(event:* = null) : void
+		protected override function end(event:* = null) : void
 		{
-			super.result(event);
-			
-			mc.removeEventListener(MovieEvent.MOVIE_END,result);
-		}
-		/** @inheritDoc*/
-		public override function fault(event:* = null) : void
-		{
-			super.fault(event);
-		
+			super.end(event);
 			mc.removeEventListener(MovieEvent.MOVIE_END,result);
 		}
 	}
