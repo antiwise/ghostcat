@@ -1,6 +1,5 @@
 package ghostcat.ui.controls
 {
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -29,7 +28,7 @@ package ghostcat.ui.controls
 		 */
 		public var showNeedTime:Boolean = true;
 		
-		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:int=1, fields:Object=null)
+		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:String="scaleX", fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin;

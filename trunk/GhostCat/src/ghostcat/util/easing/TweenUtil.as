@@ -252,9 +252,8 @@ package ghostcat.util.easing
 			if (this.invert && this.renderOnStart)
 			{	
 				for (key in this.toValues)
-				{
 					updateValue(this.target,key,this.toValues[key])
-				}
+				
 				this.renderOnStart = false;
 			}
 			
@@ -314,6 +313,15 @@ package ghostcat.util.easing
 				
 				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
 			}
+		}
+		
+		/**
+		 * 删除
+		 * 
+		 */
+		public function remove():void
+		{
+			effects.splice(effects.indexOf(this), 1);
 		}
 		
 		private static function calculateValue($o:TweenUtil,t:int,key:String):*

@@ -402,6 +402,7 @@
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
     <classEntry path="ghostcat.operation.RandomOper"/>
+    <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

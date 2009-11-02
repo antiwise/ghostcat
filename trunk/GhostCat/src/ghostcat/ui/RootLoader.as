@@ -2,10 +2,9 @@ package ghostcat.ui
 {
 	import flash.events.Event;
 	
-	import ghostcat.util.load.RootLoaderBase;
-	import ghostcat.skin.ProgressSkin;
-	import ghostcat.ui.controls.GPercentBar;
 	import ghostcat.ui.controls.GProgressBar;
+	import ghostcat.util.easing.Elastic;
+	import ghostcat.util.load.RootLoaderBase;
 	
 	/**
 	 * 自加载方式的实现。由于使用了组件的进度条，加载条本身就有14K的体积。
@@ -25,6 +24,8 @@ package ghostcat.ui
 			super();
 			progressSprite = new GProgressBar();
 			progressSprite.target = this;
+			progressSprite.duration = 1000;
+			progressSprite.ease = Elastic.easeOut;
 			addChild(progressSprite);
 			
 			stage.addEventListener(Event.RESIZE,resizeHandler);
