@@ -25,7 +25,7 @@ package
 		{
 			RootManager.register(this);
 			
-			DisplayUtil.addAllChildren(this,BitmapSeparateUtil.separateBitmapData(new DrawParse(new TestCollision()).createBitmapData(),10,10,true));
+			DisplayUtil.addAllChildren(this,BitmapSeparateUtil.separateBitmapData(new DrawParse(new TestCollision()).createBitmapData(),20,20,true));
 			
 			g = new TweenGroupByValueManager(1000,{y:"100",autoAlpha:0.0,ease:Circ.easeOut,invert:true});
 			g.addAll(this);
