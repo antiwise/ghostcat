@@ -9,6 +9,7 @@ package ghostcat.debug
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	import flash.utils.getQualifiedClassName;
@@ -19,10 +20,10 @@ package ghostcat.debug
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
 	import ghostcat.text.TextFieldUtil;
-	import ghostcat.util.display.DisplayUtil;
-	import ghostcat.util.display.Geom;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.Util;
+	import ghostcat.util.display.DisplayUtil;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 调试用，查看显示对象的属性。
@@ -105,7 +106,7 @@ package ghostcat.debug
 			pointTextField.x = pos.x + 5;
 			pointTextField.y = pos.y + 5;
 			pointTextField.text = getdisplayObjectDetail(currentObj,global);
-			TextFieldUtil.adjustSize(pointTextField);
+			pointTextField.autoSize = TextFieldAutoSize.LEFT;
 			Geom.forceRectInside(pointTextField,stage);
 			
 			graphics.clear();
