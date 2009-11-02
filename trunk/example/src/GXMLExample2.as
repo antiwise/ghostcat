@@ -73,7 +73,7 @@ package
 				</f:FilterProxy>
 				<!-- 移动 -->
 				<o:Queue id="queue" xmlns:o="ghostcat.operation">
-					<data>
+					<children>
 						<o:TweenOper target="{s}" duration="1000">
 							<!-- 因为XML无法判断是字符串还是数字，所以这里的都将是相对坐标 -->
 							<params>
@@ -86,7 +86,7 @@ package
 							</params>
 						</o:TweenOper>
 						<o:RepeatOper>
-							<list>
+							<children>
 								<o:TweenOper target="{f}" duration="1000">
 									<params>
 										<Object blurX="20" blurY="20"/>
@@ -97,9 +97,9 @@ package
 										<Object blurX="-20" blurY="-20"/>
 									</params>
 								</o:TweenOper>
-							</list>
+							</children>
 						</o:RepeatOper>
-					</data>
+					</children>
 				</o:Queue>
 			</>
 			

@@ -3,6 +3,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.text.TextFieldUtil;
@@ -77,7 +78,12 @@
 				this.thumb = content[mcField];
 				
 			if (content.hasOwnProperty(labelField))
+			{
 				this.labelTextField = content[labelField];
+				
+				if (this.labelTextField.autoSize == TextFieldAutoSize.NONE)
+					this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
+			}
 		}
 		
 		/**
@@ -126,10 +132,7 @@
 		public function set label(v:String):void
 		{
 			if (labelTextField)
-			{
 				labelTextField.text = v;
-				TextFieldUtil.adjustSize(labelTextField)
-			}	
 		}
 		
 		public function get label():String

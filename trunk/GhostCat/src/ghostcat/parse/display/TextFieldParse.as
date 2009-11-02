@@ -7,7 +7,6 @@ package ghostcat.parse.display
 	import flash.text.TextFormat;
 	
 	import ghostcat.parse.DisplayParse;
-	import ghostcat.text.TextFieldUtil;
 
 	/**
 	 * 文本框 
@@ -64,7 +63,7 @@ package ghostcat.parse.display
 				textField.x = pos.x;
 				textField.y = pos.y;
 			}
-			TextFieldUtil.adjustSize(textField);
+			textField.autoSize = TextFieldAutoSize.LEFT;
 			return textField;
 		}
 		
