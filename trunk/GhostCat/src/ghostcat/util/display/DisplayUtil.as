@@ -38,9 +38,8 @@ package ghostcat.util.display
         {
         	var result:Array = [];
             for (var i:int = 0;i < container.numChildren;i++) 
-            {
                 result.push(container.getChildAt(i));
-            }
+            
         	return result;
         }
         
@@ -54,6 +53,21 @@ package ghostcat.util.display
             while (container.numChildren) 
                 container.removeChildAt(0);
         }
+		
+		/**
+		 * 批量增加子对象 
+		 * 
+		 */
+		public static function addAllChildren(container:DisplayObjectContainer,children:Array):void
+		{
+			for (var i:int = 0;i < children.length;i++)
+			{
+				if (children[i] is Array)
+					addAllChildren(container,children[i] as Array);
+				else	
+					container.addChild(children[i])
+			}
+		}
 		
 		/**
          * 将显示对象移至顶端

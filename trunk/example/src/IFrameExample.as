@@ -3,6 +3,9 @@ package
 	import flash.display.Sprite;
 	
 	import ghostcat.extend.IFrame;
+	import ghostcat.operation.RepeatOper;
+	import ghostcat.operation.TweenOper;
+	import ghostcat.operation.effect.RepeatEffect;
 
 	[SWF(width="500",height="400")]
 	/**
@@ -21,6 +24,8 @@ package
 			iframe.width = 500;
 			iframe.height = 350;
 			iframe.url = "http://www.google.com";
+			
+			new RepeatOper([new TweenOper(iframe,5000,{y:"10"}),new TweenOper(iframe,5000,{y:"-10"})]).execute();
 		}
 	}
 }

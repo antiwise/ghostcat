@@ -2,9 +2,9 @@ package ghostcat.community.tween
 {
 	import flash.display.DisplayObject;
 	
+	import ghostcat.community.GroupManager;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenUtil;
-	import ghostcat.community.GroupManager;
 
 	/**
 	 * Tween群组执行
@@ -30,6 +30,12 @@ package ghostcat.community.tween
 		 * 顺序执行延迟
 		 */
 		public var delay:int = 0;
+		
+		/**
+		 * 是否在倒放开始时即确认Tween属性
+		 */
+		public var renderOnStart:Boolean = true;
+		
 		public function TweenGroupManager(duration:int,params:Object,delay:int = 100,invert:Boolean = false)
 		{
 			this.duration = duration;
@@ -49,8 +55,10 @@ package ghostcat.community.tween
 		{
 			var o:Object = Util.copy(params);
 			o.delay = data.indexOf(v) * delay;
+			if (renderOnStart && o.invert)
+				o.renderOnStart = true;
 			
-			TweenUtil.to(v,duration,o);
+			TweenUtil.to(v,duration,o).update();
 		}
 	}
 }

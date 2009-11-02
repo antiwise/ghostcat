@@ -105,7 +105,7 @@
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="ghostcat.display.viewport.Display45Util"/>
-    <classEntry path="ghostcat.display.viewport.Divide45Util"/>
+    <classEntry path="ghostcat.display.viewport.Separate45Util"/>
     <classEntry path="ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="ghostcat.display.viewport.Light"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
@@ -400,6 +400,7 @@
     <classEntry path="ghostcat.debug.FrameRateControl"/>
     <classEntry path="ghostcat.operation.TransitionOper"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
+    <classEntry path="ghostcat.util.display.SeparateUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
