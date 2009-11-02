@@ -401,6 +401,7 @@
     <classEntry path="ghostcat.operation.TransitionOper"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
+    <classEntry path="ghostcat.operation.RandomOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
