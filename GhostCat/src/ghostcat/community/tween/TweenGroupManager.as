@@ -54,8 +54,9 @@ package ghostcat.community.tween
 		protected function tweenCommand(v:DisplayObject):void
 		{
 			var o:Object = Util.copy(params);
-			o.delay = data.indexOf(v) * delay;
-			if (renderOnStart && o.invert)
+			var index:int =  invert ? (data.length - data.indexOf(v) - 1) :data.indexOf(v);
+			o.delay = index * delay;
+			if (renderOnStart)
 				o.renderOnStart = true;
 			
 			TweenUtil.to(v,duration,o).update();

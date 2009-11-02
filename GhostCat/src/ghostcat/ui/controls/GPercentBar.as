@@ -6,7 +6,7 @@
 	import flash.text.TextFieldAutoSize;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.text.TextFieldUtil;
+	import ghostcat.util.easing.TweenUtil;
 
 	/**
 	 * 进度条基类
@@ -18,10 +18,11 @@
 	 */
 	public class GPercentBar extends GBase
 	{
-		public static const MOVIECLIP:int = 0;
-		public static const SCALEX:int = 1;
-		public static const X:int = 2;
-		public static const Y:int = 3;
+		public static const MOVIECLIP:String = "movieClip";
+		public static const SCALEX:String = "scaleX";
+		public static const SCALEY:String = "scaleY";
+		public static const X:String = "x";
+		public static const Y:String = "y";
 		
 		/**
 		 * 最大值
@@ -33,15 +34,24 @@
 		 */
 		public var minValue:Number = 0;
 		
-		private var _percent:Number = 0.0;
+		/**
+		 * 缓动持续时间 
+		 */
+		public var duration:int = 0;
 		
+		/**
+		 * 缓动函数 
+		 */
+		public var ease:Function;
+		
+		private var _percent:Number;
 		private var thumb:DisplayObject;
 		private var labelTextField:TextField;
 		
 		/**
 		 * 取值模式
 		 */
-		public var mode:int = 1;
+		public var mode:String = "scaleX";
 		
 		/**
 		 * 内部元素名称
@@ -57,7 +67,7 @@
 		 * @param labelField	标签实例名
 		 * 
 		 */
-		public function GPercentBar(skin:*=null,replace:Boolean = true,mode:int = 1,fields:Object = null)
+		public function GPercentBar(skin:*=null,replace:Boolean = true,mode:String = "scaleX",fields:Object = null)
 		{
 			if (fields)
 				this.fields = fields;
@@ -84,15 +94,36 @@
 				if (this.labelTextField.autoSize == TextFieldAutoSize.NONE)
 					this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
 			}
+			
+			setPercent(0,false);
 		}
 		
 		/**
-		 * 设置百分比位置
+		 * 百分比位置
 		 * 
 		 * @param v
 		 * 
 		 */
 		public function set percent(v:Number):void
+		{
+			setPercent(v);
+		}
+		
+		public function get percent():Number
+		{
+			return _percent;
+		}
+		
+		
+		/**
+		 * 设置百分比位置
+		 * 
+		 * @param v
+		 * @param tween	是否使用Tween
+		 * @return 
+		 * 
+		 */
+		public function setPercent(v:Number,tween:Boolean = true):void
 		{
 			if (!thumb)
 				return;
@@ -101,28 +132,47 @@
 				return;
 			
 			_percent = v;
+			
+			if (duration > 0)
+				TweenUtil.removeTween(thumb);
+			
+			var v2:Number = minValue + v * (maxValue - minValue);
+			
 			switch (mode)
 			{
 				case MOVIECLIP:
-					(thumb as MovieClip).gotoAndStop(minValue + v * maxValue);
+					if (duration > 0 && tween)
+						TweenUtil.to(thumb,duration,{frame:Math.round(v2),ease:ease});
+					else
+						(thumb as MovieClip).gotoAndStop(Math.round(v2));
 					break;
 				case SCALEX:
-					thumb.scaleX = (minValue + v * (maxValue - minValue))/100;
+					if (duration > 0 && tween)
+						TweenUtil.to(thumb,duration,{scaleX:v2/100,ease:ease});
+					else	
+						thumb.scaleX = v2 / 100;
+					break;
+				case SCALEY:
+					if (duration > 0 && tween)
+						TweenUtil.to(thumb,duration,{scaleY:v2/100,ease:ease});
+					else	
+						thumb.scaleY = v2 / 100;
 					break;
 				case X:
-					thumb.x = minValue + v * (maxValue - minValue);
+					if (duration > 0 && tween)
+						TweenUtil.to(thumb,duration,{x:v2,ease:ease});
+					else	
+						thumb.x = v2;
 					break;
 				case Y:
-					thumb.y = minValue + v * (maxValue - minValue);
+					if (duration > 0 && tween)
+						TweenUtil.to(thumb,duration,{y:v2});
+					else	
+						thumb.y = v2;
 					break;
 			}
 		}
-		
-		public function get percent():Number
-		{
-			return _percent;
-		}
-		
+	
 		/**
 		 * 设置标签信息
 		 * 
