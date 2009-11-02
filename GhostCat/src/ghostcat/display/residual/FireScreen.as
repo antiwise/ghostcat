@@ -25,8 +25,6 @@ package ghostcat.display.residual
 		
 		public function FireScreen(width:Number,height:Number)
 		{
-			addChild(new FPS())
-			
 			super(width,height);
 			
 			maskBitmapData = new BitmapData(width,height);

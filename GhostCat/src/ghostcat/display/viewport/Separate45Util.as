@@ -15,7 +15,7 @@ package ghostcat.display.viewport
 	 * @author flashyiyi
 	 * 
 	 */
-	public final class Divide45Util
+	public final class Separate45Util
 	{
 		/**
 		 * 45度分割图形

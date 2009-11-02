@@ -1,5 +1,6 @@
 package ghostcat.util.display
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -15,10 +16,11 @@ package ghostcat.util.display
 		 * @param source
 		 * @param width
 		 * @param height
+		 * @param toBitmap	转换为Bitmap
 		 * @return 
 		 * 
 		 */
-		public static function separateBitmapData(source:BitmapData,width:int,height:int):Array
+		public static function separateBitmapData(source:BitmapData,width:int,height:int,toBitmap:Boolean = false):Array
 		{
 			var result:Array = [];
 			for (var j:int = 0;j < Math.ceil(source.height / height);j++)
@@ -27,7 +29,15 @@ package ghostcat.util.display
 				{
 					var bitmap:BitmapData = new BitmapData(width,height,true,0);
 					bitmap.copyPixels(source,new Rectangle(i*width,j*height,width,height),new Point());
-					result.push(bitmap);
+					if (toBitmap)
+					{
+						var bp:Bitmap = new Bitmap(bitmap);
+						bp.x = i * width;
+						bp.y = j * height;
+						result.push(bp);
+					}
+					else
+						result.push(bitmap)
 				}	
 			}
 			return result;
