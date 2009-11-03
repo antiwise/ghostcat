@@ -8,7 +8,7 @@ package ghostcat.community.tween
 	import ghostcat.util.easing.TweenUtil;
 
 	/**
-	 * Tween群组执行
+	 * Tween可控群组执行
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -41,7 +41,7 @@ package ghostcat.community.tween
 		}
 		
 		/**
-		 * 顺序执行延迟
+		 * 启动进度
 		 */
 		public function get percent():Number
 		{

@@ -68,10 +68,10 @@ package ghostcat.parse.graphics
 		{
 			var minSize:Number = Math.min(width * 2,height * 2);
 			
-			topLeftRadius = Math.min(isNaN(topLeftRadius) ? topLeftRadius : 0, minSize);
-			topRightRadius = Math.min(isNaN(topRightRadius) ? topRightRadius : 0, minSize);
-			bottomLeftRadius = Math.min(isNaN(bottomLeftRadius) ? bottomLeftRadius : 0, minSize);
-			bottomRightRadius = Math.min(isNaN(bottomRightRadius) ? bottomRightRadius : 0, minSize);
+			topLeftRadius = Math.min(!isNaN(topLeftRadius) ? topLeftRadius : 0, minSize);
+			topRightRadius = Math.min(!isNaN(topRightRadius) ? topRightRadius : 0, minSize);
+			bottomLeftRadius = Math.min(!isNaN(bottomLeftRadius) ? bottomLeftRadius : 0, minSize);
+			bottomRightRadius = Math.min(!isNaN(bottomRightRadius) ? bottomRightRadius : 0, minSize);
 			
 			var xw:Number = x + width;
 			var yh:Number = y + height;

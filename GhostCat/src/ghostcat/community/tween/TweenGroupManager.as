@@ -7,7 +7,7 @@ package ghostcat.community.tween
 	import ghostcat.util.easing.TweenUtil;
 
 	/**
-	 * Tween群组执行
+	 * Tween顺序延迟群组执行
 	 * 
 	 * @author flashyiyi
 	 * 

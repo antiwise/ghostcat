@@ -52,7 +52,8 @@
 		/**
 		 * 载入格式
 		 */		
-		public var dataFormat:String = URLLoaderDataFormat.TEXT;
+		public var dataFormat:String;
+		
 		
 		/**
 		 * 对象
