@@ -1,19 +1,10 @@
 package
 {
 	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 	
 	import ghostcat.community.tween.TweenGroupByValueManager;
-	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.display.loader.AVM1Loader;
-	import ghostcat.manager.RootManager;
-	import ghostcat.parse.display.DrawParse;
-	import ghostcat.util.display.BitmapSeparateUtil;
-	import ghostcat.util.display.DisplayUtil;
-	import ghostcat.util.easing.Circ;
-	import ghostcat.util.easing.TweenUtil;
 
 	[SWF(width="600",height="450")]
 	/**
@@ -39,9 +30,14 @@ package
 		
 		private function completeHandler(event:Event):void
 		{
-			v.call("gotoAndStop",2);
+			v.call("gotoAndStop",[2]);
 			v.setValue("test",123);
-			v.getValue("test");
+			v.getValue("test",rHandler);
+		}
+		
+		private function rHandler(v:Object):void
+		{
+			trace(v);
 		}
 		
 		

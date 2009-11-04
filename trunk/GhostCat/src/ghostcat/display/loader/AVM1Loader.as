@@ -3,19 +3,14 @@ package ghostcat.display.loader
 	import flash.display.AVM1Movie;
 	import flash.display.Loader;
 	import flash.display.Sprite;
-	import flash.errors.IOError;
 	import flash.events.DataEvent;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.StatusEvent;
 	import flash.net.LocalConnection;
-	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import flash.utils.setTimeout;
 	
 	[Event(name="init",type="flash.events.Event")]
 	[Event(name="open",type="flash.events.Event")]
@@ -24,7 +19,8 @@ package ghostcat.display.loader
 	[Event(name="data",type="flash.events.DataEvent")]
 	
 	/**
-	 * 加载并操作AVM1的MovieClip
+	 * 加载并操作AVM1Movie的MovieClip，它可以直接和AS2的SWF通信
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -35,7 +31,7 @@ package ghostcat.display.loader
 		private var loader:Loader;
 		private var lc:LocalConnection = new LocalConnection();
 		
-		public var linkContent:AVM1Movie;
+		public var content:AVM1Movie;
 		public var lastResult:Object;
 		public var bytesLoaded:uint;
 		public var bytesTotal:uint;
@@ -67,12 +63,17 @@ package ghostcat.display.loader
 		private function initCompleteHandler(event:Event):void
 		{
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,initCompleteHandler);
-			linkContent = loader.content as AVM1Movie;
+			content = loader.content as AVM1Movie;
 		}
 		
+		/**
+		 * 载入影片
+		 * @param url
+		 * 
+		 */
 		public function load(url:String):void
 		{
-			if (!linkContent)
+			if (!content)
 			{
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
 				return;
@@ -83,24 +84,57 @@ package ghostcat.display.loader
 			function completeHandler(event:Event):void
 			{
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,completeHandler);
-				linkContent = loader.content as AVM1Movie;
+				content = loader.content as AVM1Movie;
 				load(url);
 			}
 		}
 		
-		public function getValue(target:String):void
+		/**
+		 * 获得属性，返回值会通过DataEvent返回
+		 * @param target
+		 * 
+		 */
+		public function getValue(target:String,rHandler:Function):void
 		{
 			lc.send("AVM1Link","getValue",target);
+			if (rHandler != null)
+				addEventListener(DataEvent.DATA,dataHandler);
+			
+			function dataHandler(event:DataEvent):void
+			{
+				removeEventListener(DataEvent.DATA,dataHandler);
+				rHandler(event.data);
+			}
 		}
 		
+		/**
+		 * 设置属性
+		 * @param target
+		 * @param v
+		 * 
+		 */
 		public function setValue(target:String,v:Object):void
 		{
 			lc.send("AVM1Link","setValue",target,v);
 		}
 		
-		public function call(target:String,param:Object = null):void
+		/**
+		 * 调用方法
+		 * @param target	方法路径
+		 * @param param	方法参数
+		 * 
+		 */
+		public function call(target:String,params:Array = null,rHandler:Function=null):void
 		{
-			lc.send("AVM1Link","call",target,param);
+			lc.send("AVM1Link","call",target,params);
+			if (rHandler != null)
+				addEventListener(DataEvent.DATA,dataHandler);
+			
+			function dataHandler(event:DataEvent):void
+			{
+				removeEventListener(DataEvent.DATA,dataHandler);
+				rHandler(event.data);
+			}
 		}
 		
 		protected function onLoadInit():void
