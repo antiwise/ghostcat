@@ -6,18 +6,15 @@ package ghostcat.operation.server
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
-	import flash.net.NetConnection;
-	import flash.net.ObjectEncoding;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
-	import ghostcat.operation.RemoteOper;
 
 	/**
-	 * Remoting实现类
+	 * HTTP服务
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -67,8 +64,6 @@ package ghostcat.operation.server
 			
 			this.addEventListener(IOErrorEvent.IO_ERROR, onConnectionError);
 			this.addEventListener(SecurityErrorEvent.SECURITY_ERROR , onConnectionError);
-			
-			this.connect(gateway);
 		}
 		
 		/**
@@ -80,13 +75,20 @@ package ghostcat.operation.server
 		 * @return 
 		 * 
 		 */
-		public function operate(method:String,para:Object=null,rHander:Function=null,fHander:Function=null):RemoteOper
+		public function operate(method:String,para:Object=null,rHander:Function=null,fHander:Function=null):LoadOper
 		{
-			if (service)
-				method = service + "/" + method;
+			if (baseUrl)
+				method = baseUrl + "/" + method;
 			
 			var request:URLRequest = new URLRequest(method);
-			request.data = new URLVariables(para);
+			if (para)
+			{
+				var vars:URLVariables = new URLVariables();
+				for (var key:String in para)
+					vars[key] = para[key];
+				
+				request.data = vars;
+			}
 			
 			var oper:LoadOper = new LoadOper(request, null,rHander, fHander);
 			oper.timeout = timeout;
@@ -103,11 +105,7 @@ package ghostcat.operation.server
 		
 		protected function defaultFaultHandler(event:Event):void
 		{
-			if (event is ErrorEvent)
-				Debug.trace("Remote","REMOTE_ERROR:" + event);
-		
-			if (event is NetStatusEvent)
-				Debug.trace("Remote","REMOTE_CONECT_FAILED");
+			Debug.trace("HTTP","ERROR:" + event);
 		}		
 	}
 }
