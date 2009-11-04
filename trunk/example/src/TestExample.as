@@ -1,10 +1,13 @@
 package
 {
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.community.tween.TweenGroupByValueManager;
 	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
+	import ghostcat.display.loader.AVM1Loader;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.display.BitmapSeparateUtil;
@@ -24,10 +27,21 @@ package
 		public var p1:Class;
 		
 		public var g:TweenGroupByValueManager;
+		public var v:AVM1Loader;
 		public function TestExample()
 		{
-			Debug.traceObject(null,new Rectangle(1,1,5,5),"left","right","top","bottom");
-			Debug.traceObject(null,{a:1,b:1});
+			v = new AVM1Loader();
+			addChild(v);
+			v.load("test.swf");
+			
+			v.addEventListener(Event.COMPLETE,completeHandler);
+		}
+		
+		private function completeHandler(event:Event):void
+		{
+			v.call("gotoAndStop",2);
+			v.setValue("test",123);
+			v.getValue("test");
 		}
 		
 		

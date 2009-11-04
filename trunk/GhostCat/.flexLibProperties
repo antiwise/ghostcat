@@ -403,6 +403,7 @@
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
     <classEntry path="ghostcat.operation.RandomOper"/>
     <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
+    <classEntry path="ghostcat.display.loader.AVM1Loader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
