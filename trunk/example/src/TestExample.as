@@ -1,6 +1,9 @@
 package
 {
+	import flash.geom.Rectangle;
+	
 	import ghostcat.community.tween.TweenGroupByValueManager;
+	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.DrawParse;
@@ -23,14 +26,8 @@ package
 		public var g:TweenGroupByValueManager;
 		public function TestExample()
 		{
-			RootManager.register(this);
-			
-			DisplayUtil.addAllChildren(this,BitmapSeparateUtil.separateBitmapData(new DrawParse(new TestCollision()).createBitmapData(),20,20,true));
-			
-			g = new TweenGroupByValueManager(1000,{y:"100",autoAlpha:0.0,ease:Circ.easeOut,invert:true});
-			g.addAll(this);
-			g.start();
-			TweenUtil.to(g,10000,{percent:1.0})
+			Debug.traceObject(null,new Rectangle(1,1,5,5),"left","right","top","bottom");
+			Debug.traceObject(null,{a:1,b:1});
 		}
 		
 		
