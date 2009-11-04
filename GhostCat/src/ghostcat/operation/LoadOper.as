@@ -9,6 +9,7 @@
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.system.Security;
@@ -40,6 +41,11 @@
 		public static var LOADER_TYPE:Array = [".swf",".gif",".png",".jpg"];
 		
 		/**
+		 * 始终使用嵌入资源 
+		 */
+		public static var alawayUseEmbedClass:Boolean = false;
+		
+		/**
 		 * 路径
 		 */		
 		public var request:URLRequest;
@@ -56,12 +62,12 @@
 		
 		
 		/**
-		 * 对象
+		 * 加载对象
 		 */
-		protected var obj:*;
+		protected var _loader:EventDispatcher;
 		
 		/**
-		 * 陷入资源
+		 * 嵌入入资源
 		 */
 		protected var embedClass:Class;
 		
@@ -118,53 +124,69 @@
 			super.execute();
 			
 			var isLoader:Boolean;
-			if (this.type == AUTO)
+			if (this.type == AUTO && request)
 				isLoader = (LOADER_TYPE.indexOf(new URL(request.url).pathname.extension) != -1);
-			else if (this.type == LOADER)
-				isLoader = true;
 			else
-				isLoader = false;
+				isLoader = (this.type == LOADER);
 			
 			if (isLoader)
 			{
 				var loader:Loader = new Loader();
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
-				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
-				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
-				if (useCurrentDomain)
+				_loader = loader;
+				
+				if (embedClass && alawayUseEmbedClass || !request)
 				{
-					var loaderContext:LoaderContext = new LoaderContext(true,ApplicationDomain.currentDomain);
-					if (Security.sandboxType == Security.REMOTE)
-						loaderContext.securityDomain = SecurityDomain.currentDomain;
-						
-					loader.load(request,loaderContext);
+					loadEmbedClass();
 				}
 				else
 				{
-					loader.load(request);
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
+					loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
+					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
+					
+					if (useCurrentDomain)
+					{
+						var loaderContext:LoaderContext = new LoaderContext(true,ApplicationDomain.currentDomain);
+						if (Security.sandboxType == Security.REMOTE)
+							loaderContext.securityDomain = SecurityDomain.currentDomain;
+						
+						loader.load(request,loaderContext);
+					}
+					else
+					{
+						loader.load(request);
+					}
 				}
-				obj = loader;
 			}
 			else
 			{
 				var urlLoader:URLLoader = new URLLoader();
 				urlLoader.dataFormat = dataFormat;
-				urlLoader.addEventListener(Event.COMPLETE,result);
-				urlLoader.addEventListener(ProgressEvent.PROGRESS,progressHandler);
-				urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
-				urlLoader.load(request);
+				_loader = urlLoader;
 				
-				obj = urlLoader;
+				if (embedClass && alawayUseEmbedClass || !request)
+				{
+					loadEmbedClass();
+				}
+				else
+				{
+					urlLoader.addEventListener(Event.COMPLETE,result);
+					urlLoader.addEventListener(ProgressEvent.PROGRESS,progressHandler);
+					urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
+					
+					urlLoader.load(request);
+				}
 			}
 		}
 		
 		public override function result(event:*=null):void
 		{
 			dispatchEvent(event);
-			
-			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
-			(event.target as EventDispatcher).removeEventListener(ProgressEvent.PROGRESS,progressHandler);
-			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
+		
+			var evt:EventDispatcher = event.currentTarget as EventDispatcher;
+			evt.removeEventListener(Event.COMPLETE,result);
+			evt.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
+			evt.removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
 			super.result(event);		
 		}
@@ -172,41 +194,41 @@
 		public override function fault(event:*=null):void
 		{
 			dispatchEvent(event);
-			
+		
 			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
 			(event.target as EventDispatcher).removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
-			
+		
 			if (embedClass)
-			{
-				var byteArr:ByteArray = new embedClass();
-				
-				embedClass = null;
-				
-				if (obj is Loader)
-				{
-					var oper:Loader = obj as Loader;
-					oper.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
-					oper.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
-					oper.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
-					oper.loadBytes(byteArr,new LoaderContext(true,ApplicationDomain.currentDomain));
-				}
-				else if (obj is URLLoader)
-				{
-					var urlLoader:URLLoader = obj as URLLoader;
-					
-					if (urlLoader.dataFormat == URLLoaderDataFormat.BINARY)
-						urlLoader.data = byteArr;
-					else
-						urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
-					
-					super.result(event);
-				}
-			}
+				loadEmbedClass();
 			else
-			{
 				super.fault(event);
-			}			
+		}
+		
+		protected function loadEmbedClass():void
+		{
+			var byteArr:ByteArray = new embedClass();
+			embedClass = null;
+			
+			if (_loader is Loader)
+			{
+				var oper:Loader = _loader as Loader;
+				oper.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
+				oper.loadBytes(byteArr,new LoaderContext(true,ApplicationDomain.currentDomain));
+			}
+			else if (_loader is URLLoader)
+			{
+				var urlLoader:URLLoader = _loader as URLLoader;
+				
+				if (urlLoader.dataFormat == URLLoaderDataFormat.BINARY)
+					urlLoader.data = byteArr;
+				else if (urlLoader.dataFormat == URLLoaderDataFormat.TEXT)
+					urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
+				else
+					urlLoader.data = new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
+				
+				super.result(_loader);
+			}
 		}
 		
 		protected function progressHandler(event:ProgressEvent):void
@@ -221,11 +243,11 @@
 		{
 			super.halt();
 		
-			if (obj is Loader)
-				(obj as Loader).close();
+			if (_loader is Loader)
+				(_loader as Loader).close();
 			
-			if (obj is URLLoader)
-				(obj as URLLoader).close();
+			if (_loader is URLLoader)
+				(_loader as URLLoader).close();
 		}
 		
 		/**
@@ -234,7 +256,7 @@
 		 */		
 		public function get loaderInfo():LoaderInfo
 		{
-			return (obj is Loader)?(obj as Loader).contentLoaderInfo: null;
+			return (_loader is Loader)?(_loader as Loader).contentLoaderInfo: null;
 		}
 		
 		/**
@@ -243,7 +265,7 @@
 		 */
 		public function get eventDispatcher():EventDispatcher
 		{
-			return (obj is Loader)?(obj as Loader).contentLoaderInfo: obj;
+			return (_loader is Loader)?(_loader as Loader).contentLoaderInfo: _loader;
 		}
 		
 		/**
@@ -251,10 +273,10 @@
 		 */		
 		public function get data():*
 		{
-			if (obj is Loader)
-				return (obj as Loader).content;
-			else if (obj is URLLoader)
-				return (obj as URLLoader).data;
+			if (_loader is Loader)
+				return (_loader as Loader).content;
+			else if (_loader is URLLoader)
+				return (_loader as URLLoader).data;
 			else
 				return null;
 		}
