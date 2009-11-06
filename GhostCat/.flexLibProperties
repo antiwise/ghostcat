@@ -405,6 +405,7 @@
     <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
     <classEntry path="ghostcat.display.loader.AVM1Loader"/>
     <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
+    <classEntry path="ghostcat.util.core.EventHandler"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
