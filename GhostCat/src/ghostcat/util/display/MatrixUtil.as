@@ -33,7 +33,24 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * 创建渐变时用的矩阵
+		 * 创建按缩放比的矩阵 
+		 * @param width
+		 * @param height
+		 * @param rotation
+		 * @param tx
+		 * @param ty
+		 * @return 
+		 * 
+		 */
+		public static function createBox(scaleX:Number,scaleY:Number,rotation:Number = 0,tx:Number = 0,ty:Number = 0):Matrix
+		{
+			var m:Matrix = new Matrix();
+			m.createBox(scaleX,scaleY,rotation,tx,ty);	
+			return m;
+		}
+		
+		/**
+		 * 创建用于填充的矩阵
 		 * @param width
 		 * @param height
 		 * @param rotation

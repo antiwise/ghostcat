@@ -57,7 +57,6 @@ package ghostcat.display.loader
 		
 		private function statusHandler(event:StatusEvent):void
 		{
-			
 		}
 		
 		private function initCompleteHandler(event:Event):void
