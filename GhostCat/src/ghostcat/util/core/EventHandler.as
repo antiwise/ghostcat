@@ -13,15 +13,16 @@ package ghostcat.util.core
 	 */
 	dynamic public class EventHandler extends Proxy
 	{
+		/**
+		 * 事件列表 
+		 */
 		public var handlers:Object;
+		
 		/**
 		 * 是否弱引用 
 		 */
 		public var useWeakReference:Boolean = false;
-		/**
-		 * 目标 
-		 */
-		public var target:EventDispatcher;
+		
 		public function EventHandler(obj:Object = null)
 		{
 			handlers = {};
