@@ -51,6 +51,9 @@ package ghostcat.fileformat.swf
 		 */
 		public var frameCount:int;
 		
+		//文件头长度（指的是未压缩部分的长度）
+		private var headLength:uint;
+		
 		public function SWFDecoder(data:ByteArray = null)
 		{
 			if (data)
@@ -121,6 +124,9 @@ package ghostcat.fileformat.swf
 			
 			bytes.readBytes(bytes);
 			
+			this.headLength = bytes.position;
+			
+			bytes.position = 0;
 			if (compressed)
 				bytes.uncompress();
 			
@@ -140,7 +146,7 @@ package ghostcat.fileformat.swf
 				tag.length = BitUtil.getShiftedValue2(header,16,10,16);
 				if (tag.length == 0x3F)
 					tag.length = bytes.readInt();
-				tag.position = bytes.position;
+				tag.position = bytes.position + headLength;
 				
 				tagList.push(tag);
 				
@@ -213,7 +219,7 @@ class TagItem
 	 */
 	public var type:int;
 	/**
-	 * 在数据源中的起点位置
+	 * 在数据中的起点位置
 	 */
 	public var position:int;
 	/**
