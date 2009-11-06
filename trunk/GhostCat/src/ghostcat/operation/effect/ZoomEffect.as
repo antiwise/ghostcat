@@ -51,8 +51,8 @@ package ghostcat.operation.effect
 				params = new Object();
 			
 			params.scaleX = params.scaleY = this.scale;
-			params.x = center.x * (1 - scale);
-			params.y = center.y * (1 - scale);
+			params.x = target.x + (target.x - center.x) * (scale - target.scaleX) / target.scaleX;
+			params.y = target.y + (target.y - center.y) * (scale - target.scaleY) / target.scaleY;
 			super.execute();
 		}
 	}

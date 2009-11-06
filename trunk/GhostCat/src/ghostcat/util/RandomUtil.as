@@ -76,7 +76,7 @@ package ghostcat.util
 			var result:String = "";
 			for (var i:int = 0; i < len; i++)
 			{
-				result += String.fromCharCode(integer(48,122));
+				result += String.fromCharCode(integer(65,122));
 			}
 			return result;
 		}
