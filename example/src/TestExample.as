@@ -1,11 +1,11 @@
 package
 {
-	import flash.events.Event;
+	import flash.net.URLLoaderDataFormat;
 	
-	import ghostcat.community.tween.TweenGroupByValueManager;
 	import ghostcat.display.GBase;
-	import ghostcat.display.loader.AVM1Loader;
-	import ghostcat.util.core.Asyn;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.fileformat.mp3.MP3Decoder;
+	import ghostcat.operation.LoadOper;
 
 	[SWF(width="600",height="450")]
 	/**
@@ -15,15 +15,17 @@ package
 	 */
 	public class TestExample extends GBase
 	{
-		[Embed(source="p1.jpg")]
-		public var p1:Class;
-		
-		public var g:TweenGroupByValueManager;
-		public var v:int = 0;
 		public function TestExample()
 		{
-			Asyn.autoSetInv(stage);
-			Asyn.asynFor(function ():void {trace(++v)},0,1000000);
+			var oper:LoadOper = new LoadOper("f8i746.MP3",null,rhandler);
+			oper.dataFormat = URLLoaderDataFormat.BINARY;
+			oper.commit();
+		}
+		
+		private function rhandler(event:OperationEvent):void
+		{
+			var v:MP3Decoder = new MP3Decoder();
+			v.play((event.currentTarget as LoadOper).data,0,int.MAX_VALUE);
 		}
 		
 		

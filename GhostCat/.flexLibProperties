@@ -29,12 +29,14 @@
     <classEntry path="ghostcat.community.sort.Sort45Manager"/>
     <classEntry path="ghostcat.community.sort.SortAllManager"/>
     <classEntry path="ghostcat.community.sort.SortYManager"/>
+    <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
     <classEntry path="ghostcat.community.tween.TweenGroupManager"/>
     <classEntry path="ghostcat.debug.Debug"/>
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
+    <classEntry path="ghostcat.debug.FrameRateControl"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
@@ -62,6 +64,7 @@
     <classEntry path="ghostcat.display.graphics.GridItem"/>
     <classEntry path="ghostcat.display.graphics.LinkLine"/>
     <classEntry path="ghostcat.display.graphics.SelectRect"/>
+    <classEntry path="ghostcat.display.loader.AVM1Loader"/>
     <classEntry path="ghostcat.display.loader.AssetLoader"/>
     <classEntry path="ghostcat.display.loader.StreamLoader"/>
     <classEntry path="ghostcat.display.loader.StreamTextLoader"/>
@@ -74,9 +77,6 @@
     <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.DissolveMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.RectMaskHandler"/>
     <classEntry path="ghostcat.display.other.BubbleCreater"/>
     <classEntry path="ghostcat.display.other.CircleLight"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
@@ -93,6 +93,7 @@
     <classEntry path="ghostcat.display.transfer.Skew"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
+    <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
     <classEntry path="ghostcat.display.transition.TransitionAlphaLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
@@ -101,13 +102,20 @@
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionObjectLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.DissolveMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.RectMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
+    <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
     <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
     <classEntry path="ghostcat.display.viewport.Collision"/>
     <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
     <classEntry path="ghostcat.display.viewport.Display45Util"/>
-    <classEntry path="ghostcat.display.viewport.Separate45Util"/>
     <classEntry path="ghostcat.display.viewport.ICollisionClient"/>
     <classEntry path="ghostcat.display.viewport.Light"/>
+    <classEntry path="ghostcat.display.viewport.Separate45Util"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
     <classEntry path="ghostcat.display.viewport.Tile45"/>
     <classEntry path="ghostcat.display.viewport.TileGameItem"/>
@@ -137,6 +145,7 @@
     <classEntry path="ghostcat.fileformat.gif.LZWEncoder"/>
     <classEntry path="ghostcat.fileformat.gif.NeuQuant"/>
     <classEntry path="ghostcat.fileformat.jpg.JPGEncoder"/>
+    <classEntry path="ghostcat.fileformat.mp3.MP3Decoder"/>
     <classEntry path="ghostcat.fileformat.png.PNGEncoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFDecoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
@@ -199,6 +208,7 @@
     <classEntry path="ghostcat.operation.Oper"/>
     <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.Queue"/>
+    <classEntry path="ghostcat.operation.RandomOper"/>
     <classEntry path="ghostcat.operation.RemoteOper"/>
     <classEntry path="ghostcat.operation.RepeatOper"/>
     <classEntry path="ghostcat.operation.RetryOper"/>
@@ -207,10 +217,10 @@
     <classEntry path="ghostcat.operation.SoundOper"/>
     <classEntry path="ghostcat.operation.SwitchOper"/>
     <classEntry path="ghostcat.operation.TimeoutOper"/>
+    <classEntry path="ghostcat.operation.TransitionOper"/>
     <classEntry path="ghostcat.operation.TweenOper"/>
     <classEntry path="ghostcat.operation.WaitOper"/>
     <classEntry path="ghostcat.operation.WatchOper"/>
-    <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.effect.AlphaClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ClipEffect"/>
     <classEntry path="ghostcat.operation.effect.ColorFlashEffect"/>
@@ -219,9 +229,12 @@
     <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
+    <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
+    <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
+    <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
@@ -257,6 +270,7 @@
     <classEntry path="ghostcat.text.FilePath"/>
     <classEntry path="ghostcat.text.IME"/>
     <classEntry path="ghostcat.text.NumberUtil"/>
+    <classEntry path="ghostcat.text.PassWordUtil"/>
     <classEntry path="ghostcat.text.PinYin"/>
     <classEntry path="ghostcat.text.RegExpUtil"/>
     <classEntry path="ghostcat.text.StringTween"/>
@@ -345,6 +359,7 @@
     <classEntry path="ghostcat.util.core.Asyn"/>
     <classEntry path="ghostcat.util.core.CallLater"/>
     <classEntry path="ghostcat.util.core.ClassFactory"/>
+    <classEntry path="ghostcat.util.core.EventHandler"/>
     <classEntry path="ghostcat.util.core.Handler"/>
     <classEntry path="ghostcat.util.core.HashMap"/>
     <classEntry path="ghostcat.util.core.Singleton"/>
@@ -359,6 +374,7 @@
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
     <classEntry path="ghostcat.util.data.PropertyChangeEvent"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
+    <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
     <classEntry path="ghostcat.util.display.BitmapUtil"/>
     <classEntry path="ghostcat.util.display.ColorConvertUtil"/>
@@ -371,6 +387,7 @@
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
+    <classEntry path="ghostcat.util.display.SeparateUtil"/>
     <classEntry path="ghostcat.util.easing.Back"/>
     <classEntry path="ghostcat.util.easing.Bounce"/>
     <classEntry path="ghostcat.util.easing.Circ"/>
@@ -391,21 +408,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler"/>
-    <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
-    <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
-    <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
-    <classEntry path="ghostcat.debug.FrameRateControl"/>
-    <classEntry path="ghostcat.operation.TransitionOper"/>
-    <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
-    <classEntry path="ghostcat.util.display.SeparateUtil"/>
-    <classEntry path="ghostcat.operation.RandomOper"/>
-    <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
-    <classEntry path="ghostcat.display.loader.AVM1Loader"/>
-    <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
-    <classEntry path="ghostcat.util.core.EventHandler"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

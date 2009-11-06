@@ -25,8 +25,6 @@ package ghostcat.fileformat.swf.tag
 			symbolClasses = [];
 			links = [];
 			
-			var reader:ByteArrayReader = new ByteArrayReader(bytes);
-			
 			var len:int = bytes.readUnsignedShort();
 			for (var i:int = 0;i < len;i++)
 			{
