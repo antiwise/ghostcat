@@ -168,5 +168,34 @@ package ghostcat.display.loader
 			lastResult = v;
 			dispatchEvent(new DataEvent(DataEvent.DATA,false,false,String(v)));
 		}
+		
+		/**
+		 * 停止动画
+		 * 
+		 */
+		public function stop():void
+		{
+			call("stop");
+		}
+		
+		/**
+		 * 跳转并播放 
+		 * @param frame
+		 * 
+		 */
+		public function gotoAndPlay(frame:int):void
+		{
+			call("gotoAndPlay",[frame]);
+		}
+		
+		/**
+		 * 跳转并停止 
+		 * @param frame
+		 * 
+		 */
+		public function gotoAndStop(frame:int):void
+		{
+			call("gotoAndStop",[frame]);
+		}
 	}
 }

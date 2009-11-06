@@ -76,6 +76,17 @@ package ghostcat.fileformat.swf
 		}
 		
 		/**
+		 * 获得Tag列表
+		 * 
+		 * @return 
+		 * 
+		 */
+		public function getAllTags():Array
+		{
+			return tagList;
+		}
+		
+		/**
 		 * 获得某个类型的全部Tag
 		 * 
 		 * @param tagClass	Tag的类型
@@ -97,8 +108,15 @@ package ghostcat.fileformat.swf
 				{
 					var newTag:Tag = new tagClass();
 					newTag.bytes = this.bytes;
-					newTag.bytes.position = newTag.position = tagItem.position;
+					newTag.position = tagItem.position;
+					newTag.bytes.position = newTag.position - headLength;
 					newTag.length = tagItem.length;
+					
+					var header:uint = newTag.bytes.readUnsignedShort();
+					newTag.length = BitUtil.getShiftedValue2(header,16,10,16);
+					if (newTag.length == 0x3F)
+						newTag.length = newTag.bytes.readInt();
+						
 					newTag.read();
 					
 					result.push(newTag);
@@ -122,11 +140,11 @@ package ghostcat.fileformat.swf
 			verison = bytes.readUnsignedByte();
 			fileLength = bytes.readUnsignedInt();
 			
-			bytes.readBytes(bytes);
-			
 			this.headLength = bytes.position;
 			
+			bytes.readBytes(bytes);
 			bytes.position = 0;
+			
 			if (compressed)
 				bytes.uncompress();
 			
@@ -141,13 +159,13 @@ package ghostcat.fileformat.swf
 			while (bytes.bytesAvailable)
 			{
 				var tag:TagItem = new TagItem();
+				tag.position = bytes.position + headLength;
+				
 				var header:uint = bytes.readUnsignedShort();
 				tag.type = BitUtil.getShiftedValue2(header,16,0,10);
 				tag.length = BitUtil.getShiftedValue2(header,16,10,16);
 				if (tag.length == 0x3F)
 					tag.length = bytes.readInt();
-				tag.position = bytes.position + headLength;
-				
 				tagList.push(tag);
 				
 				bytes.position += tag.length;

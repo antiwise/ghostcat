@@ -9,10 +9,13 @@
     import flash.events.MouseEvent;
     import flash.external.ExternalInterface;
     import flash.geom.Point;
+    import flash.utils.Dictionary;
     import flash.utils.getQualifiedClassName;
     import flash.utils.getTimer;
     
     import ghostcat.events.InputEvent;
+    import ghostcat.util.Util;
+    import ghostcat.util.core.HashMap;
     import ghostcat.util.core.Singleton;
     
     /**
@@ -30,7 +33,7 @@
     {
     	public static var MUTLI_INTERVAL:int = 300;
     	
-		private var keyBuffer:int = 0;
+		private var keyBuffer:Dictionary = new Dictionary();
 		
 		private var lastTime:int = getTimer();
 		private var lastMouseTime:int;
@@ -198,7 +201,7 @@
          */
         public function isKeyPressed(code:int):Boolean
         {
-            return (keyBuffer & code) != 0;
+            return keyBuffer.hasOwnProperty(code);
         }
 
         /**
@@ -207,7 +210,7 @@
          */
         public function get keyDown():Boolean
         {
-            return keyBuffer != 0;
+			return !Util.isEmpty(keyBuffer);
         }
 		
         /**
@@ -216,7 +219,7 @@
          */		
         public function resetKeys():void
         {
-            keyBuffer = 0;
+            keyBuffer = new Dictionary();
         }
         
         /**
@@ -235,8 +238,8 @@
         
         private function keyUpHandler(event:KeyboardEvent):void
         {
-        	keyBuffer = keyBuffer & ~(event.keyCode);
-        	
+        	delete keyBuffer[event.keyCode];
+			
         	if (event.keyCode == keyDownCode)
             {
             	var evt:InputEvent = new InputEvent(InputEvent.KEY_DOWN_UP);
@@ -256,7 +259,9 @@
         		
         	lastKeyTime = getTimer();
         	
-        	keyBuffer = keyBuffer | (event.keyCode);
+			if (event.keyCode != 229)
+				keyBuffer[event.keyCode] = null;
+			
         	_keyDownCode = event.keyCode;
         	
         	refreshLastTime();

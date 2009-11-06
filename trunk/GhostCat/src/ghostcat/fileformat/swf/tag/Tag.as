@@ -18,7 +18,7 @@ package ghostcat.fileformat.swf.tag
 		public var bytes:ByteArray;
 		
 		/**
-		 * 在数据源中的起点位置
+		 * 在数据源中的起点位置（整个TAG）
 		 */
 		public var position:int;
 		

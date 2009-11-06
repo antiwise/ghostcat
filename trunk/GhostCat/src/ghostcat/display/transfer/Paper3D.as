@@ -30,12 +30,12 @@ package ghostcat.display.transfer
 		 * @return 
 		 * 
 		 */
-		public function get rotationX():Number
+		public function get rotationAtX():Number
 		{
 			return _rotationX;
 		}
 
-		public function set rotationX(v:Number):void
+		public function set rotationAtX(v:Number):void
 		{
 			_rotationX = v;
 			
@@ -56,12 +56,12 @@ package ghostcat.display.transfer
 		 * @return 
 		 * 
 		 */
-		public function get rotationY():Number
+		public function get rotationAtY():Number
 		{
 			return _rotationY;
 		}
 
-		public function set rotationY(v:Number):void
+		public function set rotationAtY(v:Number):void
 		{
 			_rotationY = v;
 			
