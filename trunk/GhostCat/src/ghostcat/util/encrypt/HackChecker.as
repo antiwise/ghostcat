@@ -5,6 +5,12 @@ package ghostcat.util.encrypt
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 
+	/**
+	 * 此类用于验证作弊行为
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class HackChecker
 	{
 		public static const checkInterval:int = 1000;
@@ -18,6 +24,12 @@ package ghostcat.util.encrypt
 		 */
 		public static var hackHandler:Function = defaultHackHandler;
 		
+		/**
+		 * 激活变速齿轮验证 
+		 * 
+		 * @param interval	检测间隔
+		 * 
+		 */
 		public static function enabledCheckSpeedUp(interval:int = 1000):void
 		{
 			var nextTime:int = getTimer();

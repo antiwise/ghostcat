@@ -7,7 +7,6 @@ package ghostcat.parse
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	
-
 	/**
 	 * 其实这东西就类似flash10的graphicData，将绘图操作对象化了。
 	 * 

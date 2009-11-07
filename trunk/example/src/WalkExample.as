@@ -14,11 +14,12 @@ package
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="600",height="450")]
 	/**
+	 * 行走
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends GBase
+	public class WalkExample extends GBase
 	{
 		//九宫格帧标签
 		private const labelNames:Array = [
@@ -112,8 +113,8 @@ package
 				return;
 			
 			var oldFrame:int = man.frameInLabel;
-			man.setLabel(state);
-			man.frameInLabel = oldFrame;
+			man.setLabel(state);//切换动画状态
+			man.frameInLabel = oldFrame;//拷贝上一次的动画位置
 		}
 	}
 }
