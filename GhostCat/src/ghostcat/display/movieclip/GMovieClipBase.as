@@ -207,8 +207,8 @@ package ghostcat.display.movieclip
         {
             nextLabels = [];
         }
-        
-        /**
+		
+		/**
          * 初始化动画
          * 
          */
@@ -274,6 +274,21 @@ package ghostcat.display.movieclip
 				
 				frameTimer += 1000/ Math.abs(frameRate);
 			}
+		}
+		
+		/**
+		 * 当前帧标签内的位置
+		 * @return 
+		 * 
+		 */
+		public function get frameInLabel():int
+		{
+			return currentFrame - getLabelStart(curLabelIndex) + 1;
+		}
+		
+		public function set frameInLabel(v:int):void
+		{
+			currentFrame = getLabelStart(curLabelIndex) + v - 1;
 		}
 		
 		/**

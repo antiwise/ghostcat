@@ -1,6 +1,5 @@
 package ghostcat.util.data
 {
-	
 	/**
 	 * 一个用来处理布尔数组的类。
 	 * 

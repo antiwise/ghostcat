@@ -408,6 +408,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.display.movieclip.FrameLabelUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
