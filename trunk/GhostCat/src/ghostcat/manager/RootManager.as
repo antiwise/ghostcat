@@ -10,14 +10,14 @@ package ghostcat.manager
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
-	import ghostcat.util.Tick;
-	
 	/**
-	 * 舞台对象相关扩展。
+	 * 舞台对象相关扩展
 	 * 
 	 * 主要功能为获取flashVars，直接使用getValue方法即可。不同的是，你可以使用setValue来设置parameters的值，模拟flashVars存在时的效果，
 	 * 这样就可以在非网页环境进行测试。而当真正的flashVars存在时，与之冲突的设置值都会被忽略。
 	 * 这样调试和发布就可以统一处理。
+	 * 
+	 * 也不一定非要和flashVars关系上，你也可以把这里当成一个全局的数据容器
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -25,6 +25,7 @@ package ghostcat.manager
 	public final class RootManager
 	{
 		private static var _root:Sprite;
+		private static var _initialized:Boolean = false;
 		
 		private static var _parameters:Object = new Object();
 		
@@ -37,6 +38,11 @@ package ghostcat.manager
 		 */
 		public static const MODE_NOSCALE:int = 1;
 		
+		/**
+		 * 场景对象 
+		 * @return 
+		 * 
+		 */
 		public static function get root():Sprite
 		{
 			if (!_root)
@@ -44,9 +50,24 @@ package ghostcat.manager
 			return _root;
 		}
 		
+		/**
+		 * 舞台对象 
+		 * @return 
+		 * 
+		 */
 		public static function get stage():Stage
 		{
 			return root.stage;
+		}
+		
+		/**
+		 * 是否已经初始化 
+		 * @return 
+		 * 
+		 */
+		public static function get initialized():Boolean
+		{
+			return _initialized;
 		}
 		
 		/**
@@ -63,7 +84,7 @@ package ghostcat.manager
 			setMode(mode);
 			setMenuMode(menuMode);
 			
-			Tick.frameRate = root.stage.frameRate;
+			_initialized = true;
 		}
 		
 		/**

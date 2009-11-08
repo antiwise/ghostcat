@@ -355,7 +355,11 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
-			tweenTo(_mouseOver ? OVER : UP);
+			if (enabled)
+				tweenTo(_mouseOver ? OVER : UP);
+			else
+				tweenTo(DISABLED);
+			
 			_mouseDown = false;
 			
 			if (trackAsMenu)

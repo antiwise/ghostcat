@@ -20,7 +20,7 @@ package ghostcat.text
 	 * @author flashyiyi
 	 * 
 	 */
-	public class StringTween extends GText
+	public class GTweenText extends GText
 	{
 		/**
 		 * 打散的文字实例 
@@ -39,7 +39,7 @@ package ghostcat.text
 			return completeCount > 0;
 		}
 		
-		public function StringTween(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
+		public function GTweenText(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
 			super(skin, replace, separateTextField, textPadding);
 		}

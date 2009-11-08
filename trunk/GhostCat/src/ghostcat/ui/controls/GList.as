@@ -40,7 +40,7 @@ package ghostcat.ui.controls
 			this.type = type;
 			this.itemRender = itemRender;
 			
-			super(skin,replace,null,fields);
+			super(skin,replace,NaN,NaN,fields);
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void

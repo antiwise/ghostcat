@@ -1,10 +1,11 @@
-package ghostcat.ui.controls
+package ghostcat.text
 {
 	import flash.display.BitmapData;
 	import flash.filters.BitmapFilter;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.ui.layout.Padding;
+	import ghostcat.ui.controls.GText;
 	
 	/**
 	 * 位图字体，可以对单字使用filter

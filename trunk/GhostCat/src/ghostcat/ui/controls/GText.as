@@ -326,6 +326,16 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 设置格式文本 
+		 * @param v
+		 * 
+		 */
+		public function set htmlText(v:String):void
+		{
+			data = "<html>"+v+"</html>"
+		}
+		
+		/**
 		 * 根据文本框更新图形大小
 		 * 
 		 */

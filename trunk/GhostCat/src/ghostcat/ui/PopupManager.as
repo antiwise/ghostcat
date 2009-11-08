@@ -2,7 +2,6 @@ package ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.filters.BlurFilter;
@@ -136,7 +135,7 @@ package ghostcat.ui
 		 */
 		public function get popupLayer():DisplayObjectContainer
 		{
-			return _popupLayer ? _popupLayer : RootManager.stage;
+			return _popupLayer;
 		}
 
 		public function set popupLayer(v:DisplayObjectContainer):void
@@ -151,7 +150,7 @@ package ghostcat.ui
 		 */
 		public function get application():DisplayObjectContainer
 		{
-			return _application ? _application : RootManager.root;
+			return _application;
 		}
 
 		public function set application(v:DisplayObjectContainer):void
@@ -207,7 +206,10 @@ package ghostcat.ui
 																0,0,0,1,0]}
 													)
 													]);
-													
+			
+			if (RootManager.initialized)
+				register(RootManager.root,RootManager.stage);
+		
 		}
 		
 		/**

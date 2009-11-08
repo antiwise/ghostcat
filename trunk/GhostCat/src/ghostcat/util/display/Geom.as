@@ -39,10 +39,12 @@ package ghostcat.util.display
 		 */		
 		public static function scaleToFit(displayObj:DisplayObject, container:*, type:String = "uniform"):void
         {
-        	var rect:Rectangle = getRect(container);
-        	
-            displayObj.scaleX = rect.width / displayObj.width;
-            displayObj.scaleY = rect.height / displayObj.height;
+			if (!(displayObj.width && displayObj.height))
+				return;
+			
+			var rect:Rectangle = getRect(container);
+        	displayObj.scaleX *= rect.width / displayObj.width;
+            displayObj.scaleY *= rect.height / displayObj.height;
             
             if (type == UNIFORM)
             	displayObj.scaleX = displayObj.scaleY = Math.min(displayObj.scaleX,displayObj.scaleY);

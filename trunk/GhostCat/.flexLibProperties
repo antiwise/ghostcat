@@ -273,7 +273,7 @@
     <classEntry path="ghostcat.text.PassWordUtil"/>
     <classEntry path="ghostcat.text.PinYin"/>
     <classEntry path="ghostcat.text.RegExpUtil"/>
-    <classEntry path="ghostcat.text.StringTween"/>
+    <classEntry path="ghostcat.text.GTweenText"/>
     <classEntry path="ghostcat.text.TextFieldUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
     <classEntry path="ghostcat.text.URL"/>
@@ -300,7 +300,7 @@
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
-    <classEntry path="ghostcat.ui.controls.GBitmapText"/>
+    <classEntry path="ghostcat.text.GBitmapText"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GButtonBase"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
@@ -409,6 +409,10 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.display.movieclip.FrameLabelUtil"/>
+    <classEntry path="ghostcat.text.GradientText"/>
+    <classEntry path="ghostcat.text.TextTweenUtil"/>
+    <classEntry path="ghostcat.display.GContextMenu"/>
+    <classEntry path="ghostcat.ui.html.SimpleHTML"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

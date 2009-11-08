@@ -68,6 +68,14 @@ package ghostcat.display.movieclip
 			super.init();
 		}
 		
+		/**
+		 * 将显示内容放在另一个Bitmap对象上
+		 */
+		public function linkBitmap(v:Bitmap):void
+		{
+			setContent(v,false);
+		}
+		
 		/** @inheritDoc*/
 		public override function set currentFrame(frame:int):void
 		{
@@ -80,6 +88,7 @@ package ghostcat.display.movieclip
 				return;
 			
 			_currentFrame = frame;
+			
 			
 			(content as Bitmap).bitmapData = bitmaps[frame - 1];
 				
