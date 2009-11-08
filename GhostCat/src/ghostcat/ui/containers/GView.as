@@ -120,7 +120,7 @@ package ghostcat.ui.containers
 		 * 删除所有子对象 
 		 * 
 		 */
-		public function removeAllObject():void
+		public function removeAllChild():void
 		{
 			while (contentPane.numChildren) 
                 removeHandlers(contentPane.removeChildAt(0));

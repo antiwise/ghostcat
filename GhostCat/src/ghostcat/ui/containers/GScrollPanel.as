@@ -43,20 +43,20 @@ package ghostcat.ui.containers
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		
-		public function GScrollPanel(skin:*,replace:Boolean = true,scrollRect:Rectangle = null,fields:Object = null)
+		public function GScrollPanel(skin:*,replace:Boolean = true,width:Number = NaN,height:Number = NaN,fields:Object = null)
 		{
 			if (fields)
 				this.fields = fields;
 				
 			super(skin,replace);
 			
-			if (scrollRect)
-				this.scrollRect = scrollRect;
+			this.scrollRect = new Rectangle(0,0,content.width,content.height);
 			
-			if (!this.scrollRect && content)
-				this.scrollRect = content.getBounds(this);
+			if (!isNaN(width))
+				this.width = width;
 			
-			invalidateSize();
+			if (!isNaN(height))
+				this.height = height;
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
@@ -157,10 +157,7 @@ package ghostcat.ui.containers
 		{
 			super.updateSize();
 			
-			if (scrollRect)
-				this.scrollRect = new Rectangle(this.scrollRect.x,this.scrollRect.y,width,height);
-			else
-				this.scrollRect = new Rectangle(0,0,width,height);
+			this.scrollRect = new Rectangle(scrollRect.x,scrollRect.y,width,height);
 			
 			if (hScrollBar)
 			{

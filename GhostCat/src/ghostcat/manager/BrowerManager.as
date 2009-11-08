@@ -144,6 +144,37 @@ package ghostcat.manager
         {
         	ExternalInterface.call("BrowerManager.confirmClose",text);
         }
+		
+		/**
+		 * 弹出警示框
+		 * @param text
+		 * 
+		 */
+		public function alert(...params):void
+		{
+			ExternalInterface.call("alert",params.toString());
+		}
+		
+		/**
+		 * 刷新浏览器 
+		 * 
+		 */
+		public function reload():void
+		{
+			ExternalInterface.call("location.reload");
+		}
+		
+		/**
+		 * 打开自定义浏览器窗口 
+		 * @param name
+		 * @param title
+		 * @param text
+		 * 
+		 */
+		public function openWindow(name:String,title:String,text:String):void
+		{
+			ExternalInterface.call("BrowerManager.openWindow",name,title,text);
+		}
 	}
 }
 

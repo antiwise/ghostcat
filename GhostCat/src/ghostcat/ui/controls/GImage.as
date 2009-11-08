@@ -8,6 +8,7 @@ package ghostcat.ui.controls
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.display.GNoScale;
 	import ghostcat.ui.UIConst;
@@ -85,10 +86,10 @@ package ghostcat.ui.controls
 			invalidateLayout();
 		}
 		
-		private var _scaleType:String = Geom.UNIFORM;
+		private var _scaleType:String = "fill";
 
 		/**
-		 * 缩放类型。常量在Geom类中。
+		 * 缩放类型
 		 */
 		public function get scaleType():String
 		{
@@ -202,6 +203,8 @@ package ghostcat.ui.controls
 		public function invalidateLayout():void
 		{
 			layoutChildrenCall.invalidate();
+			
+			invalidateSize();
 		}
 		
 		/**
@@ -210,6 +213,9 @@ package ghostcat.ui.controls
 		 */
 		protected function layoutChildren():void
 		{
+			if (!(content as Loader).content)
+				return;
+				
 			if (scaleContent && width && height)
 				Geom.scaleToFit(content,this,_scaleType);
 			else

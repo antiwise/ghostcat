@@ -7,9 +7,8 @@ package
 	
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
-	import ghostcat.text.StringTween;
+	import ghostcat.text.GTweenText;
 	import ghostcat.util.easing.Circ;
-	import ghostcat.util.easing.Elastic;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
 
@@ -23,12 +22,12 @@ package
 	 */
 	public class StringTweenExample extends Sprite
 	{
-		public var t:StringTween;
+		public var t:GTweenText;
 		public function StringTweenExample()
 		{	
 			RootManager.register(this);
 			
-			t = new StringTween();
+			t = new GTweenText();
 			t.editable = true;
 			t.multiline = true;
 			t.text = "<html>这是一个文本Tween实例，点击舞台可以重放。\n" + 
