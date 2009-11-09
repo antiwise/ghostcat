@@ -418,6 +418,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.display.graphics.ScaleBox"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
+    <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
