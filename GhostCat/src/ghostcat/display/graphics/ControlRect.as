@@ -137,7 +137,7 @@ package ghostcat.display.graphics
 				if (index != -1)
 					selectedRects.splice(index,1);
 			}
-			this.controlCotainer.alpha = v ? 1.0 : 0.0;
+			this.controlCotainer.visible = v;
 		}
 		/** @inheritDoc*/
 		override public function setContent(skin:*, replace:Boolean=true) : void
@@ -173,7 +173,7 @@ package ghostcat.display.graphics
 		{
 			controlCotainer = new Sprite();
 			addChild(controlCotainer);
-			controlCotainer.alpha = 0.0;
+			controlCotainer.visible = false;
 			
 			fillControl = new GBase();
 			fillControl.cursor = CursorSprite.CURSOR_DRAG;
@@ -324,7 +324,9 @@ package ghostcat.display.graphics
 		private function fillMouseDownHandler(event:MouseEvent):void
 		{
 			for each (var rect:ControlRect in selectedRects)
+			{
 				DragManager.startDrag(rect);
+			}
 		}
 		
 		private function mouseDownHandler(event:MouseEvent):void
@@ -333,6 +335,8 @@ package ghostcat.display.graphics
 				unSelectAll();
 			
 			selected = true;
+			
+			fillMouseDownHandler(event);
 		}
 		
 		private function mouseUpHandler(event:MouseEvent):void
