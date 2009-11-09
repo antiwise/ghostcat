@@ -25,6 +25,7 @@ package ghostcat.manager
 	public final class RootManager
 	{
 		private static var _root:Sprite;
+		private static var _stage:Stage;
 		private static var _initialized:Boolean = false;
 		
 		private static var _parameters:Object = new Object();
@@ -57,7 +58,9 @@ package ghostcat.manager
 		 */
 		public static function get stage():Stage
 		{
-			return root.stage;
+			if (!_stage)
+				throw new Error("请先使用RootManager.register()方法注册舞台");
+			return _stage;
 		}
 		
 		/**
@@ -81,6 +84,7 @@ package ghostcat.manager
 		public static function register(root:Sprite,mode:int = 1,menuMode:int = 1):void
 		{
 			_root = root;
+			_stage = root.stage;
 			setMode(mode);
 			setMenuMode(menuMode);
 			
