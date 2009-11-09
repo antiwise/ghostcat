@@ -137,7 +137,7 @@ package ghostcat.display.graphics
 				if (index != -1)
 					selectedRects.splice(index,1);
 			}
-			this.controlCotainer.visible = v;
+			this.controlCotainer.alpha = v ? 1.0 : 0.0;
 		}
 		/** @inheritDoc*/
 		override public function setContent(skin:*, replace:Boolean=true) : void
@@ -173,7 +173,7 @@ package ghostcat.display.graphics
 		{
 			controlCotainer = new Sprite();
 			addChild(controlCotainer);
-			controlCotainer.visible = false;
+			controlCotainer.alpha = 0.0;
 			
 			fillControl = new GBase();
 			fillControl.cursor = CursorSprite.CURSOR_DRAG;

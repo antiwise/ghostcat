@@ -3,6 +3,7 @@ package ghostcat.display
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -46,10 +47,10 @@ package ghostcat.display
 		{
 			super();
 			
-			setContent(skin,replace);
-				
 			addEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			addEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+		
+			setContent(skin,replace);
 		}
 		
 		/**
@@ -124,18 +125,25 @@ package ghostcat.display
 				$removeChild(_content);
 			
 			
+			var oldIndex:int;
+			var oldParent:DisplayObjectContainer;
+			
 			if (replace && skin)
 			{
 				if (_content == null)
 				{
 					//新设置内容的时候，获取内容的坐标
-					if (skin.parent)
-						skin.parent.addChildAt(this,skin.parent.getChildIndex(skin));
-						
 					if (acceptContentPosition)
 					{
 						this.x = skin.x;
 						this.y = skin.y;
+					}
+					
+					//在最后才加入舞台
+					if (skin.parent)
+					{
+						oldParent = skin.parent;
+						oldIndex = skin.parent.getChildIndex(skin);
 					}
 				}
 				
@@ -147,12 +155,14 @@ package ghostcat.display
 				this.name = skin.name;
 			}
 			_content = skin;
+			
+			if (oldParent)
+				oldParent.addChildAt(this,oldIndex);
 		}
 		
 		private function addedToStageHandler(event:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler)
-			
 			init();
 		}
 		
