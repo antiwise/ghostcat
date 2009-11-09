@@ -1,14 +1,11 @@
 package
 {
-	import flash.filters.DropShadowFilter;
+	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.text.GradientText;
-	import ghostcat.ui.containers.GScrollPanel;
-	import ghostcat.ui.html.SimpleHTML;
+	import ghostcat.display.screenshot.ScreenShotUtil;
 
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="600",height="450")]
@@ -22,8 +19,12 @@ package
 		
 		protected override function init():void
 		{
-			super.init();
-			navigateToURL(new URLRequest("www.google.com"));
+			var t:DisplayObject = new TestCollision();
+			addChild(t);
+			
+			var b:Bitmap = new Bitmap(ScreenShotUtil.shotObject(t,new Rectangle(10,10,200,200)))
+			addChild(b);
+			t.alpha = 0.3;
 		}
 	}
 }

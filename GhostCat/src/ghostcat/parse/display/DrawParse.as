@@ -105,29 +105,7 @@ package ghostcat.parse.display
 		 */
 		public static function createBitmap(source:IBitmapDrawable,matrix:Matrix=null,colorTransform:ColorTransform=null,clipRect:Rectangle = null,smoothing:Boolean = false):Bitmap
 		{
-			var displayObj:DisplayObject = source as DisplayObject;
-			if (!displayObj)
-				return null;
-			var bounds:Rectangle = displayObj.getBounds(displayObj);
-			var width:int = Math.ceil(bounds.width);
-			var height:int = Math.ceil(bounds.height);
-			if (width == 0 || height == 0)
-				return null;
-			if (!matrix)
-			{
-				matrix = new Matrix();
-				matrix.tx -= bounds.x;
-				matrix.ty -= bounds.y;
-			}
-			var bitmap:Bitmap = BitmapParse.createBitmap(width,height);
-			if (source is DisplayObject)
-			{
-				bitmap.x = (source as DisplayObject).x + bounds.x;
-				bitmap.y = (source as DisplayObject).y + bounds.y;
-			}
-			var draw:DrawParse = new DrawParse(source,matrix,colorTransform,clipRect,smoothing);
-			draw.parse(bitmap);
-			return bitmap;
+			return new DrawParse(source,matrix,colorTransform,clipRect,smoothing).createBitmap();
 		}
 	}
 }

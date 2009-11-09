@@ -8,7 +8,7 @@ package ghostcat.display.other
 	import ghostcat.events.TickEvent;
 	
 	/**
-	 * 泡泡生成器
+	 * 发光泡泡生成器
 	 * @author flashyiyi
 	 * 
 	 */
@@ -67,8 +67,8 @@ class Bubble extends GBase
 		graphics.drawCircle(50,50,50);
 		graphics.endFill();	
 		
-		blendMode=BlendMode.ADD;
-		alpha=0.0;	
+		blendMode = BlendMode.ADD;
+		alpha = 0.0;	
 		
 		enabledTick = true;
 	}
