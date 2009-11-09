@@ -1,6 +1,7 @@
 package ghostcat.util
 {
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	

@@ -7,6 +7,7 @@ package ghostcat.display
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import ghostcat.manager.RootManager;
 	import ghostcat.util.core.ClassFactory;
 
 	/**
@@ -46,6 +47,9 @@ package ghostcat.display
 		public function GSprite(skin:*=null,replace:Boolean=true)
 		{
 			super();
+			
+			if (stage)
+				RootManager.stage = stage;
 			
 			addEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			addEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
