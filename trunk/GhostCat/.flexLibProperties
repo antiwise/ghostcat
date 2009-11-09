@@ -59,7 +59,6 @@
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
-    <classEntry path="ghostcat.display.graphics.ControlRect"/>
     <classEntry path="ghostcat.display.graphics.DragPoint"/>
     <classEntry path="ghostcat.display.graphics.EditableGraphicsSprite"/>
     <classEntry path="ghostcat.display.graphics.GraphicsSprite"/>
@@ -98,12 +97,12 @@
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
-    <classEntry path="ghostcat.display.transition.TransitionSimpleLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionLayerBase"/>
     <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionObjectLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionSimpleLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
     <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
     <classEntry path="ghostcat.display.transition.maskmovie.DissolveMaskHandler"/>
@@ -417,6 +416,8 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.display.graphics.ScaleBox"/>
+    <classEntry path="ghostcat.display.graphics.ControlRect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

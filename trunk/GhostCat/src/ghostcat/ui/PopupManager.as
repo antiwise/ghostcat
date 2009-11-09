@@ -172,10 +172,12 @@ package ghostcat.ui
 													),
 													new FilterProxyOper(
 														application,
-														new ColorMatrixFilter([1,0,0,0,0,
-																				0,1,0,0,0,
-																				0,0,1,0,0,
-																				0,0,0,1,0]),
+														new ColorMatrixFilter([
+															1,0,0,0,0,
+															0,1,0,0,0,
+															0,0,1,0,0,
+															0,0,0,1,0
+														]),
 														1000,
 														{matrix:[
 															0.3086/2,0.6094/2,0.0820/2,0,0,
@@ -200,10 +202,12 @@ package ghostcat.ui
 						 									0,0,0,1,0
 														]),
 														500,
-														{matrix:[1,0,0,0,0,
-																0,1,0,0,0,
-																0,0,1,0,0,
-																0,0,0,1,0]}
+														{matrix:[
+															1,0,0,0,0,
+															0,1,0,0,0,
+															0,0,1,0,0,
+															0,0,0,1,0
+														]}
 													)
 													]);
 			
@@ -286,10 +290,10 @@ package ghostcat.ui
 		{
 			var oper:PopupOper = new PopupOper(obj,owner,modal,centerMode);
 			
-			if (queue)
-				oper.commit(queue);
-			else
-				oper.commit(this.queue);
+			if (!queue)
+				queue = this.queue;
+			
+			oper.commit(queue);
 				
 			return obj;
 		}
