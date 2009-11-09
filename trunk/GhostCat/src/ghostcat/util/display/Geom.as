@@ -179,7 +179,7 @@ package ghostcat.util.display
         public static function forceRectInside(obj:*, cotainer:*):Boolean
         {
         	var rect:Rectangle = getRect(obj);
-        	var cotainRect:Rectangle = getRect(cotainer,obj.parent);
+        	var cotainRect:Rectangle = getRect(cotainer,(obj is DisplayObject) ? obj.parent : cotainer);
         	var topLeft:Point = rect.topLeft;
         	var out:Boolean = false;
             if (rect.right > cotainRect.right)
