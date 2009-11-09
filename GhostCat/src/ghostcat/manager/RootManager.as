@@ -10,6 +10,8 @@ package ghostcat.manager
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
+	import ghostcat.util.Tick;
+	
 	/**
 	 * 舞台对象相关扩展
 	 * 
@@ -25,7 +27,6 @@ package ghostcat.manager
 	public final class RootManager
 	{
 		private static var _root:Sprite;
-		private static var _stage:Stage;
 		private static var _initialized:Boolean = false;
 		
 		private static var _parameters:Object = new Object();
@@ -51,6 +52,11 @@ package ghostcat.manager
 			return _root;
 		}
 		
+		public static function set root(v:Sprite):void
+		{
+			_root = v;
+		}
+		
 		/**
 		 * 舞台对象 
 		 * @return 
@@ -58,9 +64,7 @@ package ghostcat.manager
 		 */
 		public static function get stage():Stage
 		{
-			if (!_stage)
-				throw new Error("请先使用RootManager.register()方法注册舞台");
-			return _stage;
+			return root.stage;
 		}
 		
 		/**
@@ -70,7 +74,7 @@ package ghostcat.manager
 		 */
 		public static function get initialized():Boolean
 		{
-			return _initialized;
+			return _root!=null;
 		}
 		
 		/**
@@ -84,11 +88,11 @@ package ghostcat.manager
 		public static function register(root:Sprite,mode:int = 1,menuMode:int = 1):void
 		{
 			_root = root;
-			_stage = root.stage;
+			
 			setMode(mode);
 			setMenuMode(menuMode);
 			
-			_initialized = true;
+			Tick.frameRate = stage.frameRate;
 		}
 		
 		/**

@@ -48,8 +48,9 @@ package ghostcat.display
 		{
 			super();
 			
-			if (stage)
-				RootManager.stage = stage;
+			//保存舞台实例
+//			if (root && !RootManager.initialized)
+//				RootManager.root = root as Sprite;
 			
 			addEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			addEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);

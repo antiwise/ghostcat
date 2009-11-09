@@ -35,6 +35,8 @@ package ghostcat.ui
         public static const CURSOR_DRAG:String = "drag";
 		public static const CURSOR_H_DRAG:String = "hDrag";
 		public static const CURSOR_V_DRAG:String = "vDrag";
+		public static const CURSOR_HV_DRAG:String = "hvDrag";
+		public static const CURSOR_VH_DRAG:String = "vhDrag";
 		public static const CURSOR_ROTATE_TOPLEFT:String = "rotateTopLeft";
 		public static const CURSOR_ROTATE_TOPRIGHT:String = "rotateTopRight";
 		public static const CURSOR_ROTATE_BOTTOMLEFT:String = "rotateBottomLeft";

@@ -57,9 +57,6 @@ package ghostcat.util
 		{
 			displayObject = new Sprite();
 			displayObject.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
-			
-			if (RootManager.initialized)
-				frameRate = RootManager.stage.frameRate;
 		}
 		
 		private function enterFrameHandler(event:Event):void
