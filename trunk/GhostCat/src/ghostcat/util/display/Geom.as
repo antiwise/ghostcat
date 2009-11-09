@@ -216,7 +216,7 @@ package ghostcat.util.display
          */		
         public static function forcePointInside(obj:*, cotainer:*):Boolean
         {
-        	var cotainRect:Rectangle = getRect(cotainer,obj.parent);
+        	var cotainRect:Rectangle = getRect(cotainer,(obj is DisplayObject) ? obj.parent : cotainer);
         	var out:Boolean = false;
             if (obj.x > cotainRect.right)
             {

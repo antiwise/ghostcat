@@ -17,7 +17,7 @@ package ghostcat.display.graphics
 	import ghostcat.util.display.DisplayUtil;
 
 	/**
-	 * 图像变形控制器，点击自动选中，并可调整大小和变形
+	 * 图像变形控制器，点击自动选中，并可调整大小和旋转
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -65,9 +65,49 @@ package ghostcat.display.graphics
 		public var leftLineControl:DragPoint;
 		public var rightLineControl:DragPoint;
 		
-		public function ControlRect(skin:*=null,replace:Boolean=true)
+		private var _lockX:Boolean = false;
+
+		public function get lockX():Boolean
 		{
-			createControl();
+			return _lockX;
+		}
+
+		public function set lockX(value:Boolean):void
+		{
+			_lockX = value;
+			leftLineControl.visible = rightLineControl.visible = !value;
+		}
+
+		private var _lockY:Boolean = false;
+
+		public function get lockY():Boolean
+		{
+			return _lockY;
+		}
+
+		public function set lockY(value:Boolean):void
+		{
+			_lockY = value;
+			topLineControl.visible = bottomLineControl.visible = !value;
+		}
+
+		private var _lockRotation:Boolean = false;
+
+		public function get lockRotation():Boolean
+		{
+			return _lockRotation;
+		}
+
+		public function set lockRotation(value:Boolean):void
+		{
+			_lockRotation = value;
+			topLeftControl.visible = topRightControl.visible = bottomLeftControl.visible = bottomRightControl.visible = !value
+		}
+
+		
+		public function ControlRect(skin:*=null,pointSkin:* = null,replace:Boolean=true)
+		{
+			createControl(pointSkin);
 			
 			super(skin,replace);
 		}
@@ -129,7 +169,7 @@ package ghostcat.display.graphics
 			rightLineControl.setPoint(new Point(rect.right,rect.y + rect.height/2),true);
 		}
 		
-		private function createControl():void
+		private function createControl(pointSkin:*):void
 		{
 			controlCotainer = new Sprite();
 			addChild(controlCotainer);
@@ -140,49 +180,49 @@ package ghostcat.display.graphics
 			fillControl.addEventListener(MouseEvent.MOUSE_DOWN,fillMouseDownHandler,false,0,true);
 			controlCotainer.addChild(fillControl);
 			
-			topLeftControl = new DragPoint();
+			topLeftControl = new DragPoint(pointSkin);
 			topLeftControl.cursor = CursorSprite.CURSOR_ROTATE_TOPLEFT;
 			topLeftControl.addEventListener(MoveEvent.MOVE,topLeftControlHandler,false,0,true);
 			topLeftControl.delayUpatePosition = true;
 			controlCotainer.addChild(topLeftControl);
 			
-			topRightControl = new DragPoint();	
+			topRightControl = new DragPoint(pointSkin);	
 			topRightControl.cursor = CursorSprite.CURSOR_ROTATE_TOPRIGHT;
 			topRightControl.addEventListener(MoveEvent.MOVE,topRightControlHandler,false,0,true);
 			topRightControl.delayUpatePosition = true;
 			controlCotainer.addChild(topRightControl);
 			
-			bottomLeftControl = new DragPoint();	
+			bottomLeftControl = new DragPoint(pointSkin);	
 			bottomLeftControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMLEFT;
 			bottomLeftControl.addEventListener(MoveEvent.MOVE,bottomLeftControlHandler,false,0,true);
 			bottomLeftControl.delayUpatePosition = true;
 			controlCotainer.addChild(bottomLeftControl);
 			
-			bottomRightControl = new DragPoint();	
+			bottomRightControl = new DragPoint(pointSkin);	
 			bottomRightControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMRIGHT;
 			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler,false,0,true);
 			bottomRightControl.delayUpatePosition = true;
 			controlCotainer.addChild(bottomRightControl);
 			
-			topLineControl = new DragPoint();	
+			topLineControl = new DragPoint(pointSkin);	
 			topLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			topLineControl.lockX = true;
 			topLineControl.addEventListener(MoveEvent.MOVE,topLineControlHandler,false,0,true);
 			controlCotainer.addChild(topLineControl);
 			
-			bottomLineControl = new DragPoint();	
+			bottomLineControl = new DragPoint(pointSkin);	
 			bottomLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			bottomLineControl.lockX = true;
 			bottomLineControl.addEventListener(MoveEvent.MOVE,bottomLineControlHandler,false,0,true);
 			controlCotainer.addChild(bottomLineControl);
 			
-			leftLineControl = new DragPoint();	
+			leftLineControl = new DragPoint(pointSkin);	
 			leftLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			leftLineControl.lockY = true;
 			leftLineControl.addEventListener(MoveEvent.MOVE,leftLineControlHandler,false,0,true);
 			controlCotainer.addChild(leftLineControl);
 			
-			rightLineControl = new DragPoint();	
+			rightLineControl = new DragPoint(pointSkin);	
 			rightLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			rightLineControl.lockY = true;
 			rightLineControl.addEventListener(MoveEvent.MOVE,rightLineControlHandler,false,0,true);

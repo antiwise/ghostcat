@@ -14,7 +14,7 @@ package ghostcat.skin
 	 */
 	public class PointSkin extends Sprite
 	{
-		public function PointSkin(radius:Number = 5,borderColor:uint = 0,borderThickness:Number=0,fillColor:uint = 0xFFFFFF)
+		public function PointSkin(radius:Number = 3,borderColor:uint = 0,borderThickness:Number=0,fillColor:uint = 0xFFFFFF)
 		{
 			DisplayParse.create([new GraphicsLineStyle(borderThickness,borderColor),
 								new GraphicsFill(fillColor,0.5),
