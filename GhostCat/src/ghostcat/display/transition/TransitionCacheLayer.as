@@ -13,7 +13,7 @@ package ghostcat.display.transition
 	import ghostcat.util.core.Handler;
 	
 	/**
-	 * 过渡会先进行缓存，然后对缓存进行Tween
+	 * 过渡会先进行缓存，然后对缓存进行Tween（默认是直接透明渐变）
 	 * 
 	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
 	 *

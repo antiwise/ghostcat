@@ -1,5 +1,6 @@
 package
 {
+	import flash.display.BlendMode;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -16,6 +17,7 @@ package
 	import ghostcat.display.transition.TransitionLayerBase;
 	import ghostcat.display.transition.TransitionMaskLayer;
 	import ghostcat.display.transition.TransitionObjectLayer;
+	import ghostcat.display.transition.TransitionSimpleLayer;
 	import ghostcat.display.transition.TransitionTransferLayer;
 	import ghostcat.display.transition.maskmovie.DissolveMaskHandler;
 	import ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler;
@@ -23,6 +25,7 @@ package
 	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
 	import ghostcat.display.viewport.BackgroundLayer;
 	import ghostcat.ui.controls.GImage;
+	import ghostcat.util.RandomUtil;
 	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="600",height="450",backgroundColor="0xFFFFFF",frameRate="60")]
@@ -56,7 +59,7 @@ package
 		
 		protected override function updateDisplayList() : void
 		{
-			var v:int =  11 * Math.random();
+			var v:int =  12 * Math.random();
 			switch (v)
 			{
 				case 0://差异值渐变
@@ -97,6 +100,9 @@ package
 				case 10://方向性过度渐变
 					new TransitionMaskLayer(f,s,new GScriptMovieClip(new GradientAlphaMaskHandler(Math.random() * 360),new Rectangle(0,0,600,450))).createTo(this);
 					break;
+				case 11://白屏过渡渐变
+					new TransitionSimpleLayer(f,600,450,0xFFFFFF,RandomUtil.choose(BlendMode.NORMAL,BlendMode.ADD,BlendMode.SUBTRACT)).createTo(this);
+					break; 
 			}
 		}
 		

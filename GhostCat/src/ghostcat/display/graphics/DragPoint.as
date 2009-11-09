@@ -6,6 +6,7 @@ package ghostcat.display.graphics
 	
 	import ghostcat.display.GBase;
 	import ghostcat.skin.PointSkin;
+	import ghostcat.ui.CursorSprite;
 	import ghostcat.util.core.ClassFactory;
 
 	/**
@@ -21,6 +22,7 @@ package ghostcat.display.graphics
 		
 		public var lockX:Boolean = false;
 		public var lockY:Boolean = false;
+		
 		
 		private var _point : Point = new Point();
 
@@ -97,6 +99,8 @@ package ghostcat.display.graphics
 				
 				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+				
+				CursorSprite.instance.lock = true;
 			}
 		}
 
@@ -108,6 +112,8 @@ package ghostcat.display.graphics
 			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+			
+			CursorSprite.instance.lock = false;
 		}
 
 		private function onMouseMoveHandler(event : MouseEvent) : void

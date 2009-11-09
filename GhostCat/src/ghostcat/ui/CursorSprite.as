@@ -11,12 +11,12 @@ package ghostcat.ui
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.display.GBase;
 	import ghostcat.display.ICursorManagerClient;
 	import ghostcat.skin.cursor.CursorGroup;
-	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.DisplayUtil;
 
 	/**
 	 * 光标类，需要手动加载到某个容器内，将一直处于最高层。
@@ -61,7 +61,7 @@ package ghostcat.ui
 		
 		private var buttonDown:Boolean=false;//鼠标是否按下 
 		
-		private var findCursor:Boolean=true;//是否自动查找鼠标
+		private var _lock:Boolean=false;//锁定鼠标
 		
 		private static var _instance:CursorSprite;
 		
@@ -114,7 +114,7 @@ package ghostcat.ui
 		 */		
 		public function setCursor(c:*):void
 		{
-			findCursor = false;
+			_lock = true;
 			this.setCurrentCursorClass(c);
 		}
 		/**
@@ -122,8 +122,24 @@ package ghostcat.ui
 		 */		
 		public function removeCursor():void
 		{
-			findCursor = true;
+			_lock = false;
 		}
+		
+		/**
+		 * 锁定光标 
+		 * @return 
+		 * 
+		 */
+		public function get lock():Boolean
+		{
+			return _lock;
+		}
+
+		public function set lock(value:Boolean):void
+		{
+			_lock = value;
+		}
+
 		
 		private function mouseMoveHandler(evt:MouseEvent):void
 		{
@@ -156,7 +172,7 @@ package ghostcat.ui
 		{
 			DisplayUtil.moveToHigh(this);
 			
-			if (findCursor)
+			if (!_lock)
 				setCurrentCursorClass(findCursorClass(this.target));
 			
 			if (content){
@@ -173,7 +189,7 @@ package ghostcat.ui
 		
 		private function mouseLeaveHandler(evt:Event):void
 		{
-			if (findCursor)
+			if (!_lock)
 				setContent(null);
 		}
 		
