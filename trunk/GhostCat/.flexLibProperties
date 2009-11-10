@@ -419,6 +419,8 @@
     <classEntry path="ghostcat.display.graphics.ScaleBox"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
     <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
+    <classEntry path="ghostcat.ui.controls.GButtonState"/>
+    <classEntry path="ghostcat.ui.controls.GPlayBackButton"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
