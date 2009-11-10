@@ -84,17 +84,17 @@ package ghostcat.display.transition
 		/**白屏过渡渐变 */
 		public static function simple(switchHandler:*,target:DisplayObject):TransitionSimpleLayer
 		{
-			return new TransitionSimpleLayer(switchHandler,600,450,0xFFFFFF,BlendMode.NORMAL);
+			return new TransitionSimpleLayer(switchHandler,target.width,target.height,0xFFFFFF,BlendMode.NORMAL);
 		}
 		/**变亮过渡渐变 */
 		public static function add(switchHandler:*,target:DisplayObject):TransitionSimpleLayer
 		{
-			return new TransitionSimpleLayer(switchHandler,600,450,0xFFFFFF,BlendMode.ADD);
+			return new TransitionSimpleLayer(switchHandler,target.width,target.height,0xFFFFFF,BlendMode.ADD);
 		}
 		/**变暗过渡渐变 */
 		public static function subtract(switchHandler:*,target:DisplayObject):TransitionSimpleLayer
 		{
-			return new TransitionSimpleLayer(switchHandler,600,450,0xFFFFFF,BlendMode.SUBTRACT);
+			return new TransitionSimpleLayer(switchHandler,target.width,target.height,0xFFFFFF,BlendMode.SUBTRACT);
 		}
 	}
 }
