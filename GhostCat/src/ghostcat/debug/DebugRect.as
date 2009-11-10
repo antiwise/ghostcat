@@ -1,6 +1,7 @@
 package ghostcat.debug
 {
 	import flash.display.Sprite;
+	import flash.text.TextFormat;
 	
 	import ghostcat.parse.display.RectParse;
 	import ghostcat.parse.display.TextFieldParse;
@@ -14,12 +15,12 @@ package ghostcat.debug
 	 */
 	public class DebugRect extends Sprite
 	{
-		public function DebugRect(width:Number,height:Number,color:uint = 0xFFFFFF,title:String=null)
+		public function DebugRect(width:Number,height:Number,color:uint = 0xFFFFFF,title:String=null,titleColor:uint=0x0)
 		{
 			super();
 			new RectParse(new GraphicsRect(0,0,width,height),null,new GraphicsFill(color)).parse(this);
 			if (title)
-				new TextFieldParse(title).parse(this);
+				new TextFieldParse(title,null,new TextFormat(null,null,titleColor)).parse(this);
 		}
 	}
 }
