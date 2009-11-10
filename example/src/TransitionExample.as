@@ -89,16 +89,16 @@ package
 					new TransitionCacheLayer(f,s,1000,{x:600 * ((Math.random() < 0.5)? 1 : -1),y:450 * ((Math.random() < 0.5)? 1 : -1),ease:Circ.easeIn}).createTo(this);
 					break;
 				case 7://方格渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new DissolveMaskHandler(20),new Rectangle(0,0,600,450))).createTo(this);
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new DissolveMaskHandler(20),s.getBounds(s.parent))).createTo(this);
 					break;
 				case 8://百叶窗渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterMaskHandler(),new Rectangle(0,0,600,450))).createTo(this);
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterMaskHandler(),s.getBounds(s.parent))).createTo(this);
 					break;
 				case 9://百叶窗打开渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterDirectMaskHandler(50,Math.random() * 4),new Rectangle(0,0,600,450))).createTo(this);
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterDirectMaskHandler(50,Math.random() * 4),s.getBounds(s.parent))).createTo(this);
 					break;
 				case 10://方向性过度渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new GradientAlphaMaskHandler(Math.random() * 360),new Rectangle(0,0,600,450))).createTo(this);
+					new TransitionMaskLayer(f,s,new GScriptMovieClip(new GradientAlphaMaskHandler(Math.random() * 360),s.getBounds(s.parent))).createTo(this);
 					break;
 				case 11://白屏过渡渐变
 					new TransitionSimpleLayer(f,600,450,0xFFFFFF,RandomUtil.choose(BlendMode.NORMAL,BlendMode.ADD,BlendMode.SUBTRACT)).createTo(this);

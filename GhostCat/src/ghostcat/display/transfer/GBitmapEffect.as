@@ -71,6 +71,12 @@ package ghostcat.display.transfer
 			renderEffect();
 		}
 		
+		/**
+		 *  
+		 * @param target	渲染目标
+		 * @param command	渲染方法：Function或者Handler类型
+		 * 
+		 */
 		public function GBitmapEffect(target:DisplayObject=null,command:*=null)
 		{
 			if (command is Function)
