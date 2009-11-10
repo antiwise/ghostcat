@@ -1,10 +1,12 @@
 package
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.skin.AlertSkin;
-	import ghostcat.ui.controls.GEffectButton;
+	import ghostcat.display.screenshot.ScreenShotPanel;
+	import ghostcat.ui.CursorSprite;
 
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="600",height="450")]
@@ -18,12 +20,19 @@ package
 		
 		protected override function init():void
 		{
-			var b:GEffectButton = new GEffectButton(new AlertSkin());
+			var b:DisplayObject = new TestCollision();
 			addChild(b);
 			
-//			var b:Bitmap = new Bitmap(ScreenShotUtil.shotObject(t,new Rectangle(10,10,200,200)))
-//			addChild(b);
-//			t.alpha = 0.3;
+			new ScreenShotPanel(stage,null,r);
+			
+			stage.addChild(new CursorSprite());
+			
+		}
+		
+		private function r(b:BitmapData):void
+		{
+			addChild(new Bitmap(b));
+			
 		}
 	}
 }

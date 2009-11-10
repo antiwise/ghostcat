@@ -2,7 +2,7 @@ package ghostcat.display.screenshot
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.geom.Point;
+	import flash.display.Stage;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.parse.display.DrawParse;
@@ -40,6 +40,35 @@ package ghostcat.display.screenshot
 			
 			if (clipRect)
 				bitmap = BitmapUtil.clip(bitmap,clipRect,true);
+			
+			for (i = 0;i < withOut.length;i++)
+				withOut[i].visible = oldVisible[i].visible;
+			
+			return bitmap;
+		}
+		
+		/**
+		 * 截取屏幕
+		 *  
+		 * @param v
+		 * @param withOut
+		 * @return 
+		 * 
+		 */
+		public static function showScreen(v:Stage,withOut:Array = null):BitmapData
+		{
+			if (!withOut)
+				withOut = [];
+			
+			var oldVisible:Array = [];
+			for (var i:int = 0;i < withOut.length;i++)
+			{
+				oldVisible.push(withOut[i].visible);
+				withOut[i].visible = false;
+			}
+			
+			var bitmap:BitmapData = new BitmapData(v.stageWidth,v.stageHeight,false);
+			bitmap.draw(v);
 			
 			for (i = 0;i < withOut.length;i++)
 				withOut[i].visible = oldVisible[i].visible;

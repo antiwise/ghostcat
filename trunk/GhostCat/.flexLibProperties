@@ -421,6 +421,7 @@
     <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
     <classEntry path="ghostcat.ui.controls.GButtonState"/>
     <classEntry path="ghostcat.ui.controls.GPlayBackButton"/>
+    <classEntry path="ghostcat.display.screenshot.ScreenShotPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

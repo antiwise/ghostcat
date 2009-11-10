@@ -25,7 +25,10 @@ package ghostcat.parse.display
 		public var clipRect:Rectangle = null;
 		public var smoothing:Boolean = false;
 		
-		public function DrawParse(source:IBitmapDrawable,matrix:Matrix=null,colorTransform:ColorTransform=null,clipRect:Rectangle = null,smoothing:Boolean = false)
+		public var transparent:Boolean = true;
+		public var fillColor:uint = 0x00FFFFFF;
+		
+		public function DrawParse(source:IBitmapDrawable,matrix:Matrix=null,colorTransform:ColorTransform=null,clipRect:Rectangle = null,smoothing:Boolean = false,transparent:Boolean = true,fillColor:uint = 0x00FFFFFF)
 		{
 			this.source = source;
 			this.matrix = matrix;
@@ -33,6 +36,9 @@ package ghostcat.parse.display
 			this.blendMode = blendMode;
 			this.clipRect = clipRect;
 			this.smoothing = smoothing;
+			
+			this.transparent = transparent;
+			this.fillColor = fillColor;
 		}
 		/** @inheritDoc*/
 		public override function parse(target:*):void
@@ -72,7 +78,7 @@ package ghostcat.parse.display
 				matrix.tx -= bounds.x;
 				matrix.ty -= bounds.y;
 			}
-			var bitmap:Bitmap = BitmapParse.createBitmap(width,height);
+			var bitmap:Bitmap = new Bitmap(new BitmapData(width,height,transparent,fillColor));
 			if (source is DisplayObject)
 			{
 				bitmap.x = (source as DisplayObject).x + bounds.x;
