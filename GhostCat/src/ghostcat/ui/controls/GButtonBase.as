@@ -2,8 +2,6 @@ package ghostcat.ui.controls
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClipBase;
@@ -87,32 +85,26 @@ package ghostcat.ui.controls
 		/**
 		 * 鼠标按下时移过是否转换焦点
 		 */		
-		public var trackAsMenu:Boolean;
+		public var trackAsMenu:Boolean = false;
 		
 		/**
-		 * 鼠标状态对应的colorTransform变化
-		 */		
-		public var colorTransforms:Object;
-		
-		/**
-		 * 鼠标状态对应的matrix变化
-		 */	
-		public var matrixs:Object;
-		
-		/**
-		 * 鼠标状态对应的filters变化
-		 */		
-		public var filterses:Object;
-		
-		/**
-		 * 鼠标状态对应的skin变化
-		 */		
-		public var skins:Object;
+		 * 按钮状态字典
+		 */
+		public var buttonStates:Object = {
+			up:new GButtonState(),
+			over:new GButtonState(),
+			down:new GButtonState(),
+			disabled:new GButtonState(),
+			selectedUp:new GButtonState(),
+			selectedOver:new GButtonState(),
+			selectedDown:new GButtonState(),
+			selectedDisabled:new GButtonState()
+		};
 		
 		/**
 		 * 是否可以点击选择 
 		 */
-		public var toggle:Boolean;
+		public var toggle:Boolean = false;
 		
 		/**
 		 * 鼠标是否按下
@@ -223,8 +215,8 @@ package ghostcat.ui.controls
 			
 			createMovieClip();
 			
-			if (!movie.frameRate && stage)
-				movie.frameRate = stage.frameRate;
+//			if (!movie.frameRate && stage)
+//				movie.frameRate = stage.frameRate;
 		}
 		
 		/**
@@ -280,51 +272,28 @@ package ghostcat.ui.controls
 		{
 			super.init();
 			
-			if (!movie.frameRate)
-				movie.frameRate = stage.frameRate;
+//			if (!movie.frameRate)
+//				movie.frameRate = stage.frameRate;
 			
 			addEvents();
 		
 			tweenTo(UP);
 		}
 		
-		private function tweenTo(n:int):void
+		/**
+		 * 跳转到某个状态 
+		 * @param n
+		 * 
+		 */
+		protected function tweenTo(n:int):void
 		{
 			var next:String = LABELS[n][int(selected)];
 			
-			if (replace && skins)
-			{
-				if (skins[next])
-					setPartConetent(skin[next],replace);
-				else
-					setPartConetent(defaultSkin,replace);
-			}
+			var state:GButtonState = buttonStates[next]
+			if (state)
+				state.parse(this);
 			
-			if (replace && matrixs) 
-			{
-				if (matrixs[next])
-					content.transform.matrix = matrixs[next];
-				else
-					content.transform.matrix = new Matrix();
-			}
-			
-			if (colorTransforms)
-			{
-				if (colorTransforms[next])
-					content.transform.colorTransform = colorTransforms[next];
-				else
-					content.transform.colorTransform = new ColorTransform();
-			}
-			
-			if (filterses)
-			{
-				if (filterses[next])
-					content.filters = filterses[next];
-				else
-					content.filters = [];
-			}
-			
-			if (content && movie.labels)
+			if (content && movie && movie.labels)
 			{
 				var trans:String = movie.curLabelName+"-"+next+":start";
 				if (movie.hasLabel(trans))
