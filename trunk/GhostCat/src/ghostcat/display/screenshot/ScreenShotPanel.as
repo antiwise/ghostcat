@@ -12,11 +12,11 @@ package ghostcat.display.screenshot
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	
-	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.ScaleBox;
 	import ghostcat.display.graphics.SelectRect;
 	import ghostcat.events.TickEvent;
+	import ghostcat.parse.display.SimpleRect;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.util.display.BitmapUtil;
@@ -63,7 +63,7 @@ package ghostcat.display.screenshot
 			selectRect.blendMode = BlendMode.ERASE;
 			(selectRect as SelectRect).createTo(layer);
 			
-			panel = new DebugRect(100,20,0x0,"双击或回车截图",0xFFFFFF);
+			panel = new SimpleRect(100,20,0x0,"双击或回车截图",0xFFFFFF);
 			addChild(panel);
 			
 			this.enabledTick = true;
