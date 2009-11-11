@@ -111,7 +111,7 @@ package ghostcat.display.residual
 				if (effects)
 				{
 					for each (var f:BitmapFilter in effects)
-					bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),f);
+						bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),f);
 				}
 			}
 			super.updateDisplayList();

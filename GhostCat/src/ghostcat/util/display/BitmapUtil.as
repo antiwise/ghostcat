@@ -42,13 +42,14 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function scale(source:BitmapData,scaleX:Number =1.0,scaleY:Number = 1.0,disposeSource:Boolean = false):BitmapData
+		public static function scale(source:BitmapData,scaleX:Number =1.0,scaleY:Number = 1.0,disposeSource:Boolean = true):BitmapData
 		{
 			var result:BitmapData = new BitmapData(source.width * scaleX,source.height * scaleY,source.transparent);
 			var m:Matrix = new Matrix();
 			m.scale(scaleX,scaleY);
 			result.draw(source,m);
-			source.dispose()
+			if (disposeSource)
+				source.dispose()
 			return result;
 		}
 		
@@ -60,11 +61,12 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function clip(source:BitmapData,clipRect:Rectangle,disposeSource:Boolean = false):BitmapData
+		public static function clip(source:BitmapData,clipRect:Rectangle,disposeSource:Boolean = true):BitmapData
 		{
 			var result:BitmapData = new BitmapData(clipRect.width,clipRect.height,source.transparent);
 			result.copyPixels(source,clipRect,new Point());
-			source.dispose()
+			if (disposeSource)
+				source.dispose()
 			return result;
 		}
 		
