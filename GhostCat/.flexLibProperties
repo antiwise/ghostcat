@@ -258,7 +258,7 @@
     <classEntry path="ghostcat.parse.display.PathParse"/>
     <classEntry path="ghostcat.parse.display.RectParse"/>
     <classEntry path="ghostcat.parse.display.ShapeParse"/>
-    <classEntry path="ghostcat.parse.display.SimpleRect"/>
+    <classEntry path="ghostcat.parse.display.SimpleRectParse"/>
     <classEntry path="ghostcat.parse.display.TextFieldParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsBitmapFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsClear"/>

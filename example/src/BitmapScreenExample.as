@@ -47,7 +47,8 @@ package
 			for (var i:int = 0;i < COUNT;i++)
 			{
 				var m:GBitmap = new GBitmap(new DrawParse(new TestHuman()).createBitmapData())
-				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
+				m.x = Math.random() * stage.stageWidth;
+				m.y = Math.random() * stage.stageHeight;
 				m.enabledDelayUpdate = false;
 				m.enableMouseEvent = false;
 				s.addObject(m); 

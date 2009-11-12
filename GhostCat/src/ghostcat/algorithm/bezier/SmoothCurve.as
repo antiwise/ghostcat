@@ -165,7 +165,7 @@ package ghostcat.algorithm.bezier
 			if (distance >= curveLength)
 				distance = curveLength;
 			
-			var distanceFromStart:Number=0;
+			var distanceFromStart:Number = 0;
 			var len:uint = beziers.length;
 			
 			for (var i:uint = 0; i < len; i++)
@@ -173,7 +173,7 @@ package ghostcat.algorithm.bezier
 				var bezier:Bezier = beziers[i] as Bezier;
 				var bezierLength:Number = bezier.length;
 				
-				if (distanceFromStart + bezierLength > distance)
+				if (distanceFromStart + bezierLength >= distance)
 					return [bezier,distance - distanceFromStart];
 				
 				distanceFromStart += bezierLength;

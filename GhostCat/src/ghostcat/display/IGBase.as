@@ -48,12 +48,11 @@ package ghostcat.display
 			
 		/**
 		 * 设置坐标
-		 * @param x
-		 * @param y
+		 * @param p	坐标
 		 * @param noEvent	是否触发MOVE事件
 		 * 
 		 */
-		function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
+		function setPosition(p:Point,noEvent:Boolean = false):void
 		
 		/**
 		 * 销毁方法

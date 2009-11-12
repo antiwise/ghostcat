@@ -76,11 +76,12 @@ package ghostcat.util.display
          */        
         public static function moveToHigh(displayObj:DisplayObject):void
         {
-        	if (displayObj.parent)
+			var parent:DisplayObjectContainer = displayObj.parent;
+			if (parent)
         	{
-        		var parent:DisplayObjectContainer = displayObj.parent;
-        		if (parent.getChildIndex(displayObj) < parent.numChildren - 1)
-        			parent.setChildIndex(displayObj, parent.numChildren - 1);
+        		var lastIndex:int = parent.numChildren - 1;
+        		if (parent.getChildIndex(displayObj) < lastIndex)
+        			parent.setChildIndex(displayObj, lastIndex);
         	}
         }
         

@@ -38,7 +38,7 @@ package
 			p1.addEventListener(MoveEvent.MOVE,moveHanlder);
 			p2.addEventListener(MoveEvent.MOVE,moveHanlder);
 			
-			w = new Wall(new TestRepeater(),p1.point,p2.point,100);
+			w = new Wall(new TestRepeater(),p1.position,p2.position,100);
 			w.transform.colorTransform = new ColorTransform(0,0,0);
 			addChild(w);
 			

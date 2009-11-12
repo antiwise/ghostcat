@@ -9,7 +9,6 @@ package
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.community.sort.SortYManager;
-	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
@@ -39,7 +38,7 @@ package
 			for (var i:int = 0;i < 100;i++)
 			{
 				var m:GBase = new GBase(new TestHuman())
-				m.setPosition(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight,true);
+				m.setPosition(new Point(Math.random() * stage.stageWidth,Math.random() * stage.stageHeight),true);
 				addChild(m);
 			}
 			

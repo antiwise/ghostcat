@@ -2,8 +2,6 @@ package ghostcat.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.Graphics;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -15,9 +13,7 @@ package ghostcat.display
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.UniqueCall;
-	import ghostcat.util.display.MatrixUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
 	
@@ -284,23 +280,19 @@ package ghostcat.display
 		 * @param noEvent	是否触发事件
 		 * 
 		 */
-		public function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
+		public function setPosition(p:Point,noEvent:Boolean = false):void
 		{
-			if (super.x != x)
+			var displayPoint:Point = new Point(super.x,super.y);
+			if (!displayPoint.equals(p))
 			{
-				_oldPosition.x = super.x;
-				position.x = x;
+				_oldPosition = displayPoint;
+				_position = p;
 			
 				if (!delayUpatePosition)
-					super.x = x;
-			}
-			if (super.y != y)
-			{
-				_oldPosition.y = super.y;
-				position.y = y;
-				
-				if (!delayUpatePosition)
-					super.y = y;
+				{
+					super.x = p.x;
+					super.y = p.y
+				}
 			}
 			
 			if (enabledDelayUpdate)
@@ -314,7 +306,7 @@ package ghostcat.display
 		 */
 		public function set position(v:Point):void
 		{
-			setPosition(v.x,v.y);
+			setPosition(v);
 		}
 		
 		public function get position():Point

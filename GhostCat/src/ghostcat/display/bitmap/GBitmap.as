@@ -277,23 +277,19 @@ package ghostcat.display.bitmap
 		 * @param noEvent	是否触发事件
 		 * 
 		 */
-		public function setPosition(x:Number,y:Number,noEvent:Boolean = false):void
+		public function setPosition(p:Point,noEvent:Boolean = false):void
 		{
-			if (super.x != x)
+			var displayPoint:Point = new Point(super.x,super.y);
+			if (!displayPoint.equals(p))
 			{
-				_oldPosition.x = super.x;
-				position.x = x;
+				_oldPosition = displayPoint;
+				position = p;
 				
 				if (!delayUpatePosition)
-					super.x = x;
-			}
-			if (super.y != y)
-			{
-				_oldPosition.y = super.y;
-				position.y = y;
-				
-				if (!delayUpatePosition)
-					super.y = y;
+				{
+					super.x = p.x;
+					super.y = p.y
+				}
 			}
 			
 			if (enabledDelayUpdate)

@@ -76,10 +76,10 @@ package ghostcat.ui.containers
 			var rightRect:GraphicsRect = new GraphicsRect(-5,5,5,height - 10);
 			var bottomRect:GraphicsRect = new GraphicsRect(5, -5,width - 10,5);
 			
-			leftEdge.setPoint(new Point(0,0),true);
-			topEdge.setPoint(new Point(0,0),true);
-			rightEdge.setPoint(new Point(width,0),true);
-			bottomEdge.setPoint(new Point(0,height),true);
+			leftEdge.setPosition(new Point(0,0),true);
+			topEdge.setPosition(new Point(0,0),true);
+			rightEdge.setPosition(new Point(width,0),true);
+			bottomEdge.setPosition(new Point(0,height),true);
 			
 			new RectParse(leftRect,null,fill,null,true).parse(leftEdge.content);
 			new RectParse(topRect,null,fill,null,true).parse(topEdge.content);

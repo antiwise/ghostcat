@@ -38,7 +38,7 @@ package
 			addChild(p3);
 			addChild(p4);
 			
-			f.setTransform(p1.point,p2.point,p3.point,p4.point);
+			f.setTransform(p1.position,p2.position,p3.position,p4.position);
 			
 			stage.addChild(new CursorSprite());
 			
