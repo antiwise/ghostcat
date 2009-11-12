@@ -23,7 +23,7 @@ package
 			var b:DisplayObject = new TestCollision();
 			addChild(b);
 			
-			new ScreenShotPanel(stage,null,r);
+			new ScreenShotPanel(r,stage);
 			
 			stage.addChild(new CursorSprite());
 			

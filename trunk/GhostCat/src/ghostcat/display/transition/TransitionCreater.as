@@ -29,7 +29,7 @@ package ghostcat.display.transition
 	 * @author flashyiyi
 	 * 
 	 */
-	public final class TransitionManager
+	public final class TransitionCreater
 	{
 		/**差异值渐变 */
 		public static function threshold(switchHandler:*,target:DisplayObject):TransitionTransferLayer

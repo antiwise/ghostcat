@@ -147,7 +147,7 @@ package ghostcat.ui.controls
 			if (!f)
 				f = textField.defaultTextFormat;
 			
-			if (length > 0)
+			if (textField.length > 0)
 				textField.setTextFormat(f,0,textField.length);
 			
 			if (overwriteDefault)

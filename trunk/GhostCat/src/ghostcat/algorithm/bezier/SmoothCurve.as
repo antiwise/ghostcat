@@ -49,11 +49,37 @@ package ghostcat.algorithm.bezier
 		 */		
 		public function SmoothCurve (startPoint:Point=null, endPoint:Point=null, seqNum:int = 0)
 		{
+			createFromSeqNum(startPoint,endPoint,seqNum);
+		}
+		
+		/**
+		 * 根据起点终点创建并分段
+		 *  
+		 * @param startPoint
+		 * @param endPoint
+		 * @param seqNum
+		 * 
+		 */
+		public function createFromSeqNum(startPoint:Point, endPoint:Point, seqNum:int):void
+		{
 			this._start = startPoint;
 			this._end = endPoint;
 			
 			for (var i:int = seqNum - 1;i >= 0;i--)
 				insert(Point.interpolate(startPoint,endPoint,1.0/(seqNum+1)*(i+1)))
+		}
+		
+		/**
+		 * 从路径创建 
+		 * 
+		 */
+		public function createFromPath(path:Array):void
+		{
+			this._start = path[0];
+			this._end = path[path.length - 1];
+			
+			for (var i:int = path.length - 2;i >= 1;i--)
+				insert(path[i]);
 		}
 		
 		/**
@@ -124,20 +150,20 @@ package ghostcat.algorithm.bezier
 		}
 		
 		/**
-		 * 获得起点起经过一定长度的终点
-		 *  
-		 * @param distance	距离
+		 * 获得起点起经过一定长度的Bezier曲线和余下的曲线长度
+		 * 
+		 * @param distance
 		 * @return 
 		 * 
 		 */
-		public function getPointByDistance(distance:Number):Point
+		public function getBezierByDistance(distance:Number):Array
 		{
 			if (distance <= 0)
-				return _start.clone();
+				distance = 0;
 			
 			var curveLength:Number = length;
 			if (distance >= curveLength)
-				return _end.clone();
+				distance = curveLength;
 			
 			var distanceFromStart:Number=0;
 			var len:uint = beziers.length;
@@ -148,15 +174,43 @@ package ghostcat.algorithm.bezier
 				var bezierLength:Number = bezier.length;
 				
 				if (distanceFromStart + bezierLength > distance)
-				{
-					var difference:Number = distance - distanceFromStart;
-					var time:Number = bezier.getTimeByDistance(difference);
-					var position:Point = bezier.getPoint(time); 
-					return position;
-				}
+					return [bezier,distance - distanceFromStart];
+				
 				distanceFromStart += bezierLength;
 			}
 			return null;
+		}
+		
+		/**
+		 * 获得起点起经过一定长度的终点
+		 *  
+		 * @param distance	距离
+		 * @return 
+		 * 
+		 */
+		public function getPointByDistance(distance:Number):Point
+		{
+			var result:Array = getBezierByDistance(distance);
+			var bezier:Bezier = result[0];
+			var difference:Number = result[1];
+			var time:Number = bezier.getTimeByDistance(difference);
+			return bezier.getPoint(time); 
+		}
+		
+		/**
+		 * 获得起点起经过一定长度的点的切线
+		 *  
+		 * @param distance	距离
+		 * @return 
+		 * 
+		 */
+		public function getTangentAngleByDistance(distance:Number):Number
+		{
+			var result:Array = getBezierByDistance(distance);
+			var bezier:Bezier = result[0];
+			var difference:Number = result[1];
+			var time:Number = bezier.getTimeByDistance(difference);
+			return bezier.getTangentAngle(time); 
 		}
 		
 		/**
@@ -207,7 +261,3 @@ package ghostcat.algorithm.bezier
 		
 	}
 }
-
-
-
-

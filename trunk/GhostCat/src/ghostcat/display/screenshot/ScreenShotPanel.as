@@ -10,6 +10,7 @@ package ghostcat.display.screenshot
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	
 	import ghostcat.display.GBase;
@@ -19,6 +20,8 @@ package ghostcat.display.screenshot
 	import ghostcat.parse.display.SimpleRect;
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
+	import ghostcat.ui.controls.GText;
+	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.display.BitmapUtil;
 	
 	/**
@@ -36,9 +39,9 @@ package ghostcat.display.screenshot
 		public var rHandler:Function;
 		public var result:BitmapData;
 		
-		private var panel:Sprite;
+		private var panel:GText;
 		
-		public function ScreenShotPanel(v:Stage,withOut:Array = null,rHandler:Function=null)
+		public function ScreenShotPanel(rHandler:Function,v:Stage,withOut:Array = null)
 		{
 			super();
 			
@@ -50,11 +53,11 @@ package ghostcat.display.screenshot
 			v.addChild(this);
 			
 			layer = new Sprite();
-			layer.blendMode = BlendMode.SUBTRACT;
+			layer.blendMode = BlendMode.LAYER;
 			addChild(layer);
 			
 			var blackLayer:Shape = new Shape();
-			blackLayer.graphics.beginFill(0xFFFFFF,0.3);
+			blackLayer.graphics.beginFill(0x0,0.5);
 			blackLayer.graphics.drawRect(0,0,v.stageWidth,v.stageHeight);
 			blackLayer.graphics.endFill();
 			layer.addChild(blackLayer);
@@ -63,7 +66,10 @@ package ghostcat.display.screenshot
 			selectRect.blendMode = BlendMode.ERASE;
 			(selectRect as SelectRect).createTo(layer);
 			
-			panel = new SimpleRect(100,20,0x0,"双击或回车截图",0xFFFFFF);
+			panel = new GText(new SimpleRect(100,100,0x0),true,true,new Padding(2,2,2,2));
+			panel.applyTextFormat(new TextFormat(null,null,0xFFFFFF),true);
+			panel.enabledAdjustContextSize = true;
+			panel.text = "点击屏幕选取范围";
 			addChild(panel);
 			
 			this.enabledTick = true;
@@ -122,8 +128,17 @@ package ghostcat.display.screenshot
 		protected override function tickHandler(event:TickEvent) : void
 		{
 			var rect:Rectangle = selectRect.getRect(this);
-			panel.x = rect.x;
-			panel.y = rect.y - panel.height - 5;
+			if (rect.isEmpty())
+			{
+				panel.x = mouseX;
+				panel.y = mouseY - panel.height - 5;
+			}
+			else
+			{
+				panel.text = "双击或回车截图 (大小："+ rect.width + "," + rect.height +")";
+				panel.x = rect.x;
+				panel.y = rect.y - panel.height - 5;
+			}
 		}
 	}
 }

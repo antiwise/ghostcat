@@ -1,6 +1,8 @@
 ﻿这是一个GhostCat的衍生品，可以导入下面的SWC独立使用。
 http://code.google.com/p/ghostcat/source/browse/trunk/GhostCatMVC/bin/GhostCatMVC.swc
 
+需要Flex SDK 3.4或者以上版本编译。放心，只是需要编译环境支持[Bindable]标签，体积并不会增加。
+
 GhostCatMVC的使用成本非常低，它基本上只完成了通信方面的辅助，并没有任何强制性的措施。
 使用方法很简单：首先，你需要为Model,Command,View分别建立不同的类（起码的……）
 然后，在他们Class定义的上面标记上元标签，诸如Model就标上[M(name="test")]，Command就标记上[C(name="test")]，View就标记上[V(name="test")]
