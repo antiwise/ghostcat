@@ -32,7 +32,7 @@ package
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			initControl(start,"起点");
 			initControl(end,"终点");
-			roupe = new Roupe(start.point, end.point,10);
+			roupe = new Roupe(start.position, end.position,10);
 			
 			stage.addChild(new CursorSprite());
 			stage.addChild(new ToolTipSprite());

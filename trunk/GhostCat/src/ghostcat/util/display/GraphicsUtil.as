@@ -25,12 +25,13 @@ package ghostcat.util.display
 			{
 				var m:Matrix = new Matrix();
 				m.translate(x,y);
-				var sx:Number;
-				var sy:Number;
-				if (!isNaN(width))
-					sx = width / bitmapData.width;
-				if (!isNaN(height))
-					sy = height / bitmapData.height;
+				if (isNaN(width))
+					width = bitmapData.width;
+				if (isNaN(height))
+					height = bitmapData.height;
+							
+				var sx:Number = width / bitmapData.width;
+				var sy:Number = height / bitmapData.height;
 				m.scale(sx,sy);
 				
 				target.beginBitmapFill(bitmapData,m,false,false);

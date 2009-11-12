@@ -16,7 +16,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends GBase
+	public class ScreenShotExample extends GBase
 	{
 		
 		protected override function init():void

@@ -24,35 +24,6 @@ package ghostcat.display.graphics
 		public var lockY:Boolean = false;
 		
 		
-		private var _point : Point = new Point();
-
-		/**
-		 * 坐标
-		 */
-		public function get point():Point
-		{
-			return _point;
-		}
-
-		public function set point(v:Point):void
-		{
-			setPoint(v);
-		}
-		
-		/**
-		 * 设置绑定的坐标
-		 *  
-		 * @param v
-		 * @param noEvent	是否触发事件
-		 * 
-		 */
-		public function setPoint(v:Point,noEvent:Boolean = false):void
-		{
-			_point = v;
-			if (v)
-				setPosition(v.x,v.y,noEvent);
-		}
-		
 		private var localMousePoint:Point;//按下时的鼠标位置
 		
 		/**
@@ -80,7 +51,7 @@ package ghostcat.display.graphics
 			if (!point)
 				point = new Point();
 			
-			this.point = point;
+			this.position = point;
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
 			
@@ -122,16 +93,6 @@ package ghostcat.display.graphics
 				x = parent.mouseX + localMousePoint.x;
 			if (!lockY)
 				y = parent.mouseY + localMousePoint.y;
-		}
-		/** @inheritDoc*/
-		override public function set x(value : Number) : void
-		{
-			point.x = super.x = value;
-		}
-		/** @inheritDoc*/
-		override public function set y(value : Number) : void
-		{
-			point.y = super.y = value;
 		}
 		/** @inheritDoc*/
 		public override function set enabled(value : Boolean) : void

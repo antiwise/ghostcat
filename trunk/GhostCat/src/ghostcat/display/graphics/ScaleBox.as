@@ -113,33 +113,33 @@ package ghostcat.display.graphics
 		{
 			var rect:Rectangle = content.getBounds(content.parent);
 			
-			fillControl.setPoint(new Point(rect.x,rect.y),true);
+			fillControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(2,2,rect.width - 4,rect.height - 4),lineStyle,fill,null,true).parse(fillControl.content);
 			
 			
-			topLeftControl.setPoint(new Point(rect.x,rect.y),true);
+			topLeftControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(-2,-2,4,4),lineStyle,fill,null,true).parse(topLeftControl.content);
 			
-			topRightControl.setPoint(new Point(rect.right,rect.y),true);
+			topRightControl.setPosition(new Point(rect.right,rect.y),true);
 			new RectParse(new GraphicsRect(-2,-2,4,4),lineStyle,fill,null,true).parse(topRightControl.content);
 			
-			bottomLeftControl.setPoint(new Point(rect.x,rect.bottom),true);
+			bottomLeftControl.setPosition(new Point(rect.x,rect.bottom),true);
 			new RectParse(new GraphicsRect(-2,-2,4,4),lineStyle,fill,null,true).parse(bottomLeftControl.content);
 			
-			bottomRightControl.setPoint(new Point(rect.right,rect.bottom),true);
+			bottomRightControl.setPosition(new Point(rect.right,rect.bottom),true);
 			new RectParse(new GraphicsRect(-2,-2,4,4),lineStyle,fill,null,true).parse(bottomRightControl.content);
 			
 			
-			topLineControl.setPoint(new Point(rect.x,rect.y),true);
+			topLineControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(2,-2,rect.width-4,4),lineStyle,fill,null,true).parse(topLineControl.content);
 			
-			bottomLineControl.setPoint(new Point(rect.x,rect.bottom),true);
+			bottomLineControl.setPosition(new Point(rect.x,rect.bottom),true);
 			new RectParse(new GraphicsRect(2,-2,rect.width-4,4),lineStyle,fill,null,true).parse(bottomLineControl.content);
 			
-			leftLineControl.setPoint(new Point(rect.x,rect.y),true);
+			leftLineControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(-2,2,4,rect.height-4),lineStyle,fill,null,true).parse(leftLineControl.content);
 			
-			rightLineControl.setPoint(new Point(rect.right,rect.y),true);
+			rightLineControl.setPosition(new Point(rect.right,rect.y),true);
 			new RectParse(new GraphicsRect(-2,2,4,rect.height-4),lineStyle,fill,null,true).parse(rightLineControl.content);
 		}
 		
@@ -149,7 +149,6 @@ package ghostcat.display.graphics
 			fillControl.cursor = CursorSprite.CURSOR_DRAG;
 			fillControl.addEventListener(MoveEvent.MOVE,fillMouseDownHandler,false,0,true);
 			addChild(fillControl);
-			
 			
 			topLeftControl = new DragPoint(null,new Shape());	
 			topLeftControl.cursor = CursorSprite.CURSOR_HV_DRAG;
@@ -170,7 +169,6 @@ package ghostcat.display.graphics
 			bottomRightControl.cursor = CursorSprite.CURSOR_HV_DRAG;
 			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler,false,0,true);
 			addChild(bottomRightControl);
-			
 			
 			topLineControl = new DragPoint(null,new Shape());	
 			topLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
@@ -203,7 +201,7 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content.parent);
-			var dy:Number = topLineControl.point.y - rect.y;
+			var dy:Number = topLineControl.position.y - rect.y;
 			content.y += dy;
 			content.height -= dy;
 			
@@ -215,7 +213,7 @@ package ghostcat.display.graphics
 			if (!bottomLineControl.mouseDown)
 				return;
 			
-			content.height = bottomLineControl.point.y - topLineControl.point.y;
+			content.height = bottomLineControl.position.y - topLineControl.position.y;
 			
 			updateControls();
 		}
@@ -226,7 +224,7 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = leftLineControl.point.x - rect.x;
+			var dx:Number = leftLineControl.position.x - rect.x;
 			content.x += dx;
 			content.width -= dx;
 			
@@ -238,7 +236,7 @@ package ghostcat.display.graphics
 			if (!rightLineControl.mouseDown)
 				return;
 			
-			content.width = rightLineControl.point.x - leftLineControl.x;
+			content.width = rightLineControl.position.x - leftLineControl.x;
 			
 			updateControls();
 		}
@@ -249,10 +247,10 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = topLeftControl.point.x - rect.x;
+			var dx:Number = topLeftControl.position.x - rect.x;
 			content.x += dx;
 			content.width -= dx;
-			var dy:Number = topLeftControl.point.y - rect.y;
+			var dy:Number = topLeftControl.position.y - rect.y;
 			content.y += dy;
 			content.height -= dy;
 			
@@ -265,11 +263,11 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content.parent);
-			var dy:Number = topRightControl.point.y - rect.y;
+			var dy:Number = topRightControl.position.y - rect.y;
 			content.y += dy;
 			content.height -= dy;
 			
-			content.width = topRightControl.point.x - leftLineControl.x;
+			content.width = topRightControl.position.x - leftLineControl.x;
 			
 			updateControls();
 		}
@@ -280,11 +278,11 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = bottomLeftControl.point.x - rect.x;
+			var dx:Number = bottomLeftControl.position.x - rect.x;
 			content.x += dx;
 			content.width -= dx;
 			
-			content.height = bottomLeftControl.point.y - topLineControl.point.y;
+			content.height = bottomLeftControl.position.y - topLineControl.position.y;
 			
 			updateControls();
 		}
@@ -294,8 +292,8 @@ package ghostcat.display.graphics
 			if (!bottomRightControl.mouseDown)
 				return;
 			
-			content.height = bottomRightControl.point.y - topLineControl.point.y;
-			content.width = bottomRightControl.point.x - leftLineControl.x;
+			content.height = bottomRightControl.position.y - topLineControl.position.y;
+			content.width = bottomRightControl.position.x - leftLineControl.x;
 			
 			updateControls();
 		}
