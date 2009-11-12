@@ -20,8 +20,12 @@
  */	
 package ghostcat
 {
-	[Bindable]
-	public class FrameworkClasses
+	import ghostcat.mvc.GhostCatMVC;GhostCatMVC
+	import ghostcat.mvc.InsCotainer;InsCotainer
+	
+	public class MVCFrameworkClasses
 	{
+		[Bindable]
+		public var i:int;
 	}
 }

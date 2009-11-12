@@ -59,11 +59,13 @@
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
+    <classEntry path="ghostcat.display.graphics.ControlRect"/>
     <classEntry path="ghostcat.display.graphics.DragPoint"/>
     <classEntry path="ghostcat.display.graphics.EditableGraphicsSprite"/>
     <classEntry path="ghostcat.display.graphics.GraphicsSprite"/>
     <classEntry path="ghostcat.display.graphics.GridItem"/>
     <classEntry path="ghostcat.display.graphics.LinkLine"/>
+    <classEntry path="ghostcat.display.graphics.ScaleBox"/>
     <classEntry path="ghostcat.display.graphics.SelectRect"/>
     <classEntry path="ghostcat.display.loader.AVM1Loader"/>
     <classEntry path="ghostcat.display.loader.AssetLoader"/>
@@ -85,6 +87,8 @@
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.residual.ResidualShapeScreen"/>
+    <classEntry path="ghostcat.display.screenshot.ScreenShotPanel"/>
+    <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
     <classEntry path="ghostcat.display.transfer.GBitmapEffect"/>
     <classEntry path="ghostcat.display.transfer.GBitmapTransfer"/>
     <classEntry path="ghostcat.display.transfer.GTransfer"/>
@@ -98,6 +102,7 @@
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
     <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionCreater"/>
     <classEntry path="ghostcat.display.transition.TransitionLayerBase"/>
     <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
@@ -196,6 +201,8 @@
     <classEntry path="ghostcat.manager.PathAnalyzer"/>
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
+    <classEntry path="ghostcat.mvc.GhostCatMVC"/>
+    <classEntry path="ghostcat.mvc.InsCotainer"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FilterProxyOper"/>
     <classEntry path="ghostcat.operation.FrameCommandOper"/>
@@ -251,6 +258,7 @@
     <classEntry path="ghostcat.parse.display.PathParse"/>
     <classEntry path="ghostcat.parse.display.RectParse"/>
     <classEntry path="ghostcat.parse.display.ShapeParse"/>
+    <classEntry path="ghostcat.parse.display.SimpleRect"/>
     <classEntry path="ghostcat.parse.display.TextFieldParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsBitmapFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsClear"/>
@@ -308,6 +316,7 @@
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GButtonBase"/>
+    <classEntry path="ghostcat.ui.controls.GButtonState"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="ghostcat.ui.controls.GComboBox"/>
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
@@ -318,6 +327,7 @@
     <classEntry path="ghostcat.ui.controls.GNumberic"/>
     <classEntry path="ghostcat.ui.controls.GNumbericStepper"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
+    <classEntry path="ghostcat.ui.controls.GPlayBackButton"/>
     <classEntry path="ghostcat.ui.controls.GProgressBar"/>
     <classEntry path="ghostcat.ui.controls.GRadioButton"/>
     <classEntry path="ghostcat.ui.controls.GRadioButtonGroup"/>
@@ -416,13 +426,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.graphics.ScaleBox"/>
-    <classEntry path="ghostcat.display.graphics.ControlRect"/>
-    <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
-    <classEntry path="ghostcat.ui.controls.GButtonState"/>
-    <classEntry path="ghostcat.ui.controls.GPlayBackButton"/>
-    <classEntry path="ghostcat.display.screenshot.ScreenShotPanel"/>
-    <classEntry path="ghostcat.parse.display.SimpleRect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

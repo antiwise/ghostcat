@@ -27,7 +27,7 @@ package
 		
 		public function SmoothCurveExample()
 		{
-			RootManager.register(this,1,1);
+			RootManager.register(this);
 			
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			initControl(start,"起点");
