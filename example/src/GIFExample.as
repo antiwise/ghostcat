@@ -11,6 +11,7 @@ package
 	import ghostcat.ui.controls.GHSilder;
 	import ghostcat.ui.controls.GProgressBar;
 	
+	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="500",height="400")]
 	/**
 	 * GIF载入播放例子
@@ -22,26 +23,16 @@ package
 	 */
 	public class GIFExample extends GSprite
 	{
+		[Embed(source = "dance.gif",mimeType="application/octet-stream")]
+		public var data:Class;
+		
 		public var loader:LoadGIFOper;
-		public var pBar:GProgressBar;
 		public var movie:GBitmapMovieClip;
 		public var slider:GHSilder;
 		protected override function init():void
 		{
-			RootManager.register(this);
-		
-			GAlert.show("点击开始下载图片");
-			new FunctionOper(load).commit();
-		}
-		private function load():void
-		{
-			//加入进度条
-			pBar = new GProgressBar();
-			addChild(pBar);
-			
 			//加载GIF
-			loader = new LoadGIFOper("dance.gif");
-			pBar.target = loader;
+			loader = new LoadGIFOper(null,data);
 			loader.commit();
 			new FunctionOper(show).commit();
 		}
@@ -66,7 +57,8 @@ package
 		
 		private function sliderChangeHandler(event:Event):void
 		{
-			movie.frameRate = slider.value;
+			if (Math.abs(slider.value) > 5)
+				movie.frameRate = slider.value;
 		}
 	}
 }
