@@ -3,6 +3,7 @@ package ghostcat.util.easing
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.EventDispatcher;
+	import flash.filters.BlurFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.SoundTransform;
@@ -26,6 +27,7 @@ package ghostcat.util.easing
 	 * tint2，将会以附加的方法增加颜色
 	 * dynamicPoint，是一个显示对象，将会以它的x,y属性作为Tween的终点。这两个值在过程中可变化追踪
 	 * startAt，可以在这里设置初值
+	 * motionBlur，用它代替移动可以产生动态模糊效果
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -190,6 +192,7 @@ package ghostcat.util.easing
 						this.toValues[key] = params[key];
 						break;
 					case "dynamicPoint":
+					case "motionBlur":
 						this.fromValues[key] = new Point((target as DisplayObject).x, (target as DisplayObject).y)
 						this.toValues[key] = params[key];
 						break;
@@ -306,6 +309,9 @@ package ghostcat.util.easing
 			//如果已经结束则执行结束回调函数并删除
 			if (this.currentTime >= this.duration)
 			{
+				if (this.toValues.hasOwnProperty("motionBlur"))
+					(target as DisplayObject).filters = [];
+				
 				if (this.onComplete!=null)
 					this.onComplete();
 				
@@ -344,9 +350,8 @@ package ghostcat.util.easing
 			{
 				var newArr:Array = [];
 				for (var i:int = 0;i < a.length;i++)
-				{
 					newArr.push($o.ease(t, a[i], b[i] -  a[i], $o.duration))
-				}
+				
 				return newArr;
 			}
 			else if (key == "tint" || key == "tint2")
@@ -367,6 +372,7 @@ package ghostcat.util.easing
 		
 		private static function updateValue(target:*,key:String,value:*):void
 		{
+			var displayObj:DisplayObject = target as DisplayObject;
 			switch (key)
 			{
 				case "volume": 
@@ -376,21 +382,33 @@ package ghostcat.util.easing
 					target["soundTransform"] = soundTrans;
 					break;
 				case "autoAlpha":
-					(target as DisplayObject).alpha = value;
-					(target as DisplayObject).visible = value > 0;
+					displayObj.alpha = value;
+					displayObj.visible = value > 0;
 					break;
 				case "frame":
 					(target as MovieClip).gotoAndStop(int(value))
 					break;
 				case "tint":
-					(target as DisplayObject).transform.colorTransform = ColorUtil.getColorTransform(value as uint);
+					displayObj.transform.colorTransform = ColorUtil.getColorTransform(value as uint);
 					break;
 				case "tint2":
-					(target as DisplayObject).transform.colorTransform = ColorUtil.getColorTransform2(value as uint);
+					displayObj.transform.colorTransform = ColorUtil.getColorTransform2(value as uint);
 					break;
 				case "dynamicPoint":
-					(target as DisplayObject).x = value.x;
-					(target as DisplayObject).y = value.y;
+					displayObj.x = value.x;
+					displayObj.y = value.y;
+					break;
+				case "motionBlur":
+					var offestPoint:Point = new Point(
+						Math.abs(value.x - displayObj.x),
+						Math.abs(value.y - displayObj.y)
+					);
+					if (offestPoint.length > 0)
+						displayObj.filters = [new BlurFilter(offestPoint.x,offestPoint.y)];
+					else
+						displayObj.filters = [];
+					displayObj.x = value.x;
+					displayObj.y = value.y;
 					break;
 				default:
 					target[key] = value;
