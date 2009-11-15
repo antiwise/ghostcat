@@ -15,7 +15,6 @@ package ghostcat.ui.controls
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.skin.ListBackground;
 	import ghostcat.ui.UIConst;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.data.PropertyChangeEvent;
 
@@ -114,7 +113,27 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 由数据获得元素 
+		 * 获得某个数据的坐标
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public function getPointFromData(v:*):Point
+		{
+			var index:int = data.indexOf(v);
+			if (index == -1)
+				return null;
+			
+			if (type == UIConst.HORIZONTAL)
+				return new Point(index,0);
+			else if (type == UIConst.VERTICAL)
+				return new Point(0,index);
+			else
+				return new Point(index % columnCount,int(index / columnCount));
+		}
+		
+		/**
+		 * 由元素获得数据 
 		 * @param item
 		 * @return 
 		 * 

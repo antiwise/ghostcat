@@ -1,8 +1,7 @@
 package ghostcat.util.display
 {
 	import flash.display.DisplayObject;
-	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
+	import flash.filters.BitmapFilter;
 	
 	import ghostcat.util.core.CallLater;
 
@@ -21,11 +20,11 @@ package ghostcat.util.display
          * @param filter	滤镜对象
          * 
          */        
-        public static function applyFilter(displayObj:DisplayObject,filter:Object):void
+        public static function applyFilter(displayObj:DisplayObject,filter:BitmapFilter):void
         {
         	var filters:Array=displayObj.filters;
         	var dirty:Boolean = false;
-        	var filterType:Class = filter.constructor as Class;
+        	var filterType:Class = filter["constructor"] as Class;
         	if (filters)
         	{
         		var len:int = filters.length;

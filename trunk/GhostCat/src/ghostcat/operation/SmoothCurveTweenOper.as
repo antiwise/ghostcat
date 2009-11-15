@@ -2,9 +2,8 @@ package ghostcat.operation
 {
 	import flash.geom.Point;
 	
-	import ghostcat.util.easing.TweenEvent;
-	import ghostcat.util.easing.TweenUtil;
 	import ghostcat.algorithm.bezier.SmoothCurve;
+	import ghostcat.util.easing.TweenEvent;
 	
 	/**
 	 * 曲线缓动
@@ -19,9 +18,15 @@ package ghostcat.operation
 		 */
 		public var smoothCurve:SmoothCurve;
 		
-		public function SmoothCurveTweenOper(target:*=null, smoothCurve:SmoothCurve=null, duration:int=100, params:Object=null, invert:Boolean=false)
+		/**
+		 * 是否激活角度变化
+		 */
+		public var applyAngle:Boolean = true;
+		
+		public function SmoothCurveTweenOper(target:*=null, smoothCurve:SmoothCurve=null, duration:int=100, params:Object=null, invert:Boolean=false, applyAngle:Boolean = true)
 		{
 			this.smoothCurve = smoothCurve;
+			this.applyAngle = applyAngle;
 			
 			super(target, duration, params, invert);
 		}
@@ -56,6 +61,11 @@ package ghostcat.operation
 			var p:Point = smoothCurve.getPointByDistance(smoothCurve.length * r);
 			target.x = p.x;
 			target.y = p.y;
+			if (applyAngle)
+			{
+				var angle:Number = smoothCurve.getTangentAngleByDistance(smoothCurve.length * r);
+				target.rotation = angle / Math.PI * 180;
+			}
 		}
 	}
 }

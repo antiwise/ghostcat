@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.text.controls
 {
 	import flash.display.BlendMode;
 	import flash.display.GradientType;

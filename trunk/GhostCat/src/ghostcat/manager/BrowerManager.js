@@ -8,22 +8,18 @@
 	getTitle:function (){
 		return document.title;
 	},
-	setUrlVariables:function (url){
+	setUrlVariables:function (url)
+	{
 		window.location.replace(url);
 	},
-	addFavorite:function (url,title){
+	addFavorite:function (url,title)
+	{
 		if (document.all)
-		{
 			window.external.addFavorite(url,title);
-		}
 		else if (window.sidebar)
-		{
 			window.sidebar.addPanel(title, url, "");
-		}
 		else
-		{
 			alert("抱歉！您的浏览器不支持添加收藏。");  
-		} 
 	},
 	setHomePage:function (url){
 		try
@@ -66,5 +62,26 @@
 			var warning = text;
 			return warning;
 		}
-	}
+	},
+	disableScroll:function (objId) {
+		var obj = document;
+		if (objId != null) 
+			obj = document.getElementById(objId);   
+               
+		if (obj.addEventListener)
+			obj.addEventListener('DOMMouseScroll', preventDefault, true);   
+		else if (obj.attachEvent)  
+			obj.attachEvent('onmousewheel', preventDefault, true);   
+		else  
+			obj['onmousewheel'] = preventDefault;
+                
+		function preventDefault(e)
+		{   
+			if (window.event)  
+				window.event.returnValue = false;   
+                  
+			if (e && e.preventDefault)  
+				e.preventDefault(); 
+		}   
+ 	}
 }

@@ -91,9 +91,9 @@ package ghostcat.manager
 		
 		private function replaceTextField(event:GTextEvent):void
 		{
-			var text:String = event.gText.text;
+			var text:String = event.control.text;
 			if (text.charAt(0)=="@")
-				event.gText.text = getString(text);
+				event.control.text = getString(text);
 		}
 		
 		/**

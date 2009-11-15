@@ -64,6 +64,11 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
+		 * 是否激活多语言 
+		 */
+		public var enabledLangage:Boolean = true;
+		
+		/**
 		 * 限定输入内容的正则表达式
 		 */
 		public var regExp:RegExp;
@@ -390,9 +395,8 @@ package ghostcat.ui.controls
 			if (asTextBitmap)
 				reRenderTextBitmap();
 			
-			var e:GTextEvent = new GTextEvent(GTextEvent.TEXT_CHANGE);
-			e.gText = this;
-			dispatchEvent(e);//只在设置属性的时候才替换语言，而不是文本变化时就换
+			if (enabledLangage)
+				dispatchEvent(new GTextEvent(GTextEvent.TEXT_CHANGE));//只在设置属性的时候才替换语言，而不是文本变化时就换
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}

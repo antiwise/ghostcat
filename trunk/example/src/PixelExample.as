@@ -10,7 +10,6 @@ package
 	import ghostcat.display.bitmap.PixelItem;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
-	import ghostcat.parse.display.SimpleRect;
 	
 	[SWF(width="200",height="200",frameRate="60",backgroundColor="0xFFFFFF")]
 	

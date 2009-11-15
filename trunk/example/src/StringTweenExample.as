@@ -7,7 +7,7 @@ package
 	
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
-	import ghostcat.text.GTweenText;
+	import ghostcat.text.controls.GTweenText;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
@@ -40,7 +40,7 @@ package
 					"invert 是否倒放\n" + 
 		 			"container 放置打散字体的容器\n" + 
 		 			"bitmap 是否转换为位图\n\n" + 
-		 			"<i>单纯打字效果使用此类性能并不好，应当使用简化版的TextFieldUtil.tween()</i>\n" +
+		 			"<i>单纯打字效果使用此类性能并不好，应当使用简化版的TextTweenUtil.tween()</i>\n" +
 					"<b>注意：这段说明文本是可以编辑的。</b>" + 
 					"</html>";
 			addChild(t);

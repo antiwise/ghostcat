@@ -3,6 +3,7 @@ package ghostcat.algorithm.bezier
 	import flash.display.Graphics;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.parse.DisplayParse;
 
 	/**
@@ -14,30 +15,35 @@ package ghostcat.algorithm.bezier
 	public class SmoothCurve extends DisplayParse
 	{
 		/**
-		 * 曲线段数组
+		 * 是否过点
 		 */
-		public var beziers:Array = [];
+		public var though:Boolean;
 		
-		private var _start:Point;
-
+		/**
+		 * 路径点
+		 */
+		public var path:Array;
+		
 		/**
 		 * 起始点
 		 */
 		public function get start():Point
 		{
-			return _start;
+			return path[0];
 		}
-
-		private var _end:Point;
 
 		/**
 		 * 结束点
 		 */
 		public function get end():Point
 		{
-			return _end;
+			return path[path.length - 1];
 		}
 
+		/**
+		 * 曲线数组 
+		 */
+		protected var beziers:Array = [];
 		
 		/**
 		 * 创建一条平滑曲线
@@ -47,9 +53,9 @@ package ghostcat.algorithm.bezier
 		 * @param seqNum	中间节点数
 		 * 
 		 */		
-		public function SmoothCurve (startPoint:Point=null, endPoint:Point=null, seqNum:int = 0)
+		public function SmoothCurve (though:Boolean = false)
 		{
-			createFromSeqNum(startPoint,endPoint,seqNum);
+			this.though = though;
 		}
 		
 		/**
@@ -62,11 +68,13 @@ package ghostcat.algorithm.bezier
 		 */
 		public function createFromSeqNum(startPoint:Point, endPoint:Point, seqNum:int):void
 		{
-			this._start = startPoint;
-			this._end = endPoint;
+			var path:Array = [];
+			path.push(startPoint);
+			for (var i:int = 1;i < seqNum - 1;i++)
+				path.push(Point.interpolate(startPoint,endPoint,1.0 / (seqNum + 1) * (i + 1)));
+			path.push(endPoint);
 			
-			for (var i:int = seqNum - 1;i >= 0;i--)
-				insert(Point.interpolate(startPoint,endPoint,1.0/(seqNum+1)*(i+1)))
+			createFromPath(path);
 		}
 		
 		/**
@@ -75,51 +83,8 @@ package ghostcat.algorithm.bezier
 		 */
 		public function createFromPath(path:Array):void
 		{
-			this._start = path[0];
-			this._end = path[path.length - 1];
-			
-			for (var i:int = path.length - 2;i >= 1;i--)
-				insert(path[i]);
-		}
-		
-		/**
-		 * 在末尾之前插入控制点（控制点不能是尾节点）
-		 * 
-		 * @param flashyiyi
-		 * 
-		 */
-		public function insert(control:Point):void
-		{
-			var newBezier:Bezier;
-			if (beziers.length > 0)
-			{
-				var lastBezier:Bezier = beziers[beziers.length - 1];
-				lastBezier.end = new Point();
-				newBezier = new Bezier(lastBezier.end, control, _end);
-			}
-			else
-				newBezier = new Bezier(_start, control, _end);
-			
-			beziers.push(newBezier);
-		}
-		
-		/**
-		 * 修改节点的控制点，更改曲线形态
-		 * 
-		 * @param index
-		 * @param x
-		 * @param y
-		 * 
-		 */
-		public function modifyControl(index:int,x:Number = NaN,y:Number = NaN):void
-		{
-			var bezier:Bezier = beziers[index];
-			
-			if (!isNaN(x))
-				bezier.control.x = x;
-		
-			if (!isNaN(y))
-				bezier.control.y = y;
+			this.path = path;
+			refresh();
 		}
 		
 		/**
@@ -135,7 +100,7 @@ package ghostcat.algorithm.bezier
 			{
 				var curveLength:Number = 0;
 				
-				for (var i:uint=0; i < beziers.length; i++)
+				for (var i:int = 0; i < beziers.length; i++)
 				{
 					var bezier:Bezier = beziers[i];
 					curveLength += bezier.length;
@@ -214,27 +179,49 @@ package ghostcat.algorithm.bezier
 		}
 		
 		/**
-		 * 更新曲线
+		 * 更新曲线。如果不执行此操作，曲线的各个方法就无法得到正确的结果。
+		 * <br>会在显示和创建的时候自动更新。
 		 * 
 		 */
 		public function refresh():void
 		{
-			var len:uint = beziers.length;
-			if (!len)
-				return;
+			beziers = [];
 			
-			var prevBezier:Bezier = beziers[0] as Bezier;
+			var i:int;
 			var currentBezier:Bezier;
-			
-			for (var i:uint=1; i<len; i++)
+			var prevBezier:Bezier;
+			if (though)
 			{
-				currentBezier = beziers[i];
-				var mid:Point = Point.interpolate(prevBezier.control, currentBezier.control, 0.5);
-				currentBezier.start.x = mid.x; 
-				currentBezier.start.y = mid.y;
-				prevBezier = currentBezier;
+				var p:Point = path[2].subtract(path[0]);
+				p.x /= 4;
+				p.y /= 4;
+				prevBezier = new Bezier(start.clone(),path[1].subtract(p),end.clone());
+				beziers.push(prevBezier);
+				for (i = 1; i < path.length - 1; i++)
+				{
+					currentBezier = new Bezier(prevBezier.end,path[i].add(path[i].subtract(prevBezier.control)),end.clone())
+					currentBezier.start.x = path[i].x;
+					currentBezier.start.y = path[i].y;
+					beziers.push(currentBezier);
+					prevBezier = currentBezier;
+				}
+			}
+			else
+			{
+				prevBezier = new Bezier(start.clone(),path[1].clone(),end.clone());
+				beziers.push(prevBezier);
+				for (i = 1; i < path.length - 2; i++)
+				{
+					currentBezier = new Bezier(prevBezier.end,path[i+1].clone(),end.clone());
+					var mid:Point = Point.interpolate(prevBezier.control, currentBezier.control, 0.5);
+					currentBezier.start.x = mid.x; 
+					currentBezier.start.y = mid.y;
+					beziers.push(currentBezier);
+					prevBezier = currentBezier;
+				}
 			}
 		}
+		
 		/** @inheritDoc*/
 		public override function parseGraphics(target:Graphics) : void
 		{
@@ -242,11 +229,11 @@ package ghostcat.algorithm.bezier
 			
 			super.parseGraphics(target);
 			
-			target.moveTo(_start.x, _start.y);
+			target.moveTo(start.x, start.y);
 			var len:uint = beziers.length;
 			if (len == 0)
 			{
-				target.lineTo(_end.x, _end.y);
+				target.lineTo(end.x, end.y);
 				return;
 			}
 			var bezier:Bezier = beziers[0] as Bezier;
