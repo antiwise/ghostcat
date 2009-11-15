@@ -17,18 +17,14 @@ package ghostcat.events
 		 */
 		public static const TEXT_CHANGE:String = "text_change";
 		
-		public var gText:GText;
+		public function get control():GText
+		{
+			return target as GText;
+		}
 		
 		public function GTextEvent(type:String, bubbles:Boolean = true, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
-		}
-		
-		public override function clone() : Event
-		{
-			var evt:GTextEvent = new GTextEvent(type,bubbles,cancelable);
-			evt.gText = this.gText;
-			return evt;
 		}
 	}
 }

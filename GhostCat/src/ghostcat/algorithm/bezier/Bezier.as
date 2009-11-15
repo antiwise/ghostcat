@@ -35,6 +35,23 @@ package ghostcat.algorithm.bezier
 		}
 		
 		/**
+		 * 复制坐标 
+		 * @param start
+		 * @param control
+		 * @param end
+		 * 
+		 */
+		public function copyPosition(start : Point, control : Point, end : Point):void
+		{
+			this.start.x = start.x;
+			this.start.x = start.x;
+			this.control.x = control.x;
+			this.control.x = control.x;
+			this.end.x = end.x;
+			this.end.x = end.x;
+		}
+		
+		/**
 		 * 终点
 		 * @return 
 		 * 

@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.text.controls
 {
 	import flash.display.Bitmap;
 	import flash.display.BlendMode;
@@ -11,6 +11,7 @@ package ghostcat.text
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
+	import ghostcat.text.TextFieldUtil;
 	
 	[Event(name="tween_start",type="ghostcat.util.easing.TweenEvent")]
 	[Event(name="tween_end",type="ghostcat.util.easing.TweenEvent")]

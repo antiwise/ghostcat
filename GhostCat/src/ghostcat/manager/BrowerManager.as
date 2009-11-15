@@ -165,15 +165,12 @@ package ghostcat.manager
 		}
 		
 		/**
-		 * 打开自定义浏览器窗口 
-		 * @param name
-		 * @param title
-		 * @param text
+		 * 消除浏览器的滚动事件干扰 
 		 * 
 		 */
-		public function openWindow(name:String,title:String,text:String):void
+		public function disableScroll(objId:String = null):void
 		{
-			ExternalInterface.call("BrowerManager.openWindow",name,title,text);
+			ExternalInterface.call("BrowerManager.disableScroll",objId);
 		}
 	}
 }

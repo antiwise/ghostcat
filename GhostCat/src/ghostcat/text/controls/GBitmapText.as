@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.text.controls
 {
 	import flash.display.BitmapData;
 	import flash.filters.BitmapFilter;
