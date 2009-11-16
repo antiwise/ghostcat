@@ -219,19 +219,7 @@ package ghostcat.display.movieclip
 				setLabel(labels[0].name,-1);
         }
         
-        /**
-         * 在暂停状态下，仍然可以手动使用此方法激活tick。利用它可以处理区域调速等功能。
-         * @param v
-         * 
-         */
-        public function tick(v:int):void
-        {
-        	var evt:TickEvent = new TickEvent(TickEvent.TICK);
-        	evt.interval = v;
-        	tickHandler(evt);
-        }
-		
-		protected override function tickHandler(event:TickEvent):void
+        protected override function tickHandler(event:TickEvent):void
 		{
 			if (frameRate == 0)
 				return;
