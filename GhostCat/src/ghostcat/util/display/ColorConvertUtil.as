@@ -33,7 +33,7 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * HSL转换为RGB
+		 * HSL（色相，饱和度，亮度）转换为RGB
 		 */		
 		public static function fromHSL(v:uint):uint
 		{

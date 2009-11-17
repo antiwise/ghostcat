@@ -3,7 +3,6 @@ package
 	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GSprite;
 	import ghostcat.display.other.BubbleCreater;
-	import ghostcat.display.other.CircleLight;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.containers.GAlert;
@@ -16,9 +15,8 @@ package
 		{
 			RootManager.register(this);
 			
-			addChild(new DebugRect(500,400,0x8888FF));
-			addChild(new BubbleCreater(500,400));
-			addChild(new CircleLight(250));
+			addChild(new DebugRect(500,400,0xFF88FF));
+			addChild(new BubbleCreater(500,400,250));
 			
 			PopupManager.instance.applicationDisabledOper = null;
 			PopupManager.instance.applicationEnabledOper = null;
