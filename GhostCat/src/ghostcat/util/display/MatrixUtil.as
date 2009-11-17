@@ -1,7 +1,6 @@
 package ghostcat.util.display
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.geom.Matrix;
 
 	/**
@@ -20,7 +19,7 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function getMatrixAt(obj:DisplayObject,container:DisplayObjectContainer):Matrix
+		public static function getMatrixAt(obj:DisplayObject,container:DisplayObject):Matrix
 		{
 			if (obj == container)
 				return new Matrix();

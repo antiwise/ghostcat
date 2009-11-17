@@ -16,7 +16,9 @@ package ghostcat.ui.controls
 	import ghostcat.skin.ListBackground;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.data.PropertyChangeEvent;
+	
+	import mx.events.PropertyChangeEvent;
+	import mx.events.PropertyChangeEventKind;
 
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
@@ -356,11 +358,11 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 通过外部修改数据源变化事件 
+		 * 通过外部修改数据源变化事件
 		 * @param event
 		 * 
 		 */
-		protected function dataChangeHandler(event:PropertyChangeEvent):void
+		protected function dataChangeHandler(event:mx.events.PropertyChangeEvent):void
 		{
 			var i:int;
 			var j:int;

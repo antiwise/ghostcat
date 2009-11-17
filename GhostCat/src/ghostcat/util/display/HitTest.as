@@ -41,41 +41,29 @@ package ghostcat.util.display
 		{
 			
 			// If either of the items don't have a reference to stage, then they are not in a display list
-			
 			// or if a simple hitTestObject is false, they cannot be intersecting.
-			
 			if (!target1.root || !target2.root || !target1.hitTestObject(target2))
 				return new Rectangle();
 			
-			
-			
 			// Get the bounds of each DisplayObject.
+			var bounds1:Rectangle = target1.getBounds(target1.root);
+			var bounds2:Rectangle= target2.getBounds(target2.root);
 			
-			var bounds1:Rectangle=target1.getBounds(target1.root);
-			
-			var bounds2:Rectangle=target2.getBounds(target2.root);
-			
-			
-			
-			// Determine test area boundaries.
-			
-			var intersection:Rectangle=new Rectangle();
-			
-			intersection.x=Math.max(bounds1.x, bounds2.x);
-			
-			intersection.y=Math.max(bounds1.y, bounds2.y);
-			
-			intersection.width=Math.min((bounds1.x + bounds1.width) - intersection.x, (bounds2.x + bounds2.width) - intersection.x);
-			
-			intersection.height=Math.min((bounds1.y + bounds1.height) - intersection.y, (bounds2.y + bounds2.height) - intersection.y);
-			
-			return intersection;
+			return bounds1.intersection(bounds2);
+//			// Determine test area boundaries.
+//			var intersection:Rectangle = new Rectangle();
+//			intersection.x = Math.max(bounds1.x, bounds2.x);
+//			intersection.y = Math.max(bounds1.y, bounds2.y);
+//			intersection.width = Math.min((bounds1.x + bounds1.width) - intersection.x, (bounds2.x + bounds2.width) - intersection.x);
+//			intersection.height = Math.min((bounds1.y + bounds1.height) - intersection.y, (bounds2.y + bounds2.height) - intersection.y);
+//			return intersection;
 		}
 		
-		public static function complexIntersectionRectangle(target1:DisplayObject, target2:DisplayObject, scaleX:Number , scaleY:Number , pt:Point , ct:ColorTransform ,oldhitRectangle:Rectangle,hitRectangle:Rectangle,nowW:int,nowH:int):Rectangle
+		private static function complexIntersectionRectangle(target1:DisplayObject, target2:DisplayObject, scaleX:Number , scaleY:Number , pt:Point , ct:ColorTransform ,oldhitRectangle:Rectangle,hitRectangle:Rectangle,nowW:int,nowH:int):Rectangle
 		{		
 			if (!target1.hitTestObject(target2))
 				return new Rectangle();
+			
 			//根据纵横的缩小倍数来计算缩小的重叠矩形尺寸
 			hitRectangle.x = oldhitRectangle.x
 			hitRectangle.y = oldhitRectangle.y
@@ -86,9 +74,8 @@ package ghostcat.util.display
 			//绘制对象1其缩放比例和位移量由getDrawMatrix（）函数计算，并且把不透明处绘制为ct的颜色
 			bitmapData.draw(target1, getDrawMatrix(target1, hitRectangle , scaleX , scaleY ),ct);
 			//当纵横缩小比例不为1的时候把任何有色像素重新替换成ct的颜色0xFF00000F，原因为缩小的对象在进行纯色绘制的时候会有半透明像素产生，如果不加以重新替换会影响后面对象2的滤镜效果。
-			if(scaleX!=1&&scaleY!=1){
+			if(scaleX!=1&&scaleY!=1)
 				bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0,0xFF00000F)
-			}
 			//绘制对象2其缩放比例和位移量由getDrawMatrix（）函数计算，并且把不透明处绘制为ct的颜色，并且模式为叠加。如此一来两个对象重叠的部分颜色值必定大于0xFF00000F。
 			bitmapData.draw(target2, getDrawMatrix(target2, hitRectangle , scaleX , scaleY ),ct, BlendMode.ADD);
 			//把所有颜色值大于0xFF00000F的部分（也就是重叠部分）重新替换为不透明红色方便后面getColorBoundsRect()方法计算尺寸。这里替换的原因是getColorBoundsRect()不支持范围取色而只支持单色计算。
@@ -96,48 +83,34 @@ package ghostcat.util.display
 			var hits:int=bitmapData.threshold(bitmapData,bitmapData.rect,pt,">",0xFF00000F,0xFFFF0000)
 			//判断红色区域尺寸
 			var intersection:Rectangle=bitmapData.getColorBoundsRect(0xFFFFFFFF, 0xFFFF0000);
-			//		
-			
-			bitmapData = null
+			bitmapData.dispose();
 			//如果红色区域宽度不为0，即bitmapData中含有红色像素。此时说明对象1和对象2在此次判定中有重叠有碰撞
-			if(intersection.width!=0){				
-				//如果纵横缩放比例有任意一个不是原始尺寸
-				if(scaleX>1||scaleY>1){
-					//并且红色像素的数量比较少，对象1和对象2的碰撞面积比较小的话
-					if(hits<=(scaleX+scaleY)*1.5){
-						//由于bitmapData的宽高坐标都是以整数表示，那么经过缩放后取整的区域势必回又可能在取整的时候把真正可能产生碰撞的区域忽略。
-						//所以要进行下一次检测时候适当的把检测区域扩大xadd和yadd就是这个扩大的系数
-						var xadd:int=.5
-						var yadd:int=.5
-						//下次检测时候bitmapData的期望大小
-						var nextW:int=tileSize
-						var nextH:int=tileSize
-						//如果此次判定发现碰撞区域和bitmapData尺寸相同，那么在计算下次需要判断区域时候会和此次的区域相同，那么判断结果可能会和此次结果相同。这样则会引起堆栈上溢的情况，为了避免该情况发生，将缩小判断的尺寸扩大一倍进行再次检测。
-						if(intersection.width!=nowW){
-							nextW=tileSize					
-						}else{
-							nextW=nowW*2
-						}				
-						if(intersection.height!=nowH){
-							nextH=tileSize
-						}else{
-							nextH=nowH*2
-						}
-						//根据检测出来的缩的碰撞区域来计算未缩小的碰撞区域大小以方便下一次计算的时候缩小检测范围。
-						oldhitRectangle.x += (intersection.x - xadd) * scaleX
-						oldhitRectangle.y += (intersection.y - yadd) * scaleY
-						oldhitRectangle.width = (intersection.width + xadd*2) * scaleX
-						oldhitRectangle.height = (intersection.height + yadd*2)  * scaleY
-						//根据检测期望缩小到的尺寸重新计算缩小倍率
-						scaleX = (oldhitRectangle.width / nextW) 
-						scaleY = (oldhitRectangle.height / nextH)
-						//如果倍率小于2则直接按原始尺寸 
-						scaleX = scaleX < 2 ? 1 : scaleX
-						scaleY = scaleY < 2 ? 1 : scaleY
-						//进行下一次判定
-						intersection=complexIntersectionRectangle(target1,target2, scaleX , scaleY ,pt,ct,oldhitRectangle,hitRectangle,nextW,nextH)							
-					}
-				}
+			//如果纵横缩放比例有任意一个不是原始尺寸
+			//并且红色像素的数量比较少，对象1和对象2的碰撞面积比较小的话
+			if (intersection.width != 0 && (scaleX > 1 || scaleY > 1) && hits <= (scaleX+scaleY) * 1.5)
+			{
+				//由于bitmapData的宽高坐标都是以整数表示，那么经过缩放后取整的区域势必回又可能在取整的时候把真正可能产生碰撞的区域忽略。
+				//所以要进行下一次检测时候适当的把检测区域扩大xadd和yadd就是这个扩大的系数
+				var xadd:int = 0.5;
+				var yadd:int = 0.5;
+				//下次检测时候bitmapData的期望大小
+				//如果此次判定发现碰撞区域和bitmapData尺寸相同，那么在计算下次需要判断区域时候会和此次的区域相同，那么判断结果可能会和此次结果相同。这样则会引起堆栈上溢的情况，为了避免该情况发生，将缩小判断的尺寸扩大一倍进行再次检测。
+				var nextW:int = (intersection.width != nowW) ? tileSize : nowW * 2;			
+				var nextH:int = (intersection.height != nowH) ? tileSize : nowH * 2;
+				
+				//根据检测出来的缩的碰撞区域来计算未缩小的碰撞区域大小以方便下一次计算的时候缩小检测范围。
+				oldhitRectangle.x += (intersection.x - xadd) * scaleX;
+				oldhitRectangle.y += (intersection.y - yadd) * scaleY;
+				oldhitRectangle.width = (intersection.width + xadd*2) * scaleX;
+				oldhitRectangle.height = (intersection.height + yadd*2)  * scaleY;
+				//根据检测期望缩小到的尺寸重新计算缩小倍率
+				scaleX = (oldhitRectangle.width / nextW) 
+				scaleY = (oldhitRectangle.height / nextH)
+				//如果倍率小于2则直接按原始尺寸 
+				scaleX = scaleX < 2 ? 1 : scaleX
+				scaleY = scaleY < 2 ? 1 : scaleY
+				//进行下一次判定
+				intersection = complexIntersectionRectangle(target1,target2, scaleX , scaleY ,pt,ct,oldhitRectangle,hitRectangle,nextW,nextH)							
 			}
 			return intersection;
 		}

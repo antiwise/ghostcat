@@ -391,7 +391,6 @@
     <classEntry path="ghostcat.util.data.Hash"/>
     <classEntry path="ghostcat.util.data.LocalStorage"/>
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
-    <classEntry path="ghostcat.util.data.PropertyChangeEvent"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
@@ -430,6 +429,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.display.GTickBase"/>
     <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
+    <classEntry path="ghostcat.util.display.HitTestPhysics"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
