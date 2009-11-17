@@ -6,6 +6,7 @@ package
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import flash.utils.getTimer;
 	
 	import ghostcat.display.GBase;
@@ -13,6 +14,7 @@ package
 	import ghostcat.display.bitmap.BitmapZoomScreen;
 	import ghostcat.display.transfer.effect.MosaicHandler;
 	import ghostcat.skin.AlertSkin;
+	import ghostcat.text.TextTweenUtil;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenUtil;
 	
@@ -28,14 +30,11 @@ package
 	{
 		protected override function init():void
 		{
-			var t:Sprite = new Sprite();
-			t.addChild(Util.createObject(new AlertSkin(),{x:300,y:225}));
-			var s:BitmapZoomScreen = new BitmapZoomScreen(t,600,450);
-			s.accuracy = 1.0;
-			addChild(s);
+			var t:TextField = new TextField();
+			t.htmlText = "<font color='#FFFFF'>1<b>2</b>3</font>4"
+			addChild(t);
 			
-			TweenUtil.to(s,1000,{zoom:2})
-
+			TextTweenUtil.tweenQuick(t,1000);
 		}
 	}
 }
