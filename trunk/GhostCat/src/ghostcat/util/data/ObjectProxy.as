@@ -6,6 +6,8 @@ package ghostcat.util.data
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 	
+	import mx.events.PropertyChangeEvent;
+	
 	[Event(name="property_change",type="ghostcat.util.data.PropertyChangeEvent")]
 	
 	/**
