@@ -23,8 +23,11 @@ package ghostcat.text
 			var i2:int = 0;	    
 			while(i2 < s2.length)   
 			{   
-				var status:int = have(i1,i2);
-				if(status == 0)   
+				var status:int = s1.indexOf(s2.charAt(i2),i1);
+				if (status >= 0)
+					status -= i1;
+				
+				if(status == 0)
 				{   
 					i1++;   
 					i2++;   
@@ -62,23 +65,6 @@ package ghostcat.text
 				actions.push([true,i1,s1.substr(i1)]);
 			
 			return actions;
-			
-			function have(p:int,q:int):int 
-			{   
-				var i:int = -1;   
-				while (p < s1.length && q < s2.length)   
-				{   
-					i++;
-					if (s1.charAt(p) == s2.charAt(q))   
-						return i;   
-					else   
-						p++; 
-				}   
-				if (p >= s1.length)   
-					return  -1;   
-				
-				return i;   
-			}   
 		}
 		
 		/**

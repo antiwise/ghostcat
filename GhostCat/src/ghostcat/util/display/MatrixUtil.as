@@ -25,8 +25,8 @@ package ghostcat.util.display
 			if (obj == container)
 				return new Matrix();
 			
-			var m1:Matrix = obj.transform.concatenatedMatrix;
-			var m2:Matrix = container.transform.concatenatedMatrix;
+			var m1:Matrix = (obj.stage) ? obj.transform.concatenatedMatrix : obj.transform.matrix;
+			var m2:Matrix = (container.stage) ? container.transform.concatenatedMatrix : container.transform.matrix;
 			m2.invert();
 			m1.concat(m2);
 			return m1;

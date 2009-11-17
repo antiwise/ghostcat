@@ -1,8 +1,18 @@
 package
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.BitmapDataChannel;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
+	import flash.geom.Point;
+	import flash.utils.getTimer;
+	
 	import ghostcat.display.GBase;
-	import ghostcat.text.StringCompareUtil;
-
+	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.transfer.effect.MosaicHandler;
+	
+	
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
 	[SWF(width="600",height="450")]
 	/**
@@ -10,13 +20,16 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends GBase
+	public dynamic class TestExample extends GBase
 	{
 		protected override function init():void
 		{
-			var a:Array = StringCompareUtil.compare("特殊的事情","并不特殊的问题");
-			trace(a);
-			trace(StringCompareUtil.apply("特殊的事情",a))
+			var t:DisplayObject = new TestCollision();
+			var s:BitmapScreen = new BitmapScreen(600,450);
+			addChild(s);
+			
+			s.addChild(t);
+
 		}
 	}
 }
