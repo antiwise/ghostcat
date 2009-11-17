@@ -14,13 +14,15 @@ package ghostcat.display.other
 	 */
 	public class BubbleCreater extends GNoScale
 	{
-		public function BubbleCreater(width:Number,height:Number)
+		public function BubbleCreater(width:Number,height:Number,radius:Number)
 		{
 			super();
 			
 			this.width = width;
 			this.height = height;
 			this.enabledTick = true;
+			
+			addChild(new CircleLight(radius));
 		}
 		
 		protected override function tickHandler(event:TickEvent):void
@@ -47,8 +49,9 @@ import flash.display.GradientType;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Matrix;
-import ghostcat.events.TickEvent;
+
 import ghostcat.display.GBase;
+import ghostcat.events.TickEvent;
 
 class Bubble extends GBase
 {
@@ -68,7 +71,7 @@ class Bubble extends GBase
 		graphics.endFill();	
 		
 		blendMode = BlendMode.ADD;
-		alpha = 0.0;	
+		alpha = 0.0;
 		
 		enabledTick = true;
 	}
@@ -91,4 +94,41 @@ class Bubble extends GBase
 		}
 	}
 	
+}
+
+import flash.display.BlendMode;
+import flash.display.GradientType;
+import flash.geom.Matrix;
+
+import ghostcat.display.GBase;
+import ghostcat.events.TickEvent;
+
+/**
+ * 跟随鼠标的光球
+ * 
+ * @author flashyiyi
+ * 
+ */
+class CircleLight extends GBase
+{
+	public function CircleLight(radius:Number)
+	{
+		super();
+		
+		blendMode=BlendMode.ADD;
+		
+		var ma:Matrix=new Matrix();
+		ma.createGradientBox(radius*2,radius*2,0,-radius,-radius);
+		graphics.beginGradientFill(GradientType.RADIAL,[0xFFFFFF,0xFFFFFF],[0.8,0.0],[0,0xFF],ma);
+		graphics.drawCircle(0,0,radius);
+		graphics.endFill();
+		
+		this.enabledTick = true;
+	}
+	
+	protected override function tickHandler(event:TickEvent):void
+	{
+		x += mouseX * event.interval / 300;
+		y += mouseY * event.interval / 300;
+	}
 }
