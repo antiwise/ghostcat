@@ -55,6 +55,20 @@ package ghostcat.util.display
             displayObj.x += rect.x - objRect.x;
             displayObj.y += rect.y - objRect.y;
         }
+		
+		/**
+		 * 中心缩放
+		 *  
+		 * @param v
+		 * @param scale
+		 * 
+		 */
+		public static function zoom(content:DisplayObject,scale:Number):void
+		{
+			content.x -= content.width * (scale - content.scaleX) / 2;
+			content.y -= content.height * (scale - content.scaleY) / 2;
+			content.scaleX = content.scaleY = scale;
+		}
         
 		/**
 		 * 获得矩形（以父容器为基准），这个方法主要是为了和scaleToFit方法配套，实现矩形和显示对象的转换

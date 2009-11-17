@@ -10,7 +10,11 @@ package
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.BitmapScreen;
+	import ghostcat.display.bitmap.BitmapZoomScreen;
 	import ghostcat.display.transfer.effect.MosaicHandler;
+	import ghostcat.skin.AlertSkin;
+	import ghostcat.util.Util;
+	import ghostcat.util.easing.TweenUtil;
 	
 	
 	[Frame(factoryClass="ghostcat.ui.RootLoader")]
@@ -24,11 +28,13 @@ package
 	{
 		protected override function init():void
 		{
-			var t:DisplayObject = new TestCollision();
-			var s:BitmapScreen = new BitmapScreen(600,450);
+			var t:Sprite = new Sprite();
+			t.addChild(Util.createObject(new AlertSkin(),{x:300,y:225}));
+			var s:BitmapZoomScreen = new BitmapZoomScreen(t,600,450);
+			s.accuracy = 1.0;
 			addChild(s);
 			
-			s.addChild(t);
+			TweenUtil.to(s,1000,{zoom:2})
 
 		}
 	}

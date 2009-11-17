@@ -430,6 +430,7 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.display.GTickBase"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
