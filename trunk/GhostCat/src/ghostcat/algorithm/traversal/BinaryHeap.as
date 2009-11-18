@@ -1,4 +1,4 @@
-package ghostcat.algorithm
+package ghostcat.algorithm.traversal
 {
 	/**
 	 * 二叉堆算法

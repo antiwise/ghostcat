@@ -1,4 +1,4 @@
-package ghostcat.algorithm.astar
+package ghostcat.algorithm.traversal
 {
 	import ghostcat.algorithm.Point3D;
 
@@ -50,7 +50,7 @@ package ghostcat.algorithm.astar
 		 * @param node
 		 * 
 		 */
-		public function setNode(v:*,node:*):void
+		public function setNode(v:*,node:TraversalNote):void
 		{
 			if (this.noteMap[v.z] == null)
 				this.noteMap[v.z] = [];
@@ -66,7 +66,7 @@ package ghostcat.algorithm.astar
 		 * @return 
 		 * 
 		 */
-		public function getNode(v:*):*
+		public function getNode(v:*):TraversalNote
 		{
 			if (this.noteMap[v.z] == null) 
 				return null;
