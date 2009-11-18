@@ -1,4 +1,4 @@
-package ghostcat.algorithm.astar
+package ghostcat.algorithm.traversal
 {
 	import flash.geom.Point;
 
@@ -49,7 +49,7 @@ package ghostcat.algorithm.astar
 		 * @param node
 		 * 
 		 */
-		public function setNode(v:*,node:*):void
+		public function setNode(v:*,node:TraversalNote):void
 		{
 			this.noteMap[v] = node;
 		}
@@ -61,7 +61,7 @@ package ghostcat.algorithm.astar
 		 * @return 
 		 * 
 		 */
-		public function getNode(v:*):*
+		public function getNode(v:*):TraversalNote
 		{
 			return this.noteMap[v];
 		}
@@ -133,6 +133,20 @@ package ghostcat.algorithm.astar
 					result.push(i);
 			}
 			return result;
+		}
+		
+		public function toString():String
+		{
+			var r:String = "";
+			for (var j:int = 0;j < wayMap.length;j++)
+			{
+				for (var i:int = 0;i < wayMap.length;i++)
+				{
+					r += wayMap[i][j] ? "0" : "1"
+				}
+				r+="\n";
+			}
+			return r;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package ghostcat.algorithm.astar
+package ghostcat.algorithm.traversal
 {
 	import flash.geom.Point;
 
@@ -23,7 +23,7 @@ package ghostcat.algorithm.astar
 		 * @param node
 		 * 
 		 */
-		function setNode(v:*,node:*):void
+		function setNode(v:*,node:TraversalNote):void
 		
 		/**
 		 * 取出Node
@@ -32,7 +32,7 @@ package ghostcat.algorithm.astar
 		 * @return 
 		 * 
 		 */
-		function getNode(v:*):*
+		function getNode(v:*):TraversalNote
 		
 		/**
 		 * 提供可遍历的节点
