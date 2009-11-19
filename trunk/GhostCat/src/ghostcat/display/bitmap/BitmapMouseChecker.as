@@ -18,6 +18,7 @@ package ghostcat.display.bitmap
 		public var mouseDown:Boolean = false;
 		
 		private var _enabled:Boolean = false;
+		private var _enabledTick:Boolean = false;
 		
 		/**
 		 * 是否根据透明度来确认鼠标触发范围
@@ -67,20 +68,39 @@ package ghostcat.display.bitmap
 			_enabled = value;
 			if (value)
 			{
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 				bitmap.stage.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 				bitmap.stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 				bitmap.stage.addEventListener(MouseEvent.CLICK,clickHandler);
 			}
 			else
 			{
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 				bitmap.stage.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 				bitmap.stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 				bitmap.stage.removeEventListener(MouseEvent.CLICK,clickHandler);
 			}
+			
+			enabledTick = value;
 		}
-
+		
+		/** @inheritDoc */	
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
+		}
+		
+		public function set enabledTick(v:Boolean):void
+		{
+			if (_enabledTick == v)
+				return;
+			
+			_enabledTick = v;
+			
+			if (_enabled && _enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
 		private function tickHandler(event:TickEvent):void
 		{
 			var o:Boolean = isMouseOver();

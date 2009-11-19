@@ -1,13 +1,17 @@
 package 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.utils.getTimer;
 	
-	import ghostcat.algorithm.astar.AStar;
-	import ghostcat.algorithm.astar.MapModel;
+	import ghostcat.algorithm.traversal.AStar;
+	import ghostcat.algorithm.traversal.MapModel;
+	import ghostcat.algorithm.traversal.Traversal;
+	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.DisplayParse;
 	import ghostcat.parse.graphics.GraphicsFill;
@@ -33,10 +37,11 @@ package
 		private const MAP_WIDTH : int = 100;
 		private const MAP_HEIGHT : int = 100;
 		
-		private var player : Sprite;
+		private var screen : GBitmap;
+		private var playPoint : Point;
 		private var map : Array;
 		
-		private var aStar : AStar;
+		private var aStar : Traversal;
 		private var mapModel : MapModel;
 		
 		private var path : Array;
@@ -44,6 +49,12 @@ package
 		public function AStarExample()
 		{
 			RootManager.register(this,1,1);
+			
+			screen = new GBitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT));
+			screen.enabledScale = true;
+			screen.scaleX = screen.scaleY = 5;
+			
+			addChild(screen);
 			
 			this.mapModel = new MapModel();
 			this.reset();
@@ -64,14 +75,12 @@ package
 					var isBlock : Boolean = Math.random() < 0.3;
 					map[j][i] = isBlock;
 					
-					var tile : Sprite = DisplayParse.createSprite([new GraphicsFill(isBlock ? 0x000000 : 0xFFFFFF),new GraphicsRect(0,0,10,10)]);
-					addChild(tile);
-					tile.x = i * 5;
-					tile.y = j * 5;
+					screen.bitmapData.setPixel(i,j,isBlock ? 0x000000 : 0xFFFFFF);
 				}
 			}
-			player = DisplayParse.createSprite([new GraphicsFill(0xFF0000),new GraphicsRect(0,0,5,5)])
-			addChild(player);
+			
+			this.playPoint = new Point();
+			screen.bitmapData.setPixel(0,0,0xFF0000);
 			
 			this.mapModel.map = this.map;//创建地图数据
 			this.aStar = new AStar(this.mapModel);//根据数据生成A*类
@@ -79,11 +88,8 @@ package
 		
 		private function clickHandler(event : MouseEvent) : void
 		{
-			var findPiont : Point = new Point(int(this.mouseX/5), int(this.mouseY/5));
-			var playerPoint : Point = new Point(int(this.player.x/5), int(this.player.y/5));
-			
 			var t:int = getTimer();
-			this.path = this.aStar.find(playerPoint, findPiont);//获得行走路径
+			this.path = this.aStar.find(playPoint.clone(), new Point(int(screen.mouseX),int(screen.mouseY)));//获得行走路径
 			
 			if (this.path == null || this.path.length == 0)
 				GAlert.show("无法到达")
@@ -96,9 +102,10 @@ package
 			if (this.path == null || this.path.length == 0)
 				return;
 			
-			var note:Point = this.path.shift() as Point;
-			this.player.x = note.x * 5;
-			this.player.y = note.y * 5;
+			screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFFFFFF);
+			playPoint = this.path.shift() as Point;
+			screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFF0000);
+			
 		}
 	}
 }
