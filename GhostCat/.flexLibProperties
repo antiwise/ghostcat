@@ -2,19 +2,22 @@
 <flexLibProperties includeAllClasses="false" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
-    <classEntry path="ghostcat.algorithm.BinaryHeap"/>
     <classEntry path="ghostcat.algorithm.Point3D"/>
     <classEntry path="ghostcat.algorithm.QSort"/>
-    <classEntry path="ghostcat.algorithm.astar.AStar"/>
-    <classEntry path="ghostcat.algorithm.astar.IMapModel"/>
-    <classEntry path="ghostcat.algorithm.astar.Map3DModel"/>
-    <classEntry path="ghostcat.algorithm.astar.MapModel"/>
-    <classEntry path="ghostcat.algorithm.astar.WayPointModel"/>
     <classEntry path="ghostcat.algorithm.bezier.Bezier"/>
     <classEntry path="ghostcat.algorithm.bezier.IParametric"/>
     <classEntry path="ghostcat.algorithm.bezier.Line"/>
     <classEntry path="ghostcat.algorithm.bezier.Roupe"/>
     <classEntry path="ghostcat.algorithm.bezier.SmoothCurve"/>
+    <classEntry path="ghostcat.algorithm.traversal.AStar"/>
+    <classEntry path="ghostcat.algorithm.traversal.BinaryHeap"/>
+    <classEntry path="ghostcat.algorithm.traversal.BinaryTree"/>
+    <classEntry path="ghostcat.algorithm.traversal.IMapModel"/>
+    <classEntry path="ghostcat.algorithm.traversal.Map3DModel"/>
+    <classEntry path="ghostcat.algorithm.traversal.MapModel"/>
+    <classEntry path="ghostcat.algorithm.traversal.Traversal"/>
+    <classEntry path="ghostcat.algorithm.traversal.TraversalNote"/>
+    <classEntry path="ghostcat.algorithm.traversal.WayPointModel"/>
     <classEntry path="ghostcat.community.CommunityManager"/>
     <classEntry path="ghostcat.community.GBaseCommunityManager"/>
     <classEntry path="ghostcat.community.GroupManager"/>
@@ -44,6 +47,7 @@
     <classEntry path="ghostcat.display.GNoScale"/>
     <classEntry path="ghostcat.display.GSimpleBase"/>
     <classEntry path="ghostcat.display.GSprite"/>
+    <classEntry path="ghostcat.display.GTickBase"/>
     <classEntry path="ghostcat.display.ICursorManagerClient"/>
     <classEntry path="ghostcat.display.IData"/>
     <classEntry path="ghostcat.display.IDisplayObject"/>
@@ -56,6 +60,7 @@
     <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
@@ -402,6 +407,7 @@
     <classEntry path="ghostcat.util.display.Geom"/>
     <classEntry path="ghostcat.util.display.GraphicsUtil"/>
     <classEntry path="ghostcat.util.display.HitTest"/>
+    <classEntry path="ghostcat.util.display.HitTestGroup"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
@@ -427,8 +433,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.GTickBase"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
     <classEntry path="ghostcat.util.display.HitTestPhysics"/>
   </includeClasses>
   <includeResources/>
