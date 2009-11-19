@@ -1,245 +1,39 @@
-﻿如果有错误请尽快提出，我会马上修改。
-
-@author flashyiyi
-blog:http://uh.actionscript3.cn/space.php?uid=12147
-
-示例：
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/AStarExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/BindingExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/CollisionExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/ControlRectExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GIFExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GXMLExample2.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/GXMLExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/IFrameExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/IMEExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/LangageExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/LightExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/Paper3DExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/RightClickExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SkewExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SmoothCurveExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/SWFDecoderExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TestExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/Tile45Example.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TileExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/TweenExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIBoxExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIBuilderExampler.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIComboBoxExample.html
-http://ghostcat.googlecode.com/svn/trunk/example/bin-release/UIScrollExample.html
-
-----------------------------------------------------------
-Main Function Points 
-
-Tool sets and frameworks 
-
-It provides a miniature visual object framework, similar to FLEX delayed update mechanism to achieve some basic optimization of processing and infrastructure functions. This will provide a lot of new features to facilitate the development. 
-Provides a wealth of practical classes, to cover the color matrix conversion, bitmap caching, text processing, reflecting management, filter agents, fonts, events, mouse, sound, drag, the difficulty for many developing solutions to provide a standard . 
-Compared with the general framework of its various functions and the framework itself has lower coupling. Is therefore more similar to the tool set. 
-
-Bitmap animation and vector animation centrally 
-
-GMovieClipBase is an animated abstract classes in order to frame label processing unit can be easily spliced loop animation, a simple treatment of complex animations, especially for walking off the direction of turn eight and so a coherent movement. 
-The game must be to achieve a constant rate (jump) function. 
-Such as the abstract class, and its two entities, classes, GMovieClip, GBitmapMovieClip were realized on the common vector and bitmap animation array of animation centrally. 
-
-Pan-use of the dynamic display module 
-
-Tile class will be automatically tiled in one element of the dynamic of the deletions within the region to simulate the large range of repeated primitives. You can use him as a map grid, can also be used to do some shows need to repeat the background of the picture. 
-It uses elements of the incident update, use the intuitive, convenient, and easier to extend, or even can be used to achieve components List. 
-It derived class Tile45 realize the game is commonly used in the game map features a 45-degree angle. 
-
-The sequence data using XML serialization and anti - 
-
-Similar to the FLEX tag representation to achieve the basic function (attribute, ID binding, events). On the design purposes, and not only to that interface, the same can also be used with other data to deserialize (such as oper definition) 
-Designed with an open-style design, you can switch the parser to deal with a variety of different situations, and can modify and redesign their own parser.
-
-To the queue as a means to simplify asynchronous approach 
-
-Queue system easy to use, it is easy to extend. It can be load of resources, methods, implementation of mixed-queue model, in order to achieve a similar approach to synchronize the original. Can even determine which conditions of accession and circulation. 
-Rely on it, and was built to FilterProxy queuing Tween playback and support for filters, narrowed and TweenMax functional distance. 
-Rely on it to achieve a simple and flexible QUEST system that can help achieve the tutorial, RPG nature of the effect of the plot shows
-
-To the skin as the main GUI class library
-
-This is a free addChild to any visual container on the UI component library, there is no precise notion of the container, all the components only need to addChild to stage to take effect. 
-In meeting the above requirements at the same time to optimize the functional. Since the main for the game, right MovieClip good support, adaptive content is more inclined than the expression and diversity. This is not the main data. 
-Components tend to replace the original pixel on the graphics to achieve the components of the skin, not to make interface and then attached to the skin, but rather directly into the skin interface, thus enabling a perfect graphic design to show the contents of the script. But not exclusive way the original skin. 
-Please note. Use of the main points of this library is "art first." "Program first" and even "no art", then do not apply.
-
--------------------------------------------------- -------- 
-
-A number of miscellaneous functions 
-
-Collision 
-
-An alternative collision detection module. Using a graphical expression of the "circular" and "rectangular" as the collision of the standards in order to splice out these basic graphical objects irregular shape, which replaces the slower way to judge the bitmap. 
-
-A * 
-
-Common types of A * algorithm. Speed has been slow, but the expansion of the performance very good, very easy to read. 
-
-Roupe 
-
-This is an interesting example of the application of Bell's Law curve. One has the physical properties of the elastic cord. 
-You can refer to the curve of its trajectory to achieve TweenMax function. 
-
-TweenUtil 
-
-And TweenLite similar slow moving module, for certain categories of library use (such as SoundManager). It does not TweenLite of high efficiency, but also not far. Functions to meet the Queue, and most of the demand can be achieved FilterProxy. 
-
-SWFDecoder 
-
-Although far less functional SWFAssert, but also can achieve a lot of demand for the. Because of the its main purpose is to write your own GhostCatTool, TAG not much. We can refer to swf_file_format_spec_v9.pdf to write their own needs TAG, casual look to find a TAG should be written on the know how to do. 
-
-IME 
-
-The internal FLASH Pinyin input method, need to load the thesaurus
-
-tranfer 
-
-This package is mainly used to deal with some need to be converted into a bitmap and then to achieve things. For example thumbnails, reflection, trapezoidal transformation. 
-
-parse 
-
-This package is used to convert an object operation. In particular, easy to use for the Graphics. Primarily for other types of support. However, this approach is very useful. 
-
-Drag Tool 
-
-display.graphics offers a range of Graphic editing tools can help achieve the foundation classes. (Graphic refers to the flow chart similar to that kind of stuff) 
-
-Single-file self-loading 
-
-Frame Meta tags used to achieve single-file self-loading, this should be a very common need. 
-
-Mouse gestures 
-
-InputManager joined in the way I used to write mouse gesture system. This increases the game's user experience is very useful. 
-Monitor events and used PathAnalyzer analysis on it. 
-
-Shadow Builder
-
-Can generate an object's shadow, and shadow can also be folded into the wall
-
-----------------------------------------------------------
-Name of Source: 
-
-Each monsters, have all served as human beings. 
-- This is only circulated among monsters, preposterous urban legend. 
-
-"Why do monsters eat people?" 
-"As for the monsters, the humans are engraved in their hearts they are the most perfect existence. Therefore, even if the possibility of only a little thin, even if the end would therefore encounter, they still could not suppress this kind hearts desire - to human existence one step closer to the desire to eventually lose their reason. " 
-
-Memory disappears. Hypothetical construct of the self, or debris, or origin? 
-Lazy filled hollow heart, body hair licked back of the hand. 
-Moonlit Traceless, ghost cat.
-
------------------------------------------------------------------------------
-
-主要功能点
-
-
-工具集以及框架
-
-它提供了一个微型的可视对象framework，采用类似FLEX的延迟更新机制，实现了一些基本的优化处理以及基础功能。这将会为新功能的开发提供不少便利。
-提供了大量实用类，涵盖到颜色，矩阵转换，位图缓存，文本处理，反射管理，滤镜代理，字体，事件，鼠标，声音，拖拽，为许多开发中的难点提供了标准解决方案。
-与一般的框架相比，它的各项功能和框架本身的耦合度较低。因此更类似于工具集。
-
-位图动画和矢量动画的统一处理
-
-GMovieClipBase是对动画处理的抽象类，以帧标签为处理单位，可以方便地将动画拼接循环播放，实现复杂动画的简单处理，尤其适用于八方向行走起步转身等连贯动作。
-实现了游戏必须的恒定速率（跳帧）功能。
-此类为抽象类，它的两个实体类，GMovieClip，GBitmapMovieClip则分别实现了对普通矢量动画以及位图数组动画的统一处理。
-
-泛用化的动态显示模块
-
-Tile类会自动将元素平铺在一个区域内进行动态的增删，以模拟超大范围的重复图元。您可以将他作为地图格子使用，也可以用做一些需要进行不断重复显示的背景图片上。
-它采用事件进行元素的更新，使用直观便利，且较易进行扩展，甚至可以用来实现组件List。
-它的派生类Tile45则实现了游戏常用的45度角游戏地图功能。
-
-采用XML进行数据的序列及反序列化
-
-类似FLEX的标签表示形式，实现了基本的功能（属性设置，ID绑定，事件）。就设计目的而言并不仅仅是为了表示界面，同样也可以用与其他数据的反序列化（诸如oper定义）
-采用的是开放式的设计，可以切换解析器来应对多种不同的情况，并可自行修改和重新设计解析器。
-
-以队列为手段的简化异步处理方式
-
-简单易用的队列系统，很容易进行扩展。它可以实现资源加载，方法执行的混合队列模式，以实现类似原来的同步的处理方式。甚至可以在里面加入条件判断和循环。
-依赖它和FilterProxy实现了内置Tween的排队播放和对滤镜的支持，拉近了和TweenMax功能上的距离。
-依赖它实现了一个简单灵活的QUEST系统，可以帮助实现教程，RPG性质的情节演出效果
-
-以皮肤为主体的GUI类库
-
-这是一个可以自由addChild到任何可视容器上的UI组件库，并没有确切的容器的概念，所有组件只需要addChild到舞台上即可生效。
-在满足以上要求的同时尽可能完善了功能。由于主要面向游戏，对MovieClip有良好的支持，比起自适应内容更倾向与多样化的表现方式。数据在这里并不是主体。
-组件倾向于替换原有图元上的图形来实现组件皮肤，并不是做出界面然后附上皮肤，而是将皮肤直接转换成界面，因此能够完美呈现美工设计稿上的内容。但也不排斥原有的皮肤方式。
-请注意。这个类库的使用要点是“美工先行”。“程序先行”甚至“没有美工”的话，并不适用。
-
-
-----------------------------------------------------------
-
-一些杂项功能
-
-Collision
-
-另类的碰撞检测模块。使用图形表达的“圆形”和“矩形”作为碰撞的标准，以这些基本图形来拼接出物品不规则的外型，以此代替速度较慢的位图判断方式。
-
-A*
-
-通用型的A*算法。速度虽然较慢，但扩展性能很好，很容易阅读。
-
-Roupe
-
-这是一个有趣的贝尔法曲线的应用实例。一根具有物理特性的弹性细绳。
-你可以参考它实现TweenMax的曲线轨迹功能。
-
-TweenUtil
-
-和TweenLite类似的缓动模块，供库里的某些类使用（比如SoundManager）。它并没有TweenLite的效率高，但也相距不远。功能上，配合Queue和FilterProxy可以实现大部分需求。
-
-SWFDecoder
-
-功能虽远不如SWFAssert，但也能实现不少需求了。由于制作它的目的主要是为了编写自己的GhostCatTool，TAG并不多。大家可以参照swf_file_format_spec_v9.pdf来编写自己需要的TAG，随便找个写好的TAG看看应该就知道怎么做了。
-
-IME
-
-FLASH的内部拼音输入法，需要加载词库
-
-tranfer
-
-这个包主要用于处理一些需要转换成位图再实现的东西。比如缩略图，倒影，梯形变换。
-
-parse
-
-这个包用于将操作转换为对象。对于Graphics尤其好用。主要为其他类提供支持。但这种处理方式是很有用的。
-
-拖拽工具
-
-display.graphics提供了一系列可以帮助实现Graphic编辑工具的基础类。（Graphic指的是类似流程图那样的东西）
-
-单文件自加载
-
-利用Frame元标签实现的单文件自加载，这应该是一个很普遍的需求。
-
-鼠标手势
-
-InputManager内顺便加入了我以前写的鼠标手势系统。这对于增加游戏里的用户体验是很有用的。
-监听事件并用PathAnalyzer解析就可以了。
-
-影子生成器
-
-可以生成物体的影子，并且影子还可以折到墙壁上
-
-----------------------------------------------------------
-名称来源：
-
-每个妖怪，都曾经身为人类。
-——这是只在妖怪之间流传的，荒诞无稽的都市传说。
-
-“知道妖怪为什么要吃人吗？”
-“因为对于妖怪来说，人类是他们铭刻在心里的最完美的存在。所以哪怕只有稀薄的一点可能性，哪怕会因此遭遇终结，他们依旧无法抑制内心深处的这种欲望——向人类存在更接近一步的欲望，最终欲火焚身。”
-
-记忆散尽。假想所构筑的自我，或残骸，或本源？
-慵懒填充了空洞的内心，舔舐着手背的绒毛。
-月夜无痕，幽灵猫。
+﻿GhostCat原名ASGameUI，初期设计只是想做一个轻量化的UI组件库。FLEX暂且不提，就算AsWing实际上都未能实现和Sprite的完美结合，而且体积依然很抱歉。因此，很多开发者最终被迫选择了自行开发。然而，他们开发的东西要不功能不够，不要是针对性工具，缺乏通用性，因此并无法补齐这个空缺。
+ASGameUI来源于一个“逻辑注入”的设想，牺牲了布局的便利性，并充分利用FLASH IDE为自身服务，使得它在符合面向对象的编程方式的同时，亦实现了和原始时间线开发类似的自由度和便利性，从而可以在纯代码环境下直接套用原本动画网站丰富的表现方式，达到两种互斥方式的结合。从而，使得在开发丰富表现的UI时，开发成本大幅度降低。
+值得一提的是，虽然GhostCat在底层引入了与UI无关的大量内容，在使用UI时体积依然只有50K出头（不使用UI会很低）。这主要来源于松散的类库设计。你可以将大量内容引用，并在项目中充分使用其功能，也可以仅仅引用一个功能点，你并不会因为引入了一个功能而使得SWF体积大幅度上升。
+GhostCat的UI充分考虑了其表现。除了亲和MovieClip之外，它同时在组件内部自带了缓动和动画效果。这是目前其他类库所没有的。而且，和一些自写类库相比，GhostCat在控制体积的同时，亦提供了布局，List，ItemRender等高级特性，使得它在基本功能上同样不亚于ASWing，FLEX等组件，仅仅是效率和便利程度上不及。
+
+GhostCat之所以改名，是因为这个类库目前已经远远超出了UI的概念。它利用自己的基层类库进行发散，诞生了许多有用而独特的功能，诸如：
+
+提供了MovieClip的扩展：你可以用同一种方式操作矢量动画，位图动画，以及代码动画并可将动画进行拼接处理。动画自带倒放，帧速控制，播放队列功能，并可将矢量动画转换为位图动画播放。
+一个奇特的动态内容显示模块：可以很简单的使用（你可以假想它只是一个超大的重复内容图形），由它自动进行重复对象的创建，移动，删除，完美处理缩放和移动。而且，它甚至是List实现的基础！仅仅是重写了几个方法，它便可以立即实现45度角的游戏地图效果。你也可以把它仅仅作为一个逻辑类，并利用事件，实现你想要的任何功能。
+一个非常完善的XML反序列化器：你可以用它表述任何种类的类（可以包含构造函数参数列表），并且模仿FLEX实现了事件自动监听，属性外链等功能。可以是多层显示对象的序列化，也可以是一组包含复杂类的数据。扩展它也很简单。你只需要理解并重写它的3个方法，而如果仅仅是想进行属性名称的转义，只需要设置一个属性即可，而这也是自定义解析器最常见的需求。
+一个通用型队列系统：它不仅仅用来进行资源的排队加载，而且可以排队任何东西！函数，声音，弹窗，以及判断，转向，循环。某种程度上，它甚至像是一个脚本引擎。而使用和扩展亦非常简单。使用它，new，然后commit()即可，要扩展它，你只需要实现一个普通的命令模式，有效代码可以只有几行。作为例子，我已经提供了一个简单的任务系统，在这种需求里，命令模式的优先被表现得淋漓尽致。
+一个简便的位图引擎：是的，虽然同样是addChild，但通过这种方式加上去的东西，就是用自带的优化渲染方式实现的。在大量物品移动时，它可以比默认渲染方式获得更好的性能。并且，它还可以即时地在多种渲染模式内切换，使用风险较低。位图引擎亦实现了基本的鼠标事件模拟功能。从这个地方开始扩展，提供了一个使用很简单的位图特效类，只需要一个行代码和简单的设置便可让对象拥有平滑残影和扩散特效。再配合物理类，便可以形成一个完整的粒子引擎。
+
+GhostCat的功能远不止上面所说，事实上，大部分的通用功能它都已经在内部获得了实现（诸如Tween），这些就不就再提了。仅仅列出一些不常用的功能。
+-判断矢量边缘实现不规则物品碰撞检测（非位图）
+-A*,深/广度，2D/3D/路点，寻路方式统一处理。
+-二次贝尔法曲线，按长度切割和计算法线，光滑曲线拟合（过点或者不过点）
+-SWF解析器，从ByteArray中播放声音，直接控制AVM1的动画类容。
+-丰富的文本缓动，部分文字Filter，渐变色文字，字符差异对比，ANSI转码，URL解码，中文数字，拼音码，这是一个单独的底层包
+-完全由FLASH实现的拼音输入法，需要加载200K的词库，光标跟随并可词语输入（感觉和智能ABC差不多）
+-缩略图，倒影，梯形变换，马赛克，各种特效，火焰什么的
+-完整功能的自定制过渡，不仅能用，也能创造。如果不会用，可以使用Creater中的模板
+-粒子，物理，景深
+-像QQ那样截屏！
+-流方式读取文本和图片。HTML可以，FLASH也可以
+-和FXG类似的道理，用对象保存绘制操作，简化绘制过程
+-多种拖拽工具，变形工具，编辑形状工具。单个拖动点也可单独使用。
+-单文件自加载
+-右键，双击，三击，键盘管理，鼠标手势
+-影子生成器。FLASH也是可以模拟出效果不错的光影的。影子可以折墙壁
+-防客户端修改解决方案（内存修改，加速）
+-切割图形，同时支持矢量，位图，而且，你可以按45度角来切！
+-颜色模式转换
+-去背景，魔法棒
+-图文混排的简单实现。也可以显示Table表格
+-滤镜代理：修改了滤镜的属性便能立即生效，你可以直接对它Tween！当然，水波放大镜，对比度饱和度顺便也提供了。
+-常用的JS扩展：IFrame,便捷的提供接口给外部JS，调用浏览器音乐播放器播放MID，以及一些常用的防刷新，防鼠标滚轮干扰。当然,deeplink是不可少的。
+
+GhostCat同时亦带有一个MVC框架，它的面向对象是小项目以及小型团队，包含了必要的所有通讯功能，成功完成了M V C三者的解耦，而使用上极其傻瓜。不过有人会觉得它是个负担的。

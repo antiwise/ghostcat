@@ -39,54 +39,54 @@ package ghostcat.algorithm.traversal
 		
 		public function getLeftChildIndex(index:int):int
 		{
-			return index * 2;
+			return index << 1;
 		}
 		
 		public function getRightChildIndex(index:int):int
 		{
-			return index * 2 + 1;
+			return (index << 1) + 1;
 		}
 		
 		public function getParentIndex(index:int):int
 		{
-			return int(index / 2);
+			return index >> 1;
 		}
 		
 		public function getLeftChild(index:int):*
 		{
-			var n:int = index * 2;
+			var n:int = index << 1;
 			return n < data.length ? data[n] : null; 
 		}
 		
 		public function getRightChild(index:int):*
 		{
-			var n:int = index * 2 + 1;
+			var n:int = (index << 1) + 1;
 			return n < data.length ? data[n] : null; 
 		}
 		
 		public function getParent(index:int):*
 		{
-			var n:int = int(index / 2);
+			var n:int = index >> 1;
 			return n < data.length ? data[n] : null; 
 		}
 		
 		public function setLeftChild(index:int,v:*):int
 		{
-			var n:int = index * 2;
+			var n:int = index << 1;
 			data[n] = v;
 			return n;
 		}
 		
 		public function setRightChild(index:int,v:*):int
 		{
-			var n:int = index * 2 + 1;
+			var n:int = (index << 1) + 1;
 			data[n] = v;
 			return n;
 		}
 		
 		public function setParent(index:int,v:*):int
 		{
-			var n:int = int(index / 2);
+			var n:int = index >> 1;
 			data[n] = v;
 			return n;
 		}
@@ -101,7 +101,7 @@ package ghostcat.algorithm.traversal
 			if (index >= data.length || !data[index])
 				return null;
 			
-			return [data[index],[getArraySub(index * 2),getArraySub(index * 2 + 1)]];
+			return [data[index],[getArraySub(index << 1),getArraySub((index << 1) + 1)]];
 		}
 		
 		public function toArray():Array
@@ -114,7 +114,7 @@ package ghostcat.algorithm.traversal
 			if (index >= data.length || !data[index])
 				return null;
 			
-			return "["+data[index]+","+getArrayString(index * 2)+","+getArrayString(index * 2 + 1)+"]";
+			return "["+data[index]+","+getArrayString(index << 1)+","+getArrayString((index << 1) + 1)+"]";
 		}
 		
 		public function toString():String

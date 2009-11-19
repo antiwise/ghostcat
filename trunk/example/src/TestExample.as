@@ -1,10 +1,12 @@
 package
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
+	import flash.geom.Rectangle;
+	
+	import ghostcat.display.transfer.Boob;
 
-	[SWF(width="600",height="450")]
+	[SWF(width="600",height="600")]
 	/**
 	 * 
 	 * @author flashyiyi
@@ -12,9 +14,15 @@ package
 	 */
 	public class TestExample extends Sprite
 	{
+		[Embed("p3.jpg")]
+		public var c:Class;
 		public function TestExample()
 		{
-			flash.net.navigateToURL(new URLRequest("http://www.google.com"),"_self");
+			var t:Bitmap = new c();
+			addChild(t);
+			
+			var b:Boob = new Boob(t,new Rectangle(330,390,80,80));
+			addChild(b);
 		}
 	}
 }

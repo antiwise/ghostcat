@@ -32,7 +32,7 @@ package ghostcat.display.transfer
 		 */
 		public var byAlpha:Boolean = true;
 		
-		private var _deep:Number = 0.0;
+		private var _deep:Number = 1.0;
 		
 		/**
 		 * 当byAlpha为真时，此属性和deep属性的意义相同 

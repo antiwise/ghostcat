@@ -52,7 +52,7 @@ package
 		{
 			graphics.clear();
 			graphics.lineStyle(0,0,1);
-			roupe.applyPhysics();
+			roupe.physics.applyPhysics();
 			roupe.parse(this);
 		}
 		

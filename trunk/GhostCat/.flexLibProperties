@@ -434,6 +434,9 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.display.HitTestPhysics"/>
+    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
+    <classEntry path="ghostcat.algorithm.bezier.RoupeLink"/>
+    <classEntry path="ghostcat.display.transfer.Boob"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
