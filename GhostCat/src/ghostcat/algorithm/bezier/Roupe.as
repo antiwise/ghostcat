@@ -17,12 +17,12 @@ package ghostcat.algorithm.bezier
 		 */
 		public var physics:RoupeLink;
 		
-		public function Roupe(startPoint:Point=null, endPoint:Point=null, seqNum:int=0)
+		public function Roupe(startPoint:Point=null, endPoint:Point=null, seqNum:int=0,elasticity:Number = 0.3,friction:Number = 0.85,gravity:Point = null,hasEnd:Boolean = false)
 		{
 			super(false);
 			createFromSeqNum(startPoint, endPoint, seqNum);
 		
-			physics = new RoupeLink();
+			physics = new RoupeLink(elasticity,friction,gravity,hasEnd);
 			physics.addAll(path);
 		}
 		
