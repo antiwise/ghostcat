@@ -4,7 +4,9 @@ package ghostcat.community.physics
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
+	import ghostcat.display.transfer.effect.BombHandler;
 	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 	
 	/**
 	 * 物理管理类
@@ -20,6 +22,7 @@ package ghostcat.community.physics
 		public var gravity:Point;
 		
 		private var dict:Dictionary;
+		private var _enabledTick:Boolean = false;
 		
 		public function PhysicsManager(command:Function = null)
 		{
@@ -92,6 +95,25 @@ package ghostcat.community.physics
 		public override function calculateAll(onlyFilter:Boolean=true) : void
 		{
 			throw new Error("calculateAll不能在这里使用，应用tick方法代替")
+		}
+		
+		/** @inheritDoc */	
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
+		}
+		
+		public function set enabledTick(v:Boolean):void
+		{
+			if (_enabledTick == v)
+				return;
+			
+			_enabledTick = v;
+			
+			if (_enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		/**

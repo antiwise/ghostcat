@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import ghostcat.algorithm.bezier.Roupe;
 	import ghostcat.display.GBase;
@@ -31,10 +32,15 @@ package
 		{
 			RootManager.register(this);
 			
-			initControl(start,"起点");
-			initControl(end,"终点");
-			roupe = new Roupe(start.position, end.position,10);
-			roupe.physics.hasEnd = true;
+			start.toolTip = "起点";
+			start.position = new Point(50,50);
+			addChild(start);
+			
+			end.toolTip = "终点";
+			end.position = new Point(50,50);
+			addChild(end);
+			
+			roupe = new Roupe(start.position, end.position,10,0.3,0.85,null,true);
 			
 			stage.addChild(new CursorSprite());
 			stage.addChild(new ToolTipSprite());
@@ -46,8 +52,6 @@ package
 		
 		private function initControl(pt:DragPoint, pointName:String = null):void 
 		{
-			pt.x = Math.random()*stage.stageWidth;
-			pt.y = Math.random()*stage.stageHeight;
 			pt.toolTip = pointName;
 			addChild(pt);
 		}
