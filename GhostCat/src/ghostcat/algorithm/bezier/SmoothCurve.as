@@ -195,30 +195,32 @@ package ghostcat.algorithm.bezier
 				var p:Point = path[2].subtract(path[0]);
 				p.x /= 4;
 				p.y /= 4;
-				prevBezier = new Bezier(start.clone(),path[1].subtract(p),end.clone());
+				prevBezier = new Bezier(start,path[1].subtract(p),new Point());
 				beziers.push(prevBezier);
 				for (i = 1; i < path.length - 1; i++)
 				{
-					currentBezier = new Bezier(prevBezier.end,path[i].add(path[i].subtract(prevBezier.control)),end.clone())
+					currentBezier = new Bezier(prevBezier.end,path[i].add(path[i].subtract(prevBezier.control)),new Point())
 					currentBezier.start.x = path[i].x;
 					currentBezier.start.y = path[i].y;
 					beziers.push(currentBezier);
 					prevBezier = currentBezier;
 				}
+				prevBezier.end = end;
 			}
 			else
 			{
-				prevBezier = new Bezier(start.clone(),path[1].clone(),end.clone());
+				prevBezier = new Bezier(start,path[1].clone(),new Point());
 				beziers.push(prevBezier);
 				for (i = 1; i < path.length - 2; i++)
 				{
-					currentBezier = new Bezier(prevBezier.end,path[i+1].clone(),end.clone());
+					currentBezier = new Bezier(prevBezier.end,path[i+1].clone(),new Point());
 					var mid:Point = Point.interpolate(prevBezier.control, currentBezier.control, 0.5);
 					currentBezier.start.x = mid.x; 
 					currentBezier.start.y = mid.y;
 					beziers.push(currentBezier);
 					prevBezier = currentBezier;
 				}
+				prevBezier.end = end;
 			}
 		}
 		

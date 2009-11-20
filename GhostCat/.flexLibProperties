@@ -29,6 +29,7 @@
     <classEntry path="ghostcat.community.filter.OnlyCheckScreenFilter"/>
     <classEntry path="ghostcat.community.physics.PhysicsItem"/>
     <classEntry path="ghostcat.community.physics.PhysicsManager"/>
+    <classEntry path="ghostcat.community.physics.RoupeLink"/>
     <classEntry path="ghostcat.community.sort.Sort45Manager"/>
     <classEntry path="ghostcat.community.sort.SortAllManager"/>
     <classEntry path="ghostcat.community.sort.SortYManager"/>
@@ -93,6 +94,7 @@
     <classEntry path="ghostcat.display.residual.ResidualShapeScreen"/>
     <classEntry path="ghostcat.display.screenshot.ScreenShotPanel"/>
     <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
+    <classEntry path="ghostcat.display.transfer.Boob"/>
     <classEntry path="ghostcat.display.transfer.GBitmapEffect"/>
     <classEntry path="ghostcat.display.transfer.GBitmapTransfer"/>
     <classEntry path="ghostcat.display.transfer.GTransfer"/>
@@ -101,6 +103,7 @@
     <classEntry path="ghostcat.display.transfer.Paper3D"/>
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
+    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
@@ -408,6 +411,7 @@
     <classEntry path="ghostcat.util.display.GraphicsUtil"/>
     <classEntry path="ghostcat.util.display.HitTest"/>
     <classEntry path="ghostcat.util.display.HitTestGroup"/>
+    <classEntry path="ghostcat.util.display.HitTestPhysics"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
@@ -433,10 +437,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.display.HitTestPhysics"/>
-    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
-    <classEntry path="ghostcat.algorithm.bezier.RoupeLink"/>
-    <classEntry path="ghostcat.display.transfer.Boob"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

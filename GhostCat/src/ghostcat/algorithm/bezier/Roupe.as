@@ -2,6 +2,8 @@ package ghostcat.algorithm.bezier
 {
 	import flash.geom.Point;
 	
+	import ghostcat.community.physics.RoupeLink;
+	
 	/**
 	 * 具有物理表现的平滑曲线
 	 * 
@@ -20,16 +22,17 @@ package ghostcat.algorithm.bezier
 			super(false);
 			createFromSeqNum(startPoint, endPoint, seqNum);
 		
-			physics = new RoupeLink(path)
+			physics = new RoupeLink();
+			physics.addAll(path);
 		}
 		
 		/**
 		 * 应用物理 
 		 * 
 		 */
-		public function applyPhysics():void
+		public function applyPhysics(v:int):void
 		{
-			physics.applyPhysics();
+			physics.tick(v);
 		}
 	}
 }
