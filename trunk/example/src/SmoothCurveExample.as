@@ -5,7 +5,9 @@ package
 	import flash.events.MouseEvent;
 	
 	import ghostcat.algorithm.bezier.Roupe;
+	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
+	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.SmoothCurveTweenOper;
 	import ghostcat.ui.CursorSprite;
@@ -18,7 +20,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SmoothCurveExample extends Sprite
+	public class SmoothCurveExample extends GBase
 	{
 		private var roupe:Roupe;
 		
@@ -29,15 +31,17 @@ package
 		{
 			RootManager.register(this);
 			
-			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			initControl(start,"起点");
 			initControl(end,"终点");
 			roupe = new Roupe(start.position, end.position,10);
+			roupe.physics.hasEnd = true;
 			
 			stage.addChild(new CursorSprite());
 			stage.addChild(new ToolTipSprite());
 			
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
+			
+			this.enabledTick = true;
 		}
 		
 		private function initControl(pt:DragPoint, pointName:String = null):void 
@@ -48,12 +52,14 @@ package
 			addChild(pt);
 		}
 		
-		private function enterFrameHandler(event:Event):void
+		protected override function tickHandler(event:TickEvent):void
 		{
 			graphics.clear();
 			graphics.lineStyle(0,0,1);
-			roupe.physics.applyPhysics();
+			roupe.applyPhysics(event.interval);
 			roupe.parse(this);
+			
+			end.invalidatePosition();
 		}
 		
 		private function mouseDownHandler(event:MouseEvent):void
