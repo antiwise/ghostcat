@@ -8,7 +8,9 @@ package
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	
+	import ghostcat.algorithm.maze.MazeCreater;
 	import ghostcat.algorithm.traversal.AStar;
+	import ghostcat.algorithm.traversal.BFS;
 	import ghostcat.algorithm.traversal.MapModel;
 	import ghostcat.algorithm.traversal.Traversal;
 	import ghostcat.display.bitmap.GBitmap;
@@ -16,22 +18,17 @@ package
 	import ghostcat.parse.display.TextFieldParse;
 	
 	/**
-	 * A* 算法演示
-	 * 
-	 * 这个只实现了算法，并没有专门去选择速度快的类型，也没有刻意减少函数嵌套，因此它的效率很一般。
-	 * 但算法本身并没有问题，可以考虑将其解封装，选择数组而不是对象来进行运算，应该能够增加不少速度。
-	 * 
-	 * 当然，满足需求的话，就不需要了。
+	 * 随机地图生成
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
 	
-	[SWF(width="500",height="550")]
-	public class AStarExample extends Sprite
+	[SWF(width="500",height="500")]
+	public class MazeExample extends Sprite
 	{
-		private const MAP_WIDTH : int = 100;
-		private const MAP_HEIGHT : int = 100;
+		private const MAP_WIDTH : int = 50;
+		private const MAP_HEIGHT : int = 50;
 		
 		private var screen : GBitmap;
 		private var playPoint : Point;
@@ -43,17 +40,16 @@ package
 		private var path : Array;
 		private var debugText:TextField;
 		
-		public function AStarExample()
+		public function MazeExample()
 		{
 			RootManager.register(this,1,1);
 			
 			screen = new GBitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT));
 			screen.enabledScale = true;
-			screen.scaleX = screen.scaleY = 5;
-			
+			screen.scaleX = screen.scaleY = 4;
 			addChild(screen);
 			
-			debugText = new TextFieldParse(null,new Point(0,500)).createTextField();
+			debugText = new TextFieldParse(null,new Point(0,410)).createTextField();
 			addChild(debugText);
 			
 			this.mapModel = new MapModel();
@@ -67,23 +63,19 @@ package
 		{
 			this.map = [];
 			
-			for (var j : int = 0; j < MAP_HEIGHT; j++)
-			{
-				map[j] = [];
-				for (var i : int = 0; i < MAP_WIDTH; i++)
-				{
-					var isBlock : Boolean = Math.random() < 0.3;
-					map[j][i] = isBlock;
-					
-					screen.bitmapData.setPixel(i,j,isBlock ? 0x000000 : 0xFFFFFF);
-				}
-			}
+			var maze:MazeCreater = new MazeCreater(MAP_WIDTH,MAP_HEIGHT);
+			maze.find(new Point(0,0),new Point(MAP_WIDTH - 1,MAP_HEIGHT - 1));
+			this.map = maze.boolMap;
 			
-			this.playPoint = new Point();
-			screen.bitmapData.setPixel(0,0,0xFF0000);
-			
+			this.playPoint = new Point(1,1);
 			this.mapModel.map = this.map;//创建地图数据
+			
+			screen.bitmapData = this.mapModel.toBitmap().bitmapData;
+			screen.bitmapData.setPixel(1,1,0xFF0000);
+
+			//在复杂迷宫内A*未必总是比BFS快，因为朝向终点方向前进是最短路径的几率较低，而A*的启发式遍历本身具有消耗
 			this.aStar = new AStar(this.mapModel);//根据数据生成A*类
+//			this.aStar = new BFS(this.mapModel);//根据数据生成BFS类
 		}
 		
 		private function clickHandler(event : MouseEvent) : void

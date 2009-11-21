@@ -437,6 +437,13 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.algorithm.maze.Block4"/>
+    <classEntry path="ghostcat.algorithm.maze.BlockUtil"/>
+    <classEntry path="ghostcat.algorithm.maze.BlockModel"/>
+    <classEntry path="ghostcat.algorithm.maze.MazeCreater"/>
+    <classEntry path="ghostcat.algorithm.traversal.SimpleAStar"/>
+    <classEntry path="ghostcat.algorithm.traversal.DFS"/>
+    <classEntry path="ghostcat.algorithm.traversal.BFS"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

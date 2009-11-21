@@ -1,10 +1,11 @@
 package
 {
-	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.geom.Rectangle;
+	import flash.geom.Point;
 	
-	import ghostcat.display.transfer.Boob;
+	import ghostcat.algorithm.maze.BlockModel;
+	import ghostcat.algorithm.maze.MazeCreater;
 
 	[SWF(width="600",height="600")]
 	/**
@@ -18,11 +19,11 @@ package
 		public var c:Class;
 		public function TestExample()
 		{
-			var t:Bitmap = new c();
-			addChild(t);
+			var s:MazeCreater = new MazeCreater(100,100);
+			s.find(new Point(0,0),new Point(99,99));
+			var screen:DisplayObject = new BlockModel(s.result).toShape(4);
+			addChild(screen);
 			
-			var b:Boob = new Boob(t,new Rectangle(330,390,80,80));
-			addChild(b);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package ghostcat.algorithm.traversal
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.geom.Point;
 	
 	/**
@@ -14,11 +16,6 @@ package ghostcat.algorithm.traversal
 		
 		
 		/**
-		 * 地图数据
-		 */
-		public var map : Array;
-		
-		/**
 		 * 是否启用斜向移动
 		 */		
 		public var diagonal:Boolean = true;
@@ -30,6 +27,20 @@ package ghostcat.algorithm.traversal
 		}
 		
 		private var noteMap : Array;//node缓存
+		private var _map:Array;
+		
+		/**
+		 * 地图数据
+		 */
+		public function get map():Array
+		{
+			return _map;
+		}
+		
+		public function set map(value:Array):void
+		{
+			_map = value;
+		}
 		
 		/**
 		 * 初始化
@@ -124,30 +135,31 @@ package ghostcat.algorithm.traversal
 		public function getArounds(v:*) : Array
 		{
 			var result : Array = [];
+			var cur : Point = new Point(v.x,v.y);
 			var p : Point;
 			var canDiagonal : Boolean;
 			
 			//右
 			p = new Point(v.x + 1, v.y);
-			var canRight : Boolean = !isBlock(p);
+			var canRight : Boolean = !isBlock(p,cur);
 			if (canRight)
 				result.push(p);
 			
 			//下
 			p = new Point(v.x, v.y + 1);
-			var canDown : Boolean = !isBlock(p);
+			var canDown : Boolean = !isBlock(p,cur);
 			if (canDown)
 				result.push(p);
 			
 			//左
 			p = new Point(v.x - 1, v.y);
-			var canLeft : Boolean = !isBlock(p);
+			var canLeft : Boolean = !isBlock(p,cur);
 			if (canLeft)
 				result.push(p);
 			
 			//上
 			p = new Point(v.x, v.y - 1);
-			var canUp : Boolean = !isBlock(p);
+			var canUp : Boolean = !isBlock(p,cur);
 			if (canUp)
 				result.push(p);
 				
@@ -155,55 +167,67 @@ package ghostcat.algorithm.traversal
 			{
 				//右下
 				p = new Point(v.x + 1, v.y + 1);
-				canDiagonal = !isBlock(p);
+				canDiagonal = !isBlock(p,cur);
 				if (canDiagonal && canRight && canDown)
 					result.push(p);
 				
 				//左下
 				p = new Point(v.x - 1, v.y + 1);
-				canDiagonal = !isBlock(p);
+				canDiagonal = !isBlock(p,cur);
 				if (canDiagonal && canLeft && canDown)
 					result.push(p);
 				
 				//左上
 				p = new Point(v.x - 1, v.y - 1);
-				canDiagonal = !isBlock(p);
+				canDiagonal = !isBlock(p,cur);
 				if (canDiagonal && canLeft && canUp)
 					result.push(p);
 				
 				//右上
 				p = new Point(v.x + 1, v.y - 1);
-				canDiagonal = !isBlock(p);
+				canDiagonal = !isBlock(p,cur);
 				if (canDiagonal && canRight && canUp)
 					result.push(p);
 			}
 			return result;
 		}
 		
-		//是否是墙壁
-		private function isBlock(v:Point):Boolean
+		/**
+		 * 是否是墙壁
+		 * @param v	目标点
+		 * @param cur	当前点
+		 * @return 
+		 * 
+		 */
+		protected function isBlock(v:Point,cur:Point):Boolean
 		{
-			var mapHeight : int = map.length;
-			var mapWidth : int = map[0].length;
+			var mapHeight : int = _map.length;
+			var mapWidth : int = _map[0].length;
 			
 			if (v.x < 0 || v.x >= mapWidth || v.y < 0 || v.y >= mapHeight)
 				return true;
 			
-			return map[v.y][v.x];
+			return _map[v.y][v.x];
 		}
 		
-		public function toString():String
+		/**
+		 * 转换为位图显示 
+		 * @param source
+		 * @return 
+		 * 
+		 */
+		public function toBitmap():Bitmap
 		{
-			var r:String = "";
-			for (var j:int = 0;j < map.length;j++)
+			var bitmap:Bitmap =  new Bitmap(new BitmapData(_map[0].length,_map.length))
+			for (var j:int = 0;j < _map.length;j++)
 			{
-				for (var i:int = 0;i < map[j].length;i++)
+				for (var i:int = 0;i < _map[j].length;i++)
 				{
-					r += map[i][j] ? "1" : "0"
+					if (_map[j][i])
+						bitmap.bitmapData.setPixel(i,j,0x0);
 				}
-				r+="\n";
 			}
-			return r;
+			return bitmap;
 		}
 	}
 }

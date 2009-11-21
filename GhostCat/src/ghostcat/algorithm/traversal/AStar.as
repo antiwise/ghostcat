@@ -14,7 +14,7 @@ package ghostcat.algorithm.traversal
 		
 		public function AStar(mapModel : MapModel, maxTry : int = 5000)
 		{
-			super(mapModel,null,maxTry);
+			super(mapModel,maxTry);
 		}
 		
 		/** @inheritDoc*/
@@ -22,9 +22,8 @@ package ghostcat.algorithm.traversal
 		{
 			this.heapOpenList = new BinaryHeap();
 			this.heapOpenList.sortMetord = sortMetord;
-			
+				
 			mapModel.reset();
-			
 			var curTry : int = 0;
 			
 			this.openNote(start, 0, 0, null);//建立首节点
@@ -34,8 +33,8 @@ package ghostcat.algorithm.traversal
 				if (++curTry > this.maxTry)
 					return null;
 				
-				//获得最小F值的节点，并将它加入关闭列表
-				var cur : TraversalNote = this.heapOpenList.shift();
+				var cur:TraversalNote = this.heapOpenList.shift()
+				//获得最前的节点，并将它加入关闭列表
 				this.closeNote(cur);
 				
 				var curPoint : * = cur.point;
@@ -44,8 +43,7 @@ package ghostcat.algorithm.traversal
 				if (mapModel.reachEnd(curPoint,end))
 					return this.getPath(start, cur);
 				
-				var aroundNotes : Array = mapModel.getArounds(curPoint);
-				
+				var aroundNotes : Array = mapModel.getArounds(cur.point);
 				for each (var p : * in aroundNotes)
 				{
 					var n:TraversalNote = mapModel.getNode(p);
@@ -53,8 +51,8 @@ package ghostcat.algorithm.traversal
 						continue;
 					
 					//计算F和G值
-					var cost : int = cur.cost + mapModel.getCostAddon(start,curPoint,p,end);
-					var score : int = cost + mapModel.getScoreAddon(start,curPoint,p,end);;
+					var cost : int = cur.cost + mapModel.getCostAddon(start,cur.point,p,end);
+					var score : int = cost + mapModel.getScoreAddon(start,cur.point,p,end);;
 					if (n && n.noteOpen) //如果节点已在开放列表中
 					{
 						//如果新的G值比节点原来的G值小,修改F,G值，重新排序

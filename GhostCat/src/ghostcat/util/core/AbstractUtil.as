@@ -1,7 +1,6 @@
 package ghostcat.util.core
 {
 	import flash.errors.IllegalOperationError;
-	import flash.events.Event;
 	import flash.utils.describeType;
 	import flash.utils.getQualifiedClassName;
 
@@ -20,12 +19,16 @@ package ghostcat.util.core
 		 * @param AbstractType	抽象类类型
 		 * 
 		 */
-		public static function preventConstructor(obj:*,abstractType:Class):void
+		public static function preventConstructor(obj:*,abstractType:Class,errorText:String = null):void
 		{
 			if (obj["constructor"] == abstractType)  
 			{
-				var typeName:String = getQualifiedClassName(obj);
-				throw new IllegalOperationError(typeName+" 类为抽象类，不允许实例化!");
+				if (!errorText)
+				{
+					var typeName:String = getQualifiedClassName(obj);
+					errorText = typeName+" 类为抽象类，不允许实例化!";
+				}
+				throw new IllegalOperationError(errorText);
 			}
 		}
 		
