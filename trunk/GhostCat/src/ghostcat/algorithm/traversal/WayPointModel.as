@@ -32,6 +32,20 @@ package ghostcat.algorithm.traversal
 		}
 		
 		private var noteMap : Array;//node缓存
+		private var _map:Array;
+		
+		/**
+		 * 地图数据
+		 */
+		public function get map():Array
+		{
+			return _map;
+		}
+		
+		public function set map(value:Array):void
+		{
+			_map = value;
+		}
 		
 		/**
 		 * 初始化

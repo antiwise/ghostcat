@@ -28,9 +28,9 @@ package ghostcat.parse.display
 		 */
 		public var defaultTextFormat:TextFormat;
 		
-		public function TextFieldParse(text:String,pos:Point=null,defaultTextFormat:TextFormat=null)
+		public function TextFieldParse(text:String=null,pos:Point=null,defaultTextFormat:TextFormat=null)
 		{
-			this.text = text;
+			this.text = text ? text : "";
 			this.pos = pos;
 			this.defaultTextFormat = defaultTextFormat;
 		}

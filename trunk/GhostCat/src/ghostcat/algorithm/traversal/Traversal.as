@@ -1,5 +1,7 @@
 package ghostcat.algorithm.traversal
 {
+	import ghostcat.util.core.AbstractUtil;
+
 	/**
 	 * 遍历算法
 	 * 数据源必须实现IMapModel
@@ -8,16 +10,6 @@ package ghostcat.algorithm.traversal
 	 */	
 	public class Traversal
 	{
-		/**
-		 * 深度优先遍历 Depth-First-Search
-		 */
-		static public const DFS:String = "dfs";
-		
-		/**
-		 * 广度优先遍历 Breadth-First-Search
-		 */
-		static public const BFS:String = "bfs";
-		
 		/**
 		 * 最长限制步数
 		 */
@@ -33,12 +25,11 @@ package ghostcat.algorithm.traversal
 		 */
 		protected var openList : Array;
 		
-		private var type:String = "dfs";//遍历方式
-		
-		public function Traversal(mapModel : MapModel, type:String = "dfs", maxTry : int = 5000)
+		public function Traversal(mapModel : MapModel, maxTry : int = 5000)
 		{
+			AbstractUtil.preventConstructor(this,Traversal,"Traversal为抽象类，必须实现find方法！");
+			
 			this.mapModel = mapModel;
-			this.type = type;
 			this.maxTry = maxTry;
 		}
 		
@@ -52,51 +43,7 @@ package ghostcat.algorithm.traversal
 		 */
 		public function find(start:*, end:*) : Array
 		{
-			this.openList = [];
-			
-			mapModel.reset();
-			
-			var curTry : int = 0;
-			
-			this.openNote(start, 0, 0, null);//建立首节点
-			
-			while (this.openList.length > 0)
-			{
-				if (++curTry > this.maxTry)
-					return null;
-				
-				var cur:TraversalNote;
-				if (type == DFS)
-					cur = this.openList.pop();
-				else
-					cur = this.openList.shift();
-					
-				//获得最前的节点，并将它加入关闭列表
-				this.closeNote(cur);
-				
-				var curPoint : * = cur.point;
-				
-				//如果到达终点
-				if (mapModel.reachEnd(curPoint,end))
-					return this.getPath(start, cur);
-				
-				var aroundNotes : Array = mapModel.getArounds(curPoint);
-				
-				for each (var p : * in aroundNotes)
-				{
-					var n:TraversalNote = mapModel.getNode(p);
-					if (n && n.noteClosed)//在关闭列表中则跳过
-						continue;
-					
-					//在这里计算F和G值
-					if (n && n.noteOpen) //如果节点已在开放列表中
-					{
-						//在这里更新F和G值
-					}
-					else	//否则加入开放列表 
-						this.openNote(p, 0, 0, cur);
-				}
-			}
+			//在这里添加遍历方法
 			return null;
 		}
 		

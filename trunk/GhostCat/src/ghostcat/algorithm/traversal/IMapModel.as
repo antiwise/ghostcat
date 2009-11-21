@@ -1,6 +1,6 @@
 package ghostcat.algorithm.traversal
 {
-	import flash.geom.Point;
+	
 
 	/**
 	 * 地图模型类接口
@@ -10,6 +10,13 @@ package ghostcat.algorithm.traversal
 	 */
 	public interface IMapModel
 	{
+		/**
+		 * 地图数据
+		 * @return 
+		 * 
+		 */
+		function get map():Array;
+		function set map(v:Array):void;
 		/**
 		 * 初始化
 		 * 

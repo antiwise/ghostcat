@@ -16,10 +16,7 @@ package ghostcat.algorithm.traversal
 		
 		private const COST_DIAGONAL_3D : int = 17;//3D斜向分值
 		
-		/**
-		 * 地图数据
-		 */
-		public var map : Array;
+		private var _map : Array;
 		
 		/**
 		 * 是否启用斜向移动
@@ -34,6 +31,19 @@ package ghostcat.algorithm.traversal
 		
 		private var noteMap : Array;//node缓存
 		
+		/**
+		 * 地图数据
+		 */
+		public function get map():Array
+		{
+			return _map;
+		}
+
+		public function set map(value:Array):void
+		{
+			_map = value;
+		}
+
 		/**
 		 * 初始化
 		 * 
@@ -268,14 +278,14 @@ package ghostcat.algorithm.traversal
 		//是否是墙壁
 		private function isBlock(v:Point3D):Boolean
 		{
-			var mapDeep : int = map.length;
-			var mapHeight : int = map[0].length;
-			var mapWidth : int = map[0][0].length;
+			var mapDeep : int = _map.length;
+			var mapHeight : int = _map[0].length;
+			var mapWidth : int = _map[0][0].length;
 			
 			if (v.x < 0 || v.x >= mapWidth || v.y < 0 || v.y >= mapHeight || v.z < 0 || v.z >= mapDeep)
 				return true;
 			
-			return map[v.z][v.y][v.x];
+			return _map[v.z][v.y][v.x];
 		}
 	}
 }
