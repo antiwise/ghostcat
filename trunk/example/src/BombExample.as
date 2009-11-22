@@ -9,7 +9,7 @@ package
 	import ghostcat.display.transfer.Cataclasm;
 	import ghostcat.util.Util;
 
-	[SWF(width="600",height="450",frameRate="60",backgroundColor="0xFFFFFF")]
+	[SWF(width="600",height="480",frameRate="60",backgroundColor="0xFFFFFF")]
 	/**
 	 * 爆炸效果
 	 * @author flashyiyi
@@ -17,7 +17,7 @@ package
 	 */
 	public class BombExample extends Sprite
 	{
-		[Embed("p1.jpg")]
+		[Embed("p6.jpg")]
 		public var c:Class;
 		public var s:Cataclasm;
 		private var step:int = 1;

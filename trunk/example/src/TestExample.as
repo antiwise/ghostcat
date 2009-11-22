@@ -17,7 +17,7 @@
 	 */
 	public class TestExample extends Sprite
 	{
-		[Embed("p1.jpg")]
+		[Embed("p6.jpg")]
 		public var c:Class;
 		public var s:Cataclasm;
 		private var step:int = 1;
