@@ -25,14 +25,5 @@ package ghostcat.algorithm.bezier
 			physics = new RoupeLink(elasticity,friction,gravity,hasEnd);
 			physics.addAll(path);
 		}
-		
-		/**
-		 * 应用物理 
-		 * 
-		 */
-		public function applyPhysics(v:int):void
-		{
-			physics.tick(v);
-		}
 	}
 }

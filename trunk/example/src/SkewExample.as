@@ -22,10 +22,10 @@ package
 	public class SkewExample extends GBase
 	{
 		public var f:Skew;
-		public var p1:DragPoint = new DragPoint(new Point(50,10));
-		public var p2:DragPoint = new DragPoint(new Point(150,50));
-		public var p3:DragPoint = new DragPoint(new Point(40,240));
-		public var p4:DragPoint = new DragPoint(new Point(260,150));
+		public var p1:DragPoint = new DragPoint(null,new Point(50,10));
+		public var p2:DragPoint = new DragPoint(null,new Point(150,50));
+		public var p3:DragPoint = new DragPoint(null,new Point(40,240));
+		public var p4:DragPoint = new DragPoint(null,new Point(260,150));
 		protected override function init():void
 		{
 			f = new Skew(new TestCollision(),10,10);

@@ -33,8 +33,8 @@
     <classEntry path="ghostcat.community.sort.Sort45Manager"/>
     <classEntry path="ghostcat.community.sort.SortAllManager"/>
     <classEntry path="ghostcat.community.sort.SortYManager"/>
-    <classEntry path="ghostcat.community.tween.TweenGroupByValueManager"/>
-    <classEntry path="ghostcat.community.tween.TweenGroupManager"/>
+    <classEntry path="ghostcat.community.tween.TweenGroupByValue"/>
+    <classEntry path="ghostcat.community.tween.TweenGroupDelay"/>
     <classEntry path="ghostcat.debug.Debug"/>
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
@@ -445,6 +445,8 @@
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
     <classEntry path="ghostcat.algorithm.traversal.BFS"/>
     <classEntry path="ghostcat.display.transfer.Cataclasm"/>
+    <classEntry path="ghostcat.ui.controls.GRule"/>
+    <classEntry path="ghostcat.community.physics.BombManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

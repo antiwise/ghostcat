@@ -4,9 +4,7 @@ package ghostcat.community.physics
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
-	import ghostcat.display.transfer.effect.BombHandler;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.Tick;
 	
 	/**
 	 * 物理管理类
@@ -22,7 +20,6 @@ package ghostcat.community.physics
 		public var gravity:Point;
 		
 		private var dict:Dictionary;
-		private var _enabledTick:Boolean = false;
 		
 		public function PhysicsManager(command:Function = null)
 		{
@@ -59,9 +56,15 @@ package ghostcat.community.physics
 		 */
 		public override function remove(obj:*) : void
 		{
-			delete dict[obj];
+			var item:* = dict[obj];
+			if (item)
+				obj = item;
 			
 			super.remove(obj);
+			
+			if (obj is PhysicsItem)
+				delete dict[(obj as PhysicsItem).target]
+			delete dict[obj];
 		}
 		
 		/**
@@ -97,25 +100,6 @@ package ghostcat.community.physics
 			throw new Error("calculateAll不能在这里使用，应用tick方法代替")
 		}
 		
-		/** @inheritDoc */	
-		public function get enabledTick():Boolean
-		{
-			return _enabledTick;
-		}
-		
-		public function set enabledTick(v:Boolean):void
-		{
-			if (_enabledTick == v)
-				return;
-			
-			_enabledTick = v;
-			
-			if (_enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
-			else
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-		}
-		
 		/**
 		 * 基于时基的计算 
 		 * @param interval
@@ -141,8 +125,21 @@ package ghostcat.community.physics
 					item.velocity.x *= item.friction;
 					item.velocity.y *= item.friction;
 				}
-				item.x += item.velocity.x * d;
-				item.y += item.velocity.y * d;
+				
+				if (item.spin)
+					item.rotation += item.spin;
+				
+				if (item.spinFriction != 1)
+					item.spin *= item.spinFriction;
+				
+				if (item.scaleSpeed)
+					item.scale += item.scaleSpeed;
+				
+				if (item.scaleFriction)
+					item.scaleSpeed *= item.scaleFriction;
+				
+				item.x += item.velocity.x * d * item.scale;
+				item.y += item.velocity.y * d * item.scale;
 				
 				if (command!=null)
 					command(item,interval);

@@ -43,22 +43,22 @@ package ghostcat.ui.containers
 		 */
 		protected function createContorl():void
 		{
-			leftEdge = new DragPoint(null,new Shape());
+			leftEdge = new DragPoint(new Shape());
 			leftEdge.cursor = CursorSprite.CURSOR_H_DRAG;
 			leftEdge.lockY = true;
 			leftEdge.addEventListener(MoveEvent.MOVE,leftEdgeHandler);
 			$addChild(leftEdge);
-			rightEdge = new DragPoint(null,new Shape());
+			rightEdge = new DragPoint(new Shape());
 			rightEdge.cursor = CursorSprite.CURSOR_H_DRAG;
 			rightEdge.lockY = true;
 			rightEdge.addEventListener(MoveEvent.MOVE,rightEdgeHandler);
 			$addChild(rightEdge);
-			topEdge = new DragPoint(null,new Shape());
+			topEdge = new DragPoint(new Shape());
 			topEdge.cursor = CursorSprite.CURSOR_V_DRAG;
 			topEdge.lockX = true;
 			topEdge.addEventListener(MoveEvent.MOVE,topEdgeHandler);
 			$addChild(topEdge);
-			bottomEdge = new DragPoint(null,new Shape());
+			bottomEdge = new DragPoint(new Shape());
 			bottomEdge.cursor = CursorSprite.CURSOR_V_DRAG;
 			bottomEdge.lockX = true;
 			bottomEdge.addEventListener(MoveEvent.MOVE,bottomEdgeHandler);

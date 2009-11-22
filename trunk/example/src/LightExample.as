@@ -33,8 +33,8 @@ package
 		public function LightExample()
 		{
 			//创建墙壁和控制点
-			var p1:DragPoint = new DragPoint(new Point(100,200));
-			var p2:DragPoint = new DragPoint(new Point(200,100));
+			var p1:DragPoint = new DragPoint(null,new Point(100,200));
+			var p2:DragPoint = new DragPoint(null,new Point(200,100));
 			p1.addEventListener(MoveEvent.MOVE,moveHanlder);
 			p2.addEventListener(MoveEvent.MOVE,moveHanlder);
 			

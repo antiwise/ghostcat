@@ -12,7 +12,7 @@ package ghostcat.community.tween
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TweenGroupManager extends GroupManager
+	public class TweenGroupDelay extends GroupManager
 	{
 		/**
 		 * 每个动画的执行时间
@@ -36,7 +36,7 @@ package ghostcat.community.tween
 		 */
 		public var renderOnStart:Boolean = true;
 		
-		public function TweenGroupManager(duration:int,params:Object,delay:int = 100,invert:Boolean = false)
+		public function TweenGroupDelay(duration:int,params:Object,delay:int = 100,invert:Boolean = false)
 		{
 			this.duration = duration;
 			this.params = params;

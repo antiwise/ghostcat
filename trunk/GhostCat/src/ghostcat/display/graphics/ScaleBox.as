@@ -145,50 +145,50 @@ package ghostcat.display.graphics
 		
 		private function createControl():void
 		{
-			fillControl = new DragPoint(null,new Shape());
+			fillControl = new DragPoint(new Shape());
 			fillControl.cursor = CursorSprite.CURSOR_DRAG;
 			fillControl.addEventListener(MoveEvent.MOVE,fillMouseDownHandler,false,0,true);
 			addChild(fillControl);
 			
-			topLeftControl = new DragPoint(null,new Shape());	
+			topLeftControl = new DragPoint(new Shape());	
 			topLeftControl.cursor = CursorSprite.CURSOR_HV_DRAG;
 			topLeftControl.addEventListener(MoveEvent.MOVE,topLeftControlHandler,false,0,true);
 			addChild(topLeftControl);
 			
-			topRightControl = new DragPoint(null,new Shape());	
+			topRightControl = new DragPoint(new Shape());	
 			topRightControl.cursor = CursorSprite.CURSOR_VH_DRAG;
 			topRightControl.addEventListener(MoveEvent.MOVE,topRightControlHandler,false,0,true);
 			addChild(topRightControl);
 			
-			bottomLeftControl = new DragPoint(null,new Shape());	
+			bottomLeftControl = new DragPoint(new Shape());	
 			bottomLeftControl.cursor = CursorSprite.CURSOR_VH_DRAG;
 			bottomLeftControl.addEventListener(MoveEvent.MOVE,bottomLeftControlHandler,false,0,true);
 			addChild(bottomLeftControl);
 			
-			bottomRightControl = new DragPoint(null,new Shape());	
+			bottomRightControl = new DragPoint(new Shape());	
 			bottomRightControl.cursor = CursorSprite.CURSOR_HV_DRAG;
 			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler,false,0,true);
 			addChild(bottomRightControl);
 			
-			topLineControl = new DragPoint(null,new Shape());	
+			topLineControl = new DragPoint(new Shape());	
 			topLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			topLineControl.lockX = true;
 			topLineControl.addEventListener(MoveEvent.MOVE,topLineControlHandler,false,0,true);
 			addChild(topLineControl);
 			
-			bottomLineControl = new DragPoint(null,new Shape());	
+			bottomLineControl = new DragPoint(new Shape());	
 			bottomLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			bottomLineControl.lockX = true;
 			bottomLineControl.addEventListener(MoveEvent.MOVE,bottomLineControlHandler,false,0,true);
 			addChild(bottomLineControl);
 			
-			leftLineControl = new DragPoint(null,new Shape());	
+			leftLineControl = new DragPoint(new Shape());	
 			leftLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			leftLineControl.lockY = true;
 			leftLineControl.addEventListener(MoveEvent.MOVE,leftLineControlHandler,false,0,true);
 			addChild(leftLineControl);
 			
-			rightLineControl = new DragPoint(null,new Shape());	
+			rightLineControl = new DragPoint(new Shape());	
 			rightLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			rightLineControl.lockY = true;
 			rightLineControl.addEventListener(MoveEvent.MOVE,rightLineControlHandler,false,0,true);

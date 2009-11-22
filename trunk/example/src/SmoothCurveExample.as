@@ -60,7 +60,6 @@ package
 		{
 			graphics.clear();
 			graphics.lineStyle(0,0,1);
-			roupe.applyPhysics(event.interval);
 			roupe.parse(this);
 			
 			end.invalidatePosition();

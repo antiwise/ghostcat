@@ -1,4 +1,4 @@
-﻿package
+package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -11,17 +11,17 @@
 
 	[SWF(width="600",height="450",frameRate="60",backgroundColor="0xFFFFFF")]
 	/**
-	 * 
+	 * 爆炸效果
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TestExample extends Sprite
+	public class BombExample extends Sprite
 	{
 		[Embed("p1.jpg")]
 		public var c:Class;
 		public var s:Cataclasm;
 		private var step:int = 1;
-		public function TestExample()
+		public function BombExample()
 		{
 			s = new Cataclasm(new c());
 			addChild(Util.createObject(new ResidualScreen(600,600),{fadeSpeed:0.6,children:[s]}));
