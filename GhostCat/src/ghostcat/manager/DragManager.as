@@ -12,7 +12,6 @@ package ghostcat.manager
 	import ghostcat.parse.display.AlphaShapeParse;
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.Tick;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.Handler;
 	import ghostcat.util.display.Geom;
 	
@@ -52,6 +51,7 @@ package ghostcat.manager
 		 * 
 		 * @param obj	要拖动的物品
 		 * @param bounds	拖动的范围，坐标系为父对象
+		 * @param startHandler	开始拖动时执行的事件
 		 * @param stopHandler	停止拖动后执行的事件
 		 * @param onHandler	拖动时每帧执行的事件
 		 * @param type	拖动类型
@@ -60,7 +60,7 @@ package ghostcat.manager
 		 * @param collideByRect	判断范围是否以物品的边缘而不是注册点为标准
 		 * 
 		 */
-		public static function startDrag(obj:DisplayObject,bounds:Rectangle=null,stopHandler:Function=null,onHandler:Function=null,
+		public static function startDrag(obj:DisplayObject,bounds:Rectangle=null,startHandler:Function = null,stopHandler:Function=null,onHandler:Function=null,
 									type:String = DIRECT,lockCenter:Boolean = false,upWhenLeave:Boolean = false,collideByRect:Boolean = false):void
 		{
 			if (list[o]!=null)
@@ -74,6 +74,7 @@ package ghostcat.manager
 			o.lockCenter = lockCenter;
 			o.upWhenLeave = upWhenLeave;
 			o.collideByRect = collideByRect;
+			o.startHandler = startHandler;
 			o.stopHandler = stopHandler;
 			o.onHandler = onHandler;
 			o.startDrag();
@@ -97,13 +98,13 @@ package ghostcat.manager
 		 * @param target	被拖动的对象
 		 * 
 		 */
-		public static function register(obj:DisplayObject,target:DisplayObject=null,bounds:Rectangle=null,stopHandler:Function=null,onHandler:Function=null,
+		public static function register(obj:DisplayObject,target:DisplayObject=null,bounds:Rectangle=null,startHandler:Function=null,stopHandler:Function=null,onHandler:Function=null,
 									type:String = DIRECT,lockCenter:Boolean = false,upWhenLeave:Boolean = false,collideByRect:Boolean = false):void
 		{
 			if (!target)
 				target = obj;
 			
-			regObject[obj] = new Handler(DragManager.startDrag,[target,bounds,stopHandler,onHandler,
+			regObject[obj] = new Handler(DragManager.startDrag,[target,bounds,startHandler,stopHandler,onHandler,
 									type,lockCenter,upWhenLeave,collideByRect]);
 			obj.addEventListener(MouseEvent.MOUSE_DOWN,dragStartHandler);
 		}
@@ -133,6 +134,7 @@ package ghostcat.manager
 		protected var collideByRect:Boolean;
 		protected var bounds:Rectangle;
 		protected var onHandler:Function;
+		protected var startHandler:Function;
 		protected var stopHandler:Function;
 		
 		protected var dragMousePos:Point;
@@ -143,9 +145,12 @@ package ghostcat.manager
 	
 		protected function startDrag():void
 		{
+			if (startHandler!=null)
+				obj.addEventListener(DragEvent.DRAG_START,startHandler);
+			
 			var e:DragEvent = new DragEvent(DragEvent.DRAG_START,false,true);
 			e.dragObj = obj;
-			obj.dispatchEvent(e)
+			obj.dispatchEvent(e);
 			
 			if (e.isDefaultPrevented())
 				return;
@@ -195,6 +200,8 @@ package ghostcat.manager
 				obj.stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 				obj.stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 			}
+			if (startHandler!=null)
+				obj.removeEventListener(DragEvent.DRAG_START,startHandler);
 			if (stopHandler!=null)
 				obj.removeEventListener(DragEvent.DRAG_STOP,stopHandler);
 			if (onHandler!=null)

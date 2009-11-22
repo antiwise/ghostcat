@@ -78,7 +78,7 @@ package ghostcat.text
 		}
 		
 		/**
-		 * 高性能HTML文本缓动
+		 * 高性能HTML文本缓动，不支持倒放
 		 * 
 		 * @param textField	文本框
 		 * @param speed	速度

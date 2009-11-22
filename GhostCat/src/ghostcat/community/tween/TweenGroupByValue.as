@@ -13,7 +13,7 @@ package ghostcat.community.tween
 	 * @author flashyiyi
 	 * 
 	 */
-	public class TweenGroupByValueManager extends GroupManager
+	public class TweenGroupByValue extends GroupManager
 	{
 		/**
 		 * 每个动画的执行时间
@@ -32,7 +32,7 @@ package ghostcat.community.tween
 		 */
 		public var renderOnStart:Boolean = true;
 		
-		public function TweenGroupByValueManager(duration:int,params:Object)
+		public function TweenGroupByValue(duration:int,params:Object)
 		{
 			this.duration = duration;
 			this.params = params;

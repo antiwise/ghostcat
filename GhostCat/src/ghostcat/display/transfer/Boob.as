@@ -89,7 +89,6 @@ package ghostcat.display.transfer
 		
 			this.roupe = new RoupeLink(0.3,0.85,null,true);
 			this.roupe.addAll(items);
-			this.roupe.enabledTick = true;
 		}
 		
 		protected override function tickHandler(event:TickEvent):void
@@ -116,7 +115,6 @@ package ghostcat.display.transfer
 			removeBitmaps();
 			boobBitmap.dispose();
 			removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			roupe.enabledTick = false;
 			super.destory();
 		}
 	}

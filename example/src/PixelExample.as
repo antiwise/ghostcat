@@ -12,7 +12,7 @@ package
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.display.ColorConvertUtil;
 	
-	[SWF(width="200",height="200",frameRate="60",backgroundColor="0xFFFFFF")]
+	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
 	
 	public class PixelExample extends GBase
 	{
@@ -24,6 +24,7 @@ package
 		{
 			//创建位图显示
 			s = new ResidualScreen(200,200,false,0);
+			s.scaleX = s.scaleY = 2;
 			s.blurSpeed = 5;//扩散速度
 			s.fadeSpeed = 0.98;
 			addChild(s);
@@ -50,7 +51,7 @@ package
 			c = (c < 0xFF) ? (c + 0.3) : 0;
 			
 			//新建点
-			var item:PixelItem = new PixelItem(mouseX,mouseY,ColorConvertUtil.fromHSL(0xFF000000 + (c << 16) + 0xFF80));
+			var item:PixelItem = new PixelItem(s.mouseX,s.mouseY,ColorConvertUtil.fromHSL(0xFF000000 + (c << 16) + 0xFF80));
 			s.addObject(item);//加入显示
 			p.add(item);//加入物理
 			p.setVelocity(item,new Point((Math.random() - 0.5)*50,-100 + (Math.random() - 0.5)*20));//给予初速度

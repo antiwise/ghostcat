@@ -18,6 +18,10 @@ package ghostcat.display.graphics
 		 * 控制点数组
 		 */
 		public var controls:Array = [];
+		/**
+		 * 控制点皮肤 
+		 */
+		public var pointSkin:* = null;
 		public function EditableGraphicsSprite(data:Array = null)
 		{
 			super(data);
@@ -51,7 +55,7 @@ package ghostcat.display.graphics
 		
 		private function addControl(v:Point):void
 		{
-			var pt:DragPoint = new DragPoint(v);
+			var pt:DragPoint = new DragPoint(pointSkin,v);
 			pt.addEventListener(MoveEvent.MOVE,moveHandler,false,0,true);
 			addChild(pt);
 			

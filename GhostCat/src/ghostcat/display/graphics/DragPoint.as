@@ -3,11 +3,13 @@ package ghostcat.display.graphics
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.skin.PointSkin;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 可拖动操控点
@@ -20,8 +22,18 @@ package ghostcat.display.graphics
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(PointSkin);
 		
+		/**
+		 * 锁定X轴移动 
+		 */
 		public var lockX:Boolean = false;
+		/**
+		 * 锁定Y轴移动
+		 */
 		public var lockY:Boolean = false;
+		/**
+		 * 限制移动范围
+		 */
+		public var bounds:Rectangle;
 		
 		
 		private var localMousePoint:Point;//按下时的鼠标位置
@@ -41,7 +53,7 @@ package ghostcat.display.graphics
 		 * @param point	由外部引入坐标对象，位置的更改将会应用到此对象上
 		 * 
 		 */
-		public function DragPoint(point:Point=null,skin:DisplayObject=null,replace:Boolean=true) : void
+		public function DragPoint(skin:*=null,point:Point=null,replace:Boolean=true) : void
 		{
 			if (!skin)
 				skin = defaultSkin.newInstance();
@@ -91,8 +103,12 @@ package ghostcat.display.graphics
 		{
 			if (!lockX)
 				x = parent.mouseX + localMousePoint.x;
+			
 			if (!lockY)
 				y = parent.mouseY + localMousePoint.y;
+			
+			if (bounds)
+				Geom.forcePointInside(this,bounds);
 		}
 		/** @inheritDoc*/
 		public override function set enabled(value : Boolean) : void
