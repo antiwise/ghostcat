@@ -44,7 +44,7 @@
     <classEntry path="ghostcat.debug.MemoryChecker"/>
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
-    <classEntry path="ghostcat.display.GContextMenu"/>
+    <classEntry path="ghostcat.display.other.GContextMenu"/>
     <classEntry path="ghostcat.display.GNoScale"/>
     <classEntry path="ghostcat.display.GSimpleBase"/>
     <classEntry path="ghostcat.display.GSprite"/>
@@ -87,7 +87,7 @@
     <classEntry path="ghostcat.display.movieclip.GScriptMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
-    <classEntry path="ghostcat.display.other.BubbleCreater"/>
+    <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
@@ -447,6 +447,9 @@
     <classEntry path="ghostcat.display.transfer.Cataclasm"/>
     <classEntry path="ghostcat.ui.controls.GRule"/>
     <classEntry path="ghostcat.community.physics.BombManager"/>
+    <classEntry path="ghostcat.ui.controls.GColorPicker"/>
+    <classEntry path="ghostcat.display.other.SoundDisplayer"/>
+    <classEntry path="ghostcat.util.display.Palette"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

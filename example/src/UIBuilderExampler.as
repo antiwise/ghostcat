@@ -2,7 +2,7 @@ package
 {
 	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GSprite;
-	import ghostcat.display.other.BubbleCreater;
+	import ghostcat.other.BubbleCreater;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.containers.GAlert;
@@ -28,8 +28,6 @@ package
 			GAlert.show("这一切现在全部由美工自己控制。如果皮肤采用SWF载入，他们甚至可以实时调整。操作仅仅是输出皮肤SWF，然后运行。\n他们不再需要瞎着眼睛设计，所有的修改都能立即得到回馈，这会让他们更愿意修改和调整界面，使之变得更漂亮，用户体验更好。","积极性");
 			GAlert.show("<html><font color='#FF0000'>更重要的是，现在时间线动画可以保留了！</font>\n这个Alert的显示和消失就是使用的动画。\n动画可以充分发挥FLASH的优势，并且让那些“JS也能做，银光也很好”的支持者们永远地闭上他们的嘴。</html>","支持动画");
 			GAlert.show("组件内使用动画应注意两个限制：\n1.组件本身不能在动画帧上，只能在动画帧上变化的电影剪辑的内部\n2.内部存在组件的动画帧必须在时间线上一直存在","组件动画的限制");
-			
-			
 		}
 	}
 }

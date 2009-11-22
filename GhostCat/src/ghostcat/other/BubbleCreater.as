@@ -1,4 +1,4 @@
-package ghostcat.display.other
+package ghostcat.other
 {
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;

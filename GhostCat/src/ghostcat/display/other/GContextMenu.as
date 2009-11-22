@@ -1,4 +1,4 @@
-package ghostcat.display
+package ghostcat.display.other
 {
 	import flash.display.InteractiveObject;
 	import flash.events.ContextMenuEvent;

@@ -1,15 +1,9 @@
 package
 {
-	import flash.events.Event;
-	import flash.media.SoundTransform;
-	
 	import ghostcat.display.GBase;
+	import ghostcat.display.other.SoundDisplayer;
 	import ghostcat.manager.RootManager;
-	import ghostcat.operation.DelayOper;
 	import ghostcat.operation.SoundOper;
-	import ghostcat.operation.TweenOper;
-	import ghostcat.operation.WaitOper;
-	import ghostcat.operation.WatchOper;
 	import ghostcat.ui.containers.GAlert;
 	
 	[SWF(width="600",height="600")]
@@ -33,6 +27,8 @@ package
 			oper.commit();
 			
 			GAlert.show("音乐结束");
+			
+			addChild(new SoundDisplayer(100,50));
 		}
 	}
 }
