@@ -88,9 +88,9 @@ package ghostcat.display.transfer
 		}
 		
 		/** @inheritDoc*/
-		public override function render():void
+		public override function renderTarget():void
 		{
-			super.render();
+			super.renderTarget();
 			
 			if (normalBitmapData)
 				normalBitmapData.dispose();

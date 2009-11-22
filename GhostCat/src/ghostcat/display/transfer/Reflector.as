@@ -67,7 +67,7 @@ package ghostcat.display.transfer
 			y = rect.bottom + this.y + _distance;
 		}
 		/** @inheritDoc*/
-		public override function render(): void
+		public override function renderTarget(): void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();

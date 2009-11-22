@@ -24,7 +24,7 @@ package ghostcat.display.transfer
 		
 		protected var bitmapData:BitmapData;
 		
-		protected var renderBitmapCall:UniqueCall = new UniqueCall(renderBitmap);
+		protected var renderBitmapCall:UniqueCall = new UniqueCall(showBitmapData);
 		
 		public function GTransfer(target:DisplayObject=null):void
 		{
@@ -93,14 +93,14 @@ package ghostcat.display.transfer
 			super.updateDisplayList();
 			
 			if (_target)
-				render()
+				renderTarget()
 		}
 		
 		/**
 		 * 目标内容变化时执行
 		 * 
 		 */
-		protected function render():void
+		protected function renderTarget():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();
@@ -108,7 +108,7 @@ package ghostcat.display.transfer
 			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.draw(_target,m);
 			
-			renderBitmap();
+			showBitmapData();
 		}
 		
 		/**
@@ -124,7 +124,7 @@ package ghostcat.display.transfer
 		 * 重绘时显示位图
 		 * 
 		 */
-		protected function renderBitmap():void
+		protected function showBitmapData():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();

@@ -73,7 +73,7 @@ package
 			screen.bitmapData = this.mapModel.toBitmap().bitmapData;
 			screen.bitmapData.setPixel(1,1,0xFF0000);
 
-			//在复杂迷宫内A*未必总是比BFS快，因为朝向终点方向前进是最短路径的几率较低，而A*的启发式遍历本身具有消耗
+			//在复杂迷宫内A*未必总是比BFS快，因为朝向终点方向前进是最短路径的几率不高，而A*的启发式遍历本身具有消耗
 			this.aStar = new AStar(this.mapModel);//根据数据生成A*类
 //			this.aStar = new BFS(this.mapModel);//根据数据生成BFS类
 		}

@@ -3,7 +3,7 @@ package ghostcat.algorithm.traversal
 	import ghostcat.util.core.AbstractUtil;
 
 	/**
-	 * 遍历算法
+	 * 遍历算法基类
 	 * 数据源必须实现IMapModel
 	 * 
 	 * @author flashyiyi

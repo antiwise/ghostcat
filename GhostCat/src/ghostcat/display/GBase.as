@@ -704,7 +704,12 @@ package ghostcat.display
 			}
 		}
 		
-		private function refreshHandler(event:TimerEvent):void
+		/**
+		 * 定时刷新事件 
+		 * @param event
+		 * 
+		 */
+		protected function refreshHandler(event:TimerEvent):void
 		{
 			vaildDisplayList();
 		}

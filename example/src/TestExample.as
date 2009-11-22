@@ -1,11 +1,9 @@
-package
+﻿package
 {
-	import flash.display.DisplayObject;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
-	import flash.geom.Point;
 	
-	import ghostcat.algorithm.maze.BlockModel;
-	import ghostcat.algorithm.maze.MazeCreater;
+	import ghostcat.display.transfer.Cataclasm;
 
 	[SWF(width="600",height="600")]
 	/**
@@ -19,11 +17,11 @@ package
 		public var c:Class;
 		public function TestExample()
 		{
-			var s:MazeCreater = new MazeCreater(100,100);
-			s.find(new Point(0,0),new Point(99,99));
-			var screen:DisplayObject = new BlockModel(s.result).toShape(4);
-			addChild(screen);
+			var t:Bitmap = new c();
+			addChild(t);
 			
+			var s:Cataclasm = new Cataclasm(t);
+			addChild(s);
 		}
 	}
 }

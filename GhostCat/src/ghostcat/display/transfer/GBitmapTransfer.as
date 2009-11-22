@@ -91,14 +91,14 @@ package ghostcat.display.transfer
 			super.updateDisplayList();
 			
 			if (_target && stage)
-				render();
+				renderTarget();
 		}
 		
 		/**
 		 * 从源图渲染 
 		 * 
 		 */
-		public function render():void
+		public function renderTarget():void
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();
