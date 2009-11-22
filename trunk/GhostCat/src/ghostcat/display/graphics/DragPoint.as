@@ -83,7 +83,8 @@ package ghostcat.display.graphics
 				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 				
-				CursorSprite.instance.lock = true;
+				if (CursorSprite.instance)
+					CursorSprite.instance.lock = true;
 			}
 		}
 
@@ -96,7 +97,8 @@ package ghostcat.display.graphics
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			
-			CursorSprite.instance.lock = false;
+			if (CursorSprite.instance)
+				CursorSprite.instance.lock = false;
 		}
 
 		private function onMouseMoveHandler(event : MouseEvent) : void
