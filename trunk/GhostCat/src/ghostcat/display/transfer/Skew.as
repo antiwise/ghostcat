@@ -181,7 +181,7 @@
 			_bottomRight = bottomR;
  			
 			if (!dotList)
-				render();
+				renderTarget();
 			
 			var leftV:Point = bottomL.subtract(topL);
 			var rightV:Point = bottomR.subtract(topR);
@@ -196,10 +196,10 @@
 				point.sx = bx + gx * (topR.x + gy * rightV.x - bx);
 				point.sy = by + gx * (topR.y + gy * rightV.y - by);
 			}
-			renderBitmap();
+			showBitmapData();
 		}
 		/** @inheritDoc*/
-		protected override function renderBitmap() : void
+		protected override function showBitmapData() : void
 		{
 			graphics.clear();
 			for (var i:int = pieceList.length - 1;i>=0;i--)

@@ -444,6 +444,7 @@
     <classEntry path="ghostcat.algorithm.traversal.SimpleAStar"/>
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
     <classEntry path="ghostcat.algorithm.traversal.BFS"/>
+    <classEntry path="ghostcat.display.transfer.Cataclasm"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -65,7 +65,7 @@ package ghostcat.display.transfer
 			//取消原来根据目标修改位图大小的操作。位图大小将由updateSize控制
 		}
 		/** @inheritDoc*/
-		protected override function render() : void
+		protected override function renderTarget() : void
 		{
 			if (!bitmap.bitmapData)
 				updateSize();

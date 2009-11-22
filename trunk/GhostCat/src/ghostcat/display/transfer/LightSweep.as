@@ -31,7 +31,7 @@ package ghostcat.display.transfer
 		public function set quality(v:int):void
 		{
 			_quality = v;
-			render();
+			renderTarget();
 		}
 
 		public function get offest():Point
@@ -56,9 +56,9 @@ package ghostcat.display.transfer
 			invalidateRenderBitmap();
 		}
 		/** @inheritDoc*/
-		protected override function render() : void
+		protected override function renderTarget() : void
 		{
-			super.render();
+			super.renderTarget();
 			removeBitmaps();
 			for (var i:int = 0;i < _quality;i++)
 			{
@@ -67,11 +67,11 @@ package ghostcat.display.transfer
 				bitmaps.push(img);
 			}
 			
-			renderBitmap();
+			showBitmapData();
 		}
 
 		/** @inheritDoc*/
-		protected override function renderBitmap() : void
+		protected override function showBitmapData() : void
 		{
 			if (!bitmaps)
 				return;
