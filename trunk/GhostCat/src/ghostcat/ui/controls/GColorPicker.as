@@ -3,10 +3,12 @@ package ghostcat.ui.controls
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.display.Palette;
+	import ghostcat.util.display.ColorUtil;
+	import ghostcat.util.display.PaletteUtil;
 	
 	[Event(name="change",type="flash.events.Event")]
 	
@@ -20,14 +22,12 @@ package ghostcat.ui.controls
 	 */
 	public class GColorPicker extends GBase
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(Palette);
-		private var bitmap:BitmapData;
 		private var _selectedColor:Number;
 		
 		public function GColorPicker(skin:*=null, replace:Boolean=true)
 		{
 			if (!skin)
-				skin = defaultSkin;
+				skin = PaletteBitmap;
 			
 			super(skin, replace);
 			this.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
@@ -47,14 +47,6 @@ package ghostcat.ui.controls
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
-
-		public override function setContent(skin:*, replace:Boolean=true) : void
-		{
-			super.setContent(skin,replace);
-			
-			bitmap = new BitmapData(content.width,content.height);
-			bitmap.draw(content);
-		}
 		
 		private function mouseDownHandler(event:MouseEvent):void
 		{
@@ -68,7 +60,7 @@ package ghostcat.ui.controls
 		 */
 		public function getColorOnMouse():uint
 		{
-			return bitmap.getPixel(mouseX,mouseY);
+			return ColorUtil.getColorAtPoint(content,mouseX,mouseY);
 		}
 		
 		public override function destory() : void
@@ -76,12 +68,20 @@ package ghostcat.ui.controls
 			if (destoryed)
 				return;
 			
-			if (bitmap)
-				bitmap.dispose();
-			
 			this.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			
 			super.destory();
 		}
+	}
+}
+import flash.display.Bitmap;
+
+import ghostcat.util.display.PaletteUtil;
+
+class PaletteBitmap extends Bitmap
+{
+	public function PaletteBitmap():void
+	{
+		bitmapData = PaletteUtil.getColorPaletter();
 	}
 }
