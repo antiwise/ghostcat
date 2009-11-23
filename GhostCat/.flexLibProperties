@@ -449,7 +449,8 @@
     <classEntry path="ghostcat.community.physics.BombManager"/>
     <classEntry path="ghostcat.ui.controls.GColorPicker"/>
     <classEntry path="ghostcat.display.other.SoundDisplayer"/>
-    <classEntry path="ghostcat.util.display.Palette"/>
+    <classEntry path="ghostcat.util.display.TransformUtil"/>
+    <classEntry path="ghostcat.util.display.PaletteUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

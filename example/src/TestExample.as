@@ -1,8 +1,10 @@
 ﻿package
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	
 	import ghostcat.ui.controls.GColorPicker;
+	import ghostcat.util.display.PaletteUtil;
 
 	[SWF(width="600",height="450")]
 	/**
@@ -14,7 +16,7 @@
 	{
 		public function TestExample()
 		{
-			addChild(new GColorPicker())
+			addChild(new Bitmap(PaletteUtil.getLightPaletter(0xFF0000)))
 		}
 	}
 }

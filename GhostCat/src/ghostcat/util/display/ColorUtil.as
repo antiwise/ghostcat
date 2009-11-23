@@ -2,9 +2,12 @@ package ghostcat.util.display
 {
 	import flash.display.BitmapData;
 	import flash.display.GradientType;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Shape;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * 
@@ -277,6 +280,23 @@ package ghostcat.util.display
 			return ((r1 + (r2 - r1) * ratio) << 16) |
 				((g1 + (g2 - g1) * ratio) << 8) |
 				((b1 + (b2 - b1) * ratio));
+		}
+		
+		/**
+		 * 获得某点上显示对象的实际颜色
+		 *  
+		 * @param displayObj
+		 * @param p
+		 * @return 
+		 * 
+		 */
+		public static function getColorAtPoint(displayObj:IBitmapDrawable,x:int,y:int):uint
+		{
+			var bitmapData:BitmapData = new BitmapData(1,1);
+			var m:Matrix = new Matrix();
+			m.translate(-x,-y);
+			bitmapData.draw(displayObj,m);
+			return bitmapData.getPixel(0,0);
 		}
 	}
 }
