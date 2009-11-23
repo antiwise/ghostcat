@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.util.data
 {
 	import flash.utils.ByteArray;
 	

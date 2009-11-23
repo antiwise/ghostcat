@@ -100,51 +100,5 @@ package ghostcat.util.data
         	res+="\n";
         	return res;
         }
-        
-        /**
-         * 将数据转换为二维表的形式，避免因为重复键值大量浪费带宽
-         */
-        public static function transToTable(source:Array):Array
-        {
-        	if (source.length == 0)
-        		return [];
-        	
-        	var result:Array = [];
-        	var key:*;
-        	var arr:Array;
-        	arr = [];
-        	for (key in source[0])
-        		arr.push(key);
-        	result.push(arr);
-        	
-        	for (var i:int = 0; i < source.length; i++)
-        	{
-        		arr = [];
-        		var data:Object = source[i];
-        		for (key in data)
-        			arr.push(data[key]);
-        		result.push(arr);	
-        	}
-        	return result;
-        }
-        
-        /**
-         * 将数据由二维表转换为对象数组的形式
-         */
-        public static function transFromTable(source:Array):Array
-        {
-        	if (source.length <= 1)
-        		return [];
-        	
-        	var result:Array = [];
-        	for (var i:int = 1; i < source.length; i++)
-        	{
-        		var data:Object = new Object();
-        		for (var j:int = 0;j < source[i].length;j++)
-        			data[source[0][j]] = source[i][j];
-        		result.push(data);	
-        	}
-        	return result;
-        }
 	}
 }

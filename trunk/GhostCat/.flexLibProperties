@@ -381,7 +381,6 @@
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
-    <classEntry path="ghostcat.util.XMLUtil"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
     <classEntry path="ghostcat.util.core.Asyn"/>
     <classEntry path="ghostcat.util.core.CallLater"/>
@@ -451,6 +450,7 @@
     <classEntry path="ghostcat.display.other.SoundDisplayer"/>
     <classEntry path="ghostcat.util.display.TransformUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
+    <classEntry path="ghostcat.util.data.ConversionUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

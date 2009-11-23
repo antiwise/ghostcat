@@ -16,7 +16,7 @@
 	{
 		public function TestExample()
 		{
-			addChild(new Bitmap(PaletteUtil.getLightPaletter(0xFF0000)))
+			
 		}
 	}
 }
