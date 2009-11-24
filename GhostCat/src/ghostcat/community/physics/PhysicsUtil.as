@@ -1,5 +1,6 @@
 package ghostcat.community.physics
 {
+	import flash.display.BitmapData;
 	import flash.geom.Point;
 
 	/**
@@ -31,15 +32,55 @@ package ghostcat.community.physics
 		}
 		
 		/**
-		 * 吸引力 
+		 * 向点的吸引力 
 		 * @param physics
 		 * @param p
 		 * @param power
 		 * 
 		 */
-		public static function attract(physics:PhysicsManager,p:Point,power:Number = 5):void
+		public static function attract(physics:PhysicsManager,p:Point,power:Number = 1):void
 		{
-			
+			for each (var item:PhysicsItem in physics.data)
+			{
+				var offest:Point = p.subtract(new Point(item.x,item.y));
+				
+				item.velocity.x += offest.x * power;
+				item.velocity.y += offest.y * power;
+			}
+		}
+		
+		/**
+		 * 向点的吸引力 
+		 * @param physics
+		 * @param p
+		 * @param power
+		 * 
+		 */
+		public static function attract2(physics:PhysicsManager,p:Point,power:Number = 1):void
+		{
+			for each (var item:PhysicsItem in physics.data)
+			{
+				var offest:Point = p.subtract(new Point(item.x,item.y));
+				item.velocity.x += 1 / offest.x * power;
+				item.velocity.y += 1 / offest.y * power;
+			}
+		}
+		
+		/**
+		 * 根据位图的颜色提供力场（红色为x轴，绿色为y轴）
+		 * @param physics
+		 * @param bitmapData
+		 * 
+		 */
+		public static function field(physics:PhysicsManager,bitmapData:BitmapData,power:Number = 1.0):void
+		{
+			const t:Number = power / 0xFF;
+			for each (var item:PhysicsItem in physics.data)
+			{
+				var c:uint = bitmapData.getPixel(item.x,item.y);
+				item.velocity.x += t * (((c >> 16) & 0xFF) - 0x80);
+				item.velocity.y += t * (((c >> 8) & 0xFF) - 0x80);
+			}
 		}
 	}
 }

@@ -89,6 +89,17 @@ package ghostcat.community.physics
 			(dict[obj] as PhysicsItem).velocity = v;
 		}
 		
+		/**
+		 * 获得物理物品 
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public function getPhysicsItem(v):PhysicsItem
+		{
+			return dict[v];
+		}
+		
 		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent):void
 		{

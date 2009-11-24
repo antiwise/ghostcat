@@ -45,7 +45,7 @@
 		 * @param scale	放大倍速（波长）
 		 * 
 		 */
-        public function Ripple(skin:* = null, replace:Boolean = true, strength : Number = 40, scale : Number = 6)
+        public function Ripple(skin:* = null, replace:Boolean = true, strength : Number = 40, scale : Number = 3)
         {
 			this.scaleInv = 1 / scale;
 			this.strength = strength;

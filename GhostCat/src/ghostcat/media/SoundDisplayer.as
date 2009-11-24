@@ -1,4 +1,4 @@
-package ghostcat.display.other
+package ghostcat.media
 {
 	import flash.media.SoundMixer;
 	import flash.utils.ByteArray;
