@@ -3,26 +3,21 @@ package ghostcat.community.physics
 	import flash.geom.Point;
 
 	/**
-	 * 爆炸物理管理器
+	 * 物理管理器，提供一些控制物理属性的方法
 	 * @author flashyiyi
 	 * 
 	 */
-	public class BombManager extends PhysicsManager
+	public final class PhysicsUtil
 	{
-		public function BombManager(command:Function=null)
-		{
-			super(command);
-		}
-		
 		/**
-		 * 开始爆炸 
+		 * 爆炸 
 		 * @param p	起爆点
 		 * @param power
 		 * 
 		 */
-		public function bomb(p:Point,power:Number = 5,spin:Number = 10):void
+		public static function bomb(physics:PhysicsManager,p:Point,power:Number = 5,spin:Number = 10):void
 		{
-			for each (var item:PhysicsItem in this.data)
+			for each (var item:PhysicsItem in physics.data)
 			{
 				var offest:Point = new Point(item.x,item.y).subtract(p);
 				
@@ -32,8 +27,19 @@ package ghostcat.community.physics
 				
 				item.friction = 0.95;
 				item.spinFriction = 0.99;
-				
 			}
+		}
+		
+		/**
+		 * 吸引力 
+		 * @param physics
+		 * @param p
+		 * @param power
+		 * 
+		 */
+		public static function attract(physics:PhysicsManager,p:Point,power:Number = 5):void
+		{
+			
 		}
 	}
 }
