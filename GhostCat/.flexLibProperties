@@ -445,12 +445,12 @@
     <classEntry path="ghostcat.algorithm.traversal.BFS"/>
     <classEntry path="ghostcat.display.transfer.Cataclasm"/>
     <classEntry path="ghostcat.ui.controls.GRule"/>
-    <classEntry path="ghostcat.community.physics.BombManager"/>
     <classEntry path="ghostcat.ui.controls.GColorPicker"/>
     <classEntry path="ghostcat.display.other.SoundDisplayer"/>
     <classEntry path="ghostcat.util.display.TransformUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
     <classEntry path="ghostcat.util.data.ConversionUtil"/>
+    <classEntry path="ghostcat.community.physics.PhysicsUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

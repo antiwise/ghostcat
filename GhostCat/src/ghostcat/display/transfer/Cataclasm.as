@@ -3,7 +3,8 @@ package ghostcat.display.transfer
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	
-	import ghostcat.community.physics.BombManager;
+	import ghostcat.community.physics.PhysicsManager;
+	import ghostcat.community.physics.PhysicsUtil;
 
 	public class Cataclasm extends GTransfer
 	{
@@ -12,13 +13,13 @@ package ghostcat.display.transfer
 		public var w:int;
 		public var h:int;
 		
-		public var physics:BombManager;
+		public var physics:PhysicsManager;
 		
 		public function Cataclasm(target:DisplayObject=null,w:int = 10,h:int = 10)
 		{
 			this.w = w;
 			this.h = h;
-			this.physics = new BombManager();
+			this.physics = new PhysicsManager();
 			
 			super(target);
 		}
@@ -72,7 +73,8 @@ package ghostcat.display.transfer
 			
 			physics.addAll(tris);
 			physics.gravity = new Point(0,1000);
-			physics.bomb(p);	
+			
+			PhysicsUtil.bomb(physics,p);	
 		}
 		
 		protected override function showBitmapData() : void
