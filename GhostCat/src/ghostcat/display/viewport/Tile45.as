@@ -16,10 +16,9 @@ package ghostcat.display.viewport
 		/**
 		 * 
 		 * @param base	源图像
-		 * @param tranSourceTo45	是否将源图像由矩形转换成菱形
 		 * 
 		 */
-		public function Tile45(itemClass:*=null,tranSourceTo45:Boolean = false)
+		public function Tile45(itemClass:*=null)
 		{
 			super(itemClass);
 		}

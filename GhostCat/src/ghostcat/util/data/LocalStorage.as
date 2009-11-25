@@ -23,7 +23,7 @@ package ghostcat.util.data
         
 		private var field:String;
 		
-		public function LocalStorage(name:String,field:String = "value"):void
+		public function LocalStorage(name:String):void
         {
             sharedObject = SharedObject.getLocal(name);
         }
@@ -38,7 +38,8 @@ package ghostcat.util.data
         {
             try 
             {
-                sharedObject.setProperty(field, data);
+                sharedObject.setProperty("value", data);
+				sharedObject.setProperty("lastTime", new Date());
                 sharedObject.flush(minDiskSpace);
             } 
             catch(e:Error) {};
@@ -54,11 +55,21 @@ package ghostcat.util.data
         {
             try 
             {
-                return (sharedObject.data[field]);
+                return (sharedObject.data["value"]);
             } 
             catch(e:Error) {};
             return null;
         }
+		
+		public function getlastTime():Date
+		{
+			try 
+			{
+				return (sharedObject.data["lastTime"]);
+			} 
+			catch(e:Error) {};
+			return null;
+		}
 
     }
 }
