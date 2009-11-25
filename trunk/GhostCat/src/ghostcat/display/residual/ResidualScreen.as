@@ -84,6 +84,7 @@ package ghostcat.display.residual
 			super(width,height,alphaMultiplier,backgroundColor);
 			
 			this.redraw = false;
+			this.enabledMouseCheck = false;
 			this.mouseEnabled = this.mouseChildren = false;
 		}
 		

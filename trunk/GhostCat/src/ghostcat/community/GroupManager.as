@@ -198,9 +198,9 @@ package ghostcat.community
 		 * @param obj	对象
 		 * 
 		 */		
-		public function add(obj:*):void
+		public function add(obj:*,checkDup:Boolean = true):void
 		{
-			if (data.indexOf(obj) == -1)
+			if (!checkDup || data.indexOf(obj) == -1)
 				data.push(obj);
 			
 			if (obj is EventDispatcher && setDirtyWhenEvent)

@@ -36,7 +36,7 @@ package ghostcat.community.physics
 		 * @param obj
 		 * 
 		 */
-		public override function add(obj:*) : void
+		public override function add(obj:*,checkDup:Boolean = true) : void
 		{
 			var item:PhysicsItem;
 			if (obj is PhysicsItem)
@@ -46,7 +46,7 @@ package ghostcat.community.physics
 			
 			dict[obj] = item;
 			
-			super.add(item);
+			super.add(item,checkDup);
 		}
 		
 		/**
@@ -95,7 +95,7 @@ package ghostcat.community.physics
 		 * @return 
 		 * 
 		 */
-		public function getPhysicsItem(v):PhysicsItem
+		public function getPhysicsItem(v:*):PhysicsItem
 		{
 			return dict[v];
 		}
@@ -146,7 +146,7 @@ package ghostcat.community.physics
 				if (item.scaleSpeed)
 					item.scale += item.scaleSpeed;
 				
-				if (item.scaleFriction)
+				if (item.scaleFriction != 1)
 					item.scaleSpeed *= item.scaleFriction;
 				
 				item.x += item.velocity.x * d * item.scale;

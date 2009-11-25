@@ -36,33 +36,19 @@ package ghostcat.community.physics
 		 * @param physics
 		 * @param p
 		 * @param power
-		 * 
+		 * @param baseRadius
 		 */
-		public static function attract(physics:PhysicsManager,p:Point,power:Number = 1):void
+		public static function attract(physics:PhysicsManager,p:Point,power:Number = 1.0,baseRadius:Number = 0):void
 		{
 			for each (var item:PhysicsItem in physics.data)
 			{
 				var offest:Point = p.subtract(new Point(item.x,item.y));
+				var len:Number = offest.length;
+				if (baseRadius != 0)
+					offest.normalize(len - baseRadius);
 				
-				item.velocity.x += offest.x * power;
-				item.velocity.y += offest.y * power;
-			}
-		}
-		
-		/**
-		 * 向点的吸引力 
-		 * @param physics
-		 * @param p
-		 * @param power
-		 * 
-		 */
-		public static function attract2(physics:PhysicsManager,p:Point,power:Number = 1):void
-		{
-			for each (var item:PhysicsItem in physics.data)
-			{
-				var offest:Point = p.subtract(new Point(item.x,item.y));
-				item.velocity.x += 1 / offest.x * power;
-				item.velocity.y += 1 / offest.y * power;
+				item.velocity.x += 1 / offest.x * Math.abs(offest.x) * power;
+				item.velocity.y += 1 / offest.y * Math.abs(offest.y) * power;
 			}
 		}
 		

@@ -4,8 +4,8 @@ package ghostcat.community.sort
 	import flash.display.DisplayObjectContainer;
 	import flash.events.EventDispatcher;
 	
-	import ghostcat.display.IGBase;
 	import ghostcat.community.GBaseCommunityManager;
+	import ghostcat.display.IGBase;
 	
 
 	/**
@@ -99,7 +99,7 @@ package ghostcat.community.sort
 			
 		}
 		
-		public override function add(obj:*):void
+		public override function add(obj:*,checkDup:Boolean = true):void
 		{
 			if (!(obj is IGBase))
 				return;
