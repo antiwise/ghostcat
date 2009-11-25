@@ -2,6 +2,7 @@ package
 {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
 	import ghostcat.community.physics.PhysicsItem;
@@ -11,6 +12,7 @@ package
 	import ghostcat.display.bitmap.PixelItem;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.util.display.ColorConvertUtil;
+	import ghostcat.util.display.DisplayUtil;
 	
 	[SWF(width="400",height="400",frameRate="60",backgroundColor="0xFFFFFF")]
 	
@@ -37,8 +39,8 @@ package
 		
 		private function onTick(v:PhysicsItem,inv:int):void
 		{
-			//落下屏幕则删除
-			if (v.y > 500)
+			//离开屏幕则删除
+			if (!new Rectangle(0,0,200,200).contains(v.x,v.y))
 			{
 				s.removeObject(v.target);
 				p.remove(v.target);
