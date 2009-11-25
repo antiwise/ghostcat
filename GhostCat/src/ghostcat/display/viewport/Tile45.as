@@ -7,6 +7,7 @@ package ghostcat.display.viewport
 
 	/**
 	 * 45度角重复场景，适合实现超大范围的地图显示
+	 * （元素的注册点要求位于菱形顶角）
 	 * 
 	 * @author flashyiyi
 	 * 
