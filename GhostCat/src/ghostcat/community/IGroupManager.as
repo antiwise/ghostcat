@@ -4,7 +4,7 @@ package ghostcat.community
 
 	public interface IGroupManager
 	{
-		function add(v:*):void
+		function add(v:*,checkDup:Boolean = true):void
 		function remove(v:*):void
 		function addAll(v:*):void
 		function removeAll(v:*=null):void

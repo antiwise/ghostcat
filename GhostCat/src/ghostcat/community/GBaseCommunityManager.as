@@ -20,12 +20,12 @@ package ghostcat.community
 			this.setDirtyWhenEvent = MoveEvent.MOVE;//当发布MOVE事件的时候自动setDirty
 		}
 		/** @inheritDoc*/
-		public override function add(obj:*):void
+		public override function add(obj:*,checkDup:Boolean = true):void
 		{
 			if (!(obj is IGBase))
 				return;
 			
-			super.add(obj);
+			super.add(obj,checkDup);
 			
 			setDirty(obj);//加入时立即计算
 		}

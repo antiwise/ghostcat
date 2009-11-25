@@ -38,20 +38,14 @@ package ghostcat.ui.controls
 			if (skin)
 				target.setPartConetent(skin);
 			
-			if (colorTransform)
-				target.content.transform.colorTransform = colorTransform;
-			else
-				target.content.transform.colorTransform = new ColorTransform();
-				
-			if (filters)
-				target.content.filters = filters;
-			else
-				target.content.filters = [];
+			target.content.transform.colorTransform = colorTransform ? colorTransform : new ColorTransform();
+			target.content.filters = filters ? filters : [];
 			
 			if (oper)
 			{
 				if (oper is IEffect)
 					(oper as IEffect).target = target.content;
+				
 				oper.execute();
 			}
 		}

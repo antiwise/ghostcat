@@ -87,19 +87,27 @@ package ghostcat.ui.controls
 		 */		
 		public var trackAsMenu:Boolean = false;
 		
+		/** 按钮状态（up） */
+		public const upState:GButtonState = new GButtonState();
+		/** 按钮状态（over） */
+		public const overState:GButtonState = new GButtonState();
+		/** 按钮状态（downState） */
+		public const downState:GButtonState = new GButtonState();
+		/** 按钮状态（disabledState） */
+		public const disabledState:GButtonState = new GButtonState();
+		/** 按钮状态（selectedUp） */
+		public const selectedUpState:GButtonState = new GButtonState();
+		/** 按钮状态（selectedOver） */
+		public const selectedOverState:GButtonState = new GButtonState();
+		/** 按钮状态（selectedDown） */
+		public const selectedDownState:GButtonState = new GButtonState();
+		/** 按钮状态（selectedDisabled） */
+		public const selectedDisabledState:GButtonState = new GButtonState();
+		
 		/**
 		 * 按钮状态字典
 		 */
-		public var buttonStates:Object = {
-			up:new GButtonState(),
-			over:new GButtonState(),
-			down:new GButtonState(),
-			disabled:new GButtonState(),
-			selectedUp:new GButtonState(),
-			selectedOver:new GButtonState(),
-			selectedDown:new GButtonState(),
-			selectedDisabled:new GButtonState()
-		};
+		public var buttonStates:Object;
 		
 		/**
 		 * 是否可以点击选择 
@@ -124,6 +132,18 @@ package ghostcat.ui.controls
 		
 		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
+			this.buttonStates = 
+			{
+				up:this.upState,
+				over:this.overState,
+				down:this.downState,
+				disabled:this.disabledState,
+				selectedUp:this.selectedUpState,
+				selectedOver:this.selectedOverState,
+				selectedDown:this.selectedDownState,
+				selectedDisabled:this.selectedDisabledState
+			};
+			
 			AbstractUtil.preventConstructor(this,GButtonBase);
 			
 			if (textPadding)

@@ -44,8 +44,6 @@ package ghostcat.community.physics
 		 */
 		public var spinFriction:Number = 1;
 		
-		private var _scale:Number = 1.0;
-		
 		/**
 		 * 缩放衰减系数
 		 */
@@ -81,6 +79,7 @@ package ghostcat.community.physics
 			target.rotation = v;
 		}
 		
+		private var _scale:Number = 1.0;
 		public function get scale():Number
 		{
 			return _scale;

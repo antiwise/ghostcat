@@ -35,9 +35,6 @@ package ghostcat.operation.effect
 		 */
 		public function ZoomEffect(target:*=null, center:Point = null, scale:Number = 1.0, duration:int=100, params:Object=null, invert:Boolean=false)
 		{
-			if (!center)
-				center = Geom.center(target);
-			
 			this.center = center;
 			this.scale = scale;
 			
@@ -49,6 +46,9 @@ package ghostcat.operation.effect
 		{
 			if (!params)
 				params = new Object();
+			
+			if (!center)
+				center = Geom.center(target);
 			
 			params.scaleX = params.scaleY = this.scale;
 			params.x = target.x + (target.x - center.x) * (scale - target.scaleX) / target.scaleX;
