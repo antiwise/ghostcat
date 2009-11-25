@@ -453,6 +453,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.display.viewport.Tile45TopLeft"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

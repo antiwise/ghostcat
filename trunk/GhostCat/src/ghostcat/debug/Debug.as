@@ -76,7 +76,7 @@ package ghostcat.debug
 		 * @return 
 		 * 
 		 */	
-		public static function trace(channel:String, ...rest):void
+		public static function trace(channel:*, ...rest):void
 		{
 			var text:String = getHeader(channel)+ (rest as Array).join(",");
 			
@@ -109,7 +109,7 @@ package ghostcat.debug
 		 * @param obj
 		 * 
 		 */
-		public static function traceObject(channel:String,obj:Object,...filters):void
+		public static function traceObject(channel:*,obj:Object,...filters):void
 		{
 			var result:String = getQualifiedClassName(obj);
 			var key:*;
@@ -126,7 +126,7 @@ package ghostcat.debug
 			trace(channel,"["+result+"]");
 		}
 		
-		private static function getHeader(channel:String):String
+		private static function getHeader(channel:*):String
 		{
 			var result:String = "";
 			if (showTime)
@@ -136,6 +136,7 @@ package ghostcat.debug
 			}
 			if (channel)
 				result += "[" + channel + "]"
+			
 			return result;
 		}
 		
