@@ -26,7 +26,7 @@ package ghostcat.display.loader
 	 */
 	public class AVM1Loader extends Sprite
 	{
-		[Embed(source = "../asset/avm1link.swf",mimeType="application/octet-stream")]
+		[Embed(source = "avm1link.swf",mimeType="application/octet-stream")]
 		private var linkMovieRef:Class;
 		private var loader:Loader;
 		private var lc:LocalConnection = new LocalConnection();

@@ -18,7 +18,7 @@ package ghostcat.fileformat.mp3
 	 */
 	public class MP3Decoder extends EventDispatcher
 	{
-		[Embed(source = "asset/soundswf.swf",mimeType="application/octet-stream")]
+		[Embed(source = "soundswf.swf",mimeType="application/octet-stream")]
 		private var core:Class;
 		
 		private var _soundType:uint;

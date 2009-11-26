@@ -4,6 +4,7 @@ package ghostcat.media
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 
 	/**
 	 * 声音类 
@@ -92,15 +93,16 @@ package ghostcat.media
 		 * @return 
 		 * 
 		 */
-		public static function beep(v:Number = 1.0,len:int = 1000):SoundChannel
+		public static function beep(v:Number = 1.0,len:int = 10):SoundChannel
 		{
+			var t:int = getTimer();
 			var s:Sound = new Sound();
 			s.addEventListener(SampleDataEvent.SAMPLE_DATA,sampleDataHandler);
 			return s.play();
 			
 			function sampleDataHandler(event:SampleDataEvent):void
 			{
-				if (event.position > len)
+				if (getTimer() - t > len)
 				{
 					s.removeEventListener(SampleDataEvent.SAMPLE_DATA,sampleDataHandler);
 					return;
