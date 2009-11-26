@@ -31,7 +31,7 @@
 */
 
 
-package ghostcat.media
+package ghostcat.fileformat.wav
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;

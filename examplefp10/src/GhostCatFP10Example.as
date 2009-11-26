@@ -15,14 +15,6 @@ package
 		public function GhostCatFP10Example()
 		{
 			SoundUtil.beep(0.5);
-			
-
-		}
-		 
-		protected override function tickHandler(event:TickEvent) : void
-		{
-			
-			
 		}
 	}
 }
