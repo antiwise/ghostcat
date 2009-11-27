@@ -8,7 +8,7 @@ package ghostcat.mvc
 	 * @author flashyiyi
 	 * 
 	 */
-	public class InsCotainer
+	public class InsLink
 	{
 		/**
 		 * 立即创建
@@ -61,7 +61,7 @@ package ghostcat.mvc
 			parseMetaData(value);
 		}
 
-		public function InsCotainer(ref:Class)
+		public function InsLink(ref:Class)
 		{
 			this.ref = ref;
 		}

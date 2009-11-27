@@ -4,6 +4,7 @@
     <classEntry path="ghostcat.fileformat.wav.WAVWriter"/>
     <classEntry path="ghostcat.media.SoundUtil"/>
     <classEntry path="ghostcat.operation.FileLoadOper"/>
+    <classEntry path="ghostcat.operation.FileSaveOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
