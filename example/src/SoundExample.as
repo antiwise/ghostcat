@@ -1,8 +1,8 @@
 package
 {
 	import ghostcat.display.GBase;
-	import ghostcat.display.other.SoundDisplayer;
 	import ghostcat.manager.RootManager;
+	import ghostcat.media.SoundDisplayer;
 	import ghostcat.operation.SoundOper;
 	import ghostcat.ui.containers.GAlert;
 	

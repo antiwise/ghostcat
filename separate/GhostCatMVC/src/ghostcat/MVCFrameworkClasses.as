@@ -21,7 +21,7 @@
 package ghostcat
 {
 	import ghostcat.mvc.GhostCatMVC;GhostCatMVC
-	import ghostcat.mvc.InsCotainer;InsCotainer
+	import ghostcat.mvc.InsLink;InsLink
 	
 	public class MVCFrameworkClasses
 	{

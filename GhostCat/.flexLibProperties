@@ -219,7 +219,6 @@
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
     <classEntry path="ghostcat.mvc.GhostCatMVC"/>
-    <classEntry path="ghostcat.mvc.InsCotainer"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FilterProxyOper"/>
     <classEntry path="ghostcat.operation.FrameCommandOper"/>

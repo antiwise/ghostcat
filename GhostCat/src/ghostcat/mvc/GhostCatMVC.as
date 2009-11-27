@@ -49,7 +49,6 @@ package ghostcat.mvc
 	/**
 	 * [M][V][C]
 	 * 
-	 * 
 	 * @author flashyiyi
 	 * 
 	 */
@@ -90,7 +89,7 @@ package ghostcat.mvc
 			for (var i:int = 0;i < params.length;i++)
 			{
 				var v:Class = params[i] as Class;
-				var ins:InsCotainer = new InsCotainer(v);
+				var ins:InsLink = new InsLink(v);
 				var dict:Dictionary = this[ins.type];
 				if (dict[ins.name])
 					throw new Error("不允许重复注册！")
@@ -111,7 +110,7 @@ package ghostcat.mvc
 		{
 			for (var i:int = 0;i < params.length;i++)
 			{
-				var o:InsCotainer;
+				var o:InsLink;
 				o = getIns(params[i],"m");
 				if (o)
 					o.destory();
@@ -132,7 +131,7 @@ package ghostcat.mvc
 		 */
 		public function getM(target:*):*
 		{
-			var o:InsCotainer = getIns(target,"m");
+			var o:InsLink = getIns(target,"m");
 			return o ? o.getIns() : null;
 		}
 		
@@ -144,7 +143,7 @@ package ghostcat.mvc
 		 */
 		public function getV(target:*):*
 		{
-			var o:InsCotainer = getIns(target,"v");
+			var o:InsLink = getIns(target,"v");
 			return o ? o.getIns() : null;
 		}
 		
@@ -156,7 +155,7 @@ package ghostcat.mvc
 		 */
 		public function getC(target:*):*
 		{
-			var o:InsCotainer = getIns(target,"c");
+			var o:InsLink = getIns(target,"c");
 			return o ? o.getIns() : null;
 		}
 		
@@ -166,9 +165,9 @@ package ghostcat.mvc
 		 * @param type	目标类型（m,v,c）为空则不做限制
 		 * 
 		 */
-		public function register(target:*):InsCotainer
+		public function register(target:*):InsLink
 		{
-			var o:InsCotainer = getIns(target);
+			var o:InsLink = getIns(target);
 			if (o)
 				o.ins = target;
 			return o;
@@ -180,9 +179,9 @@ package ghostcat.mvc
 		 * @param type	目标类型（m,v,c）为空则不做限制
 		 * 
 		 */
-		public function unregister(target:*):InsCotainer
+		public function unregister(target:*):InsLink
 		{
-			var o:InsCotainer = getIns(target);
+			var o:InsLink = getIns(target);
 			if (o)
 				o.ins = null;
 			return o;
@@ -200,7 +199,7 @@ package ghostcat.mvc
 		{
 			if (target)
 			{
-				var o:InsCotainer = getIns(target,type);
+				var o:InsLink = getIns(target,type);
 				var dispatcher:IEventDispatcher = o.getIns() as IEventDispatcher;
 				if (dispatcher)
 					dispatcher.dispatchEvent(e);
@@ -222,7 +221,7 @@ package ghostcat.mvc
 		{
 			if (target)
 			{
-				var o:InsCotainer = getIns(target,type);
+				var o:InsLink = getIns(target,type);
 				var dispatcher:IEventDispatcher = o.getIns() as IEventDispatcher;
 				if (dispatcher)
 					dispatcher.addEventListener(e,handler,false,0,true);
@@ -236,17 +235,20 @@ package ghostcat.mvc
 		 * 
 		 * @param target	对象的标示
 		 * @param type	对象的类型（m,v,c）为空则不做限制
-		 * @param metrod	执行的方法
+		 * @param metrod	执行的方法，为空则固定为"execute"方法
 		 * @param param	参数列表
 		 * @return 
 		 * 
 		 */
-		public function call(target:*,type:String,metrod:String,...param):*
+		public function call(target:*,type:String,metrod:String=null,...param):*
 		{
-			var o:InsCotainer = getIns(target,type);
+			var o:InsLink = getIns(target,type);
 			if (!o)
 				return null;
 			var ins:Object = o.getIns();
+			if (!metrod)
+				metrod = "execute";
+			
 			if (ins.hasOwnProperty(metrod) && ins[metrod] is Function)
 				(ins[metrod] as Function).apply(ins,param);
 			else
@@ -265,7 +267,7 @@ package ghostcat.mvc
 		 */
 		public function bindProperty(site:Object,prop:String,target:*,type:String,chain:Object):ChangeWatcher
 		{
-			var o:InsCotainer = getIns(target ? target : site,type);
+			var o:InsLink = getIns(target ? target : site,type);
 			var host:Object = o.getIns();
 			return BindingUtils.bindProperty(site,prop,host,chain);
 		}
@@ -281,7 +283,7 @@ package ghostcat.mvc
 		 */
 		public function bindSetter(setter:Function,target:*,type:String,chain:Object):ChangeWatcher
 		{
-			var o:InsCotainer = getIns(target,type);
+			var o:InsLink = getIns(target,type);
 			var host:Object = o.getIns();
 			return BindingUtils.bindSetter(setter,host,chain);
 		}
@@ -300,14 +302,14 @@ package ghostcat.mvc
 		}
 		
 		/**
-		 * 获得InsCotainer对象
+		 * 获得InsLink对象
 		 *  
 		 * @param v	标示符或者类
 		 * @param type	类型(m,v,c)为空则不做限制
 		 * @return 
 		 * 
 		 */
-		public function getIns(v:*,type:String=null):InsCotainer
+		public function getIns(v:*,type:String=null):InsLink
 		{
 			if (!v)
 				return null;
@@ -323,7 +325,7 @@ package ghostcat.mvc
 				}
 				else
 				{
-					var o:InsCotainer;
+					var o:InsLink;
 					o = getIns(v,"m");
 					if (o)
 						return o;
