@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="AttentExample.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
+<actionScriptProperties mainApplicationPath="BeepExample.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
   <compiler additionalCompilerArguments="" autoRSLOrdering="false" copyDependentFiles="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="10.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -26,10 +26,12 @@
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/GhostCatFP10/bin/GhostCatFP10.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="src/test.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/GhostCat/bin/GhostCat.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="BeepExample.as"/>
     <application path="AttentExample.as"/>
     <application path="GhostCatFP10Example.as"/>
   </applications>
