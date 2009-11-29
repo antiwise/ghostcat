@@ -5,6 +5,9 @@
     <classEntry path="ghostcat.media.SoundUtil"/>
     <classEntry path="ghostcat.operation.FileLoadOper"/>
     <classEntry path="ghostcat.operation.FileSaveOper"/>
+    <classEntry path="ghostcat.media.BeepMusic"/>
+    <classEntry path="ghostcat.operation.BeepOper"/>
+    <classEntry path="ghostcat.text.fte.GRichText"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

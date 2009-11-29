@@ -21,21 +21,21 @@ package ghostcat.fileformat.mp3
 		[Embed(source = "soundswf.swf",mimeType="application/octet-stream")]
 		private var core:Class;
 		
-		private var _soundType:uint;
-		private var _soundSampleCount:uint;
+		private var _multiple:uint;
+		private var _sampling:uint;
 		private var _result:Class;
 		
 		/**
 		 * 0 - 单声道 1 - 双声道
 		 */
-		public function soundType():uint {return _soundType};
+		public function multiple():uint {return _multiple};
 		
 		/**
 		 * 采样率
 		 * 
 		 * (仅支持 44100 22050 11025)
 		 */
-		public function soundSampleCount():uint {return _soundSampleCount};
+		public function sampling():uint {return _sampling};
 		
 		/**
 		 * 解析得到的声音类
@@ -179,8 +179,8 @@ package ghostcat.fileformat.mp3
 				}
 			}
 			
-			_soundSampleCount = samples;
-			_soundType = (channelmode == 3) ? 0 : 1;
+			_sampling = samples;
+			_multiple = (channelmode == 3) ? 0 : 1;
 			
 			var soundRate:uint;
 			switch(samplingrate)
@@ -194,8 +194,8 @@ package ghostcat.fileformat.mp3
 			var body:ByteArray = new ByteArray();
 			body.endian = Endian.LITTLE_ENDIAN;
 			body.writeShort(1);//资源定位ID
-			body.writeByte((2 << 4) | (soundRate << 2) | (1 << 1) | _soundType);
-			body.writeUnsignedInt(_soundSampleCount);
+			body.writeByte((2 << 4) | (soundRate << 2) | (1 << 1) | _multiple);
+			body.writeUnsignedInt(_sampling);
 			body.writeShort(0);//固定占位
 			body.writeBytes(mp3, beginIdx, endIdx - beginIdx);
 			

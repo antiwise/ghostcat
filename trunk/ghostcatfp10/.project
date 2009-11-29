@@ -15,16 +15,4 @@
 		<nature>com.adobe.flexbuilder.project.flexlibnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] asset</name>
-			<type>2</type>
-			<locationURI>DOCUMENTS/ghostcat/GhostCat/asset</locationURI>
-		</link>
-		<link>
-			<name>[source path] src</name>
-			<type>2</type>
-			<locationURI>DOCUMENTS/ghostcat/GhostCat/src</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

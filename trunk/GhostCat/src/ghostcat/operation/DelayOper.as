@@ -4,7 +4,7 @@ package ghostcat.operation
 	import flash.utils.Timer;
 
 	/**
-	 * 此类增加超时失败功能
+	 * 延时
 	 * 
 	 * @author flashyiyi
 	 * 

@@ -29,6 +29,7 @@ package ghostcat.operation
 				addEventListener(OperationEvent.OPERATION_ERROR,eHandler);
 		}
 		
+		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
@@ -45,6 +46,7 @@ package ghostcat.operation
 			file.save(data);
 		}
 		
+		/** @inheritDoc*/
 		protected override function end(event:*=null) : void
 		{
 			file.removeEventListener(Event.COMPLETE,result);
