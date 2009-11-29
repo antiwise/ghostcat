@@ -1,20 +1,30 @@
-package 
+package
 {
-	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Tile45;
-	import ghostcat.events.TickEvent;
-	import ghostcat.media.SoundUtil;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.text.engine.ElementFormat;
+	import flash.text.engine.FontDescription;
 	
-	[SWF(width="200",height="200",backgroundColor="0x0")]
+	import ghostcat.parse.display.SimpleRectParse;
+	import ghostcat.text.fte.GRichText;
 	
-	public class GhostCatFP10Example extends GBase
+	public class GhostCatFP10Example extends Sprite
 	{
-		[Embed("p1.jpg")]
-		public var p:Class;
-		public var t:Tile45;
-		public function GhostCatFP10Example()
+		public function GhostCatFP10Example():void
 		{
-			SoundUtil.beep(0.5);
+			var str1:String = "这里是一段文本。。。。。";
+			var str2:String = "。。。。";
+			
+			var t:GRichText = new GRichText();
+			t.textWidth = 200;
+			addChild(t);
+			t.addText(str1);
+			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
+			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
+			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
+			t.addText(str2);
+			t.refresh();
 		}
 	}
+	
 }
