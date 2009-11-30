@@ -9,6 +9,7 @@ package ghostcat.display.bitmap
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -126,7 +127,7 @@ package ghostcat.display.bitmap
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
 			var p:Point = getGlobalPosition().add(offest);
-			GraphicsUtil.drawBitmpData(target,bitmapData,p.x,p.y);
+			GraphicsBitmapFill.drawBitmpData(target,bitmapData,p.x,p.y);
 			
 			var children:Array = this.children;
 			if (children)

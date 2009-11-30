@@ -3,6 +3,7 @@
  */
 package ghostcat.algorithm.bezier
 {
+	import flash.display.Graphics;
 	import flash.geom.Point;
 	/**
 	 * 直线类
@@ -229,6 +230,28 @@ package ghostcat.algorithm.bezier
 				return 1;
 			
 			return time;
+		}
+		
+		/**
+		 * 绘制
+		 * @param g
+		 * 
+		 */
+		public function parse(g:Graphics,dash:Number = NaN,dashStart:Number = 0.0):void
+		{
+			if (!isNaN(dash))
+			{
+				var len:Number = this.length / (dash + dash);
+				var dl:Number = 1 / len;
+				var sl:Number = dl * dashStart;
+				for (var i:int = 0;i < len;i++)
+					getSegment(i * dl + sl,i * dl + dl / 2 + sl).parse(g);
+			}
+			else
+			{
+				g.moveTo(start.x,start.y);
+				g.lineTo(end.x,end.y);
+			}
 		}
 	}
 }

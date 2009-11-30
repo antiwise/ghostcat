@@ -19,7 +19,7 @@ package
 				"C1----C3C5----C5C6------C5------C3----C1C5--C5--C5--C3--00--C1--00--B5------C1------" +
 				"C3----C1C5--C5--C5--C3--00--C1--00--B5------C1------B5------C1------B5------C1------C1------00------"
 			).play(int.MAX_VALUE);
-			addChild(new SoundDisplayer(300,100));
+			addChild(new SoundDisplayer(200,200));
 		}
 	}
 }

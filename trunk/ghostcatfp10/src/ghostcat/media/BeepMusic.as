@@ -15,9 +15,30 @@ package ghostcat.media
 	{
 		private static const HZS:Array = [24.7,27.7,31.1,33.0,37.0,41.5,46.6];
 			
+		/**
+		 * 声音数据
+		 */
 		public var data:String;
+		
+		/**
+		 * 声音位置
+		 */
 		public var position:int = 0;
+		
+		/**
+		 * 循环次数 
+		 */
 		public var loop:int;
+		
+		/**
+		 * 音高 
+		 */
+		public var pitch:String = "C";
+		
+		/**
+		 * 节奏 
+		 */
+		public var cadence:int = 8;
 		
 		private var timer:Timer;
 		private var hz:Number;
@@ -31,9 +52,9 @@ package ghostcat.media
 		 * @param v
 		 * 
 		 */
-		public static function getMHZ(v:String):int
+		public static function getMHZ(v:String,pitch:String = "C"):int
 		{
-			var a:int = v.charCodeAt(0) - 65;
+			var a:int = v.charCodeAt(0) + pitch.charCodeAt(0) - 135;
 			var b:int = v.charCodeAt(1) - 49;
 			if (b < 0 || b > 8)
 				return 0
@@ -45,16 +66,22 @@ package ghostcat.media
 		{
 			this.data = data;
 			
-			this.timer = new Timer(125,1000);
+			this.timer = new Timer(1000 / cadence, int.MAX_VALUE);
 			this.timer.addEventListener(TimerEvent.TIMER,timerHandler);
 		}
 		
+		/**
+		 * 播放 
+		 * @param loop
+		 * 
+		 */
 		public function play(loop:int = 1):void
 		{
 			this.loop = loop;
 			this.loopCount = 0;
 			this.position = 0;
 			this.hz = 0;
+			this.data = this.data.toUpperCase();
 			timer.start();
 			
 			snd = new Sound();
@@ -70,9 +97,10 @@ package ghostcat.media
 				var s:String = data.substr(p,2);
 				if (s != "--")
 				{
-					var curHz:int = getMHZ(s);
+					var curHz:int = getMHZ(s,pitch);
 					if (curHz == this.hz)
 					{
+						//暂停20毫秒再继续播放
 						this.hz = 0;
 						setTimeout(function ():void{
 							hz = curHz;
@@ -92,6 +120,10 @@ package ghostcat.media
 			position++;
 		}
 		
+		/**
+		 * 停止 
+		 * 
+		 */
 		public function stop():void
 		{
 			timer.stop();

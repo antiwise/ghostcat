@@ -2,8 +2,13 @@ package ghostcat.util.display
 {
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
+	
+	import ghostcat.algorithm.bezier.Bezier;
+	import ghostcat.parse.graphics.GraphicsBitmapFill;
+	import ghostcat.parse.graphics.GraphicsLine;
+	import ghostcat.parse.graphics.GraphicsRect;
+	import ghostcat.parse.graphics.GraphicsSector;
 
 	/**
 	 * Graphics辅助类 
@@ -13,36 +18,74 @@ package ghostcat.util.display
 	public final class GraphicsUtil
 	{
 		/**
-		 * 绘制一个位图到画布上 
+		 * 绘制虚线直线 
 		 * @param target
-		 * @param bitmapData
-		 * @param pos
+		 * @param start
+		 * @param end
+		 * @param dash
+		 * @param dashStart
 		 * 
 		 */
-		public static function drawBitmpData(target:Graphics,bitmapData:BitmapData,x:Number,y:Number,width:Number = NaN,height:Number = NaN):void
+		public static function lineTo(target:Graphics, start:Point = null, end:Point = null, dash:Number = NaN, dashStart:Number = 0.0):void
 		{
-			if (bitmapData)
-			{
-				var m:Matrix = new Matrix();
-				m.translate(x,y);
-				if (isNaN(width))
-					width = bitmapData.width;
-				if (isNaN(height))
-					height = bitmapData.height;
-							
-				var sx:Number = width / bitmapData.width;
-				var sy:Number = height / bitmapData.height;
-				m.scale(sx,sy);
-				
-				target.beginBitmapFill(bitmapData,m,false,false);
-				target.drawRect(x,y,width,height);
-				target.endFill();
-			}
+			GraphicsLine.lineTo(target, start, end, dash, dashStart);
 		}
 		
 		/**
-		 * 绘制一个扇形
-		 *  
+		 * 绘制虚线弧线 
+		 * @param target
+		 * @param start
+		 * @param control
+		 * @param end
+		 * @param dash
+		 * @param dashStart
+		 * 
+		 */
+		public static function curveTo(target:Graphics, start:Point = null, control:Point = null, end:Point = null, dash:Number = NaN, dashStart:Number = NaN):void
+		{
+			new Bezier(start,control,end).parse(target,dash,dashStart);
+		}
+		
+		/**
+		 * 绘制位图 
+		 * @param target
+		 * @param bitmapData
+		 * @param x
+		 * @param y
+		 * @param width
+		 * @param height
+		 * 
+		 */
+		public static function drawBitmapData(target:Graphics,bitmapData:BitmapData,x:Number,y:Number,width:Number = NaN,height:Number = NaN):void
+		{
+			GraphicsBitmapFill.drawBitmpData(target,bitmapData,x,y,width,height);
+		}
+		
+		/**
+		 * 绘制圆角矩形 
+		 * @param target
+		 * @param x
+		 * @param y
+		 * @param width
+		 * @param height
+		 * @param topLeftRadius
+		 * @param topRightRadius
+		 * @param bottomLeftRadius
+		 * @param bottomRightRadius
+		 * @param arowTo
+		 * @param arowWidth
+		 * @param arowFrom
+		 * 
+		 */
+		public static function drawRoundRect(target:Graphics,x:Number,y:Number,width:Number,height:Number,
+											 topLeftRadius:Number,topRightRadius:Number,bottomLeftRadius:Number,bottomRightRadius:Number,
+											 arowTo:Point=null,arowWidth:Number=10,arowFrom:Point=null):void
+		{
+			GraphicsRect.drawRoundRectComplex(target,x,y,width,height,topLeftRadius,topRightRadius,bottomLeftRadius,bottomRightRadius,arowTo,arowWidth,arowFrom);
+		}
+		
+		/**
+		 * 绘制扇形 
 		 * @param target
 		 * @param x
 		 * @param y
@@ -54,26 +97,11 @@ package ghostcat.util.display
 		 */
 		public static function drawSector(target:Graphics,x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number,toAngle:Number):void
 		{
-			var start:Number = fromAngle / 180 * Math.PI;
-			if (toAngle % 360 != fromAngle % 360)
-			{
-				target.moveTo(x,y);
-				target.lineTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
-			}
-			else
-			{
-				target.moveTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
-			}
-			
-			drawCurve(target,x,y,wradius,hradius,fromAngle,toAngle);
-			
-			if (toAngle % 360 != fromAngle % 360)
-				target.lineTo(x,y);
+			GraphicsSector.drawSector(target,x,y,wradius,hradius,fromAngle,toAngle)
 		}
 		
 		/**
-		 * 绘制一个圆环
-		 *  
+		 * 绘制圆环 
 		 * @param target
 		 * @param x
 		 * @param y
@@ -81,53 +109,12 @@ package ghostcat.util.display
 		 * @param hradius
 		 * @param fromAngle
 		 * @param toAngle
+		 * @param inner
 		 * 
 		 */
 		public static function drawRing(target:Graphics,x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number,toAngle:Number,inner:Number):void
 		{
-			var p:Boolean = (toAngle % 360 != fromAngle % 360);
-			
-			var start:Number = fromAngle / 180 * Math.PI;
-			if (p)
-			{
-				target.moveTo(x + wradius * Math.cos(start) * inner,y + hradius * Math.sin(start) * inner);
-				target.lineTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
-			}
-			else
-			{
-				target.moveTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
-			}
-			
-			drawCurve(target,x,y,wradius,hradius,fromAngle,toAngle);
-			
-			var end:Number = toAngle / 180 * Math.PI;
-			if (p)
-				target.lineTo(x + wradius * Math.cos(end) * inner,y + hradius * Math.sin(end) * inner);
-			else
-				target.moveTo(x + wradius * Math.cos(end) * inner,y + hradius * Math.sin(end) * inner);
-			
-			drawCurve(target,x,y,wradius * inner,hradius * inner,toAngle,fromAngle);
-			
-			if (p)
-				target.lineTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
-		}
-		
-		private static function drawCurve(target:Graphics,x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number,toAngle:Number):void
-		{
-			var start:Number = fromAngle / 180 * Math.PI;
-			var angle:Number = (toAngle - fromAngle) / 180 * Math.PI;
-			var n:Number = Math.ceil(Math.abs(angle) / (Math.PI / 4));
-			var angleS:Number = angle / n;
-			for (var i:int = 1;i <= n;i++)
-			{
-				start += angleS;
-				var angleMid:Number = start - angleS / 2;
-				var bx:Number = x + wradius / Math.cos(angleS / 2) * Math.cos(angleMid);
-				var by:Number = y + hradius / Math.cos(angleS / 2) * Math.sin(angleMid);
-				var cx:Number = x + wradius * Math.cos(start);
-				var cy:Number = y + hradius * Math.sin(start);
-				target.curveTo(bx,by,cx,cy);
-			}
+			GraphicsSector.drawRing(target,x,y,wradius,hradius,fromAngle,toAngle,inner)
 		}
 	}
 }

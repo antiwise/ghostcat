@@ -248,7 +248,7 @@ package ghostcat.ui.controls
 			else
 				rect = new Rectangle(thumb.x,thumbAreaStart,0,thumbAreaLength);
 				
-			DragManager.startDrag(thumb,rect,null,thumbMouseMoveHandler);
+			DragManager.startDrag(thumb,rect,null,null,thumbMouseMoveHandler);
 		}
 		
 		/**
