@@ -1,30 +1,17 @@
-package
+package 
 {
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.text.engine.ElementFormat;
-	import flash.text.engine.FontDescription;
+	import ghostcat.display.GBase;
+	import ghostcat.display.viewport.Tile45;
+	import ghostcat.parse.graphics.GraphicsLineFill;
 	
-	import ghostcat.parse.display.SimpleRectParse;
-	import ghostcat.text.fte.GRichText;
+	[SWF(width="200",height="200",backgroundColor="0x0")]
 	
-	public class GhostCatFP10Example extends Sprite
+	public class GhostCatFP10Example extends GBase
 	{
-		public function GhostCatFP10Example():void
+		public function GhostCatFP10Example()
 		{
-			var str1:String = "这里是一段文本。。。。。";
-			var str2:String = "。。。。";
-			
-			var t:GRichText = new GRichText();
-			t.textWidth = 200;
-			addChild(t);
-			t.addText(str1);
-			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
-			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
-			t.addGraphics(new SimpleRectParse(100,100,0xFF0000,0xFFFF00).createShape());
-			t.addText(str2);
-			t.refresh();
+			new GraphicsLineFill(45,10,2,0xFF0000,1,0,0).parse(this);
+			graphics.drawCircle(100,100,100);
 		}
 	}
-	
 }

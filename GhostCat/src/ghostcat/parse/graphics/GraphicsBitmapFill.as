@@ -26,5 +26,33 @@ package ghostcat.parse.graphics
 			super.parseGraphics(target);
 			target.beginBitmapFill(bitmap,matrix,repeat,smooth);
 		}
+		
+		/**
+		 * 绘制一个位图到画布上 
+		 * @param target
+		 * @param bitmapData
+		 * @param pos
+		 * 
+		 */
+		public static function drawBitmpData(target:Graphics,bitmapData:BitmapData,x:Number,y:Number,width:Number = NaN,height:Number = NaN):void
+		{
+			if (bitmapData)
+			{
+				var m:Matrix = new Matrix();
+				m.translate(x,y);
+				if (isNaN(width))
+					width = bitmapData.width;
+				if (isNaN(height))
+					height = bitmapData.height;
+				
+				var sx:Number = width / bitmapData.width;
+				var sy:Number = height / bitmapData.height;
+				m.scale(sx,sy);
+				
+				target.beginBitmapFill(bitmapData,m,false,false);
+				target.drawRect(x,y,width,height);
+				target.endFill();
+			}
+		}
 	}
 }

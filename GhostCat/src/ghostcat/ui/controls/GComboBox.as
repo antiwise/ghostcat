@@ -141,6 +141,12 @@ package ghostcat.ui.controls
 		{
 			super.mouseDownHandler(event);
 		
+			if (list.parent)
+			{
+				hideList();
+				return;
+			}
+			
 			var listPos:Point = Geom.localToContent(new Point(),this,listContainer)
 			list.data = listData;
 			list.addEventListener(Event.CHANGE,listChangeHandler);

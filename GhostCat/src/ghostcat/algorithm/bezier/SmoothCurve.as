@@ -180,7 +180,7 @@ package ghostcat.algorithm.bezier
 		
 		/**
 		 * 更新曲线。如果不执行此操作，曲线的各个方法就无法得到正确的结果。
-		 * <br>会在显示和创建的时候自动更新。
+		 * 会在显示和创建的时候自动更新。
 		 * 
 		 */
 		public function refresh():void

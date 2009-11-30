@@ -62,7 +62,23 @@ package ghostcat.parse.graphics
 				drawRoundRectComplex(target,x,y,width,height,topLeftRadius,topRightRadius,bottomLeftRadius,bottomRightRadius,arowTo,arowWidth,arowFrom);
 		}
 		
-		private function drawRoundRectComplex(graphics:Graphics,x:Number,y:Number,width:Number,height:Number,
+		/**
+		 * 绘制圆角矩形 
+		 * @param graphics
+		 * @param x
+		 * @param y
+		 * @param width
+		 * @param height
+		 * @param topLeftRadius
+		 * @param topRightRadius
+		 * @param bottomLeftRadius
+		 * @param bottomRightRadius
+		 * @param arowTo
+		 * @param arowWidth
+		 * @param arowFrom
+		 * 
+		 */
+		public static function drawRoundRectComplex(graphics:Graphics,x:Number,y:Number,width:Number,height:Number,
 			topLeftRadius:Number,topRightRadius:Number,bottomLeftRadius:Number,bottomRightRadius:Number,
 			arowTo:Point=null,arowWidth:Number=10,arowFrom:Point=null):void
 		{

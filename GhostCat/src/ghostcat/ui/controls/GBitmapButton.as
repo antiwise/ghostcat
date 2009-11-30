@@ -12,6 +12,7 @@ package ghostcat.ui.controls
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -102,7 +103,7 @@ package ghostcat.ui.controls
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
 			var p:Point = new Point(x,y).add(offest);
-			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
+			GraphicsBitmapFill.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
 		}
 		
 		/** @inheritDoc*/

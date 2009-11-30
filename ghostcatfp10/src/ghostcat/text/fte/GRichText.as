@@ -35,11 +35,23 @@ package ghostcat.text.fte
 			textBlock = new TextBlock(content);
 		}
 		
+		/**
+		 * 获得文字数据 
+		 * @return 
+		 * 
+		 */
 		public function get content():GroupElement
 		{
 			return _content;
 		}
 
+		/**
+		 * 添加一段文本
+		 * @param text
+		 * @param format
+		 * @param textRotation
+		 * 
+		 */
 		public function addText(text:String,format:ElementFormat = null,textRotation:String = "rotate0"):void
 		{
 			if (!format)
@@ -49,6 +61,12 @@ package ghostcat.text.fte
 			groupVector.push(e);
 		}
 		
+		/**
+		 * 添加一个图形
+		 * @param graphics
+		 * @param format
+		 * 
+		 */
 		public function addGraphics(graphics:DisplayObject,format:ElementFormat = null):void
 		{
 			if (!format)
@@ -58,6 +76,10 @@ package ghostcat.text.fte
 			groupVector.push(e);
 		}
 
+		/**
+		 * 刷新显示
+		 * 
+		 */
 		public function refresh():void
 		{
 			DisplayUtil.removeAllChildren(this);
@@ -69,7 +91,7 @@ package ghostcat.text.fte
 		{
 			var yPos:int = 0;
 			var line_length:Number = textWidth;
-			var textLine:TextLine = textBlock.createTextLine (null, line_length);
+			var textLine:TextLine = textBlock.createTextLine(null,line_length);
 			
 			while (textLine)
 			{
@@ -77,7 +99,7 @@ package ghostcat.text.fte
 				textLine.x = 15;
 				yPos += textLine.height + 8;
 				textLine.y = yPos;
-				textLine = textBlock.createTextLine(textLine, line_length);
+				textLine = textBlock.createTextLine(textLine,line_length);
 			}
 		}
 	}

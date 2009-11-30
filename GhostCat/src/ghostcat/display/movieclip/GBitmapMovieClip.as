@@ -10,6 +10,7 @@ package ghostcat.display.movieclip
 	
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
+	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
@@ -175,7 +176,7 @@ package ghostcat.display.movieclip
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
 			var p:Point = new Point(x,y).add(offest);
-			GraphicsUtil.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
+			GraphicsBitmapFill.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
 		}
 		
 		/** @inheritDoc*/

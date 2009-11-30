@@ -16,6 +16,7 @@ package ghostcat.display.bitmap
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.parse.display.DrawParse;
+	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
@@ -578,7 +579,7 @@ package ghostcat.display.bitmap
 		public function drawToShape(target:Graphics,offest:Point):void
 		{
 			var p:Point = new Point(x,y).add(offest);
-			GraphicsUtil.drawBitmpData(target,bitmapData,p.x,p.y);
+			GraphicsBitmapFill.drawBitmpData(target,bitmapData,p.x,p.y);
 		}
 		
 		
