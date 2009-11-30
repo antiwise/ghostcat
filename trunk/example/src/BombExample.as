@@ -24,7 +24,7 @@ package
 		public function BombExample()
 		{
 			s = new Cataclasm(new c());
-			addChild(Util.createObject(new ResidualScreen(600,600),{fadeSpeed:0.6,children:[s]}));
+			addChild(s);
 		
 			stage.addEventListener(MouseEvent.CLICK,clickHandler);
 		}
