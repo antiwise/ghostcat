@@ -1,5 +1,6 @@
 package
 {
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
 	import ghostcat.media.SoundDisplayer;
@@ -16,6 +17,8 @@ package
 	{
 		public function SoundExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			GAlert.show("音乐开始");

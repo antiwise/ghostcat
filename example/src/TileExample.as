@@ -4,6 +4,7 @@ package
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.viewport.Tile;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.manager.DragManager;
@@ -25,6 +26,8 @@ package
 		public var repeater:Tile;
 		public function TileExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			repeater = new Tile(TestRepeater);
 			repeater.width = 100000;

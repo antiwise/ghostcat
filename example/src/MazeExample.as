@@ -13,6 +13,7 @@ package
 	import ghostcat.algorithm.traversal.BFS;
 	import ghostcat.algorithm.traversal.MapModel;
 	import ghostcat.algorithm.traversal.Traversal;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.TextFieldParse;
@@ -42,6 +43,8 @@ package
 		
 		public function MazeExample()
 		{
+			new EnabledSWFScreen(stage)
+			
 			RootManager.register(this,1,1);
 			
 			screen = new GBitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT));

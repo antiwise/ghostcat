@@ -7,6 +7,7 @@ package
 	import flash.text.TextField;
 	
 	import ghostcat.debug.DebugRect;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.BitmapScreen;
@@ -39,6 +40,8 @@ package
 		
 		public function BitmapTile45Example()
 		{
+			new EnabledSWFScreen(stage)
+			
 			stage.addChild(new FPS())
 			
 			debugText = TextFieldParse.createTextField("",new Point(0,20));

@@ -2,11 +2,12 @@ package
 {
 	import flash.display.Sprite;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.residual.ResidualScreen;
+	import ghostcat.display.transfer.Paper3D;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.RepeatOper;
 	import ghostcat.operation.TweenOper;
-	import ghostcat.display.transfer.Paper3D;
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.Back;
 	
@@ -23,6 +24,8 @@ package
 		public var p:Paper3D;
 		public function Paper3DExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			p = new Paper3D(new TestRepeater());
 			p.x = 50;
 			p.y = 50;

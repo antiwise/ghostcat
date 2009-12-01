@@ -47,8 +47,10 @@
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
+    <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
     <classEntry path="ghostcat.debug.FrameRateControl"/>
+    <classEntry path="ghostcat.debug.GhostCatLogo"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
@@ -82,6 +84,7 @@
     <classEntry path="ghostcat.display.graphics.SelectRect"/>
     <classEntry path="ghostcat.display.loader.AVM1Loader"/>
     <classEntry path="ghostcat.display.loader.AssetLoader"/>
+    <classEntry path="ghostcat.display.loader.LoaderCreater"/>
     <classEntry path="ghostcat.display.loader.StreamLoader"/>
     <classEntry path="ghostcat.display.loader.StreamTextLoader"/>
     <classEntry path="ghostcat.display.movieclip.CollisionMovieClip"/>
@@ -95,7 +98,6 @@
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="ghostcat.display.other.GContextMenu"/>
-    <classEntry path="ghostcat.media.SoundDisplayer"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
@@ -142,6 +144,7 @@
     <classEntry path="ghostcat.display.viewport.Separate45Util"/>
     <classEntry path="ghostcat.display.viewport.Tile"/>
     <classEntry path="ghostcat.display.viewport.Tile45"/>
+    <classEntry path="ghostcat.display.viewport.Tile45TopLeft"/>
     <classEntry path="ghostcat.display.viewport.TileGameItem"/>
     <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
     <classEntry path="ghostcat.display.viewport.ViewportCamera"/>
@@ -218,7 +221,9 @@
     <classEntry path="ghostcat.manager.PathAnalyzer"/>
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
+    <classEntry path="ghostcat.media.SoundDisplayer"/>
     <classEntry path="ghostcat.mvc.GhostCatMVC"/>
+    <classEntry path="ghostcat.mvc.InsLink"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FilterProxyOper"/>
     <classEntry path="ghostcat.operation.FrameCommandOper"/>
@@ -285,6 +290,8 @@
     <classEntry path="ghostcat.parse.graphics.GraphicsFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsGradientFillParse"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsGradientLineStyle"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsLine"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsLineFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsPath"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsRect"/>
@@ -427,6 +434,7 @@
     <classEntry path="ghostcat.util.display.HitTestPhysics"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
+    <classEntry path="ghostcat.util.display.RotationUtil"/>
     <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
@@ -445,6 +453,7 @@
     <classEntry path="ghostcat.util.easing.Strong"/>
     <classEntry path="ghostcat.util.easing.TweenEvent"/>
     <classEntry path="ghostcat.util.easing.TweenUtil"/>
+    <classEntry path="ghostcat.util.encrypt.AES"/>
     <classEntry path="ghostcat.util.encrypt.HackChecker"/>
     <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
@@ -452,11 +461,8 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.display.viewport.Tile45TopLeft"/>
-    <classEntry path="ghostcat.parse.graphics.GraphicsLine"/>
-    <classEntry path="ghostcat.display.loader.LoaderCreater"/>
-    <classEntry path="ghostcat.util.display.RotationUtil"/>
-    <classEntry path="ghostcat.parse.graphics.GraphicsLineFill"/>
+    <classEntry path="ghostcat.util.encrypt.Base64"/>
+    <classEntry path="ghostcat.util.encrypt.Utf8"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -3,6 +3,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.FrameLabelUtil;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
@@ -41,7 +42,7 @@ package
 		
 		protected override function init():void
 		{
-			super.init();
+			new EnabledSWFScreen(stage);
 			
 			RootManager.register(this);//注册舞台（非必须）
 			

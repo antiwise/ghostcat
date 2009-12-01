@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.ui.html.TableCreater;
@@ -19,6 +20,8 @@ package
 	{
 		public function TableExample()
 		{	
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			var xml:XML = <table backgroundColor="#FFFFFF">

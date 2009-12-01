@@ -4,6 +4,7 @@ package
 	import flash.geom.Point;
 	
 	import ghostcat.debug.DebugScreen;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.CollisionSprite;
 	import ghostcat.events.TickEvent;

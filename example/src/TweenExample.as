@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.filters.BlurFilter;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GSprite;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.manager.RootManager;
@@ -31,13 +32,14 @@ package
 		public var f:FilterProxy;
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this,1,1);
 			
 			sp = DisplayParse.createSprite([new GraphicsFill(0xFFFFFF),new GraphicsRect(0,0,100,100,10)])
 			addChild(sp);
 			
-			GAlert.commit("点击开始")
-			new FunctionOper(start).commit();
+			start();
 		}
 		public function start():void
 		{
@@ -51,8 +53,6 @@ package
 			
 			//利用Operation机制实现的顺序以及循环Tween
 			new DelayOper(2000).commit();
-			GAlert.commit("可以在Tween效果中插入其他的Oper，例如这个对话框。\n点击确认则继续播放下面的循环Tween")
-			
 			new RepeatOper([new TweenOper(f,1000,{blurX:20,blurY:20}),new TweenOper(f,1000,{blurX:0,blurY:0})]).commit();
 			
 			TweenUtil.update();//手动更新缓动，主要为了处理倒放时第一帧的空位问题

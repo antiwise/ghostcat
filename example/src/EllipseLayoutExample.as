@@ -3,6 +3,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
@@ -27,6 +28,8 @@ package
 		
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			//创建椭圆布局，并应用在this上
 			layout = new EllipseLayout(this,true);
 			mouseDownHandler(null);

@@ -6,6 +6,7 @@ package
 	import flash.geom.Point;
 	
 	import ghostcat.algorithm.bezier.Roupe;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.events.TickEvent;
@@ -30,6 +31,8 @@ package
 		
 		public function SmoothCurveExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			start.toolTip = "起点";

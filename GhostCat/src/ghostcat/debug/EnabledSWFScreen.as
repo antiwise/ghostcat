@@ -34,6 +34,11 @@ package ghostcat.debug
 			stage.addChild(this);
 		}
 		
+		/**
+		 * 是否激活暂停 
+		 * @return 
+		 * 
+		 */
 		public function get enabled():Boolean
 		{
 			return _enabled;
@@ -55,14 +60,14 @@ package ghostcat.debug
 			{
 				stage.frameRate = oldFrameRate;
 				Tick.instance.clear();
-				TweenUtil.to(this,1000,{autoAlpha:0.0});
+				TweenUtil.to(this,400,{autoAlpha:0.0});
 				
 				if (showHandler!=null)
 					showHandler();
 			}
 			else
 			{
-				TweenUtil.to(this,1000,{autoAlpha:1.0,onComplete:onTweenComplete});
+				TweenUtil.to(this,400,{autoAlpha:1.0,onComplete:onTweenComplete});
 			
 				if (hideHandler!=null)
 					hideHandler();
@@ -91,10 +96,15 @@ package ghostcat.debug
 			textField.selectable = false;
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.text = "鼠标移入开始播放";
-			textField.x = (stage.stageWidth - textField.width) / 2;
+			textField.x = (stage.stageWidth - textField.width) / 2 + 30;
 			textField.y = (stage.stageHeight - textField.height) / 2;
 			textField.blendMode = BlendMode.LAYER;
 			addChild(textField);
+			
+			var logo:GhostCatLogo = new GhostCatLogo();
+			logo.x = textField.x - logo.width + 20;
+			logo.y = textField.y - logo.height / 2;
+			addChild(logo);
 			
 			stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE,mouseLeaveHandler);

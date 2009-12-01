@@ -2,11 +2,12 @@ package
 {
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.display.residual.ResidualScreen;
-	import ghostcat.events.TickEvent;
 	import ghostcat.display.transfer.Skew;
+	import ghostcat.events.TickEvent;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.util.Util;
 	
@@ -28,6 +29,8 @@ package
 		public var p4:DragPoint = new DragPoint(null,new Point(260,150));
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			f = new Skew(new TestCollision(),10,10);
 			addChild(f);
 			

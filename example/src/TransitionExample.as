@@ -6,6 +6,7 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GScriptMovieClip;
 	import ghostcat.display.transfer.GBitmapEffect;
@@ -49,6 +50,8 @@ package
 		
 		protected override function init() : void
 		{
+			new EnabledSWFScreen(stage,function ():void{refreshInterval = 3000},function ():void{refreshInterval = 0});
+			
 			s = new GImage();
 			addChild(s);
 			s.source = p1;

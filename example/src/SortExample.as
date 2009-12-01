@@ -9,6 +9,7 @@ package
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.community.sort.SortYManager;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
@@ -32,6 +33,8 @@ package
 			
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			//创建100个物品
@@ -56,8 +59,6 @@ package
 			addChild(debugTextField);
 			
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-		
-			GAlert.show("点击人物激活移动")
 			
 			this.enabledTick = true;
 		}

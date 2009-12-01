@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Shape;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GSprite;
 	import ghostcat.display.residual.FireScreen;
 	import ghostcat.events.InputEvent;

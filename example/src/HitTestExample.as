@@ -2,6 +2,7 @@ package
 {
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.events.TickEvent;
@@ -20,6 +21,8 @@ package
 			
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			//建立一个支持检测碰撞的图元

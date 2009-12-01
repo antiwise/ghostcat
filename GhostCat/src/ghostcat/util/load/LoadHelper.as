@@ -100,7 +100,7 @@ package ghostcat.util.load
 		 */
 		public function get loadPercent():Number
 		{
-			return bytesLoaded/bytesTotal;
+			return bytesLoaded / bytesTotal;
 		}
 		
 		/**

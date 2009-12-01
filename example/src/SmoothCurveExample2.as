@@ -5,6 +5,7 @@ package
 	import flash.geom.Point;
 	
 	import ghostcat.algorithm.bezier.SmoothCurve;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.CursorSprite;
@@ -27,6 +28,8 @@ package
 		
 		public function SmoothCurveExample2()
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);

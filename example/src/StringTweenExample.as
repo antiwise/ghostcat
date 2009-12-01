@@ -5,6 +5,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
 	import ghostcat.text.controls.GTweenText;
@@ -25,6 +26,8 @@ package
 		public var t:GTweenText;
 		public function StringTweenExample()
 		{	
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			t = new GTweenText();
