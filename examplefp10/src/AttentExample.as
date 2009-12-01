@@ -8,6 +8,7 @@ package
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.community.physics.PhysicsUtil;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.PixelItem;
 	import ghostcat.display.residual.ResidualScreen;
@@ -24,6 +25,8 @@ package
 		public var stageRect:Rectangle;
 		public function AttentExample()
 		{
+			new EnabledSWFScreen(stage,function ():void{refreshInterval = 2},function ():void{refreshInterval = 0})
+			
 			stageRect = new Rectangle(0,0,400,400);
 			//创建位图显示
 			s = new ResidualScreen(400,400,false,0);

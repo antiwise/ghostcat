@@ -27,6 +27,7 @@
       <libraryPathEntry kind="3" linkType="1" path="/GhostCat/bin/GhostCat.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/GhostCatFP10/bin/GhostCatFP10.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="src/test.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/GhostCat/bin/GhostCat.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

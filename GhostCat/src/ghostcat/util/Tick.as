@@ -59,6 +59,15 @@ package ghostcat.util
 			displayObject.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 		
+		/**
+		 * 清除掉积累的时间（在暂停之后）
+		 * 
+		 */
+		public function clear():void
+		{
+			this.prevTime = 0;
+		}
+		
 		private function enterFrameHandler(event:Event):void
 		{
 			var nextTime:int = getTimer();
