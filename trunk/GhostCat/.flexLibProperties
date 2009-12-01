@@ -47,10 +47,8 @@
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
-    <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
     <classEntry path="ghostcat.debug.FrameRateControl"/>
-    <classEntry path="ghostcat.debug.GhostCatLogo"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
@@ -265,6 +263,7 @@
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
+    <classEntry path="ghostcat.operation.server.ActionGroupOper"/>
     <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
     <classEntry path="ghostcat.other.BubbleCreater"/>
@@ -314,6 +313,7 @@
     <classEntry path="ghostcat.text.TextTweenUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
     <classEntry path="ghostcat.text.URL"/>
+    <classEntry path="ghostcat.text.Utf8"/>
     <classEntry path="ghostcat.text.controls.GBitmapText"/>
     <classEntry path="ghostcat.text.controls.GTweenText"/>
     <classEntry path="ghostcat.text.controls.GradientText"/>
@@ -454,6 +454,7 @@
     <classEntry path="ghostcat.util.easing.TweenEvent"/>
     <classEntry path="ghostcat.util.easing.TweenUtil"/>
     <classEntry path="ghostcat.util.encrypt.AES"/>
+    <classEntry path="ghostcat.util.encrypt.Base64"/>
     <classEntry path="ghostcat.util.encrypt.HackChecker"/>
     <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
@@ -461,8 +462,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.encrypt.Base64"/>
-    <classEntry path="ghostcat.util.encrypt.Utf8"/>
+    <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

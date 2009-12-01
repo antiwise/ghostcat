@@ -115,6 +115,8 @@ package ghostcat.operation
 				e.childOper = this;
 				e.result = event;
 				dispatchEvent(e);
+				
+				this.queue = null;
 			}
 			
 			step = END;
@@ -142,6 +144,8 @@ package ghostcat.operation
 				e.childOper = this;
 				e.result = event;
 				dispatchEvent(e);
+				
+				this.queue = null;
 			}
 			
 			step = END;

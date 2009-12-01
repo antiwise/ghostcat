@@ -56,12 +56,17 @@
 		return null;
 	},
 	confirmClose:function (text) {
-		window.onbeforeunload = onbeforeunload_handler;
-		function onbeforeunload_handler() 
+		if (text != null)
 		{
-			var warning = text;
-			return warning;
+			window.onbeforeunload = onbeforeunload_handler;
+			function onbeforeunload_handler() 
+			{
+				var warning = text;
+				return warning;
+			}
 		}
+		else
+			window.onbeforeunload = null;
 	},
 	disableScroll:function (objId) {
 		var obj = document;

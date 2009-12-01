@@ -18,6 +18,7 @@ package ghostcat.operation
 		 * 连接
 		 */
 		public var nc:NetConnection;
+		
 		/**
 		 * 服务端方法（全称）
 		 */
