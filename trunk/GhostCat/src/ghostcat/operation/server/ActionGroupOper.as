@@ -31,6 +31,7 @@ package ghostcat.operation.server
 		public function ActionGroupOper(nc:NetConnection=null,metord:String=null)
 		{
 			super(nc,metord);
+			this.maxRetry = 0;//不允许重试
 			this.appendGroup();
 		}
 		
@@ -69,11 +70,11 @@ package ghostcat.operation.server
 		public override function execute() : void
 		{
 			commitedId = curId;//记录当前的组id
-			appendGroup();//创建新组，新的记录将加在这个组内
 			
 			this.para = [data];
-			
 			super.execute();
+		
+			appendGroup();//创建新组，新的记录将加在这个组内
 		}
 		
 		public override function result(event:*=null) : void
