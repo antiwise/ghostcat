@@ -1,5 +1,10 @@
 package ghostcat.util.encrypt
 {
+	import ghostcat.text.Utf8;
+	
+	/*AES Counter-mode for Actionscript ported from AES Counter-mode implementation in JavaScript by Chris Veness
+	- see http://csrc.nist.gov/public statications/nistpubs/800-38a/sp800-38a.pdf*/
+
 	public class Base64 {
 		
 		private static const code : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

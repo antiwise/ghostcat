@@ -142,8 +142,11 @@ package ghostcat.manager
          */
         public function confirmClose(text:String = "确认退出？"):void
         {
-        	ExternalInterface.call("BrowerManager.confirmClose",text);
-        }
+			if (text)
+        		ExternalInterface.call("BrowerManager.confirmClose",text);
+			else
+				ExternalInterface.call("BrowerManager.confirmClose");
+		}
 		
 		/**
 		 * 弹出警示框

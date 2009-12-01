@@ -1,9 +1,14 @@
 package ghostcat.util.encrypt
 {
+	import ghostcat.text.Utf8;
 	
 	/*AES Counter-mode for Actionscript ported from AES Counter-mode implementation in JavaScript by Chris Veness
 	- see http://csrc.nist.gov/public statications/nistpubs/800-38a/sp800-38a.pdf*/
 	
+	/**
+	 * 高级加密标准（Advanced Encryption Standard，AES），又称Rijndael加密法，当今最流行的对称密钥加密算法
+	 * 
+	 */
 	public class AES
 	{
 		
@@ -190,7 +195,8 @@ package ghostcat.util.encrypt
 			var Nr : int = w.length / Nb - 1; // no of rounds: 10/12/14 for 128/192/256-bit keys
 			
 			var state : Array = [[],[],[],[]];  // initialise 4xNb byte-array 'state' with input [§3.4]
-			for (var i : int = 0;i < 4 * Nb;i++) state[i % 4][Math.floor(i / 4)] = input[i];
+			for (var i : int = 0;i < 4 * Nb;i++) 
+				state[i % 4][Math.floor(i / 4)] = input[i];
 			
 			state = addRoundKey(state, w, 0, Nb);
 			
@@ -206,7 +212,8 @@ package ghostcat.util.encrypt
 			state = addRoundKey(state, w, Nr, Nb);
 			
 			var output : Array = new Array(4 * Nb);  // convert state to 1-d array before returning [§3.4]
-			for (var i : int = 0;i < 4 * Nb;i++) output[i] = state[i % 4][Math.floor(i / 4)];
+			for (i = 0;i < 4 * Nb;i++)
+				output[i] = state[i % 4][Math.floor(i / 4)];
 			
 			return output;
 		}
