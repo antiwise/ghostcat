@@ -4,6 +4,7 @@ package
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.screenshot.ScreenShotPanel;
 	import ghostcat.ui.CursorSprite;

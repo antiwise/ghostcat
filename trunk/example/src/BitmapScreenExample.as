@@ -6,6 +6,7 @@ package
 	
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GNoScale;
@@ -36,6 +37,8 @@ package
 		
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage)
+			
 			RootManager.register(this);
 			
 			s = new BitmapScreen(400,400,false);

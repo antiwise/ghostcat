@@ -5,6 +5,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.display.transfer.Cataclasm;
 	import ghostcat.util.Util;
@@ -23,9 +24,11 @@ package
 		private var step:int = 1;
 		public function BombExample()
 		{
+			new EnabledSWFScreen(stage)
+			
 			s = new Cataclasm(new c());
-			addChild(s);
-		
+			addChild(Util.createObject(new ResidualScreen(600,480),{blurSpeed:4,fadeSpeed:0.7,children:[s]}));
+			
 			stage.addEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		

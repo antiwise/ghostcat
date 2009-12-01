@@ -1,5 +1,6 @@
 package
 {
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GSprite;
 	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.display.residual.ResidualScreen;
@@ -20,6 +21,8 @@ package
 	{
 		protected override function init():void
 		{	
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			//下拉框
 			var b:GComboBox = new GComboBox();

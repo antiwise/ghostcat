@@ -4,6 +4,7 @@ package
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
 	import ghostcat.display.viewport.Light;
@@ -32,6 +33,8 @@ package
 		public var r:GBase;
 		public function LightExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			//创建墙壁和控制点
 			var p1:DragPoint = new DragPoint(null,new Point(100,200));
 			var p2:DragPoint = new DragPoint(null,new Point(200,100));

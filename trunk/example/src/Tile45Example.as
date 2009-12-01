@@ -5,6 +5,7 @@ package
 	import flash.geom.Point;
 	import flash.text.TextField;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
 	import ghostcat.display.viewport.Display45Util;
@@ -34,6 +35,8 @@ package
 		
 		public function Tile45Example()
 		{
+			new EnabledSWFScreen(stage);
+			
 			stage.addChild(new FPS())
 			
 			debugText = TextFieldParse.createTextField("",new Point(0,20));

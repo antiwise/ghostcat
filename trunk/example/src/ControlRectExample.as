@@ -4,6 +4,7 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.graphics.ControlRect;
 	import ghostcat.display.graphics.EditableGraphicsSprite;
 	import ghostcat.display.graphics.ScaleBox;
@@ -22,6 +23,8 @@ package
 	{
 		public function ControlRectExample()
 		{
+			new EnabledSWFScreen(stage);
+			
 			//加入两个控制块
 			addChild(new ControlRect(new TestRepeater()))
 			addChild(new ControlRect(new TestRepeater45()))

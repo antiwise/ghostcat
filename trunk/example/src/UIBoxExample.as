@@ -3,6 +3,7 @@ package
 	import flash.geom.Rectangle;
 	
 	import ghostcat.debug.DebugRect;
+	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.effect.ColorFlashEffect;
@@ -31,6 +32,8 @@ package
 	{
 		protected override function init():void
 		{
+			new EnabledSWFScreen(stage);
+			
 			RootManager.register(this);
 			
 			//单选框
