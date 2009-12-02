@@ -463,6 +463,7 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
+    <classEntry path="ghostcat.GhostCatApp"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
