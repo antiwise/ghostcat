@@ -40,8 +40,6 @@
 		private var lastRightMouseTime:int;
 		private var lastKeyTime:int;
 		
-		private var mousePath:Array = [];
-		
 		private var _mutliMouse:int;
 		private var _mutliRightMouse:int;
 		private var _mutliKey:int;
@@ -52,6 +50,11 @@
 		
 		[Embed(source = "rightClick.js",mimeType="application/octet-stream")]
 		private static var rightClickJSCode:Class;
+		
+		/**
+		 * 鼠标路径 
+		 */
+		public var mousePath:Array = [];
 		
 		/**
 		 * 触发鼠标手势的最低速度
@@ -231,7 +234,11 @@
         	return (getTimer() - lastTime > inactiveTime) && mouseLeave;
         }
         
-        private function refreshLastTime():void
+		/**
+		 * 刷新最后一次交互的时间 
+		 * 
+		 */
+        public function refreshLastTime():void
         {
         	lastTime = getTimer();
         }
