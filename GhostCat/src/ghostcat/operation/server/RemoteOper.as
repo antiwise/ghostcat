@@ -1,9 +1,10 @@
-package ghostcat.operation
+package ghostcat.operation.server
 {
 	import flash.net.NetConnection;
 	import flash.net.Responder;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.RetryOper;
 
 	/**
 	 * 这个针对的是采用NetConnection直接实现的Remoting方式，
@@ -30,6 +31,8 @@ package ghostcat.operation
 		
 		public function RemoteOper(nc:NetConnection=null,metord:String=null,para:Array=null,rhandler:Function=null,fhandler:Function=null)
 		{
+			super();
+			
 			this.nc = nc;
 			this.metord = metord;
 			this.para = para;

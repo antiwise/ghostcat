@@ -73,6 +73,16 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 设置URL后缀
+		 * @param v
+		 * 
+		 */
+		public function setPostfix(v:String):void
+		{
+			LoadOper.postfix = v;
+		}
+		
+		/**
 		 * 载入一个资源
 		 * 
 		 * @param res	资源路径

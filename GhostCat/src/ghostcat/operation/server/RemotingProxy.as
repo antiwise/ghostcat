@@ -10,7 +10,6 @@ package ghostcat.operation.server
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.operation.Queue;
-	import ghostcat.operation.RemoteOper;
 
 	/**
 	 * Remoting实现类

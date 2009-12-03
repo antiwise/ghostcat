@@ -3,7 +3,6 @@ package ghostcat.operation.server
 	import flash.net.NetConnection;
 	
 	import ghostcat.operation.Queue;
-	import ghostcat.operation.RemoteOper;
 
 	/**
 	 * 请求分组
