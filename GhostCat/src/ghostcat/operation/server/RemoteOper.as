@@ -29,6 +29,11 @@ package ghostcat.operation.server
 		 */
 		public var para:Array;
 		
+		public function get data():Object
+		{
+			return lastResult;
+		}
+		
 		public function RemoteOper(nc:NetConnection=null,metord:String=null,para:Array=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			super();

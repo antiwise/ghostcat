@@ -8,7 +8,7 @@ package ghostcat
 	import ghostcat.ui.ToolTipSprite;
 
 	/**
-	 * GhostCat的默认文档类。此类并不是必须的。
+	 * GhostCatUI部分的默认文档类。此类并不是必须的。如果你愿意，可以由Sprite作为文档类，并使用GhostCat的所有功能。
 	 * @author flashyiyi
 	 * 
 	 */
