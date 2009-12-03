@@ -237,7 +237,6 @@
     <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.Queue"/>
     <classEntry path="ghostcat.operation.RandomOper"/>
-    <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.RepeatOper"/>
     <classEntry path="ghostcat.operation.RetryOper"/>
     <classEntry path="ghostcat.operation.SetPropertyOper"/>
@@ -464,6 +463,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
     <classEntry path="ghostcat.GhostCatApp"/>
+    <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

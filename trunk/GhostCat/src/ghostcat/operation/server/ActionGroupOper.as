@@ -14,7 +14,7 @@ package ghostcat.operation.server
 		/**
 		 * 组数据 
 		 */
-		public var data:Array = [];
+		public var groups:Array = [];
 		
 		/**
 		 * 当前组id 
@@ -44,7 +44,7 @@ package ghostcat.operation.server
 			curId++;
 			
 			this.curGroup = new ActionGroup(curId);
-			this.data.push(curGroup);
+			this.groups.push(curGroup);
 			return curGroup;
 		}
 		
@@ -70,10 +70,20 @@ package ghostcat.operation.server
 		{
 			commitedId = curId;//记录当前的组id
 			
-			this.para = [data];
+			this.para = getPara();
 			super.execute();
 		
 			appendGroup();//创建新组，新的记录将加在这个组内
+		}
+		
+		/**
+		 * 获得发送到服务端的参数列表，默认为[groups]
+		 * @return 
+		 * 
+		 */
+		protected function getPara():Array
+		{
+			return [groups];
 		}
 		
 		public override function result(event:*=null) : void
@@ -82,8 +92,8 @@ package ghostcat.operation.server
 			
 			//如果请求成功，销毁commitId之前的记录，通信期间增加的记录不受影响
 			//不成功则不做任何事情
-			if (data.length > 0 && (data[0] as ActionGroup).id <= commitedId)
-				data.shift();
+			if (groups.length > 0 && (groups[0] as ActionGroup).id <= commitedId)
+				groups.shift();
 		}
 	}
 }
