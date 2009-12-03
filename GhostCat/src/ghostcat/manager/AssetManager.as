@@ -170,7 +170,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function getOper(name:String):Oper
+		public function getOper(name:String):LoadOper
 		{
 			return opers[name];
 		}
