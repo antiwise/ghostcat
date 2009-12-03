@@ -36,6 +36,11 @@
 		public static const LOADER:String = "loader";
 		
 		/**
+		 * 地址的后缀
+		 */
+		public static var postfix:String = "";
+		
+		/**
 		 * 使用Loader的扩展名
 		 */
 		public static var LOADER_TYPE:Array = [".swf",".gif",".png",".jpg"];
@@ -101,7 +106,7 @@
 		public function LoadOper(url:*=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			if (url is String)
-				url = new URLRequest(url);
+				url = new URLRequest(url + postfix);
 			
 			this.request = url;
 			this.embedClass = embedClass;
