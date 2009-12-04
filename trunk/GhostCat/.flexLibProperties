@@ -464,6 +464,7 @@
     <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
     <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
+    <classEntry path="ghostcat.util.encrypt.MD5"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
