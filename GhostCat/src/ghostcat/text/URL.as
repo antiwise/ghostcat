@@ -1,6 +1,8 @@
 package ghostcat.text
 {
 	import flash.net.URLVariables;
+	
+	import ghostcat.util.Util;
 
 	/**
 	 * URL解析
