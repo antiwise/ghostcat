@@ -64,6 +64,7 @@ package ghostcat.manager
 		{
 			super();
 			
+			opers = new Dictionary();
 			queue = Queue.defaultQueue;
 		}
 		
