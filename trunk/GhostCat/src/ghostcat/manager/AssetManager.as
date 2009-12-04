@@ -104,16 +104,10 @@ package ghostcat.manager
 			return oper;
 		}
 		
-		/**
-		 * 批量载入资源
-		 * 
-		 * @param res	资源路径列表
-		 * @param names 资源的名称，用于在进度条中显示
-		 * @return 
-		 * 
-		 */
-		public function loadResources(res:Array,names:Array=null):Oper
+		//获得加载资源数组
+		private function getResources(res:Array,names:Array=null):Array
 		{
+			var list:Array = [];
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(assetBase + res[i]);
@@ -122,11 +116,10 @@ package ghostcat.manager
 				
 				oper.addEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-			
-				oper.commit(queue);
+				
+				list.push(oper);
 			}
-			
-			return queue;
+			return list;
 		}
 		
 		private function changeProgressTargetHandler(event:OperationEvent):void
@@ -141,8 +134,23 @@ package ghostcat.manager
 			if (oper.name)
 				opers[oper.name] = oper;
 			
-			oper.removeEventListener(OperationEvent.CHILD_OPERATION_START,changeProgressTargetHandler);
+			oper.removeEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+		}
+		
+		/**
+		 * 批量载入资源
+		 * 
+		 * @param res	资源路径列表
+		 * @param names 资源的名称，用于在进度条中显示
+		 * @return 
+		 * 
+		 */
+		public function loadResources(res:Array,names:Array=null):Queue
+		{
+			var subQueue:Queue = new Queue(getResources(res,names));
+			subQueue.commit(queue);
+			return subQueue;
 		}
 		
 		/**
@@ -153,26 +161,29 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXMLFile(filePath:String):Oper
+		public function loadResourcesFromXMLFile(filePath:String):Queue
 		{
+			var subQueue:Queue = new Queue();
 			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
-			return queue;
-		
+			oper.commit(queue);
+			subQueue.commit(queue);
 			
+			return subQueue;
+			
+			function resConfigHandler(event:OperationEvent):void
+			{
+				var xml:XML = new XML((event.oper as LoadTextOper).data);
+				var res:Array = [];
+				var names:Array = [];
+				for each (var child:XML in xml.children())
+				{
+					res.push(child.@url.toString());
+					names.push(child.@name.toString());
+				}
+				subQueue.children = getResources(res,names);
+			}
 		}
 		
-		private function resConfigHandler(event:OperationEvent):void
-		{
-			var xml:XML = new XML((event.oper as LoadTextOper).data);
-			var res:Array = [];
-			var names:Array = [];
-			for each (var child:XML in xml.children())
-			{
-				res.push(child.@url.toString());
-				names.push(child.@name.toString());
-			}
-			loadResources(res,names);
-		}
 		
 		/**
 		 * 根据载入时的名称获取加载器，继而可以取得加载完成的资源
