@@ -6,7 +6,7 @@ package ghostcat.parse.graphics
 	import ghostcat.parse.DisplayParse;
 	
 	/**
-	 * 绘制扇形或环
+	 * 绘制矩形扇形
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -57,7 +57,7 @@ package ghostcat.parse.graphics
 		}
 		
 		/**
-		 * 绘制一个扇形
+		 * 绘制一个矩形扇形
 		 *  
 		 * @param target
 		 * @param x

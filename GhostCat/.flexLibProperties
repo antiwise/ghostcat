@@ -465,6 +465,7 @@
     <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsRectSector"/>
+    <classEntry path="ghostcat.util.encrypt.MD5"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
