@@ -81,6 +81,9 @@
 		{
 			super.setContent(skin,replace);
 			
+			if (!content)
+				return;
+			
 			var mcField:String = this.fields.mcField;
 			var labelField:String = this.fields.labelField;
 			
