@@ -295,7 +295,7 @@ package ghostcat.ui.controls
 		public function get columnCount():int
 		{
 			if (type == UIConst.HORIZONTAL)
-				return data.length;
+				return data ? data.length : 0;
 			else if (type == UIConst.VERTICAL)
 				return 1;
 			else

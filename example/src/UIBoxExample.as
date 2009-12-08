@@ -32,8 +32,6 @@ package
 	{
 		protected override function init():void
 		{
-			new EnabledSWFScreen(stage);
-			
 			RootManager.register(this);
 			
 			//单选框

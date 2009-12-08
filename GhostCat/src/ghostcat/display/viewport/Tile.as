@@ -283,6 +283,9 @@ package ghostcat.display.viewport
 		public function getLocalScreen():Rectangle
 		{
 			if (!scrollRectContainer)
+				scrollRectContainer = findScrollRectContainer();
+			
+			if (!scrollRectContainer)
 				return null;
 			
 			var sRect:Rectangle; 

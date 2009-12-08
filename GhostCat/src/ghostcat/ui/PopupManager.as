@@ -169,13 +169,7 @@ package ghostcat.ui
 			
 			popups = new Dictionary(true);
 		
-			applicationDisabledOper =new GroupEffect([new FilterProxyOper(
-														null,
-														new BlurFilter(0,0),
-														1000,
-														{blurX:4,blurY:4}
-													),
-													new FilterProxyOper(
+			applicationDisabledOper = new FilterProxyOper(
 														null,
 														new ColorMatrixFilter([
 															1,0,0,0,0,
@@ -191,14 +185,7 @@ package ghostcat.ui
 						 									0,0,0,1,0
 														]}
 													)
-													]);
-			applicationEnabledOper = new GroupEffect([new FilterProxyOper(
-														null,
-														new BlurFilter(4,4),
-														1000,
-														{blurX:0,blurY:0}
-													),
-													new FilterProxyOper(
+			applicationEnabledOper = new FilterProxyOper(
 														null,
 														new ColorMatrixFilter([
 															0.3086/2,0.6094/2,0.0820/2,0,0,
@@ -213,8 +200,7 @@ package ghostcat.ui
 															0,0,1,0,0,
 															0,0,0,1,0
 														]}
-													)
-													]);
+													);
 			
 			if (RootManager.initialized)
 				register(RootManager.root,RootManager.stage);

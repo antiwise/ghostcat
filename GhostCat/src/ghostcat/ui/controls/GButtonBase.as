@@ -315,10 +315,10 @@ package ghostcat.ui.controls
 			
 			if (content && movie && movie.labels)
 			{
-				var trans:String = movie.curLabelName+"-"+next+":start";
+				var trans:String = movie.curLabelName+"-"+next;
 				if (movie.hasLabel(trans))
 				{
-					movie.setLabel(movie.curLabelName+"-"+next+":start",1);
+					movie.setLabel(movie.curLabelName+"-"+next,1);
 					movie.queueLabel(next,-1);
 				}
 				else
