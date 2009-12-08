@@ -16,6 +16,11 @@ package ghostcat.events
 		public static const UPDATE_COMPLETE:String = "update_complete";
 		
 		/**
+		 * 创建完毕
+		 */
+		public static const CREATE_COMPLETE:String = "create_complete";
+		
+		/**
 		 * 显示事件（可中断）
 		 */
 		public static const SHOW:String = "show";

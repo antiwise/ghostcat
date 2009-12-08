@@ -4,23 +4,21 @@ package ghostcat.ui.containers
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.GNoScale;
 	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LinearLayout;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
 	
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
+	
 	/**
 	 * 根据data复制对象排列的容器
 	 * 
-	 * 标签规则：子对象的render将会被作为子对象的默认skin，其余部分照常显示并会被作为自己的初始大小
+	 * 标签规则：这个对象并没有背景，skin将作为ItemRender的skin存在
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -29,35 +27,34 @@ package ghostcat.ui.containers
 	{
 		public var ref:ClassFactory;
 		
-		public var fields:Object = {renderField:"render"};
 		public var renderSkin:ClassFactory;
 		
-		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null)
+		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null,type:String = "horizontal")
 		{
-			if (fields)
-				this.fields = fields;
+			super(skin, replace);
 			
+			setContent(new Sprite());//重新设置Content，避免冲突
+			setLayout(new LinearLayout());
+			
+			if (skin is DisplayObject)
+				skin = skin["constructor"];
+				
+			if (skin is Class)
+				this.renderSkin = new ClassFactory(skin)
+			else if (ref is ClassFactory)
+				this.renderSkin = skin as ClassFactory;
+				
 			if (ref is Class)
 				this.ref = new ClassFactory(ref)
 			else if (ref is ClassFactory)
 				this.ref = ref as ClassFactory;
-			
-			super(skin, replace);
 			
 			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			
 			this.data = [];
 			
 		}
-		/** @inheritDoc*/
-		public override function setContent(skin:*, replace:Boolean=true) : void
-		{
-			super.setContent(skin,replace);
-			
-			var renderField:String = fields.renderField;
-			if (renderField && content.hasOwnProperty(renderField))
-				renderSkin = new ClassFactory(content[renderField].constructor);
-		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{

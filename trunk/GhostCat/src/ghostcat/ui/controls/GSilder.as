@@ -206,14 +206,16 @@ package ghostcat.ui.controls
 			if (direction == UIConst.HORIZONTAL)
 			{
 				thumbAreaStart = upArrow.width;
-				thumbAreaLength = this.width - downArrow.width - thumb.width - thumbAreaStart;
-				background.width = width;
+				thumbAreaLength = this.width - (downArrow ? downArrow.width : 0) - (thumb ? thumb.width : 0) - thumbAreaStart;
+				if (background)
+					background.width = width;
 			}
 			else
 			{
 				thumbAreaStart = upArrow.height;
-				thumbAreaLength = this.height - downArrow.height - thumb.height - thumbAreaStart;
-				background.height = height;
+				thumbAreaLength = this.height - (downArrow ? downArrow.height : 0) - (thumb ? thumb.height : 0) - thumbAreaStart;
+				if (background)
+					background.height = height;
 			}
 			
 			updateThumb();

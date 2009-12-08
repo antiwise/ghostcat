@@ -8,7 +8,6 @@ package ghostcat.ui.controls
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GScrollPanel;
 	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.Util;
 	
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
@@ -29,16 +28,20 @@ package ghostcat.ui.controls
 		public var listContent:GListBase;
 		private var listFields:Object = {renderField:"render",vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
-		private var itemRender:ClassFactory;
+		private var _itemRender:ClassFactory;
 		private var _type:String;
 		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null,fields:Object = null)
+		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:* = null,fields:Object = null)
 		{
 			if (!fields)
 				fields = listFields;
 			
 			this.type = type;
-			this.itemRender = itemRender;
+			
+			if (itemRender is Class)
+				itemRender = new ClassFactory(itemRender);
+			
+			_itemRender = itemRender;
 			
 			super(skin,replace,NaN,NaN,fields);
 		}
@@ -56,7 +59,7 @@ package ghostcat.ui.controls
 			if (renderSkin && renderSkin.parent)
 				renderSkin.parent.removeChild(renderSkin);
 			
-			listContent = new GListBase(renderSkin,replace,_type,itemRender);
+			listContent = new GListBase(renderSkin,replace,_type,_itemRender);
 			addChild(listContent);
 			
 			content = listContent;//用listContent取代原来的content
@@ -89,6 +92,23 @@ package ghostcat.ui.controls
 		private function eventpaseHandler(event:Event):void
 		{
 			dispatchEvent(event);//转移事件
+		}
+		
+		/**
+		 * 设置ItemRender
+		 * @param v
+		 * 
+		 */
+		public function set itemRender(v:ClassFactory):void
+		{
+			_itemRender = v;
+			if (listContent)
+				listContent.itemRender = v;
+		}
+		
+		public function get itemRender():ClassFactory
+		{
+			return _itemRender;
 		}
 		
 		/**

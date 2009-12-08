@@ -43,17 +43,17 @@ package ghostcat
 		{
 			super.init();
 			
-			this.cursor = new CursorSprite();
-			addChild(this.cursor);
-			
-			this.toolTip = new ToolTipSprite();
-			addChild(this.cursor);
-			
 			this.worldLayer = new GBase();
 			addChild(this.worldLayer);
 			
 			this.popupLayer = new GBase();
 			addChild(this.popupLayer);
+			
+			this.toolTip = new ToolTipSprite();
+			addChild(this.toolTip);
+			
+			this.cursor = new CursorSprite();
+			addChild(this.cursor);
 			
 			PopupManager.instance.register(worldLayer,popupLayer);	
 		}

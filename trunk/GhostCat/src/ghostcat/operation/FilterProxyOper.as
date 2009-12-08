@@ -14,27 +14,34 @@ package ghostcat.operation
 	public class FilterProxyOper extends TweenOper
 	{
 		/**
-		 * 滤镜
-		 */
-		public var filter:BitmapFilter;
-		/**
 		 * 滤镜目标
 		 */
 		public var filterTarget:*;
 		
+		private var proxy:FilterProxy;
+		
+		public override function set target(v:*) : void
+		{
+			filterTarget = v;
+		}
+		
+		public override function get target() : *
+		{
+			return filterTarget;
+		}
+		
 		public function FilterProxyOper(target:DisplayObject=null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false)
 		{
-			super(null, duration, params, invert);
-			this.filter = filter;
 			this.filterTarget = target;
+			this.proxy = new FilterProxy(filter.clone());
+		
+			super(this.proxy, duration, params, invert);
 		}
 		
 		public override function execute() : void
 		{
-			var proxy:FilterProxy = new FilterProxy(this.filter.clone());
 			proxy.applyFilter(filterTarget);
 			
-			this.target = proxy;
 			super.execute();
 		}
 	}

@@ -51,6 +51,17 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 增加值 
+		 * @param v
+		 * @param tween
+		 * 
+		 */
+		public function addValue(v : Number, tween:Boolean = true):void
+		{
+			setValue(data + v,tween);
+		}
+		
+		/**
 		 * 设置数值
 		 * 
 		 * @param v

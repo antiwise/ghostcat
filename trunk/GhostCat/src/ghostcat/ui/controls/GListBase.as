@@ -18,7 +18,6 @@ package ghostcat.ui.controls
 	import ghostcat.util.core.ClassFactory;
 	
 	import mx.events.PropertyChangeEvent;
-	import mx.events.PropertyChangeEventKind;
 
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
@@ -51,6 +50,8 @@ package ghostcat.ui.controls
 		private var oldSelectedItem:DisplayObject;
 		private var _selectedData:*;
 		
+		private var itemSkin:ClassFactory;//ItemRender的皮肤
+		
 		/**
 		 * 
 		 * @param skin	Render皮肤
@@ -59,35 +60,37 @@ package ghostcat.ui.controls
 		 * @param itemRender	Render类型
 		 * 
 		 */
-		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:ClassFactory = null)
+		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:* = null)
 		{
+			if (itemRender is Class)
+				itemRender = new ClassFactory(itemRender);
+			
 			if (!itemRender)
 				itemRender = defaultItemRender;
 				
-			var render:ClassFactory;
 			if (skin)
 			{
 				if (skin is DisplayObject)
 				{
 					var t:DisplayObject = skin;
 					t.parent.removeChild(t);
-					render = new ClassFactory(t["constructor"]);
+					itemSkin = new ClassFactory(t["constructor"]);
 				}
 				else if (skin is Class)
-					render = new ClassFactory(skin);
+					itemSkin = new ClassFactory(skin);
 				else if (skin is ClassFactory)
-					render = skin as ClassFactory
+					itemSkin = skin as ClassFactory
 			}
 			
-			if (!render)
-				render = defaultSkin;
+			if (!itemSkin)
+				itemSkin = defaultSkin;
 			
 			this.type = type;
 			
 			if (itemRender.params)
-				itemRender.params[0] = render;
+				itemRender.params[0] = itemSkin;
 			else
-				itemRender.params = [render];
+				itemRender.params = [itemSkin];
 				
 			super(itemRender);
 			
@@ -95,6 +98,27 @@ package ghostcat.ui.controls
 			addEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
 			
 			addEventListener(MouseEvent.CLICK,clickHandler);
+		}
+		
+		/**
+		 * 设置ItemRender
+		 * @param v
+		 * 
+		 */
+		public function set itemRender(v:ClassFactory):void
+		{
+			this.ref = v;
+			if (v.params)
+				v.params[0] = itemSkin;
+			else
+				v.params = [itemSkin];
+			
+			setContentClass(this.ref);
+		}
+		
+		public function get itemRender():ClassFactory
+		{
+			return this.ref;
 		}
 		
 		/**

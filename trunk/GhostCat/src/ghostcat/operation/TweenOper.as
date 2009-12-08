@@ -44,11 +44,16 @@ package ghostcat.operation
 		public var updateWhenInvent:Boolean = true;
 		
 		/**
+		 * 是否清除原有的Tween效果
+		 */
+		public var clearTarget:Boolean;
+		
+		/**
 		 * 缓动实例 
 		 */
 		public var tween:TweenUtil;
 		
-		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false)
+		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false,clearTarget:Boolean = false)
 		{
 			super();
 			this._target = target;
@@ -58,6 +63,7 @@ package ghostcat.operation
 			if (invert)
 				this.invert = invert;
 			
+			this.clearTarget = clearTarget;
 		}
 		
 		/**
@@ -80,6 +86,10 @@ package ghostcat.operation
 		public override function execute() : void
 		{
 			super.execute();
+			
+			if (clearTarget)
+				TweenUtil.removeTween(_target);
+			
 			tween = new TweenUtil(_target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
 			

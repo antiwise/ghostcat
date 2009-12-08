@@ -4,10 +4,11 @@ package ghostcat.display
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import ghostcat.manager.RootManager;
+	import ghostcat.events.GEvent;
 	import ghostcat.util.core.ClassFactory;
 
 	/**
@@ -161,7 +162,7 @@ package ghostcat.display
 			}
 			_content = skin;
 			
-			if (oldParent)
+			if (oldParent && !(oldParent is Loader))
 				oldParent.addChildAt(this,oldIndex);
 		}
 		
@@ -169,6 +170,8 @@ package ghostcat.display
 		{
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler)
 			init();
+			
+			dispatchEvent(new GEvent(GEvent.CREATE_COMPLETE));
 		}
 		
 		private function removedFromStageHandler(event:Event):void
