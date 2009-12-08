@@ -19,14 +19,7 @@ package ghostcat.ui.containers
 		
 		public function GViewState(skin:* = null,replace:Boolean = true)
 		{
-			super(skin, replace)
-		}
-		
-		protected override function init() : void
-		{
-			super.init();
-			
-			selectedIndex = 0;
+			super(skin, replace);
 		}
 
 		/**

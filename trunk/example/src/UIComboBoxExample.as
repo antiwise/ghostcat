@@ -21,8 +21,6 @@ package
 	{
 		protected override function init():void
 		{	
-			new EnabledSWFScreen(stage);
-			
 			RootManager.register(this);
 			//下拉框
 			var b:GComboBox = new GComboBox();
