@@ -197,14 +197,11 @@ package ghostcat.ui.controls
 		{
 			super.updateSize();
 			
-			if (this.downArrow)
-			{
-				this.downArrow.x = this.width - this.downArrow.width;
-				this.downArrow.y = this.height - this.downArrow.height;
-			}
-			
 			if (direction == UIConst.HORIZONTAL)
 			{
+				if (this.downArrow)
+					this.downArrow.x = this.width - this.downArrow.width;
+				
 				thumbAreaStart = upArrow.width;
 				thumbAreaLength = this.width - (downArrow ? downArrow.width : 0) - (thumb ? thumb.width : 0) - thumbAreaStart;
 				if (background)
@@ -212,6 +209,9 @@ package ghostcat.ui.controls
 			}
 			else
 			{
+				if (this.downArrow)
+					this.downArrow.y = this.height - this.downArrow.height;
+				
 				thumbAreaStart = upArrow.height;
 				thumbAreaLength = this.height - (downArrow ? downArrow.height : 0) - (thumb ? thumb.height : 0) - thumbAreaStart;
 				if (background)
