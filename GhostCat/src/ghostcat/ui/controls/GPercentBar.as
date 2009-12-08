@@ -97,7 +97,11 @@
 				if (this.labelTextField.autoSize == TextFieldAutoSize.NONE)
 					this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
 			}
-			
+		}
+		
+		protected override function init():void
+		{
+			super.init();
 			setPercent(0,false);
 		}
 		

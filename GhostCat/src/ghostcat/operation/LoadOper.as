@@ -43,7 +43,7 @@
 		/**
 		 * 使用Loader的扩展名
 		 */
-		public static var LOADER_TYPE:Array = [".swf",".gif",".png",".jpg"];
+		public static var LOADER_TYPE:Array = ["swf","gif","png","jpg"];
 		
 		/**
 		 * 始终使用嵌入资源 

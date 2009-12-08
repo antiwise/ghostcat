@@ -5,7 +5,6 @@ package ghostcat.ui.layout
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.containers.GView;
 
 	/**
 	 * 线性布局

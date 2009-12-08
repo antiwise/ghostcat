@@ -1,6 +1,8 @@
 package ghostcat.operation
 {
-	public interface IOper
+	import flash.events.IEventDispatcher;
+
+	public interface IOper extends IEventDispatcher
 	{
 		/**
 		 * 立即执行

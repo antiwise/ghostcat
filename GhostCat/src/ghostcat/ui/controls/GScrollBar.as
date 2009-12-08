@@ -124,11 +124,17 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		public override function get percent():Number
 		{
+			if (!_scrollContent)
+				return NaN;
+			
 			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH / _scrollContent.maxScrollH : _scrollContent.scrollV / _scrollContent.maxScrollV;
 		}
 		
 		public override function set percent(v:Number):void
 		{
+			if (!_scrollContent)
+				return;
+			
 			if (direction == UIConst.HORIZONTAL)
 				_scrollContent.scrollH = _scrollContent.maxScrollH * v; 
 			else

@@ -14,10 +14,11 @@ package ghostcat.ui
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
-	import ghostcat.operation.GroupOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
+	import ghostcat.operation.effect.GroupEffect;
+	import ghostcat.operation.effect.IEffect;
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.display.Geom;
 	
@@ -82,12 +83,12 @@ package ghostcat.ui
 		/**
 		 * 定义进入激活状态的Oper，用于显示过渡效果
 		 */
-		public var applicationEnabledOper:Oper;
+		public var applicationEnabledOper:IEffect;
 		
 		/**
 		 * 定义进入非激活状态的Oper，用于显示过渡效果
 		 */
-		public var applicationDisabledOper:Oper;
+		public var applicationDisabledOper:IEffect;
 		
 		/**
 		 * 主程序是否激活 
@@ -111,6 +112,7 @@ package ghostcat.ui
 			{
 				if (applicationEnabledOper)
 				{
+					applicationEnabledOper.target = application;
 					applicationEnabledOper.addEventListener(OperationEvent.OPERATION_COMPLETE,enabledOperCompleteHandler);
 					applicationEnabledOper.execute();
 				}
@@ -118,7 +120,10 @@ package ghostcat.ui
 			else
 			{
 				if (applicationDisabledOper)
+				{
+					applicationDisabledOper.target = application;
 					applicationDisabledOper.execute();
+				}
 			}
 		}
 		
@@ -164,14 +169,14 @@ package ghostcat.ui
 			
 			popups = new Dictionary(true);
 		
-			applicationDisabledOper =new GroupOper([new FilterProxyOper(
-														application,
+			applicationDisabledOper =new GroupEffect([new FilterProxyOper(
+														null,
 														new BlurFilter(0,0),
 														1000,
 														{blurX:4,blurY:4}
 													),
 													new FilterProxyOper(
-														application,
+														null,
 														new ColorMatrixFilter([
 															1,0,0,0,0,
 															0,1,0,0,0,
@@ -187,14 +192,14 @@ package ghostcat.ui
 														]}
 													)
 													]);
-			applicationEnabledOper = new GroupOper([new FilterProxyOper(
-														application,
+			applicationEnabledOper = new GroupEffect([new FilterProxyOper(
+														null,
 														new BlurFilter(4,4),
 														1000,
 														{blurX:0,blurY:0}
 													),
 													new FilterProxyOper(
-														application,
+														null,
 														new ColorMatrixFilter([
 															0.3086/2,0.6094/2,0.0820/2,0,0,
 						 									0.3086/2,0.6094/2,0.0820/2,0,0,

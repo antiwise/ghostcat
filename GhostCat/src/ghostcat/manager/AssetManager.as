@@ -238,7 +238,7 @@ package ghostcat.manager
 		 */
 		public function getMovieClip(ref:String):MovieClip
 		{
-			return getAssetByName(ref)() as MovieClip;
+			return new (this.getAssetByName(ref))() as MovieClip;
 		}
 		
 		/**
@@ -250,7 +250,7 @@ package ghostcat.manager
 		 */
 		public function getSprite(ref:String):Sprite
 		{
-			return getAssetByName(ref)() as Sprite;
+			return new (this.getAssetByName(ref))() as Sprite;
 		}
 		
 		/**
@@ -262,7 +262,7 @@ package ghostcat.manager
 		 */
 		public function getBitmapData(ref:String,width:int,height:int):BitmapData
 		{
-			return getAssetByName(ref)(width,height) as BitmapData;
+			return new (this.getAssetByName(ref))(width,height) as BitmapData;
 		}
 	}
 }

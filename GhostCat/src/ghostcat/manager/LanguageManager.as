@@ -10,8 +10,8 @@ package ghostcat.manager
 	import ghostcat.operation.Queue;
 	import ghostcat.text.RegExpUtil;
 	import ghostcat.util.ReflectUtil;
-	import ghostcat.util.display.SearchUtil;
 	import ghostcat.util.core.Singleton;
+	import ghostcat.util.display.SearchUtil;
 	
 	
 	/**
@@ -71,11 +71,14 @@ package ghostcat.manager
 			var texts:Array = oper.data.toString().split(/\r?\n/);
 			for (var i:int=0;i < texts.length;i++)
 			{
-				var textArr:Array = (texts[i] as String).split(/\s*=\s*/);
-				if (textArr.length == 2)
-					resource[textType][textArr[0]] = textArr[1];
+				var textLine:String = texts[i] as String;
+				if (textLine.substr(0,2)!="//")
+				{
+					var textArr:Array = textLine.split(/\s*=\s*/);
+					if (textArr.length == 2)
+						resource[textType][textArr[0]] = textArr[1];
+				}
 			}
-			
 		}
 		
 		/**

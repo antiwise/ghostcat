@@ -20,11 +20,6 @@ package ghostcat.ui.containers
 	public class GView extends GNoScale
 	{
 		/**
-		 * 对象容器 
-		 */
-		public var contentPane:DisplayObjectContainer;
-		
-		/**
 		 * 背景容器
 		 */
 		public var backContent:DisplayObject
@@ -34,14 +29,20 @@ package ghostcat.ui.containers
 		 */
 		public var layout:Layout;
 		
+		/**
+		 * 对象容器 
+		 */
+		public function get contentPane():DisplayObjectContainer
+		{
+			return content as DisplayObjectContainer;
+		}
+		
 		public function GView(skin:*=null, replace:Boolean=true)
 		{
 			if (!skin)
 				skin = new Sprite();
 			
 			super(skin, replace);
-			
-			contentPane = content as DisplayObjectContainer;
 		}
 		
 		/**
