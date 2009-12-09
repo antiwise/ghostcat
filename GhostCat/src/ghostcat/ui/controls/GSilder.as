@@ -28,6 +28,8 @@ package ghostcat.ui.controls
 		public var thumb:GButton;
 		public var background:DisplayObject;
 		
+		public var clickToMove:Boolean = false;
+		
 		/**
 		 * 拖动起点
 		 */
@@ -169,12 +171,18 @@ package ghostcat.ui.controls
 			var backgroundField:String =  fields.backgroundField;
 			
 			if (content.hasOwnProperty(upArrowField))
+			{
 				this.upArrow = new GButton(content[upArrowField]);
+				this.upArrow.addEventListener(MouseEvent.CLICK,upArrowClickHandler);
+			}
 			else
 				this.upArrow = new GButton(new Shape())
 				
 			if (content.hasOwnProperty(downArrowField))
+			{
 				this.downArrow = new GButton(content[downArrowField]);
+				this.downArrow.addEventListener(MouseEvent.CLICK,downArrowClickHandler);
+			}
 			else
 				this.downArrow = new GButton(new Shape())
 				
@@ -253,6 +261,24 @@ package ghostcat.ui.controls
 			DragManager.startDrag(thumb,rect,null,null,thumbMouseMoveHandler);
 		}
 		
+		protected function upArrowClickHandler(event:MouseEvent):void
+		{
+			if (clickToMove)
+			{
+				value -= detra;
+				updateThumb();
+			}
+		}
+		
+		protected function downArrowClickHandler(event:MouseEvent):void
+		{
+			if (clickToMove)
+			{
+				value += detra;
+				updateThumb();
+			}
+		}
+		
 		/**
 		 * 滚动块移动
 		 * @param event
@@ -278,7 +304,7 @@ package ghostcat.ui.controls
 			if (upArrow)
 			{
 				upArrow.enabled = !isNaN(p) && p > 0;
-				if (upArrow.mouseDown)
+				if (upArrow.mouseDown && !clickToMove)
 				{
 					value -= detra;
 					updateThumb();
@@ -288,7 +314,7 @@ package ghostcat.ui.controls
 			if (downArrow)
 			{
 				downArrow.enabled = !isNaN(p) && p < 1;
-				if (downArrow.mouseDown)
+				if (downArrow.mouseDown && !clickToMove)
 				{
 					value += detra;
 					updateThumb();
@@ -342,10 +368,16 @@ package ghostcat.ui.controls
 				return;
 			
 			if (upArrow) 
+			{
+				upArrow.removeEventListener(MouseEvent.CLICK,upArrowClickHandler);
 				upArrow.destory();
+			}
 			
 			if (downArrow) 
+			{
+				downArrow.removeEventListener(MouseEvent.CLICK,downArrowClickHandler);
 				downArrow.destory();
+			}
 			
 			if (thumb) 
 			{

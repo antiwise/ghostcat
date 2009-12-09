@@ -414,6 +414,7 @@ package ghostcat.display.viewport
 			if (!s)
 				s = ref ? ref.newInstance() : new Shape();
 			
+			
 			setItemPosition(s,i,j);
 			contents[i + ":" +j] = s;
 			
@@ -429,7 +430,7 @@ package ghostcat.display.viewport
 			e.addToLow = low;
 			e.repeatIndex = getChildIndex(s);
 			dispatchEvent(e);
-		
+			
 			return s;
 		}
 		

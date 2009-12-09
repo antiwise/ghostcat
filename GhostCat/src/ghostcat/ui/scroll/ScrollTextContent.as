@@ -13,6 +13,8 @@ package ghostcat.ui.scroll
 	public class ScrollTextContent extends EventDispatcher implements IScrollContent
 	{
 		private var target:TextField;
+		private var _tweenTargetH:Number = 0;
+		private var _tweenTargetV:Number = 0;
 		
 		public function ScrollTextContent(target:TextField)
 		{
@@ -58,6 +60,26 @@ package ghostcat.ui.scroll
 		public function set scrollV(v:int):void
 		{
 			target.scrollV = v;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetH():Number
+		{
+			return _tweenTargetH;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetV():Number
+		{
+			return _tweenTargetV;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetH(v:Number):void
+		{
+			_tweenTargetH = v;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetV(v:Number):void
+		{
+			_tweenTargetV = v;
 		}
 	}
 }

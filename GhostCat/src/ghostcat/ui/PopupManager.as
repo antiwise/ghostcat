@@ -4,7 +4,6 @@ package ghostcat.ui
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -14,10 +13,8 @@ package ghostcat.ui
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
-	import ghostcat.operation.Oper;
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
-	import ghostcat.operation.effect.GroupEffect;
 	import ghostcat.operation.effect.IEffect;
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.display.Geom;
@@ -168,39 +165,21 @@ package ghostcat.ui
 			super();
 			
 			popups = new Dictionary(true);
-		
-			applicationDisabledOper = new FilterProxyOper(
-														null,
-														new ColorMatrixFilter([
-															1,0,0,0,0,
-															0,1,0,0,0,
-															0,0,1,0,0,
-															0,0,0,1,0
-														]),
-														1000,
-														{matrix:[
-															0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0,0,0,1,0
-														]}
-													)
-			applicationEnabledOper = new FilterProxyOper(
-														null,
-														new ColorMatrixFilter([
-															0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0.3086/2,0.6094/2,0.0820/2,0,0,
-						 									0,0,0,1,0
-														]),
-														500,
-														{matrix:[
-															1,0,0,0,0,
-															0,1,0,0,0,
-															0,0,1,0,0,
-															0,0,0,1,0
-														]}
-													);
+			
+			const normalMatrix:Array = [
+				1,0,0,0,0,
+				0,1,0,0,0,
+				0,0,1,0,0,
+				0,0,0,1,0
+			]
+			const gredMatrix:Array = [
+				0.3086/2,0.6094/2,0.0820/2,0,0,
+				0.3086/2,0.6094/2,0.0820/2,0,0,
+				0.3086/2,0.6094/2,0.0820/2,0,0,
+				0,0,0,1,0
+			]
+			applicationDisabledOper = new FilterProxyOper(null,new ColorMatrixFilter(normalMatrix),1000,{matrix:gredMatrix})
+			applicationEnabledOper = new FilterProxyOper(null,new ColorMatrixFilter(gredMatrix),500,{matrix:normalMatrix});
 			
 			if (RootManager.initialized)
 				register(RootManager.root,RootManager.stage);

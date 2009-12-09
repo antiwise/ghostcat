@@ -2,6 +2,7 @@ package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -29,7 +30,7 @@ package ghostcat.ui.controls
 		
 		private var blurProxy:FilterProxy;
 		
-		private var _target:DisplayObject;
+		private var _target:*;
 		
 		/**
 		 * 滚动缓动效果
@@ -46,6 +47,7 @@ package ghostcat.ui.controls
 		 */		
 		public var blur:Number = 0
 		
+		
 		public function GScrollBar(skin:*=null, replace:Boolean=true,fields:Object=null)
 		{
 			super(skin, replace,fields);
@@ -56,12 +58,12 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function get target():DisplayObject
+		public function get target():*
 		{
 			return _target;
 		}
 
-		public function set target(v:DisplayObject):void
+		public function set target(v:*):void
 		{
 			if (_target)
 				_target.removeEventListener(Event.SCROLL,scrollHandler);
@@ -157,7 +159,7 @@ package ghostcat.ui.controls
 		 * @param scrollRect	目标的滚动大小
 		 * 
 		 */
-		public function setTarget(target:DisplayObject,scrollRect:Rectangle = null):void
+		public function setTarget(target:*,scrollRect:Rectangle = null):void
 		{
 			this.target = target;
 			
@@ -183,6 +185,52 @@ package ghostcat.ui.controls
 			
 			super.updateThumb();
 		}
+		
+		protected override function upArrowClickHandler(event:MouseEvent):void
+		{
+			if (clickToMove)
+				tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra)
+		}
+		
+		protected override function downArrowClickHandler(event:MouseEvent):void
+		{
+			if (clickToMove)
+				tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra);
+		}
+		
+		/**
+		 * 缓动到值
+		 * @param v
+		 * 
+		 */
+		protected function tweenToValue(v:Number):void
+		{
+			v = Math.max(Math.min(v,maxValue),minValue);
+			
+			if (direction == UIConst.HORIZONTAL)
+			{
+				scrollContent.tweenTargetH = v;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing})
+				}
+				else
+					_scrollContent.scrollH = v;
+			}
+			else
+			{
+				scrollContent.tweenTargetV = v;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing})
+				}
+				else 
+					_scrollContent.scrollV = v;
+			}
+		}
+		
 		/** @inheritDoc*/
 		protected override function thumbMouseMoveHandler(event:Event=null):void
 		{
@@ -194,27 +242,12 @@ package ghostcat.ui.controls
 			
 			var v:Number;
 			if (direction == UIConst.HORIZONTAL)
-			{
 				v = _scrollContent.maxScrollH * (thumb.x - thumbAreaStart) / thumbAreaLength;
-				if (duration > 0)
-				{
-					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing})
-				}
-				else
-					_scrollContent.scrollH = v;
-			}
 			else
-			{
 				v = _scrollContent.maxScrollV * (thumb.y - thumbAreaStart) / thumbAreaLength;
-				if (duration > 0)
-				{
-					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing})
-				}
-				else 
-					_scrollContent.scrollV = v;
-			}
+			
+			tweenToValue(v);
+			
 		}
 		
 		protected function scrollHandler(event:Event):void

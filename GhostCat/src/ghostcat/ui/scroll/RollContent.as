@@ -15,6 +15,8 @@ package ghostcat.ui.scroll
 		
 		private var _maxScrollH:int = int.MAX_VALUE;
 		private var _maxScrollV:int = int.MAX_VALUE;
+		private var _tweenTargetH:Number = 0;
+		private var _tweenTargetV:Number = 0;
 		
 		public function RollContent(target:DisplayObject)
 		{
@@ -64,6 +66,26 @@ package ghostcat.ui.scroll
 		public function set scrollV(v:int):void
 		{
 			content.y = -v;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetH():Number
+		{
+			return _tweenTargetH;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetV():Number
+		{
+			return _tweenTargetV;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetH(v:Number):void
+		{
+			_tweenTargetH = v;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetV(v:Number):void
+		{
+			_tweenTargetV = v;
 		}
 	}
 }

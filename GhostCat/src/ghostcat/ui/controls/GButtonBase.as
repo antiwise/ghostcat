@@ -255,6 +255,7 @@ package ghostcat.ui.controls
 				return;
 			
 			super.selected = v;
+			
 			tweenTo(UP);
 			
 			dispatchEvent(new Event(Event.CHANGE))
@@ -382,7 +383,11 @@ package ghostcat.ui.controls
 		 */
 		protected function rollOutHandler(event:MouseEvent):void
 		{
-			tweenTo(UP);
+			if (enabled)
+				tweenTo(UP);
+			else
+				tweenTo(DISABLED);
+			
 			_mouseOver = false;
 		}
 		

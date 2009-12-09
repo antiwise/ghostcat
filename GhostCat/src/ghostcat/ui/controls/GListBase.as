@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -71,11 +72,7 @@ package ghostcat.ui.controls
 			if (skin)
 			{
 				if (skin is DisplayObject)
-				{
-					var t:DisplayObject = skin;
-					t.parent.removeChild(t);
-					itemSkin = new ClassFactory(t["constructor"]);
-				}
+					itemSkin = new ClassFactory(skin["constructor"]);
 				else if (skin is Class)
 					itemSkin = new ClassFactory(skin);
 				else if (skin is ClassFactory)
@@ -93,6 +90,20 @@ package ghostcat.ui.controls
 				itemRender.params = [itemSkin];
 				
 			super(itemRender);
+			
+			if (skin is DisplayObject && skin.parent)
+			{
+				var t:DisplayObject = skin;
+				var oldIndex:int = t.parent.getChildIndex(t);
+				var p:DisplayObjectContainer = t.parent;
+				if (p)
+				{
+					p.removeChild(t);
+					p.addChildAt(this,oldIndex);
+					this.x = t.x;
+					this.y = t.y;
+				}
+			}
 			
 			addEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			addEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);
@@ -415,7 +426,7 @@ package ghostcat.ui.controls
 			var item:GBase = event.repeatObj as GBase;
 			refreshItem(p.x,p.y);
 			
-			item.visible = (item.data != null);
+//			item.visible = (item.data != null);
 		}
 		
 		/**
@@ -427,7 +438,7 @@ package ghostcat.ui.controls
 		{
 			var item:GBase = event.repeatObj as GBase;
 			item.data = null;
-			item.visible = item.selected = false;
+			item.selected = false;
 		}
 		
 		/**
@@ -487,7 +498,7 @@ package ghostcat.ui.controls
 					item.content.width = columnWidth;
 					item.content.height = rowHeight;
 				}
-				item.selected = (d == selectedData);
+				item.selected = d && (d == selectedData);
 			}
 			return item;
 		}

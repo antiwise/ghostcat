@@ -12,7 +12,7 @@ package ghostcat.operation
 	 */
 	public class TweenOper extends Oper implements IEffect
 	{
-		private var _target:*;
+		protected var _target:*;
 
 		/**
 		 * 目标

@@ -84,7 +84,7 @@ package ghostcat.text.controls
 		 * @param bitmap	是否转换为位图
 		 * 
 		 */
-		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = false,container:DisplayObjectContainer = null,bitmap:Boolean = false):void
+		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = false,container:DisplayObjectContainer = null,bitmap:Boolean = true):void
 		{
 			separateText(container,bitmap);
 			
