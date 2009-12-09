@@ -59,6 +59,9 @@ package ghostcat.ui.controls
 			if (renderSkin && renderSkin.parent)
 				renderSkin.parent.removeChild(renderSkin);
 			
+			if (renderSkin is DisplayObject)
+				renderSkin = renderSkin["constructor"];
+			
 			listContent = new GListBase(renderSkin,replace,_type,_itemRender);
 			addChild(listContent);
 			

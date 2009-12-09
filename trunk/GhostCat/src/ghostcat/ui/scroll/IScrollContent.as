@@ -45,5 +45,22 @@ package ghostcat.ui.scroll
 		 */
 		function get scrollV():int
 		function set scrollV(v:int):void
+		
+		/**
+		 * 横向缓动目标值
+		 * @return 
+		 * 
+		 */
+		function get tweenTargetH():Number
+		function set tweenTargetH(v:Number):void
+		/**
+		 * 纵向缓动目标值
+		 * @return 
+		 * 
+		 */
+		function get tweenTargetV():Number
+		function set tweenTargetV(v:Number):void
+				
+			
 	}
 }

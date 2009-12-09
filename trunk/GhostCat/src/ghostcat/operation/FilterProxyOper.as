@@ -18,7 +18,10 @@ package ghostcat.operation
 		 */
 		public var filterTarget:*;
 		
-		private var proxy:FilterProxy;
+		/**
+		 * 滤镜
+		 */
+		public var filter:BitmapFilter;
 		
 		public override function set target(v:*) : void
 		{
@@ -32,15 +35,18 @@ package ghostcat.operation
 		
 		public function FilterProxyOper(target:DisplayObject=null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false)
 		{
+			this.filter = filter;
 			this.filterTarget = target;
-			this.proxy = new FilterProxy(filter.clone());
 		
-			super(this.proxy, duration, params, invert);
+			super(null, duration, params, invert);
 		}
 		
 		public override function execute() : void
 		{
+			var proxy:FilterProxy = new FilterProxy(filter.clone());
 			proxy.applyFilter(filterTarget);
+			
+			this._target = proxy;
 			
 			super.execute();
 		}

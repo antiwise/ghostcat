@@ -42,6 +42,8 @@ package ghostcat.ui.containers
 		
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
+		private var _tweenTargetH:Number = 0;
+		private var _tweenTargetV:Number = 0;
 		
 		public function GScrollPanel(skin:*,replace:Boolean = true,width:Number = NaN,height:Number = NaN,fields:Object = null)
 		{
@@ -176,14 +178,14 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public function get maxScrollH():int
 		{
-			return content.width - scrollRect.width;
+			return Math.max(0,content.width - scrollRect.width);
 		}
 		/** @inheritDoc*/
 		public function get maxScrollV():int
 		{
-			return content.height - scrollRect.height;
+			return Math.max(content.height - scrollRect.height);
 		}
-		
+		/** @inheritDoc*/
 		public function get oldScrollH():int
 		{
 			return _oldScrollH;
@@ -193,7 +195,7 @@ package ghostcat.ui.containers
 		{
 			return	-content.x;
 		}
-		
+		/** @inheritDoc*/
 		public function set scrollH(v:int):void
 		{
 			v = Math.max(0,Math.min(v,maxScrollH))
@@ -201,7 +203,7 @@ package ghostcat.ui.containers
 			_oldScrollH = -content.x;
 			content.x = -v;
 		}
-		
+		/** @inheritDoc*/
 		public function get oldScrollV():int
 		{
 			return _oldScrollV;
@@ -211,13 +213,33 @@ package ghostcat.ui.containers
 		{
 			return -content.y;
 		}
-		
+		/** @inheritDoc*/
 		public function set scrollV(v:int):void
 		{
 			v = Math.max(0,Math.min(v,maxScrollV))
 			
 			_oldScrollV = -content.y;
 			content.y = -v;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetH():Number
+		{
+			return _tweenTargetH;
+		}
+		/** @inheritDoc*/
+		public function get tweenTargetV():Number
+		{
+			return _tweenTargetV;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetH(v:Number):void
+		{
+			_tweenTargetH = v;
+		}
+		/** @inheritDoc*/
+		public function set tweenTargetV(v:Number):void
+		{
+			_tweenTargetV = v;
 		}
 		/** @inheritDoc*/
 		public override function destory() : void
