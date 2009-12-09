@@ -29,7 +29,12 @@ package ghostcat.ui.containers
 		 */
 		public function get selectedChild():DisplayObject
 		{
-			return _selectedIndex != -1 ? (content as DisplayObjectContainer).getChildAt(_selectedIndex) : null;
+			if (_selectedIndex == -1)
+				return null;
+			else if (_selectedIndex >= (content as DisplayObjectContainer).numChildren)
+				return null;
+			else
+				return (content as DisplayObjectContainer).getChildAt(_selectedIndex);
 		}
 
 		public function set selectedChild(v:DisplayObject):void

@@ -109,7 +109,8 @@ package ghostcat.ui
 			{
 				if (applicationEnabledOper)
 				{
-					applicationEnabledOper.target = application;
+					if (!applicationEnabledOper.target)
+						applicationEnabledOper.target = effectTarget;
 					applicationEnabledOper.addEventListener(OperationEvent.OPERATION_COMPLETE,enabledOperCompleteHandler);
 					applicationEnabledOper.execute();
 				}
@@ -118,7 +119,8 @@ package ghostcat.ui
 			{
 				if (applicationDisabledOper)
 				{
-					applicationDisabledOper.target = application;
+					if (!applicationDisabledOper.target)
+						applicationDisabledOper.target = effectTarget;
 					applicationDisabledOper.execute();
 				}
 			}
@@ -160,6 +162,11 @@ package ghostcat.ui
 			_application = v;
 		}
 		
+		/**
+		 * 效果的目标 
+		 */
+		public var effectTarget:DisplayObject;
+		
 		public function PopupManager()
 		{
 			super();
@@ -197,6 +204,8 @@ package ghostcat.ui
 		{
 			this.application = application;
 			this.popupLayer = popupLayer;
+			
+			this.effectTarget = this.application;
 		}
 		
 		/**
