@@ -18,6 +18,11 @@ package ghostcat.util.display
 			this.children = children;
 			this.field = field;
 			this.eventTarget = this;
+			
+			for (var i:int = 0; i < children.length; i++)
+				this.children[i][field] = false;
+			
+			selectedIndex = 0;
 		}
 		
 		public function get selectedIndex():int
@@ -30,10 +35,13 @@ package ghostcat.util.display
 			if (_selectedIndex == value)
 				return;
 			
+			if (_selectedIndex != -1)
+				children[_selectedIndex][field] = false;
+			
 			_selectedIndex = value;
 			
-			for (var i:int = 0;i < children.length;i++)
-				children[i][field] = (i == value)
+			if (_selectedIndex != -1)
+				children[_selectedIndex][field] = true;
 			
 			if (this.eventTarget)
 				this.eventTarget.dispatchEvent(new Event(Event.CHANGE));

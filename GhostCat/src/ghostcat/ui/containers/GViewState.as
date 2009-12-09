@@ -15,11 +15,17 @@ package ghostcat.ui.containers
 	 */
 	public class GViewState extends GBase
 	{
-		private var _selectedIndex:int = -1;
+		protected var _selectedIndex:int = -1;
 		
 		public function GViewState(skin:* = null,replace:Boolean = true)
 		{
 			super(skin, replace);
+			
+			var container:DisplayObjectContainer = content as DisplayObjectContainer;
+			for (var i:int = 0; i < container.numChildren; i++)
+				container.getChildAt(i).visible = false;
+			
+			selectedIndex = 0;
 		}
 
 		/**
@@ -66,13 +72,16 @@ package ghostcat.ui.containers
 		{
 			if (_selectedIndex == v)
 				return;
-				
-			_selectedIndex = v;
 			
 			var container:DisplayObjectContainer = content as DisplayObjectContainer;
 			
-			for (var i:int = 0; i < container.numChildren; i++)
-				container.getChildAt(i).visible = (_selectedIndex == i);
+			if (_selectedIndex != -1 && _selectedIndex < container.numChildren)
+				container.getChildAt(_selectedIndex).visible = false;
+			
+			_selectedIndex = v;
+			
+			if (_selectedIndex != -1 && _selectedIndex < container.numChildren)
+				container.getChildAt(_selectedIndex).visible = true;
 		}
 
 	}
