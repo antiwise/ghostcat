@@ -11,6 +11,7 @@ package ghostcat.ui
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
+	import ghostcat.filter.ColorMatrixFilterProxy;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
 	import ghostcat.operation.PopupOper;
@@ -185,8 +186,8 @@ package ghostcat.ui
 				0.3086/2,0.6094/2,0.0820/2,0,0,
 				0,0,0,1,0
 			]
-			applicationDisabledOper = new FilterProxyOper(null,new ColorMatrixFilter(normalMatrix),1000,{matrix:gredMatrix})
-			applicationEnabledOper = new FilterProxyOper(null,new ColorMatrixFilter(gredMatrix),500,{matrix:normalMatrix});
+			applicationDisabledOper = new FilterProxyOper(null,new ColorMatrixFilter(normalMatrix),300,{matrix:gredMatrix})
+			applicationEnabledOper = new FilterProxyOper(null,new ColorMatrixFilter(gredMatrix),300,{matrix:normalMatrix});
 			
 			if (RootManager.initialized)
 				register(RootManager.root,RootManager.stage);
@@ -235,18 +236,18 @@ package ghostcat.ui
 				
 			popups[obj] = owner;
 			
-			popupLayer.addChild(obj);
-			
 			if (centerMode == CenterMode.RECT)
 			{
-				Geom.centerIn(obj,obj.stage);
+				Geom.centerIn(obj,popupLayer.stage);
 			}
 			else if (centerMode == CenterMode.POINT)
 			{
-				var center:Point = popupLayer.globalToLocal(Geom.center(obj.stage));
+				var center:Point = popupLayer.globalToLocal(Geom.center(popupLayer.stage));
 				obj.x = center.x;
 				obj.y = center.y;
 			}
+			
+			popupLayer.addChild(obj);
 			
 			if (modal && applicationEnabled)
 			{

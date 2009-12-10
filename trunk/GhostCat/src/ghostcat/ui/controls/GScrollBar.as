@@ -229,6 +229,8 @@ package ghostcat.ui.controls
 				else 
 					_scrollContent.scrollV = v;
 			}
+		
+//			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/** @inheritDoc*/

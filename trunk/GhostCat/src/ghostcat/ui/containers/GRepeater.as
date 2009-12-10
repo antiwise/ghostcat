@@ -8,7 +8,6 @@ package ghostcat.ui.containers
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
 	import ghostcat.events.ItemClickEvent;
-	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
@@ -55,11 +54,19 @@ package ghostcat.ui.containers
 			
 		}
 		
-		/** @inheritDoc*/
-		public override function set data(v:*) : void
+		public function get itemRender():ClassFactory
 		{
-			super.data = v;
-			
+			return ref;
+		}
+		
+		public function set itemRender(v:ClassFactory):void
+		{
+			this.ref = v;
+			refresh();
+		}
+		
+		public function refresh():void
+		{
 			if (ref && renderSkin)
 			{
 				if (ref.params)
@@ -76,7 +83,14 @@ package ghostcat.ui.containers
 				contentPane.addChild(obj);
 				obj.data = data[i];
 			}
-			layout.invalidateLayout();
+			layout.vaildLayout();
+		}
+		
+		/** @inheritDoc*/
+		public override function set data(v:*) : void
+		{
+			super.data = v;
+			refresh();
 		}
 		/** @inheritDoc*/
 		public override function destory() : void

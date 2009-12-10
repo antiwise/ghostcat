@@ -120,7 +120,7 @@ package ghostcat.ui.controls
 			_displayValue = v;
 			
 			if (textField)
-				textField.text = prefix + v.toFixed(fix) + suffix;
+				textField.text = prefix + (fix == 0) ? int(v).toString() : v.toFixed(fix) + suffix;
 			
 			if (enabledAdjustContextSize)
 				adjustContextSize();

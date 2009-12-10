@@ -28,7 +28,15 @@ package ghostcat.ui.controls
 		public var thumb:GButton;
 		public var background:DisplayObject;
 		
+		/**
+		 * 点击一次按钮才移动一次
+		 */
 		public var clickToMove:Boolean = false;
+		
+		/**
+		 * 激活滚动条按钮自适应
+		 */
+		public var enabledArrowResize:Boolean = true;
 		
 		/**
 		 * 拖动起点
@@ -207,7 +215,7 @@ package ghostcat.ui.controls
 			
 			if (direction == UIConst.HORIZONTAL)
 			{
-				if (this.downArrow)
+				if (this.downArrow && enabledArrowResize)
 					this.downArrow.x = this.width - this.downArrow.width;
 				
 				thumbAreaStart = upArrow.width;
@@ -217,7 +225,7 @@ package ghostcat.ui.controls
 			}
 			else
 			{
-				if (this.downArrow)
+				if (this.downArrow && enabledArrowResize)
 					this.downArrow.y = this.height - this.downArrow.height;
 				
 				thumbAreaStart = upArrow.height;

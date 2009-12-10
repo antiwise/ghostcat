@@ -117,6 +117,17 @@ package ghostcat.util.display
 		}
 		
 		/**
+		 * 获得注册点（相对与显示出的图形）
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public static function getRegPoint(v:DisplayObject):Point
+		{
+			return v.getRect(v).topLeft;
+		}
+		
+		/**
 		 * 转换坐标到某个显示对象
 		 * 
 		 * @param pos	坐标
