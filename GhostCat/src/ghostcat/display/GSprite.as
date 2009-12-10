@@ -7,6 +7,7 @@ package ghostcat.display
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.events.GEvent;
 	import ghostcat.util.core.ClassFactory;
@@ -115,6 +116,9 @@ package ghostcat.display
 		 */		
 		public function setContent(skin:*,replace:Boolean=true):void
 		{
+			if (skin is String)
+				skin = getDefinitionByName(skin as String);
+			
 			if (skin is Class)
 				skin = new ClassFactory(skin);
 			

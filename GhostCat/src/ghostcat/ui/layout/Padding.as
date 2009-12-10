@@ -1,5 +1,8 @@
 package ghostcat.ui.layout
 {
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
+	
 	import ghostcat.util.display.Geom;
 
 	/**
@@ -43,7 +46,7 @@ package ghostcat.ui.layout
 			if (!isNaN(right))
 				rect.width = parent.right - right - rect.x;
 			
-			if (!isNaN(right))
+			if (!isNaN(bottom))
 				rect.height = parent.bottom - bottom - rect.y;		
 		}
 		
@@ -65,8 +68,16 @@ package ghostcat.ui.layout
 			if (!isNaN(right))
 				rect.width = rect2.x + rect2.width - right - rect.x;
 			
-			if (!isNaN(right))
-				rect.height = rect2.y + rect2.height - bottom - rect.y;		
+			if (!isNaN(bottom))
+				rect.height = rect2.y + rect2.height - bottom - rect.y;
+			
+			//处理注册点问题
+			if (rect is DisplayObject)
+			{
+				var regPoint:Point = Geom.getRegPoint(rect as DisplayObject);
+				rect.x -= regPoint.x;
+				rect.y -= regPoint.y;
+			}
 		}
 		
 		/**
