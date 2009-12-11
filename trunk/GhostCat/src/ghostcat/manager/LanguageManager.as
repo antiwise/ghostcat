@@ -2,13 +2,12 @@ package ghostcat.manager
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.text.TextField;
 	
-	import ghostcat.events.GTextEvent;
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.text.RegExpUtil;
+	import ghostcat.ui.controls.GText;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.display.SearchUtil;
@@ -43,6 +42,20 @@ package ghostcat.manager
 		public var customConversion:Object = new Object();
 		
 		private var resource:Object = new Object();
+		
+		/**
+		 * 自动更新GText内的语言文本
+		 * 
+		 */		
+		public function set registerGText(v:Boolean):void
+		{
+			GText.textChangeHandler = v ? replaceTextField : null;
+		}
+		
+		public function get registerGText():Boolean
+		{
+			return GText.textChangeHandler == replaceTextField;
+		}
 		
 		/**
 		 * 加载语言包。properties文件的格式和FLEX的多语言相同，主要为了利用IDE的代码分色。详情请参考FLEX帮助。
@@ -81,22 +94,11 @@ package ghostcat.manager
 			}
 		}
 		
-		/**
-		 * 向舞台注册事件，开始自动更新控件内的语言文本
-		 * 
-		 * @param target	目标，一般情况下为stage
-		 * 
-		 */		
-		public function register(target:EventDispatcher):void
+		private function replaceTextField(control:GText):void
 		{
-			target.addEventListener(GTextEvent.TEXT_CHANGE,replaceTextField);
-		}
-		
-		private function replaceTextField(event:GTextEvent):void
-		{
-			var text:String = event.control.text;
+			var text:String = control.text;
 			if (text.charAt(0)=="@")
-				event.control.text = getString(text);
+				control.text = getString(text);
 		}
 		
 		/**

@@ -196,7 +196,7 @@ package ghostcat.display.movieclip
                  
         public function queueLabel(labelName:String, repeat:int=-1):void
         {
-            nextLabels.push([labelName, repeat]);
+			nextLabels.push([labelName, repeat]);
         }
         
         /**

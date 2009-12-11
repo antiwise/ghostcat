@@ -15,16 +15,14 @@ package ghostcat.ui.controls
 	import flash.text.TextFormat;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.events.GTextEvent;
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
+	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
-	
-	[Event(name="text_change",type="ghostcat.events.GTextEvent")]
 	
 	/**
 	 * 文本框
@@ -39,6 +37,15 @@ package ghostcat.ui.controls
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(TextField,{autoSize:TextFieldAutoSize.LEFT});
 		public static var defaultTextFormat:String;
+		/**
+		 * 文本改变时的回调函数 
+		 */
+		public static var textChangeHandler:Function;
+		
+		/**
+		 * 是否直接使用资源里的字体
+		 */
+		public static var getEmbedFontFromSWF:Boolean = true;
 		
 		private var _textFormat:String;
 		private var _autoSize:String;
@@ -291,6 +298,9 @@ package ghostcat.ui.controls
 			}
 			else
 			{
+				if (!getEmbedFontFromSWF)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
+					textField = TextFieldUtil.clone(textField,true)
+				
 				var pos:Point = new Point(textField.x,textField.y);
 				Geom.localToContent(pos,content,this);
 			
@@ -301,10 +311,7 @@ package ghostcat.ui.controls
 					addChild(textField);//可缩放背景必须提取文本框
 			}
 			
-			if (!textFormat)
-				textFormat = defaultTextFormat;
-			else
-				textFormat = textFormat;
+			this.textFormat = textFormat ? textFormat : defaultTextFormat;
 			
 			this.text = textField.text;
 			
@@ -313,6 +320,7 @@ package ghostcat.ui.controls
 			textField.addEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
 			textField.addEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
 		}
+		
 		
 		/**
 		 * 当此属性包含<html>标签时，将作为html文本处理
@@ -395,8 +403,8 @@ package ghostcat.ui.controls
 			if (asTextBitmap)
 				reRenderTextBitmap();
 			
-			if (enabledLangage)
-				dispatchEvent(new GTextEvent(GTextEvent.TEXT_CHANGE));//只在设置属性的时候才替换语言，而不是文本变化时就换
+			if (textChangeHandler != null && enabledLangage)
+				textChangeHandler(this);//只在设置属性的时候才替换语言，而不是文本变化时就换
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
