@@ -43,11 +43,6 @@ package ghostcat.ui
 		 */		
 		public var target:DisplayObject;
 		
-		/**
-		 * 默认ToolTipClass
-		 */		
-		public var defaultObj:IToolTipSkin;
-		
 		private var toolTipObjs:Object;//已注册的ToolTipObj集合
 		
 		private var delayTimer:Timer;//延迟显示计时器
@@ -62,13 +57,8 @@ package ghostcat.ui
 		 * @param obj
 		 * 
 		 */
-		public function ToolTipSprite(obj:IToolTipSkin=null)
+		public function ToolTipSprite()
 		{
-			if (!obj)
-				obj = defaultSkin.newInstance();
-				
-			defaultObj = obj;
-				
 			super();
 			
 			this.acceptContentPosition = false;
@@ -213,7 +203,7 @@ package ghostcat.ui
 				obj = new obj();
 			
 			if (!obj)
-				obj = defaultObj;
+				obj = defaultSkin;
 			
 			setContent(obj);
 			(content as IToolTipSkin).data = toolTip;

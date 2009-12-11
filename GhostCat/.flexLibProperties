@@ -151,7 +151,6 @@
     <classEntry path="ghostcat.events.CollideEvent"/>
     <classEntry path="ghostcat.events.DragEvent"/>
     <classEntry path="ghostcat.events.GEvent"/>
-    <classEntry path="ghostcat.events.GTextEvent"/>
     <classEntry path="ghostcat.events.InputEvent"/>
     <classEntry path="ghostcat.events.ItemClickEvent"/>
     <classEntry path="ghostcat.events.MoveEvent"/>

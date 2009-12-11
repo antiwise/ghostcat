@@ -8,9 +8,7 @@ package ghostcat.text
 	import flash.text.TextLineMetrics;
 	
 	import ghostcat.parse.display.DrawParse;
-	import ghostcat.util.RandomUtil;
 	import ghostcat.util.display.MatrixUtil;
-	import ghostcat.util.easing.TweenUtil;
 
 	/**
 	 * 文本框处理类 
@@ -103,6 +101,8 @@ package ghostcat.text
 			{
 				var t:TextField = getTextFieldAtIndex(textField,i);
 				t.transform.matrix = MatrixUtil.concat(m,t.transform.matrix);
+				t.transform.colorTransform = textField.transform.colorTransform;
+				t.filters = textField.filters;
 				
 				if (bitmap)
 				{
@@ -118,6 +118,41 @@ package ghostcat.text
 			}
 			
 			return result;
+		}
+		
+		/**
+		 * 复制文本框 
+		 * @param v
+		 * @param replace 是否替换到父对象中
+		 * @return 
+		 * 
+		 */
+		public static function clone(v:TextField,replace:Boolean = false):TextField
+		{
+			var c:TextField = new TextField();
+			c.autoSize = v.autoSize;
+			c.embedFonts = v.embedFonts;
+			c.defaultTextFormat = v.defaultTextFormat;
+			c.htmlText = v.htmlText;
+			
+			c.x = v.x;
+			c.y = v.y;
+			c.scaleX = v.scaleX;
+			c.scaleY = v.scaleY;
+			c.width = v.width;
+			c.height = v.height;
+			c.rotation = v.rotation;
+			c.transform.colorTransform = v.transform.colorTransform;
+			c.filters = v.filters;
+			
+			if (replace && v.parent)
+			{
+				var p:DisplayObjectContainer = v.parent;
+				var index:int = p.getChildIndex(v);
+				p.removeChild(v);
+				p.addChildAt(c,index);
+			}
+			return c;
 		}
 	}
 }
