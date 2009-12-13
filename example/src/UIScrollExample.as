@@ -5,7 +5,6 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GList;
-	import ghostcat.util.data.ObjectProxy;
 	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="400",height="400")]
@@ -23,10 +22,9 @@ package
 			new EnabledSWFScreen(stage);
 			
 			var list:GList = new GList();
-			list.width = 150;
-			list.height = 150;
 			
-			list.type = UIConst.TILE;//设置为平铺
+			list.width = 300;
+			list.height = 150;
 			
 //			var arr:ObjectProxy = new ObjectProxy([]);
 			var arr:Array = [];//这里用ObjectProxy可以实现动态修改数据

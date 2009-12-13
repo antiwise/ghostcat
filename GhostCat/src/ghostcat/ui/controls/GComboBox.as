@@ -120,8 +120,8 @@ package ghostcat.ui.controls
 			openButton = new GButton(content[openButtonField]);
 			
 			list = new GList(content[listField],true,UIConst.VERTICAL);
-			list.width = this.width;
-			list.height = list.rowHeight * maxLine;
+			list.width = int(this.width);
+			list.height = int(list.rowHeight * maxLine);
 			
 			if (list.parent)
 				list.parent.removeChild(list);

@@ -8,10 +8,11 @@ package ghostcat.ui
 	import ghostcat.display.GBase;
 	import ghostcat.display.IDisplayObject;
 	import ghostcat.display.IToolTipManagerClient;
+	import ghostcat.events.TickEvent;
 	import ghostcat.ui.tooltip.IToolTipSkin;
 	import ghostcat.ui.tooltip.ToolTipSkin;
-	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.ClassFactory;
 
 	/**
 	 * 提示类
@@ -63,6 +64,7 @@ package ghostcat.ui
 			
 			this.acceptContentPosition = false;
 			this.mouseEnabled = this.mouseChildren = false;
+			this.enabledTick = true;
 			
 			if (!_instance)
 				_instance = this;
@@ -108,12 +110,11 @@ package ghostcat.ui
 		protected override function init() : void
 		{
 			super.init();
-			stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 		}
 		
-		private function mouseMoveHandler(event:MouseEvent):void
+		protected override function tickHandler(event:TickEvent) : void
 		{
 			if (content && target)
 				(content as IToolTipSkin).positionTo(target);
@@ -208,8 +209,6 @@ package ghostcat.ui
 			setContent(obj);
 			(content as IToolTipSkin).data = toolTip;
 			(content as IToolTipSkin).show(target);
-			
-			mouseMoveHandler(null);
 		}
 		
 		/**
@@ -220,9 +219,12 @@ package ghostcat.ui
 		{
 			setContent(null);
 			
-			if (delayCooldown){
+			if (delayCooldown)
+			{
 				delayCooldown.delay = cooldown;
-			}else{
+			}
+			else
+			{
 				delayCooldown = new Timer(cooldown,1);
 				delayCooldown.addEventListener(TimerEvent.TIMER_COMPLETE,removeCooldown);
 				delayCooldown.start();
@@ -241,7 +243,6 @@ package ghostcat.ui
 			if (destoryed)
 				return;
 			
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 		

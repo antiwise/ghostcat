@@ -43,6 +43,8 @@ package ghostcat.text.controls
 		public function GTweenText(skin:*=null, replace:Boolean=true, separateTextField:Boolean=false, textPadding:Padding=null)
 		{
 			super(skin, replace, separateTextField, textPadding);
+			
+			this.rebuildTextField();
 		}
 		
 		//将文本打散成块
@@ -108,8 +110,6 @@ package ghostcat.text.controls
 			TweenUtil.update();
 			
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
-			
-			
 		}
 		
 		private function tweenEndHandler(event:TweenEvent):void
@@ -123,5 +123,15 @@ package ghostcat.text.controls
 				dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
 			}
 		}
+		
+//		public override function destory() : void
+//		{
+//			if (destoryed)
+//				return;
+//			
+//			destoryAllTexts();
+//			
+//			super.destory();
+//		}
 	}
 }

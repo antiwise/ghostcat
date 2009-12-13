@@ -62,10 +62,10 @@ package ghostcat.ui.containers
 		public function set itemRender(v:ClassFactory):void
 		{
 			this.ref = v;
-			refresh();
+			render();
 		}
 		
-		public function refresh():void
+		public function render():void
 		{
 			if (ref && renderSkin)
 			{
@@ -86,11 +86,26 @@ package ghostcat.ui.containers
 			layout.vaildLayout();
 		}
 		
+		/**
+		 * 单独刷新某个物体 
+		 * @param i
+		 * 
+		 */
+		public function renderItem(i:int):void
+		{
+			if (i < contentPane.numChildren)
+			{
+				var obj:GBase = getChildAt(i) as GBase;
+				if (obj)
+					obj.data = data[i];
+			}
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{
 			super.data = v;
-			refresh();
+			render();
 		}
 		/** @inheritDoc*/
 		public override function destory() : void
@@ -122,7 +137,7 @@ package ghostcat.ui.containers
 				return;
 			
 			var o:DisplayObject = event.target as DisplayObject;
-			while (o.parent != contentPane)
+			while (o && o.parent != contentPane)
 				o = o.parent;
 			
 			if (ref.isClass(o))

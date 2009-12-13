@@ -49,12 +49,12 @@ package ghostcat.manager
 		 */		
 		public function set registerGText(v:Boolean):void
 		{
-			GText.textChangeHandler = v ? replaceTextField : null;
+			GText.textChangeHandler = v ? getString : null;
 		}
 		
 		public function get registerGText():Boolean
 		{
-			return GText.textChangeHandler == replaceTextField;
+			return GText.textChangeHandler == getString;
 		}
 		
 		/**
@@ -85,20 +85,23 @@ package ghostcat.manager
 			for (var i:int=0;i < texts.length;i++)
 			{
 				var textLine:String = texts[i] as String;
-				if (textLine.substr(0,2)!="//")
+				if (textLine && textLine.substr(0,2)!="//")
 				{
-					var textArr:Array = textLine.split(/\s*=\s*/);
-					if (textArr.length == 2)
-						resource[textType][textArr[0]] = textArr[1];
+					var pos:int = textLine.indexOf("=");
+					var key:String; 
+					var value:String;
+					if (pos != -1)
+					{
+						key = textLine.slice(0,pos);
+						value = textLine.slice(pos + 1);
+						resource[textType][key] = value;
+					}
+					else if (key)
+					{
+						resource[textType][key] += "\n" + textLine;//没有=则是上一行的继续
+					}
 				}
 			}
-		}
-		
-		private function replaceTextField(control:GText):void
-		{
-			var text:String = control.text;
-			if (text.charAt(0)=="@")
-				control.text = getString(text);
 		}
 		
 		/**
@@ -115,6 +118,9 @@ package ghostcat.manager
 			var result:String;
 			if (res.charAt(0)=="@")
 			{
+				if (res.charAt(res.length - 1)=="\r")
+					res = res.slice(0,res.length - 1);
+				
 				var dot:int = res.indexOf(".");
 				if (dot == -1)
 				{

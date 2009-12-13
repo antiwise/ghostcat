@@ -29,7 +29,7 @@ package ghostcat.operation.effect
 			sourceTarget = v;
 		}
 		
-		public function ZoomFromRectEffect(target:*=null, rect:Rectangle=null, duration:int=100, easing:Function = null, invert:Boolean=true,asBitmap:Boolean = false)
+		public function ZoomFromRectEffect(target:*=null, rect:Rectangle=null, duration:int=100, easing:Function = null, invert:Boolean=true,asBitmap:Boolean = true,clearTarget:Boolean = false)
 		{
 			this.asBitmap = asBitmap;
 			this.target = target;
@@ -47,7 +47,7 @@ package ghostcat.operation.effect
 				var sy:Number = targetRect.y / targetRect.height;
 				para = {x:rect.x - sx * rect.width,y:rect.y - sy * rect.height,width:rect.width,height:rect.height,ease:easing};
 			}
-			super(asBitmap ? bitmap : target, duration, para, invert);
+			super(asBitmap ? bitmap : target, duration, para, invert,clearTarget);
 		}
 		
 		public override function execute() : void

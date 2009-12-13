@@ -72,6 +72,16 @@ package ghostcat.text
 		}
 		
 		/**
+		 * 删除所有的\r 
+		 * @param text
+		 * 
+		 */
+		public static function removeR(text:String):String
+		{
+			return text.replace(/\r/g,"");
+		}
+		
+		/**
 		 * 插入换行符使得字体可以竖排
 		 *  
 		 * @param str

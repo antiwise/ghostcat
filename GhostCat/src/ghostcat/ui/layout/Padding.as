@@ -2,6 +2,7 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.util.display.Geom;
 
@@ -72,11 +73,12 @@ package ghostcat.ui.layout
 				rect.height = rect2.y + rect2.height - bottom - rect.y;
 			
 			//处理注册点问题
-			if (rect is DisplayObject)
+			var dis:DisplayObject = rect as DisplayObject
+			if (dis)
 			{
-				var regPoint:Point = Geom.getRegPoint(rect as DisplayObject);
-				rect.x -= regPoint.x;
-				rect.y -= regPoint.y;
+				var pRect:Rectangle = Geom.getRect(dis);
+				dis.x -= pRect.x - dis.x;
+				dis.y -= pRect.y - dis.y;
 			}
 		}
 		

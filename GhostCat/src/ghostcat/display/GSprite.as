@@ -33,6 +33,11 @@ package ghostcat.display
 		public var destoryWhenRemove:Boolean = false;
 		
 		/**
+		 * 是否在更换Content时销毁原有Content
+		 */
+		public var autoDestoryContent:Boolean = true;
+		
+		/**
 		 * 是否已经被销毁
 		 */
 		public var destoryed:Boolean = false;
@@ -132,8 +137,13 @@ package ghostcat.display
 				skin = new Bitmap(skin as BitmapData)
 			
 			if (_content && _content.parent == this)
-				$removeChild(_content);
-			
+			{
+				if (_content is IGBase && autoDestoryContent)
+					(_content as IGBase).destory();
+				
+				if (_content.parent)
+					$removeChild(_content);
+			}
 			
 			var oldIndex:int;
 			var oldParent:DisplayObjectContainer;
@@ -168,7 +178,7 @@ package ghostcat.display
 			}
 			_content = skin;
 			
-			if (oldParent && !(oldParent is Loader))
+			if (oldParent && !(oldParent is Loader) && oldParent != this)
 				oldParent.addChildAt(this,oldIndex);
 		}
 		
@@ -204,8 +214,8 @@ package ghostcat.display
 			if (destoryed)
 				return;
 			
-			if (content is GSprite)
-				(content as GSprite).destory();
+			if (content is IGBase && autoDestoryContent)
+				(content as IGBase).destory();
 			
 			if (parent)
 				parent.removeChild(this);

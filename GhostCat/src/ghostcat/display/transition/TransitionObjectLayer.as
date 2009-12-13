@@ -99,15 +99,14 @@ package ghostcat.display.transition
 		public override function destory() : void
 		{
 			if (transfer is IGBase)
-			{
 				(transfer as IGBase).destory();
-			}
-			else if (transfer is DisplayObject)
-			{
+			
+			if (transfer.parent)
 				transfer.parent.removeChild(transfer);
-				if (transfer is Bitmap)
-					(transfer as Bitmap).bitmapData.dispose();
-			}
+			
+			if (transfer is Bitmap)
+				(transfer as Bitmap).bitmapData.dispose();
+			
 			super.destory();
 		}
 	}
