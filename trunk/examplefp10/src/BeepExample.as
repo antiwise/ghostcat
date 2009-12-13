@@ -1,6 +1,7 @@
 package 
 {
 	import flash.media.Sound;
+	import flash.net.FileReference;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.media.BeepMusic;

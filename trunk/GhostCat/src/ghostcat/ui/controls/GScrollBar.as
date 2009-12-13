@@ -156,15 +156,14 @@ package ghostcat.ui.controls
 		 * 设置目标
 		 * 
 		 * @param target	目标
-		 * @param scrollRect	目标的滚动大小
+		 * @param width	目标的滚动大小
+		 * @param height	目标的滚动大小
 		 * 
 		 */
-		public function setTarget(target:*,scrollRect:Rectangle = null):void
+		public function setTarget(target:*,width:Number = NaN,height:Number = NaN):void
 		{
 			this.target = target;
-			
-			if (scrollRect)
-				setTargetScrollRect(scrollRect);
+			setTargetScrollSize(width,height);
 		}
 		
 		/**
@@ -172,10 +171,18 @@ package ghostcat.ui.controls
 		 * @param rect
 		 * 
 		 */
-		public function setTargetScrollRect(rect:Rectangle):void
+		public function setTargetScrollSize(width:Number = NaN,height:Number = NaN):void
 		{
-			if (_scrollContent && _scrollContent is DisplayObject)
-				(_scrollContent as DisplayObject).scrollRect = rect;
+			if (isNaN(width) && isNaN(height) || !(_scrollContent is DisplayObject))
+				return;
+			
+			if (isNaN(width))
+				width = (_scrollContent as DisplayObject).width;
+			
+			if (isNaN(height))
+				height = (_scrollContent as DisplayObject).height;
+			
+			(_scrollContent as DisplayObject).scrollRect = new Rectangle(0,0,width,height);
 		}
 		/** @inheritDoc*/
 		public override function updateThumb():void
@@ -209,6 +216,9 @@ package ghostcat.ui.controls
 			
 			if (direction == UIConst.HORIZONTAL)
 			{
+				if (v == _scrollContent.tweenTargetH)
+					return;
+					
 				scrollContent.tweenTargetH = v;
 				if (duration > 0)
 				{
@@ -219,7 +229,10 @@ package ghostcat.ui.controls
 					_scrollContent.scrollH = v;
 			}
 			else
-			{
+			{	
+				if (v == _scrollContent.tweenTargetV)
+					return;
+				
 				scrollContent.tweenTargetV = v;
 				if (duration > 0)
 				{
@@ -229,8 +242,6 @@ package ghostcat.ui.controls
 				else 
 					_scrollContent.scrollV = v;
 			}
-		
-//			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/** @inheritDoc*/

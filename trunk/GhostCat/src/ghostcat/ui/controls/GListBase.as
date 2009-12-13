@@ -340,7 +340,7 @@ package ghostcat.ui.controls
 		 */
 		public override function get width() : Number
 		{
-			return (type != UIConst.VERTICAL) ? columnWidth * columnCount : super.width;
+			return (type != UIConst.VERTICAL) ? columnWidth * columnCount : super.width ? super.width : _contentRect.width;
 		}
 		
 		/**
@@ -350,7 +350,7 @@ package ghostcat.ui.controls
 		 */
 		public override function get height() : Number
 		{
-			return (type != UIConst.HORIZONTAL) ? rowHeight * rowCount : super.height;
+			return (type != UIConst.HORIZONTAL) ? rowHeight * rowCount : super.height ? super.height : _contentRect.height;
 		}
 		
 		/**
@@ -388,7 +388,7 @@ package ghostcat.ui.controls
 			super.data = v;
 			refresh();
 			
-			if (v is IEventDispatcher)
+			if (v is IEventDispatcher && !(v as IEventDispatcher).hasEventListener(PropertyChangeEvent.PROPERTY_CHANGE))
 				(v as IEventDispatcher).addEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler,false,0,true);
 		}
 		
@@ -477,28 +477,25 @@ package ghostcat.ui.controls
 			var item:GBase = getItemAt(i,j);
 			if (item)
 			{
-				var d:*;
-				try
-				{
-					if (type == UIConst.HORIZONTAL)
-						d = data[i];
-					else if (type == UIConst.VERTICAL)
-						d = data[j];
-					else
-						d = data[j * columnCount + i];
-				}
-				catch(e:Error)
-				{
-					trace("error")
-				}
+				var index:int;
+				if (type == UIConst.HORIZONTAL)
+					index = i;
+				else if (type == UIConst.VERTICAL)
+					index = j;
+				else
+					index = j * columnCount + i;
 				
-				item.data = d;
-				if (autoReszieItemContent)
+				if (index < data.length)
 				{
-					item.content.width = columnWidth;
-					item.content.height = rowHeight;
+					var d:* = data[index];
+					item.data = d;
+					if (autoReszieItemContent)
+					{
+						item.content.width = columnWidth;
+						item.content.height = rowHeight;
+					}
+					item.selected = d && (d == selectedData);
 				}
-				item.selected = d && (d == selectedData);
 			}
 			return item;
 		}
@@ -516,6 +513,7 @@ package ghostcat.ui.controls
 					for (var i:int = screen.left;i < screen.right;i++)
 						refreshItem(i,j);	
 			}
+			render();
 		}
 		/** @inheritDoc*/
 		public override function destory() : void

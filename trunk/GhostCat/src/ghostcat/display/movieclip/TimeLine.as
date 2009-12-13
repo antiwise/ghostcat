@@ -44,7 +44,7 @@ package ghostcat.display.movieclip
 			this.mc = mc;
 			mc.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 			
-			_labels = mc.currentLabels;//currentLabels取值很慢，必须缓存
+			_labels = mc.currentLabels.concat();//currentLabels取值很慢，必须缓存
 		}
 		
 		/**

@@ -34,7 +34,7 @@ package
 			RootManager.register(this,1,1);
 			PopupManager.instance.applicationDisabledFilters = [];
 			
-			LanguageManager.instance.register(this);
+			LanguageManager.instance.registerGText = true;
 			LanguageManager.instance.load("ui.lang");
 			LanguageManager.instance.customConversion = {"roll":"#LangageExample.roll"}
 		

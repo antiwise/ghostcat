@@ -127,14 +127,16 @@ package ghostcat.text
 		 * @return 
 		 * 
 		 */
-		public static function clone(v:TextField,replace:Boolean = false):TextField
+		public static function clone(v:TextField,html:Boolean = true,replace:Boolean = false):TextField
 		{
 			var c:TextField = new TextField();
 			c.autoSize = v.autoSize;
 			c.embedFonts = v.embedFonts;
 			c.defaultTextFormat = v.defaultTextFormat;
-			c.htmlText = v.htmlText;
-			
+			if (html)
+				c.htmlText = v.htmlText;
+			else
+				c.text = v.text;
 			c.x = v.x;
 			c.y = v.y;
 			c.scaleX = v.scaleX;
@@ -142,6 +144,9 @@ package ghostcat.text
 			c.width = v.width;
 			c.height = v.height;
 			c.rotation = v.rotation;
+			c.multiline = v.multiline;
+			c.selectable = v.selectable;
+			c.wordWrap = v.wordWrap;
 			c.transform.colorTransform = v.transform.colorTransform;
 			c.filters = v.filters;
 			

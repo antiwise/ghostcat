@@ -134,7 +134,7 @@ package ghostcat.display.viewport
 		
 		public function Tile(itemClass:*=null)
 		{
-			super(null);
+			super();
 			
 			_rect = new Rectangle();
 			contents = new Dictionary();

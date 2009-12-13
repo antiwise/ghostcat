@@ -21,7 +21,7 @@ package ghostcat.ui.tooltip
 		 */
 		function show(target:DisplayObject):void;
 		/**
-		 * 更新指向位置 
+		 * 更新指向位置（每帧更新） 
 		 * @param target
 		 * 
 		 */

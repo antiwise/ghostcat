@@ -43,9 +43,9 @@ package ghostcat.ui.controls
 		public static var textChangeHandler:Function;
 		
 		/**
-		 * 是否直接使用资源里的字体
+		 * 必须将它设置为true，才能通过外部嵌入字体
 		 */
-		public static var getEmbedFontFromSWF:Boolean = true;
+		public static var autoRebuildTextField:Boolean = false;
 		
 		private var _textFormat:String;
 		private var _autoSize:String;
@@ -290,7 +290,7 @@ package ghostcat.ui.controls
 			{
 				this.separateTextField = true;
 				textField = TextFieldParse.createTextField();
-			
+				
 				addChild(textField);
 				
 				if (textPadding)
@@ -298,8 +298,8 @@ package ghostcat.ui.controls
 			}
 			else
 			{
-				if (!getEmbedFontFromSWF)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
-					textField = TextFieldUtil.clone(textField,true)
+				if (autoRebuildTextField)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
+					rebuildTextField();
 				
 				var pos:Point = new Point(textField.x,textField.y);
 				Geom.localToContent(pos,content,this);
@@ -313,7 +313,17 @@ package ghostcat.ui.controls
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;
 			
-			this.text = textField.text;
+			if (this.text)
+			{
+				if (this.text.indexOf("<html>")!= - 1)
+					textField.htmlText = this.text;
+				else
+					textField.text = this.text;
+			}
+			else
+			{
+				this.text = textField.text;
+			}
 			
 			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
 			textField.addEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
@@ -321,6 +331,14 @@ package ghostcat.ui.controls
 			textField.addEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
 		}
 		
+		/**
+		 * 重新创建TextField，执行此方法后，TextField会和代码创建的相同（原本有些细节是不同的）
+		 * 
+		 */
+		public function rebuildTextField(html:Boolean = true):void
+		{
+			this.textField = TextFieldUtil.clone(this.textField,html,true);//将TextField重新创建避免出现显示错误
+		}
 		
 		/**
 		 * 当此属性包含<html>标签时，将作为html文本处理
@@ -380,6 +398,9 @@ package ghostcat.ui.controls
 			else
 				str = v.toString();
 			
+			if (textChangeHandler != null && enabledLangage)
+				str = textChangeHandler(str);
+			
 			super.data = str;
 		
 			if (this.vertical)
@@ -402,9 +423,6 @@ package ghostcat.ui.controls
 			
 			if (asTextBitmap)
 				reRenderTextBitmap();
-			
-			if (textChangeHandler != null && enabledLangage)
-				textChangeHandler(this);//只在设置属性的时候才替换语言，而不是文本变化时就换
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
