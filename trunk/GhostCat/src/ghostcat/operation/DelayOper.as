@@ -39,8 +39,12 @@ package ghostcat.operation
 		protected override function end(event:*=null):void
 		{
 			super.end(event);
-			timer.removeEventListener(TimerEvent.TIMER_COMPLETE,result);
-			timer.stop();
+			
+			if (timer)
+			{
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE,result);
+				timer.stop();
+			}
 		}
 	}
 }

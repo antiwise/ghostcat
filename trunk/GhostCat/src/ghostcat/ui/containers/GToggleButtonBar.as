@@ -36,7 +36,7 @@ package ghostcat.ui.containers
 		 */
 		protected function itemClickHandler(event:ItemClickEvent):void
 		{
-			if (toggleOnClick)
+			if (toggleOnClick && event.item)
 				selectedData = event.item;
 		}
 
