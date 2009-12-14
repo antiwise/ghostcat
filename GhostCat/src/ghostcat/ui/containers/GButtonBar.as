@@ -24,9 +24,6 @@ package ghostcat.ui.containers
 				ref = GButton;
 			
 			super(skin, replace,ref);
-			
-			(layout as LinearLayout).horizontalGap = 5;
-			(layout as LinearLayout).verticalGap = 5;
 		}
 		
 		/**
