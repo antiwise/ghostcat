@@ -19,8 +19,8 @@ package ghostcat.ui.layout
 		private var _horizontalGap:Number = 0;
 		private var _verticalGap:Number = 0;
 		
-		private var _horizontalAlign:String = UIConst.LEFT;
-		private var _verticalAlign:String = UIConst.TOP;
+		private var _horizontalAlign:String = "";
+		private var _verticalAlign:String = "";
 		
 		/**
 		 * 横向对齐方式

@@ -74,7 +74,6 @@
 			this.mode = mode;
 		
 			super(skin,replace);
-			
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
@@ -99,11 +98,10 @@
 			}
 		}
 		
-		protected override function init():void
-		{
-			super.init();
-			setPercent(0,false);
-		}
+//		protected override function init():void
+//		{
+//			super.init();
+//		}
 		
 		/**
 		 * 百分比位置
