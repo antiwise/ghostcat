@@ -19,8 +19,6 @@ package
 	{
 		public function UIScrollExample()
 		{	
-			new EnabledSWFScreen(stage);
-			
 			var list:GList = new GList();
 			
 			list.width = 300;

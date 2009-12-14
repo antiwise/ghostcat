@@ -70,12 +70,15 @@ package ghostcat.ui.containers
 
 		public function set selectedData(v:*):void
 		{
+			if (_selectedData == v)
+				return;
+			
 			_selectedData = v;
 			for (var i:int = 0;i < contentPane.numChildren;i++)
 			{
 				var item:GBase = contentPane.getChildAt(i) as GBase;
 				if (item)
-					item.selected = (item.data == v); 
+					item.selected = v && item.data == v; 
 			}
 			
 			dispatchEvent(new Event(Event.CHANGE));
