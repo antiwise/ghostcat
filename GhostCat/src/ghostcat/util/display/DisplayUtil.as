@@ -3,7 +3,6 @@ package ghostcat.util.display
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -28,6 +27,30 @@ package ghostcat.util.display
 			var screen:Rectangle = Geom.getRect(displayObj.stage);
             return screen.containsRect(displayObj.getBounds(displayObj.stage));
         }
+		
+		/**
+		 * 添加到对象之后
+		 * @param container
+		 * @param child
+		 * @param target
+		 * 
+		 */
+		public static function addChildAfter(child:DisplayObject,target:DisplayObject):void
+		{
+			target.parent.addChildAt(child,target.parent.getChildIndex(target) + 1);
+		}
+		
+		/**
+		 * 添加到对象之前
+		 * @param container
+		 * @param child
+		 * @param target
+		 * 
+		 */
+		public static function addChildBefore(child:DisplayObject,target:DisplayObject):void
+		{
+			target.parent.addChildAt(child,target.parent.getChildIndex(target));
+		}
         
         /**
          * 获得子对象数组 

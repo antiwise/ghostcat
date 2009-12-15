@@ -111,19 +111,31 @@ package ghostcat.debug
 		 */
 		public static function traceObject(channel:*,obj:Object,...filters):void
 		{
+			trace(channel,"["+getObjectValues.apply(null,[obj].concat(filters))+"]");
+		}
+		
+		/**
+		 * 获得对象的值
+		 * @param obj
+		 * @param filters
+		 * @return 
+		 * 
+		 */
+		public static function getObjectValues(obj:Object,...filters):String
+		{
 			var result:String = getQualifiedClassName(obj);
 			var key:*;
 			if (filters && filters.length > 0)
 			{
 				for each (key in filters)
-					result += " " + key + "=" + obj[key];
+				result += " " + key + "=" + obj[key];
 			}
 			else
 			{
 				for (key in obj)
 					result += " " + key + "=" + obj[key];
 			}
-			trace(channel,"["+result+"]");
+			return result;
 		}
 		
 		private static function getHeader(channel:*):String
@@ -211,6 +223,16 @@ package ghostcat.debug
 		public static function get isNetWork():Boolean
 		{
 			return Security.sandboxType == Security.REMOTE;
+		}
+		
+		/**
+		 * 判断是否在浏览器上
+		 * @return 
+		 * 
+		 */
+		public static function get isBrower():Boolean
+		{
+			return ExternalInterface.available;
 		}
 		
 	}

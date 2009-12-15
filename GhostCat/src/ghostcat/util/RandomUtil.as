@@ -24,10 +24,14 @@ package ghostcat.util
 		{
 			var r:Number;
 			r = min + Math.random()*(max - min);
-			while (!duplicate && randomHistory[r])
+			if (!duplicate)
 			{
-				r = min + Math.random()*(max - min);
+				while (randomHistory[r])
+					r = min + Math.random()*(max - min);
+				
+				randomHistory[r] = true;
 			}
+			
 			
 			return r;
 		}
@@ -44,9 +48,12 @@ package ghostcat.util
 		{
 			var r:int;
 			r = min + Math.random()*(max - min);
-			while (!duplicate && randomHistory[r])
+			if (!duplicate)
 			{
-				r = min + Math.random()*(max - min);
+				while (randomHistory[r])
+					r = min + Math.random()*(max - min);
+				
+				randomHistory[r] = true;
 			}
 			
 			return r;

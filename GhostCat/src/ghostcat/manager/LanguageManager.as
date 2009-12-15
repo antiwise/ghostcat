@@ -7,6 +7,7 @@ package ghostcat.manager
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.text.RegExpUtil;
+	import ghostcat.text.URL;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.Singleton;
@@ -77,9 +78,9 @@ package ghostcat.manager
 		private function completeHandler(event:Event):void
 		{
 			var oper:LoadOper = event.currentTarget as LoadOper;
-			var urlSpit:Array = RegExpUtil.splitUrl(oper.request.url);
-			var textType:String = urlSpit[urlSpit.length - 2];
-			resource[textType]=new Object();
+			var url:URL = new URL(oper.request.url);
+			var textType:String = url.pathname.filename;
+			resource[textType] = {};
 					
 			var texts:Array = oper.data.toString().split(/\r?\n/);
 			for (var i:int=0;i < texts.length;i++)

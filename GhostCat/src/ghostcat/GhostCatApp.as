@@ -14,7 +14,7 @@ package ghostcat
 	 */
 	public class GhostCatApp extends GSprite
 	{
-		public var worldLayer:GBase;
+		public var application:GBase;
 		public var popupLayer:GBase;
 		public var cursor:CursorSprite;
 		public var toolTip:ToolTipSprite;
@@ -43,8 +43,8 @@ package ghostcat
 		{
 			super.init();
 			
-			this.worldLayer = new GBase();
-			addChild(this.worldLayer);
+			this.application = new GBase();
+			addChild(this.application);
 			
 			this.popupLayer = new GBase();
 			addChild(this.popupLayer);
@@ -55,7 +55,7 @@ package ghostcat
 			this.cursor = new CursorSprite();
 			addChild(this.cursor);
 			
-			PopupManager.instance.register(worldLayer,popupLayer);	
+			PopupManager.instance.register(application,popupLayer);	
 		}
 	}
 }
