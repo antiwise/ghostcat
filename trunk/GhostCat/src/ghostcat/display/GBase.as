@@ -646,7 +646,7 @@ package ghostcat.display
 		{
 			var oldRect:Rectangle = _bitmap ? _bitmap.getBounds(this) : null;
 			var rect:Rectangle = content.getBounds(this);
-			if (!rect.equals(oldRect))
+			if (!oldRect || !rect.equals(oldRect))
 			{
 				if (_bitmap)
 				{

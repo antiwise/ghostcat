@@ -187,9 +187,9 @@ package ghostcat.util.display
          * @return 
          * 
          */		
-        public static function center(obj:*):Point
+        public static function center(obj:*,space:DisplayObject=null):Point
         {
-        	var rect:Rectangle = getRect(obj);
+        	var rect:Rectangle = getRect(obj,space);
         	return (rect)?new Point(rect.x + rect.width / 2, rect.y + rect.height / 2):null;
         }
         

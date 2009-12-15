@@ -112,7 +112,7 @@ package
 			f.applyFilter(s);
 			
 			
-			GAlert.show("点击开始")
+			GAlert.show("点击开始");
 			queue.commit();
 		}
 	}

@@ -135,14 +135,19 @@ package ghostcat.display.viewport
 		 */
 		public function addLayer(skin:*,matrix:Matrix = null,asBitmap:Boolean = true,divider:Number = 1.0):void
 		{
-			if (skin is DisplayObject)
+			if (skin is DisplayObject && !asBitmap)
 				skin = skin["constructor"] as Class;
 				
 			if (skin is Class)
 				skin = new ClassFactory(skin);
 			
 			var layer:Sprite = new Sprite();
-            var child:DisplayObject = (skin as ClassFactory).newInstance() as DisplayObject;
+            var child:DisplayObject;
+			if (skin is DisplayObject)
+				child = skin as DisplayObject;
+			else
+				child = (skin as ClassFactory).newInstance() as DisplayObject;
+			
 			var contentSize:Point = new Point(child.width,child.height);
 			var item:Item = new Item(skin,layer,contentSize,matrix,divider,asBitmap);
 			items.push(item);
@@ -171,9 +176,9 @@ package ghostcat.display.viewport
 				if (item.bitmapData)
 					item.bitmapData.dispose();
 				
-				var child:DisplayObject = item.skin.newInstance() as DisplayObject;
+				var child:DisplayObject = (item.skin is ClassFactory) ? item.skin.newInstance() as DisplayObject : item.skin as DisplayObject;
 				var drawPos:Point = child.getBounds(child).topLeft;
-				item.bitmapData = new DrawParse(child).createBitmapData();
+				item.bitmapData = new DrawParse(child,null,null,null,false,item.transparent).createBitmapData();
 				var m:Matrix = item.matrix ? item.matrix : new Matrix();
 				m.translate(drawPos.x,drawPos.y);
 				item.layer.graphics.beginBitmapFill(item.bitmapData,m);
@@ -225,7 +230,7 @@ class Item
 	/**
 	 * 皮肤类型
 	 */
-	public var skin:ClassFactory
+	public var skin:*;
 	/**
 	 * 层实例
 	 */
@@ -246,12 +251,15 @@ class Item
 	 * 缓存的位图
 	 */
 	public var bitmapData:BitmapData;
-	
+	/**
+	 * 是否透明
+	 */
+	public var transparent:Boolean;
 	/**
 	 * 显示矩阵
 	 */
 	public var matrix:Matrix
-	public function Item(skin:ClassFactory,layer:Sprite,contentSize:Point,matrix:Matrix,divider:Number,asBitmap:Boolean):void
+	public function Item(skin:*,layer:Sprite,contentSize:Point,matrix:Matrix,divider:Number,asBitmap:Boolean,transparent:Boolean = true):void
 	{
 		this.skin = skin;
 		this.layer = layer;
@@ -259,5 +267,6 @@ class Item
 		this.matrix = matrix;
 		this.divider = divider;
 		this.asBitmap = asBitmap;
+		this.transparent = transparent;
 	}
 }

@@ -15,8 +15,8 @@ package ghostcat.manager
 		public static const LEFT:int = 2;
 		public static const RIGHT:int = 0;
 		
-		private var directs:Array;
-		private var lengths:Array;
+		private var directs:Array = [];
+		private var lengths:Array = [];
 		
 		public function PathAnalyzer(source:Array)
 		{
