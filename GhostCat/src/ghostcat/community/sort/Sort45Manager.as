@@ -5,7 +5,7 @@ package ghostcat.community.sort
 	import flash.geom.Point;
 	
 	import ghostcat.display.IGBase;
-	import ghostcat.display.viewport.Display45Util;
+	import ghostcat.display.game.Display45Util;
 
 	/**
 	 * 针对45度景深排序做了优化（暂时还有问题）

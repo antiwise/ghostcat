@@ -5,7 +5,7 @@ package
 	import flash.geom.Rectangle;
 	
 	import ghostcat.debug.EnabledSWFScreen;
-	import ghostcat.display.viewport.Tile;
+	import ghostcat.display.game.Tile;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.manager.RootManager;

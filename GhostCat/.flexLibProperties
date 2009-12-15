@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="false" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
+    <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.algorithm.Point3D"/>
     <classEntry path="ghostcat.algorithm.QSort"/>
     <classEntry path="ghostcat.algorithm.bezier.Bezier"/>
@@ -47,8 +48,10 @@
     <classEntry path="ghostcat.debug.DebugPanel"/>
     <classEntry path="ghostcat.debug.DebugRect"/>
     <classEntry path="ghostcat.debug.DebugScreen"/>
+    <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
     <classEntry path="ghostcat.debug.FPS"/>
     <classEntry path="ghostcat.debug.FrameRateControl"/>
+    <classEntry path="ghostcat.debug.GhostCatLogo"/>
     <classEntry path="ghostcat.debug.MemoryChecker"/>
     <classEntry path="ghostcat.debug.SpeedTester"/>
     <classEntry path="ghostcat.display.GBase"/>
@@ -72,6 +75,20 @@
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
+    <classEntry path="ghostcat.display.game.BackgroundLayer"/>
+    <classEntry path="ghostcat.display.game.Collision"/>
+    <classEntry path="ghostcat.display.game.CollisionSprite"/>
+    <classEntry path="ghostcat.display.game.Display45Util"/>
+    <classEntry path="ghostcat.display.game.ICollisionClient"/>
+    <classEntry path="ghostcat.display.game.Light"/>
+    <classEntry path="ghostcat.display.game.Separate45Util"/>
+    <classEntry path="ghostcat.display.game.Tile"/>
+    <classEntry path="ghostcat.display.game.Tile45"/>
+    <classEntry path="ghostcat.display.game.Tile45TopLeft"/>
+    <classEntry path="ghostcat.display.game.TileGameItem"/>
+    <classEntry path="ghostcat.display.game.TileGameLayer"/>
+    <classEntry path="ghostcat.display.game.ViewportCamera"/>
+    <classEntry path="ghostcat.display.game.Wall"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
     <classEntry path="ghostcat.display.graphics.DragPoint"/>
     <classEntry path="ghostcat.display.graphics.EditableGraphicsSprite"/>
@@ -133,20 +150,6 @@
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirect2MaskHandler"/>
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
-    <classEntry path="ghostcat.display.viewport.BackgroundLayer"/>
-    <classEntry path="ghostcat.display.viewport.Collision"/>
-    <classEntry path="ghostcat.display.viewport.CollisionSprite"/>
-    <classEntry path="ghostcat.display.viewport.Display45Util"/>
-    <classEntry path="ghostcat.display.viewport.ICollisionClient"/>
-    <classEntry path="ghostcat.display.viewport.Light"/>
-    <classEntry path="ghostcat.display.viewport.Separate45Util"/>
-    <classEntry path="ghostcat.display.viewport.Tile"/>
-    <classEntry path="ghostcat.display.viewport.Tile45"/>
-    <classEntry path="ghostcat.display.viewport.Tile45TopLeft"/>
-    <classEntry path="ghostcat.display.viewport.TileGameItem"/>
-    <classEntry path="ghostcat.display.viewport.TileGameLayer"/>
-    <classEntry path="ghostcat.display.viewport.ViewportCamera"/>
-    <classEntry path="ghostcat.display.viewport.Wall"/>
     <classEntry path="ghostcat.events.ActionEvent"/>
     <classEntry path="ghostcat.events.CollideEvent"/>
     <classEntry path="ghostcat.events.DragEvent"/>
@@ -258,11 +261,13 @@
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
     <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
+    <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
     <classEntry path="ghostcat.operation.server.ActionGroupOper"/>
     <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
+    <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
     <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
@@ -273,6 +278,7 @@
     <classEntry path="ghostcat.parse.display.BitmapParse"/>
     <classEntry path="ghostcat.parse.display.DrawParse"/>
     <classEntry path="ghostcat.parse.display.EllipseParse"/>
+    <classEntry path="ghostcat.parse.display.GradientRectParse"/>
     <classEntry path="ghostcat.parse.display.Grid9Parse"/>
     <classEntry path="ghostcat.parse.display.PathParse"/>
     <classEntry path="ghostcat.parse.display.RectParse"/>
@@ -292,6 +298,7 @@
     <classEntry path="ghostcat.parse.graphics.GraphicsLineStyle"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsPath"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsRect"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsRectSector"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsSector"/>
     <classEntry path="ghostcat.parse.graphics.IGraphicsFill"/>
     <classEntry path="ghostcat.parse.graphics.IGraphicsLineStyle"/>
@@ -435,6 +442,7 @@
     <classEntry path="ghostcat.util.display.RotationUtil"/>
     <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
+    <classEntry path="ghostcat.util.display.SelectGroup"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
     <classEntry path="ghostcat.util.display.TransformUtil"/>
     <classEntry path="ghostcat.util.easing.Back"/>
@@ -455,18 +463,13 @@
     <classEntry path="ghostcat.util.encrypt.Base64"/>
     <classEntry path="ghostcat.util.encrypt.HackChecker"/>
     <classEntry path="ghostcat.util.encrypt.IEncrypt"/>
+    <classEntry path="ghostcat.util.encrypt.MD5"/>
     <classEntry path="ghostcat.util.encrypt.ProtectedVO"/>
     <classEntry path="ghostcat.util.encrypt.SimpleEncrypt"/>
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.debug.EnabledSWFScreen"/>
-    <classEntry path="ghostcat.GhostCatApp"/>
-    <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
-    <classEntry path="ghostcat.parse.graphics.GraphicsRectSector"/>
-    <classEntry path="ghostcat.util.encrypt.MD5"/>
-    <classEntry path="ghostcat.util.display.SelectGroup"/>
-    <classEntry path="ghostcat.parse.display.GradientRectParse"/>
+    <classEntry path="ghostcat.display.game.AbilityGraphic"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

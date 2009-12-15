@@ -12,7 +12,7 @@ package ghostcat.util.display
 	public final class SearchUtil
 	{
 		/**
-		 * 遍历子对象，找到某个类型的第一个实例
+		 * 逐层遍历子对象，找到某个类型的第一个实例
 		 * @param displayObj 目标
 		 * @param classRef	要查询的类
 		 * @return 
@@ -25,18 +25,40 @@ package ghostcat.util.display
                 
             if (displayObj is DisplayObjectContainer && depth > 0)
             {
-                var contain:DisplayObjectContainer = DisplayObjectContainer(displayObj);
-                for (var i:int=0;i < contain.numChildren;i++) 
-                {
-                    var child:DisplayObject = findChildByClass(contain.getChildAt(i), classRef, depth - 1);
-                    if (child)
-                    	return child;
-                }
+                var child:DisplayObject = findChildByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1);
+                if (child)
+                  	return child;
             }
             return null;
         }
+		
+		private static function findChildByClassIns(contain:DisplayObjectContainer, classRef:Class, depth:int = int.MAX_VALUE):DisplayObject
+		{
+			if (depth > 0)
+			{
+				var len:int = contain.numChildren;
+				var displayObj:DisplayObject
+				for (var i:int=0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj is classRef)
+						return displayObj;
+				}
+				for (i = 0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj is DisplayObjectContainer)
+					{
+						var child:DisplayObject = findChildByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1);
+						if (child)
+							return child;
+					}
+				}	
+			}
+			return null;
+		}
         /**
-         * 遍历子对象，找到某个类型的所有实例
+         * 逐层遍历子对象，找到某个类型的所有实例
          * @param displayObj	目标
          * @param classRef	要查询的类
          * @param result	返回值也会存在这里，可以在这里共用一个返回值，将多个结果集合并在一起
@@ -52,13 +74,94 @@ package ghostcat.util.display
                 result.push(displayObj);
                 
             if (displayObj is DisplayObjectContainer && depth > 0)
-            {
-                var contain:DisplayObjectContainer = DisplayObjectContainer(displayObj);
-                for (var i:int=0;i < contain.numChildren;i++) 
-                    findChildrenByClass(contain.getChildAt(i), classRef, depth - 1, result);
-            }
-            return result;
+            	findChildrenByClassIns(displayObj as DisplayObjectContainer,classRef,depth - 1,result);
+            
+			return result;
         }
+		
+		private static function findChildrenByClassIns(contain:DisplayObjectContainer, classRef:Class, depth:int = int.MAX_VALUE, result:Array=null):void
+		{
+			if (depth > 0)
+			{
+				var len:int = contain.numChildren;
+				var displayObj:DisplayObject
+				for (var i:int=0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj is classRef)
+						result.push(displayObj);
+				}
+				for (i = 0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj is DisplayObjectContainer)
+						findChildrenByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1, result);
+				}	
+			}
+		}
+		
+		/**
+		 * 逐层遍历子对象，找到第一个有某个属性值的对象
+		 * 诸如当property为name时，便是寻找特定实例名的子对象
+		 * 
+		 * @param displayObject	目标
+		 * @param property	要查询的属性
+		 * @param value	属性的值，设为null则表示不限制property的值
+		 * @return 
+		 * 
+		 */        
+		public static function findChildByProperty(displayObj:DisplayObject, property:String, value:*=null, depth:int = int.MAX_VALUE):DisplayObject
+		{
+			if (displayObj == null)
+				return null;
+			
+			if (displayObj.hasOwnProperty(property))
+			{
+				if (value && displayObj[property] == value || value==null)
+					return displayObj;
+			}
+			
+			if (displayObj is DisplayObjectContainer && depth > 0)
+			{
+				var child:DisplayObject = findChildByPropertyIns(displayObj as DisplayObjectContainer, property, value, depth - 1);
+				if (child)
+					return child;
+			}
+			return null;
+		}
+		
+		public static function findChildByPropertyIns(contain:DisplayObjectContainer, property:String, value:*=null, depth:int = int.MAX_VALUE):DisplayObject
+		{
+			if (displayObj == null)
+				return null;
+			
+			if (depth > 0)
+			{
+				var len:int = contain.numChildren;
+				var displayObj:DisplayObject;
+				
+				for (var i:int=0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj.hasOwnProperty(property))
+					{
+						if (value && displayObj[property] == value || value==null)
+							return displayObj;
+					}
+				}
+				for (i = 0;i < len;i++)
+				{
+					displayObj = contain.getChildAt(i);
+					if (displayObj is DisplayObjectContainer)
+					{
+						var child:DisplayObject = findChildByPropertyIns(displayObj as DisplayObjectContainer, property, value, depth - 1);
+						if (child)
+							return child;
+					}
+				}	
+			}
+			return null;
+		}
         
         /**
          * 遍历父层对象，找到某个类型的第一个实例
@@ -97,40 +200,6 @@ package ghostcat.util.display
                 findParentsByClass(displayObj.parent, classRef, depth - 1, result);
                 
             return result;
-        }
-        
-        /**
-         * 遍历子对象，找到第一个有某个属性值的对象
-         * 诸如当property为name时，便是寻找特定实例名的子对象
-         * 
-         * @param displayObject	目标
-         * @param property	要查询的属性
-         * @param value	属性的值，设为null则表示不限制property的值
-         * @return 
-         * 
-         */        
-        public static function findChildByProperty(displayObj:DisplayObject, property:String, value:*=null, depth:int = int.MAX_VALUE):DisplayObject
-        {
-            if (displayObj == null)
-                return null;
-            
-            if (displayObj.hasOwnProperty(property))
-            {
-            	if (value && displayObj[property] == value || value==null)
-            	    return displayObj;
-            }
-                
-            if (displayObj is DisplayObjectContainer && depth > 0)
-            {
-                var displayObjectContainer:DisplayObjectContainer = DisplayObjectContainer(displayObj);
-                for (var i:int = 0;i < displayObjectContainer.numChildren;i++) 
-                {
-                	var child:DisplayObject = findChildByProperty(displayObjectContainer.getChildAt(i),property, value, depth - 1);
-                    if (child)
-                        return child;
-                }
-            }
-            return null;
         }
         
         /**

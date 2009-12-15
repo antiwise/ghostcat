@@ -12,8 +12,8 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.display.bitmap.BitmapScreen;
 	import ghostcat.display.bitmap.GBitmap;
-	import ghostcat.display.viewport.Tile45;
-	import ghostcat.display.viewport.TileGameLayer;
+	import ghostcat.display.game.Tile45;
+	import ghostcat.display.game.TileGameLayer;
 	import ghostcat.manager.DragManager;
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.parse.display.TextFieldParse;

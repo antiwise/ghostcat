@@ -8,9 +8,9 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.debug.FPS;
 	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.Display45Util;
-	import ghostcat.display.viewport.Tile45;
-	import ghostcat.display.viewport.TileGameLayer;
+	import ghostcat.display.game.Display45Util;
+	import ghostcat.display.game.Tile45;
+	import ghostcat.display.game.TileGameLayer;
 	import ghostcat.manager.DragManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.ui.CursorSprite;

@@ -1,4 +1,4 @@
-package ghostcat.display.viewport
+package ghostcat.display.game
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

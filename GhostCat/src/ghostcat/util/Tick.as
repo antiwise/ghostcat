@@ -1,12 +1,10 @@
 package ghostcat.util
 {
 	import flash.display.Sprite;
-	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
 	import ghostcat.events.TickEvent;
-	import ghostcat.manager.RootManager;
 	import ghostcat.util.core.Singleton;
 
 	[Event(name="tick",type="ghostcat.events.TickEvent")]
@@ -38,6 +36,11 @@ package ghostcat.util
 		 * 全局默认帧频
 		 */
 		static public var frameRate:Number = NaN;
+		
+		/**
+		 * 最大两帧间隔（防止待机后返回卡死） 
+		 */
+		static public var MAX_INTERVAL:int = 10000;
 		
 		/**
 		 * 速度系数
@@ -78,7 +81,7 @@ package ghostcat.util
 					interval = 0;
 				else
 				{
-					interval = nextTime - prevTime;
+					interval = Math.min(nextTime - prevTime,MAX_INTERVAL);
 					var e:TickEvent = new TickEvent(TickEvent.TICK);
 					e.interval = interval * speed;
 					dispatchEvent(e);

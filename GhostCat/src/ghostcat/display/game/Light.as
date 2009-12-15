@@ -1,4 +1,4 @@
-package ghostcat.display.viewport
+package ghostcat.display.game
 {
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
@@ -161,28 +161,23 @@ package ghostcat.display.viewport
 
 	}
 }
+import flash.display.Bitmap;
+import flash.display.BlendMode;
 import flash.display.DisplayObject;
 import flash.display.Shape;
-import flash.display.Bitmap;
-import ghostcat.util.display.BitmapUtil;
-import flash.geom.Point;
-import ghostcat.util.display.Geom;
-import flash.display.DisplayObjectContainer;
-import flash.geom.Matrix;
 import flash.display.Sprite;
-import flash.geom.Rectangle;
-import ghostcat.display.viewport.Light;
 import flash.filters.BlurFilter;
-import ghostcat.events.GEvent;
-import ghostcat.display.viewport.Wall;
-import ghostcat.parse.graphics.GraphicsPath;
-import flash.display.Graphics;
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+
 import ghostcat.algorithm.bezier.Line;
-import flash.display.BitmapData;
-import flash.display.BlendMode;
-import ghostcat.util.display.ColorUtil;
-import flash.geom.ColorTransform;
+import ghostcat.events.GEvent;
+import ghostcat.parse.graphics.GraphicsPath;
 import ghostcat.util.display.BitmapUtil;
+import ghostcat.util.display.Geom;
+
+import ghostcat.display.game.Light;
 
 class ShadowItem
 {
@@ -367,6 +362,7 @@ class ShadowItem
 	}
 }
 
+import ghostcat.display.game.Wall;
 class WallShadowItem
 {
 	public var item:Wall;
