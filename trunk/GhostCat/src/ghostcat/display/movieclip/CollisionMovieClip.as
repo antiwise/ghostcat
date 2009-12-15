@@ -1,10 +1,8 @@
 package ghostcat.display.movieclip
 {
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	
-	import ghostcat.display.viewport.Collision;
-	import ghostcat.display.viewport.ICollisionClient;
+	import ghostcat.display.game.Collision;
+	import ghostcat.display.game.ICollisionClient;
+	import ghostcat.display.game.Light;
 	
 	/**
 	 * 支持不规则碰撞的动画显示对象

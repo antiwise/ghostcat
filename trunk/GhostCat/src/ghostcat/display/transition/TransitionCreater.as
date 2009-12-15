@@ -18,7 +18,7 @@ package ghostcat.display.transition
 	import ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
-	import ghostcat.display.viewport.BackgroundLayer;
+	import ghostcat.display.game.BackgroundLayer;
 	import ghostcat.ui.controls.GImage;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.easing.Circ;

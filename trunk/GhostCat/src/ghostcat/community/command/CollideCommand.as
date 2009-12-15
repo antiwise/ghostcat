@@ -3,7 +3,7 @@ package ghostcat.community.command
 	import flash.display.DisplayObject;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.viewport.ICollisionClient;
+	import ghostcat.display.game.ICollisionClient;
 	import ghostcat.events.CollideEvent;
 	import ghostcat.util.Util;
 
@@ -15,6 +15,7 @@ package ghostcat.community.command
 	 */
 	public final class CollideCommand
 	{
+		
 		/**
 		 * 检测碰撞并向目标发送碰撞事件
 		 * 

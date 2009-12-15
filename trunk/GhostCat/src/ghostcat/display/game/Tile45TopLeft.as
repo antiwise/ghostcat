@@ -1,4 +1,4 @@
-package ghostcat.display.viewport
+package ghostcat.display.game
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

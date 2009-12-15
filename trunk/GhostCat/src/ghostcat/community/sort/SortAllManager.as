@@ -5,7 +5,7 @@ package ghostcat.community.sort
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.GroupManager;
-	import ghostcat.display.viewport.Display45Util;
+	import ghostcat.display.game.Display45Util;
 	import ghostcat.util.Util;
 
 	/**

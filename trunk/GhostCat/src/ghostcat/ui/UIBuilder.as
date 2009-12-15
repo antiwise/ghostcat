@@ -36,7 +36,7 @@ package ghostcat.ui
 				if (types[name])
 				{
 					var ref:ClassFactory;
-					if (params)
+					if (params)//进行类型约定
 					{
 						if (params[name])
 						{
@@ -60,6 +60,7 @@ package ghostcat.ui
 							ref.params = [obj];
 						
 						target[name] = ref.newInstance();
+						delete types[name];//删除已完成生成的属性
 					}
 				}
 			}

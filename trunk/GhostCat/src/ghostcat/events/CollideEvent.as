@@ -4,7 +4,7 @@ package ghostcat.events
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	import ghostcat.display.viewport.ICollisionClient;
+	import ghostcat.display.game.ICollisionClient;
 	
 	/**
 	 * 碰撞事件

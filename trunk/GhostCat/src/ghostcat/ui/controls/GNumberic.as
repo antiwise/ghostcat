@@ -2,6 +2,7 @@ package ghostcat.ui.controls
 {
 	import flash.events.Event;
 	
+	import ghostcat.text.NumberUtil;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenUtil;
@@ -16,6 +17,11 @@ package ghostcat.ui.controls
 	 */
 	public class GNumberic extends GText
 	{
+		/**
+		 * 转换文字函数
+		 */
+		public var textFunction:Function;
+		
 		/**
 		 * 缓动时间
 		 */
@@ -120,7 +126,12 @@ package ghostcat.ui.controls
 			_displayValue = v;
 			
 			if (textField)
-				textField.text = prefix + (fix == 0) ? int(v).toString() : v.toFixed(fix) + suffix;
+			{
+				if (textFunction!=null)
+					textField.text = textFunction(v);
+				else
+					textField.text = prefix + (fix == 0) ? int(v).toString() : v.toFixed(fix) + suffix;
+			}
 			
 			if (enabledAdjustContextSize)
 				adjustContextSize();

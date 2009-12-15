@@ -7,8 +7,8 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
-	import ghostcat.display.viewport.Light;
-	import ghostcat.display.viewport.Wall;
+	import ghostcat.display.game.Light;
+	import ghostcat.display.game.Wall;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.skin.cursor.CursorDrag;

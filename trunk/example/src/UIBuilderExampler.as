@@ -15,7 +15,7 @@ package
 		{
 			RootManager.register(this);
 			
-			addChild(new DebugRect(500,400,0xFF88FF));
+			addChild(new DebugRect(500,400,0x8888FF));
 			addChild(new BubbleCreater(500,400,250));
 			
 			PopupManager.instance.applicationDisabledOper = null;

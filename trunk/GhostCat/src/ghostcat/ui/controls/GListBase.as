@@ -11,7 +11,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
-	import ghostcat.display.viewport.Tile;
+	import ghostcat.display.game.Tile;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.skin.ListBackground;
