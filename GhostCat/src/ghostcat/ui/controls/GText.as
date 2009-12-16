@@ -43,9 +43,14 @@ package ghostcat.ui.controls
 		public static var textChangeHandler:Function;
 		
 		/**
-		 * 必须将它设置为true，才能通过外部嵌入字体
+		 * 将它设置为true，将通过外部嵌入字体，否则使用SWF内的字体
 		 */
 		public static var autoRebuildTextField:Boolean = false;
+		
+		/**
+		 * 字体替换 
+		 */
+		public static var fontFamilyReplacer:Object;
 		
 		private var _textFormat:String;
 		private var _autoSize:String;
@@ -311,8 +316,14 @@ package ghostcat.ui.controls
 					addChild(textField);//可缩放背景必须提取文本框
 			}
 			
-			this.textFormat = textFormat ? textFormat : defaultTextFormat;
-			
+			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）
+			var oldFont:TextFormat = this.textField.defaultTextFormat;//替换字体
+			if (fontFamilyReplacer && fontFamilyReplacer[oldFont.font])
+			{
+				oldFont.font = fontFamilyReplacer[oldFont.font]
+				this.textField.defaultTextFormat = oldFont;
+			}
+					
 			if (this.text)
 			{
 				if (this.text.indexOf("<html>")!= - 1)

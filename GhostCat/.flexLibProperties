@@ -471,6 +471,7 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsSpider"/>
+    <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -10,7 +10,6 @@ package ghostcat.ui.containers
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.display.DisplayUtil;
 	
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
 	
@@ -54,6 +53,21 @@ package ghostcat.ui.containers
 			
 		}
 		
+		/**
+		 * 线性布局 
+		 * @return 
+		 * 
+		 */
+		public function get linearLayout():LinearLayout
+		{
+			return layout as LinearLayout;
+		}
+		
+		/**
+		 * 子对象渲染器 
+		 * @return 
+		 * 
+		 */
 		public function get itemRender():ClassFactory
 		{
 			return ref;
@@ -65,6 +79,10 @@ package ghostcat.ui.containers
 			render();
 		}
 		
+		/**
+		 * 刷新全部 
+		 * 
+		 */
 		public function render():void
 		{
 			if (ref && renderSkin)

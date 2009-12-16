@@ -12,27 +12,23 @@ package ghostcat.operation
 		 */
 		public var client:*;
 		/**
-		 * 属性
-		 */
-		public var property:*;
-		/**
 		 * 值
 		 */
-		public var value:*;
+		public var values:*;
 		
-		public function SetPropertyOper(client:*=null,property:*=null,value:*=null)
+		public function SetPropertyOper(client:*=null,values:* =null)
 		{
 			super();
 			
 			this.client = client;
-			this.property = property;
-			this.value = value;
+			this.values = values;
 		}
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
 			super.execute();
-			client[property] = value;
+			for (var p:String in values)
+				client[p] = values[p];
 			
 			result();
 		}
