@@ -63,6 +63,7 @@ package ghostcat.ui.controls
 				renderSkin = renderSkin["constructor"];
 			
 			listContent = new GListBase(renderSkin,replace,_type,_itemRender);
+			listContent.self = this;
 			addChild(listContent);
 			
 			content = listContent;//用listContent取代原来的content

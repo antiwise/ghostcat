@@ -6,7 +6,7 @@ package ghostcat.ui.containers
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.GSprite;
+	import ghostcat.display.IGBase;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.core.ClassFactory;
@@ -75,13 +75,22 @@ package ghostcat.ui.containers
 					ref.params = [renderSkin];
 			}
 			
-			DisplayUtil.removeAllChildren(contentPane);
+			var i:int;
+			for (i = contentPane.numChildren - 1;i >= 0;i--)
+			{
+				var display:DisplayObject = contentPane.getChildAt(i);
+				if (display is IGBase)
+					(display as IGBase).destory();
+				else
+					contentPane.removeChild(display);
+			}
 			
-			for (var i:int = 0;i < data.length;i++)
+			for (i = 0;i < data.length;i++)
 			{
 				var obj:GBase = ref.newInstance() as GBase;
 				contentPane.addChild(obj);
 				obj.data = data[i];
+				obj.owner = self;
 			}
 			layout.vaildLayout();
 		}
@@ -118,8 +127,8 @@ package ghostcat.ui.containers
 			
 			for (var i:int = 0; i < contentPane.numChildren;i++)
 			{
-				if (contentPane.getChildAt(i) is GSprite)
-					(contentPane.getChildAt(i) as GSprite).destory();
+				if (contentPane.getChildAt(i) is IGBase)
+					(contentPane.getChildAt(i) as IGBase).destory();
 			}
 			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
 		
