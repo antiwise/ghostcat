@@ -130,7 +130,7 @@ package ghostcat.gxml.spec
 					var ref:Class = ReflectUtil.getTypeByProperty(source,name)
 					if (ref == Array)//在这里判断是否真的是数组，不是则取第一个元素用原来的处理方式
 						source[name] = child;
-					else
+					else if (child.length > 0)
 						ReflectXMLUtil.setProperty(source,name,child[0],root);
 				}
 				else
