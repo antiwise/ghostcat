@@ -238,7 +238,8 @@ package ghostcat.util.easing
 			for (var i:int = effects.length - 1; i >=0; i--) 
 			{
 				var $o:TweenUtil = effects[i] as TweenUtil;
-				$o.update(interval);
+				if ($o)
+					$o.update(interval);
 			}
 		}
 		

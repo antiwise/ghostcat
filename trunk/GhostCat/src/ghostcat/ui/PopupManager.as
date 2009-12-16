@@ -11,7 +11,6 @@ package ghostcat.ui
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.filter.ColorMatrixFilterProxy;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
 	import ghostcat.operation.PopupOper;
@@ -65,8 +64,6 @@ package ghostcat.ui
 		private var _popupLayer:DisplayObjectContainer;
 		private var _application:DisplayObjectContainer;
 		private var _applicationEnabled:Boolean = true;
-		
-		private var popups:Dictionary;
 		
 		/**
 		 * 弹出窗口指定的队列，为空则为全局队列
@@ -172,8 +169,6 @@ package ghostcat.ui
 		{
 			super();
 			
-			popups = new Dictionary(true);
-			
 			const normalMatrix:Array = [
 				1,0,0,0,0,
 				0,1,0,0,0,
@@ -210,18 +205,6 @@ package ghostcat.ui
 		}
 		
 		/**
-		 * 获得窗口的调用者
-		 * 
-		 * @param v
-		 * @return 
-		 * 
-		 */
-		public function getOwner(v:DisplayObject):DisplayObject
-		{
-			return popups[v]
-		}
-		
-		/**
 		 * 显示一个窗口
 		 * 
 		 * @param obj	窗口实例
@@ -231,11 +214,6 @@ package ghostcat.ui
 		 */
 		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect"):DisplayObject
 		{
-			if (!owner)
-				owner = popupLayer;
-				
-			popups[obj] = owner;
-			
 			if (centerMode == CenterMode.RECT)
 			{
 				Geom.centerIn(obj,popupLayer.stage);
@@ -249,6 +227,10 @@ package ghostcat.ui
 			
 			popupLayer.addChild(obj);
 			
+			if (owner && obj is GBase)
+				(obj as GBase).owner = owner;
+			
+			obj.addEventListener(Event.REMOVED_FROM_STAGE,popupCloseHandler);
 			if (modal && applicationEnabled)
 			{
 				applicationEnabled = false;
@@ -279,6 +261,20 @@ package ghostcat.ui
 		}
 		
 		/**
+		 * 窗口关闭
+		 * @param event
+		 * 
+		 */
+		protected function popupCloseHandler(event:Event):void
+		{
+			var obj:DisplayObject = event.currentTarget as DisplayObject;
+			if (obj is GBase)
+				(obj as GBase).owner = null;
+			
+			event.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE,popupCloseHandler);
+		}
+		
+		/**
 		 * 模式窗口关闭方法 
 		 * @param event
 		 * 
@@ -286,6 +282,7 @@ package ghostcat.ui
 		protected function modulePopupCloseHandler(event:Event):void
 		{
 			applicationEnabled = true;
+			event.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 		}
 		
 		/**
@@ -295,8 +292,6 @@ package ghostcat.ui
 		 */
 		public function removePopup(obj:DisplayObject):void
 		{
-			delete popups[obj];
-			
 			if (obj.parent == popupLayer)
 			{
 				if (obj is GBase)
@@ -304,16 +299,6 @@ package ghostcat.ui
 				else
 					popupLayer.removeChild(obj);
 			}
-		}
-		
-		/**
-		 * 删除所有 
-		 * 
-		 */
-		public function removeAllPopup():void
-		{
-			for each (var item:DisplayObject in popups)
-				removePopup(item);
 		}
 	}
 }

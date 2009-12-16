@@ -162,6 +162,16 @@ package ghostcat.ui.containers
 			return contentPane.getChildIndex(child);
 		}
 		
+		/**
+		 * 子对象数量 
+		 * @return 
+		 * 
+		 */
+		public override function get numChildren() : int
+		{
+			return contentPane.numChildren;
+		}
+		
 		
 		private function addHandlers(target:DisplayObject):void
 		{

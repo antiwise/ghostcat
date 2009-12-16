@@ -281,6 +281,7 @@
     <classEntry path="ghostcat.parse.display.GradientRectParse"/>
     <classEntry path="ghostcat.parse.display.Grid9Parse"/>
     <classEntry path="ghostcat.parse.display.PathParse"/>
+    <classEntry path="ghostcat.parse.display.RadiusPolygonParse"/>
     <classEntry path="ghostcat.parse.display.RectParse"/>
     <classEntry path="ghostcat.parse.display.ShapeParse"/>
     <classEntry path="ghostcat.parse.display.SimpleEllipseParse"/>
@@ -469,7 +470,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.parse.display.RadiusPolygonParse"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsSpider"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

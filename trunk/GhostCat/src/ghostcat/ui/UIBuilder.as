@@ -4,6 +4,7 @@ package ghostcat.ui
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
+	import ghostcat.display.IGBase;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.SearchUtil;
@@ -59,7 +60,10 @@ package ghostcat.ui
 						else
 							ref.params = [obj];
 						
-						target[name] = ref.newInstance();
+						var displayObj:GBase = ref.newInstance();//创建
+						displayObj.owner = target;
+						
+						target[name] = displayObj;
 						delete types[name];//删除已完成生成的属性
 					}
 				}
@@ -97,7 +101,10 @@ package ghostcat.ui
 					cls.params = [skin];
 			}
 			
-			return cls.newInstance(); 
+			var displayObj:GBase = cls.newInstance();//创建
+			displayObj.owner = target;
+			
+			return displayObj; 
 		}
 		
 		/**

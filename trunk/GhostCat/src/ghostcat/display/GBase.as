@@ -2,6 +2,7 @@ package ghostcat.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -73,8 +74,19 @@ package ghostcat.display
 		 */		
 		public function GBase(skin:*=null,replace:Boolean=true)
 		{
+			this.self = this;
 			super(skin,replace);
 		}
+		
+		/**
+		 * 拥有者
+		 */
+		public var owner:DisplayObject;
+		
+		/**
+		 * 自身
+		 */
+		public var self:GBase;
 		
 		/**
 		 * 设置数据 

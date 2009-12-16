@@ -11,6 +11,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
+	import ghostcat.display.IGBase;
 	import ghostcat.display.game.Tile;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.events.RepeatEvent;
@@ -424,6 +425,8 @@ package ghostcat.ui.controls
 		{
 			var p:Point = event.repeatPos;
 			var item:GBase = event.repeatObj as GBase;
+			item.owner = self;
+			
 			refreshItem(p.x,p.y);
 			
 //			item.visible = (item.data != null);
@@ -475,6 +478,7 @@ package ghostcat.ui.controls
 		public function refreshItem(i:int,j:int):GBase
 		{
 			var item:GBase = getItemAt(i,j);
+			
 			if (item)
 			{
 				var index:int;
@@ -526,8 +530,8 @@ package ghostcat.ui.controls
 				
 			for (var i:int = 0; i < numChildren;i++)
 			{
-				if (getChildAt(i) is GSprite)
-					(getChildAt(i) as GSprite).destory();
+				if (getChildAt(i) is IGBase)
+					(getChildAt(i) as IGBase).destory();
 			}
 			
 			removeEventListener(MouseEvent.CLICK,clickHandler);
