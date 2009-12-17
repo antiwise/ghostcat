@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import flash.events.Event;
+	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	
@@ -15,9 +16,19 @@ package ghostcat.operation
 	{
 		public var file:FileReference;
 		
+		public var typeFilter:Array;
+		
 		public function get data():ByteArray
 		{
 			return file.data;
+		}
+		
+		public function addTypeFilter(name:String,extensions:Array):void
+		{
+			if (!typeFilter)
+				typeFilter = [];
+		
+			typeFilter.push(new FileFilter(name,extensions.join(";")));
 		}
 			
 		public function FileLoadOper(rHandler:Function = null,eHandler:Function = null)
@@ -38,7 +49,7 @@ package ghostcat.operation
 			
 			file.addEventListener(Event.SELECT,selectFileHandler);
 			file.addEventListener(Event.CANCEL,fault);
-			file.browse();
+			file.browse(typeFilter);
 		}
 		
 		private function selectFileHandler(event:Event):void

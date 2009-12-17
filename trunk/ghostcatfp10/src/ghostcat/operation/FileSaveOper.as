@@ -14,6 +14,7 @@ package ghostcat.operation
 	public class FileSaveOper extends Oper
 	{
 		public var file:FileReference;
+		public var typeFilter:Array;
 		
 		private var data:ByteArray;
 			
@@ -36,7 +37,7 @@ package ghostcat.operation
 			
 			file.addEventListener(Event.SELECT,selectFileHandler);
 			file.addEventListener(Event.CANCEL,fault);
-			file.browse();
+			file.browse(typeFilter);
 		}
 		
 		private function selectFileHandler(event:Event):void
