@@ -144,6 +144,15 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 重置滚动 
+		 * 
+		 */
+		public function resetContent():void
+		{
+			_scrollContent.scrollH = _scrollContent.scrollV = _scrollContent.tweenTargetH = _scrollContent.tweenTargetV = 0.0;
+		}
+		
+		/**
 		 * 滚动区域对象
 		 * @return 
 		 * 

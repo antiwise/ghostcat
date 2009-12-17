@@ -58,6 +58,11 @@ package ghostcat.operation
 		public var immediately:Boolean = false;
 		
 		/**
+		 * 是否在出错的时候继续队列
+		 */
+		public var continueWhenFail:Boolean = true;
+		
+		/**
 		 * 立即执行
 		 * 
 		 */		

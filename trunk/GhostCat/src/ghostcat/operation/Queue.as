@@ -94,13 +94,14 @@ package ghostcat.operation
 		
 		private function nexthandler(event:Event=null):void
 		{
-			var loader:Oper = children[0] as Oper;
-			loader.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
-			loader.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
+			var oper:Oper = children[0] as Oper;
+			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
+			oper.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 			
 			children.shift();
 		
-			doLoad();
+			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
+				doLoad();
 		}
 		/** @inheritDoc*/
 		public override function commit(queue:Queue=null) : void

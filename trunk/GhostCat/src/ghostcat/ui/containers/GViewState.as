@@ -4,6 +4,8 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObjectContainer;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.effect.IEffect;
 	
 	/**
 	 * 切换显示容器
@@ -15,6 +17,11 @@ package ghostcat.ui.containers
 	 */
 	public class GViewState extends GBase
 	{
+		public var showFromLeft:IEffect;
+		public var showFromRight:IEffect;
+		public var hideToLeft:IEffect;
+		public var hideToRight:IEffect;
+		
 		protected var _selectedIndex:int = -1;
 		
 		public function GViewState(skin:* = null,replace:Boolean = true)
@@ -73,15 +80,39 @@ package ghostcat.ui.containers
 			if (_selectedIndex == v)
 				return;
 			
+			var tweenToRight:Boolean = v > _selectedIndex;
+			var effect:IEffect;
 			var container:DisplayObjectContainer = content as DisplayObjectContainer;
-			
 			if (_selectedIndex != -1 && _selectedIndex < container.numChildren)
-				container.getChildAt(_selectedIndex).visible = false;
-			
+			{
+				var page:DisplayObject = container.getChildAt(_selectedIndex);
+				effect = tweenToRight ? hideToRight : hideToLeft;
+				if (effect)
+				{
+					effect.addEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
+					effect.execute();
+					function tweenCompleteHandler(event:OperationEvent):void
+					{
+						page.visible = false;
+						effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
+					}
+				}
+				else
+				{
+					page.visible = false;
+				}
+			}
+				
 			_selectedIndex = v;
-			
+				
 			if (_selectedIndex != -1 && _selectedIndex < container.numChildren)
-				container.getChildAt(_selectedIndex).visible = true;
+			{
+				var page2:DisplayObject = container.getChildAt(_selectedIndex);
+				effect = tweenToRight ? showFromLeft : showFromRight;
+				page2.visible = true;
+				if (effect)
+					effect.execute();
+			}
 		}
 
 	}
