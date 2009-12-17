@@ -221,7 +221,7 @@ package ghostcat.display.movieclip
         
         protected override function tickHandler(event:TickEvent):void
 		{
-			if (frameRate == 0)
+			if (frameRate == 0 || totalFrames <= 1)
 				return;
 			
 			frameTimer -= event.interval;
