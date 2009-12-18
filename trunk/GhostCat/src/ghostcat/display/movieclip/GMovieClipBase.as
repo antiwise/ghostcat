@@ -167,12 +167,13 @@ package ghostcat.display.movieclip
         		nextLabels = [];
 			
 			var index:int = getLabelIndex(labelName);
-			if (!resetLabel && index != -1 && index == curLabelIndex)
-				return;
 			
 			if (index != -1)
 			{
 				numLoops = repeat;
+				if (!resetLabel && index == curLabelIndex)
+					return;
+				
 				currentFrame  = (frameRate >= 0) ? getLabelStart(index) : getLabelEnd(index);
 				curLabelIndex = index;
 				
