@@ -60,6 +60,22 @@ package ghostcat.ui.scroll
 		 */
 		function get tweenTargetV():Number
 		function set tweenTargetV(v:Number):void
+			
+		/**
+		 * 鼠标滚动方向
+		 * @return 
+		 * 
+		 */
+		function get wheelDirect():String
+		function set wheelDirect(v:String):void
+			
+		/**
+		 * 鼠标滚动速度
+		 * @return 
+		 * 
+		 */
+		function get wheelSpeed():Number
+		function set wheelSpeed(v:Number):void
 				
 			
 	}

@@ -54,14 +54,11 @@ package ghostcat.display.movieclip
         	if (frame > totalFrames)
         		frame = totalFrames;
         	
-        	if (_currentFrame == frame)
+        	if (super.currentFrame == frame)
         		return;
         		
-        	_currentFrame = frame;
-        
-        	command.call(this);
-			
-			super.currentFrame = frame;
+        	super.currentFrame = frame;
+			command.call(this);
 		}
 		/** @inheritDoc*/
         public function set totalFrames(v:int):void

@@ -75,12 +75,8 @@ package ghostcat.display.movieclip
 		{
 			return timeLine ? timeLine.labels : null;
 		}
+		
 		/** @inheritDoc*/
-		public override function get currentFrame():int
-        {
-        	return mc ? mc.currentFrame : 0;
-        }
-        /** @inheritDoc*/
         public override function set currentFrame(frame:int):void
         {
 			if (frame < 1)

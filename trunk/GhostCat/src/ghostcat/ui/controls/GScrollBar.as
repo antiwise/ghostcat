@@ -167,11 +167,14 @@ package ghostcat.ui.controls
 		 * @param target	目标
 		 * @param width	目标的滚动大小
 		 * @param height	目标的滚动大小
-		 * 
+		 * @param overrideWheelDirect	重置目标的鼠标滚动方向
 		 */
-		public function setTarget(target:*,width:Number = NaN,height:Number = NaN):void
+		public function setTarget(target:*,width:Number = NaN,height:Number = NaN, overrideWheelDirect:Boolean = true):void
 		{
 			this.target = target;
+			if (overrideWheelDirect)
+				_scrollContent.wheelDirect = this.direction;
+			
 			setTargetScrollSize(width,height);
 		}
 		

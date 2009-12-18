@@ -85,15 +85,13 @@ package ghostcat.display.movieclip
 			if (frame > totalFrames)
 				frame = totalFrames;
 			
-			if (_currentFrame == frame)
+			if (super.currentFrame == frame)
 				return;
 			
-			_currentFrame = frame;
-			
-			
+			super.currentFrame = frame;
+				
 			(content as Bitmap).bitmapData = bitmaps[frame - 1];
 				
-			super.currentFrame = frame;
 		}
 		
 		/** @inheritDoc*/
