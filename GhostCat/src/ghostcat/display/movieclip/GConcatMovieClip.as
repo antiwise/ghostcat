@@ -79,19 +79,20 @@ package ghostcat.display.movieclip
 		{
 			if (frame < 1)
 				frame = 1;
+			
 			if (frame > totalFrames)
 				frame = totalFrames;
 			
-			if (_currentFrame == frame)
+			if (super.currentFrame == frame)
 				return;
 			
-			_currentFrame = frame;
+			super.currentFrame = frame;
 			
 			var curMc:MovieClip;
 			var curStartFrame:int;
 			for (var i:int = 0;i < mcStartFrame.length;i++)
 			{
-				if (_currentFrame >= mcStartFrame[i])
+				if (frame >= mcStartFrame[i])
 				{
 					curMc = mcs[i] as MovieClip;
 					curStartFrame = mcStartFrame[i];
@@ -105,15 +106,13 @@ package ghostcat.display.movieclip
 			
 			if (mc)
 			{
-				if (mcFrame == currentFrame + 1) 
+				if (mcFrame == mc.currentFrame + 1) 
 					mc.nextFrame();
-				else if (mcFrame == currentFrame - 1)
+				else if (mcFrame == mc.currentFrame - 1)
 					mc.prevFrame();
 				else
 					mc.gotoAndStop(mcFrame);
 			}
-			
-			super.currentFrame = frame;
 		}
 	}
 }

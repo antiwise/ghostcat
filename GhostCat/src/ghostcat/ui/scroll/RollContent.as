@@ -27,6 +27,33 @@ package ghostcat.ui.scroll
 		{
 			return target;
 		}
+		
+		private var _wheelDirect:String;
+		
+		/** @inheritDoc*/
+		public function get wheelDirect():String
+		{
+			return _wheelDirect;
+		}
+		
+		public function set wheelDirect(value:String):void
+		{
+			_wheelDirect = value;
+		}
+		
+		private var _wheelSpeed:Number = 1.0;
+		
+		/** @inheritDoc*/
+		public function get wheelSpeed():Number
+		{
+			return _wheelSpeed;
+		}
+		
+		public function set wheelSpeed(value:Number):void
+		{
+			_wheelSpeed = value;
+		}
+		
 		/** @inheritDoc*/
 		public function get maxScrollH():int
 		{

@@ -29,7 +29,7 @@ package ghostcat.display.movieclip
 	public class GMovieClipBase extends GBase
 	{
 		protected var _labels:Array;
-		protected var _currentFrame:int = 1;
+		private var _currentFrame:int = 1;
 		protected var _totalFrames:int = 1;
 		
 		/**
@@ -69,7 +69,7 @@ package ghostcat.display.movieclip
         
         protected var curLabelIndex:int=0;//缓存LabelIndex的序号，避免重复遍历
         
-        private var frameTimer:int=0;//记时器，小于0则需要播放，直到大于0
+		protected var frameTimer:int = 0;//记时器，小于0则需要播放，直到大于0
 
 		/**
 		 * 连接到自己的MovieClip对象
@@ -80,6 +80,11 @@ package ghostcat.display.movieclip
 		 * 是否在动画结束后暂停 
 		 */
 		public var playOnce:Boolean = true;
+		
+		/**
+		 * 设置相同的Label是否重置
+		 */
+		public var resetLabel:Boolean = true;
 		
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
@@ -153,14 +158,18 @@ package ghostcat.display.movieclip
 		 * 设置当前动画 
 		 * @param labelName		动画名称
 		 * @param repeat		动画循环次数，设为-1为无限循环
-		 * 
+		 * @param clearQueue	是否清除动画队列
 		 */
 		 		
-		public function setLabel(labelName:String, repeat:int=-1):void
+		public function setLabel(labelName:String, repeat:int=-1, clearQueue:Boolean = true):void
         {
-        	nextLabels = [];
-        	
-            var index:int = getLabelIndex(labelName);
+			if (clearQueue)
+        		nextLabels = [];
+			
+			var index:int = getLabelIndex(labelName);
+			if (!resetLabel && index != -1 && index == curLabelIndex)
+				return;
+			
 			if (index != -1)
 			{
 				numLoops = repeat;
@@ -221,7 +230,7 @@ package ghostcat.display.movieclip
         
         protected override function tickHandler(event:TickEvent):void
 		{
-			if (frameRate == 0 || totalFrames <= 1)
+			if (frameRate == 0 || numLoops == 0 || totalFrames <= 1)
 				return;
 			
 			frameTimer -= event.interval;
@@ -240,7 +249,7 @@ package ghostcat.display.movieclip
 						
 						if (nextLabels.length > 0)
 						{
-							setLabel(nextLabels[0][0], nextLabels[0][1]);
+							setLabel(nextLabels[0][0], nextLabels[0][1], false);
 							nextLabels.splice(0, 1);
 						}
 						else 
@@ -248,6 +257,8 @@ package ghostcat.display.movieclip
 							e = new MovieEvent(MovieEvent.MOVIE_EMPTY);
 							e.labelName = curLabelName;
 							dispatchEvent(e);
+							
+							frameTimer = 0;//停止动画时需要将延时重置为0
 						}
 					}
 					else 
@@ -366,6 +377,7 @@ package ghostcat.display.movieclip
         
         public function set currentFrame(frame:int):void
         {
+			_currentFrame = frame;
 			if (linkMovieClips)
 			{
 				for each (var mc:GMovieClipBase in linkMovieClips)

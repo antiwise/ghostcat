@@ -1,13 +1,18 @@
 package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GNoScale;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GHScrollBar;
 	import ghostcat.ui.controls.GScrollBar;
 	import ghostcat.ui.controls.GVScrollBar;
 	import ghostcat.ui.scroll.IScrollContent;
+	
+	[Event(name="scroll",type="flash.events.Event")]
 	
 	/**
 	 * 滚动区域
@@ -38,12 +43,49 @@ package ghostcat.ui.containers
 		 */
 		public var vScrollBarSkin:DisplayObject;
 		
+		private var _wheelDirect:String;
+
+		/**
+		 * 鼠标滚动方向
+		 */
+		public function get wheelDirect():String
+		{
+			return _wheelDirect;
+		}
+
+		public function set wheelDirect(value:String):void
+		{
+			_wheelDirect = value;
+		}
+
+		
+		private var _wheelSpeed:Number = 5;
+
+		/**
+		 * 鼠标滚动速度（像素）
+		 */
+		public function get wheelSpeed():Number
+		{
+			return _wheelSpeed;
+		}
+
+		public function set wheelSpeed(value:Number):void
+		{
+			_wheelSpeed = value;
+		}
+
+		
 		public var fields:Object = {vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
 		private var _tweenTargetH:Number = 0;
 		private var _tweenTargetV:Number = 0;
+		
+		/**
+		 * 是否在设置滚动区域时绘制透明背景
+		 */
+		public var createScrollArea:Boolean = true;
 		
 		public function GScrollPanel(skin:*,replace:Boolean = true,width:Number = NaN,height:Number = NaN,fields:Object = null)
 		{
@@ -59,6 +101,8 @@ package ghostcat.ui.containers
 			
 			if (!isNaN(height))
 				this.height = height;
+			
+			addEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
@@ -175,6 +219,20 @@ package ghostcat.ui.containers
 				vScrollBar.height = this.height;
 			}
 		}
+		
+		public override function set scrollRect(value:Rectangle) : void
+		{
+			super.scrollRect = value;
+			
+			if (createScrollArea)
+			{
+				graphics.clear();
+				graphics.beginFill(0,0);
+				graphics.drawRect(scrollRect.x,scrollRect.y,scrollRect.width,scrollRect.height);
+				graphics.endFill();
+			}
+		}
+		
 		/** @inheritDoc*/
 		public function get maxScrollH():int
 		{
@@ -241,6 +299,21 @@ package ghostcat.ui.containers
 		{
 			_tweenTargetV = v;
 		}
+		
+		protected function mouseWheelHandler(event:MouseEvent):void
+		{
+			if (wheelDirect)
+			{
+				if (wheelDirect == UIConst.HORIZONTAL)
+					scrollH = Math.min(maxScrollH,Math.max(0,scrollH + event.delta * wheelSpeed));	
+				
+				if (wheelDirect == UIConst.VERTICAL)
+					scrollV = Math.min(maxScrollV,Math.max(0,scrollV + event.delta * wheelSpeed));
+				
+				dispatchEvent(new Event(Event.SCROLL));
+			}
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
@@ -252,6 +325,8 @@ package ghostcat.ui.containers
 			
 			if (vScrollBar)
 				vScrollBar.destory();
+			
+			removeEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		
 			super.destory();
 		}
