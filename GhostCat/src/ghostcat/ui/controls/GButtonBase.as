@@ -2,6 +2,7 @@ package ghostcat.ui.controls
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextFieldAutoSize;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClipBase;
@@ -15,7 +16,7 @@ package ghostcat.ui.controls
 	 * 按钮
 	 * 
 	 * 标签规则：为一整动画，up,over,down,disabled,selectedUp,selectedOver,selectedDown,selectedDisabled是按钮的八个状态，
-	 * 状态间的过滤为两个标签中间加-，末尾加:start。比如up和over的过滤即为up-over:start
+	 * 状态间的过滤为两个标签中间加-，比如up和over的过滤即为up-over
 	 * 
 	 * 皮肤同时也会当作文本框再次处理一次
 	 * 
@@ -55,7 +56,10 @@ package ghostcat.ui.controls
 		
 		private var _mouseOver:Boolean = false;
 		
-		private var labelTextField:GText;
+		/**
+		 * Label文本实例 
+		 */
+		public var labelTextField:GText;
 		
 		/**
 		 * data中显示成label的字段
@@ -76,6 +80,11 @@ package ghostcat.ui.controls
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
 		 */
 		public var enabledAdjustContextSize:Boolean = false;
+		
+		/**
+		 * Label自动大小
+		 */
+		public var autoSize:String = TextFieldAutoSize.CENTER;
 		
 		/**
 		 * 执行的指令名称
@@ -209,7 +218,8 @@ package ghostcat.ui.controls
 				labelTextField.destory();
 			
 			labelTextField = new GText(content,false,separateTextField,textPadding);
-			labelTextField.enabledAdjustContextSize = enabledAdjustContextSize;
+			labelTextField.enabledAdjustContextSize = this.enabledAdjustContextSize;
+			labelTextField.autoSize = this.autoSize;
 			addChild(labelTextField)
 			
 			labelTextField.text = label;
