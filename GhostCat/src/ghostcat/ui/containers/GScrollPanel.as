@@ -305,7 +305,7 @@ package ghostcat.ui.containers
 			if (wheelDirect)
 			{
 				if (wheelDirect == UIConst.HORIZONTAL)
-					tweenTargetH = scrollH = Math.min(maxScrollH,Math.max(0,scrollH + event.delta * wheelSpeed));	
+					tweenTargetH = scrollH = Math.min(maxScrollH,Math.max(0,scrollH - event.delta * wheelSpeed));	
 				
 				if (wheelDirect == UIConst.VERTICAL)
 					tweenTargetV = scrollV = Math.min(maxScrollV,Math.max(0,scrollV - event.delta * wheelSpeed));

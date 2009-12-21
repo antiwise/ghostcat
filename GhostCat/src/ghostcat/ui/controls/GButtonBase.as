@@ -82,6 +82,11 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
+		 * 自动刷新文本框
+		 */
+		public var autoRefreshLabelField:Boolean = true;
+		
+		/**
 		 * Label自动大小
 		 */
 		public var autoSize:String = TextFieldAutoSize.CENTER;
@@ -192,7 +197,7 @@ package ghostcat.ui.controls
 			
 			if (labelTextField)
 				labelTextField.text = label;
-			else
+			else if (autoRefreshLabelField)
 				refreshLabelField();
 		} 
 		/** @inheritDoc*/
@@ -202,7 +207,7 @@ package ghostcat.ui.controls
 				return;
 			
 			this.mouseChildren = this.mouseEnabled = super.enabled = v;
-			tweenTo(v ? UP : DISABLED);
+			tweenTo(UP);
 		}
 		
 		/**
@@ -241,7 +246,8 @@ package ghostcat.ui.controls
 		{
 			super.setContent(skin,replace);
 			
-			refreshLabelField();
+			if (autoRefreshLabelField)
+				refreshLabelField();
 			
 			createMovieClip();
 			
@@ -318,8 +324,10 @@ package ghostcat.ui.controls
 		 */
 		protected function tweenTo(n:int):void
 		{
-			var next:String = LABELS[n][int(selected)];
+			if (!enabled)
+				n = DISABLED;
 			
+			var next:String = LABELS[n][int(selected)];
 			var state:GButtonState = buttonStates[next]
 			if (state)
 				state.parse(this);
@@ -355,10 +363,7 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
-			if (enabled)
-				tweenTo(_mouseOver ? OVER : UP);
-			else
-				tweenTo(DISABLED);
+			tweenTo(_mouseOver ? OVER : UP);
 			
 			_mouseDown = false;
 			
@@ -393,10 +398,7 @@ package ghostcat.ui.controls
 		 */
 		protected function rollOutHandler(event:MouseEvent):void
 		{
-			if (enabled)
-				tweenTo(UP);
-			else
-				tweenTo(DISABLED);
+			tweenTo(UP);
 			
 			_mouseOver = false;
 		}
