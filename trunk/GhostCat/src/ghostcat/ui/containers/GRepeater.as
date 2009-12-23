@@ -102,13 +102,15 @@ package ghostcat.ui.containers
 				else
 					contentPane.removeChild(display);
 			}
-			
-			for (i = 0;i < data.length;i++)
+			if (data)
 			{
-				var obj:GBase = ref.newInstance() as GBase;
-				contentPane.addChild(obj);
-				obj.data = data[i];
-				obj.owner = self;
+				for (i = 0;i < data.length;i++)
+				{
+					var obj:GBase = ref.newInstance() as GBase;
+					contentPane.addChild(obj);
+					obj.data = data[i];
+					obj.owner = self;
+				}
 			}
 			layout.vaildLayout();
 		}

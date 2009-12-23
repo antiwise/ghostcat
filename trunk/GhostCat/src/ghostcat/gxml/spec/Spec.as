@@ -159,7 +159,7 @@ package ghostcat.gxml.spec
 			for (var i:int = 0;i < fields.length;i++)
 			{
 				var field:String = fields[i];
-				if (source.hasOwnProperty(field) && child.hasOwnProperty(field) && child[field] == null)
+				if (source.hasOwnProperty(field) && child.hasOwnProperty(field) && (child[field] == null || isNaN(child[field])))
 					child[field] = source[field];
 			}
 		}

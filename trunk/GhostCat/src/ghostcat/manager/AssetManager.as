@@ -122,13 +122,13 @@ package ghostcat.manager
 			return list;
 		}
 		
-		private function changeProgressTargetHandler(event:OperationEvent):void
+		protected function changeProgressTargetHandler(event:OperationEvent):void
 		{
 			if (progressBar)
 				progressBar.target = (event.oper as LoadOper).eventDispatcher;
 		}
 		
-		private function loadCompleteHandler(event:OperationEvent):void
+		protected function loadCompleteHandler(event:OperationEvent):void
 		{
 			var oper:Oper = event.oper;
 			if (oper.name)
