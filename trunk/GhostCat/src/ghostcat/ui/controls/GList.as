@@ -145,6 +145,20 @@ package ghostcat.ui.controls
 		{
 			listContent.autoReszieItemContent = v;
 		}
+		
+		/**
+		 * 是否隐藏空对象
+		 */
+		public function get hideNullItem():Boolean
+		{
+			return listContent.hideNullItem;
+		}
+		
+		public function set hideNullItem(v:Boolean):void
+		{
+			listContent.hideNullItem = v;
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{

@@ -7,7 +7,6 @@ package ghostcat.ui
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
@@ -58,6 +57,23 @@ package ghostcat.ui
 			{
 				parent.removeEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
 				parent.removeChild(back);	
+			}
+		}
+		
+		/**
+		 * 在窗口存在期间禁用父窗口
+		 * @param v
+		 * @param owner
+		 * 
+		 */
+		static public function lockOwner(v:DisplayObject,owner:Sprite):void
+		{
+			v.addEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
+			owner.mouseChildren = owner.mouseEnabled = false;
+			function removeHandler(event:Event):void
+			{
+				v.removeEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
+				owner.mouseChildren = owner.mouseEnabled = true;
 			}
 		}
 		

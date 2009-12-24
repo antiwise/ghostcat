@@ -42,5 +42,18 @@ package ghostcat.ui
 		public static const ON : String = "on";
 		
 		public static const OFF : String = "off";
+		
+		/**
+		 * 等比例缩放，但不会超过容器的范围
+		 */
+		public static const UNIFORM:String = "uniform";
+		/**
+		 * 等比例填充，多余的部分会被裁切
+		 */
+		public static const CROP:String = "crop";
+		/**
+		 * 非等比例填充
+		 */
+		public static const FILL:String = "fill";
 	}
 }

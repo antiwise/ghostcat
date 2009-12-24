@@ -139,6 +139,5 @@ package ghostcat.ui.controls
 			if (asTextBitmap)
 				reRenderTextBitmap();
 		}
-		
 	}
 }

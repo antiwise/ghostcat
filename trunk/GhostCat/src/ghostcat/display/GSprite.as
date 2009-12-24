@@ -47,6 +47,9 @@ package ghostcat.display
 		 */		
 		public var acceptContentPosition:Boolean = true;
 		
+		//内容是否初始化
+		private var contentInited:Boolean = false;
+		
 		/**
 		 * 参数与setContent方法相同
 		 * 
@@ -150,15 +153,17 @@ package ghostcat.display
 			
 			if (replace && skin)
 			{
+				//新设置内容的时候，获取内容的坐标
+				if (acceptContentPosition && !contentInited)
+				{
+					this.x = skin.x;
+					this.y = skin.y;
+					
+					skin.x = skin.y = 0
+				}
+				
 				if (_content == null)
 				{
-					//新设置内容的时候，获取内容的坐标
-					if (acceptContentPosition)
-					{
-						this.x = skin.x;
-						this.y = skin.y;
-					}
-					
 					//在最后才加入舞台
 					if (skin.parent)
 					{
@@ -166,9 +171,6 @@ package ghostcat.display
 						oldIndex = skin.parent.getChildIndex(skin);
 					}
 				}
-				
-				if (acceptContentPosition)
-					skin.x = skin.y = 0;
 				
 				$addChild(skin);
 				
@@ -180,6 +182,8 @@ package ghostcat.display
 			
 			if (oldParent && !(oldParent is Loader) && oldParent != this)
 				oldParent.addChildAt(this,oldIndex);
+			
+			this.contentInited = true;
 		}
 		
 		private function addedToStageHandler(event:Event):void

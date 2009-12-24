@@ -4,6 +4,8 @@ package ghostcat.util.display
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import ghostcat.ui.UIConst;
 
     /**
      * 主要是一些处理矩形区域的方法
@@ -16,19 +18,6 @@ package ghostcat.util.display
      */	
     public final class Geom extends Object
     {
-    	/**
-		 * 等比例缩放，但不会超过容器的范围
-		 */
-		public static const UNIFORM:String = ScaleType.UNIFORM;
-		/**
-		 * 等比例填充，多余的部分会被裁切
-		 */
-		public static const CROP:String = ScaleType.CROP;
-		/**
-		 * 非等比例填充
-		 */
-		public static const FILL:String = ScaleType.FILL;
-		
 		/**
 		 * 拉伸对象到充满到某个区域
 		 * 
@@ -46,9 +35,9 @@ package ghostcat.util.display
         	displayObj.scaleX *= rect.width / displayObj.width;
             displayObj.scaleY *= rect.height / displayObj.height;
             
-            if (type == UNIFORM)
+            if (type == UIConst.UNIFORM)
             	displayObj.scaleX = displayObj.scaleY = Math.min(displayObj.scaleX,displayObj.scaleY);
-            else if (type == CROP)
+            else if (type == UIConst.CROP)
             	displayObj.scaleX = displayObj.scaleY = Math.max(displayObj.scaleX,displayObj.scaleY);
             
             var objRect:Rectangle = displayObj.getRect(displayObj.parent);

@@ -241,7 +241,7 @@ package ghostcat.ui.containers
 		/** @inheritDoc*/
 		public function get maxScrollV():int
 		{
-			return Math.max(content.height - scrollRect.height);
+			return Math.max(0,content.height - scrollRect.height);
 		}
 		/** @inheritDoc*/
 		public function get oldScrollH():int

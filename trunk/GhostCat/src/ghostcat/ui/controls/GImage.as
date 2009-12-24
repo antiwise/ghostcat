@@ -8,7 +8,6 @@ package ghostcat.ui.controls
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
-	import flash.utils.setTimeout;
 	
 	import ghostcat.display.GNoScale;
 	import ghostcat.ui.UIConst;
@@ -16,7 +15,6 @@ package ghostcat.ui.controls
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.Geom;
-	import ghostcat.util.display.ScaleType;
 	
 	/**
 	 * 图片
@@ -29,17 +27,17 @@ package ghostcat.ui.controls
 		/**
 		 * 等比例缩放，但不会超过容器的范围
 		 */
-		public static const UNIFORM:String = ScaleType.UNIFORM;
+		public static const UNIFORM:String = UIConst.UNIFORM;
 		
 		/**
 		 * 等比例填充，多余的部分会被裁切
 		 */
-		public static const CROP:String = ScaleType.CROP;
+		public static const CROP:String = UIConst.CROP;
 		
 		/**
 		 * 非等比例填充
 		 */
-		public static const FILL:String = ScaleType.FILL;
+		public static const FILL:String = UIConst.FILL;
 		
 		/**
 		 * 载入时使用的loaderContext
@@ -171,11 +169,15 @@ package ghostcat.ui.controls
 			}
 			
 			setContent(v as DisplayObject, replace);
+			
+			if (v && !(v is Loader))
+				layoutChildren();
 		}
 		
 		public function GImage(source:*=null, replace:Boolean=true)
 		{
 			super(null, replace);
+			this.enabledAutoSize = false;
 			this.source = source;
 		}
 		
@@ -213,7 +215,10 @@ package ghostcat.ui.controls
 		 */
 		protected function layoutChildren():void
 		{
-			if (!(content as Loader).content)
+			if (!content)
+				return;
+			
+			if (content is Loader && !(content as Loader).content)
 				return;
 				
 			if (scaleContent && width && height)

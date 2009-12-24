@@ -441,7 +441,6 @@
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
     <classEntry path="ghostcat.util.display.RotationUtil"/>
-    <classEntry path="ghostcat.util.display.ScaleType"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
     <classEntry path="ghostcat.util.display.SelectGroup"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>

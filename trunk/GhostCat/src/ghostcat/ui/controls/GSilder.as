@@ -39,6 +39,11 @@ package ghostcat.ui.controls
 		public var enabledArrowResize:Boolean = true;
 		
 		/**
+		 * 当不可用时是隐藏Thumb还是自身
+		 */
+		public var hideThumbInstead:Boolean = true;
+		
+		/**
 		 * 拖动起点
 		 */
 		protected var thumbAreaStart:Number;
@@ -75,6 +80,8 @@ package ghostcat.ui.controls
 			super(skin, replace);
 			
 			this.enabledTick = true;
+			
+			tick(0);
 		}
 		
 		/**
@@ -329,10 +336,13 @@ package ghostcat.ui.controls
 				}
 			}
 			
-			if (thumb)
+			if (hideThumbInstead)
 			{
-				thumb.visible =  !isNaN(p);
+				if (thumb)
+					thumb.visible =  !isNaN(p);
 			}
+			else
+				this.visible = !isNaN(p);
 		}
 		
 		/**

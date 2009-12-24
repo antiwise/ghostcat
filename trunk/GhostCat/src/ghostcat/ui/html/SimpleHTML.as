@@ -3,7 +3,6 @@ package ghostcat.ui.html
 	import ghostcat.ui.containers.GVBox;
 	import ghostcat.ui.controls.GImage;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.util.display.ScaleType;
 	
 	/**
 	 * 一个简单的HTML容器，仅支持图片定义都在底层的情况
