@@ -70,7 +70,7 @@ package ghostcat.ui.scroll
 		/** @inheritDoc*/
 		public function get maxScrollV():int
 		{
-			return target.maxScrollV;
+			return target.maxScrollV - 1;
 		}
 		/** @inheritDoc*/
 		public function get scrollH():int
@@ -85,12 +85,12 @@ package ghostcat.ui.scroll
 		/** @inheritDoc*/
 		public function get scrollV():int
 		{
-			return	target.scrollV;
+			return	target.scrollV - 1;
 		}
 		/** @inheritDoc*/
 		public function set scrollV(v:int):void
 		{
-			target.scrollV = v;
+			target.scrollV = v + 1;
 		}
 		/** @inheritDoc*/
 		public function get tweenTargetH():Number

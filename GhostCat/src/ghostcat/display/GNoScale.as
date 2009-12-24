@@ -16,6 +16,9 @@ package ghostcat.display
 		private var _height:Number;
 		private var _width:Number;
 		
+		/**
+		 * 是否接受内容的大小 
+		 */
 		public var enabledAutoSize:Boolean = true;
 		
 		public function GNoScale(skin:*=null,replace:Boolean=true)

@@ -1,5 +1,6 @@
 package ghostcat.util.load
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
@@ -64,16 +65,25 @@ package ghostcat.util.load
 		}
 		
 		/**
+		 * 获得主要SWF实例 
+		 * @return 
+		 * 
+		 */
+		protected function getMainSWF():DisplayObject
+		{
+			var name:String = this.loaderInfo.loaderURL.match(/[^\/]*\.swf/i)[0];
+			var urlArr:Array = name.split(/\/+|\\+|\.|\?/ig);
+			name =  decodeURI(urlArr[urlArr.length - 2]);
+			return new (getDefinitionByName(name) as Class);
+		}
+		
+		/**
 		 * 完成载入，实例化主场景时执行的方法。可以重写这个方法以显示一段进入主场景的动画。
 		 * 
 		 */		
 		protected function loadComplete():void 
 		{
-			var name:String = this.loaderInfo.loaderURL.match(/[^\/]*\.swf/i)[0];
-			var urlArr:Array = name.split(/\/+|\\+|\.|\?/ig);
-        	name = decodeURI(urlArr[urlArr.length - 2]);
-			
-			stage.addChildAt(new (getDefinitionByName(name) as Class),0);
+			stage.addChildAt(getMainSWF(),0);
 			stage.removeChild(this);
 		}
 	}

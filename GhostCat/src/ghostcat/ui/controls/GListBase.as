@@ -10,7 +10,6 @@ package ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.GSprite;
 	import ghostcat.display.IGBase;
 	import ghostcat.display.game.Tile;
 	import ghostcat.events.ItemClickEvent;
@@ -35,7 +34,7 @@ package ghostcat.ui.controls
 	public class GListBase extends Tile
 	{
 		public static var defaultSkin:ClassFactory =  new ClassFactory(ListBackground);
-		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton,null,[null,true,true]);
+		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton,{autoSize:"left"},[null,true,true]);
 		
 		/**
 		 * 类型 
@@ -46,6 +45,11 @@ package ghostcat.ui.controls
 		 * 是否自动更新Item的大小 
 		 */
 		public var autoReszieItemContent:Boolean = true;
+		
+		/**
+		 * 是否隐藏空对象
+		 */
+		public var hideNullItem:Boolean = true;
 		
 		private var _columnCount:int = -1;
 		
@@ -429,7 +433,8 @@ package ghostcat.ui.controls
 			
 			refreshItem(p.x,p.y);
 			
-//			item.visible = (item.data != null);
+			if (hideNullItem)
+				item.visible = (item.data != null);
 		}
 		
 		/**
@@ -489,16 +494,13 @@ package ghostcat.ui.controls
 				else
 					index = j * columnCount + i;
 				
-				if (index < data.length)
+				var d:* = (index < data.length) ? data[index] : null;
+				item.data = d;
+				item.selected = d && (d == selectedData);
+				if (autoReszieItemContent)
 				{
-					var d:* = data[index];
-					item.data = d;
-					if (autoReszieItemContent)
-					{
-						item.content.width = columnWidth;
-						item.content.height = rowHeight;
-					}
-					item.selected = d && (d == selectedData);
+					item.content.width = columnWidth;
+					item.content.height = rowHeight;
 				}
 			}
 			return item;

@@ -529,7 +529,8 @@ package ghostcat.ui.controls
 		
 		protected function textFocusOutHandler(event:Event):void
 		{
-			this.data = textField.text;
+			if (editable)
+				this.data = textField.text;
 		}
 		
 		protected function textKeyDownHandler(event:KeyboardEvent):void

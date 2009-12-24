@@ -2,7 +2,6 @@ package
 {
 	import flash.display.Sprite;
 	
-	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GList;
 	import ghostcat.util.easing.Circ;
@@ -26,9 +25,9 @@ package
 			
 //			var arr:ObjectProxy = new ObjectProxy([]);
 			var arr:Array = [];//这里用ObjectProxy可以实现动态修改数据
-			for (var i:int = 0;i < 1000000;i++)
+			for (var i:int = 0;i < 1000001;i++)
 				arr.push(i);
-			 
+			
 			list.data = arr;
 			
 			addChild(list);
