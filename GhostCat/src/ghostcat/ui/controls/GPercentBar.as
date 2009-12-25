@@ -76,7 +76,7 @@
 			super(skin,replace);
 		}
 		/** @inheritDoc*/
-		public override function setContent(skin:*, replace:Boolean=true) : void
+		public override function setContent(skin:*, replace:Boolean = true) : void
 		{
 			super.setContent(skin,replace);
 			
@@ -97,11 +97,6 @@
 					this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
 			}
 		}
-		
-//		protected override function init():void
-//		{
-//			super.init();
-//		}
 		
 		/**
 		 * 百分比位置

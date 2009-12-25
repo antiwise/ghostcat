@@ -36,7 +36,7 @@ package ghostcat.util.load
 			root.loaderInfo.addEventListener(Event.INIT, initHandler);
 		}
 		
-		private function initHandler(event:Event):void
+		protected function initHandler(event:Event):void
 		{
 			dispatchEvent(event);
 			
@@ -47,7 +47,7 @@ package ghostcat.util.load
 		}
 		
 		
-		private function completeHandler(event:Event):void
+		protected function completeHandler(event:Event):void
 		{
 			this.gotoAndStop(2);
 			
@@ -59,7 +59,7 @@ package ghostcat.util.load
 			loadComplete();
 		}
 		
-		private function progressHandler(event:ProgressEvent):void
+		protected function progressHandler(event:ProgressEvent):void
 		{
 			dispatchEvent(event);
 		}

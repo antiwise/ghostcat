@@ -228,7 +228,7 @@ package ghostcat.ui
 		 * @param modal	是否是模态窗口
 		 * @param center	居中模式（CenterMode）
 		 */
-		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect"):DisplayObject
+		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",offest:Point = null):DisplayObject
 		{
 			if (centerMode == CenterMode.RECT)
 			{
@@ -239,6 +239,12 @@ package ghostcat.ui
 				var center:Point = popupLayer.globalToLocal(Geom.center(popupLayer.stage));
 				obj.x = center.x;
 				obj.y = center.y;
+			}
+			
+			if (offest)
+			{
+				obj.x += offest.x;
+				obj.y += offest.y;
 			}
 			
 			popupLayer.addChild(obj);

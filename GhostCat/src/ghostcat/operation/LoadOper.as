@@ -55,6 +55,22 @@
 		 */		
 		public var request:URLRequest;
 		
+		private var _name:String;
+
+		/**
+		 * 用于在进度条中显示说明
+		 */
+		public function get name():String
+		{
+			return _name ? _name : id;
+		}
+
+		public function set name(value:String):void
+		{
+			_name = value;
+		}
+
+		
 		/**
 		 * 载入方式
 		 */
@@ -126,8 +142,6 @@
 		 */		
 		public override function execute():void
 		{
-			super.execute();
-			
 			var isLoader:Boolean;
 			if (this.type == AUTO && request)
 				isLoader = (LOADER_TYPE.indexOf(new URL(request.url).pathname.extension) != -1);
@@ -182,6 +196,8 @@
 					urlLoader.load(request);
 				}
 			}
+		
+			super.execute();
 		}
 		
 		public override function result(event:*=null):void

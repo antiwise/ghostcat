@@ -25,7 +25,6 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
-			super.execute();
 			if (timeout>0)
 			{
 				if (alawaySuccess)
@@ -33,12 +32,15 @@ package ghostcat.operation
 				else
 					timeId = setTimeout(fault,timeout);
 			}
+		
+			super.execute();
 		}
 		/** @inheritDoc*/
 		protected override function end(event:*=null):void
 		{
-			super.end(event);
 			clearTimeout(timeId);
+			
+			super.end(event);
 		}
 	}
 }

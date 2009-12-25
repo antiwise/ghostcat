@@ -23,21 +23,33 @@ package ghostcat.ui.controls
 	public class GProgressBar extends GPercentBar
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(ProgressSkin);
-		/**
-		 * 是否显示剩余时间
-		 */
-		public var showNeedTime:Boolean = true;
 		
 		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:String="scaleX", fields:Object=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
+			this.progressFunction = defaultProgressFunction;
+			
 			super(skin, replace, mode, fields);
 		}
 		
 		private var _target:EventDispatcher;
-		private var loadHelper:LoadHelper;
+		
+		/**
+		 * 辅助加载器 
+		 */
+		public var loadHelper:LoadHelper;
+		
+		/**
+		 * 资源的名字
+		 */
+		public var resName:String;
+		
+		/**
+		 * 进度条更新方法（参数为进度条）
+		 */
+		public var progressFunction:Function;
 		
 		/**
 		 * 设置进度条目标。请在load方法执行前设置。
@@ -62,6 +74,7 @@ package ghostcat.ui.controls
 				loadHelper.removeEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
 				loadHelper.destory();
 			}
+			
 			_target = v;
 			
 			percent = 0;
@@ -73,18 +86,41 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 设置目标
+		 * 
+		 * @param v	资源加载器的loadInfo
+		 * @param resName	资源名称
+		 * 
+		 */
+		public function setTarget(v:EventDispatcher,resName:String = null):void
+		{
+			this.target = v;
+			this.resName = resName;
+		}
+		
+		/**
 		 * 进度事件 
 		 * @param event
 		 * 
 		 */
 		protected function progressHandler(event:ProgressEvent):void
 		{
-			percent = loadHelper.loadPercent;
-			label = (loadHelper.loadPercent * 100).toFixed(1) + "%" + 
-					"(" + loadHelper.bytesLoaded + "/" + loadHelper.bytesTotal + ")";
-			if (showNeedTime)
-				label += "\n已用时：" + loadHelper.progressTimeString +
-						 "\n预计剩余时间：" + loadHelper.progressNeedTimeString;
+			this.progressFunction(this);
+		}
+		
+		/**
+		 * 默认进度事件 
+		 * @param progress
+		 * 
+		 */
+		public static function defaultProgressFunction(progress:GProgressBar):void
+		{
+			progress.percent = progress.loadHelper.loadPercent;
+			progress.label = (progress.resName ? progress.resName + "\n" : "") +
+				(progress.loadHelper.loadPercent * 100).toFixed(1) + "%" + 
+				"(" + progress.loadHelper.bytesLoaded + "/" + progress.loadHelper.bytesTotal + ")" + 
+				"\n已用时：" + progress.loadHelper.progressTimeString +
+				"\n预计剩余时间：" + progress.loadHelper.progressNeedTimeString;
 		}
 		
 		/**
@@ -95,8 +131,6 @@ package ghostcat.ui.controls
 		protected function completeHandler(event:Event):void
 		{
 			percent = 1.0;
-			label = "加载完成";
-			
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
@@ -107,9 +141,6 @@ package ghostcat.ui.controls
 		 */
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
-			percent = 0.0;
-			label = "加载失败";
-			
 			dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR))
 		}
 	}
