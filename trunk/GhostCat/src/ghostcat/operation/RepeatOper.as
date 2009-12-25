@@ -18,6 +18,11 @@ package ghostcat.operation
 		 * 循环次数 
 		 */
 		public var loop:int;
+		
+		/**
+		 * 当前循环
+		 */
+		public var curLoop:int;
 		/**
 		 * 位置
 		 */
@@ -32,6 +37,8 @@ package ghostcat.operation
 		public override function execute():void
 		{
 			super.execute();
+			
+			this.curLoop = this.loop;
 			
 			for (var i:int = 0;i < children.length;i++)
 			{
@@ -63,9 +70,9 @@ package ghostcat.operation
 			index++;
 			if (index > children.length - 1)
 			{
-				loop--;
+				curLoop--;
 				index = 0;
-				if (loop == 0)
+				if (curLoop == 0)
 				{
 					result();
 					return;

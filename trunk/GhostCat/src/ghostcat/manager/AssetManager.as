@@ -91,9 +91,13 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResource(res:String,name:String=null):Oper
+		public function loadResource(res:String,id:String=null,name:String = null):Oper
 		{
 			var oper:LoadOper = new LoadOper(assetBase + res);
+			
+			if (id)
+				oper.id = id;
+			
 			if (name)
 				oper.name = name;
 			
@@ -105,12 +109,15 @@ package ghostcat.manager
 		}
 		
 		//获得加载资源数组
-		private function getResources(res:Array,names:Array=null):Array
+		private function getResources(res:Array,ids:Array=null,names:Array = null):Array
 		{
 			var list:Array = [];
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(assetBase + res[i]);
+				if (ids && ids[i])
+					oper.id = ids[i];
+				
 				if (names && names[i])
 					oper.name = names[i];
 				
@@ -125,14 +132,14 @@ package ghostcat.manager
 		protected function changeProgressTargetHandler(event:OperationEvent):void
 		{
 			if (progressBar)
-				progressBar.target = (event.oper as LoadOper).eventDispatcher;
+				progressBar.setTarget((event.oper as LoadOper).eventDispatcher,(event.oper as LoadOper).name);
 		}
 		
 		protected function loadCompleteHandler(event:OperationEvent):void
 		{
 			var oper:Oper = event.oper;
-			if (oper.name)
-				opers[oper.name] = oper;
+			if (oper.id)
+				opers[oper.id] = oper;
 			
 			oper.removeEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
@@ -146,9 +153,9 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,names:Array=null):Queue
+		public function loadResources(res:Array,ids:Array=null,names:Array = null):Queue
 		{
-			var subQueue:Queue = new Queue(getResources(res,names));
+			var subQueue:Queue = new Queue(getResources(res,ids,names));
 			subQueue.commit(queue);
 			return subQueue;
 		}
@@ -174,13 +181,15 @@ package ghostcat.manager
 			{
 				var xml:XML = new XML((event.oper as LoadTextOper).data);
 				var res:Array = [];
+				var ids:Array = [];
 				var names:Array = [];
 				for each (var child:XML in xml.children())
 				{
 					res.push(child.@url.toString());
-					names.push(child.@name.toString());
+					ids.push(child.@id.toString());
+					names.push(child.@tip.toString())
 				}
-				subQueue.children = getResources(res,names);
+				subQueue.children = getResources(res,ids,names);
 			}
 		}
 		
@@ -192,9 +201,9 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function getOper(name:String):LoadOper
+		public function getOper(id:String):LoadOper
 		{
-			return opers[name];
+			return opers[id];
 		}
 		
 		/**
@@ -204,9 +213,9 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function deleteOper(name:String):Boolean
+		public function deleteOper(id:String):Boolean
 		{
-			return (delete opers[name]);
+			return (delete opers[id]);
 		}
 		
 		/**

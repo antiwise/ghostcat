@@ -25,6 +25,7 @@ package ghostcat.ui.controls
 			UIBuilder.buildAll(this);
 		}
 		
+		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			if (destoryed)

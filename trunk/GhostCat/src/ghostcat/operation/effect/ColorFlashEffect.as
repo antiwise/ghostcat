@@ -2,6 +2,7 @@ package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
 	
+	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
 	import ghostcat.util.display.ColorUtil;
 	
@@ -61,6 +62,9 @@ package ghostcat.operation.effect
 		/** @inheritDoc*/
 		public override function execute():void
 		{
+			if (step == RUN)
+				halt();
+			
 			this.alpha = fromAlpha;
 			this.children = [new TweenOper(this,duration,{alpha:toAlpha}),
 							new TweenOper(this,duration,{alpha:fromAlpha})];

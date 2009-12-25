@@ -1,9 +1,9 @@
 package ghostcat.ui.controls
 {
 	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
 	
 	import ghostcat.operation.Oper;
+	import ghostcat.operation.SoundOper;
 	import ghostcat.operation.effect.IEffect;
 
 	/**
@@ -33,6 +33,11 @@ package ghostcat.ui.controls
 		 */
 		public var oper:Oper;
 		
+		/**
+		 * 鼠标状态对应的声音
+		 */
+		public var sound:*;
+		
 		public function parse(target:GButtonBase):void
 		{
 			if (skin)
@@ -47,6 +52,14 @@ package ghostcat.ui.controls
 					(oper as IEffect).target = target.content;
 				
 				oper.execute();
+			}
+			
+			if (sound)
+			{
+				if (!(sound is SoundOper))
+					sound = new SoundOper(sound);
+				
+				(sound as SoundOper).execute();
 			}
 		}
 		

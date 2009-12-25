@@ -1,6 +1,6 @@
 package ghostcat.ui.containers
 {
-	import ghostcat.display.GSprite;
+	import ghostcat.display.GBase;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.manager.DragManager;
 	import ghostcat.skin.AlertSkin;
@@ -111,7 +111,7 @@ package ghostcat.ui.containers
 		public var titleTextField:GText;
 		public var textTextField:GText;
 		public var buttonBar:GButtonBar;
-		public var dragShape:GSprite;
+		public var dragShape:GBase;
 		
 		public function GAlert(skin:*=null, replace:Boolean=true, paused:Boolean=false, fields:Object=null)
 		{

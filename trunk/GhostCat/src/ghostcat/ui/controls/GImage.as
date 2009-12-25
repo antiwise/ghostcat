@@ -176,7 +176,8 @@ package ghostcat.ui.controls
 		
 		public function GImage(source:*=null, replace:Boolean=true)
 		{
-			super(null, replace);
+			super(source, replace);
+			
 			this.enabledAutoSize = false;
 			this.source = source;
 		}

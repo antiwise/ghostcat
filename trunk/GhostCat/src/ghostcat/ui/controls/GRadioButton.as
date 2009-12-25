@@ -34,7 +34,7 @@ package ghostcat.ui.controls
 				skin = defaultSkin;
 			
 			if (!textPadding)
-				textPadding = new Padding(15,0);
+				textPadding = new Padding(20,0);
 			
 			super(skin, replace,separateTextField,textPadding);
 		}

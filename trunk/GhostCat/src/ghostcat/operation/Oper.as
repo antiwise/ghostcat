@@ -33,9 +33,9 @@ package ghostcat.operation
 		}
 		
 		/**
-		 * 名称
+		 * 标示
 		 */
-		public var name:String;
+		public var id:String;
 		
 		/**
 		 * 当前所处的队列
