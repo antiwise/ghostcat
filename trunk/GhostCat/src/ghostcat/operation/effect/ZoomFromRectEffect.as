@@ -6,6 +6,7 @@ package ghostcat.operation.effect
 	
 	import ghostcat.operation.TweenOper;
 	import ghostcat.parse.display.DrawParse;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 缓存位图并从一个固定位置缩放，类似操作系统任务栏的展开效果 
@@ -33,6 +34,14 @@ package ghostcat.operation.effect
 		{
 			this.asBitmap = asBitmap;
 			this.target = target;
+			
+			if (!rect)
+			{
+				rect = Geom.getRect(target);
+				var sw:Number = rect.width / 10;
+				var sh:Number = rect.height / 10;
+				rect = new Rectangle(rect.x + (rect.width - sw) / 2,rect.y + (rect.height - sh) / 2,sw,sh)
+			}
 			
 			var para:Object;
 			if (asBitmap)

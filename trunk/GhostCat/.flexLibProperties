@@ -472,6 +472,7 @@
     <classEntry path="ghostcat.parse.graphics.GraphicsSpider"/>
     <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
+    <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
