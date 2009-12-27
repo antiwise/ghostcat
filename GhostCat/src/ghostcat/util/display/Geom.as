@@ -23,7 +23,7 @@ package ghostcat.util.display
 		 * 
 		 * @param displayObj	显示对象
 		 * @param rect	范围
-		 * @param equal	是否保持长宽比
+		 * @param type	缩放类型
 		 * 
 		 */		
 		public static function scaleToFit(displayObj:DisplayObject, container:*, type:String = "uniform"):void
@@ -60,7 +60,7 @@ package ghostcat.util.display
 		}
         
 		/**
-		 * 获得矩形（以父容器为基准），这个方法主要是为了和scaleToFit方法配套，实现矩形和显示对象的转换
+		 * 获得矩形（以父容器为基准）
 		 * 当源是stage时，获取的将不是图形矩形，而是舞台的矩形。必要的时候请用root代替。
 		 * 
 		 * @param obj	显示对象或者矩形，矩形将会被直接返回
