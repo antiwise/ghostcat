@@ -8,6 +8,7 @@ package ghostcat.filter
 	import flash.utils.flash_proxy;
 	
 	import ghostcat.util.Util;
+	import ghostcat.util.core.UniqueCall;
 	
 	/**
 	 * 对滤镜的代理类，可以直接设置此对象的属性改变滤镜的值，并立即更新。
@@ -19,6 +20,16 @@ package ghostcat.filter
 	public dynamic class FilterProxy extends Proxy
 	{
 		protected var filter:BitmapFilter;
+		
+		/**
+		 * 自动更新滤镜位置
+		 */
+		public var autoUpdateIndex:Boolean = false;
+	
+		/**
+		 * 是否每帧后延迟更新
+		 */
+		public var callLaterInv:Number;
 	
 		/**
 		 * 滤镜的所有者
@@ -26,6 +37,7 @@ package ghostcat.filter
 		public var owner:DisplayObject;
 		
 		private var _index:int = -1;
+		private var caller:UniqueCall;
 		
 		public function get index():int
 		{
@@ -57,11 +69,13 @@ package ghostcat.filter
 			return _index;
 		}
 		
-		public function FilterProxy(filter:BitmapFilter = null)
+		public function FilterProxy(filter:BitmapFilter = null,autoUpdateIndex:Boolean = false,callLaterInv:Number = NaN)
 		{
 			super();
 			
 			this.filter = filter;
+			this.autoUpdateIndex = autoUpdateIndex;
+			this.callLaterInv = callLaterInv;
 		}
 		
 		/**
@@ -98,6 +112,9 @@ package ghostcat.filter
 				}
 				
 			}
+			
+			if (!isNaN(callLaterInv))
+				this.caller = new UniqueCall(updateFilter,false,callLaterInv);
 		}
 		
 		/**
@@ -152,12 +169,24 @@ package ghostcat.filter
 		{
 			return filter?filter[name]:null;
 		}
+		
 		override flash_proxy function setProperty(name:*, value:*):void
 		{
-			updateIndex();
+			if (autoUpdateIndex)
+				updateIndex();
+			
 			if (filter) 
 				filter[name] = value;
-			updateFilter();
+			
+			if (isNaN(callLaterInv))
+			{
+				updateFilter();
+			}
+			else
+			{
+				caller.inv = callLaterInv;
+				caller.invalidate()
+			}
 		}
 	}
 }

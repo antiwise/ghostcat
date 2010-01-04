@@ -1,9 +1,9 @@
 package ghostcat.util.display
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	
-	import ghostcat.events.ItemClickEvent;
+	import flash.events.MouseEvent;
 	
 	[Event(name="change",type="flash.events.Event")]
 	public class SelectGroup extends EventDispatcher
@@ -13,16 +13,26 @@ package ghostcat.util.display
 		private var _selectedIndex:int = -1;
 		public var eventTarget:EventDispatcher;
 		
-		public function SelectGroup(children:Array,field:String = "selected")
+		public function SelectGroup(children:Array,clickToggle:Boolean = false,field:String = "selected")
 		{
 			this.children = children;
 			this.field = field;
 			this.eventTarget = this;
 			
 			for (var i:int = 0; i < children.length; i++)
-				this.children[i][field] = false;
-			
+			{
+				var child:DisplayObject = this.children[i] as DisplayObject;
+				child[field] = false;
+				if (clickToggle)
+					child.addEventListener(MouseEvent.CLICK,itemClickHandler);
+			}
 			selectedIndex = 0;
+		}
+		
+		private function itemClickHandler(event:MouseEvent):void
+		{
+			this.selectedChild = event.currentTarget;
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function get selectedIndex():int
@@ -60,6 +70,15 @@ package ghostcat.util.display
 		public function set selectedChild(v:*):void
 		{
 			this.selectedIndex = children.indexOf(v);
+		}
+		
+		public function destory():void
+		{
+			for (var i:int = 0; i < children.length; i++)
+			{
+				var child:DisplayObject = this.children[i] as DisplayObject;
+				child.removeEventListener(MouseEvent.CLICK,itemClickHandler);
+			}
 		}
 
 	}

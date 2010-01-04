@@ -12,7 +12,10 @@ package ghostcat.operation.effect
 		/** @inheritDoc*/
 		public function get target():*
 		{
-			return (children && children.length > 0) ? children[0] : null;
+			if (children && children.length > 0 && children[0] is IEffect)
+				return (children[0] as IEffect).target;
+			else
+				return null;
 		}
 		
 		public function set target(v:*):void

@@ -7,6 +7,7 @@ package ghostcat.ui.controls
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -45,7 +46,7 @@ package ghostcat.ui.controls
 		/**
 		 * 将它设置为true，将通过外部嵌入字体，否则使用SWF内的字体
 		 */
-		public static var autoRebuildTextField:Boolean = false;
+		public static var autoRebuildEmbedText:Boolean = false;
 		
 		/**
 		 * 字体替换 
@@ -226,6 +227,7 @@ package ghostcat.ui.controls
 		public function set editable(v:Boolean):void
 		{
 			textField.type = v ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+			textField.mouseEnabled = v;
 		}
 		
 		/**
@@ -303,7 +305,7 @@ package ghostcat.ui.controls
 			}
 			else
 			{
-				if (autoRebuildTextField)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
+				if (autoRebuildEmbedText && textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
 					rebuildTextField();
 				
 				var pos:Point = new Point(textField.x,textField.y);
@@ -340,6 +342,8 @@ package ghostcat.ui.controls
 			textField.addEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
 			textField.addEventListener(FocusEvent.FOCUS_OUT,textFocusOutHandler);
 			textField.addEventListener(KeyboardEvent.KEY_DOWN,textKeyDownHandler);
+			
+			textField.mouseEnabled = false;
 		}
 		
 		/**

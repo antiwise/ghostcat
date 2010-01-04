@@ -191,12 +191,15 @@ package ghostcat.ui
 				0,0,1,0,0,
 				0,0,0,1,0
 			]
+			const n:Number = 0.0;
+			const d:Number = 0.2;
 			const gredMatrix:Array = [
-				0.3086/2,0.6094/2,0.0820/2,0,0,
-				0.3086/2,0.6094/2,0.0820/2,0,0,
-				0.3086/2,0.6094/2,0.0820/2,0,0,
-				0,0,0,1,0
+				0.3086*(1-n)+ n - d,	0.6094*(1-n) - d,	0.0820*(1-n) - d,	0,	0,
+				0.3086*(1-n) - d,	0.6094*(1-n) + n - d,	0.0820*(1-n) - d,	0,	0,
+				0.3086*(1-n) - d,	0.6094*(1-n) - d    ,	0.0820*(1-n) + n - d,	0,	0,
+				0,	0,	0,	1,	0
 			]
+				
 			applicationDisabledOper = new FilterProxyOper(null,new ColorMatrixFilter(normalMatrix),300,{matrix:gredMatrix})
 			applicationEnabledOper = new FilterProxyOper(null,new ColorMatrixFilter(gredMatrix),300,{matrix:normalMatrix});
 			

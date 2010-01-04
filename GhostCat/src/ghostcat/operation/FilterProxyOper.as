@@ -23,6 +23,16 @@ package ghostcat.operation
 		 */
 		public var filter:BitmapFilter;
 		
+		/**
+		 * 自动更新滤镜位置
+		 */
+		public var autoUpdateIndex:Boolean = false;
+		
+		/**
+		 * 是否每帧后延迟更新
+		 */
+		public var callLaterInv:Number;
+		
 		public override function set target(v:*) : void
 		{
 			filterTarget = v;
@@ -33,17 +43,20 @@ package ghostcat.operation
 			return filterTarget;
 		}
 		
-		public function FilterProxyOper(target:DisplayObject=null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false)
+		public function FilterProxyOper(target:DisplayObject=null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false, autoUpdateIndex:Boolean = false, callLaterInv:Number = NaN)
 		{
 			this.filter = filter;
 			this.filterTarget = target;
-		
+			
+			this.autoUpdateIndex = autoUpdateIndex;
+			this.callLaterInv = callLaterInv;
+			
 			super(null, duration, params, invert);
 		}
 		
 		public override function execute() : void
 		{
-			var proxy:FilterProxy = new FilterProxy(filter.clone());
+			var proxy:FilterProxy = new FilterProxy(filter.clone(),autoUpdateIndex,callLaterInv);
 			proxy.applyFilter(filterTarget);
 			
 			this._target = proxy;

@@ -1,7 +1,6 @@
 package ghostcat.util.core
 {
-	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
+	import flash.events.IEventDispatcher;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 
@@ -23,9 +22,11 @@ package ghostcat.util.core
 		 */
 		public var useWeakReference:Boolean = false;
 		
-		public function EventHandler(obj:Object = null)
+		public function EventHandler(obj:Object = null,useWeakReference:Boolean = false)
 		{
 			handlers = {};
+			
+			this.useWeakReference = useWeakReference;
 			
 			if (obj)
 			{
@@ -63,10 +64,14 @@ package ghostcat.util.core
 		 * @param target
 		 * 
 		 */
-		public function parse(target:EventDispatcher):void
+		public function parse(...regs):void
 		{
-			for each (var handler:HandlerItem in handlers)
-				target.addEventListener(handler.type,handler.listener,handler.useCapture,handler.priority,handler.useWeakReference);
+			for (var i:int = 0;i < regs.length;i++)
+			{
+				var target:IEventDispatcher = regs[i] as IEventDispatcher;
+				for each (var handler:HandlerItem in handlers)
+					target.addEventListener(handler.type,handler.listener,handler.useCapture,handler.priority,handler.useWeakReference);
+			}
 		}
 		
 		/**
@@ -74,10 +79,14 @@ package ghostcat.util.core
 		 * @param target
 		 * 
 		 */
-		public function unparse(target:EventDispatcher):void
+		public function unparse(...regs):void
 		{
-			for each (var handler:HandlerItem in handlers)
-				target.removeEventListener(handler.type,handler.listener);
+			for (var i:int = 0;i < regs.length;i++)
+			{
+				var target:IEventDispatcher = regs[i] as IEventDispatcher;
+				for each (var handler:HandlerItem in handlers)
+					target.removeEventListener(handler.type,handler.listener);
+			}
 		}
 		
 		/**
