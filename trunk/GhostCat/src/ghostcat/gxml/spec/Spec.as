@@ -154,12 +154,12 @@ package ghostcat.gxml.spec
 		 * 从父对象从继承缺少的属性（用于applyProperties方法） 
 		 * 
 		 */
-		protected function extendsProperties(fields:Array,source:*,child:*):void
+		protected function extendsProperties(fields:Array,source:*,child:*,overwrite:Boolean = false):void
 		{
 			for (var i:int = 0;i < fields.length;i++)
 			{
 				var field:String = fields[i];
-				if (source.hasOwnProperty(field) && child.hasOwnProperty(field) && (child[field] == null || isNaN(child[field])))
+				if (source.hasOwnProperty(field) && child.hasOwnProperty(field) && (overwrite || child[field] == null || isNaN(child[field])))
 					child[field] = source[field];
 			}
 		}

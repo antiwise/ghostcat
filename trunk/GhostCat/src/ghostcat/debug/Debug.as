@@ -164,7 +164,8 @@ package ghostcat.debug
 			
 			errorHandler(text);
 			
-			if (logUrl){
+			if (logUrl)
+			{
 				var values:URLVariables = new URLVariables();
 				values.log = log;
 				

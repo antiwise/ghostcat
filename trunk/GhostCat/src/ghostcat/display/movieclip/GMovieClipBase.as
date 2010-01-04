@@ -13,11 +13,11 @@ package ghostcat.display.movieclip
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.Handler;
 
-	[Event(name="movie_start",type="org.gameui.events.MovieEvent")]
+	[Event(name="movie_start",type="ghostcat.events.MovieEvent")]
 	
-	[Event(name="movie_end",type="org.gameui.events.MovieEvent")]
+	[Event(name="movie_end",type="ghostcat.events.MovieEvent")]
 	
-	[Event(name="movie_empty",type="org.gameui.events.MovieEvent")]
+	[Event(name="movie_empty",type="ghostcat.events.MovieEvent")]
 	
 	
 	/**

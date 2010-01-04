@@ -82,7 +82,7 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
-		 * 自动刷新文本框
+		 * 自动刷新Label框
 		 */
 		public var autoRefreshLabelField:Boolean = true;
 		
@@ -166,6 +166,8 @@ package ghostcat.ui.controls
 			this.separateTextField = separateTextField;
 			
 			super(skin, replace);
+			
+			this.mouseChildren = false;
 		}
 		
 		/**
@@ -272,7 +274,7 @@ package ghostcat.ui.controls
 			
 			super.selected = v;
 			
-			tweenTo(UP);
+			tweenTo(_mouseOver ? OVER : UP);
 			
 			dispatchEvent(new Event(Event.CHANGE))
 		}
@@ -334,14 +336,20 @@ package ghostcat.ui.controls
 			
 			if (content && movie && movie.labels)
 			{
-				var trans:String = movie.curLabelName+"-"+next;
-				if (movie.hasLabel(trans))
+				if (movie.hasLabel(movie.curLabelName+"-"+next))
 				{
 					movie.setLabel(movie.curLabelName+"-"+next,1);
 					movie.queueLabel(next,-1);
 				}
+				else if (movie.hasLabel("*-"+next))
+				{
+					movie.setLabel("*-"+next,1);
+					movie.queueLabel(next,-1);
+				}
 				else
+				{
 					movie.setLabel(next,-1);
+				}
 			}
 		}
 		
@@ -352,6 +360,9 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseDownHandler(event:MouseEvent):void
 		{
+			if (_mouseDown)
+				return;
+			
 			tweenTo(DOWN);
 			_mouseDown = true;
 		}
@@ -363,6 +374,9 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
+			if (!_mouseDown)
+				return;
+			
 			tweenTo(_mouseOver ? OVER : UP);
 			
 			_mouseDown = false;
@@ -399,7 +413,7 @@ package ghostcat.ui.controls
 		protected function rollOutHandler(event:MouseEvent):void
 		{
 			tweenTo(UP);
-			
+						
 			_mouseOver = false;
 		}
 		

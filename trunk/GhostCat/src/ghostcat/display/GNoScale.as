@@ -78,6 +78,16 @@ package ghostcat.display
 			invalidateSize();
 		}
 		
+		/**
+		 * 是否已经手动设置过大小
+		 * @return 
+		 * 
+		 */
+		public function get sized():Boolean
+		{
+			return _height || _width;
+		}
+		
 		public override function setSize(width:Number, height:Number, noEvent:Boolean=false) : void
 		{
 			if (_width == width && _height == height)

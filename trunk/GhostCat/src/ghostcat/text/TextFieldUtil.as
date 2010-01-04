@@ -133,10 +133,11 @@ package ghostcat.text
 			c.autoSize = v.autoSize;
 			c.embedFonts = v.embedFonts;
 			c.defaultTextFormat = v.defaultTextFormat;
-			if (html)
-				c.htmlText = v.htmlText;
-			else
-				c.text = v.text;
+			c.text = v.text;
+			for (var i:int = 0;i < v.text.length;i++)
+			{
+				c.setTextFormat(v.getTextFormat(i,i + 1),i,i + 1);
+			}
 			c.x = v.x;
 			c.y = v.y;
 			c.scaleX = v.scaleX;

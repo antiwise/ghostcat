@@ -87,7 +87,11 @@ package ghostcat.display.game
 			{
 				var item:Item = items[i] as Item;
 				if (this.enabledTileX)
+				{
 					item.layer.x = (value * item.divider) % item.contentSize.x - item.contentSize.x;
+					if (item.layer.x < -item.contentSize.x)
+						item.layer.x += item.contentSize.x;
+				}
 				else
 					item.layer.x = value;
 			};
@@ -110,7 +114,11 @@ package ghostcat.display.game
 			{
 				var item:Item = items[i] as Item;
 				if (this.enabledTileY)
+				{
 					item.layer.y = (value / item.divider) % item.contentSize.y - item.contentSize.y;
+					if (item.layer.y < -item.contentSize.y)
+						item.layer.y += item.contentSize.y;
+				}
 				else
 					item.layer.y = value;
 			};
@@ -135,9 +143,15 @@ package ghostcat.display.game
 		 */
 		public function addLayer(skin:*,matrix:Matrix = null,asBitmap:Boolean = true,divider:Number = 1.0):void
 		{
-			if (skin is DisplayObject && !asBitmap)
-				skin = skin["constructor"] as Class;
+			if (skin is DisplayObject)
+			{
+				if ((skin as DisplayObject).parent)
+					(skin as DisplayObject).parent.removeChild(skin as DisplayObject);
 				
+				if (!asBitmap)
+					skin = skin["constructor"] as Class;
+			}
+			
 			if (skin is Class)
 				skin = new ClassFactory(skin);
 			
@@ -193,7 +207,8 @@ package ghostcat.display.game
 					for (var i:int = 0;i < lw;i++)
 					{
 						child = item.skin.newInstance() as DisplayObject;
-						child.transform.matrix = item.matrix;
+						if (item.matrix)
+							child.transform.matrix = item.matrix;
 						child.x += i * child.width;
 						child.y += j * child.height;
 						item.layer.addChild(child);

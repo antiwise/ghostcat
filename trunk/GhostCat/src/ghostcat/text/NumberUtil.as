@@ -16,7 +16,7 @@ package ghostcat.text
 		 * @return 转换完毕的字符串
 		 * 
 		 */		
-		public static function toDateString(date:Date,format:String="",utc:Boolean = false):String
+		public static function toDateString(date:Date,format:String="yyyy-mm-dd",utc:Boolean = false):String
 		{
 			var y:int = utc ? date.fullYearUTC : date.fullYear;
 			var m:int = utc ? date.monthUTC : date.month;
@@ -43,18 +43,61 @@ package ghostcat.text
 		 * 将时间转换为字符串
 		 * 
 		 * @param date	日期
-		 * @param format	时间格式（hh:mm:ss，h:m:s，hh:mm:ss:ss.s，h:m:s:ss.s，h小时m分钟s秒，H小时M分钟S秒）
+		 * @param format	时间格式（hh:mm:ss，h:m:s，hh:mm:ss:ss.s，h:m:s:ss.s，h点m分s秒，H点M分S秒）
 		 * @return 转换完毕的字符串
 		 * 
 		 */		
-		public static function toTimeString(date:Date,format:String="",utc:Boolean = false):String
+		public static function toTimeString(date:Date,format:String="hh:mm:ss",utc:Boolean = false):String
 		{
 			var h:int = utc ? date.hoursUTC : date.hours;
 			var m:int = utc ? date.minutesUTC : date.minutes;
 			var s:int = utc ? date.secondsUTC : date.seconds;
 			var ms:Number = (utc ? date.millisecondsUTC : date.milliseconds) / 10;
 			
-			switch (format){
+			switch (format)
+			{
+				case "hh:mm:ss":
+					return fillZeros(h.toString(),2) + ":" + fillZeros(m.toString(),2) + ":" + fillZeros(s.toString(),2);
+					break;
+				case "h:m:s":
+					return h + ":" + m + ":" + s;
+					break;
+				case "hh:mm:ss:ss.s":
+					return fillZeros(h.toString(),2) + ":" + fillZeros(m.toString(),2) + ":" + fillZeros(s.toString(),2) + ":" + ms.toFixed(1);
+					break;
+				case "h:m:s:ss.s":
+					return h + ":" + m + ":" + s + ":" + ms.toFixed(1);
+					break;
+				case "h点m分s秒":
+					return (h ? (h + "点"):"") + (m ? (m + "分"):"") + s + "秒";
+					break;
+				case "H点M分S秒":
+					return (h ? (toChineseNumber(h) + "点"):"") + (m ? (toChineseNumber(m) + "分"):"") + toChineseNumber(s) + "秒";
+					break;
+			}
+			return date.toString();
+		}
+		
+		/**
+		 * 将时间长度转换为字符串
+		 * 
+		 * @param date	日期
+		 * @param format	时间格式（hh:mm:ss，h:m:s，hh:mm:ss:ss.s，h:m:s:ss.s，h小时m分钟s秒，H小时M分钟S秒）
+		 * @return 转换完毕的字符串
+		 * 
+		 */		
+		public static function toDurTimeString(time:int,format:String="hh:mm:ss"):String
+		{
+			var ms:Number = (time % 1000) / 10;
+			time /= 1000;
+			var s:int = time % 60;
+			time /= 60;
+			var m:int = time % 60;
+			time /= 60;
+			var h:int = time;
+			
+			switch (format)
+			{
 				case "hh:mm:ss":
 					return fillZeros(h.toString(),2) + ":" + fillZeros(m.toString(),2) + ":" + fillZeros(s.toString(),2);
 					break;
@@ -74,7 +117,7 @@ package ghostcat.text
 					return (h ? (toChineseNumber(h) + "小时"):"") + (m ? (toChineseNumber(m) + "分钟"):"") + toChineseNumber(s) + "秒";
 					break;
 			}
-			return date.toString();
+			return time.toString();
 		}
 		
 		private static const chineseMapping:Array = ["","一","二","三","四","五","六","七","八","九"];

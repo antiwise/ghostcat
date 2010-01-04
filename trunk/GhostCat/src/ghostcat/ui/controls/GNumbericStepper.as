@@ -115,6 +115,12 @@ package ghostcat.ui.controls
 				stage.focus = null;
 		}
 		
+		/** @inheritDoc*/
+		public override function set data(v : *):void
+		{
+			setValue(v,false);
+		}
+		
 		/**
 		 * 确认文本的数据
 		 * 

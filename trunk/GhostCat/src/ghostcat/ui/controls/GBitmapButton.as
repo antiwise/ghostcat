@@ -36,8 +36,6 @@ package ghostcat.ui.controls
 			movie = new GBitmapMovieClip(bitmaps,labels);
 			
 			super(movie.content, true, true,textPadding);
-			
-			this.mouseEnabled = false;
 		}
 		
 		/** @inheritDoc*/

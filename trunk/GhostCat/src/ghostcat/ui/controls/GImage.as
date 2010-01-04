@@ -222,12 +222,13 @@ package ghostcat.ui.controls
 			if (content is Loader && !(content as Loader).content)
 				return;
 				
-			if (scaleContent && width && height)
+			if (scaleContent && sized)
 				Geom.scaleToFit(content,this,_scaleType);
 			else
 				content.scaleX = content.scaleY = 1.0;
 			
-			LayoutUtil.silder(content,this,horizontalAlign,verticalAlign);
+			if (sized)
+				LayoutUtil.silder(content,this,horizontalAlign,verticalAlign);
 		}
 	}
 }
