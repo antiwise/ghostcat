@@ -7,7 +7,6 @@ package ghostcat.ui.controls
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -100,6 +99,11 @@ package ghostcat.ui.controls
 		 * ANSI的最大输入限制字数（中文算两个字）
 		 */
 		public var ansiMaxChars:int;
+		
+		/**
+		 * 是否强制使用HTML文本
+		 */
+		public var useHtml:Boolean = false;
 		
 		/**
 		 * 文本框自适应文字的方式
@@ -328,7 +332,7 @@ package ghostcat.ui.controls
 					
 			if (this.text)
 			{
-				if (this.text.indexOf("<html>")!= - 1)
+				if (useHtml || this.text.indexOf("<html>")!= - 1)
 					textField.htmlText = this.text;
 				else
 					textField.text = this.text;
@@ -350,9 +354,9 @@ package ghostcat.ui.controls
 		 * 重新创建TextField，执行此方法后，TextField会和代码创建的相同（原本有些细节是不同的）
 		 * 
 		 */
-		public function rebuildTextField(html:Boolean = true):void
+		public function rebuildTextField():void
 		{
-			this.textField = TextFieldUtil.clone(this.textField,html,true);//将TextField重新创建避免出现显示错误
+			this.textField = TextFieldUtil.clone(this.textField,true);//将TextField重新创建避免出现显示错误
 		}
 		
 		/**
@@ -424,7 +428,7 @@ package ghostcat.ui.controls
 			
 			if (textField)
 			{
-				if (str.indexOf("<html>") != -1)
+				if (useHtml || str.indexOf("<html>") != -1)
 					textField.htmlText = str;
 				else
 					textField.text = str;

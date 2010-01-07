@@ -310,10 +310,6 @@ package ghostcat.ui.controls
 		protected override function init():void
 		{
 			super.init();
-			
-//			if (!movie.frameRate)
-//				movie.frameRate = stage.frameRate;
-			
 			addEvents();
 		
 			tweenTo(UP);

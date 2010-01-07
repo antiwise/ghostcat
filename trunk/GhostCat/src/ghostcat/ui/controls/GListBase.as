@@ -39,7 +39,7 @@ package ghostcat.ui.controls
 		/**
 		 * 类型 
 		 */
-		public var type:String = UIConst.TILE;
+		public var type:String = UIConst.VERTICAL;
 		
 		/**
 		 * 是否自动更新Item的大小 
@@ -50,6 +50,11 @@ package ghostcat.ui.controls
 		 * 是否隐藏空对象
 		 */
 		public var hideNullItem:Boolean = true;
+		
+		/**
+		 * 点击选择
+		 */
+		public var toggle:Boolean = true;
 		
 		private var _columnCount:int = -1;
 		
@@ -66,7 +71,7 @@ package ghostcat.ui.controls
 		 * @param itemRender	Render类型
 		 * 
 		 */
-		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:* = null)
+		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.VERTICAL,itemRender:* = null)
 		{
 			if (itemRender is Class)
 				itemRender = new ClassFactory(itemRender);
@@ -465,7 +470,8 @@ package ghostcat.ui.controls
 			
 			if (ref.isClass(o))
 			{
-				selectedItem = o;
+				if (toggle)
+					selectedItem = o;
 				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
 				e.item = (o as GBase).data;
 				e.relatedObject = o as InteractiveObject;

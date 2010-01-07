@@ -31,7 +31,7 @@ package ghostcat.ui.controls
 		private var _itemRender:ClassFactory;
 		private var _type:String;
 		
-		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.TILE,itemRender:* = null,fields:Object = null)
+		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.VERTICAL,itemRender:* = null,fields:Object = null)
 		{
 			if (!fields)
 				fields = listFields;
@@ -115,6 +115,8 @@ package ghostcat.ui.controls
 			return _itemRender;
 		}
 		
+		
+		
 		/**
 		 * 类型 
 		 * @param v
@@ -144,6 +146,19 @@ package ghostcat.ui.controls
 		public function set autoReszieItemContent(v:Boolean):void
 		{
 			listContent.autoReszieItemContent = v;
+		}
+		
+		/**
+		 * 是否点击选中 
+		 */
+		public function get toggle():Boolean
+		{
+			return listContent.toggle;
+		}
+		
+		public function set toggle(v:Boolean):void
+		{
+			listContent.toggle = v;
 		}
 		
 		/**

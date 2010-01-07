@@ -19,7 +19,7 @@ package
 		public function UIScrollExample()
 		{	
 			var list:GList = new GList();
-			
+			list.type = UIConst.TILE;
 			list.width = 300;
 			list.height = 150;
 			
