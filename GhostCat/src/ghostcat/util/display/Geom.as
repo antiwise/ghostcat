@@ -181,6 +181,20 @@ package ghostcat.util.display
         	var rect:Rectangle = getRect(obj,space);
         	return (rect)?new Point(rect.x + rect.width / 2, rect.y + rect.height / 2):null;
         }
+		
+		/**
+		 * 在原点居中（当父容器长宽为0时）
+		 * @param content
+		 * 
+		 */
+		public static function centerAtZero(content:DisplayObject):void
+		{
+			var rect:Rectangle = Geom.getRect(content);
+			var offest:Point = new Point(content.x - rect.x,content.y - rect.y);
+			
+			content.x = - rect.width/2 + offest.x;
+			content.y = - rect.height/2 + offest.y;
+		}
         
         /**
          * 将某个矩形限定在另一个矩形的范围内（矩形大小不变）。左上的优先度较高。

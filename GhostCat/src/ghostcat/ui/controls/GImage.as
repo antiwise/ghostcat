@@ -4,6 +4,7 @@ package ghostcat.ui.controls
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IOErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
@@ -50,6 +51,9 @@ package ghostcat.ui.controls
 		private var _horizontalAlign:String = UIConst.CENTER;
 		private var _verticalAlign:String = UIConst.MIDDLE;
 		
+		private var _centerAtZero:Boolean = false;
+		
+
 		protected var layoutChildrenCall:UniqueCall = new UniqueCall(layoutChildren);
 		
 		/**
@@ -97,6 +101,23 @@ package ghostcat.ui.controls
 		public function set scaleType(v:String):void
 		{
 			_scaleType = v;
+			invalidateLayout();
+		}
+		
+		
+		/**
+		 * 在原点居中 
+		 * @return 
+		 * 
+		 */
+		public function get centerAtZero():Boolean
+		{
+			return _centerAtZero;
+		}
+		
+		public function set centerAtZero(value:Boolean):void
+		{
+			_centerAtZero = value;
 			invalidateLayout();
 		}
 
@@ -149,6 +170,7 @@ package ghostcat.ui.controls
 				loader = new Loader();
 				loader.load(v as URLRequest,loaderContext);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
+				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 				
 				v = loader;
 			}
@@ -185,9 +207,11 @@ package ghostcat.ui.controls
 		private function loadCompleteHandler(event:Event):void
 		{
 			(event.currentTarget as EventDispatcher).removeEventListener(Event.COMPLETE,loadCompleteHandler);
+			(event.currentTarget as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 			
 			invalidateLayout();
 		}
+		
 		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
@@ -227,8 +251,11 @@ package ghostcat.ui.controls
 			else
 				content.scaleX = content.scaleY = 1.0;
 			
-			if (sized)
+			if (centerAtZero)
+				Geom.centerAtZero(content);
+			else if (sized)
 				LayoutUtil.silder(content,this,horizontalAlign,verticalAlign);
+			
 		}
 	}
 }

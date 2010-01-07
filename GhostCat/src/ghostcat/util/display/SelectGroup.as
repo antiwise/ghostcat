@@ -32,7 +32,6 @@ package ghostcat.util.display
 		private function itemClickHandler(event:MouseEvent):void
 		{
 			this.selectedChild = event.currentTarget;
-			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function get selectedIndex():int

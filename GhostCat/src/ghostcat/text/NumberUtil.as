@@ -56,6 +56,12 @@ package ghostcat.text
 			
 			switch (format)
 			{
+				case "hh:mm":
+					return fillZeros(h.toString(),2) + ":" + fillZeros(m.toString(),2);
+					break;
+				case "h:m":
+					return h + ":" + m;
+					break;
 				case "hh:mm:ss":
 					return fillZeros(h.toString(),2) + ":" + fillZeros(m.toString(),2) + ":" + fillZeros(s.toString(),2);
 					break;

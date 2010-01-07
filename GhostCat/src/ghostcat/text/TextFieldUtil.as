@@ -127,7 +127,7 @@ package ghostcat.text
 		 * @return 
 		 * 
 		 */
-		public static function clone(v:TextField,html:Boolean = true,replace:Boolean = false):TextField
+		public static function clone(v:TextField,replace:Boolean = false):TextField
 		{
 			var c:TextField = new TextField();
 			c.autoSize = v.autoSize;
@@ -159,6 +159,26 @@ package ghostcat.text
 				p.addChildAt(c,index);
 			}
 			return c;
+		}
+		
+		/**
+		 * 获得一行文本的HtmlText 
+		 * @param textField
+		 * @param lineIndex
+		 * @return 
+		 * 
+		 */
+		public static function getLineHtmlText(textField:TextField,lineIndex:int):String
+		{
+			var offest:int = textField.getLineOffset(lineIndex);
+			var len:int = textField.getLineLength(lineIndex);
+			var t:TextField = new TextField();
+			for (var i:int = 0;i < len;i++)
+			{
+				t.appendText(textField.text.charAt(offest + i));
+				t.setTextFormat(textField.getTextFormat(offest + i,offest + i + 1),i,i + 1);
+			}
+			return t.htmlText;
 		}
 	}
 }
