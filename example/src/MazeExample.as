@@ -43,8 +43,6 @@ package
 		
 		public function MazeExample()
 		{
-			new EnabledSWFScreen(stage)
-			
 			RootManager.register(this,1,1);
 			
 			screen = new GBitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT));

@@ -253,7 +253,7 @@ package ghostcat.ui.controls
 			if (!thumb)
 				return;
 			
-			var v:Number = thumbAreaStart + thumbAreaLength * percent;
+			var v:Number = thumbAreaStart + thumbAreaLength * (percent ? percent : 0);
 			if (direction == UIConst.HORIZONTAL)
 				thumb.x = v;
 			else

@@ -45,8 +45,16 @@
 		public var ease:Function;
 		
 		private var _percent:Number;
-		private var thumb:DisplayObject;
-		private var labelTextField:TextField;
+		
+		/**
+		 * 滑块
+		 */
+		public var thumb:DisplayObject;
+		
+		/**
+		 * 文本框
+		 */
+		public var labelTextField:TextField;
 		
 		/**
 		 * 取值模式

@@ -29,10 +29,15 @@ package ghostcat.filter
 		 * 颜色反相
 		 */
 		public static const INVERSION:int = 3;
+		
+		/**
+		 * 色相偏移 
+		 */
+		public static const HUE:int = 4;
 		/**
 		 * 阈值
 		 */
-		public static const THRESHOLD:int = 4;
+		public static const THRESHOLD:int = 5;
 		
 		private var _type:int;
 		private var _n:int;
@@ -92,6 +97,9 @@ package ghostcat.filter
 					break;
 				case INVERSION:
 					changeFilter(createInversionFilter());
+					break;
+				case HUE:
+					changeFilter(createHueFilter(n));
 					break;
 				case THRESHOLD:
 					changeFilter(createThresholdFilter(n));
@@ -160,6 +168,24 @@ package ghostcat.filter
 						 0,	0,	-1,	0,	255,
 						 0,	0,	0,	1,	0]);
         }
+		
+		/**
+		 * 色相偏移 
+		 * @return 
+		 * 
+		 */
+		public static function createHueFilter(n:Number):ColorMatrixFilter
+		{
+			const p1:Number = Math.cos(n * Math.PI / 180);
+			const p2:Number = Math.sin(n * Math.PI / 180);
+			const p4:Number = 0.213;
+			const p5:Number = 0.715;
+			const p6:Number = 0.072;
+			return new ColorMatrixFilter([p4 + p1 * (1 - p4) + p2 * (0 - p4), p5 + p1 * (0 - p5) + p2 * (0 - p5), p6 + p1 * (0 - p6) + p2 * (1 - p6), 0, 0, 
+				p4 + p1 * (0 - p4) + p2 * 0.143, p5 + p1 * (1 - p5) + p2 * 0.14, p6 + p1 * (0 - p6) + p2 * -0.283, 0, 0, 
+				p4 + p1 * (0 - p4) + p2 * (0 - (1 - p4)), p5 + p1 * (0 - p5) + p2 * p5, p6 + p1 * (1 - p6) + p2 * p6, 0, 0,
+				0, 0, 0, 1, 0]);
+		}
         
         /**
          * 阈值

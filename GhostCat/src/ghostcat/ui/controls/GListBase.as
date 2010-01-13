@@ -502,7 +502,10 @@ package ghostcat.ui.controls
 				
 				var d:* = (index < data.length) ? data[index] : null;
 				item.data = d;
-				item.selected = d && (d == selectedData);
+				
+				if (toggle)
+					item.selected = d && (d == selectedData);
+				
 				if (autoReszieItemContent)
 				{
 					item.content.width = columnWidth;

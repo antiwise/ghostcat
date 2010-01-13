@@ -162,11 +162,11 @@ package ghostcat.manager
 		 * 
 		 * @param key
 		 * @return 
-		 * 
+		 *  
 		 */		
 		public static function getValue(key:String):*
 		{
-			if (root.loaderInfo.hasOwnProperty(key))
+			if (root.loaderInfo.parameters.hasOwnProperty(key))
 				return root.loaderInfo.parameters[key];
 			else
 				return _parameters[key];

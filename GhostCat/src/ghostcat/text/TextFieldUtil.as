@@ -43,19 +43,20 @@ package ghostcat.text
          */        
         public static function truncateToFit(textField:TextField):*
         {
-            if (textField.text == null || textField.text.length < 1)
+            if (textField.text == null || textField.text.length == 0)
                 return;
             
             var firstLine:TextLineMetrics = textField.getLineMetrics(0);
-            var charBound:Rectangle = textField.getCharBoundaries(0);
-            
-            if (firstLine.x + charBound.width > textField.width) 
-            {
-                var i:int = (textField.text.charAt(textField.text.length - 5) != " ") ? 4 : 5;
-                textField.text = textField.text.slice(0, textField.length - i);
-                textField.text = textField.text.concat("...");
-            }
-        }
+			
+			if (firstLine.width > textField.width)
+			{
+				while (firstLine.width > textField.width - 20) 
+				{
+					textField.text = textField.text.slice(0, textField.length - 1);
+				}
+				textField.appendText("...");
+			}
+		}
 		
 		/**
 		 * 从索引处截取一个字

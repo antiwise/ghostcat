@@ -80,6 +80,27 @@ package ghostcat.ui
 		private var _popupLayer:DisplayObjectContainer;
 		private var _application:DisplayObjectContainer;
 		private var _applicationEnabled:Boolean = true;
+		private var _popupUpCount:int = 0;
+
+		/**
+		 * 打开的模式窗口数量 
+		 * @return 
+		 * 
+		 */
+		public function get popupUpCount():int
+		{
+			return _popupUpCount;
+		}
+
+		public function set popupUpCount(value:int):void
+		{
+			_popupUpCount = value;
+			if (!applicationEnabled && _popupUpCount == 0)
+				applicationEnabled = true;
+			else if (applicationEnabled && _popupUpCount > 0)
+				applicationEnabled = false;
+		}
+
 		
 		/**
 		 * 弹出窗口指定的队列，为空则为全局队列
@@ -256,9 +277,9 @@ package ghostcat.ui
 				(obj as GBase).owner = owner;
 			
 			obj.addEventListener(Event.REMOVED_FROM_STAGE,popupCloseHandler);
-			if (modal && applicationEnabled)
+			if (modal)
 			{
-				applicationEnabled = false;
+				popupUpCount++;
 				obj.addEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 			}
 			return obj;
@@ -306,7 +327,7 @@ package ghostcat.ui
 		 */
 		protected function modulePopupCloseHandler(event:Event):void
 		{
-			applicationEnabled = true;
+			popupUpCount --;
 			event.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 		}
 		
