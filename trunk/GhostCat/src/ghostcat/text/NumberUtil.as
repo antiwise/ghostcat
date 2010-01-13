@@ -23,17 +23,20 @@ package ghostcat.text
 			var d:int = utc ? date.dateUTC : date.date;
 			
 			switch (format){
+				case "mm-dd":
+					return fillZeros((m + 1).toString(),2) + "-" + fillZeros(d.toString(),2);
+					break;
 				case "yyyy-mm-dd":
-					return y +"-" + fillZeros(m.toString(),2) + "-" + fillZeros(d.toString(),2);
+					return y +"-" + fillZeros((m + 1).toString(),2) + "-" + fillZeros(d.toString(),2);
 					break;
 				case "yyyy-m-d":
-					return y +"-" + m +"-" + d;
+					return y +"-" + (m + 1).toString() +"-" + d;
 					break;
 				case "yyyy年m月d日":
-					return y +"年" + m +"月" + d + "日";
+					return y +"年" + (m + 1).toString() +"月" + d + "日";
 					break;
 				case "Y年M月D日":
-					return toChineseNumber(y) +"年" + toChineseNumber(m) +"月" + toChineseNumber(d) + "日";
+					return toChineseNumber(y) +"年" + toChineseNumber(m + 1) +"月" + toChineseNumber(d) + "日";
 					break;
 			}
 			return date.toString();

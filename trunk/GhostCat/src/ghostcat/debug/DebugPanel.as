@@ -4,8 +4,9 @@ package ghostcat.debug
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
-	import ghostcat.display.GSprite;
+	import ghostcat.display.GBase;
 	import ghostcat.manager.DragManager;
+	import ghostcat.manager.LanguageManager;
 	import ghostcat.skin.DebugPanelSkin;
 	import ghostcat.ui.UIBuilder;
 	import ghostcat.ui.containers.GResizePanel;
@@ -24,11 +25,22 @@ package ghostcat.debug
 		public var debugTextField:GText;
 		public var scrollBar:GVScrollBar;
 		public var closeButton:GButton;
-		public var background:GSprite;
+		public var background:GBase;
 		
 		private var _stage:Stage;
+		
+		private static var _instance:DebugPanel;
+		
+		public static function show():void
+		{
+			_instance.show();
+		}
+		
+		
 		public function DebugPanel(stage:Stage)
 		{
+			_instance = this;
+			
 			_stage = stage;
 			
 			super(new DebugPanelSkin());
@@ -52,10 +64,12 @@ package ghostcat.debug
 			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
 			
 			Debug.debugTextField = debugTextField.textField;
-			
+			this.debugTextField.editable = true;
 			
 			this.minHeight = 80;
 			this.minWidth = 50;
+			this.width = 500;
+			this.height = 400;
 			this.x = (stage.stageWidth - this.width)/2;
 			this.y = (stage.stageHeight - this.height)/2;
 			
@@ -69,8 +83,13 @@ package ghostcat.debug
 				if (parent)
 					parent.removeChild(this);
 				else
-					_stage.addChild(this);
+					show();
 			}
+		}
+		
+		public function show():void
+		{
+			_stage.addChild(this);
 		}
 		
 		private function closeButtonClickHandler(event:MouseEvent):void
@@ -85,6 +104,9 @@ package ghostcat.debug
 			_stage.removeEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
 			closeButton.removeEventListener(MouseEvent.CLICK,closeButtonClickHandler);
 			DragManager.unregister(background);
+			
+			_instance = null;
+			
 			super.destory();
 		}
 	}

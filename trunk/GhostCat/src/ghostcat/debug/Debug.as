@@ -33,7 +33,12 @@ package ghostcat.debug
 		 * 在非调试模式下，将禁用trace。因为自定义trace编译不会被自动删除，此属性对于提高效率是必须的。
 		 * 默认情况下，发布版本就会自动禁用trace
 		 */		
-		public static var DEBUG:Boolean = isDebugSWF;
+		public static var DEBUG:Boolean = false;
+		
+		/**
+		 * 是否处于本地模式
+		 */
+		public static var LOCAL:Boolean = false;
 		
 		/**
 		 * 记录日志用。实际运行时，可在程序出错后将客户端日志信息发送出去，做为服务端日志的有效补充。 
@@ -53,7 +58,7 @@ package ghostcat.debug
 		/**
 		 * 是否激活浏览器控制台trace，信息将会被同时输出到firebug或者Chrome的控制台内。
 		 */
-		public static var enabledBrowserConsole:Boolean = true;
+		public static var enabledBrowserConsole:Boolean = false;
 		
 		/**
 		 * 是否显示时间
@@ -83,18 +88,14 @@ package ghostcat.debug
 			if (enabledLog)
 				log += text+"\n";
 			
-			if (!DEBUG)
-				return;
-			
-			if (channels==null || channel==null || channels.indexOf(channel) != -1)
-				traceExt(text);
-				
 			if (debugTextField)
 				debugTextField.appendText(text+"\n");
-				
+			
 			if (enabledBrowserConsole && ExternalInterface.available)
 				ExternalInterface.call("console.log",text);
-				
+			
+			if (DEBUG && (channels==null || channel==null || channels.indexOf(channel) != -1))
+				traceExt(text);
 		}
 		
 		public static function traceAll(...rest):void
@@ -206,15 +207,15 @@ package ghostcat.debug
 			}
 		}
 		
-		/**
-		 * 判断SWF是否是调试版本
-		 * @return 
-		 * 
-		 */		
-		public static function get isDebugSWF():Boolean
-		{
-			return new Error().getStackTrace().search(/:[0-9]+]$/m) != -1;
-		}
+//		/**
+//		 * 判断SWF是否是调试版本
+//		 * @return 
+//		 * 
+//		 */		
+//		public static function get isDebugSWF():Boolean
+//		{
+//			return new Error().getStackTrace().search(/:[0-9]+]$/m) != -1;
+//		}
 		
 		/**
 		 * 判断是否在网络上

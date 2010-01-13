@@ -73,7 +73,7 @@ package ghostcat.util.load
 		{
 			var name:String = this.loaderInfo.loaderURL.match(/[^\/]*\.swf/i)[0];
 			var urlArr:Array = name.split(/\/+|\\+|\.|\?/ig);
-			name =  decodeURI(urlArr[urlArr.length - 2]);
+			name = decodeURI(urlArr[urlArr.length - 2]);
 			return new (getDefinitionByName(name) as Class);
 		}
 		

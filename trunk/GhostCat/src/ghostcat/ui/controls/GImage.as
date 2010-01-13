@@ -53,6 +53,13 @@ package ghostcat.ui.controls
 		
 		private var _centerAtZero:Boolean = false;
 		
+		private var _source:*;
+		
+		/**
+		 * 在加载完成前隐藏内容 
+		 */
+		public var hideContentBeforeLoad:Boolean = true;
+		
 
 		protected var layoutChildrenCall:UniqueCall = new UniqueCall(layoutChildren);
 		
@@ -161,6 +168,11 @@ package ghostcat.ui.controls
 		 */
 		public function set source(v:*):void
 		{
+			if (v == _source)
+				return;
+			
+			_source = v;
+			
 			var loader:Loader;
 			if (v is String)
 				v = new URLRequest(v as String)
@@ -168,7 +180,7 @@ package ghostcat.ui.controls
 			if (v is URLRequest)
 			{
 				loader = new Loader();
-				loader.load(v as URLRequest,loaderContext);
+				loader.load(v as URLRequest,loaderContext ? loaderContext : new LoaderContext(true));
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 				
@@ -209,7 +221,7 @@ package ghostcat.ui.controls
 			(event.currentTarget as EventDispatcher).removeEventListener(Event.COMPLETE,loadCompleteHandler);
 			(event.currentTarget as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 			
-			invalidateLayout();
+			layoutChildren();
 		}
 		
 		/** @inheritDoc*/
@@ -230,8 +242,6 @@ package ghostcat.ui.controls
 		public function invalidateLayout():void
 		{
 			layoutChildrenCall.invalidate();
-			
-			invalidateSize();
 		}
 		
 		/**
@@ -243,7 +253,7 @@ package ghostcat.ui.controls
 			if (!content)
 				return;
 			
-			if (content is Loader && !(content as Loader).content)
+			if (content is Loader && !content.width && !content.height)
 				return;
 				
 			if (scaleContent && sized)
