@@ -56,6 +56,8 @@ package ghostcat.ui.controls
 		
 		private var _mouseOver:Boolean = false;
 		
+		private var _autoSize:String = TextFieldAutoSize.NONE;
+		
 		/**
 		 * Label文本实例 
 		 */
@@ -89,7 +91,18 @@ package ghostcat.ui.controls
 		/**
 		 * Label自动大小
 		 */
-		public var autoSize:String = TextFieldAutoSize.CENTER;
+		public function get autoSize():String
+		{
+			return _autoSize;
+		}
+
+		public function set autoSize(value:String):void
+		{
+			_autoSize = value;
+			if (labelTextField)
+				labelTextField.autoSize = value;
+		}
+
 		
 		/**
 		 * 执行的指令名称
@@ -226,7 +239,12 @@ package ghostcat.ui.controls
 			
 			labelTextField = new GText(content,false,separateTextField,textPadding);
 			labelTextField.enabledAdjustContextSize = this.enabledAdjustContextSize;
-			labelTextField.autoSize = this.autoSize;
+			
+			if (labelTextField.autoSize == TextFieldAutoSize.NONE)
+				labelTextField.autoSize = _autoSize;
+			else
+				_autoSize = labelTextField.autoSize;
+			
 			addChild(labelTextField)
 			
 			labelTextField.text = label;

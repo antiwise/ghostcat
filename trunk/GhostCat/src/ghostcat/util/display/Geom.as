@@ -295,7 +295,7 @@ package ghostcat.util.display
          */        
         public static function moveCenterTo(obj:*,target:Point):void
         {
-        	var center:Point = center(obj);
+        	var center:Point = center(obj,obj.parent);
         	obj.x += target.x - center.x;
         	obj.y += target.y - center.y;
         }
@@ -323,7 +323,7 @@ package ghostcat.util.display
          */        
         public static function centerIn(obj:*,cotainer:*):void
         {
-        	moveCenterTo(obj,center(cotainer));
+        	moveCenterTo(obj,center(cotainer,obj.parent));
         }
         
         /**

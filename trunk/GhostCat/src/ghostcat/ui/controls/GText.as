@@ -53,7 +53,7 @@ package ghostcat.ui.controls
 		public static var fontFamilyReplacer:Object;
 		
 		private var _textFormat:String;
-		private var _autoSize:String;
+		private var _autoSize:String = TextFieldAutoSize.NONE;
 		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
@@ -110,7 +110,7 @@ package ghostcat.ui.controls
 		 */
 		public function get autoSize():String
 		{
-			return textField ? textField.autoSize:_autoSize;
+			return textField ? textField.autoSize : _autoSize;
 		}
 
 		public function set autoSize(v:String):void

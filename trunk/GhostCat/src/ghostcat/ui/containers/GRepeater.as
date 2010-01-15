@@ -130,6 +130,18 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		/**
+		 * 单独刷新某个数据
+		 * @param i
+		 * 
+		 */
+		public function renderData(v:*):void
+		{
+			var index:int = data.indexOf(v);
+			if (index != -1)
+				renderItem(index)
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{
@@ -172,7 +184,7 @@ package ghostcat.ui.containers
 			if (ref.isClass(o))
 			{
 				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
-				e.item = (o as GBase).data;
+				e.data = (o as GBase).data;
 				e.relatedObject = o as InteractiveObject;
 				dispatchEvent(e);
 			}

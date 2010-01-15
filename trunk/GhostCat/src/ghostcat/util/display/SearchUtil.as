@@ -2,6 +2,7 @@ package ghostcat.util.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Loader;
 
 	/**
 	 * 此类用于查找显示对象
@@ -23,7 +24,7 @@ package ghostcat.util.display
         	if (displayObj is classRef)
                 return displayObj;
                 
-            if (displayObj is DisplayObjectContainer && depth > 0)
+            if (displayObj is DisplayObjectContainer && !(displayObj is Loader) && depth > 0)
             {
                 var child:DisplayObject = findChildByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1);
                 if (child)
@@ -47,7 +48,7 @@ package ghostcat.util.display
 				for (i = 0;i < len;i++)
 				{
 					displayObj = contain.getChildAt(i);
-					if (displayObj is DisplayObjectContainer)
+					if (displayObj is DisplayObjectContainer && !(displayObj is Loader))
 					{
 						var child:DisplayObject = findChildByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1);
 						if (child)
@@ -73,7 +74,7 @@ package ghostcat.util.display
             if (displayObj is classRef)
                 result.push(displayObj);
                 
-            if (displayObj is DisplayObjectContainer && depth > 0)
+            if (displayObj is DisplayObjectContainer && !(displayObj is Loader) && depth > 0)
             	findChildrenByClassIns(displayObj as DisplayObjectContainer,classRef,depth - 1,result);
             
 			return result;
@@ -94,7 +95,7 @@ package ghostcat.util.display
 				for (i = 0;i < len;i++)
 				{
 					displayObj = contain.getChildAt(i);
-					if (displayObj is DisplayObjectContainer)
+					if (displayObj is DisplayObjectContainer && !(displayObj is Loader))
 						findChildrenByClassIns(displayObj as DisplayObjectContainer, classRef, depth - 1, result);
 				}	
 			}
@@ -121,7 +122,7 @@ package ghostcat.util.display
 					return displayObj;
 			}
 			
-			if (displayObj is DisplayObjectContainer && depth > 0)
+			if (displayObj is DisplayObjectContainer && !(displayObj is Loader) && depth > 0)
 			{
 				var child:DisplayObject = findChildByPropertyIns(displayObj as DisplayObjectContainer, property, value, depth - 1);
 				if (child)
@@ -152,7 +153,7 @@ package ghostcat.util.display
 				for (i = 0;i < len;i++)
 				{
 					displayObj = contain.getChildAt(i);
-					if (displayObj is DisplayObjectContainer)
+					if (displayObj is DisplayObjectContainer && !(displayObj is Loader))
 					{
 						var child:DisplayObject = findChildByPropertyIns(displayObj as DisplayObjectContainer, property, value, depth - 1);
 						if (child)
@@ -246,7 +247,7 @@ package ghostcat.util.display
             if (displayObj.hasOwnProperty(property))
             	displayObj[property] = value;
                 
-            if (displayObj is DisplayObjectContainer && depth > 0)
+            if (displayObj is DisplayObjectContainer && !(displayObj is Loader) && depth > 0)
             {
                 var displayObjectContainer:DisplayObjectContainer = DisplayObjectContainer(displayObj);
                 for (var i:int = 0;i < displayObjectContainer.numChildren;i++) 

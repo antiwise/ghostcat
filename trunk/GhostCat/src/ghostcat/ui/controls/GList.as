@@ -151,14 +151,14 @@ package ghostcat.ui.controls
 		/**
 		 * 是否点击选中 
 		 */
-		public function get toggle():Boolean
+		public function get toggleOnClick():Boolean
 		{
-			return listContent.toggle;
+			return listContent.toggleOnClick;
 		}
 		
-		public function set toggle(v:Boolean):void
+		public function set toggleOnClick(v:Boolean):void
 		{
-			listContent.toggle = v;
+			listContent.toggleOnClick = v;
 		}
 		
 		/**
