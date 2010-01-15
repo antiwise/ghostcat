@@ -31,7 +31,7 @@ package ghostcat.util.data
 		 * @return 
 		 * 
 		 */
-		public static function objectToArray(source:Array):Array
+		public static function objectArrayToTitleArray(source:Array):Array
 		{
 			if (source.length == 0)
 				return [];
@@ -61,7 +61,7 @@ package ghostcat.util.data
 		 * @return 
 		 * 
 		 */
-		public static function arrayToObject(source:Array):Array
+		public static function titleArrayToObjectArray(source:Array):Array
 		{
 			if (source.length <= 1)
 				return [];
@@ -73,6 +73,25 @@ package ghostcat.util.data
 				for (var j:int = 0;j < source[i].length;j++)
 					data[source[0][j]] = source[i][j];
 				result.push(data);	
+			}
+			return result;
+		}
+		
+		/**
+		 * 对象数组转换为单一对象 
+		 * @param source
+		 * @return 
+		 * 
+		 */
+		public static function arrayToObject(source:Array,key:String,value:String):Object
+		{
+			if (source.length <= 1)
+				return [];
+			
+			var result:Object = {};
+			for (var i:int = 0; i < source.length; i++)
+			{
+				result[source[i][key]] = source[i][value];	
 			}
 			return result;
 		}
@@ -107,7 +126,7 @@ package ghostcat.util.data
 		 * @return 
 		 * 
 		 */
-		public static function filterArray(source:Array,filter:Array):Array
+		public static function filterTitleArray(source:Array,filter:Array):Array
 		{
 			var i:int;
 			var newHeader:Array = [];

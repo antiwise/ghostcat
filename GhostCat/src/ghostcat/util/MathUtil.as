@@ -82,7 +82,7 @@ package ghostcat.util
 		 */
 		public static function max(arr:Array):Number
 		{
-			var result:Number = Number.MIN_VALUE;
+			var result:Number = int.MIN_VALUE;
 			for (var i:int = 0;i < arr.length;i++)
 			{
 				if (arr[i] > result)
@@ -100,7 +100,7 @@ package ghostcat.util
 		 */
 		public static function min(arr:Array):Number
 		{
-			var result:Number = Number.MAX_VALUE;
+			var result:Number = int.MAX_VALUE;
 			for (var i:int = 0;i < arr.length;i++)
 			{
 				if (arr[i] < result)

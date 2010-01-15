@@ -54,7 +54,7 @@ package ghostcat.ui.controls
 		/**
 		 * 点击选择
 		 */
-		public var toggle:Boolean = true;
+		public var toggleOnClick:Boolean = true;
 		
 		private var _columnCount:int = -1;
 		
@@ -422,7 +422,7 @@ package ghostcat.ui.controls
 				i = int(event.property) % columnCount;
 			}
 			
-			refreshItem(i,j);
+			refreshIndex(i,j);
 		}
 		
 		/**
@@ -436,7 +436,7 @@ package ghostcat.ui.controls
 			var item:GBase = event.repeatObj as GBase;
 			item.owner = self;
 			
-			refreshItem(p.x,p.y);
+			refreshIndex(p.x,p.y);
 			
 			if (hideNullItem)
 				item.visible = (item.data != null);
@@ -470,10 +470,10 @@ package ghostcat.ui.controls
 			
 			if (ref.isClass(o))
 			{
-				if (toggle)
+				if (toggleOnClick)
 					selectedItem = o;
 				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
-				e.item = (o as GBase).data;
+				e.data = (o as GBase).data;
 				e.relatedObject = o as InteractiveObject;
 				dispatchEvent(e);
 			}
@@ -486,7 +486,7 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function refreshItem(i:int,j:int):GBase
+		public function refreshIndex(i:int,j:int):GBase
 		{
 			var item:GBase = getItemAt(i,j);
 			
@@ -503,7 +503,7 @@ package ghostcat.ui.controls
 				var d:* = (index < data.length) ? data[index] : null;
 				item.data = d;
 				
-				if (toggle)
+				if (toggleOnClick)
 					item.selected = d && (d == selectedData);
 				
 				if (autoReszieItemContent)
@@ -513,6 +513,17 @@ package ghostcat.ui.controls
 				}
 			}
 			return item;
+		}
+		
+		/**
+		 * 刷新某个数据 
+		 * @param data
+		 * 
+		 */
+		public function refreshData(data:*):void
+		{
+			var p:Point = getPointFromData(data);
+			refreshIndex(p.x,p.y);
 		}
 		
 		/**
@@ -526,7 +537,7 @@ package ghostcat.ui.controls
 			{
 				for (var j:int = screen.top;j < screen.bottom;j++)
 					for (var i:int = screen.left;i < screen.right;i++)
-						refreshItem(i,j);	
+						refreshIndex(i,j);	
 			}
 			render();
 		}

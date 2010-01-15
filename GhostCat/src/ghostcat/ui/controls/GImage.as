@@ -63,6 +63,28 @@ package ghostcat.ui.controls
 
 		protected var layoutChildrenCall:UniqueCall = new UniqueCall(layoutChildren);
 		
+		private var _hideContent:Boolean
+		
+		public function get hideContent():Boolean
+		{
+			return _hideContent;
+		}
+
+		public function set hideContent(value:Boolean):void
+		{
+			_hideContent = value;
+			if (value)
+			{
+				if (content.parent == this)
+					removeChild(content)
+			}
+			else
+			{
+				if (content.parent != this)
+					addChild(content);
+			}
+		}
+
 		/**
 		 * 垂直对齐
 		 * @return 

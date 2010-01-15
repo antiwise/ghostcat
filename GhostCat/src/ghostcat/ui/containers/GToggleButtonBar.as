@@ -5,6 +5,7 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.ItemClickEvent;
+	import ghostcat.util.display.SelectGroup;
 
 	/**
 	 * 可按下的按钮条
@@ -36,8 +37,8 @@ package ghostcat.ui.containers
 		 */
 		protected function itemClickHandler(event:ItemClickEvent):void
 		{
-			if (toggleOnClick && event.item)
-				selectedData = event.item;
+			if (toggleOnClick && event.data)
+				selectedData = event.data;
 		}
 
 		/**
@@ -80,7 +81,7 @@ package ghostcat.ui.containers
 				if (item)
 					item.selected = v && item.data == v; 
 			}
-			
+			SelectGroup
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 

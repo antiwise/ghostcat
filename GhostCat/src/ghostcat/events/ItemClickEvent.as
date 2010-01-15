@@ -12,7 +12,7 @@ package ghostcat.events
 	{
 		public static const ITEM_CLICK:String = "item_click";
 		
-		public var item:*;
+		public var data:*;
 		
 		public var relatedObject:InteractiveObject;
 		
@@ -24,7 +24,7 @@ package ghostcat.events
 		public override function clone() : Event
 		{
 			var evt:ItemClickEvent = new ItemClickEvent(type,bubbles,cancelable);
-			evt.item = this.item;
+			evt.data = this.data;
 			evt.relatedObject = this.relatedObject;
 			return evt;
 		}

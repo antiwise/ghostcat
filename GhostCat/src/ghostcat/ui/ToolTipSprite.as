@@ -6,7 +6,6 @@ package ghostcat.ui
 	import flash.utils.Timer;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.IDisplayObject;
 	import ghostcat.display.IToolTipManagerClient;
 	import ghostcat.events.TickEvent;
 	import ghostcat.ui.tooltip.IToolTipSkin;
@@ -27,7 +26,7 @@ package ghostcat.ui
 		/**
 		 * 延迟显示的毫秒数 
 		 */		
-		public var delay:int = 500;
+		public var delay:int = 250;
 		
 		/**
 		 * 连续显示间隔的毫秒数 
@@ -122,17 +121,21 @@ package ghostcat.ui
 		
 		private function mouseOutHandler(event:MouseEvent):void
 		{
-			hide();
+//			hide();
 		}
 		
 		private function mouseOverHandler(event:MouseEvent):void
 		{
-			target = findToolTipTarget(event.target as DisplayObject);
-			
-			if (target)
-				delayShow(delay);
-			else
-				hide();
+			var newTarget:DisplayObject = findToolTipTarget(event.target as DisplayObject);
+			if (newTarget != target)
+			{
+				target = newTarget;
+				
+				if (target)
+					delayShow(delay);
+				else if (this.content)
+					hide();
+			}
 		}
 		
 		private function findToolTipTarget(displayObj : DisplayObject) : DisplayObject
@@ -141,7 +144,7 @@ package ghostcat.ui
 			
 			while (currentTarget && currentTarget.parent != currentTarget)
 			{
-				if (currentTarget is IToolTipManagerClient 
+				if (currentTarget is IToolTipManagerClient
 					&& (currentTarget as IToolTipManagerClient).toolTip 
 					&& (onlyWithClasses == null || Util.isIn(cursor,onlyWithClasses)))
 					return currentTarget;
@@ -158,14 +161,18 @@ package ghostcat.ui
 		 */		
 		public function delayShow(t:int):void
 		{
-			if (delayCooldown){
+			if (delayCooldown)//还在连续显示状态
+			{
 				delayCooldown.delay = 0;
 				t = 0;
 			}
 			
-			if (delayTimer){
+			if (delayTimer)
+			{
 				delayTimer.delay = t;
-			}else{
+			}
+			else
+			{
 				delayTimer = new Timer(t,1);
 				delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE,show);
 				delayTimer.start();
