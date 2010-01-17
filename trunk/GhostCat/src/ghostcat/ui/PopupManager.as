@@ -66,14 +66,19 @@ package ghostcat.ui
 		 * @param owner
 		 * 
 		 */
-		static public function lockOwner(v:DisplayObject,owner:Sprite):void
+		static public function lockOwner(v:DisplayObject,owner:Sprite,asBitmap:Boolean = false):void
 		{
 			v.addEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
 			owner.mouseChildren = owner.mouseEnabled = false;
+			if (owner is GBase && asBitmap)
+				(owner as GBase).asBitmap = true;
+			
 			function removeHandler(event:Event):void
 			{
 				v.removeEventListener(Event.REMOVED_FROM_STAGE,removeHandler);
 				owner.mouseChildren = owner.mouseEnabled = true;
+				if (owner is GBase && asBitmap)
+					(owner as GBase).asBitmap = false;
 			}
 		}
 		
