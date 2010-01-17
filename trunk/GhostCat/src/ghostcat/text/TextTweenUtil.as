@@ -1,7 +1,6 @@
 package ghostcat.text
 {
 	import flash.text.TextField;
-	import flash.text.TextFormat;
 	
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.easing.TweenUtil;
@@ -22,14 +21,16 @@ package ghostcat.text
 		 * @param invent	是否倒放
 		 * @param addRandomText	是否在缓动的时候增加随机尾字符
 		 */
-		public static function tween(textField:TextField,speed:Number = 100,ease:Function = null,invert:Boolean = false,addRandomText:Boolean = false):void
+		public static function tween(textField:TextField,speed:Number = 100,ease:Function = null,invert:Boolean = false,addRandomText:Boolean = false):TweenUtil
 		{
 			var oldText:String = textField.text;
 			var data:Object = {len : 0};
 			
 			var length:int = textField.text.length;
 			
-			TweenUtil.to(data, speed * length,{len: length,ease: ease, invert: invert,onUpdate: updateHandler,onComplete:completeHandler}).update();
+			var tween:TweenUtil =  TweenUtil.to(data, speed * length,{len: length,ease: ease, invert: invert,onUpdate: updateHandler,onComplete:completeHandler});
+			tween.update();
+			return tween;
 			
 			function updateHandler():void
 			{
@@ -54,14 +55,16 @@ package ghostcat.text
 		 * @param invent	是否倒放
 		 * @param addRandomText	是否在缓动的时候增加随机尾字符
 		 */
-		public static function tweenHtml(textField:TextField,speed:Number = 100,ease:Function = null,invert:Boolean = false,addRandomText:Boolean = false):void
+		public static function tweenHtml(textField:TextField,speed:Number = 100,ease:Function = null,invert:Boolean = false,addRandomText:Boolean = false):TweenUtil
 		{
 			var oldText:String = textField.htmlText;
 			var data:Object = {len : 0};
 			
 			var length:int = textField.text.length;
 			
-			TweenUtil.to(data, speed * length,{len: length,ease: ease, invert: invert,onUpdate: updateHandler,onComplete:completeHandler}).update();
+			var tween:TweenUtil = TweenUtil.to(data, speed * length,{len: length,ease: ease, invert: invert,onUpdate: updateHandler,onComplete:completeHandler});
+			tween.update();
+			return tween;
 			
 			function updateHandler():void
 			{
@@ -84,7 +87,7 @@ package ghostcat.text
 		 * @param speed	速度
 		 * @param ease	缓动方法
 		 */
-		public static function tweenQuick(textField:TextField,speed:Number = 100,ease:Function = null):void
+		public static function tweenQuick(textField:TextField,speed:Number = 100,ease:Function = null):TweenUtil
 		{
 			var oldText:TextField = new TextField();
 			oldText.htmlText = textField.htmlText;
@@ -93,7 +96,9 @@ package ghostcat.text
 			var data:Object = {len : 0};
 			textField.text = "";
 			
-			TweenUtil.to(data, speed * length,{len: length,ease: ease, onUpdate: updateHandler,onComplete:completeHandler}).update();
+			var tween:TweenUtil = TweenUtil.to(data, speed * length,{len: length,ease: ease, onUpdate: updateHandler,onComplete:completeHandler});
+			tween.update();
+			return tween;
 			
 			function updateHandler():void
 			{

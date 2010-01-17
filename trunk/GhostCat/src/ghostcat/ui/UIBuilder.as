@@ -1,10 +1,11 @@
 package ghostcat.ui
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.display.GSprite;
 	import ghostcat.display.IGBase;
+	import ghostcat.ui.controls.GButtonBase;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.SearchUtil;
@@ -108,24 +109,48 @@ package ghostcat.ui
 		}
 		
 		/**
-		 * 销毁子对象（注意，它并不会自动销毁GBitmap对象）
+		 * 销毁子对象
 		 * @param target
 		 * @param all	是否销毁不在属性值里的对象
 		 */
 		public static function destory(target:GBase,all:Boolean = false):void
 		{
 			var skin:DisplayObject = target.content;
-			var children:Array = SearchUtil.findChildrenByClass(skin,GSprite);
+			var children:Array = SearchUtil.findChildrenByClass(skin,IGBase);
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = 0;i < children.length;i++)
 			{
 				var obj:DisplayObject = children[i] as DisplayObject;
-				if (obj is GSprite)
+				if (obj is IGBase)
 				{
 					var name:String = obj.name;
 					if (all || types[name])
-						(obj as GSprite).destory();
+						(obj as IGBase).destory();
+				}
+			}
+		}
+		
+		/**
+		 * 自动按钮事件 
+		 * @param target
+		 * @param remove	是否是卸载
+		 * 
+		 */
+		public static function autoBNHandlers(target:DisplayObject,remove:Boolean = false,useWeak:Boolean = false):void
+		{
+			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
+			for (var p:String in types)
+			{
+				if (target.hasOwnProperty(p) && target.hasOwnProperty(p + "Handler") && target[p + "Handler"] is Function)
+				{
+					if (target["p"] is GButtonBase)
+					{
+						if (remove)
+							(target["p"] as GButtonBase).removeEventListener(MouseEvent.CLICK,target[p + "Handler"])
+						else
+							(target["p"] as GButtonBase).addEventListener(MouseEvent.CLICK,target[p + "Handler"],false,0,useWeak)
+					}
 				}
 			}
 		}

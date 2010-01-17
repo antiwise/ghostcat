@@ -28,14 +28,16 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
-			popup.addEventListener(Event.REMOVED_FROM_STAGE,result);
+			super.execute();
 			
+			popup.addEventListener(Event.REMOVED_FROM_STAGE,result);
 			PopupManager.instance.showPopup(popup,owner,modal,centerMode);
 		}
 		/** @inheritDoc*/
 		protected override function end(event:* = null) : void
 		{
 			super.end(event);
+			
 			popup.removeEventListener(Event.REMOVED_FROM_STAGE,result);
 		}
 	}

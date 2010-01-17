@@ -322,14 +322,6 @@ package ghostcat.util.easing
 			}
 		}
 		
-		/**
-		 * 删除
-		 * 
-		 */
-		public function remove():void
-		{
-			effects.splice(effects.indexOf(this), 1);
-		}
 		
 		private static function calculateValue($o:TweenUtil,t:int,key:String):*
 		{
@@ -418,30 +410,6 @@ package ghostcat.util.easing
 		}
 		
 		/**
-		 * 移除对target的所有缓动效果
-		 *  
-		 * @param target			目标对象
-		 * @param submitEffect		是否让当前缓动效果生效
-		 * 
-		 */		
-		public static function removeTween(target:Object, submitEffect:Boolean = true):void
-		{
-			for (var i:int = effects.length - 1; i >=0 ; i--)
-			{
-				var $o:TweenUtil = effects[i] as TweenUtil;
-				if ($o.target == target)
-				{
-					if (submitEffect)
-						$o.duration = 0;
-					else 
-						effects.splice(i, 1);
-				}
-			}
-			if (submitEffect) 
-				update();
-		}
-		
-		/**
 		 * 获取Tween
 		 * 
 		 * @param target
@@ -489,6 +457,46 @@ package ghostcat.util.easing
 				if ($o.target == target)
 					$o.paused = false;
 			}
+		}
+		
+		/**
+		 * 删除
+		 * 
+		 */
+		public function remove(submitEffect:Boolean = true):void
+		{
+			var index:int = effects.indexOf(this);
+			if (index != -1)
+			{
+				effects.splice(effects.indexOf(this), 1);
+				
+				if (submitEffect) 
+					update();
+			}
+		}
+		
+		/**
+		 * 移除对target的所有缓动效果
+		 *  
+		 * @param target			目标对象
+		 * @param submitEffect		是否让当前缓动效果生效
+		 * 
+		 */		
+		public static function removeTween(target:Object, submitEffect:Boolean = true):void
+		{
+			for (var i:int = effects.length - 1; i >=0 ; i--)
+			{
+				var $o:TweenUtil = effects[i] as TweenUtil;
+				if ($o.target == target)
+				{
+					if (submitEffect)
+						$o.duration = 0;
+					else 
+						effects.splice(i, 1);
+				}
+			}
+			if (submitEffect) 
+				update();
 		}
 		
 		/**

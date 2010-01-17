@@ -56,7 +56,7 @@ package ghostcat.debug
 			layout = new AbsoluteLayout(this);
 			
 			(layout as AbsoluteLayout).setMetrics(background,0,0,0,0);
-			(layout as AbsoluteLayout).setMetrics(debugTextField.textField,8,25,8,8);
+			(layout as AbsoluteLayout).setMetrics(debugTextField.textField,8,25,22,8);
 			(layout as AbsoluteLayout).setMetrics(scrollBar,NaN,26,7,7);
 			(layout as AbsoluteLayout).setMetrics(closeButton,NaN,NaN,8,NaN);
 			

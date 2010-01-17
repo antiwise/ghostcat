@@ -122,5 +122,17 @@ package ghostcat.operation
 			doLoad();
 		}
 		
+		/** @inheritDoc*/
+		public override function halt() : void
+		{
+			super.halt();
+			
+			if (children.length > 0)
+			{
+				children = children.slice(0,1);
+				(children[0] as Oper).halt();
+			}
+		}
+		
 	}
 }
