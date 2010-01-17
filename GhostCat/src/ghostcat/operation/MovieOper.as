@@ -1,5 +1,7 @@
 package ghostcat.operation
 {
+	import flash.display.MovieClip;
+	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.events.MovieEvent;
@@ -25,9 +27,13 @@ package ghostcat.operation
 		 */
 		public var loop:int;
 		
-		public function MovieOper(mc:GMovieClipBase=null,labelName:String=null,loop:int = 1)
+		public function MovieOper(mc:*=null,labelName:String=null,loop:int = 1)
 		{
-			this.mc = mc;
+			if (mc is MovieClip)
+				this.mc = new GMovieClip(mc);
+			else if (mc is GMovieClipBase)
+				this.mc = mc;
+			
 			this.labelName = labelName;
 			this.loop = loop;
 		}

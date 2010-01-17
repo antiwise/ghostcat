@@ -7,6 +7,7 @@ package ghostcat.display
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.events.GEvent;
@@ -16,7 +17,7 @@ package ghostcat.display
 	 * 基类，用于对图元进行包装。replace参数为false时将不会对源图元产生影响，可作为单独的控制类使用
 	 * replace参数为true时，将会将Skin替换成此类。
 	 * 
-	 * 增加嵌套而不使用逻辑类是考虑到实际应用时更方便，而且可以更容易实现更替内容和旋转等操作，在它的派生类里可充分体现这一点。
+	 * 增加嵌套而不使用逻辑类是考虑到实际应用时更方便，而且可以更容易实现更替内容和旋转等操作。
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -49,6 +50,8 @@ package ghostcat.display
 		
 		//内容是否初始化
 		private var contentInited:Boolean = false;
+		private var _hideContent:Boolean;
+		
 		
 		/**
 		 * 参数与setContent方法相同
@@ -116,6 +119,50 @@ package ghostcat.display
 		}
 		
 		/**
+		 * 是否暂时移除Content 
+		 * @return 
+		 * 
+		 */
+		public function get hideContent():Boolean
+		{
+			return _hideContent;
+		}
+		
+		public function set hideContent(value:Boolean):void
+		{
+			if (!content)
+				return;
+			
+			_hideContent = value;
+			if (value)
+			{
+				if (content.parent == this)
+					removeChild(content)
+			}
+			else
+			{
+				if (content.parent != this)
+					addChild(content);
+			}
+		}
+		
+		public override function set width(value:Number) : void
+		{
+			if (content)
+				content.width = value;
+			else
+				super.width = value;
+		}
+		
+		public override function set height(value:Number) : void
+		{
+			if (content)
+				content.height = value;
+			else
+				super.height = value;
+		}
+		
+		/**
 		 * 设置皮肤。
 		 * 
 		 * @param skin		皮肤	
@@ -159,7 +206,7 @@ package ghostcat.display
 					this.x = skin.x;
 					this.y = skin.y;
 					
-					skin.x = skin.y = 0
+					skin.x = skin.y = 0;
 				}
 				
 				if (_content == null)
@@ -197,7 +244,11 @@ package ghostcat.display
 		private function removedFromStageHandler(event:Event):void
 		{
 			if (destoryWhenRemove)
+			{
+				this.removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+				
 				destory();
+			}
 		}
 		
 		/**
@@ -218,14 +269,14 @@ package ghostcat.display
 			if (destoryed)
 				return;
 			
+			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
+			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+			
 			if (content is IGBase && autoDestoryContent)
 				(content as IGBase).destory();
 			
 			if (parent)
 				parent.removeChild(this);
-			
-			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
-			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
 			
 			destoryed = true;
 		}

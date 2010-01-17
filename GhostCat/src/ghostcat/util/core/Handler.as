@@ -1,5 +1,7 @@
 package ghostcat.util.core
 {
+	import ghostcat.util.ReflectUtil;
+
 	/**
 	 * 带参函数执行器 
 	 * 
@@ -9,7 +11,7 @@ package ghostcat.util.core
 	public class Handler
 	{
 		public var caller:*;
-		public var handler:Function;
+		public var handler:*;
 		public var para:Array;
 		
 		private var _toFunction:Function;
@@ -21,7 +23,7 @@ package ghostcat.util.core
 		 * @param caller	调用者
 		 * 
 		 */
-		public function Handler(handler:Function=null,para:Array=null,caller:*=null)
+		public function Handler(handler:*=null,para:Array=null,caller:*=null)
 		{
 			this.handler = handler;
 			this.para = para;
@@ -35,10 +37,21 @@ package ghostcat.util.core
 		 */
 		public function call(...params) : *
 		{
-			if (params && params.length > 0)
-				return this.handler.apply(this.caller,params);
+			var h:*;
+			if (this.handler is String)
+				h = ReflectUtil.eval(this.handler.toString());
 			else
-				return this.handler.apply(this.caller,this.para);
+				h = this.handler;
+			
+			if (h is Function)
+			{
+				if (params && params.length > 0)
+					return handler.apply(this.caller,params);
+				else
+					return handler.apply(this.caller,this.para);
+			}
+			else
+				return h;
 		}
 		
 		/**

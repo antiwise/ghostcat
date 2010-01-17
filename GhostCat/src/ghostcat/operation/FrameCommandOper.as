@@ -49,7 +49,7 @@ package ghostcat.operation
 		public function FrameCommandOper(onUpdate:*, repeatCount:int = -1, delayedFrame:int = 1)
 		{
 			if (onUpdate is Function)
-				onUpdate = new Handler(onUpdate as Function)
+				onUpdate = new Handler(onUpdate)
 			
 			if (delayedFrame < 1)
 				delayedFrame = 1;

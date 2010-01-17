@@ -1,9 +1,9 @@
 package ghostcat.operation
 {
-	import flash.display.DisplayObject;
 	import flash.filters.BitmapFilter;
 	
 	import ghostcat.filter.FilterProxy;
+	import ghostcat.util.ReflectUtil;
 
 	/**
 	 * 滤镜代理Tween
@@ -43,7 +43,7 @@ package ghostcat.operation
 			return filterTarget;
 		}
 		
-		public function FilterProxyOper(target:DisplayObject=null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false, autoUpdateIndex:Boolean = false, callLaterInv:Number = NaN)
+		public function FilterProxyOper(target:* = null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false, autoUpdateIndex:Boolean = false, callLaterInv:Number = NaN)
 		{
 			this.filter = filter;
 			this.filterTarget = target;
@@ -57,7 +57,14 @@ package ghostcat.operation
 		public override function execute() : void
 		{
 			var proxy:FilterProxy = new FilterProxy(filter.clone(),autoUpdateIndex,callLaterInv);
-			proxy.applyFilter(filterTarget);
+			
+			var target:*;
+			if (filterTarget is String)
+				target = ReflectUtil.eval(filterTarget);
+			else
+				target = filterTarget;
+			
+			proxy.applyFilter(target);
 			
 			this._target = proxy;
 			

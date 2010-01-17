@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import ghostcat.events.OperationEvent;
+	import ghostcat.util.core.Handler;
 	
 	/**
 	 * 条件判断
@@ -13,7 +14,7 @@ package ghostcat.operation
 		/**
 		 * 检测函数
 		 */
-		public var cHandler:Function;
+		public var cHandler:Handler;
 		/**
 		 * cHandler返回true时执行
 		 */
@@ -25,10 +26,14 @@ package ghostcat.operation
 		
 		private var choose:Oper;
 		
-		public function IfOper(cHandler:Function=null,b1:Oper=null,b2:Oper=null)
+		public function IfOper(cHandler:*=null,b1:Oper=null,b2:Oper=null)
 		{
 			super();
-			this.cHandler = cHandler;
+			if (cHandler is Handler)
+				this.cHandler = cHandler;
+			else
+				this.cHandler = new Handler(cHandler);
+			
 			this.b1 = b1;
 			this.b2 = b2;
 		}
@@ -37,7 +42,7 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			choose = cHandler() ? b1 : b2;
+			choose = cHandler.call() ? b1 : b2;
 			choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
 			choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
 			choose.execute();

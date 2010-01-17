@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import ghostcat.operation.effect.IEffect;
+	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
 
@@ -53,12 +54,14 @@ package ghostcat.operation
 		 */
 		public var tween:TweenUtil;
 		
-		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false,clearTarget:Boolean = false)
+		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false,clearTarget:Boolean = false,immediately:Boolean = false)
 		{
 			super();
+			
 			this._target = target;
 			this.duration = duration;
 			this.params = params;
+			this.immediately = immediately;
 			
 			if (invert)
 				this.invert = invert;
@@ -87,10 +90,16 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			if (clearTarget)
-				TweenUtil.removeTween(_target);
+			var target:*;
+			if (_target is String)
+				target = ReflectUtil.eval(_target);
+			else
+				target = _target;
 			
-			tween = new TweenUtil(_target,duration,params);
+			if (clearTarget)
+				TweenUtil.removeTween(target);
+			
+			tween = new TweenUtil(target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
 			
 			if (invert && updateWhenInvent)
@@ -99,8 +108,8 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		protected override function end(event:*=null):void
 		{
-			super.end(event);
 			tween.removeEventListener(TweenEvent.TWEEN_END,result);
+			super.end(event);
 		}
 	}
 }

@@ -18,9 +18,12 @@ package ghostcat.operation
 		 * @param cmd	函数
 		 * 
 		 */
-		public function FunctionOper(handler:Function=null,para:Array=null,caller:*=null)
+		public function FunctionOper(handler:*=null,para:Array=null,caller:*=null)
 		{
-			this.cmd = new Handler(handler,para,caller);
+			if (handler is Handler)
+				this.cmd =  handler as Handler;
+			else
+				this.cmd = new Handler(handler,para,caller);
 		}
 		/** @inheritDoc*/
 		public override function execute():void

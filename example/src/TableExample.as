@@ -20,8 +20,6 @@ package
 	{
 		public function TableExample()
 		{	
-			new EnabledSWFScreen(stage);
-			
 			RootManager.register(this);
 			
 			var xml:XML = <table backgroundColor="#FFFFFF">
@@ -54,9 +52,8 @@ package
 								</tr>
 							</table>
 			
-			addChild(new TableCreater().createObject(xml));
-		
 			new TextFieldParse(xml.toXMLString(),new Point(0,100)).parse(this);
+			addChild(new TableCreater().createObject(xml));
 		}
 	}
 }

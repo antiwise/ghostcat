@@ -14,6 +14,8 @@ package ghostcat.ui.layout
 	/**
 	 * 布局器基类，此类为抽像类
 	 * 
+	 * 当接收到目标的Reszie事件时就会触发
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */

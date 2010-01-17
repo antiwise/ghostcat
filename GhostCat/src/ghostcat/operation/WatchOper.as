@@ -1,6 +1,9 @@
 package ghostcat.operation
 {
 	import flash.events.EventDispatcher;
+	import flash.events.MouseEvent;
+	
+	import ghostcat.util.ReflectUtil;
 
 	/**
 	 * 监听事件，事件触发时继续
@@ -14,28 +17,41 @@ package ghostcat.operation
 		/**
 		 * 对象
 		 */
-		public var obj:EventDispatcher;
+		public var target:*;
+		
 		/**
 		 * 监听的事件 
 		 */
 		public var event:String;
-		public function WatchOper(obj:EventDispatcher=null,event:String=null)
+		
+		protected function get dispatcher():EventDispatcher
+		{
+			if (target is EventDispatcher)
+				return target as EventDispatcher
+			else
+				return ReflectUtil.eval(target.toString());
+		}
+		
+		public function WatchOper(target:*=null,event:String=null)
 		{
 			super();
-			this.obj = obj;
+			
+			this.target = target;
 			this.event = event;
 		}
 		/** @inheritDoc*/
 		public override function execute():void
 		{
 			super.execute();
-			obj.addEventListener(this.event,result);
+			this.dispatcher.addEventListener(this.event,result);
 		}
 		/** @inheritDoc*/
 		protected override function end(event:*=null):void
 		{
+			if (event)
+				event.currentTarget.removeEventListener(this.event,result);
+			
 			super.end(event);
-			obj.removeEventListener(this.event,result);
 		}
 	}
 }

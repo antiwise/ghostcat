@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import ghostcat.events.OperationEvent;
+	import ghostcat.util.core.Handler;
 	
 	/**
 	 * 条件分支
@@ -13,7 +14,7 @@ package ghostcat.operation
 		/**
 		 * 检测函数 
 		 */
-		public var cHandler:Function;
+		public var cHandler:Handler;
 		/**
 		 * 分支列表，元素为二维数组，第一项为值，第二项为需要执行的Oper
 		 */
@@ -25,10 +26,15 @@ package ghostcat.operation
 		
 		private var choose:Oper;
 		
-		public function SwitchOper(cHandler:Function=null,list:Array=null,defaultOper:Oper = null)
+		public function SwitchOper(cHandler:*=null,list:Array=null,defaultOper:Oper = null)
 		{
 			super();
-			this.cHandler = cHandler;
+			
+			if (cHandler is Handler)
+				this.cHandler = cHandler;
+			else
+				this.cHandler = new Handler(cHandler);
+			
 			this.list = list;
 			this.defaultOper = defaultOper;
 		}
@@ -37,7 +43,7 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			var result:* = cHandler();
+			var result:* = cHandler.call();
 			for (var i:int = 0;i < list.length;i++)
 			{
 				if (result == list[i][0])

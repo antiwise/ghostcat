@@ -22,6 +22,16 @@ package ghostcat.ui.layout
 		}
 		
 		/**
+		 * 统一设置全部边距 
+		 * @param v
+		 * 
+		 */
+		public function set padding(v:Number):void
+		{
+			this.paddingTop = this.paddingBottom = this.paddingLeft = this.paddingRight = v;
+		}
+		
+		/**
 		 * 左边距
 		 * @return 
 		 * 
