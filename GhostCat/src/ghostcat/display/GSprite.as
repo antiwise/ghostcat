@@ -7,7 +7,6 @@ package ghostcat.display
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.events.GEvent;
@@ -37,6 +36,11 @@ package ghostcat.display
 		 * 是否在更换Content时销毁原有Content
 		 */
 		public var autoDestoryContent:Boolean = true;
+		
+		/**
+		 * 是否初始化
+		 */
+		public var initialized:Boolean;
 		
 		/**
 		 * 是否已经被销毁
@@ -237,6 +241,8 @@ package ghostcat.display
 		{
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler)
 			init();
+			
+			this.initialized = true;
 			
 			dispatchEvent(new GEvent(GEvent.CREATE_COMPLETE));
 		}

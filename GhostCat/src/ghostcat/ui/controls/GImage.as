@@ -17,6 +17,8 @@ package ghostcat.ui.controls
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.Geom;
 	
+	[Event(name="complete",type="flash.events.Event")]
+	
 	/**
 	 * 图片
 	 * 
@@ -60,9 +62,10 @@ package ghostcat.ui.controls
 		 */
 		public var hideContentBeforeLoad:Boolean = true;
 		
-
+		
 		protected var layoutChildrenCall:UniqueCall = new UniqueCall(layoutChildren);
 		
+			
 		/**
 		 * 垂直对齐
 		 * @return 
@@ -222,6 +225,8 @@ package ghostcat.ui.controls
 			(event.currentTarget as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 			
 			layoutChildren();
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/** @inheritDoc*/
