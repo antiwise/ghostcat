@@ -49,7 +49,7 @@ package ghostcat.parse.display
 		public function createTextField():TextField
 		{
 			if (!defaultTextFormat)
-				defaultTextFormat = new TextFormat("宋体",12);
+				defaultTextFormat = new TextFormat("宋体",12,null,null,null,null,null,null,null,null,null,null,3);
 			var textField:TextField = new TextField();
 			textField.defaultTextFormat = defaultTextFormat;
 			textField.selectable = false;

@@ -102,6 +102,7 @@ package ghostcat.display
 		public function set data(v:*):void
 		{
 			_data = v;
+			dispatchEvent(new GEvent(GEvent.DATA_CHANGE));
 		}
 		
 		/**

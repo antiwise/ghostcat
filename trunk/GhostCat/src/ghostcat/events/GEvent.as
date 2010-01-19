@@ -31,6 +31,11 @@ package ghostcat.events
 		public static const HIDE:String = "hide";
 		
 		/**
+		 * 数据变化
+		 */
+		public static const DATA_CHANGE:String = "data_change";
+		
+		/**
 		 * 执行destory方法时触发的事件（可中断，若是直接被removeChild，即使触发了这个事件也无法中断了）
 		 */
 		public static const REMOVE:String = "remove";

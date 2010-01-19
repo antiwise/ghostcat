@@ -24,6 +24,8 @@ package ghostcat.ui.controls
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
 	
+	[Event(name="change",type="flash.events.Event")]
+	
 	/**
 	 * 文本框
 	 * 
@@ -373,6 +375,16 @@ package ghostcat.ui.controls
 		public function set text(v:String):void
 		{
 			data = v;
+		}
+		
+		/**
+		 * 当前文本 
+		 * @return 
+		 * 
+		 */
+		public function get curText():String
+		{
+			return textField ? textField.text : null;
 		}
 		
 		/**
