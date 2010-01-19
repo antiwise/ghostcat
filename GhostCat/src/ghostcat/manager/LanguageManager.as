@@ -83,18 +83,18 @@ package ghostcat.manager
 			resource[textType] = {};
 					
 			var texts:Array = oper.data.toString().split(/\r?\n/);
+			var key:String; 
 			for (var i:int=0;i < texts.length;i++)
 			{
 				var textLine:String = texts[i] as String;
 				if (textLine && textLine.substr(0,2)!="//")
 				{
-					var pos:int = textLine.indexOf("=");
-					var key:String; 
-					var value:String;
-					if (pos != -1)
+					if (/^\w+=.*/.test(textLine))
 					{
+						var pos:int = textLine.indexOf("=");
+						
 						key = textLine.slice(0,pos);
-						value = textLine.slice(pos + 1);
+						var value:String = textLine.slice(pos + 1);
 						resource[textType][key] = value;
 					}
 					else if (key)

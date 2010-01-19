@@ -81,7 +81,6 @@ package ghostcat.ui.containers
 				if (item)
 					item.selected = v && item.data == v; 
 			}
-			SelectGroup
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 
