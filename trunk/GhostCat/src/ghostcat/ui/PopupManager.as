@@ -299,7 +299,7 @@ package ghostcat.ui
 		 * @param queue	使用的队列。默认使用PopupManager指定的队列。
 		 * 
 		 */
-		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",queue:Queue = null):DisplayObject
+		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",offest:Point = null,queue:Queue = null):DisplayObject
 		{
 			var oper:PopupOper = new PopupOper(obj,owner,modal,centerMode);
 			

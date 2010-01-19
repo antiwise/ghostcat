@@ -1,5 +1,7 @@
 package ghostcat
 {
+	import flash.geom.Rectangle;
+	
 	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
@@ -37,6 +39,11 @@ package ghostcat
 		public override function set height(v:Number):void
 		{
 			Debug.error("不允许设置高度");
+		}
+		
+		public function get bounds():Rectangle
+		{
+			return new Rectangle(0,0,width,height)
 		}
 		
 		protected override function init():void

@@ -74,7 +74,7 @@ package ghostcat.display.transition
 		/**百叶窗打开渐变 */
 		public static function shutterMask2(switchHandler:*,target:DisplayObject,direction:int = 0):TransitionMaskLayer
 		{
-			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new ShutterDirectMaskHandler(50,direction),target.getBounds(target.parent)));
+			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new ShutterDirectMaskHandler(50,direction),target.getBounds(target.parent),40));
 		}
 		/**方向性过度渐变 */
 		public static function gradientAlphaMask(switchHandler:*,target:DisplayObject,angle:Number = 0):TransitionMaskLayer
