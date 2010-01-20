@@ -20,7 +20,7 @@ package ghostcat.text
 		}
 		
 		private static const COLORS:Array = ["red","blue","green","yellow","fuchsia","aqua","black","white","gray"];
-		private static const COLOR_REPS:Array = ["#FF000","#0000FF","#00FF00","#FFFF00","#FF00FF","#00FFFF","#000000","#FFFFFF","#808080"];
+		private static const COLOR_REPS:Array = ["#FF0000","#0000FF","#00FF00","#FFFF00","#FF00FF","#00FFFF","#000000","#FFFFFF","#808080"];
 		
 		private static function replFN():String
 		{
@@ -28,7 +28,7 @@ package ghostcat.text
 			var f:String = s.charAt(0);
 			var e:String = s.charAt(s.length - 1);
 			if (e == f && (e == "'" || e=="\""))
-				s = s.slice(1,s.length - 2);
+				s = s.slice(1,s.length - 1);
 			
 			if (arguments[1].toLowerCase() == "color")
 			{
