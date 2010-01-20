@@ -1,6 +1,7 @@
 package ghostcat.display.transfer.effect
 {
 	import flash.display.BitmapData;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	

@@ -19,6 +19,7 @@ package ghostcat.ui.controls
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
+	import ghostcat.text.UBB;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
@@ -106,6 +107,11 @@ package ghostcat.ui.controls
 		 * 是否强制使用HTML文本
 		 */
 		public var useHtml:Boolean = false;
+		
+		/**
+		 * 是否转换UBB（只在HTML文本中有效）
+		 */
+		public var ubb:Boolean = false;
 		
 		/**
 		 * 文本框自适应文字的方式
@@ -441,7 +447,12 @@ package ghostcat.ui.controls
 			if (textField)
 			{
 				if (useHtml || str.indexOf("<html>") != -1)
+				{
+					if (ubb)
+						str = UBB.decode(str);
+					
 					textField.htmlText = str;
+				}
 				else
 					textField.text = str;
 			}

@@ -1,6 +1,5 @@
 package ghostcat.util.encrypt
 {
-	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
@@ -14,7 +13,9 @@ package ghostcat.util.encrypt
 	public final class HackChecker
 	{
 		public static const checkInterval:int = 1000;
-		public static var timer:Timer;
+		
+		private static var blur:int = 20;
+		private static var timer:Timer;
 		
 		private static var prevDate:Number;//上次记录的时间
 		private static var prevTime:int;//上次记录的Time
@@ -30,8 +31,10 @@ package ghostcat.util.encrypt
 		 * @param interval	检测间隔
 		 * 
 		 */
-		public static function enabledCheckSpeedUp(interval:int = 1000):void
+		public static function enabledCheckSpeedUp(interval:int = 1000,blur:int = 20):void
 		{
+			HackChecker.blur = blur;
+			
 			var nextTime:int = getTimer();
 			var interval:int = nextTime - prevTime;
 			
@@ -47,7 +50,7 @@ package ghostcat.util.encrypt
 			
 			var interval:int = nextTime - prevTime;
 			
-			if (!isNaN(prevDate) && interval - (newDate - prevDate) > 20)
+			if (!isNaN(prevDate) && Math.abs(interval - (newDate - prevDate)) > blur)
 				hackHandler();
 			
 			prevDate = newDate;

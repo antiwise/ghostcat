@@ -6,7 +6,6 @@ package ghostcat.debug
 	
 	import ghostcat.display.GBase;
 	import ghostcat.manager.DragManager;
-	import ghostcat.manager.LanguageManager;
 	import ghostcat.skin.DebugPanelSkin;
 	import ghostcat.ui.UIBuilder;
 	import ghostcat.ui.containers.GResizePanel;
@@ -31,11 +30,10 @@ package ghostcat.debug
 		
 		private static var _instance:DebugPanel;
 		
-		public static function show():void
+		public static function get instance():DebugPanel
 		{
-			_instance.show();
+			return _instance;
 		}
-		
 		
 		public function DebugPanel(stage:Stage)
 		{
