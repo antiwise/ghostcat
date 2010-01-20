@@ -2,7 +2,6 @@ package ghostcat.display.transfer
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.filters.DropShadowFilter;
 	
 	import ghostcat.util.core.Handler;
 
@@ -31,6 +30,11 @@ package ghostcat.display.transfer
 		 * 是否根据alpha值决定特效的强度 
 		 */
 		public var byAlpha:Boolean = true;
+		
+		/**
+		 * 是否每次都要清除画布
+		 */
+		public var clearCanvas:Boolean = false;
 		
 		private var _deep:Number = 1.0;
 		
@@ -106,7 +110,8 @@ package ghostcat.display.transfer
 		 */
 		protected function renderEffect():void
 		{
-			bitmapData.fillRect(bitmapData.rect,0);
+			if (clearCanvas)
+				bitmapData.fillRect(bitmapData.rect,0);
 			
 			if (this.command && normalBitmapData)
 				this.command.call(normalBitmapData,bitmapData,deep);

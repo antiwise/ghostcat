@@ -473,6 +473,7 @@
     <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
+    <classEntry path="ghostcat.text.UBB"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

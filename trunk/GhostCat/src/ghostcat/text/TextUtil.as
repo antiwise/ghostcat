@@ -82,6 +82,17 @@ package ghostcat.text
 		}
 		
 		/**
+		 * 删除所有换行
+		 * @param text
+		 * @return 
+		 * 
+		 */
+		public static function removeBR(text:String):String
+		{
+			return text.replace(/\r|\n|<br>/g,"");
+		}
+		
+		/**
 		 * 插入换行符使得字体可以竖排
 		 *  
 		 * @param str
