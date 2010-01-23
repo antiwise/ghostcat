@@ -474,6 +474,11 @@
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
     <classEntry path="ghostcat.text.UBB"/>
+    <classEntry path="ghostcat.text.HTMLUtil"/>
+    <classEntry path="ghostcat.util.display.ColorContant"/>
+    <classEntry path="ghostcat.display.game.Clock"/>
+    <classEntry path="ghostcat.display.loader.GMovieClipLoader"/>
+    <classEntry path="ghostcat.display.loader.GBitmapMovieClipLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

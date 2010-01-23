@@ -23,7 +23,7 @@ package ghostcat
 		
 		public override function get width():Number
 		{
-			return 745;
+			return 750;
 		}
 		
 		public override function get height():Number

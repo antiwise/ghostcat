@@ -66,13 +66,14 @@ package ghostcat.fileformat.swf
 		 * @param data
 		 * 
 		 */
-		public function read(data:ByteArray):void
+		public function read(data:ByteArray,readTag:Boolean = true):void
 		{
 			this.bytes = data;
 			this.bytes.endian = Endian.LITTLE_ENDIAN;
 			
 			readHead();	
-			readTagList();
+			if (readTag)
+				readTagList();
 		}
 		
 		/**

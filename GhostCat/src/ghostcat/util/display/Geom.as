@@ -1,6 +1,7 @@
 package ghostcat.util.display
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -111,9 +112,12 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function getRegPoint(v:DisplayObject):Point
+		public static function getRegPoint(v:DisplayObject,space:DisplayObject=null):Point
 		{
-			return v.getRect(v).topLeft;
+			if (!space)
+				space = v;
+			
+			return v.getRect(space).topLeft;
 		}
 		
 		/**
@@ -268,6 +272,20 @@ package ghostcat.util.display
             }
             return out;
         }
+		
+		/**
+		 * 缩放点
+		 * @param p
+		 * @param scale
+		 * @return 
+		 * 
+		 */
+		public static function scalePoint(p:Point,scale:Number):Point
+		{
+			p.x *= scale;
+			p.y *= scale;
+			return p;
+		}
         
         /**
          * 以中心点为基准放大矩形
@@ -290,12 +308,12 @@ package ghostcat.util.display
          * 移动中心点至某个坐标
          * 
          * @param obj	显示对象或者矩形
-         * @param target	目标坐标
+         * @param target	目标父对象坐标
          * 
          */        
         public static function moveCenterTo(obj:*,target:Point):void
         {
-        	var center:Point = center(obj,obj.parent);
+			var center:Point = center(obj,obj.parent);
         	obj.x += target.x - center.x;
         	obj.y += target.y - center.y;
         }
@@ -307,9 +325,12 @@ package ghostcat.util.display
          * @param target
          * 
          */
-        public static function moveTopLeftTo(obj:*,target:Point):void
+        public static function moveTopLeftTo(obj:*,target:Point,space:DisplayObjectContainer = null):void
         {
-        	var topLeft:Point = getRect(obj).topLeft;
+			if (!space && (obj is DisplayObject))
+				space = obj.parent;
+			
+			var topLeft:Point = getRect(obj,space).topLeft;
         	obj.x += target.x - topLeft.x;
         	obj.y += target.y - topLeft.y;
         }
@@ -321,9 +342,12 @@ package ghostcat.util.display
          * @param cotainer	容器区域
          * 
          */        
-        public static function centerIn(obj:*,cotainer:*):void
+        public static function centerIn(obj:*,cotainer:*,space:DisplayObjectContainer = null):void
         {
-        	moveCenterTo(obj,center(cotainer,obj.parent));
+			if (!space && (obj is DisplayObject))
+				space = obj.parent;
+			
+        	moveCenterTo(obj,center(cotainer,space));
         }
         
         /**

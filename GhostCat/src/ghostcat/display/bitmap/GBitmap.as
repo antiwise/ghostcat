@@ -137,8 +137,11 @@ package ghostcat.display.bitmap
 		{
 			_bitmapData = super.bitmapData = value;
 			
-			_width = bitmapData.width;
-			_height = bitmapData.height;
+			if (bitmapData)
+			{
+				_width = bitmapData.width;
+				_height = bitmapData.height;
+			}
 		}
 		
 		/** @inheritDoc */
@@ -602,8 +605,10 @@ package ghostcat.display.bitmap
 				bitmapMouseChecker.destory();
 			
 			if (bitmapData)
+			{
 				bitmapData.dispose();
-			
+				bitmapData = null;
+			}
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);

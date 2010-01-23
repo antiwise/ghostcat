@@ -14,7 +14,7 @@ package ghostcat.display.bitmap
 	{
 		public var x:Number;
 		public var y:Number;
-		public var color:uint;
+		public var color:uint; 
 		
 		public function PixelItem(x:Number,y:Number,color:uint)
 		{

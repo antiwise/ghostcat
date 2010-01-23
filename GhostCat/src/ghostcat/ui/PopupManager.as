@@ -301,7 +301,7 @@ package ghostcat.ui
 		 */
 		public function queuePopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",offest:Point = null,queue:Queue = null):DisplayObject
 		{
-			var oper:PopupOper = new PopupOper(obj,owner,modal,centerMode);
+			var oper:PopupOper = new PopupOper(obj,owner,modal,centerMode,offest);
 			
 			if (!queue)
 				queue = this.queue;

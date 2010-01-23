@@ -8,6 +8,7 @@ package ghostcat.parse.display
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.parse.DisplayParse;
 
 	/**
@@ -52,7 +53,15 @@ package ghostcat.parse.display
 		public override function parseBitmapData(target:BitmapData) : void
 		{
 			super.parseBitmapData(target);
-			target.draw(source,matrix,colorTransform,blendMode,clipRect,smoothing);
+			
+			try
+			{
+				target.draw(source,matrix,colorTransform,blendMode,clipRect,smoothing);
+			}
+			catch (e:Error)
+			{
+				Debug.error(e.message);
+			}
 		}
 		
 		/**
@@ -72,6 +81,7 @@ package ghostcat.parse.display
 			var height:int = Math.ceil(bounds.height);
 			if (width == 0 || height == 0)
 				return null;
+			
 			if (!matrix)
 			{
 				matrix = new Matrix();

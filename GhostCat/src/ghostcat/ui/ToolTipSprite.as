@@ -109,6 +109,7 @@ package ghostcat.ui
 		protected override function init() : void
 		{
 			super.init();
+			
 			stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
 			stage.addEventListener(MouseEvent.MOUSE_OUT,mouseOutHandler);
 		}
@@ -163,7 +164,7 @@ package ghostcat.ui
 		{
 			if (delayCooldown)//还在连续显示状态
 			{
-				delayCooldown.delay = 0;
+				delayCooldown.delay = 1;
 				t = 0;
 			}
 			
