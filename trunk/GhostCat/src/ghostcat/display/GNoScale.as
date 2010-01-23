@@ -102,7 +102,10 @@ package ghostcat.display
 		/** @inheritDoc*/
 		public override function getRect(targetCoordinateSpace:DisplayObject) : Rectangle
 		{
-			return Geom.localRectToContent(new Rectangle(0,0,width,height),this,targetCoordinateSpace);
+			if (sized)
+				return Geom.localRectToContent(new Rectangle(0,0,width,height),this,targetCoordinateSpace);
+			else
+				return super.getRect(targetCoordinateSpace)
 		}
 		/** @inheritDoc*/
 		override protected function updateSize() : void

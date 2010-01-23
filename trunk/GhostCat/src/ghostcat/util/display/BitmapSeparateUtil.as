@@ -16,7 +16,7 @@ package ghostcat.util.display
 		 * @param source
 		 * @param width
 		 * @param height
-		 * @param toBitmap	转换为Bitmap
+		 * @param toBitmap	转换为Bitmap（而非BitmapData）
 		 * @return 
 		 * 
 		 */

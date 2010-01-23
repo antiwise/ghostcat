@@ -2,6 +2,7 @@ package ghostcat.operation
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	import ghostcat.ui.PopupManager;
 
@@ -16,7 +17,9 @@ package ghostcat.operation
 		public var owner:DisplayObject;
 		public var modal:Boolean;
 		public var centerMode:String;
-		public function PopupOper(popup:DisplayObject=null,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect")
+		public var offest:Point;
+		
+		public function PopupOper(popup:DisplayObject=null,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",offest:Point = null)
 		{
 			super();
 			
@@ -24,6 +27,7 @@ package ghostcat.operation
 			this.owner = owner;
 			this.modal = modal;
 			this.centerMode = centerMode;
+			this.offest = offest;
 		}
 		/** @inheritDoc*/
 		public override function execute() : void
@@ -31,7 +35,7 @@ package ghostcat.operation
 			super.execute();
 			
 			popup.addEventListener(Event.REMOVED_FROM_STAGE,result);
-			PopupManager.instance.showPopup(popup,owner,modal,centerMode);
+			PopupManager.instance.showPopup(popup,owner,modal,centerMode,offest);
 		}
 		/** @inheritDoc*/
 		protected override function end(event:* = null) : void

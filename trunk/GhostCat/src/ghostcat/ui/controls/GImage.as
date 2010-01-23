@@ -47,6 +47,11 @@ package ghostcat.ui.controls
 		 */
 		public var loaderContext:LoaderContext;
 		
+		/**
+		 * 是否检测图片的跨域文件
+		 */
+		public var checkPolicyFile:Boolean = false;
+		
 		private var _clipContent:Boolean = false;
 		private var _scaleContent:Boolean = true;
 		
@@ -183,7 +188,7 @@ package ghostcat.ui.controls
 			if (v is URLRequest)
 			{
 				loader = new Loader();
-				loader.load(v as URLRequest,loaderContext ? loaderContext : new LoaderContext(true));
+				loader.load(v as URLRequest,loaderContext ? loaderContext: checkPolicyFile ? new LoaderContext(true) : null);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 				
@@ -247,6 +252,16 @@ package ghostcat.ui.controls
 		public function invalidateLayout():void
 		{
 			layoutChildrenCall.invalidate();
+		}
+		
+		/**
+		 * 立即更新布局
+		 * 
+		 */
+		public override function vaildNow():void
+		{
+			super.vaildNow()
+			layoutChildren();
 		}
 		
 		/**

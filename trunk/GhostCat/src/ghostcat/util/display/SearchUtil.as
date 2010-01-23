@@ -131,9 +131,9 @@ package ghostcat.util.display
 			return null;
 		}
 		
-		public static function findChildByPropertyIns(contain:DisplayObjectContainer, property:String, value:*=null, depth:int = int.MAX_VALUE):DisplayObject
+		private static function findChildByPropertyIns(contain:DisplayObjectContainer, property:String, value:*=null, depth:int = int.MAX_VALUE):DisplayObject
 		{
-			if (displayObj == null)
+			if (contain == null)
 				return null;
 			
 			if (depth > 0)

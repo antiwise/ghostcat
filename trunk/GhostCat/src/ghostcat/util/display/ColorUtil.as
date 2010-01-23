@@ -6,8 +6,6 @@ package ghostcat.util.display
 	import flash.display.Shape;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	
 	/**
 	 * 

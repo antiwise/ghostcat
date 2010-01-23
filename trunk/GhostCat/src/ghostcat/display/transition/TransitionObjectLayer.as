@@ -104,7 +104,7 @@ package ghostcat.display.transition
 			if (transfer.parent)
 				transfer.parent.removeChild(transfer);
 			
-			if (transfer is Bitmap)
+			if (transfer is Bitmap && (transfer as Bitmap).bitmapData)
 				(transfer as Bitmap).bitmapData.dispose();
 			
 			super.destory();

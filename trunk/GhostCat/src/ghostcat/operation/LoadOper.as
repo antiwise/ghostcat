@@ -106,6 +106,11 @@
 		public var useCurrentDomain:Boolean = true;
 		
 		/**
+		 * 是否加载跨域文件
+		 */
+		public var checkPolicyFile:Boolean = false;
+		
+		/**
 		 * @param url	路径
 		 * 载入SWF时将会默认使用当前应用域以及安全域。
 		 * 
@@ -165,7 +170,7 @@
 					
 					if (useCurrentDomain)
 					{
-						var loaderContext:LoaderContext = new LoaderContext(true,ApplicationDomain.currentDomain);
+						var loaderContext:LoaderContext = new LoaderContext(checkPolicyFile,ApplicationDomain.currentDomain);
 						if (Security.sandboxType == Security.REMOTE)
 							loaderContext.securityDomain = SecurityDomain.currentDomain;
 						
@@ -173,7 +178,7 @@
 					}
 					else
 					{
-						loader.load(request);
+						loader.load(request,new LoaderContext(checkPolicyFile));
 					}
 				}
 			}

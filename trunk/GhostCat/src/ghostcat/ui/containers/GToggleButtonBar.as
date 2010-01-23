@@ -48,15 +48,15 @@ package ghostcat.ui.containers
 		 */
 		public function get selectedIndex():int
 		{
-			return data.indexOf(_selectedData);
+			return data.indexOf(selectedData);
 		}
 
 		public function set selectedIndex(v:int):void
 		{
 			if (v == -1)
-				_selectedData = null;
+				selectedData = null;
 			else
-				_selectedData = data[v];
+				selectedData = data[v];
 		}
 
 		/**
