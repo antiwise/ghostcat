@@ -76,11 +76,10 @@ package ghostcat.parse.display
 			var displayObj:DisplayObject = source as DisplayObject;
 			if (!displayObj)
 				return null;
+			
 			var bounds:Rectangle = displayObj.getBounds(displayObj);
 			var width:int = Math.ceil(bounds.width);
 			var height:int = Math.ceil(bounds.height);
-			if (width == 0 || height == 0)
-				return null;
 			
 			if (!matrix)
 			{
@@ -88,13 +87,26 @@ package ghostcat.parse.display
 				matrix.tx -= bounds.x;
 				matrix.ty -= bounds.y;
 			}
-			var bitmap:Bitmap = new Bitmap(new BitmapData(width,height,transparent,fillColor));
+			
+			var bitmap:Bitmap;
+			try
+			{
+				bitmap = new Bitmap(new BitmapData(width,height,transparent,fillColor));
+			}
+			catch (e:Error)
+			{
+				Debug.error(e.message);
+				bitmap = new Bitmap();
+			}
+			
 			if (source is DisplayObject)
 			{
 				bitmap.x = (source as DisplayObject).x + bounds.x;
 				bitmap.y = (source as DisplayObject).y + bounds.y;
 			}
+			
 			this.parse(bitmap);
+			
 			return bitmap;
 		}
 		

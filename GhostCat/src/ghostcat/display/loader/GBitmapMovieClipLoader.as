@@ -21,9 +21,10 @@ package ghostcat.display.loader
 	 */
 	public class GBitmapMovieClipLoader extends GBitmapMovieClip
 	{
-		public var loader:URLLoader;
 		public var renderRect:Rectangle;
 		
+		public var loader:URLLoader;
+		public var swf:SWFDecoder;
 		public function GBitmapMovieClipLoader(request:URLRequest, renderRect:Rectangle = null, paused:Boolean=false)
 		{
 			this.renderRect = renderRect;
@@ -53,9 +54,9 @@ package ghostcat.display.loader
 			swfLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,swfLoadCompleteHandler);
 			swfLoader.loadBytes(bytes);
 			
-			var dec:SWFDecoder = new SWFDecoder();
-			dec.read(bytes,false);
-			this.frameRate = dec.frameRate;
+			swf = new SWFDecoder();
+			swf.read(bytes,false);
+			this.frameRate = swf.frameRate;
 			
 		}
 		

@@ -22,9 +22,10 @@ package ghostcat.display.loader
 	public class GMovieClipLoader extends GMovieClip
 	{
 		public var loader:URLLoader;
+		public var swf:SWFDecoder;
 		public function GMovieClipLoader(request:URLRequest, paused:Boolean=false)
 		{
-			super(new MovieClip(), replace, paused);
+			super(null, replace, paused);
 			
 			if (request)
 				load(request);
@@ -49,9 +50,9 @@ package ghostcat.display.loader
 			swfLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,swfLoadCompleteHandler);
 			swfLoader.loadBytes(bytes);
 			
-			var dec:SWFDecoder = new SWFDecoder();
-			dec.read(bytes,false);
-			this.frameRate = dec.frameRate;
+			swf = new SWFDecoder();
+			swf.read(bytes,false);
+			this.frameRate = swf.frameRate;
 			
 		}
 		

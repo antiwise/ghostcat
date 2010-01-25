@@ -164,7 +164,9 @@ package ghostcat.ui
 		{
 			if (delayCooldown)//还在连续显示状态
 			{
-				delayCooldown.delay = 1;
+				delayCooldown.stop();
+				removeCooldown(null);
+				
 				t = 0;
 			}
 			
@@ -241,7 +243,7 @@ package ghostcat.ui
 		
 		private function removeCooldown(event:TimerEvent):void
 		{
-			delayCooldown.removeEventListener(TimerEvent.TIMER_COMPLETE,show);
+			delayCooldown.removeEventListener(TimerEvent.TIMER_COMPLETE,removeCooldown);
 			delayCooldown = null;
 		}
 		

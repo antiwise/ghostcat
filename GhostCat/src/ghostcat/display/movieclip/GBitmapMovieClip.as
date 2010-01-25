@@ -112,7 +112,7 @@ package ghostcat.display.movieclip
          */
         public function dispose():void
         {
-        	for each (var bitmapData:BitmapData in bitmaps.length)
+        	for each (var bitmapData:BitmapData in bitmaps)
         		bitmapData.dispose();
         } 
 		

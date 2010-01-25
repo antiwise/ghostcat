@@ -65,6 +65,9 @@ package ghostcat.text
 		 */
     	public function URL(v:String,hasPath:Boolean = true)
 		{
+			if (!v)
+				v = "";
+			
 			var data:Array = regex.exec(v);
 			protocol = data[2];
 			username = data[4];
