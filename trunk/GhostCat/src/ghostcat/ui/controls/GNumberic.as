@@ -76,21 +76,24 @@ package ghostcat.ui.controls
 		 */
 		public function setValue(v : Number, tween:Boolean = true):void
 		{
-			v = Number(v);
-//			if (_data && v == data)
-//				return;
-				
 			_data = v;
 			
-			if (!_data || !tween)
-				displayValue = v;
-			else
+			if (_data && tween)
 			{
 				TweenUtil.removeTween(this);
-				TweenUtil.to(this,duration,{displayValue:v,ease:easing})
+				TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
+			}
+			else
+			{
+				tweenCompleteHandler();
 			}
 		
 			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		private function tweenCompleteHandler():void
+		{
+			displayValue = Number(_data);
 		}
 		
 		/**

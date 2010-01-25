@@ -39,6 +39,9 @@ package ghostcat.parse.display
 		/** @inheritDoc*/
 		public function createBitmap():Bitmap
 		{
+			if (!width || !height)
+				return new Bitmap(null,pixelSnapping,smoothing);
+			
 			var bitmapData:BitmapData = new BitmapData(width,height,transparent,fillColor);
 			var bitmap:Bitmap = new Bitmap(bitmapData,pixelSnapping,smoothing);
 			if (pos)

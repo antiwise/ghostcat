@@ -28,8 +28,8 @@ package ghostcat.parse
 				parseGraphics(target as Graphics);
 			if (target is BitmapData)
 				parseBitmapData(target as BitmapData);
-				
-			var graphics:Graphics = (target.hasOwnProperty("graphics"))?target["graphics"] as Graphics : null;
+			
+			var graphics:Graphics = (target && target.hasOwnProperty("graphics"))?target["graphics"] as Graphics : null;
 			if (graphics)
 				parseGraphics(graphics);
 		}

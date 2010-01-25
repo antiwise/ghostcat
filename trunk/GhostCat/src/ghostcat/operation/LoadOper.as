@@ -2,6 +2,7 @@
 {
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -81,11 +82,16 @@
 		 */		
 		public var dataFormat:String;
 		
-		
 		/**
 		 * 加载对象
 		 */
 		protected var _loader:EventDispatcher;
+		
+		
+		/**
+		 * 是否在开始加载的时候stop动画
+		 */
+		public var stopAtInit:Boolean = false;
 		
 		/**
 		 * 嵌入入资源
@@ -165,6 +171,7 @@
 				else
 				{
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
+					loader.contentLoaderInfo.addEventListener(Event.INIT,initHandler);
 					loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
 					
@@ -211,6 +218,7 @@
 		
 			var evt:EventDispatcher = event.currentTarget as EventDispatcher;
 			evt.removeEventListener(Event.COMPLETE,result);
+			evt.removeEventListener(Event.INIT,initHandler);
 			evt.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			evt.removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
@@ -220,8 +228,9 @@
 		public override function fault(event:*=null):void
 		{
 			dispatchEvent(event);
-		
+			
 			(event.target as EventDispatcher).removeEventListener(Event.COMPLETE,result);
+			(event.target as EventDispatcher).removeEventListener(Event.INIT,initHandler);
 			(event.target as EventDispatcher).removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
 		
@@ -254,6 +263,16 @@
 					urlLoader.data = new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
 				
 				super.result(_loader);
+			}
+		}
+		
+		protected function initHandler(event:Event):void
+		{
+			if (stopAtInit && _loader is Loader)
+			{
+				var loader:Loader = _loader as Loader;
+				if (loader.content is MovieClip)
+					(loader.content as MovieClip).stop();
 			}
 		}
 		

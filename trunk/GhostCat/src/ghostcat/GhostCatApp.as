@@ -23,12 +23,12 @@ package ghostcat
 		
 		public override function get width():Number
 		{
-			return 750;
+			return stage.stageWidth;
 		}
 		
 		public override function get height():Number
 		{
-			return 660;
+			return stage.stageHeight;
 		}
 		
 		public override function set width(v:Number):void
