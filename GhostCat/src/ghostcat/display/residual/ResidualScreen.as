@@ -91,6 +91,9 @@ package ghostcat.display.residual
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
+			if (destoryed)
+				return;
+			
 			if (mode != MODE_BITMAP)
 				return;
 			

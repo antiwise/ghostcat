@@ -139,7 +139,7 @@ package ghostcat.util.easing
 		/**
 		 * 是否在倒放最开始的时候显示初值
 		 */
-		public var renderOnStart:Boolean;
+		public var renderOnStart:Boolean = true;
 		
 		public function TweenUtil(target:Object, duration:int, params:Object)
 		{

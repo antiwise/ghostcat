@@ -142,9 +142,14 @@ package ghostcat.ui
 			_applicationEnabled = v;
 			
 			application.mouseEnabled = application.mouseChildren = v;
-			
 			application.filters = v ? null : applicationDisabledFilters;
 			
+			if (applicationEnabledOper)
+				applicationEnabledOper.halt()
+					
+			if (applicationDisabledOper)
+				applicationDisabledOper.halt()
+					
 			if (v)
 			{
 				if (applicationEnabledOper)

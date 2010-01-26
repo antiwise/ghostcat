@@ -185,11 +185,23 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function getDataFromItem(item:DisplayObject):*
+		public function getDataFromRender(item:DisplayObject):*
 		{
 			var i:int = item.x / columnWidth;
 			var j:int = item.y / rowHeight;
 			return getDataAt(i,j);
+		}
+		
+		/**
+		 * 由数据获得元素 
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public function getRender(v:*):DisplayObject
+		{
+			var p:Point = getPointFromData(v);
+			return getItemAt(p.x,p.y);
 		}
 		
 		/**

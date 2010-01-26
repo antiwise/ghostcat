@@ -164,10 +164,8 @@ package ghostcat.ui
 		{
 			if (delayCooldown)//还在连续显示状态
 			{
-				delayCooldown.stop();
-				removeCooldown(null);
-				
-				t = 0;
+				delayCooldown.delay = 1;
+				t = 1;
 			}
 			
 			if (delayTimer)
