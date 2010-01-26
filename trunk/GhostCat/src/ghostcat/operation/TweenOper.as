@@ -108,7 +108,8 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		protected override function end(event:*=null):void
 		{
-			tween.removeEventListener(TweenEvent.TWEEN_END,result);
+			if (tween)
+				tween.removeEventListener(TweenEvent.TWEEN_END,result);
 			super.end(event);
 		}
 	}
