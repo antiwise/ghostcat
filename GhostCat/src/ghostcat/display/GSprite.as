@@ -38,6 +38,11 @@ package ghostcat.display
 		public var autoDestoryContent:Boolean = true;
 		
 		/**
+		 * 是否修改同时修改Content的大小
+		 */
+		public var resizeContent:Boolean = true;
+		
+		/**
 		 * 是否初始化
 		 */
 		public var initialized:Boolean;
@@ -152,7 +157,7 @@ package ghostcat.display
 		
 		public override function set width(value:Number) : void
 		{
-			if (content)
+			if (content && resizeContent)
 				content.width = value;
 			else
 				super.width = value;
@@ -160,7 +165,7 @@ package ghostcat.display
 		
 		public override function set height(value:Number) : void
 		{
-			if (content)
+			if (content && resizeContent)
 				content.height = value;
 			else
 				super.height = value;

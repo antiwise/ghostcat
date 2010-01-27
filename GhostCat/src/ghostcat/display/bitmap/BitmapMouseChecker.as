@@ -51,8 +51,7 @@ package ghostcat.display.bitmap
 		public function BitmapMouseChecker(bitmap:Bitmap)
 		{
 			this.bitmap = bitmap;
-			
-			enabled = true;
+			this.enabled = true;
 		}
 		
 		public function get enabled():Boolean

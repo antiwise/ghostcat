@@ -11,7 +11,6 @@ package ghostcat.display.movieclip
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
-	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	
@@ -37,6 +36,8 @@ package ghostcat.display.movieclip
 		 * 鼠标事件对象
 		 */
 		public var bitmapMouseChecker:BitmapMouseChecker;
+		
+		private var _enableMouseEvent:Boolean;
 		
 		/**
 		 * 
@@ -66,7 +67,25 @@ package ghostcat.display.movieclip
 		protected override function init() : void
 		{
 			bitmapMouseChecker = new BitmapMouseChecker(content as Bitmap);
+			bitmapMouseChecker.enabled = _enableMouseEvent;
 			super.init();
+		}
+		
+		/**
+		 * 是否激活模拟鼠标事件
+		 * @return 
+		 * 
+		 */
+		public function get enableMouseEvent():Boolean
+		{
+			return _enableMouseEvent;
+		}
+		
+		public function set enableMouseEvent(value:Boolean):void
+		{
+			_enableMouseEvent = value;
+			if (bitmapMouseChecker)
+				bitmapMouseChecker.enabled = value;
 		}
 		
 		/**

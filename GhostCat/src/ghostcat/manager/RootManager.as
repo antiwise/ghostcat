@@ -101,7 +101,7 @@ package ghostcat.manager
 		 * @param url
 		 * 
 		 */
-		public static function addURLMenu(label:String,url:String):void
+		public static function addURLMenu(label:String,url:String = null):void
 		{
 			var item:ContextMenuItem = new ContextMenuItem(label);
             if (url)
