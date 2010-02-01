@@ -80,7 +80,7 @@ package ghostcat.ui.controls
 			
 			if (_data && tween)
 			{
-				TweenUtil.removeTween(this);
+				TweenUtil.removeTween(this,false);
 				TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
 			}
 			else
