@@ -43,18 +43,17 @@ package ghostcat.text
          */        
         public static function truncateToFit(textField:TextField):*
         {
-            if (textField.text == null || textField.text.length == 0)
+			var text:String = textField.text;
+			if (text == null || text.length == 0)
                 return;
             
             var firstLine:TextLineMetrics = textField.getLineMetrics(0);
-			
-			if (firstLine.width > textField.width)
+			while (firstLine.width > textField.width) 
 			{
-				while (firstLine.width > textField.width - 20) 
-				{
-					textField.text = textField.text.slice(0, textField.length - 1);
-				}
-				textField.appendText("...");
+				text = text.slice(0,text.length - 1);
+				
+				textField.text = text + "...";
+				firstLine = textField.getLineMetrics(0);
 			}
 		}
 		

@@ -14,7 +14,7 @@
 		 * 输出汉字的拼音码
 		 * 
 		 * @param str
-		 * @param sep
+		 * @param sep	是否空格分隔
 		 * @return
 		 * 
 		 */
