@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import ghostcat.display.GBase;
+	import ghostcat.events.TickEvent;
 	import ghostcat.ui.UIBuilder;
 	
 	/**

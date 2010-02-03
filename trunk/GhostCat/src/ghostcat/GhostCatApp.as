@@ -5,6 +5,7 @@ package ghostcat
 	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
+	import ghostcat.manager.RootManager;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.ToolTipSprite;
@@ -62,6 +63,7 @@ package ghostcat
 			this.cursor = new CursorSprite();
 			addChild(this.cursor);
 			
+			RootManager.register(this);
 			PopupManager.instance.register(application,popupLayer);	
 		}
 	}
