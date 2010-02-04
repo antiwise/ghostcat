@@ -483,6 +483,7 @@
     <classEntry path="ghostcat.display.transfer.effect.PaperDropHandler"/>
     <classEntry path="ghostcat.display.transfer.BookTransfer"/>
     <classEntry path="ghostcat.operation.effect.MoviePathEffect"/>
+    <classEntry path="ghostcat.util.RandomSeed"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

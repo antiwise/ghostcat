@@ -4,6 +4,7 @@ package ghostcat.operation.effect
 	import flash.display.MovieClip;
 	
 	import ghostcat.display.movieclip.GMovieClip;
+	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.operation.Oper;
 	import ghostcat.util.Tick;
@@ -39,9 +40,15 @@ package ghostcat.operation.effect
 		{
 			super.execute();
 			
+			if (gmovie)
+				gmovie.destory();
+			
 			gmovie = new GMovieClip(path);
+			gmovie.setLoop(1);
+			gmovie.addEventListener(MovieEvent.MOVIE_END,result);
+			
 			if (duration)
-				gmovie.frameRate = gmovie.totalFrames / duration;
+				gmovie.frameRate = gmovie.totalFrames / duration * 1000;
 			
 			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 			tickHandler(null);
