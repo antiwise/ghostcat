@@ -293,10 +293,12 @@ package ghostcat.util
 		{	
 			if (obj == null)
 				return null;
+			else if (obj is String)
+				return getDefinitionByName(obj) as Class
 			else if (obj is Class)
 				return obj;
 			else	
-				return obj.constructor as Class;
+				return obj["constructor"] as Class;
 		}
 		
 		/**
