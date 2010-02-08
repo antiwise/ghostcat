@@ -484,6 +484,7 @@
     <classEntry path="ghostcat.display.transfer.BookTransfer"/>
     <classEntry path="ghostcat.operation.effect.MoviePathEffect"/>
     <classEntry path="ghostcat.util.RandomSeed"/>
+    <classEntry path="ghostcat.display.residual.SleepResidualScreen"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
