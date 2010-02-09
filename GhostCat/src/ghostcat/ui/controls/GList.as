@@ -103,14 +103,14 @@ package ghostcat.ui.controls
 		 * @param v
 		 * 
 		 */
-		public function set itemRender(v:ClassFactory):void
+		public function set itemRender(v:*):void
 		{
 			_itemRender = v;
 			if (listContent)
 				listContent.itemRender = v;
 		}
 		
-		public function get itemRender():ClassFactory
+		public function get itemRender():*
 		{
 			return _itemRender;
 		}

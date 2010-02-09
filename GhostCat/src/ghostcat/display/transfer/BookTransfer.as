@@ -6,9 +6,20 @@ package ghostcat.display.transfer
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
+	/**
+	 * 翻页效果 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BookTransfer extends GTransfer
 	{
 		private var _point:Point = new Point();
+		
+		/**
+		 * 基准点 
+		 * @return 
+		 * 
+		 */
 		public function get point():Point
 		{
 			return _point;
@@ -30,22 +41,32 @@ package ghostcat.display.transfer
 		{
 			var rect: Rectangle = _target.getBounds(_target);
 			
-			var p:Point = Point.interpolate(point,new Point(),0.5);
-			var t:Point = Point.interpolate(point,new Point(),1);
+			var t:Point = point.clone();
+			if (t.x <= 0)
+				t.x = 0.1;
+			if (t.y <= 0)
+				t.y = 0.1;
+			
+			var p:Point = Point.interpolate(t,new Point(),0.5);
 			var step:Number = t.length / rect.bottomRight.length;
 			var k:Number = p.y / p.x;
 			var r:Number = Math.atan2(p.y,p.x);
 //			y = p.y - (x - p.x) / k
 			var p1:Point = new Point(0, p.y + p.x / k);
-			if (p1.y > rect.height)
+			if (p1.y > rect.height) //修正方折角
 				p1 = new Point((p.y - rect.height) * k + p.x,rect.height);
 					
 			var p2:Point = new Point(p.y * k + p.x, 0);
 			if (p2.x > rect.width)
 				p2 = new Point(rect.width,p.y - (rect.width - p.x) / k);
-					
-			var m:Matrix = new Matrix();
 			
+			if (rect.y + p2.y > rect.bottom) //修正超出
+			{
+				var d:Number = (rect.y + p2.y - rect.bottom) * Math.sin(r) * 2;
+				var op:Point = new Point(rect.width + Math.cos(r) * d, rect.height + Math.sin(r) * d);
+			}
+			
+			var m:Matrix = new Matrix();
 			m.createBox(1,1,0,rect.x,rect.y);
 			graphics.clear();
 			graphics.beginBitmapFill(bitmapData,m,false);
@@ -71,6 +92,9 @@ package ghostcat.display.transfer
 			
 			function drawBack():void
 			{
+				if (op)
+					return;
+				
 				graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
 				graphics.lineTo(rect.right,rect.y);
 				graphics.lineTo(rect.right,rect.bottom);
@@ -81,13 +105,22 @@ package ghostcat.display.transfer
 			
 			function drawFront():void
 			{
-				graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
+				if (op)
+					graphics.moveTo(rect.x + op.x,rect.y + op.y);
+				else
+					graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
+				
 				if (p2.y)
 					graphics.lineTo(rect.x + p2.x + p2.y * Math.cos(r * 2 - Math.PI / 2),rect.y + p2.y + p2.y * Math.sin(r * 2 - Math.PI / 2));
+				
 				graphics.lineTo(rect.x + t.x,rect.y + t.y);
+				
 				if (p1.x)
 					graphics.lineTo(rect.x + p1.x + p1.x * Math.cos(r * 2),rect.y + p1.y + p1.x * Math.sin(r * 2));
-				graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
+				
+				if (!op)
+					graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
+				
 				graphics.endFill();
 			}
 		}
