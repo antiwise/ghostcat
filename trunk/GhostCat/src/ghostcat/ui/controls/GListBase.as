@@ -126,9 +126,13 @@ package ghostcat.ui.controls
 		 * @param v
 		 * 
 		 */
-		public function set itemRender(v:ClassFactory):void
+		public function set itemRender(v:*):void
 		{
+			if (v is Class)
+				v = new ClassFactory(v);
+			
 			this.ref = v;
+			
 			if (v.params)
 				v.params[0] = itemSkin;
 			else
@@ -137,7 +141,7 @@ package ghostcat.ui.controls
 			setContentClass(this.ref);
 		}
 		
-		public function get itemRender():ClassFactory
+		public function get itemRender():*
 		{
 			return this.ref;
 		}

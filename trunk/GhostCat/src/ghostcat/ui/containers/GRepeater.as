@@ -68,13 +68,16 @@ package ghostcat.ui.containers
 		 * @return 
 		 * 
 		 */
-		public function get itemRender():ClassFactory
+		public function get itemRender():*
 		{
 			return ref;
 		}
 		
-		public function set itemRender(v:ClassFactory):void
+		public function set itemRender(v:*):void
 		{
+			if (v is Class)
+				v = new ClassFactory(v);
+			
 			this.ref = v;
 			render();
 		}
