@@ -48,7 +48,7 @@ package ghostcat.ui.controls
 			
 			if (oper)
 			{
-				if (oper is IEffect)
+				if (oper is IEffect && !(oper as IEffect).target)
 					(oper as IEffect).target = target.content;
 				
 				oper.execute();

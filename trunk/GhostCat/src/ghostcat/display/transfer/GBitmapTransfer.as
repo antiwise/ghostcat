@@ -10,6 +10,7 @@ package ghostcat.display.transfer
 	import ghostcat.events.GEvent;
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
+	import ghostcat.util.core.UniqueCall;
 
 	
 	/**
@@ -21,6 +22,7 @@ package ghostcat.display.transfer
 	public class GBitmapTransfer extends GBitmap
 	{
 		protected var _target:DisplayObject;
+		protected var renderCaller:UniqueCall = new UniqueCall(renderTarget);
 		
 		public function GBitmapTransfer(target:DisplayObject=null):void
 		{

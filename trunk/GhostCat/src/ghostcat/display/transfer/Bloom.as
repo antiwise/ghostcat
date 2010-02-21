@@ -3,8 +3,10 @@ package ghostcat.display.transfer
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.filters.BlurFilter;
+	import flash.geom.Point;
 	
 	import ghostcat.filter.ColorMatrixFilterProxy;
+	import ghostcat.util.display.BitmapUtil;
 	
 
 	/**
@@ -24,7 +26,7 @@ package ghostcat.display.transfer
 		public function set blur(value:int):void
 		{
 			_blur = value;
-			updateFilter();
+			renderCaller.invalidate();
 		}
 
 		private var _brightness:Number;
@@ -37,7 +39,7 @@ package ghostcat.display.transfer
 		public function set brightness(value:Number):void
 		{
 			_brightness = value;
-			updateFilter();
+			renderCaller.invalidate();
 		}
 		
 		private var _contrast:Number;
@@ -50,10 +52,10 @@ package ghostcat.display.transfer
 		public function set contrast(value:Number):void
 		{
 			_contrast = value;
-			updateFilter();
+			renderCaller.invalidate();
 		}
 
-		public function Bloom(target:DisplayObject=null,alpha:Number = 1.0,blur:int = 8,brightness:int = -100, contrast:Number = 100)
+		public function Bloom(target:DisplayObject=null,alpha:Number = 1.0,blur:int = 12,brightness:int = -100, contrast:Number = 100)
 		{
 			super(target);
 			
@@ -68,17 +70,11 @@ package ghostcat.display.transfer
 		public override function renderTarget() : void
 		{
 			super.renderTarget();
-			updateFilter();
-		}
-		
-		public function updateFilter():void
-		{
-			this.filters = [
-				ColorMatrixFilterProxy.createBrightnessFilter(brightness),
-				ColorMatrixFilterProxy.createContrastFilter(contrast),
-				new BlurFilter(blur,blur),
-				ColorMatrixFilterProxy.createSaturationFilter(0)
-			]
+			
+			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createBrightnessFilter(brightness));
+			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createContrastFilter(contrast));
+			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),new BlurFilter(blur,blur));
+			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createSaturationFilter(0));
 		}
 	}
 }
