@@ -85,8 +85,8 @@ package ghostcat.util.data
 		 */
 		public static function arrayToObject(source:Array,key:String,value:String):Object
 		{
-			if (source.length == 0)
-				return [];
+			if (!source)
+				return null;
 			
 			var result:Object = {};
 			for (var i:int = 0; i < source.length; i++)

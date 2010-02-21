@@ -46,7 +46,7 @@ package ghostcat.display.game
 			var h:int = t.hours;
 			
 			if (this.hour)
-				this.hour.rotation = h / 12 * 360;
+				this.hour.rotation = h / 12 * 360 + m / 12 / 60 * 360;
 			
 			if (this.minute)
 				this.minute.rotation = m / 60 * 360;

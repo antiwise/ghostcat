@@ -243,6 +243,20 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 是否可选
+		 * 
+		 */
+		public function get selectable():Boolean
+		{
+			return textField.selectable;
+		}
+		
+		public function set selectable(v:Boolean):void
+		{
+			textField.selectable = textField.mouseEnabled = v;
+		}
+		
+		/**
 		 * 是否多行显示（可激活回车换行） 
 		 * @return 
 		 * 
