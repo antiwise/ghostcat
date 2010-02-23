@@ -32,3 +32,7 @@ new FunctionOper(completeHandler).commit()
 GhostCat广泛地使用了Queue体系，但凡和队列和执行操作有关的基本都在这里。
 
 总之，这个东西只要new出来然后commit就好了。是一个很简单的东西。
+
+
+Queue除了用Oper的commit被动执行，也可以通过传入数组临时生成，诸如下面这样的写法：
+new Queue([new TweenOper(xxx),new FunctionOper(xxx),new TweenOper(xxx)]).execute()
