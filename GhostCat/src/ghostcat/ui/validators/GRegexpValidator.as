@@ -26,10 +26,7 @@ package ghostcat.ui.validators
 		 */
 		public function get noMatchError():String
 		{
-			if (_noMatchError)
-				return _noMatchError;
-			else
-				return defaultNoMatchError;
+			return _noMatchError ? _noMatchError : defaultNoMatchError;
 		}
 
 		public function set noMatchError(value:String):void

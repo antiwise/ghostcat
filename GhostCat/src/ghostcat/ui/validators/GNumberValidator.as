@@ -46,10 +46,7 @@ package ghostcat.ui.validators
 		 */
 		public function get exceedsMaxError():String
 		{
-			if (_exceedsMaxError)
-				return _exceedsMaxError;
-			else
-				return defaultExceedsMaxError;
+			return _exceedsMaxError ? _exceedsMaxError : defaultExceedsMaxError;
 		}
 
 		public function set exceedsMaxError(value:String):void
@@ -64,10 +61,7 @@ package ghostcat.ui.validators
 		 */
 		public function get lowerThanMinError():String
 		{
-			if (_lowerThanMinError)
-				return _lowerThanMinError;
-			else
-				return defaultLowerThanMinError;
+			return _lowerThanMinError ? _lowerThanMinError : defaultLowerThanMinError;
 		}
 
 		public function set lowerThanMinError(value:String):void
@@ -82,10 +76,7 @@ package ghostcat.ui.validators
 		 */
 		public function get integerError():String
 		{
-			if (_integerError)
-				return _integerError;
-			else
-				return defaultIntegerError;
+			return _integerError ? _integerError : defaultIntegerError;
 		}
 
 		public function set integerError(value:String):void
@@ -100,10 +91,7 @@ package ghostcat.ui.validators
 		 */
 		public function get precisionError():String
 		{
-			if (_precisionError)
-				return _precisionError;
-			else
-				return defaultPrecisionError;
+			return _precisionError ? _precisionError : defaultPrecisionError;
 		}
 		
 		public function set precisionError(value:String):void
@@ -131,19 +119,24 @@ package ghostcat.ui.validators
 				this.data = integerError;
 				return;
 			}
+			
 			if (!isNaN(minValue) && v < minValue)
 			{
 				this.data = lowerThanMinError;
 				return;
 			}
+			
 			if (!isNaN(maxValue) && v > maxValue)
 			{
 				this.data = exceedsMaxError;
 				return;
 			}
+			
 			if (!isNaN(precision) && !RegExpUtil.isNumber(v.toString(),precision))
+			{
 				this.data = precisionError;
-				
+				return;
+			}	
 		}
 	}
 }

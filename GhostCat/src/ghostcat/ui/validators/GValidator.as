@@ -47,10 +47,7 @@ package ghostcat.ui.validators
 		 */
 		public function get requiredFieldError():String
 		{
-			if (_requiredFieldError)
-				return _requiredFieldError;
-			else
-				return defaultRequiredFieldError;
+			return _requiredFieldError ? _requiredFieldError : defaultRequiredFieldError;
 		}
 
 		public function set requiredFieldError(value:String):void
@@ -65,10 +62,7 @@ package ghostcat.ui.validators
 		 */
 		public function get trigger():IEventDispatcher
 		{
-			if (_trigger)
-				return _trigger;
-			else
-				return source as IEventDispatcher;
+			return _trigger ? _trigger : source as IEventDispatcher;
 		}
 
 		public function set trigger(value:IEventDispatcher):void
@@ -84,10 +78,7 @@ package ghostcat.ui.validators
 		/** @inheritDoc*/
 		public function get triggerEvent():String
 		{
-			if (_triggerEvent)
-				return _triggerEvent;
-			else
-				return defaultTriggerEvent;
+			return _triggerEvent ? _triggerEvent : defaultTriggerEvent;
 		}
 
 		public function set triggerEvent(value:String):void
