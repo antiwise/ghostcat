@@ -89,13 +89,10 @@ package ghostcat.ui.containers
 				effect = tweenToRight ? hideToRight : hideToLeft;
 				if (effect)
 				{
+					effect.target = page;
+					
 					effect.addEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.execute();
-					function tweenCompleteHandler(event:OperationEvent):void
-					{
-						page.visible = false;
-						effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
-					}
 				}
 				else
 				{
@@ -111,8 +108,20 @@ package ghostcat.ui.containers
 				effect = tweenToRight ? showFromLeft : showFromRight;
 				page2.visible = true;
 				if (effect)
+				{
+					effect.target = page2;
+					
+					effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.execute();
+				}
 			}
+		}
+		
+		private function tweenCompleteHandler(event:OperationEvent):void
+		{
+			var tween:IEffect = event.currentTarget as IEffect;
+			tween.target.visible = selectedChild == tween.target;
+			tween.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 		}
 
 	}
