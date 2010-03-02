@@ -17,8 +17,6 @@ package
 	{
 		public function SoundExample()
 		{
-			new EnabledSWFScreen(stage);
-			
 			RootManager.register(this);
 			
 			GAlert.show("音乐开始");

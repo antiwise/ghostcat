@@ -40,10 +40,7 @@ package ghostcat.ui.validators
 		 */
 		public function get tooLongError():String
 		{
-			if (_tooLongError)
-				return _tooLongError;
-			else
-				return defaultTooLongError;
+			return _tooLongError ? _tooLongError : defaultTooLongError;
 		}
 
 		public function set tooLongError(value:String):void
@@ -56,10 +53,7 @@ package ghostcat.ui.validators
 		 */
 		public function get tooShortError():String
 		{
-			if (_tooShortError)
-				return _tooShortError;
-			else
-				return defaultTooShortError;
+			return _tooShortError ? _tooShortError :  defaultTooShortError;
 		}
 		
 		public function set tooShortError(value:String):void
