@@ -54,6 +54,13 @@ package ghostcat.display.transfer
 			_contrast = value;
 			renderCaller.invalidate();
 		}
+		
+		public override function set alpha(value:Number) : void
+		{
+			super.alpha = value;
+			
+			this.visible = (value == 0);
+		}
 
 		public function Bloom(target:DisplayObject=null,alpha:Number = 1.0,blur:int = 12,brightness:int = -100, contrast:Number = 100)
 		{
@@ -71,10 +78,10 @@ package ghostcat.display.transfer
 		{
 			super.renderTarget();
 			
-			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createBrightnessFilter(brightness));
-			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createContrastFilter(contrast));
-			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),new BlurFilter(blur,blur));
-			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),ColorMatrixFilterProxy.createSaturationFilter(0));
+			this.filters = [ColorMatrixFilterProxy.createBrightnessFilter(brightness),
+				ColorMatrixFilterProxy.createContrastFilter(contrast),
+				new BlurFilter(blur,blur),
+				ColorMatrixFilterProxy.createSaturationFilter(0)];
 		}
 	}
 }
