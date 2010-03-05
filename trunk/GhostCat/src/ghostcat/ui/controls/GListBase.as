@@ -247,7 +247,7 @@ package ghostcat.ui.controls
 			if (selectIndex != -1)
 			{
 				if (type == UIConst.HORIZONTAL)
-					return 1;
+					return 0;
 				else if (type == UIConst.VERTICAL)
 					return selectIndex;
 				else
@@ -275,7 +275,7 @@ package ghostcat.ui.controls
 				if (type == UIConst.HORIZONTAL)
 					return selectIndex;
 				else if (type == UIConst.VERTICAL)
-					return 1;
+					return 0;
 				else
 					return selectIndex % columnCount;
 			}
