@@ -22,9 +22,12 @@ package ghostcat.util.display
 			for (var i:int = 0; i < children.length; i++)
 			{
 				var child:DisplayObject = this.children[i] as DisplayObject;
-				child[field] = false;
-				if (clickToggle)
-					child.addEventListener(MouseEvent.CLICK,itemClickHandler);
+				if (child)
+				{
+					child[field] = false;
+					if (clickToggle)
+						child.addEventListener(MouseEvent.CLICK,itemClickHandler);
+				}
 			}
 			selectedIndex = 0;
 		}
@@ -44,12 +47,12 @@ package ghostcat.util.display
 			if (_selectedIndex == value)
 				return;
 			
-			if (_selectedIndex != -1)
+			if (_selectedIndex != -1 && children[_selectedIndex])
 				children[_selectedIndex][field] = false;
 			
 			_selectedIndex = value;
 			
-			if (_selectedIndex != -1)
+			if (_selectedIndex != -1 && children[_selectedIndex])
 				children[_selectedIndex][field] = true;
 			
 			if (this.eventTarget)

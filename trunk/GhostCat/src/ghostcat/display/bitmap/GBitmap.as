@@ -80,7 +80,7 @@ package ghostcat.display.bitmap
 		 */
 		public var enabledScale:Boolean = false;
 		
-		private var _enableMouseEvent:Boolean;
+		private var _enableMouseEvent:Boolean = false;
 		
 		private var _oldPosition:Point = new Point();
 		

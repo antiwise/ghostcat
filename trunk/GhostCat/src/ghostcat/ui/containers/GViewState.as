@@ -89,8 +89,10 @@ package ghostcat.ui.containers
 				effect = tweenToRight ? hideToRight : hideToLeft;
 				if (effect)
 				{
+					effect.result();
 					effect.target = page;
 					
+					effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.addEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.execute();
 				}
@@ -109,8 +111,9 @@ package ghostcat.ui.containers
 				page2.visible = true;
 				if (effect)
 				{
+					effect.result();
 					effect.target = page2;
-					
+
 					effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.execute();
 				}
@@ -119,9 +122,10 @@ package ghostcat.ui.containers
 		
 		private function tweenCompleteHandler(event:OperationEvent):void
 		{
-			var tween:IEffect = event.currentTarget as IEffect;
-			tween.target.visible = selectedChild == tween.target;
-			tween.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
+			var effect:IEffect = event.currentTarget as IEffect;
+			effect.target.visible = selectedChild == effect.target;
+			
+			effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 		}
 
 	}
