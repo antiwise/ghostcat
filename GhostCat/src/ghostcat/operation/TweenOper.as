@@ -47,14 +47,14 @@ package ghostcat.operation
 		/**
 		 * 是否清除原有的Tween效果
 		 */
-		public var clearTarget:Boolean;
+		public var clearTarget:int;
 		
 		/**
 		 * 缓动实例 
 		 */
 		public var tween:TweenUtil;
 		
-		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false,clearTarget:Boolean = false,immediately:Boolean = false)
+		public function TweenOper(target:*=null,duration:int=100,params:Object=null,invert:Boolean = false,clearTarget:int = 0,immediately:Boolean = false)
 		{
 			super();
 			
@@ -97,7 +97,7 @@ package ghostcat.operation
 				target = _target;
 			
 			if (clearTarget)
-				TweenUtil.removeTween(target);
+				TweenUtil.removeTween(target,clearTarget == 1);
 			
 			tween = new TweenUtil(target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);

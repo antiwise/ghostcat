@@ -54,16 +54,6 @@ package ghostcat.ui.containers
 		}
 		
 		/**
-		 * 线性布局 
-		 * @return 
-		 * 
-		 */
-		public function get linearLayout():LinearLayout
-		{
-			return layout as LinearLayout;
-		}
-		
-		/**
 		 * 子对象渲染器 
 		 * @return 
 		 * 

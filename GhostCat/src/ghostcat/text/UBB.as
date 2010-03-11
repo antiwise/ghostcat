@@ -4,8 +4,8 @@ package ghostcat.text
 	{
 		public static function decode(v:String):String
 		{
-			v = v.replace(/\[(b|i|u)\]/ig,"<$1>");
-			v = v.replace(/\[\/(b|i|u)\]/ig,"</$1>");
+			v = v.replace(/\[(b|i|u|p|br)\]/ig,"<$1>");
+			v = v.replace(/\[\/(b|i|u|p)\]/ig,"</$1>");
 			
 			v = v.replace(/\[(color|size|face|align)=(.*?)]/ig,replFN);
 			v = v.replace(/\[\/(color|size|face|align)\]/ig,"</font>");
