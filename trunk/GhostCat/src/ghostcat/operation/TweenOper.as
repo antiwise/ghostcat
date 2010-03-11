@@ -45,7 +45,7 @@ package ghostcat.operation
 		public var updateWhenInvent:Boolean = true;
 		
 		/**
-		 * 是否清除原有的Tween效果
+		 * 是否清除原有的Tween效果（0:不清除 1:立即完成 2:中断）
 		 */
 		public var clearTarget:int;
 		

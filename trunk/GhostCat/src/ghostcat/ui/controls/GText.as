@@ -355,7 +355,13 @@ package ghostcat.ui.controls
 			if (this.text)
 			{
 				if (useHtml || this.text.indexOf("<html>")!= - 1)
-					textField.htmlText = this.text;
+				{
+					var str:String = this.text;
+					if (ubb)
+						str = UBB.decode(str);
+					
+					textField.htmlText = str;
+				}
 				else
 					textField.text = this.text;
 			}
