@@ -356,5 +356,18 @@ package ghostcat.ui
 					popupLayer.removeChild(obj);
 			}
 		}
+		
+		/**
+		 * 删除所有窗口
+		 * @param obj
+		 * 
+		 */
+		public function removeAllPopup():void
+		{
+			while (popupLayer.numChildren)
+			{
+				removePopup(popupLayer.getChildAt(0));
+			}
+		}
 	}
 }

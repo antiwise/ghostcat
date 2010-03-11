@@ -190,7 +190,7 @@ package ghostcat.ui.controls
 		 */
 		public function get label():String
 		{
-			return labelField ? data[labelField] : data;
+			return labelField ? data[labelField] : (data is String) ? data : null;
 		}
 
 		public function set label(v:String):void
@@ -210,10 +210,11 @@ package ghostcat.ui.controls
 		{
 			super.data = v;
 			
-			if (labelTextField)
-				labelTextField.text = label;
-			else if (autoRefreshLabelField)
-				refreshLabelField();
+			if (label != null)
+			{
+				if (labelTextField)
+					labelTextField.text = label;
+			}
 		} 
 		/** @inheritDoc*/
 		public override function set enabled(v:Boolean) : void
@@ -231,9 +232,6 @@ package ghostcat.ui.controls
 		 */
 		public function refreshLabelField():void
 		{
-			if (!label)
-				return;
-			
 			if (labelTextField)
 				labelTextField.destory();
 			
@@ -245,9 +243,11 @@ package ghostcat.ui.controls
 			else
 				_autoSize = labelTextField.autoSize;
 			
-			addChild(labelTextField)
+			if (!labelTextField.parent)
+				addChild(labelTextField)
 			
-			labelTextField.text = label;
+			if (label != null)
+				labelTextField.text = label;
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true):void
