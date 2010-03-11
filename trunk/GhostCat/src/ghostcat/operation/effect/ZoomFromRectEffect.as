@@ -30,7 +30,7 @@ package ghostcat.operation.effect
 			sourceTarget = v;
 		}
 		
-		public function ZoomFromRectEffect(target:*=null, rect:Rectangle=null, duration:int=100, easing:Function = null, invert:Boolean=true,asBitmap:Boolean = true,clearTarget:Boolean = false)
+		public function ZoomFromRectEffect(target:*=null, rect:Rectangle=null, duration:int=100, easing:Function = null, invert:Boolean=true,asBitmap:Boolean = true,clearTarget:int = 0)
 		{
 			this.asBitmap = asBitmap;
 			this.target = target;

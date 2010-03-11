@@ -78,10 +78,12 @@ package ghostcat.display.transfer
 		{
 			super.renderTarget();
 			
-			this.filters = [ColorMatrixFilterProxy.createBrightnessFilter(brightness),
+			this.filters = [
+				ColorMatrixFilterProxy.createBrightnessFilter(brightness),
 				ColorMatrixFilterProxy.createContrastFilter(contrast),
 				new BlurFilter(blur,blur),
-				ColorMatrixFilterProxy.createSaturationFilter(0)];
+				ColorMatrixFilterProxy.createSaturationFilter(0)
+			];
 		}
 	}
 }
