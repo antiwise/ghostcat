@@ -303,6 +303,16 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 选择的数据项
+		 * @return 
+		 * 
+		 */
+		public function get selectedIndex():int
+		{
+			return data.indexOf(_selectedData);
+		}
+		
+		/**
 		 * 元素大小 
 		 * @return 
 		 * 
