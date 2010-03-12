@@ -20,6 +20,11 @@ package ghostcat.ui.containers
 		public var drawerRect:Rectangle;
 		
 		/**
+		 * 展开时的矩形
+		 */
+		public var allRect:Rectangle;
+		
+		/**
 		 * 缓动持续时间
 		 */
 		public var duration:int = 1000;
@@ -65,17 +70,22 @@ package ghostcat.ui.containers
 			_opened = v;
 			TweenUtil.removeTween(this);
 			if (v)
-				TweenUtil.to(this,duration,{scrollRect:content.getRect(content),ease:easing,onUpdate:this.vaildSize});
+				TweenUtil.to(this,duration,{scrollRect:allRect ? allRect : content.getRect(content),ease:easing,onUpdate:this.vaildSize});
 			else
 				TweenUtil.to(this,duration,{scrollRect:drawerRect,ease:easing,onUpdate:this.vaildSize});
 		}
 		
-		private function refreshOpenedState(opened:Boolean):void
+		/**
+		 * 立即更新打开状态 
+		 * @param opened
+		 * 
+		 */
+		public function refreshOpenedState(opened:Boolean):void
 		{
 			_opened = opened;
 			
 			if (_opened || !drawerRect)
-				this.scrollRect = content.getRect(content);
+				this.scrollRect = allRect ? allRect : content.getRect(content);
 			else
 				this.scrollRect = drawerRect;
 			
