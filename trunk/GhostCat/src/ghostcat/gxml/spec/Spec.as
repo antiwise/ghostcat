@@ -196,7 +196,7 @@ package ghostcat.gxml.spec
 			if (name)
 			{
 				var firstCode:String = name.charAt(0);
-				return firstCode > "A" && firstCode < "Z";
+				return firstCode >= "A" && firstCode <= "Z";
 			}
 			else
 			{

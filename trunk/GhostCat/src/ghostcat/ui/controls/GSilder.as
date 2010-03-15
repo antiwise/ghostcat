@@ -225,8 +225,8 @@ package ghostcat.ui.controls
 				if (this.downArrow && enabledArrowResize)
 					this.downArrow.x = this.width - this.downArrow.width;
 				
-				thumbAreaStart = upArrow.width;
-				thumbAreaLength = this.width - (downArrow ? downArrow.width : 0) - (thumb ? thumb.width : 0) - thumbAreaStart;
+				thumbAreaStart = upArrow.x + upArrow.width;
+				thumbAreaLength = (downArrow ? downArrow.x : this.width) - (thumb ? thumb.width : 0) - thumbAreaStart;
 				if (background)
 					background.width = width;
 			}
@@ -235,8 +235,8 @@ package ghostcat.ui.controls
 				if (this.downArrow && enabledArrowResize)
 					this.downArrow.y = this.height - this.downArrow.height;
 				
-				thumbAreaStart = upArrow.height;
-				thumbAreaLength = this.height - (downArrow ? downArrow.height : 0) - (thumb ? thumb.height : 0) - thumbAreaStart;
+				thumbAreaStart = upArrow.y + upArrow.height;
+				thumbAreaLength = (downArrow ? downArrow.y : this.height) - (thumb ? thumb.height : 0) - thumbAreaStart;
 				if (background)
 					background.height = height;
 			}
