@@ -41,7 +41,7 @@ package ghostcat.ui.controls
 		public function parse(target:GButtonBase):void
 		{
 			if (skin)
-				target.setPartConetent(skin);
+				target.setPartContent(skin);
 			
 			target.content.transform.colorTransform = colorTransform ? colorTransform : new ColorTransform();
 			target.content.filters = filters ? filters : [];

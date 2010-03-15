@@ -84,9 +84,14 @@ package ghostcat.ui.controls
 		public var enabledAdjustContextSize:Boolean = false;
 		
 		/**
-		 * 自动刷新Label框
+		 * 是否自动在更新数据的时候刷新文本框
 		 */
 		public var autoRefreshLabelField:Boolean = true;
+		
+		/**
+		 * 是否在更新Skin的时候自动刷新文本框
+		 */
+		public var autoRefreshLabelFieldWithContent:Boolean = false;
 		
 		/**
 		 * Label自动大小
@@ -214,6 +219,8 @@ package ghostcat.ui.controls
 			{
 				if (labelTextField)
 					labelTextField.text = label;
+				else if (autoRefreshLabelField)
+					refreshLabelField();
 			}
 		} 
 		/** @inheritDoc*/
@@ -253,7 +260,7 @@ package ghostcat.ui.controls
 		public override function setContent(skin:*, replace:Boolean=true):void
 		{
 			defaultSkin = skin;
-			setPartConetent(skin,replace);
+			setPartContent(skin,replace);
 		}
 		
 		/**
@@ -262,17 +269,14 @@ package ghostcat.ui.controls
 		 * @param replace
 		 * 
 		 */
-		public function setPartConetent(skin:*, replace:Boolean=true):void
+		public function setPartContent(skin:*, replace:Boolean=true):void
 		{
 			super.setContent(skin,replace);
 			
-			if (autoRefreshLabelField)
+			if (autoRefreshLabelFieldWithContent)
 				refreshLabelField();
 			
 			createMovieClip();
-			
-//			if (!movie.frameRate && stage)
-//				movie.frameRate = stage.frameRate;
 		}
 		
 		/**
