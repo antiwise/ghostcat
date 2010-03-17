@@ -52,12 +52,24 @@ package ghostcat.operation.server
 		{
 			super.execute();
 			
-			var responder:Responder = new Responder(this.result,this.fault);
+			var responder:Responder = new Responder(this.resultHandler,this.faultHandler);
 			var callArgs:Array = [metord,responder];
 			if (para)
 				callArgs = callArgs.concat(para);
 			
 			nc.call.apply(nc,callArgs);
+		}
+		
+		protected function resultHandler(data:*):void
+		{
+			this.lastResult = data;
+			result();
+		}
+		
+		protected function faultHandler(data:*):void
+		{
+			this.lastResult = data;
+			fault();
 		}
 	}
 }

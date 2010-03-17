@@ -9,6 +9,18 @@ package ghostcat.text
 	public final class NumberUtil
 	{
 		/**
+		 * 创建时间
+		 * @param v
+		 * 
+		 */
+		public static function createDate(v:*):Date
+		{
+			if (v is String)
+				v = v.replace(/-/g,"/");
+					
+			return new Date(v);
+		}
+		/**
 		 * 将日期转换为字符串
 		 * 
 		 * @param date	日期

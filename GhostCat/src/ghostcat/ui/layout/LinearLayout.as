@@ -2,9 +2,11 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
+	import ghostcat.util.display.Geom;
 
 	/**
 	 * 线性布局
@@ -115,16 +117,16 @@ package ghostcat.ui.layout
 			for (var i:int = 0;i < target.numChildren;i++)
 			{
 				var obj:DisplayObject = target.getChildAt(i);
-				
+				var rect:Rectangle = Geom.getRect(obj);
 				if (type == UIConst.HORIZONTAL)
 				{
-					width += obj.width;
-					height = Math.max(height,obj.height);
+					width += rect.width;
+					height = Math.max(height,rect.height);
 				}
 				else if (type == UIConst.VERTICAL)
 				{
-					height += obj.height;
-					width = Math.max(width,obj.width);
+					height += rect.height;
+					width = Math.max(width,rect.width);
 				}
 			}
 			
