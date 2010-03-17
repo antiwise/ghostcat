@@ -94,14 +94,27 @@ package ghostcat.util
 		 * @param arr	数组
 		 * 
 		 */		
-		public static function randomArray(arr:Array):void
+		public static function randomArray(arr:Array):Array
 		{
-			arr.sort(randomFunction);
+			return arr.sort(randomFunction);
 		}
 		
 		private static function randomFunction(n1:*,n2:*):int
 		{
 			return (Math.random() < 0.5)? -1 : 1;
+		}
+		
+		/**
+		 * 随机选择多个数
+		 * @param arr
+		 * @param num
+		 * @return 
+		 * 
+		 */
+		public static function chooseMuti(arr:Array,num:int):Array
+		{
+			var a:Array = randomArray(arr.concat());
+			return a.slice(0,num);
 		}
 		
 		/**

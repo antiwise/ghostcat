@@ -25,6 +25,7 @@ package ghostcat.ui.containers
 	{
 		public var ref:ClassFactory;
 		
+		public var hideNullItem:Boolean = true;
 		public var renderSkin:ClassFactory;
 		
 		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null,type:String = "horizontal")
@@ -99,10 +100,13 @@ package ghostcat.ui.containers
 			{
 				for (i = 0;i < data.length;i++)
 				{
-					var obj:GBase = ref.newInstance() as GBase;
-					contentPane.addChild(obj);
-					obj.data = data[i];
-					obj.owner = self;
+					if (data[i] != null || !hideNullItem)
+					{	
+						var obj:GBase = ref.newInstance() as GBase;
+						contentPane.addChild(obj);
+						obj.data = data[i];
+						obj.owner = self;
+					}
 				}
 			}
 			layout.vaildLayout();
