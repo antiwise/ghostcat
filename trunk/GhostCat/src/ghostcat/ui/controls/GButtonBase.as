@@ -57,6 +57,7 @@ package ghostcat.ui.controls
 		private var _mouseOver:Boolean = false;
 		
 		private var _autoSize:String = TextFieldAutoSize.NONE;
+		private var _separateTextField:Boolean = false;
 		
 		/**
 		 * Label文本实例 
@@ -74,12 +75,8 @@ package ghostcat.ui.controls
 		public var textPadding:Padding;
 		
 		/**
-		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
-		 */
-		public var separateTextField:Boolean = false;
-		
-		/**
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
+		 * 要正确适应文本，首先必须在创建时将separateTextField参数设为true，其次可以根据textPadding来决定边距
 		 */
 		public var enabledAdjustContextSize:Boolean = false;
 		
@@ -107,7 +104,37 @@ package ghostcat.ui.controls
 			if (labelTextField)
 				labelTextField.autoSize = value;
 		}
-
+		
+		/**
+		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
+		 */
+		public function get separateTextField():Boolean
+		{
+			return _separateTextField;
+		}
+		
+		public function set separateTextField(v:Boolean):void
+		{
+			_separateTextField = v;
+			
+			if (labelTextField)
+				labelTextField.separateTextField = v;
+		}
+		
+		/**
+		 * 激活文本自适应
+		 * 
+		 */
+		public function enabledAutoLayout(padding:Padding,autoSize:String = TextFieldAutoSize.LEFT):void
+		{
+			this._separateTextField = true;
+			this._autoSize = autoSize;
+			this.enabledAdjustContextSize = true;
+			this.textPadding = padding;
+			
+			if (labelTextField)
+				labelTextField.enabledAutoLayout(padding,autoSize);
+		}
 		
 		/**
 		 * 执行的指令名称
@@ -178,10 +205,8 @@ package ghostcat.ui.controls
 			
 			AbstractUtil.preventConstructor(this,GButtonBase);
 			
-			if (textPadding)
-				this.textPadding = textPadding;
-			
-			this.separateTextField = separateTextField;
+			this.textPadding = textPadding;
+			this._separateTextField = separateTextField;
 			
 			super(skin, replace);
 			

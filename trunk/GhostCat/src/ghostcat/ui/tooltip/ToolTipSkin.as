@@ -25,8 +25,9 @@ package ghostcat.ui.tooltip
 			if (!skin)
 				skin = defaultSkin;
 				
-			super(skin,true,true,new Padding(2,2,2,2));
-			this.enabledAdjustContextSize = true;
+			super(skin);
+		
+			this.enabledAutoLayout(new Padding(2,2,2,2));
 		}
 		
 		/** @inheritDoc*/
