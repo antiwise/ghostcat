@@ -14,6 +14,7 @@ package ghostcat.ui.controls
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
@@ -57,6 +58,7 @@ package ghostcat.ui.controls
 		
 		private var _textFormat:String;
 		private var _autoSize:String = TextFieldAutoSize.NONE;
+		private var _separateTextField:Boolean = false;
 		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
@@ -69,12 +71,8 @@ package ghostcat.ui.controls
 		public var textPadding:Padding;
 		
 		/**
-		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
-		 */
-		public var separateTextField:Boolean = false;
-		
-		/**
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
+		 * 要正确适应文本，首先必须在创建时将separateTextField参数设为true，其次可以根据textPadding来决定边距
 		 */
 		public var enabledAdjustContextSize:Boolean = false;
 		
@@ -114,6 +112,31 @@ package ghostcat.ui.controls
 		public var ubb:Boolean = false;
 		
 		/**
+		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
+		 */
+		public function get separateTextField():Boolean
+		{
+			return _separateTextField;
+		}
+		
+		public function set separateTextField(v:Boolean):void
+		{
+			_separateTextField = v;
+			
+			if (textField)
+			{
+				if (v)
+				{
+					var p:Point = Geom.localToContent(new Point(),textField,this);
+					textField.x = p.x;
+					textField.y = p.y;
+					
+					addChild(textField);
+				}
+			}
+		}
+		
+		/**
 		 * 文本框自适应文字的方式
 		 */
 		public function get autoSize():String
@@ -129,20 +152,20 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 是否让文本框适应文本大小
+		 * 让文本框适应文本大小
 		 * @return 
 		 * 
 		 */
-		public function get enabledAdjustTextSize():Boolean
+		public function enabledAutoLayout(padding:Padding,autoSize:String = TextFieldAutoSize.LEFT):void
 		{
-			return autoSize != null;
+			this.separateTextField = true;
+			this.enabledAdjustContextSize = true;
+			this.autoSize = autoSize;
+			this.textPadding = padding;
+			
+			this.adjustContextSize();
 		}
 		
-		public function set enabledAdjustTextSize(v:Boolean):void
-		{
-			autoSize = v ? TextFieldAutoSize.LEFT : null;	
-		}
-
 		/**
 		 * 字体名称
 		 */
@@ -288,7 +311,7 @@ package ghostcat.ui.controls
 			if (textPadding)
 				this.textPadding = textPadding;
 			
-			this.separateTextField = separateTextField;
+			this._separateTextField = separateTextField;
 			
 			super(skin, replace);
 		}
@@ -321,10 +344,10 @@ package ghostcat.ui.controls
 			
 			if (!textField)
 			{
-				this.separateTextField = true;
 				textField = TextFieldParse.createTextField();
-				
 				addChild(textField);
+				
+				this._separateTextField = true;
 				
 				if (textPadding)
 					textPadding.adjectRect(textField,this);
@@ -334,14 +357,8 @@ package ghostcat.ui.controls
 				if (autoRebuildEmbedText && textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
 					rebuildTextField();
 				
-				var pos:Point = new Point(textField.x,textField.y);
-				Geom.localToContent(pos,content,this);
-			
-				textField.x = pos.x;
-				textField.y = pos.y;
-			
-				if (this.separateTextField)
-					addChild(textField);//可缩放背景必须提取文本框
+				if (this._separateTextField)
+					separateTextField = true;//提取文本框
 			}
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）

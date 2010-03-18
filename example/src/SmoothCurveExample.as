@@ -1,11 +1,11 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import ghostcat.algorithm.bezier.Roupe;
+	import ghostcat.debug.DebugRect;
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.graphics.DragPoint;
@@ -14,7 +14,6 @@ package
 	import ghostcat.operation.SmoothCurveTweenOper;
 	import ghostcat.ui.CursorSprite;
 	import ghostcat.ui.ToolTipSprite;
-	import ghostcat.ui.tooltip.ArowToolTipSkin;
 	
 	/**
 	 * 拥有重力的细绳
@@ -22,6 +21,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
+	[SWF(width="500",height="400")]
 	public class SmoothCurveExample extends GBase
 	{
 		private var roupe:Roupe;
@@ -31,11 +31,9 @@ package
 		
 		public function SmoothCurveExample()
 		{
-			new EnabledSWFScreen(stage);
-			
 			RootManager.register(this);
 			
-			start.toolTip = "起点";
+			start.toolTip = "起点XXXX";
 			start.position = new Point(50,50);
 			addChild(start);
 			
@@ -62,7 +60,7 @@ package
 		protected override function tickHandler(event:TickEvent):void
 		{
 			graphics.clear();
-			graphics.lineStyle(0,0,1);
+			graphics.lineStyle(0,0x0,1);
 			roupe.parse(this);
 			
 			end.invalidatePosition();
