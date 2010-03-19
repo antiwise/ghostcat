@@ -5,6 +5,7 @@ package ghostcat.text
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.text.TextLineMetrics;
 	
 	import ghostcat.parse.display.DrawParse;
@@ -179,6 +180,34 @@ package ghostcat.text
 				t.setTextFormat(textField.getTextFormat(offest + i,offest + i + 1),i,i + 1);
 			}
 			return t.htmlText;
+		}
+		
+		/**
+		 * 根据文本框大小自动缩小字体
+		 * @param textField
+		 * 
+		 */
+		public static function autoFontSize(textField:TextField):void
+		{
+			var text:String = textField.text;
+			if (text == null || text.length == 0)
+				return;
+			
+			var firstLine:TextLineMetrics = textField.getLineMetrics(0);
+			if (firstLine.width <= textField.width - 2)
+				return;
+			
+			while (firstLine.width > textField.width - 2) 
+			{
+				var f:TextFormat = textField.getTextFormat();
+				f.size = int(f.size) - 1;
+				if (f.size == 0)
+					return;
+				
+				textField.setTextFormat(f,0,text.length);
+				
+				firstLine = textField.getLineMetrics(0);
+			}
 		}
 	}
 }
