@@ -312,6 +312,11 @@ package ghostcat.ui.controls
 			return data.indexOf(_selectedData);
 		}
 		
+		public function set selectedIndex(v:int):void
+		{
+			selectedData = data[v];
+		}
+		
 		/**
 		 * 元素大小 
 		 * @return 

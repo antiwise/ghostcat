@@ -136,7 +136,8 @@ package ghostcat.ui.controls
 					textField.text = prefix + (fix == 0) ? int(v).toString() : v.toFixed(fix) + suffix;
 			}
 			
-			adjustContextSize();
+			if (enabledAdjustContextSize)
+				adjustContextSize();
 			
 			if (asTextBitmap)
 				reRenderTextBitmap();

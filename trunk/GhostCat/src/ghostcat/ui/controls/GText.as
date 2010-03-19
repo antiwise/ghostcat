@@ -14,7 +14,6 @@ package ghostcat.ui.controls
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
-	import ghostcat.debug.Debug;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.FontManager;
 	import ghostcat.parse.display.TextFieldParse;
@@ -24,6 +23,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
+	import ghostcat.util.display.MatrixUtil;
 	import ghostcat.util.display.SearchUtil;
 	
 	[Event(name="change",type="flash.events.Event")]
@@ -127,10 +127,7 @@ package ghostcat.ui.controls
 			{
 				if (v)
 				{
-					var p:Point = Geom.localToContent(new Point(),textField,this);
-					textField.x = p.x;
-					textField.y = p.y;
-					
+					textField.transform.matrix = MatrixUtil.getMatrixAt(textField,this);
 					addChild(textField);
 				}
 			}
@@ -159,9 +156,10 @@ package ghostcat.ui.controls
 		public function enabledAutoLayout(padding:Padding,autoSize:String = TextFieldAutoSize.LEFT):void
 		{
 			this.separateTextField = true;
+			
+			this.textPadding = padding;
 			this.enabledAdjustContextSize = true;
 			this.autoSize = autoSize;
-			this.textPadding = padding;
 			
 			this.adjustContextSize();
 		}
