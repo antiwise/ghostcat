@@ -230,9 +230,12 @@ package ghostcat.display
 				
 				$addChild(skin);
 				
-				this.visible = skin.visible;
-				skin.visible = true;
-				this.name = skin.name;
+				if (!contentInited)
+				{
+					this.visible = skin.visible;
+					skin.visible = true;
+					this.name = skin.name;
+				}
 			}
 			_content = skin;
 			
