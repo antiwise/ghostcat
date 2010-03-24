@@ -15,7 +15,7 @@ package ghostcat.text
 		 */
 		public static function createDate(v:*):Date
 		{
-			if (v is String)
+			if (isNaN(Number(v)))
 				v = v.replace(/-/g,"/");
 					
 			return new Date(v);

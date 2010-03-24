@@ -1,5 +1,7 @@
 package ghostcat.operation.server
 {
+	import flash.events.AsyncErrorEvent;
+	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
 	

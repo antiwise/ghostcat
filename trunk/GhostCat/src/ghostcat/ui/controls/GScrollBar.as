@@ -105,6 +105,32 @@ package ghostcat.ui.controls
 				_scrollContent.scrollV = v;
 				
 		}
+		
+		/**
+		 * 单页长度 
+		 */
+		public var pageLength:Number;
+		
+		/**
+		 * 页数 
+		 * @return 
+		 * 
+		 */
+		public function get page():int
+		{
+			return pageLength ? Math.ceil(value / pageLength + 1) : 1;
+		}
+		
+		/**
+		 * 总页数
+		 * @return 
+		 * 
+		 */
+		public function get maxPage():int
+		{
+			return (pageLength && maxValue) ? Math.ceil(maxValue / pageLength) : 1;
+		}
+		
 		/** @inheritDoc*/
 		public override function get maxValue():Number
 		{
