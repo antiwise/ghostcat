@@ -192,5 +192,24 @@ package ghostcat.util.display
 			}
 			return true;
         }
+		
+		/**
+		 * 判断对象是否在某个容器中 
+		 * @param displayObj
+		 * @param container
+		 * @return 
+		 * 
+		 */
+		public static function isInContainer(displayObj:DisplayObject,container:DisplayObjectContainer):Boolean
+		{
+			var currentTarget:DisplayObject = displayObj;
+			while (currentTarget && currentTarget.parent != currentTarget)
+			{
+				if (currentTarget == container) 
+					return true;
+				currentTarget = currentTarget.parent;
+			}
+			return false;
+		}
 	}
 }
