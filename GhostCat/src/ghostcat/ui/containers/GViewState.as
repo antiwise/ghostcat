@@ -74,8 +74,13 @@ package ghostcat.ui.containers
 		{
 			return _selectedIndex;
 		}
-
+		
 		public function set selectedIndex(v:int):void
+		{
+			setSelectIndex(v);
+		}
+		
+		public function setSelectIndex(v:int,immediately:Boolean = false):void
 		{
 			if (_selectedIndex == v)
 				return;
@@ -87,7 +92,7 @@ package ghostcat.ui.containers
 			{
 				var page:DisplayObject = container.getChildAt(_selectedIndex);
 				effect = tweenToRight ? hideToRight : hideToLeft;
-				if (effect)
+				if (effect && !immediately)
 				{
 					effect.result();
 					effect.target = page;
@@ -101,19 +106,19 @@ package ghostcat.ui.containers
 					page.visible = false;
 				}
 			}
-				
+			
 			_selectedIndex = v;
-				
+			
 			if (_selectedIndex != -1 && _selectedIndex < container.numChildren)
 			{
 				var page2:DisplayObject = container.getChildAt(_selectedIndex);
 				effect = tweenToRight ? showFromLeft : showFromRight;
 				page2.visible = true;
-				if (effect)
+				if (effect && !immediately)
 				{
 					effect.result();
 					effect.target = page2;
-
+					
 					effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 					effect.execute();
 				}

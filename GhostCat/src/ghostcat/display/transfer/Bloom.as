@@ -54,13 +54,6 @@ package ghostcat.display.transfer
 			_contrast = value;
 			renderCaller.invalidate();
 		}
-		
-		public override function set alpha(value:Number) : void
-		{
-			super.alpha = value;
-			
-			this.visible = (value == 0);
-		}
 
 		public function Bloom(target:DisplayObject=null,alpha:Number = 1.0,blur:int = 12,brightness:int = -100, contrast:Number = 100)
 		{
