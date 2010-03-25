@@ -89,7 +89,7 @@ package ghostcat.ui.containers
 			else
 				this.scrollRect = drawerRect;
 			
-//			this.invalidateSize();
+			this.invalidateSize();
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
