@@ -82,7 +82,10 @@ package ghostcat.operation.effect
 			{
 				if (bitmap.parent)
 					bitmap.parent.removeChild(bitmap);
-				this.bitmap.bitmapData.dispose();
+				
+				if (bitmap.bitmapData)
+					this.bitmap.bitmapData.dispose();
+				
 				this.bitmap.bitmapData = null;
 				this.sourceTarget.visible = true;
 			}

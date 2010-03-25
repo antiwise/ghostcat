@@ -39,23 +39,27 @@ package ghostcat.text
          * 缩短文字以符合TextField的大小
          * 
          * @param textField	文本框
-         * @return 
+         * @return 是否经过裁剪
          * 
          */        
-        public static function truncateToFit(textField:TextField):*
+        public static function truncateToFit(textField:TextField):Boolean
         {
 			var text:String = textField.text;
 			if (text == null || text.length == 0)
-                return;
+                return false;
             
+			var bool:Boolean = false;
             var firstLine:TextLineMetrics = textField.getLineMetrics(0);
 			while (firstLine.width > textField.width) 
 			{
 				text = text.slice(0,text.length - 1);
 				
 				textField.text = text + "...";
+				bool = true;
+				
 				firstLine = textField.getLineMetrics(0);
 			}
+			return bool;
 		}
 		
 		/**

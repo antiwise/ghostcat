@@ -120,15 +120,21 @@ package ghostcat.ui.layout
 				var rect:Rectangle = Geom.getRect(obj);
 				if (type == UIConst.HORIZONTAL)
 				{
+					if (i != 0)
+						width += horizontalGap;
 					width += rect.width;
 					height = Math.max(height,rect.height);
 				}
 				else if (type == UIConst.VERTICAL)
 				{
+					if (i != 0)
+						height += verticalGap;
 					height += rect.height;
 					width = Math.max(width,rect.width);
 				}
 			}
+			
+			
 			
 			if (target.parent is GBase)
 				(target.parent as GBase).setSize(width,height);//不知道为何设置大小并没有重新触发本身的layout

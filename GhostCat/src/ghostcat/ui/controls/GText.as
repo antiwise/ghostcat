@@ -82,6 +82,11 @@ package ghostcat.ui.controls
 		public var enabledLangage:Boolean = true;
 		
 		/**
+		 * 是否激活截断文本
+		 */
+		public var enabledTruncateToFit:Boolean = false;
+		
+		/**
 		 * 限定输入内容的正则表达式
 		 */
 		public var regExp:RegExp;
@@ -366,24 +371,11 @@ package ghostcat.ui.controls
 				oldFont.font = fontFamilyReplacer[oldFont.font]
 				this.textField.defaultTextFormat = oldFont;
 			}
-					
-			if (this.text)
-			{
-				if (useHtml || this.text.indexOf("<html>")!= - 1)
-				{
-					var str:String = this.text;
-					if (ubb)
-						str = UBB.decode(str);
-					
-					textField.htmlText = str;
-				}
-				else
-					textField.text = this.text;
-			}
-			else
-			{
-				this.text = textField.text;
-			}
+			
+			if (!this.text)
+				super.data = textField.text;
+			
+			doWithText(this.text);
 			
 			textField.addEventListener(TextEvent.TEXT_INPUT,textInputHandler);
 			textField.addEventListener(FocusEvent.FOCUS_IN,textFocusInHandler);
@@ -458,26 +450,40 @@ package ghostcat.ui.controls
 				}
 			}
 		}
+		
+		/**
+		 * 根据文本框大小截断文本 
+		 * 
+		 */
+		public function truncateToFit(showToolTip:Boolean = true):void
+		{
+			if (TextFieldUtil.truncateToFit(textField) && showToolTip)
+				this.toolTip = this.text;
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*):void
 		{
 			if (v == super.data)
 				return;
 			
-			var str:String;
-			if (!v)
+			super.data = v;
+			
+			doWithText(v);
+			
+			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		protected function doWithText(str:String):void
+		{
+			if (!str)
 				str = "";
-			else
-				str = v.toString();
 			
 			if (textChangeHandler != null && enabledLangage)
 				str = textChangeHandler(str);
 			
-			super.data = str;
-		
 			if (this.vertical)
 				str = TextUtil.vertical(str);
-			
 			
 			if (textField)
 			{
@@ -490,18 +496,16 @@ package ghostcat.ui.controls
 				}
 				else
 					textField.text = str;
+				
+				if (enabledTruncateToFit)
+					truncateToFit();
+				
+				if (enabledAdjustContextSize)
+					adjustContextSize();
+				
+				if (asTextBitmap)
+					reRenderTextBitmap();
 			}
-			
-//			if (autoSize)
-//				textField.autoSize = TextFieldAutoSize.LEFT;
-			
-			if (enabledAdjustContextSize)
-				adjustContextSize();
-			
-			if (asTextBitmap)
-				reRenderTextBitmap();
-			
-			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
