@@ -52,7 +52,7 @@ package ghostcat.display.transfer
 			
 			updateTargetMove();
 			createBitmapData();
-			invalidateDisplayList();
+			vaildDisplayList();
 		}
 		                
 		/**
