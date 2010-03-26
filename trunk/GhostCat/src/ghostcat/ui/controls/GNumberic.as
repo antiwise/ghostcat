@@ -78,7 +78,7 @@ package ghostcat.ui.controls
 		{
 			_data = v;
 			
-			if (_data && tween)
+			if (_data && tween && !isNaN(displayValue))
 			{
 				TweenUtil.removeTween(this,false);
 				TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
