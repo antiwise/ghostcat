@@ -24,12 +24,33 @@ package ghostcat.util.display
 			if (obj == container)
 				return new Matrix();
 			
-			var m1:Matrix = (obj.stage) ? obj.transform.concatenatedMatrix : obj.transform.matrix;
-			var m2:Matrix = (container.stage) ? container.transform.concatenatedMatrix : container.transform.matrix;
-			m2.invert();
-			m1.concat(m2);
+			if (obj.stage)//有stage
+			{	
+				var m1:Matrix = obj.transform.concatenatedMatrix;
+				var m2:Matrix = container.transform.concatenatedMatrix;
+				m2.invert();
+				m1.concat(m2);
+			}
+			else
+			{
+				m1 = obj.transform.matrix;
+				var cur:DisplayObject = obj.parent;
+				while (cur != container)
+				{
+					if (!cur)
+						return null;
+					
+					m1.concat(cur.transform.matrix);
+					
+					if (cur != cur.parent)
+						cur = cur.parent;
+					else
+						return null;
+				}
+			}
 			return m1;
 		}
+		
 		
 		/**
 		 * 创建按缩放比的矩阵 
