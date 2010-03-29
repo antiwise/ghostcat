@@ -5,7 +5,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.UIBuilder;
 	
 	/**
-	 * 自动执行UIBuilder的控件（无法设置参数，只能重写）
+	 * 自动执行UIBuilder的控件
 	 * @author flashyiyi
 	 * 
 	 */
@@ -14,15 +14,14 @@ package ghostcat.ui.controls
 		public function GBuilderBase(skin:*=null, replace:Boolean=true)
 		{
 			super(skin, replace);
-			this.autoBuild();
 		}
 		
-		/**
-		 * 自动创建UI方法 
-		 * 
-		 */
-		protected function autoBuild():void
+		public override function setContent(skin:*, replace:Boolean=true):void
 		{
+			if (contentInited)
+				UIBuilder.destory(this);
+			
+			super.setContent(skin,replace);
 			UIBuilder.buildAll(this);
 		}
 		

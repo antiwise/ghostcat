@@ -57,8 +57,11 @@ package ghostcat.display
 		 */		
 		public var acceptContentPosition:Boolean = true;
 		
-		//内容是否初始化
-		private var contentInited:Boolean = false;
+		/**
+		 * 内容是否初始化
+		 */
+		protected var contentInited:Boolean = false;
+		
 		private var _hideContent:Boolean;
 		
 		

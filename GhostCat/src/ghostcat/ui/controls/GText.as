@@ -7,6 +7,7 @@ package ghostcat.ui.controls
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -132,7 +133,9 @@ package ghostcat.ui.controls
 			{
 				if (v)
 				{
-					textField.transform.matrix = MatrixUtil.getMatrixAt(textField,this);
+					var m:Matrix = MatrixUtil.getMatrixAt(textField,this);
+					if (m)
+						textField.transform.matrix = m;
 					addChild(textField);
 				}
 			}
