@@ -7,6 +7,7 @@ package ghostcat.ui.containers
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.util.display.SelectGroup;
 
+	[Event(name="change",type="flash.events.Event")]
 	/**
 	 * 可按下的按钮条
 	 * 

@@ -364,6 +364,9 @@ package ghostcat.display.bitmap
 				else if (obj is DisplayObject)
 				{
 					m = MatrixUtil.getMatrixAt(obj as DisplayObject,this);
+					if (!m)
+						m = (obj as DisplayObject).transform.matrix;
+					
 					if (drawOffest)
 						m.translate(drawOffest.x,drawOffest.y);
 					bitmapData.draw(obj as DisplayObject,m,itemColorTransform);

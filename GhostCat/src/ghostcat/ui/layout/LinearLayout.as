@@ -2,6 +2,7 @@ package ghostcat.ui.layout
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
@@ -110,7 +111,7 @@ package ghostcat.ui.layout
 		}
 		
 		/** @inheritDoc*/
-		protected override function measureChildren():void
+		protected override function measureChildren(width:Number = NaN,height:Number = NaN):void
 		{
 			var width:Number = 0;
 			var height:Number = 0;
@@ -132,17 +133,22 @@ package ghostcat.ui.layout
 					height += rect.height;
 					width = Math.max(width,rect.width);
 				}
+				else if (type == UIConst.TILE)
+				{
+					//暂定
+					width = Math.max(width,rect.right);
+					height = Math.max(height,rect.bottom);
+				}
 			}
 			
-			
-			
-			if (target.parent is GBase)
-				(target.parent as GBase).setSize(width,height);//不知道为何设置大小并没有重新触发本身的layout
+			super.measureChildren(width,height);
 		}
 		
 		/** @inheritDoc*/
 		protected override function layoutChildren(x:Number, y:Number, w:Number, h:Number) : void
 		{
+			var curY:Number = 0;
+			var maxH:Number = 0;
 			var prev:DisplayObject;
 			for (var i:int = 0;i < target.numChildren;i++)
 			{
@@ -150,16 +156,41 @@ package ghostcat.ui.layout
 				
 				if (type == UIConst.HORIZONTAL)
 				{
-					LayoutUtil.silder(obj,target,horizontalAlign,verticalAlign);
-					if (prev)
+					LayoutUtil.silder(obj,target,null,verticalAlign);
+					if (i == 0)
+						LayoutUtil.silder(obj,target,UIConst.LEFT);
+					else
 						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
 				}
 				else if (type == UIConst.VERTICAL)
 				{
-					LayoutUtil.silder(obj,target,horizontalAlign,verticalAlign);
-					if (prev)
+					LayoutUtil.silder(obj,target,horizontalAlign);
+					if (i == 0)
+						LayoutUtil.silder(obj,target,null,UIConst.TOP);
+					else
 						LayoutUtil.vertical(obj,prev,target,verticalGap);
 					
+				}
+				else if (type == UIConst.TILE)
+				{
+					maxH = Math.max(maxH,obj.height);
+					if (i == 0)
+						Geom.moveTopLeftTo(obj,new Point());
+					else
+					{
+						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
+						var rect:Rectangle = Geom.getRect(obj);
+						if (rect.right > x + w)
+						{
+							curY += maxH + verticalGap;
+							maxH = 0;
+							Geom.moveTopLeftTo(obj,new Point(0,curY));
+						}
+						else
+						{
+							Geom.moveTopLeftTo(obj,new Point(rect.x,curY));
+						}
+					}
 				}
 				prev = obj;
 			}

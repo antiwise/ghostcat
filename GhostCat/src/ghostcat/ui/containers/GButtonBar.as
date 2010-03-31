@@ -54,7 +54,7 @@ package ghostcat.ui.containers
 		{
 			super.data = v;
 			
-			labelField = labelField;
+			this.labelField = labelField;
 			layout.invalidateLayout();
 		}
 	}

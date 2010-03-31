@@ -28,7 +28,7 @@ package ghostcat.ui.controls
 		public var listContent:GListBase;
 		private var listFields:Object = {renderField:"render",vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
-		private var _itemRender:ClassFactory;
+		private var _itemRender:*;
 		private var _type:String;
 		
 		public function GList(skin:*=null,replace:Boolean = true, type:String = UIConst.VERTICAL,itemRender:* = null,fields:Object = null)
@@ -112,7 +112,7 @@ package ghostcat.ui.controls
 		
 		public function get itemRender():*
 		{
-			return _itemRender;
+			return listContent ? listContent.itemRender : _itemRender;
 		}
 		
 		

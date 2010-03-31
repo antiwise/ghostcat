@@ -178,6 +178,7 @@ package ghostcat.ui.controls
 		public function resetContent():void
 		{
 			_scrollContent.scrollH = _scrollContent.scrollV = _scrollContent.tweenTargetH = _scrollContent.tweenTargetV = 0.0;
+			updateThumb();
 		}
 		
 		/**
@@ -204,6 +205,8 @@ package ghostcat.ui.controls
 				_scrollContent.wheelDirect = this.direction;
 			
 			setTargetScrollSize(width,height);
+			
+			tickHandler(null);
 		}
 		
 		/**
