@@ -5,6 +5,7 @@ package ghostcat.ui.layout
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.core.AbstractUtil;
 	import ghostcat.util.core.CallLater;
@@ -88,7 +89,11 @@ package ghostcat.ui.layout
 			
 			if (_target)
 			{
-				_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				if (_target is GBase)
+					(_target as GBase).content.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				else
+					_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				
 				if (isRoot)
 				{
 					if (_target.stage)
@@ -157,11 +162,23 @@ package ghostcat.ui.layout
 		
 		
 		/**
-		 * 根据Children决定自身体积
+		 * 根据Children决定自身体积，重写时需要重新指定width,height
 		 * 
 		 */
-		protected function measureChildren():void
+		protected function measureChildren(width:Number = NaN,height:Number = NaN):void
 		{
+			if (isNaN(width) || isNaN(height))
+				return;
+			
+			if (target is GBase)
+			{
+				(target as GBase).setSize(width,height,true);//避免重复触发
+			}
+			else
+			{
+				target.width = width;
+				target.height = height;
+			}
 		}
 		
 		/**

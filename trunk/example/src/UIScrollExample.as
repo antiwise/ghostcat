@@ -2,8 +2,11 @@ package
 {
 	import flash.display.Sprite;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.controls.GButton;
 	import ghostcat.ui.controls.GList;
+	import ghostcat.ui.controls.GText;
 	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="400",height="400")]
@@ -20,6 +23,7 @@ package
 		{	
 			var list:GList = new GList();
 			list.type = UIConst.TILE;
+			list.itemRender = GButton;
 			list.width = 300;
 			list.height = 150;
 			

@@ -53,7 +53,7 @@ package ghostcat.ui.containers
 		public function setLayout(layout:Layout,isRoot:Boolean = false):void
 		{
 			this.layout = layout;
-			this.layout.setTarget(contentPane,isRoot);
+			this.layout.setTarget(this,isRoot);
 		}
 		
 		/**
@@ -186,12 +186,12 @@ package ghostcat.ui.containers
 			target.removeEventListener(Event.REMOVED_FROM_STAGE,invalidateLayoutHandler);
 			target.removeEventListener(Event.ADDED_TO_STAGE,invalidateLayoutHandler);
 		}
-		/** @inheritDoc*/
-		protected override function updateSize() : void
-		{
-			super.updateSize();
-			invalidateLayout();
-		}
+//		/** @inheritDoc*/
+//		protected override function updateSize() : void
+//		{
+//			super.updateSize();
+//			invalidateLayout();
+//		}
 		
 		/**
 		 * 之后更新布局

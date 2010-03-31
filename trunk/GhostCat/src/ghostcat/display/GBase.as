@@ -548,7 +548,7 @@ package ghostcat.display
 				var e:ResizeEvent = new ResizeEvent(ResizeEvent.RESIZE);
 				e.size = new Point(width,height)
 				dispatchEvent(e);
-				
+			
 				if (parent)
 				{
 					e = new ResizeEvent(ResizeEvent.CHILD_RESIZE);
@@ -557,6 +557,8 @@ package ghostcat.display
 					parent.dispatchEvent(e);
 				}
 			}
+			
+			
 		}
 		
 		/**

@@ -34,7 +34,6 @@ package
 			RootManager.register(this,1,1);
 			PopupManager.instance.applicationDisabledFilters = [];
 			
-			LanguageManager.instance.registerGText = true;
 			LanguageManager.instance.load("ui.lang");
 			LanguageManager.instance.customConversion = {"roll":"#LangageExample.roll"}
 		
@@ -60,10 +59,10 @@ package
 			var t2:GText = new GText();
 			addChild(t2);
 			t2.y = 26;
-			t2.text = "@canel";//不写文件名则取第一个满足条件的
+			t2.text = "@cancel";//不写文件名则取第一个满足条件的
 			
 			new LightOnceEffect(t2,1000).commit();
-			GAlert.show("text = '@canel'","不写文件名则取第一个满足条件的");
+			GAlert.show("text = '@cancel'","不写文件名则取第一个满足条件的");
 			new FunctionOper(step3).commit();
 		}	
 	

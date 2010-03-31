@@ -58,6 +58,12 @@ package ghostcat.manager
 			return GText.textChangeHandler == getString;
 		}
 		
+		public function LanguageManager():void
+		{
+			super();
+			this.registerGText = true;
+		}
+		
 		/**
 		 * 加载语言包。properties文件的格式和FLEX的多语言相同，主要为了利用IDE的代码分色。详情请参考FLEX帮助。
 		 * 注意，此方法可多次使用。
@@ -131,6 +137,7 @@ package ghostcat.manager
 						if (result)
 							return result;
 					}
+					return res;
 				}
 				else
 				{
