@@ -52,7 +52,12 @@ package ghostcat.gxml.spec
 			var obj:*;
 			if (xml.nodeKind()=="text")//是普通文本
 			{
-				obj = xml.toString().split(/[,|\s]+/);
+				var str:String = xml.toString();
+				if (str.length >= 2 && str.charAt(0) == str.charAt(str.length - 1) == '"')//加双引号解除转义
+					obj = [str.slice(1,str.length - 2)];
+				else
+					obj = str.split(/[,|\s]+/);
+				
 				for (var i:int = 0;i < obj.length;i++)
 				{
 					if (obj[i]=="null")
