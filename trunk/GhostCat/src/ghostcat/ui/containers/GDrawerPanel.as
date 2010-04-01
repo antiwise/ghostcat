@@ -34,6 +34,11 @@ package ghostcat.ui.containers
 		 */
 		public var easing:Function = Circ.easeOut;
 		
+		/**
+		 * 点几展开 
+		 */
+		public var clickToOpen:Boolean = true;
+		
 		private var _opened:Boolean;
 		
 		/**
@@ -56,7 +61,7 @@ package ghostcat.ui.containers
 		
 		protected function clickHandler(event:MouseEvent):void
 		{
-			if (this.drawerRect.contains(mouseX,mouseY))
+			if (clickToOpen && this.drawerRect.contains(mouseX,mouseY))
 				opened = !opened;
 		}
 		

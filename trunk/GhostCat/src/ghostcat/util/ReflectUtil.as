@@ -15,31 +15,83 @@ package ghostcat.util
 	 */	
 	public class ReflectUtil
 	{
+		public var xml:XML;
+		public var methods:Array;
+		public var propertys:Array;
+		public var propertysAccess:Object;
+		public var propertysType:Object;
+		
+		
 		private static var describeTypeCache:Dictionary = new Dictionary(true);
+		
+		public function ReflectUtil(obj:*):void
+		{
+			obj = getClass(obj);
+			describeTypeCache[obj] = this;
+			
+			//类定义
+			this.xml = describeType(obj);
+			
+			//方法列表
+			this.methods = [];
+			
+			for each(var child:XML in xml..method)
+			{
+				var name:String = child.@name.toString();
+				methods.push(name);
+			}
+			
+			//属性列表
+			this.propertys = [];
+			this.propertysAccess = {};
+			this.propertysType = {};
+			
+			for each(child in xml..accessor)
+			{
+				name = child.@name.toString();
+				
+				propertys.push(name);
+				propertysAccess[name] = child.@access.toString();
+				propertysType[name] = getDefinitionByName(child.@type);
+			}
+			
+			for each(child in xml..variable)
+			{
+				name = child.@name.toString();
+				
+				propertys.push(name);
+				propertysType[name] = getDefinitionByName(child.@type);
+			}
+		}
+		
+		/**
+		 * 获得缓存的反射类实例
+		 *  
+		 * @param obj
+		 * @return 
+		 * 
+		 */
+		public static function getDescribeTypeCache(obj:*):ReflectUtil
+		{
+			obj = getClass(obj);
+			
+			var ins:ReflectUtil = describeTypeCache[obj];
+			if (!ins)
+				ins = new ReflectUtil(obj);
+			
+			return ins;
+		}
 		
 		/**
 		 * 获取类和对象的详细属性
 		 * 
 		 * @param obj	对象
-		 * @param cache	是否缓存，供下次快速调用
 		 * @return 
 		 * 
 		 */		
-		public static function getDescribeType(obj:*,cache:Boolean=true):XML
+		public static function getDescribeType(obj:*):XML
 		{
-			obj = getClass(obj);
-			var xml:XML;
-			if (describeTypeCache.hasOwnProperty(obj))
-			{
-				xml = describeTypeCache[obj];
-			}
-			else
-			{
-				xml = describeType(obj);
-				if (cache) 
-					describeTypeCache[obj] = xml;
-			}
-			return xml;
+			return getDescribeTypeCache(obj).xml;
 		}
 		
 		/**
@@ -50,13 +102,9 @@ package ghostcat.util
 		public static function clearDescribeTypeCache(obj:*=null):void
 		{
 			if (obj)
-			{
 				delete describeTypeCache[obj];
-			}
 			else
-			{
 				describeTypeCache = new Dictionary(true);
-			}
 		}
 		
 		/**
@@ -68,19 +116,11 @@ package ghostcat.util
 		 */		
 		public static function getMethodList(obj:*):Object
 		{
-			var xml:XML;
-			var child:XML;
-			var name:String;
-			var result:Object;
-			
-			xml = getDescribeType(obj);
-			result = new Object();
-			
-			for each(child in xml..method){
-				name = child.@name.toString();
-				result[name] = obj[name];
-			}
-						
+			var ins:ReflectUtil = getDescribeTypeCache(obj);
+			var result:Object = {};
+			for each (var s:String in ins.methods)
+				result[s] = obj[s];
+		
 			return result;
 		}
 		
@@ -94,26 +134,15 @@ package ghostcat.util
 		 */
 		public static function getPropertyList(obj:*,onlyWriteable:Boolean=false):Object
 		{
-			var xml:XML;
-			var child:XML;
-			var name:String;
-			var result:Object;
-			
-			xml = getDescribeType(obj);
-			result = new Object();
-			
-			for each(child in xml..accessor)
+			var ins:ReflectUtil = getDescribeTypeCache(obj);
+			var result:Object = {};
+			for (var k:String in ins.propertys)
 			{
-				if (child.@access=="readonly" && onlyWriteable)
-					continue;
-				name = child.@name.toString();
-				if (obj.hasOwnProperty(name))
-					result[name] = obj[name];
-			}
-			for each(child in xml..variable)
-			{
-				name = child.@name.toString();
-				result[name] = obj[name];
+				if (obj.hasOwnProperty(k))
+				{
+					if (!onlyWriteable || ins.propertysAccess[k] != "readonly")
+						result[k] = obj[k];		
+				}
 			}
 			return result;
 		}
@@ -128,14 +157,7 @@ package ghostcat.util
 		 */
 		public static function getTypeByProperty(obj:*,property:String):Class
 		{
-			var xml:XML = getDescribeType(obj);
-			var result:XMLList = xml..*.accessor.(@name==property);
-			if (result.length()>0)
-				return getDefinitionByName(result[0].@type) as Class;
-			result = xml..*.variable.(@name==property);
-			if (result.length()>0)
-				return getDefinitionByName(result[0].@type) as Class;
-			return null;
+			return getDescribeTypeCache(obj).propertysType[property] as Class;
 		}
 		
 		/**
@@ -148,28 +170,21 @@ package ghostcat.util
 		 */
 		public static function getPropertyTypeList(obj:*,onlyWriteable:Boolean=false):Object
 		{
-			var xml:XML;
-			var child:XML;
-			var name:String;
-			var result:Object;
-			
-			xml = getDescribeType(obj);
-			result = new Object();
-			
-			for each(child in xml..accessor)
+			var ins:ReflectUtil = getDescribeTypeCache(obj);
+			if (onlyWriteable)
 			{
-				if (child.@access=="readonly" && onlyWriteable)
-					continue;
-				name = child.@name.toString();
-				if (obj.hasOwnProperty(name))
-					result[name] = getDefinitionByName(child.@type);
+				var result:Object = {};
+				for (var k:* in ins.propertysType)
+				{
+					if (ins.propertysAccess[k] != "readonly")
+						result[k] = ins.propertysType[k];		
+				}
+				return result;
 			}
-			for each(child in xml..variable)
+			else
 			{
-				name = child.@name.toString();
-				result[name] = getDefinitionByName(child.@type);
+				return ins.propertys;
 			}
-			return result;
 		}
 		
 		/**

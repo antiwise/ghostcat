@@ -486,6 +486,8 @@
     <classEntry path="ghostcat.util.RandomSeed"/>
     <classEntry path="ghostcat.display.residual.SleepResidualScreen"/>
     <classEntry path="ghostcat.display.transfer.Bloom"/>
+    <classEntry path="ghostcat.util.display.InstanceWatcher"/>
+    <classEntry path="ghostcat.events.InstanceEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

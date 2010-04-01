@@ -144,7 +144,7 @@ package ghostcat.util.display
 				for (var i:int=0;i < len;i++)
 				{
 					displayObj = contain.getChildAt(i);
-					if (displayObj.hasOwnProperty(property))
+					if (displayObj && displayObj.hasOwnProperty(property))
 					{
 						if (value && displayObj[property] == value || value==null)
 							return displayObj;
@@ -153,7 +153,7 @@ package ghostcat.util.display
 				for (i = 0;i < len;i++)
 				{
 					displayObj = contain.getChildAt(i);
-					if (displayObj is DisplayObjectContainer && !(displayObj is Loader))
+					if (displayObj && displayObj is DisplayObjectContainer && !(displayObj is Loader))
 					{
 						var child:DisplayObject = findChildByPropertyIns(displayObj as DisplayObjectContainer, property, value, depth - 1);
 						if (child)
