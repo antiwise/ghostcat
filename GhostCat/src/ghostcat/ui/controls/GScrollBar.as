@@ -90,6 +90,12 @@ package ghostcat.ui.controls
 			if (_scrollContent)
 				_scrollContent.addEventListener(Event.SCROLL,scrollHandler);
 		}
+		
+		public function get scrollContent():IScrollContent
+		{
+			return _scrollContent;
+		}
+		
 		/** @inheritDoc*/
 		public override function get value():Number
 		{
@@ -179,16 +185,6 @@ package ghostcat.ui.controls
 		{
 			_scrollContent.scrollH = _scrollContent.scrollV = _scrollContent.tweenTargetH = _scrollContent.tweenTargetV = 0.0;
 			updateThumb();
-		}
-		
-		/**
-		 * 滚动区域对象
-		 * @return 
-		 * 
-		 */
-		public function get scrollContent():IScrollContent
-		{
-			return _scrollContent;
 		}
 		/**
 		 * 设置目标

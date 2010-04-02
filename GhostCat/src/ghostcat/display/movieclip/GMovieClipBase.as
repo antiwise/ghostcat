@@ -33,6 +33,11 @@ package ghostcat.display.movieclip
 		protected var _totalFrames:int = 1;
 		
 		/**
+		 * 是否激活按Label跳转的动画模式
+		 */
+		public var enabledLabelMovie:Boolean = true;
+		
+		/**
 		 * 保存着所有的帧上函数
 		 */
 		public static var labelHandlers:Dictionary = new Dictionary();
@@ -347,7 +352,7 @@ package ghostcat.display.movieclip
 		 */
 		public function get labels():Array
 		{
-			return _labels;
+			return enabledLabelMovie ? _labels : null;
 		}
 		
 		/**

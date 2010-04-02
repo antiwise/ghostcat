@@ -10,6 +10,7 @@ package ghostcat.display.transfer
 	import ghostcat.events.MoveEvent;
 	import ghostcat.events.ResizeEvent;
 	import ghostcat.util.core.UniqueCall;
+	import ghostcat.util.display.Geom;
 
 	
 	/**
@@ -83,7 +84,7 @@ package ghostcat.display.transfer
 		{
 			bitmapData && bitmapData.dispose();
 			
-			var rect: Rectangle = _target.getBounds(_target);
+			var rect: Rectangle = _target.scrollRect ? _target.scrollRect : _target.getBounds(_target);
 			if (rect.width && rect.height)
 				bitmapData = new BitmapData(rect.width,rect.height,true,0);
 		}
