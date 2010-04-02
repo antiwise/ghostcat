@@ -11,7 +11,7 @@ package ghostcat.util.display
 	[Event(name="instance_create",type="ghostcat.events.InstanceEvent")]
 	[Event(name="instance_destory",type="ghostcat.events.InstanceEvent")]
 	/**
-	 * 管理动态显示对象自动创建取消事件
+	 * 管理动态显示对象(例如MovieClip)内实例自动创建取消事件，用来处理替换MovieClip内容断帧的问题
 	 * @author flashyiyi
 	 * 
 	 */
@@ -20,6 +20,9 @@ package ghostcat.util.display
 		public var mc:DisplayObjectContainer;
 		public var objects:Array;
 		
+		/**
+		 * 在Label切换的时候重置实例，处理无法正确判断的情况
+		 */
 		public var clearWhenLabelChange:Boolean = false;
 		
 		private var ins:Object = {};

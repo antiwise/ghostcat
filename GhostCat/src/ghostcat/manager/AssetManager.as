@@ -162,7 +162,7 @@ package ghostcat.manager
 		
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
-		 * Oper的名称将是配置文件的@name属性，地址则是@url属性。
+		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，资源名称是@tip属性。
 		 * 
 		 * @param filePath	资源配置文件名称
 		 * @return 

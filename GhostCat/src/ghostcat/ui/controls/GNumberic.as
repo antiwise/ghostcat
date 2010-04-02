@@ -1,9 +1,19 @@
 package ghostcat.ui.controls
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.text.NumberUtil;
+	import ghostcat.text.TextFieldUtil;
+	import ghostcat.ui.containers.GBox;
+	import ghostcat.ui.containers.GView;
 	import ghostcat.ui.layout.Padding;
+	import ghostcat.ui.layout.PaddingLayout;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenUtil;
 	
@@ -47,6 +57,24 @@ package ghostcat.ui.controls
 		public var easing:Function = Circ.easeOut;
 		
 		/**
+		 * 显示变化文字
+		 */
+		public var showOffestTextNum:int = 0;
+		
+		/**
+		 * 变化文字间距
+		 */
+		public var offestTextGap:int = 0;
+		
+		/**
+		 * 变化文本持续时间
+		 */
+		public var offestTextShowTime:int = 1000;
+		
+		private var offestTexts:Sprite;
+		private var offestValues:Array = [];
+		
+		/**
 		 * 小数点位数
 		 */
 		public var fix:int = 0;
@@ -76,10 +104,15 @@ package ghostcat.ui.controls
 		 */
 		public function setValue(v : Number, tween:Boolean = true):void
 		{
+			var offest:Number = v - Number(data);
+			
 			_data = v;
 			
 			if (_data && tween && !isNaN(displayValue))
 			{
+				if (showOffestTextNum && offest != 0)
+					addOffestNum(offest);
+				
 				TweenUtil.removeTween(this,false);
 				TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
 			}
@@ -94,6 +127,60 @@ package ghostcat.ui.controls
 		private function tweenCompleteHandler():void
 		{
 			displayValue = Number(_data);
+		}
+		
+		/**
+		 * 增加变化文本
+		 * 
+		 */
+		public function addOffestNum(v:Number):void
+		{
+			if (showOffestTextNum)
+			{
+				offestValues.push(v);
+				offestValues = offestValues.slice(Math.max(0,offestValues.length - showOffestTextNum),showOffestTextNum);
+			}
+			
+			refreshOffestTexts();
+			setTimeout(removeOffestNum,offestTextShowTime);
+		}
+		
+		//删除一个变化文本
+		private function removeOffestNum():void
+		{
+			offestValues.shift();
+			refreshOffestTexts();
+		}
+		
+		/**
+		 * 更新变化文本
+		 * 
+		 */
+		public function refreshOffestTexts():void
+		{
+			if (!offestTexts)
+			{
+				offestTexts = new Sprite();
+				addChild(offestTexts);
+			}
+			
+			DisplayUtil.removeAllChildren(offestTexts);
+			
+			var prevText:TextField = textField;
+			for (var i:int = 0;i < offestValues.length;i++)
+			{
+				var n:TextField = TextFieldUtil.clone(prevText,false); 
+				n.text = (offestValues[i] >= 0 ? "+" : "-") + offestValues[i].toString();
+				n.y = prevText.y + prevText.height + offestTextGap;
+				
+				var tf:TextFormat = n.defaultTextFormat;
+				tf.size = Number(tf.size) * (1 - 1 / (showOffestTextNum + 1));
+				n.setTextFormat(tf,0,n.length);
+				n.defaultTextFormat = tf;
+				offestTexts.addChild(n);
+				
+				prevText = n;
+			}
 		}
 		
 		/**
