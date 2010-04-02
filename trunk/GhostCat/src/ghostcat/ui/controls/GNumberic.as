@@ -170,7 +170,7 @@ package ghostcat.ui.controls
 			for (var i:int = 0;i < offestValues.length;i++)
 			{
 				var n:TextField = TextFieldUtil.clone(prevText,false); 
-				n.text = (offestValues[i] >= 0 ? "+" : "-") + offestValues[i].toString();
+				n.text = (offestValues[i] >= 0 ? "+" : "") + offestValues[i].toString();
 				n.y = prevText.y + prevText.height + offestTextGap;
 				
 				var tf:TextFormat = n.defaultTextFormat;

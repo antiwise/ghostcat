@@ -53,10 +53,10 @@ package ghostcat.gxml.spec
 			if (xml.nodeKind()=="text")//是普通文本
 			{
 				var str:String = xml.toString();
-				if (str.length >= 2 && str.charAt(0) == str.charAt(str.length - 1) == '"')//加双引号解除转义
+				if (str.length >= 2 && str.charAt(0) == '"' && str.charAt(str.length - 1) == '"')//加双引号解除转义
 					obj = [str.slice(1,str.length - 2)];
 				else
-					obj = str.split(/[,|\s]+/);
+					obj = str.split(",");
 				
 				for (var i:int = 0;i < obj.length;i++)
 				{
