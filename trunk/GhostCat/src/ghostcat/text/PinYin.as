@@ -31,7 +31,7 @@
 						n--;
 					result += (firstChar)?spell[n].charAt(0):spell[n];
 					if (sep)
-						result +=" ";
+						result += " ";
 				}
 				else
 				{
