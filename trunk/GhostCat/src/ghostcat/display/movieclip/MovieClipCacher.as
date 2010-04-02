@@ -36,14 +36,20 @@ package ghostcat.display.movieclip
 		 */
 		public var result:Array;
 		
-		/**
-		 * 是否已经绘制完成
-		 */
-		public var readComplete:Boolean=false;
+		private var _readComplete:Boolean = false;
 		
 		private var readFrame:int;//预计要读取的帧
 		private var endFrame:int;//最后一帧的位置
 		private var timer:Timer;
+		private var readWhenPlaying:Boolean;//是否在播放时缓存
+		
+		/**
+		 * 是否已经绘制完成
+		 */
+		public function get readComplete():Boolean
+		{
+			return _readComplete;
+		}
 		
 		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1)
 		{
@@ -60,9 +66,10 @@ package ghostcat.display.movieclip
 		 * @param len		长度
 		 * 
 		 */
-		public function read(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1):void
+		public function read(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false):void
 		{
 			this.mc = mc;
+			this.readWhenPlaying = readWhenPlaying;
 			
 			this.rect = rect ? rect : mc.getBounds(mc)
 			
@@ -81,16 +88,23 @@ package ghostcat.display.movieclip
 			}
 			
 			this.result = [];
-			this.readComplete = false;
+			this._readComplete = false;
 			
-			this.timer = new Timer(0,int.MAX_VALUE);
-			this.timer.addEventListener(TimerEvent.TIMER,timeHandler);
-			this.timer.start();
+			if (readWhenPlaying)
+			{
+				this.mc.addEventListener(Event.ENTER_FRAME,timeHandler);	
+			}
+			else
+			{
+				this.timer = new Timer(0,int.MAX_VALUE);
+				this.timer.addEventListener(TimerEvent.TIMER,timeHandler);
+				this.timer.start();
+			}
 		}
 		
 		private function timeHandler(event:Event):void
 		{
-			if (mc.currentFrame >= readFrame)
+			if (readWhenPlaying || mc.currentFrame >= readFrame)
 			{
 				var bitmapData:BitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
 				var m:Matrix;
@@ -107,18 +121,26 @@ package ghostcat.display.movieclip
 				else
 				{
 					readFrame++;
-					mc.nextFrame();
+					if (!readWhenPlaying)//播放时缓存不控制动画
+						mc.nextFrame();
 				}
 			}
 		}
 		
 		private function readCompleteHandler():void
 		{
-			this.timer.removeEventListener(TimerEvent.TIMER,timeHandler);
-			this.timer.stop();
-			this.timer = null;
+			if (readWhenPlaying)
+			{
+				this.mc.removeEventListener(Event.ENTER_FRAME,timeHandler);	
+			}
+			else
+			{
+				this.timer.removeEventListener(TimerEvent.TIMER,timeHandler);
+				this.timer.stop();
+				this.timer = null;
+			}
 			
-			this.readComplete = true;
+			this._readComplete = true;
 			
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
