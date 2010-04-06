@@ -1,4 +1,4 @@
-package com.kunlun.appmovie.ui.components
+package ghostcat.ui.controls
 {
 	import flash.display.MovieClip;
 	
@@ -19,7 +19,7 @@ package com.kunlun.appmovie.ui.components
 		public function GFrameBase(skin:*=null, replace:Boolean=true)
 		{
 			super(skin, replace);
-			this.data = 0;
+			this.data = 1;
 		}
 		
 		public function set frame(v:int):void
