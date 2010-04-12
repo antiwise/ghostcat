@@ -58,6 +58,7 @@ package ghostcat.ui.controls
 		
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
+		private var _enabledTruncateToFit:Boolean = false;
 		
 		/**
 		 * Label文本实例 
@@ -119,6 +120,26 @@ package ghostcat.ui.controls
 			
 			if (labelTextField)
 				labelTextField.separateTextField = v;
+		}
+		
+		/**
+		 * 自动截取文本 
+		 * @return 
+		 * 
+		 */
+		public function get enabledTruncateToFit():Boolean
+		{
+			return _enabledTruncateToFit;
+			
+		}
+		
+		public function set enabledTruncateToFit(v:Boolean):void
+		{
+			_enabledTruncateToFit = v;
+			
+			if (labelTextField)
+				labelTextField.enabledTruncateToFit = v;
+			
 		}
 		
 		/**
@@ -269,6 +290,7 @@ package ghostcat.ui.controls
 			
 			labelTextField = new GText(content,false,separateTextField,textPadding);
 			labelTextField.enabledAdjustContextSize = this.enabledAdjustContextSize;
+			labelTextField.enabledTruncateToFit = this.enabledTruncateToFit;
 			
 			if (labelTextField.autoSize == TextFieldAutoSize.NONE)
 				labelTextField.autoSize = _autoSize;

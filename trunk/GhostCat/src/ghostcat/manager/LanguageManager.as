@@ -174,7 +174,7 @@ package ghostcat.manager
 			{
 				for (var i:int = 0;i<parms.length;i++)
 				{
-					result = result.replace(new RegExp("\\{"+i+"\\}","g"),parms[i]);
+					result = result.replace(new RegExp("\\{"+i+"\\}","g"),parms[i] != null ? parms[i] : "");
 				}
 			}
 			for (var conv:* in customConversion)

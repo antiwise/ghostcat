@@ -207,5 +207,14 @@ package ghostcat.ui.containers
 		{
 			invalidateLayout();
 		}
+		
+		/**
+		 * 立即更新布局 
+		 * 
+		 */
+		public function vaildLayout():void
+		{
+			layout.vaildLayout();
+		}
 	}
 }
