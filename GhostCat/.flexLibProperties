@@ -488,6 +488,7 @@
     <classEntry path="ghostcat.display.transfer.Bloom"/>
     <classEntry path="ghostcat.util.display.InstanceWatcher"/>
     <classEntry path="ghostcat.events.InstanceEvent"/>
+    <classEntry path="ghostcat.ui.controls.GFrameBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -57,6 +57,11 @@ package ghostcat.ui.controls
 		 */
 		public static var fontFamilyReplacer:Object;
 		
+		/**
+		 * 嵌入字体模式切换
+		 */
+		public static var fontEmbedReplacer:Object;
+		
 		private var _textFormat:String;
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
@@ -369,11 +374,20 @@ package ghostcat.ui.controls
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）
 			var oldFont:TextFormat = this.textField.defaultTextFormat;//替换字体
+			if (fontEmbedReplacer && fontEmbedReplacer[oldFont.font])
+			{
+				if (!this.textField.embedFonts && fontEmbedReplacer[oldFont.font])
+					rebuildTextField();
+				
+				this.textField.embedFonts = fontEmbedReplacer[oldFont.font];
+			}
 			if (fontFamilyReplacer && fontFamilyReplacer[oldFont.font])
 			{
-				oldFont.font = fontFamilyReplacer[oldFont.font]
-				this.textField.defaultTextFormat = oldFont;
+				oldFont.font = fontFamilyReplacer[oldFont.font];
+				this.applyTextFormat(oldFont,true);
 			}
+			
+			
 			
 			if (!this.text)
 				super.data = textField.text;

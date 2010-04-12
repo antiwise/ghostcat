@@ -31,6 +31,8 @@ package ghostcat.display.loader
 			
 			super(null,null, paused);
 			
+			this.acceptContentPosition = false;
+			
 			if (request)
 				load(request);
 		}

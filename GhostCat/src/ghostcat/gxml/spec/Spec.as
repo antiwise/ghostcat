@@ -54,7 +54,7 @@ package ghostcat.gxml.spec
 			{
 				var str:String = xml.toString();
 				if (str.length >= 2 && str.charAt(0) == '"' && str.charAt(str.length - 1) == '"')//加双引号解除转义
-					obj = [str.slice(1,str.length - 2)];
+					obj = [str.slice(1,str.length - 1)];
 				else
 					obj = str.split(",");
 				

@@ -26,6 +26,11 @@ package ghostcat.ui.layout
 		private var _verticalAlign:String = "";
 		
 		/**
+		 * 是否忽略不可视对象
+		 */
+		public var withoutHided:Boolean = true;
+		
+		/**
 		 * 横向对齐方式
 		 * @return 
 		 * 
@@ -118,6 +123,9 @@ package ghostcat.ui.layout
 			for (var i:int = 0;i < target.numChildren;i++)
 			{
 				var obj:DisplayObject = target.getChildAt(i);
+				if (withoutHided && !obj.visible)
+					continue;
+				
 				var rect:Rectangle = Geom.getRect(obj);
 				if (type == UIConst.HORIZONTAL)
 				{
@@ -154,10 +162,13 @@ package ghostcat.ui.layout
 			{
 				var obj:DisplayObject = target.getChildAt(i);
 				
+				if (withoutHided && !obj.visible)
+					continue;
+				
 				if (type == UIConst.HORIZONTAL)
 				{
 					LayoutUtil.silder(obj,target,null,verticalAlign);
-					if (i == 0)
+					if (!prev)
 						LayoutUtil.silder(obj,target,UIConst.LEFT);
 					else
 						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
@@ -165,7 +176,7 @@ package ghostcat.ui.layout
 				else if (type == UIConst.VERTICAL)
 				{
 					LayoutUtil.silder(obj,target,horizontalAlign);
-					if (i == 0)
+					if (!prev)
 						LayoutUtil.silder(obj,target,null,UIConst.TOP);
 					else
 						LayoutUtil.vertical(obj,prev,target,verticalGap);
@@ -174,7 +185,7 @@ package ghostcat.ui.layout
 				else if (type == UIConst.TILE)
 				{
 					maxH = Math.max(maxH,obj.height);
-					if (i == 0)
+					if (!prev)
 						Geom.moveTopLeftTo(obj,new Point());
 					else
 					{

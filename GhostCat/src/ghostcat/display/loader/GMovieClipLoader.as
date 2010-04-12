@@ -10,6 +10,7 @@ package ghostcat.display.loader
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.TickEvent;
 	import ghostcat.fileformat.swf.SWFDecoder;
@@ -23,9 +24,12 @@ package ghostcat.display.loader
 	{
 		public var loader:URLLoader;
 		public var swf:SWFDecoder;
+		public var useAssetFrameRate:Boolean = true;
 		public function GMovieClipLoader(request:URLRequest, paused:Boolean=false)
 		{
 			super(null, replace, paused);
+			
+			this.acceptContentPosition = false;
 			
 			if (request)
 				load(request);
@@ -50,10 +54,12 @@ package ghostcat.display.loader
 			swfLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,swfLoadCompleteHandler);
 			swfLoader.loadBytes(bytes);
 			
-			swf = new SWFDecoder();
-			swf.read(bytes,false);
-			this.frameRate = swf.frameRate;
-			
+			if (useAssetFrameRate)
+			{
+				swf = new SWFDecoder();
+				swf.read(bytes,false);
+				this.frameRate = swf.frameRate;
+			}
 		}
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
