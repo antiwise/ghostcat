@@ -2,15 +2,20 @@ package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
+	import flash.system.Security;
+	import flash.system.SecurityDomain;
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GNoScale;
+	import ghostcat.display.loader.ImageLoader;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LayoutUtil;
 	import ghostcat.util.core.ClassFactory;
@@ -51,6 +56,16 @@ package ghostcat.ui.controls
 		 * 是否检测图片的跨域文件
 		 */
 		public var checkPolicyFile:Boolean = false;
+		
+		/**
+		 * 是否使用当前域
+		 */
+		public var useCurrentDomain:Boolean = false;
+		
+		/**
+		 * 是否使用中转Loader（可以绕过图片沙箱）
+		 */
+		public var useTempLoader:Boolean = false;
 		
 		private var _clipContent:Boolean = false;
 		private var _scaleContent:Boolean = true;
@@ -192,8 +207,19 @@ package ghostcat.ui.controls
 			
 			if (v is URLRequest)
 			{
-				loader = new Loader();
-				loader.load(v as URLRequest,loaderContext ? loaderContext: checkPolicyFile ? new LoaderContext(true) : null);
+				var loaderContext:LoaderContext = this.loaderContext;
+				if (!loaderContext)
+				{
+					loaderContext = new LoaderContext(checkPolicyFile);
+					if (useCurrentDomain)
+					{
+						loaderContext.applicationDomain = ApplicationDomain.currentDomain;
+						if (Security.sandboxType == Security.REMOTE)
+							loaderContext.securityDomain = SecurityDomain.currentDomain;
+					}
+				}
+				loader = useTempLoader ? new ImageLoader() : new Loader();
+				loader.load(v as URLRequest,loaderContext);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
 				
