@@ -57,11 +57,14 @@ package ghostcat.operation
 		{
 			super.end(event);
 			
-			for (var i:int = 0;i < children.length;i++)
+			if (children)
 			{
-				var oper:Oper = children[i] as Oper;
-				oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nextOperation);
-				oper.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
+				for (var i:int = 0;i < children.length;i++)
+				{
+					var oper:Oper = children[i] as Oper;
+					oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nextOperation);
+					oper.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
+				}
 			}
 		}
 		
