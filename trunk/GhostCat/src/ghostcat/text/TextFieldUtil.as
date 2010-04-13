@@ -213,5 +213,20 @@ package ghostcat.text
 				firstLine = textField.getLineMetrics(0);
 			}
 		}
+		
+		/**
+		 * 获取一段文字的TextLineMetrics对象
+		 * @param s
+		 * @param format
+		 * @return 
+		 * 
+		 */
+		public static function getTextLineMetrics(s:String,format:TextFormat):TextLineMetrics
+		{
+			var t:TextField = new TextField();
+			t.defaultTextFormat = format;
+			t.text = s;
+			return t.getLineMetrics(0);
+		}
 	}
 }

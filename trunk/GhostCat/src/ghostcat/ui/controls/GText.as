@@ -62,6 +62,19 @@ package ghostcat.ui.controls
 		 */
 		public static var fontEmbedReplacer:Object;
 		
+		public static function setFontReplace(name:String,fontName:String,embed:Boolean = false):void
+		{
+			if (!fontFamilyReplacer)
+				fontFamilyReplacer = {};
+			fontFamilyReplacer[name] = fontName;
+			if (embed)
+			{
+				if (!fontEmbedReplacer)
+					fontEmbedReplacer = {};
+				fontEmbedReplacer[name] = embed;
+			}
+		}
+		
 		private var _textFormat:String;
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
