@@ -3,6 +3,7 @@ package ghostcat.ui.controls
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
@@ -14,6 +15,7 @@ package ghostcat.ui.controls
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import flash.text.TextLineMetrics;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.manager.FontManager;
@@ -21,6 +23,8 @@ package ghostcat.ui.controls
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
 	import ghostcat.text.UBB;
+	import ghostcat.ui.layout.Layout;
+	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
@@ -104,6 +108,11 @@ package ghostcat.ui.controls
 		 * 是否激活截断文本
 		 */
 		public var enabledTruncateToFit:Boolean = false;
+		
+		/**
+		 * 文本是否垂直居中
+		 */
+		public var enabledVerticalCenter:Boolean = false;
 		
 		/**
 		 * 限定输入内容的正则表达式
@@ -491,6 +500,22 @@ package ghostcat.ui.controls
 				this.toolTip = this.text;
 		}
 		
+		/**
+		 * 使文本在皮肤中垂直居中
+		 * 
+		 */
+		public function verticalCenter():void
+		{
+			if (!textField && textField.parent)
+				return;
+			
+			var p:DisplayObjectContainer = textField.parent;
+			p.removeChild(textField);
+			var center:Point = Geom.center(content,p);
+			p.addChild(textField);
+			textField.y = center.y - textField.height / 2;
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*):void
 		{
@@ -533,6 +558,9 @@ package ghostcat.ui.controls
 				if (enabledAdjustContextSize)
 					adjustContextSize();
 				
+				if (enabledVerticalCenter)
+					verticalCenter();
+					
 				if (asTextBitmap)
 					reRenderTextBitmap();
 			}
