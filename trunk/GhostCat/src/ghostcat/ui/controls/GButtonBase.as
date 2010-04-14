@@ -59,7 +59,8 @@ package ghostcat.ui.controls
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
 		private var _enabledTruncateToFit:Boolean = false;
-		
+		private var _enabledVerticalCenter:Boolean = false;
+
 		/**
 		 * Label文本实例 
 		 */
@@ -141,6 +142,23 @@ package ghostcat.ui.controls
 				labelTextField.enabledTruncateToFit = v;
 			
 		}
+		
+		/**
+		 * 文本是否垂直居中
+		 */
+		public function get enabledVerticalCenter():Boolean
+		{
+			return _enabledVerticalCenter;
+		}
+		
+		public function set enabledVerticalCenter(v:Boolean):void
+		{
+			_enabledVerticalCenter = v;
+			
+			if (labelTextField)
+				labelTextField.enabledVerticalCenter = v;
+		}
+		
 		
 		/**
 		 * 激活文本自适应
@@ -291,6 +309,7 @@ package ghostcat.ui.controls
 			labelTextField = new GText(content,false,separateTextField,textPadding);
 			labelTextField.enabledAdjustContextSize = this.enabledAdjustContextSize;
 			labelTextField.enabledTruncateToFit = this.enabledTruncateToFit;
+			labelTextField.enabledVerticalCenter = this.enabledVerticalCenter;
 			
 			if (labelTextField.autoSize == TextFieldAutoSize.NONE)
 				labelTextField.autoSize = _autoSize;
