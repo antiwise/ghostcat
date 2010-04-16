@@ -29,7 +29,7 @@ package ghostcat.display.movieclip
 	public class GMovieClipBase extends GBase
 	{
 		protected var _labels:Array;
-		private var _currentFrame:int = 1;
+		protected var _currentFrame:int = 1;
 		protected var _totalFrames:int = 1;
 		
 		/**
@@ -72,9 +72,12 @@ package ghostcat.display.movieclip
 		
 		private var nextLabels:Array = [];//Labels列表
         
-        protected var curLabelIndex:int=0;//缓存LabelIndex的序号，避免重复遍历
+		private var _queueDestory:Boolean = false;
+		
+        protected var curLabelIndex:int = 0;//缓存LabelIndex的序号，避免重复遍历
         
 		protected var frameTimer:int = 0;//记时器，小于0则需要播放，直到大于0
+		
 
 		/**
 		 * 连接到自己的MovieClip对象
@@ -129,7 +132,8 @@ package ghostcat.display.movieclip
          */
         public function getLabelIndex(labelName:String):int
         {
-        	for (var i:int = 0;i<labels.length;i++)
+			var len:int = labels.length;
+        	for (var i:int = 0;i < len;i++)
         	{
         		if ((labels[i] as FrameLabel).name == labelName)
         			return i;
@@ -169,9 +173,9 @@ package ghostcat.display.movieclip
 		public function setLabel(labelName:String, repeat:int=-1, clearQueue:Boolean = true):void
         {
 			if (clearQueue)
-        		nextLabels = [];
+        		this.clearQueue();
 			
-			var index:int = getLabelIndex(labelName);
+			var index:int = labelName ? getLabelIndex(labelName) : 0;
 			
 			if (index != -1)
 			{
@@ -229,9 +233,7 @@ package ghostcat.display.movieclip
          */
         public function reset():void
         {
-			clearQueue();
-			if (labels && labels.length > 0)
-				setLabel(labels[0].name,-1);
+			setLabel(null);
         }
         
         protected override function tickHandler(event:TickEvent):void
@@ -263,6 +265,9 @@ package ghostcat.display.movieclip
 							e = new MovieEvent(MovieEvent.MOVIE_EMPTY);
 							e.labelName = curLabelName;
 							dispatchEvent(e);
+							
+							if (_queueDestory)
+								destory();
 							
 							frameTimer = 0;//停止动画时需要将延时重置为0
 						}
@@ -437,6 +442,15 @@ package ghostcat.display.movieclip
 			
 			if (target.linkMovieClips.length == 0)
 				target.linkMovieClips = null;
+		}
+		
+		/**
+		 * 播放动画后销毁自身
+		 * 
+		 */
+		public function queueDestory():void
+		{
+			_queueDestory = true;
 		}
 	}
 }

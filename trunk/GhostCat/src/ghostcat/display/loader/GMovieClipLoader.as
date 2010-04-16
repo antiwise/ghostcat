@@ -25,7 +25,7 @@ package ghostcat.display.loader
 		public var loader:URLLoader;
 		public var swf:SWFDecoder;
 		public var useAssetFrameRate:Boolean = true;
-		public function GMovieClipLoader(request:URLRequest, paused:Boolean=false)
+		public function GMovieClipLoader(request:URLRequest=null, paused:Boolean=false)
 		{
 			super(null, replace, paused);
 			
@@ -42,6 +42,11 @@ package ghostcat.display.loader
 			loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 			loader.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
 			loader.load(request);
+		}
+		
+		public function unload():void
+		{
+			setContent(null);
 		}
 		
 		protected function loadCompleteHandler(event:Event):void
