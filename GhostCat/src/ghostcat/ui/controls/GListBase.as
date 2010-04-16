@@ -58,7 +58,6 @@ package ghostcat.ui.controls
 		
 		private var _columnCount:int = -1;
 		
-		private var oldSelectedItem:DisplayObject;
 		private var _selectedData:*;
 		
 		private var itemSkin:ClassFactory;//ItemRender的皮肤
@@ -205,7 +204,7 @@ package ghostcat.ui.controls
 		public function getRender(v:*):DisplayObject
 		{
 			var p:Point = getPointFromData(v);
-			return getItemAt(p.x,p.y);
+			return p ? getItemAt(p.x,p.y) : null;
 		}
 		
 		/**
@@ -220,10 +219,11 @@ package ghostcat.ui.controls
 
 		public function set selectedData(v:*):void
 		{
-			_selectedData = v;
-			
+			var oldSelectedItem:DisplayObject = getRender(_selectedData);
 			if (oldSelectedItem && oldSelectedItem is GBase)
 				(oldSelectedItem as GBase).selected = false;
+			
+			_selectedData = v;
 			
 			var item:DisplayObject = selectedItem;
 			oldSelectedItem = item;
