@@ -68,6 +68,14 @@ package ghostcat.operation
 			}
 		}
 		
+//		public override function halt():void
+//		{
+//			if (index && children[index])
+//				children[index].halt();
+//			
+//			super.halt();
+//		}
+		
 		private function nextOperation(event:OperationEvent):void
 		{
 			index++;

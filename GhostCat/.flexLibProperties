@@ -490,6 +490,7 @@
     <classEntry path="ghostcat.events.InstanceEvent"/>
     <classEntry path="ghostcat.ui.controls.GFrameBase"/>
     <classEntry path="ghostcat.display.loader.ImageLoader"/>
+    <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
