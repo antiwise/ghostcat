@@ -109,7 +109,10 @@ package ghostcat.operation
 		protected override function end(event:*=null):void
 		{
 			if (tween)
+			{
 				tween.removeEventListener(TweenEvent.TWEEN_END,result);
+				tween.remove(false);
+			}
 			super.end(event);
 		}
 	}

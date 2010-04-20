@@ -34,6 +34,17 @@ package ghostcat.operation.effect
 			this.fromAlpha = fromAlpha;
 			this.toAlpha = toAlpha;
 		}
+		
+		public override function halt():void
+		{
+			if (children && index >= 0 && index < children.length)
+				children[index].halt();
+			
+			(target as DisplayObject).alpha = fromAlpha;
+			
+			super.halt();
+		}
+		
 		/** @inheritDoc*/
 		public override function execute():void
 		{

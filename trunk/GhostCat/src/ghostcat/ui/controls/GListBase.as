@@ -554,7 +554,8 @@ package ghostcat.ui.controls
 		public function refreshData(data:*):void
 		{
 			var p:Point = getPointFromData(data);
-			refreshIndex(p.x,p.y);
+			if (p)
+				refreshIndex(p.x,p.y);
 		}
 		
 		/**
