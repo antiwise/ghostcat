@@ -58,33 +58,39 @@ package ghostcat.gxml.spec
 		{
 			replaceClassName(xml);
 			
-			var id:String;
-			var handlers:Object = {};
-			for each (var item:XML in xml.attributes())
+			if (root)
 			{
-				var name:String = item.name().toString();
-				if (name == "id")
+				var id:String;
+				var handlers:Object = {};
+				for each (var item:XML in xml.attributes())
 				{
-					id = item.toString();
-					delete xml["@"+name];
+					var name:String = item.name().toString();
+					if (name == "id")
+					{
+						id = item.toString();
+						delete xml["@"+name];
+					}
+					else if (name.substr(0,3)=="on_")
+					{
+						handlers[name.substr(3)] = item.toString();
+						delete xml["@"+name];
+					}
+					
 				}
-				else if (name.substr(0,3)=="on_")
-				{
-					handlers[name.substr(3)] = item.toString();
-					delete xml["@"+name];
-				}
-				
 			}
 			
 			var obj:* = super.createObject(xml);
 			
-			if (root && id)
-				root[id] = obj;//如果设置了ID属性，创建的对象将会创建指定的外部引用
-			
-			if (obj is IEventDispatcher)
+			if (root)
 			{
-				for (var key:String in handlers)
-					(obj as IEventDispatcher).addEventListener(key,root[handlers[key]],false,0,true); 
+				if (id)
+					root[id] = obj;//如果设置了ID属性，创建的对象将会创建指定的外部引用
+				
+				if (obj is IEventDispatcher)
+				{
+					for (var key:String in handlers)
+						(obj as IEventDispatcher).addEventListener(key,root[handlers[key]],false,0,true); 
+				}
 			}
 			
 			return obj;

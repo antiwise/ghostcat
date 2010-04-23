@@ -86,6 +86,8 @@ package ghostcat.manager
 		/**
 		 * 载入一个资源
 		 * 
+		 * 加载结束可监听返回值的operation_complete事件
+		 * 
 		 * @param res	资源路径
 		 * @param name	资源的名称，用于在进度条中显示
 		 * @return 
@@ -150,6 +152,8 @@ package ghostcat.manager
 		 * 
 		 * @param res	资源路径列表
 		 * @param names 资源的名称，用于在进度条中显示
+		 * 
+		 * 加载结束可监听返回值的operation_complete事件
 		 * @return 
 		 * 
 		 */
@@ -163,6 +167,8 @@ package ghostcat.manager
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，资源名称是@tip属性。
+		 * 
+		 * 加载结束可监听返回值的operation_complete事件
 		 * 
 		 * @param filePath	资源配置文件名称
 		 * @return 

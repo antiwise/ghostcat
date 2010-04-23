@@ -2,6 +2,7 @@ package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
 	
+	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
 
 	/**
@@ -37,18 +38,26 @@ package ghostcat.operation.effect
 		
 		public override function halt():void
 		{
+			this.clearCurrent();
+			super.halt();
+		}
+		
+		public function clearCurrent():void
+		{
 			if (children && index >= 0 && index < children.length)
 				children[index].halt();
-			
+		
 			(target as DisplayObject).alpha = fromAlpha;
-			
-			super.halt();
 		}
 		
 		/** @inheritDoc*/
 		public override function execute():void
 		{
-			(target as DisplayObject).alpha = fromAlpha;
+			if (this.step == Oper.RUN)//清理重复调用
+			{
+				this.end();
+				this.clearCurrent();
+			}
 			
 			this.children = [new TweenOper(target,duration,{alpha:toAlpha}),
 							new TweenOper(target,duration,{alpha:fromAlpha})];

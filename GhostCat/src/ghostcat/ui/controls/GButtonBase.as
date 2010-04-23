@@ -293,7 +293,7 @@ package ghostcat.ui.controls
 			if (super.enabled == v)
 				return;
 			
-			this.mouseChildren = this.mouseEnabled = super.enabled = v;
+			this.mouseEnabled = super.enabled = v;
 			tweenTo(UP);
 		}
 		
