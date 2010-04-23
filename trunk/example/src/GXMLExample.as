@@ -48,7 +48,7 @@ package
 			
 			GAlert.show("使用命名空间以及自定义解析器，可以用XML轻松表示出任何一种类型的对象结构","由XML创建");
 			new TextFieldParse(xml.toXMLString()).parse(this);
-			GXMLManager.instance.create(xml,new DisplaySpec(this));
+			GXMLManager.create(xml,new DisplaySpec(this));
 			
 			addChild(button);//由于指定了id，这个时候button已经被自动实例化了
 		}
