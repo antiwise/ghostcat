@@ -3,14 +3,16 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.IGBase;
 	import ghostcat.events.ItemClickEvent;
+	import ghostcat.ui.controls.GButtonBase;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.core.ClassFactory;
-	
+	 
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
 	
 	/**
@@ -27,6 +29,14 @@ package ghostcat.ui.containers
 		
 		public var hideNullItem:Boolean = true;
 		public var renderSkin:ClassFactory;
+		
+		/**
+		 * 是否点击选中
+		 */
+		public var toggleOnClick:Boolean;
+		
+		private var _selectedData:*;
+		private var _labelField:String;
 		
 		public function GRepeater(skin:*=null, replace:Boolean=true, ref:*=null,type:String = "horizontal")
 		{
@@ -51,6 +61,8 @@ package ghostcat.ui.containers
 			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			
 			this.data = [];
+			
+			addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
 			
 		}
 		
@@ -104,8 +116,11 @@ package ghostcat.ui.containers
 					{	
 						var obj:GBase = ref.newInstance() as GBase;
 						contentPane.addChild(obj);
+						if (obj is GButtonBase && _labelField)
+							(obj as GButtonBase).labelField = _labelField;
 						obj.data = data[i];
 						obj.owner = self;
+						obj.selected = obj.data && obj.data == selectedData;
 					}
 				}
 			}
@@ -187,5 +202,98 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		/**
+		 * 按钮条的label字段
+		 * @return 
+		 * 
+		 */
+		public function get labelField():String
+		{
+			return _labelField;
+		}
+		
+		public function set labelField(v:String):void
+		{
+			_labelField = v;
+			for (var i:int = 0;i < contentPane.numChildren;i++)
+			{
+				var obj:GButtonBase = contentPane.getChildAt(i) as GButtonBase;
+				if (obj)
+				{
+					obj.labelField = labelField;
+					obj.data = obj.data;
+				}
+			}
+		}
+		
+		/**
+		 * 按钮点击事件
+		 * @param event
+		 * 
+		 */
+		protected function itemClickHandler(event:ItemClickEvent):void
+		{
+			if (toggleOnClick && event.data)
+				selectedData = event.data;
+		}
+		
+		/**
+		 * 选择的索引 
+		 * @return 
+		 * 
+		 */
+		public function get selectedIndex():int
+		{
+			return data.indexOf(selectedData);
+		}
+		
+		public function set selectedIndex(v:int):void
+		{
+			if (v == -1)
+				selectedData = null;
+			else
+				selectedData = data[v];
+		}
+		
+		/**
+		 * 选择的数据 
+		 * @return 
+		 * 
+		 */
+		public function get selectedData():*
+		{
+			return _selectedData;
+		}
+		
+		public function set selectedData(v:*):void
+		{
+			if (_selectedData == v)
+				return;
+			
+			_selectedData = v;
+			for (var i:int = 0;i < contentPane.numChildren;i++)
+			{
+				var item:GBase = contentPane.getChildAt(i) as GBase;
+				if (item)
+					item.selected = v && item.data == v; 
+			}
+			
+			dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		/**
+		 * 选择的按钮
+		 * @return 
+		 * 
+		 */
+		public function get selectedChild():DisplayObject
+		{
+			return contentPane.getChildAt(selectedIndex);
+		}
+		
+		public function set selectedChild(v:DisplayObject):void
+		{
+			selectedIndex = contentPane.getChildIndex(v);
+		}
 	}
 }

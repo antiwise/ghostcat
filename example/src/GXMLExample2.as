@@ -105,10 +105,10 @@ package
 			
 			new TextFieldParse(xml.toXMLString()).parse(this);
 			
-			s = GXMLManager.instance.create(sxml,new ItemSpec(this)).createSprite();
-			addChild(s);
+			s = GXMLManager.create(sxml,new ItemSpec(this)).createSprite();
+			addChild(s)
 			
-			GXMLManager.instance.exec(xml,new ItemSpec(this));
+			GXMLManager.exec(xml,new ItemSpec(this));
 			f.applyFilter(s);
 			
 			
