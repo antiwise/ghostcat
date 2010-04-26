@@ -1,6 +1,7 @@
 package ghostcat.operation.effect
 {
 	import flash.display.DisplayObject;
+	import flash.geom.ColorTransform;
 	
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
@@ -59,13 +60,25 @@ package ghostcat.operation.effect
 			_alpha = v;
 			(target as DisplayObject).transform.colorTransform = ColorUtil.getColorTransform2(color,_alpha);
 		}
+		
+		public function clearCurrent():void
+		{
+			if (children && index >= 0 && index < children.length)
+				children[index].halt();
+			
+			(target as DisplayObject).transform.colorTransform = new ColorTransform(color,fromAlpha);
+		}
+		
 		/** @inheritDoc*/
 		public override function execute():void
 		{
-			if (step == RUN)
-				halt();
+			if (this.step == Oper.RUN)//清理重复调用
+			{
+				this.end();
+				this.clearCurrent();
+			}
 			
-			this.alpha = fromAlpha;
+			this._alpha = fromAlpha;
 			this.children = [new TweenOper(this,duration,{alpha:toAlpha}),
 							new TweenOper(this,duration,{alpha:fromAlpha})];
 			

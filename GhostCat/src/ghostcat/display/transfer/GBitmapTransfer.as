@@ -102,6 +102,9 @@ package ghostcat.display.transfer
 		 */
 		public function renderTarget():void
 		{
+			if (!bitmapData)
+				return;
+			
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();
 			m.translate(-rect.x, -rect.y);
