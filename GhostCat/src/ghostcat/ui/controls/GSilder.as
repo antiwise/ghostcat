@@ -29,7 +29,7 @@ package ghostcat.ui.controls
 		public var background:DisplayObject;
 		
 		/**
-		 * 点击一次按钮才移动一次
+		 * (此屬性功能已取消)
 		 */
 		public var clickToMove:Boolean = true;
 		
@@ -280,20 +280,14 @@ package ghostcat.ui.controls
 		
 		protected function upArrowClickHandler(event:MouseEvent):void
 		{
-			if (clickToMove)
-			{
-				value -= detra;
-				updateThumb();
-			}
+			value -= detra;
+			updateThumb();
 		}
 		
 		protected function downArrowClickHandler(event:MouseEvent):void
 		{
-			if (clickToMove)
-			{
-				value += detra;
-				updateThumb();
-			}
+			value += detra;
+			updateThumb();
 		}
 		
 		/**
@@ -319,24 +313,10 @@ package ghostcat.ui.controls
 		{
 			var p:Number = percent;
 			if (upArrow)
-			{
-				upArrow.enabled = !isNaN(p) && p > 0;
-				if (upArrow.mouseDown && !clickToMove)
-				{
-					value -= detra;
-					updateThumb();
-				}
-			}
+				upArrow.enabled = !isNaN(p) && p > 0;				
 			
 			if (downArrow)
-			{
-				downArrow.enabled = !isNaN(p) && p < 1;
-				if (downArrow.mouseDown && !clickToMove)
-				{
-					value += detra;
-					updateThumb();
-				}
-			}
+				downArrow.enabled = !isNaN(p) && p < 1;				
 			
 			if (hideThumbInstead)
 			{
