@@ -262,10 +262,13 @@ package ghostcat.ui.controls
 				if (duration > 0)
 				{
 					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing})
+					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, onUpdate:updateThumb})
 				}
 				else
+				{
 					_scrollContent.scrollH = v;
+					updateThumb();
+				}
 			}
 			else
 			{	
@@ -276,10 +279,13 @@ package ghostcat.ui.controls
 				if (duration > 0)
 				{
 					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing})
+					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, onUpdate:updateThumb})
 				}
 				else 
+				{
 					_scrollContent.scrollV = v;
+					updateThumb();
+				}
 			}
 		}
 		

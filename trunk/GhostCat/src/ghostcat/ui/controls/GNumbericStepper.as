@@ -3,6 +3,7 @@ package ghostcat.ui.controls
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
 	import ghostcat.events.TickEvent;
@@ -59,17 +60,37 @@ package ghostcat.ui.controls
 			var downArrowField:String = fields.downArrowField;
 			
 			if (content.hasOwnProperty(upArrowField))
-				upArrow = new GButton(content[upArrowField])
-			
+			{
+				upArrow = new GButton(content[upArrowField]);
+				upArrow.addEventListener(MouseEvent.CLICK,upArrowHandler);
+				upArrow.incessancyClick = true;
+			}
 			if (content.hasOwnProperty(downArrowField))
-				downArrow = new GButton(content[downArrowField])
+			{
+				downArrow = new GButton(content[downArrowField]);
+				downArrow.addEventListener(MouseEvent.CLICK,downArrowHandler);
+				downArrow.incessancyClick = true;
+			}
 		}
 		/** @inheritDoc*/
 		public override function getValue():*
 		{
 			accaptText();
-			
 			return super.getValue();
+		}
+		
+		protected function upArrowHandler(event:MouseEvent):void
+		{
+			data -= detra;
+			if (!isNaN(minValue))
+				data = Math.max(data,minValue);
+		}
+		
+		protected function downArrowHandler(event:MouseEvent):void
+		{
+			data += detra;
+			if (!isNaN(maxValue))
+				data = Math.min(data,maxValue);
 		}
 		
 		/**
@@ -80,18 +101,10 @@ package ghostcat.ui.controls
 		protected override function tickHandler(event:TickEvent):void
 		{
 			if (upArrow)
-			{
 				upArrow.enabled = isNaN(minValue) || data > minValue;
-				if (upArrow.enabled && upArrow.mouseDown)
-					data -= detra;
-			}
 			
 			if (downArrow)
-			{
 				downArrow.enabled = isNaN(maxValue) ||  data < maxValue;
-				if (downArrow.enabled && downArrow.mouseDown)
-					data += detra;
-			}
 		}
 		/** @inheritDoc*/
 		protected override function textFocusInHandler(event:Event) : void
