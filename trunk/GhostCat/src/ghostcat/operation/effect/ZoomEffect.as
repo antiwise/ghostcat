@@ -33,7 +33,7 @@ package ghostcat.operation.effect
 		 * @param invert
 		 * 
 		 */
-		public function ZoomEffect(target:*=null, center:Point = null, scale:Number = 1.0, duration:int=100, params:Object=null, invert:Boolean=false,clearTarget:int = 0)
+		public function ZoomEffect(target:*=null, center:Point = null, scale:Number = 1.0, duration:int=100, params:Object=null, invert:Boolean=false,clearTarget:* = 0)
 		{
 			this.center = center;
 			this.scale = scale;

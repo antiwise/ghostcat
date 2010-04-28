@@ -27,7 +27,7 @@ package ghostcat.ui.containers
 	{
 		public var ref:ClassFactory;
 		
-		public var hideNullItem:Boolean = true;
+		public var hideNullItem:Boolean;
 		public var renderSkin:ClassFactory;
 		
 		/**

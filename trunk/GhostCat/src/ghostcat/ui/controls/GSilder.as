@@ -31,7 +31,7 @@ package ghostcat.ui.controls
 		/**
 		 * 点击一次按钮才移动一次
 		 */
-		public var clickToMove:Boolean = false;
+		public var clickToMove:Boolean = true;
 		
 		/**
 		 * 激活滚动条按钮自适应
@@ -188,6 +188,7 @@ package ghostcat.ui.controls
 			if (content.hasOwnProperty(upArrowField))
 			{
 				this.upArrow = new GButton(content[upArrowField]);
+				this.upArrow.incessancyClick = true;
 				this.upArrow.addEventListener(MouseEvent.CLICK,upArrowClickHandler);
 			}
 			else
@@ -196,6 +197,7 @@ package ghostcat.ui.controls
 			if (content.hasOwnProperty(downArrowField))
 			{
 				this.downArrow = new GButton(content[downArrowField]);
+				this.downArrow.incessancyClick = true;
 				this.downArrow.addEventListener(MouseEvent.CLICK,downArrowClickHandler);
 			}
 			else

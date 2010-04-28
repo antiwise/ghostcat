@@ -115,11 +115,14 @@ package ghostcat.ui.controls
 			
 			if (_data && tween && !isNaN(displayValue))
 			{
-				if (showOffestTextNum && offest != 0)
-					addOffestNum(offest);
-				
-				TweenUtil.removeTween(this,false);
-				TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
+				if (offest != 0)
+				{
+					if (showOffestTextNum)
+						addOffestNum(offest);
+					
+					TweenUtil.removeTween(this,false);
+					TweenUtil.to(this,duration,{displayValue:v,ease:easing,onComplete:tweenCompleteHandler})
+				}
 			}
 			else
 			{
