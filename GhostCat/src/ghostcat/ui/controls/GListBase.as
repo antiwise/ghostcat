@@ -170,7 +170,7 @@ package ghostcat.ui.controls
 		 */
 		public function getPointFromData(v:*):Point
 		{
-			var index:int = data.indexOf(v);
+			var index:int = data ? data.indexOf(v) : -1;
 			if (index == -1)
 				return null;
 			
@@ -242,7 +242,7 @@ package ghostcat.ui.controls
 		 */
 		public function get selectedRow():int
 		{
-			var selectIndex:int = data.indexOf(_selectedData);
+			var selectIndex:int = data ? data.indexOf(_selectedData) : -1;
 			
 			if (selectIndex != -1)
 			{
@@ -268,7 +268,7 @@ package ghostcat.ui.controls
 		 */
 		public function get selectedColumn():int
 		{
-			var selectIndex:int = data.indexOf(_selectedData);
+			var selectIndex:int = data ? data.indexOf(_selectedData) : -1;
 			
 			if (selectIndex != -1)
 			{

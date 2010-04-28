@@ -641,7 +641,8 @@ package ghostcat.ui.controls
 				event.preventDefault();
 			
 			if (changeWhenInput)
-				dispatchEvent(new Event(Event.CHANGE));
+				this.data = textField.text;
+//				dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**

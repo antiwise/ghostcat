@@ -2,11 +2,17 @@ package ghostcat.ui.controls
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.text.TextFieldAutoSize;
+	import flash.utils.Timer;
+	import flash.utils.clearTimeout;
+	import flash.utils.getTimer;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.events.ActionEvent;
+	import ghostcat.events.TickEvent;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.AbstractUtil;
 	
@@ -53,14 +59,16 @@ package ghostcat.ui.controls
 		private var _toggle:Boolean;
 		
 		private var _mouseDown:Boolean = false;
-		
 		private var _mouseOver:Boolean = false;
 		
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
 		private var _enabledTruncateToFit:Boolean = false;
 		private var _enabledVerticalCenter:Boolean = false;
-
+		
+		private var mouseDownTimer:Timer;
+		private var mouseDownDelayTimer:int;
+		
 		/**
 		 * Label文本实例 
 		 */
@@ -184,6 +192,21 @@ package ghostcat.ui.controls
 		 * 鼠标按下时移过是否转换焦点
 		 */		
 		public var trackAsMenu:Boolean = false;
+		
+		/**
+		 * 是否允许按下时模拟连续点击
+		 */
+		public var incessancyClick:Boolean = false;
+		
+		/**
+		 * 连续点击的延迟响应时间
+		 */
+		public var incessancyDelay:int = 300;
+		
+		/**
+		 * 连续点击的响应间隔
+		 */
+		public var incessancyInterval:int = 50;
 		
 		/** 按钮状态（up） */
 		public const upState:GButtonState = new GButtonState();
@@ -449,6 +472,13 @@ package ghostcat.ui.controls
 			
 			tweenTo(DOWN);
 			_mouseDown = true;
+			if (incessancyClick)
+				mouseDownDelayTimer = setTimeout(enabledIncessancyHandler,incessancyDelay);
+		}
+		
+		private function enabledIncessancyHandler():void
+		{
+			enabledIncessancy = true;
 		}
 		
 		/**
@@ -464,6 +494,7 @@ package ghostcat.ui.controls
 			tweenTo(_mouseOver ? OVER : UP);
 			
 			_mouseDown = false;
+			enabledIncessancy = false;
 			
 			if (trackAsMenu)
 				dispatchEvent(new MouseEvent(MouseEvent.CLICK));
@@ -487,6 +518,36 @@ package ghostcat.ui.controls
 			}
 			
 			_mouseOver = true;
+		}
+		
+		private function set enabledIncessancy(v:Boolean):void
+		{
+			if (mouseDownTimer)
+			{
+				mouseDownTimer.stop();
+				mouseDownTimer.removeEventListener(TimerEvent.TIMER,incessancyHandler);
+				mouseDownTimer = null;
+			}
+			if (v)
+			{
+				mouseDownTimer = new Timer(incessancyInterval,int.MAX_VALUE);
+				mouseDownTimer.addEventListener(TimerEvent.TIMER,incessancyHandler);
+				mouseDownTimer.start();
+			}
+			else
+			{
+				clearTimeout(mouseDownDelayTimer);
+			}
+		}
+		
+		/**
+		 * 连续点击事件
+		 * @param event
+		 * 
+		 */
+		protected function incessancyHandler(event:TimerEvent):void
+		{
+			dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		}
 		
 		/**
@@ -525,6 +586,8 @@ package ghostcat.ui.controls
 				return;
 			
 			removeEvents();
+			
+			enabledIncessancy = false;
 			
 			if (labelTextField)
 				labelTextField.destory();
