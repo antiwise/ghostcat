@@ -234,14 +234,12 @@ package ghostcat.ui.controls
 		
 		protected override function upArrowClickHandler(event:MouseEvent):void
 		{
-			if (clickToMove)
-				tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra)
+			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra)
 		}
 		
 		protected override function downArrowClickHandler(event:MouseEvent):void
 		{
-			if (clickToMove)
-				tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra);
+			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra);
 		}
 		
 		/**
