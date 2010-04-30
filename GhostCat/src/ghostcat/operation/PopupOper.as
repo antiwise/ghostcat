@@ -34,14 +34,22 @@ package ghostcat.operation
 		{
 			super.execute();
 			
+			show();
 			popup.addEventListener(Event.REMOVED_FROM_STAGE,result);
+		}
+		
+		/**
+		 * 執行彈出 
+		 * 
+		 */
+		protected function show():void
+		{
 			PopupManager.instance.showPopup(popup,owner,modal,centerMode,offest);
 		}
 		/** @inheritDoc*/
 		protected override function end(event:* = null) : void
 		{
 			super.end(event);
-			
 			popup.removeEventListener(Event.REMOVED_FROM_STAGE,result);
 		}
 	}
