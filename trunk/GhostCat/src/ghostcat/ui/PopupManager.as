@@ -15,6 +15,7 @@ package ghostcat.ui
 	import ghostcat.operation.PopupOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.effect.IEffect;
+	import ghostcat.util.Util;
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.display.Geom;
 	
@@ -85,7 +86,6 @@ package ghostcat.ui
 		private var _popupLayer:DisplayObjectContainer;
 		private var _application:DisplayObjectContainer;
 		private var _applicationEnabled:Boolean = true;
-		private var _popupUpCount:int = 0;
 
 		/**
 		 * 打开的模式窗口数量 
@@ -94,16 +94,7 @@ package ghostcat.ui
 		 */
 		public function get popupUpCount():int
 		{
-			return _popupUpCount;
-		}
-
-		public function set popupUpCount(value:int):void
-		{
-			_popupUpCount = value;
-			if (!applicationEnabled && _popupUpCount == 0)
-				applicationEnabled = true;
-			else if (applicationEnabled && _popupUpCount > 0)
-				applicationEnabled = false;
+			return popups.length;
 		}
 
 		
@@ -111,6 +102,11 @@ package ghostcat.ui
 		 * 弹出窗口指定的队列，为空则为全局队列
 		 */
 		public var queue:Queue = null;
+		
+		/**
+		 * 模式窗口數組
+		 */
+		public var popups:Array = [];
 		
 		/**
 		 * 定义非激活状态的Filter数组
@@ -139,6 +135,9 @@ package ghostcat.ui
 
 		public function set applicationEnabled(v:Boolean):void
 		{
+			if (_applicationEnabled == v)
+				return;
+			
 			_applicationEnabled = v;
 			
 			application.mouseEnabled = application.mouseChildren = v;
@@ -289,7 +288,9 @@ package ghostcat.ui
 			obj.addEventListener(Event.REMOVED_FROM_STAGE,popupCloseHandler);
 			if (modal)
 			{
-				popupUpCount++;
+				popups.push(obj);
+				if (popups.length > 0)
+					applicationEnabled = false;
 				obj.addEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 			}
 			return obj;
@@ -337,7 +338,11 @@ package ghostcat.ui
 		 */
 		protected function modulePopupCloseHandler(event:Event):void
 		{
-			popupUpCount --;
+			Util.remove(popups,event.currentTarget);
+			
+			if (popups.length <= 0)
+				applicationEnabled = true;
+			
 			event.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
 		}
 		

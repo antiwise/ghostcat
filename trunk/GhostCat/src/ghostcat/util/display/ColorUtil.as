@@ -82,14 +82,15 @@ package ghostcat.util.display
 		 * 注意，此对象会重置alpha
 		 * 
 		 * @param rgb	颜色值
+		 * @param alpha	透明度
 		 */
-		public static function getColorTransform(rgb:uint):ColorTransform
+		public static function getColorTransform(rgb:uint,alpha:Number = 1.0):ColorTransform
 		{
 			var r:Number = (rgb >> 16) & 0xFF;
 			var g:Number = (rgb >> 8) & 0xFF;
 			var b:Number = rgb & 0xFF;
 				
-			return new ColorTransform(r/0xFF,g/0xFF,b/0xFF);
+			return new ColorTransform(r/0xFF,g/0xFF,b/0xFF,alpha);
 		}
 		
 		/**
