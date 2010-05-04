@@ -4,6 +4,7 @@ package ghostcat.operation
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import ghostcat.display.transfer.Boob;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.Handler;
@@ -31,6 +32,15 @@ package ghostcat.operation
 		 */
 		public var value:*;
 		
+		/**
+		 * 限定值的類型
+		 */
+		public var type:Class;
+		/**
+		 * 當返回為false時繼續 
+		 */
+		public var invent:Boolean = false;
+		
 		private var timer:Timer;
 		
 		/**
@@ -39,10 +49,10 @@ package ghostcat.operation
 		 * @param checkHandler	检测的方法，方法返回为true则结束
 		 * @param interval	检测间隔。默认则跟随ENTERFRAME发生
 		 * @param value	结束需要的结果，默认返回非空即结束
-		 * 
+		 * @param invent 當返回為false時繼續
 		 * 
 		 */
-		public function WaitOper(checkHandler:*=null,interval:Number=NaN,value:* = null)
+		public function WaitOper(checkHandler:*=null,interval:Number=NaN,value:* = null,type:Class = null,invent:Boolean = false)
 		{
 			super();
 			
@@ -52,6 +62,8 @@ package ghostcat.operation
 				this.checkHandler = new Handler(checkHandler)
 			
 			this.interval = interval;
+			this.invent = invent;
+			this.type = type;
 			this.value = value;
 		}
 		
@@ -75,7 +87,12 @@ package ghostcat.operation
 		private function tick(event:Event):void
 		{
 			var r:* = checkHandler.call();
-			if (value == null && r || value != null && value == r)
+			var b:Boolean = (value == null && r || value != null && value == r)
+			
+			if (type != null && !(r is type))
+				b = false;
+				
+			if (invent != b)
 				result();
 		}
 		
