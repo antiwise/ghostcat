@@ -364,20 +364,12 @@ package ghostcat.ui
 		 */
 		protected function disibledBackgoundPopup():void
 		{
-			if (popups.length == 0)
-				return;
-			
-			
-			for (var i:int = 0;i < popups.length - 1;i++)
+			for (var i:int = 0;i < popups.length;i++)
 			{
 				var w:Sprite = popups[i] as Sprite;
 				if (w)
-					w.mouseEnabled = w.mouseChildren = false;
+					w.mouseEnabled = w.mouseChildren = (i == popups.length - 1);
 			}
-			
-			w = popups[popups.length - 1] as Sprite;
-			if (w)
-				w.mouseEnabled = w.mouseChildren = true;
 		}
 		
 		/**
