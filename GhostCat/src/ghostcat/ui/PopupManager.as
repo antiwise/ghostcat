@@ -2,6 +2,7 @@ package ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.filters.ColorMatrixFilter;
@@ -122,6 +123,11 @@ package ghostcat.ui
 		 * 定义进入非激活状态的Oper，用于显示过渡效果
 		 */
 		public var applicationDisabledOper:IEffect;
+		
+		/**
+		 * 是否自動禁用其他窗口
+		 */
+		public var autoDisibledBackgroundPopup:Boolean;
 		
 		/**
 		 * 主程序是否激活 
@@ -292,6 +298,9 @@ package ghostcat.ui
 				if (popups.length > 0)
 					applicationEnabled = false;
 				obj.addEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
+				
+				if (autoDisibledBackgroundPopup)
+					disibledBackgoundPopup();
 			}
 			return obj;
 		}
@@ -344,6 +353,31 @@ package ghostcat.ui
 				applicationEnabled = true;
 			
 			event.currentTarget.removeEventListener(Event.REMOVED_FROM_STAGE,modulePopupCloseHandler);
+			
+			if (autoDisibledBackgroundPopup)
+				disibledBackgoundPopup();
+		}
+		
+		/**
+		 * 禁用最高層之外的窗體
+		 * 
+		 */
+		protected function disibledBackgoundPopup():void
+		{
+			if (popups.length == 0)
+				return;
+			
+			
+			for (var i:int = 0;i < popups.length - 1;i++)
+			{
+				var w:Sprite = popups[i] as Sprite;
+				if (w)
+					w.mouseEnabled = w.mouseChildren = false;
+			}
+			
+			w = popups[popups.length - 1] as Sprite;
+			if (w)
+				w.mouseEnabled = w.mouseChildren = true;
 		}
 		
 		/**
