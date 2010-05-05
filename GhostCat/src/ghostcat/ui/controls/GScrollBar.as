@@ -234,12 +234,12 @@ package ghostcat.ui.controls
 		
 		protected override function upArrowClickHandler(event:MouseEvent):void
 		{
-			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra)
+			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra,true)
 		}
 		
 		protected override function downArrowClickHandler(event:MouseEvent):void
 		{
-			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra);
+			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra,true);
 		}
 		
 		/**
@@ -247,7 +247,7 @@ package ghostcat.ui.controls
 		 * @param v
 		 * 
 		 */
-		protected function tweenToValue(v:Number):void
+		protected function tweenToValue(v:Number,update:Boolean = false):void
 		{
 			v = Math.max(Math.min(v,maxValue),minValue);
 			
@@ -260,12 +260,13 @@ package ghostcat.ui.controls
 				if (duration > 0)
 				{
 					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, onUpdate:updateThumb})
+					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, onUpdate:update ? updateThumb : null})
 				}
 				else
 				{
 					_scrollContent.scrollH = v;
-					updateThumb();
+					if (update)
+						updateThumb();
 				}
 			}
 			else
@@ -277,12 +278,14 @@ package ghostcat.ui.controls
 				if (duration > 0)
 				{
 					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, onUpdate:updateThumb})
+					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, onUpdate:update ? updateThumb : null})
 				}
 				else 
 				{
 					_scrollContent.scrollV = v;
-					updateThumb();
+					if (update)
+						updateThumb();
+					
 				}
 			}
 		}
