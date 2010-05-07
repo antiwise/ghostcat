@@ -225,6 +225,7 @@ package ghostcat.display.movieclip
         public function clearQueue():void
         {
             nextLabels = [];
+			_queueDestory = false;
         }
 		
 		/**
