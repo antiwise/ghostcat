@@ -6,6 +6,11 @@ package ghostcat.display.transfer
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.community.physics.PhysicsUtil;
 
+	/**
+	 * 爆炸效果
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Cataclasm extends GTransfer
 	{
 		private var tris:Array = []; 
@@ -24,6 +29,10 @@ package ghostcat.display.transfer
 			super(target);
 		}
 		
+		/**
+		 * 切割三角形
+		 * 
+		 */
 		public function createTris():void
 		{
 			removeTris();
@@ -57,6 +66,10 @@ package ghostcat.display.transfer
 			}
 		}
 		
+		/**
+		 * 銷毀三角形 
+		 * 
+		 */
 		public function removeTris():void
 		{
 			for each (var tri:Tri in tris)
@@ -66,6 +79,11 @@ package ghostcat.display.transfer
 			physics.removeAll();
 		}
 		
+		/**
+		 * 開始爆炸
+		 * @param p
+		 * 
+		 */
 		public function bomb(p:Point = null):void
 		{
 			if (!p)

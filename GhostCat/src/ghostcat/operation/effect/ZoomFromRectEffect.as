@@ -51,7 +51,7 @@ package ghostcat.operation.effect
 			}
 			else
 			{
-				var targetRect:Rectangle = (target as DisplayObject).getRect(target as DisplayObject);
+				var targetRect:Rectangle = Geom.getRect(target,target);
 				var sx:Number = targetRect.x / targetRect.width;
 				var sy:Number = targetRect.y / targetRect.height;
 				para = {x:rect.x - sx * rect.width,y:rect.y - sy * rect.height,width:rect.width,height:rect.height,ease:easing};
