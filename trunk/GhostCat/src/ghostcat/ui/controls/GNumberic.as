@@ -113,7 +113,7 @@ package ghostcat.ui.controls
 			
 			_data = v;
 			
-			if (_data && tween && !isNaN(displayValue))
+			if (tween && !isNaN(displayValue))
 			{
 				if (offest != 0)
 				{
