@@ -56,17 +56,27 @@ package ghostcat.operation
 			if (choose == null)
 				choose = defaultOper;
 			
-			choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
-			choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
-			choose.execute();
+			if (choose)
+			{
+				choose.addEventListener(OperationEvent.OPERATION_COMPLETE,result);
+				choose.addEventListener(OperationEvent.OPERATION_ERROR,fault);
+				choose.execute();
+			}
+			else
+			{
+				result();
+			}
 		}
 		/** @inheritDoc*/
 		protected override function end(event:*=null):void
 		{
 			super.end(event);
 		
-			choose.removeEventListener(OperationEvent.OPERATION_COMPLETE,result);
-			choose.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
+			if (choose)
+			{
+				choose.removeEventListener(OperationEvent.OPERATION_COMPLETE,result);
+				choose.removeEventListener(OperationEvent.OPERATION_ERROR,fault);
+			}
 		}
 	}
 }
