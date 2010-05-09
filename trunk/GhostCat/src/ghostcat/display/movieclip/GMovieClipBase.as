@@ -183,7 +183,7 @@ package ghostcat.display.movieclip
 				if (!resetLabel && index == curLabelIndex)
 					return;
 				
-				currentFrame  = (frameRate >= 0) ? getLabelStart(index) : getLabelEnd(index);
+				currentFrame  = (frameRate < 0) ? getLabelEnd(index) : getLabelStart(index);
 				curLabelIndex = index;
 				
 				var e:MovieEvent = new MovieEvent(MovieEvent.MOVIE_START);
@@ -307,17 +307,17 @@ package ghostcat.display.movieclip
          */
         public function loopBackToStart():void
         {
-            currentFrame = (frameRate >= 0) ? getLabelStart(curLabelIndex) : getLabelEnd(curLabelIndex);
+            currentFrame = (frameRate < 0) ? getLabelEnd(curLabelIndex) : getLabelStart(curLabelIndex);
         }
 		
 		//检测是否已经到达当前区段的尾端（倒放则相反）
 		private function hasReachedLabelEnd():Boolean
         {
-        	if (frameRate >= 0)
-        		return currentFrame >= getLabelEnd(curLabelIndex);
-        	else
+        	if (frameRate < 0)
         		return currentFrame <= getLabelStart(curLabelIndex);
-        }
+			else
+				return currentFrame >= getLabelEnd(curLabelIndex);
+		}
         
         //取得Label的头部
         private function getLabelStart(labelIndex:int):int
@@ -414,7 +414,7 @@ package ghostcat.display.movieclip
          */
         public function nextFrame():void
         {
-			(frameRate >= 0) ? currentFrame ++ : currentFrame --;
+			(frameRate < 0) ? currentFrame -- : currentFrame ++;
 		}
 		
 		/**
