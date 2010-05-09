@@ -492,6 +492,7 @@
     <classEntry path="ghostcat.display.loader.ImageLoader"/>
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
+    <classEntry path="ghostcat.algorithm.Arithmetic"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
