@@ -181,9 +181,14 @@ package ghostcat.ui.controls
 		 * 重置滚动 
 		 * 
 		 */
-		public function resetContent():void
+		public function resetContent(x:Boolean = true,y:Boolean = true):void
 		{
-			_scrollContent.scrollH = _scrollContent.scrollV = _scrollContent.tweenTargetH = _scrollContent.tweenTargetV = 0.0;
+			if (x)
+				_scrollContent.scrollH = _scrollContent.tweenTargetH = 0.0;
+			
+			if (y)
+				_scrollContent.scrollV = _scrollContent.tweenTargetV = 0.0;
+				
 			updateThumb();
 		}
 		/**
