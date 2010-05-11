@@ -82,10 +82,10 @@ package ghostcat.util
 		 */
 		public static function max(arr:Array):Number
 		{
-			var result:Number = int.MIN_VALUE;
+			var result:Number = NaN;
 			for (var i:int = 0;i < arr.length;i++)
 			{
-				if (arr[i] > result)
+				if (isNaN(result) || arr[i] > result)
 					result = arr[i];
 			}
 			return result;
@@ -100,10 +100,10 @@ package ghostcat.util
 		 */
 		public static function min(arr:Array):Number
 		{
-			var result:Number = int.MAX_VALUE;
+			var result:Number = NaN;
 			for (var i:int = 0;i < arr.length;i++)
 			{
-				if (arr[i] < result)
+				if (isNaN(result) || arr[i] < result)
 					result = arr[i];
 			}
 			return result;
