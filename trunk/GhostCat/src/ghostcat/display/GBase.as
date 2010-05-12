@@ -67,6 +67,11 @@ package ghostcat.display
 		 */		
 		public var delayUpatePosition:Boolean = false;
 		
+		/**
+		 * 是否延迟执行Vaild事件
+		 */
+		public var delayCall:Boolean = true;
+		
 		
 		/**
 		 * 参数与setContent方法相同
@@ -257,7 +262,12 @@ package ghostcat.display
 				super.x = value;
 			
 			if (enabledDelayUpdate)
-				positionCall.invalidate();
+			{
+				if (delayCall)
+					positionCall.invalidate();
+				else
+					positionCall.vaildNow();
+			}
 		}
 		
 		public override function get x() : Number
@@ -277,7 +287,12 @@ package ghostcat.display
 				super.y = value;
 				
 			if (enabledDelayUpdate)
-				positionCall.invalidate();
+			{
+				if (delayCall)
+					positionCall.invalidate();
+				else
+					positionCall.vaildNow();
+			}
 		}
 		
 		public override function get y() : Number
@@ -356,7 +371,12 @@ package ghostcat.display
 			super.width = value;
 				
 			if (enabledDelayUpdate)
-				sizeCall.invalidate();
+			{
+				if (delayCall)
+					sizeCall.invalidate();
+				else
+					sizeCall.vaildNow();
+			}
 		}
 		/** @inheritDoc*/
 		public override function set height(value:Number):void
@@ -367,7 +387,46 @@ package ghostcat.display
 			super.height = value;
 				
 			if (enabledDelayUpdate)
-				sizeCall.invalidate();
+			{
+				if (delayCall)
+					sizeCall.invalidate();
+				else
+					sizeCall.vaildNow();
+			}
+		}
+		
+		/** @inheritDoc*/
+		public override function set scaleX(value:Number):void
+		{
+			if (super.scaleX == value)
+				return;
+			
+			super.scaleX = value;
+			
+			if (enabledDelayUpdate)
+			{
+				if (delayCall)
+					sizeCall.invalidate();
+				else
+					sizeCall.vaildNow();
+			}
+		}
+		
+		/** @inheritDoc*/
+		public override function set scaleY(value:Number):void
+		{
+			if (super.scaleY == value)
+				return;
+			
+			super.scaleY = value;
+			
+			if (enabledDelayUpdate)
+			{
+				if (delayCall)
+					sizeCall.invalidate();
+				else
+					sizeCall.vaildNow();
+			}
 		}
 		
 		/**

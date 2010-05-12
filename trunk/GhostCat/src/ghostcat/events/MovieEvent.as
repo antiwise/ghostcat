@@ -1,5 +1,6 @@
 package ghostcat.events
 {
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	
 	/**

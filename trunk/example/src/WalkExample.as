@@ -7,6 +7,7 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.display.movieclip.FrameLabelUtil;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
@@ -60,6 +61,7 @@ package
 			man = new GBitmapMovieClip(source,labels);
 			man.frameRate = 10;
 			addChild(man);
+			
 			
 			this.enabledTick = true;
 			
