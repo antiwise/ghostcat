@@ -40,6 +40,11 @@ package ghostcat.ui.layout
 		public var enabledMeasureChildren:Boolean = true;
 		
 		/**
+		 * 是否延迟调用
+		 */
+		public var delayCall:Boolean = true;
+		
+		/**
 		 * 布局执行器 
 		 */
 		protected var vaildLayoutCall:UniqueCall = new UniqueCall(vaildLayout);
@@ -131,7 +136,10 @@ package ghostcat.ui.layout
 		 */
 		public function invalidateLayout():void
 		{
-			vaildLayoutCall.invalidate();
+			if (delayCall)
+				vaildLayoutCall.invalidate();
+			else
+				vaildLayoutCall.vaildNow();
 		}
 		
 		/**
