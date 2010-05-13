@@ -150,7 +150,6 @@ package ghostcat.text
 				
 				list = getString(text);
 				
-				skin.visible = true;
 				page = 0;
 				refreshSkin(textField,list.slice(0,charNum))
 			}
@@ -279,6 +278,7 @@ package ghostcat.text
 				
 				function refresh():void
 				{
+					skin.visible = true;
 					var rect:Rectangle = textField.getCharBoundaries(textField.caretIndex - 1);
 					if (rect)
 					{
