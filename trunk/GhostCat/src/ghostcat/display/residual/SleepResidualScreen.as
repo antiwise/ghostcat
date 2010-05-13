@@ -5,6 +5,11 @@ package ghostcat.display.residual
 	import ghostcat.display.residual.ResidualScreen;
 	import ghostcat.events.TickEvent;
 	
+	/**
+	 * 在一段时间类没有子对象会自动禁用的ResidualScreen
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SleepResidualScreen extends ResidualScreen
 	{
 		private var sleepStartTime:int;
