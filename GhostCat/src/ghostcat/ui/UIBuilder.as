@@ -56,13 +56,22 @@ package ghostcat.ui
 					
 					if (ref)
 					{
-						if (ref.params)
-							ref.params[0] = obj;	
-						else
-							ref.params = [obj];
+						if (!ref.params)
+							ref.params = [];
 						
-						var displayObj:GBase = ref.newInstance();//创建
-						displayObj.owner = target;
+						var displayObj:DisplayObject;
+						try //尝试生成GBase对象
+						{
+							ref.params[0] = obj;	
+							displayObj = ref.newInstance();//创建
+							if (displayObj is GBase)
+								(displayObj as GBase).owner = target;
+						}
+						catch (e:ArgumentError)
+						{
+							//否则直接使用皮肤	
+							displayObj = obj;
+						}
 						
 						target[name] = displayObj;
 						delete types[name];//删除已完成生成的属性
