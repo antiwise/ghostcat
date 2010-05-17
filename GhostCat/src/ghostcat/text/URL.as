@@ -12,6 +12,11 @@ package ghostcat.text
 	 */
 	public class URL
 	{
+		public static function isHTTP(v:String):Boolean
+		{
+			return v.substr(0,7).toLowerCase() == "http://";
+		}
+		
 		/**
 		 * 使用的正则
 		 */

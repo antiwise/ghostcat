@@ -22,6 +22,17 @@ package ghostcat.text
         {
         	return str.slice(str.length - len);
         }
+		
+		/**
+		 * 删除两侧空格
+		 * @param str
+		 * @return 
+		 * 
+		 */
+		public static function trim(str:String):String
+		{
+			return str.replace(/^\s+/,"").replace(/\s+$/,"");
+		}
         
         /**
          * 忽略掉标签截取特定长度htmlText的文字

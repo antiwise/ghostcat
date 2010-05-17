@@ -14,6 +14,7 @@ package ghostcat.manager
 	import ghostcat.operation.Queue;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
+	import ghostcat.text.URL;
 
 	/**
 	 * 资源管理类
@@ -27,6 +28,7 @@ package ghostcat.manager
 		{
 			return Singleton.getInstanceOrCreate(AssetManager) as AssetManager;
 		}
+		
 		
 		private var progressBar:GProgressBar;
 		
@@ -68,6 +70,11 @@ package ghostcat.manager
 			queue = Queue.defaultQueue;
 		}
 		
+		/**
+		 * 设置一个进度条显示加载进度
+		 * @param v
+		 * 
+		 */
 		public function setProgressBar(v:GProgressBar):void
 		{
 			this.progressBar = v;
@@ -84,6 +91,16 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 获得路径全称
+		 * @param v
+		 * 
+		 */
+		public function getFullUrl(v:String):String
+		{
+			return URL.isHTTP(v) ? v : assetBase + v;
+		}
+		
+		/**
 		 * 载入一个资源
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
@@ -95,7 +112,7 @@ package ghostcat.manager
 		 */
 		public function loadResource(res:String,id:String=null,name:String = null):Oper
 		{
-			var oper:LoadOper = new LoadOper(assetBase + res);
+			var oper:LoadOper = new LoadOper(getFullUrl(res));
 			
 			if (id)
 				oper.id = id;
@@ -116,7 +133,7 @@ package ghostcat.manager
 			var list:Array = [];
 			for (var i:int = 0;i < res.length;i++)
 			{
-				var oper:LoadOper = new LoadOper(assetBase + res[i]);
+				var oper:LoadOper = new LoadOper(getFullUrl(res[i]));
 				if (ids && ids[i])
 					oper.id = ids[i];
 				
@@ -177,7 +194,7 @@ package ghostcat.manager
 		public function loadResourcesFromXMLFile(filePath:String):Queue
 		{
 			var subQueue:Queue = new Queue();
-			var oper:LoadTextOper = new LoadTextOper(assetBase + filePath,null,false,resConfigHandler);
+			var oper:LoadTextOper = new LoadTextOper(getFullUrl(filePath),null,false,resConfigHandler);
 			oper.commit(queue);
 			subQueue.commit(queue);
 			
