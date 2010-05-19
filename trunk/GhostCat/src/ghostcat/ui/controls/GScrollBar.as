@@ -256,23 +256,13 @@ package ghostcat.ui.controls
 		{
 			v = Math.max(Math.min(v,maxValue),minValue);
 			
+			//记录目标值防止重复缓动
 			if (direction == UIConst.HORIZONTAL)
 			{
 				if (v == _scrollContent.tweenTargetH)
 					return;
 					
 				scrollContent.tweenTargetH = v;
-				if (duration > 0)
-				{
-					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, onUpdate:update ? updateThumb : null})
-				}
-				else
-				{
-					_scrollContent.scrollH = v;
-					if (update)
-						updateThumb();
-				}
 			}
 			else
 			{	
@@ -280,18 +270,18 @@ package ghostcat.ui.controls
 					return;
 				
 				scrollContent.tweenTargetV = v;
-				if (duration > 0)
-				{
-					TweenUtil.removeTween(_scrollContent,false);
-					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, onUpdate:update ? updateThumb : null})
-				}
-				else 
-				{
-					_scrollContent.scrollV = v;
-					if (update)
-						updateThumb();
-					
-				}
+			}
+			
+			if (duration > 0)
+			{
+				TweenUtil.removeTween(_scrollContent,false);
+				TweenUtil.to(this,duration,{value : v, ease : easing, onUpdate:update ? updateThumb : null})
+			}
+			else
+			{
+				this.value = v;
+				if (update)
+					updateThumb();
 			}
 		}
 		
