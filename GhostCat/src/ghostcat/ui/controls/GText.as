@@ -26,6 +26,7 @@ package ghostcat.ui.controls
 	import ghostcat.ui.layout.Layout;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.ui.layout.Padding;
+	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.MatrixUtil;
@@ -225,13 +226,16 @@ package ghostcat.ui.controls
 		 * @param overwriteDefault	是否覆盖默认字体样式
 		 * 
 		 */
-		public function applyTextFormat(f:TextFormat=null,overwriteDefault:Boolean = false):void 
+		public function applyTextFormat(f:*=null,overwriteDefault:Boolean = false):void 
 		{
 			if (!textField)
 				return;
 			
 			if (!f)
 				f = textField.defaultTextFormat;
+			
+			if (!(f is TextFormat))
+				f = Util.createObject(TextFormat,f);
 			
 			if (textField.length > 0)
 				textField.setTextFormat(f,0,textField.length);
