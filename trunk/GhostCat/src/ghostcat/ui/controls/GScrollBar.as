@@ -18,8 +18,9 @@ package ghostcat.ui.controls
 	import ghostcat.util.easing.TweenUtil;
 	
 	
+	[Event(name="tween_start",type="ghostcat.util.easing.TweenEvent")]
 	[Event(name="tween_end",type="ghostcat.util.easing.TweenEvent")]
-	
+	[Event(name="tween_update",type="ghostcat.util.easing.TweenEvent")]
 	/**
 	 * 滚动条 
 	 * 
@@ -241,11 +242,21 @@ package ghostcat.ui.controls
 			super.updateThumb();
 		}
 		
+		/**
+		 * 向上按钮点击事件
+		 * @param event
+		 * 
+		 */
 		protected override function upArrowClickHandler(event:MouseEvent):void
 		{
 			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra,true)
 		}
 		
+		/**
+		 * 向下按钮点击事件
+		 * @param event
+		 * 
+		 */
 		protected override function downArrowClickHandler(event:MouseEvent):void
 		{
 			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra,true);
@@ -265,8 +276,23 @@ package ghostcat.ui.controls
 			{
 				if (v == _scrollContent.tweenTargetH)
 					return;
-					
+				
 				scrollContent.tweenTargetH = v;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, 
+						onUpdate:update ? tweenUpdateWithThumb : tweenUpdateHandler, 
+						onStart:tweenStartHandler, onComplete:tweenCompleteHandler
+					})
+				}
+				else
+				{
+					this.value = v;
+					if (update)
+						updateThumb();
+					
+					tweenCompleteHandler();				}
 			}
 			else
 			{	
@@ -274,32 +300,56 @@ package ghostcat.ui.controls
 					return;
 				
 				scrollContent.tweenTargetV = v;
+				if (duration > 0)
+				{
+					TweenUtil.removeTween(_scrollContent,false);
+					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, 
+						onUpdate:update ? tweenUpdateWithThumb : tweenUpdateHandler, 
+						onStart:tweenStartHandler, onComplete:tweenCompleteHandler
+					})
+				}
+				else 
+				{
+					this.value = v;
+					if (update)
+						updateThumb();
+				}
 			}
 			
-			if (duration > 0)
+			
+			function tweenUpdateWithThumb():void
 			{
-				TweenUtil.removeTween(_scrollContent,false);
-				TweenUtil.to(this,duration,{value : v, ease : easing, onUpdate:update ? updateThumb : null, onComplete:tweenCompleteHandler})
+				updateThumb();
+				tweenUpdateHandler();
 			}
-			else
-			{
-				this.value = v;
-				if (update)
-					updateThumb();
-				
-				tweenCompleteHandler();
-			}
+		}
+		
+		/**
+		 * 缓动开始方法
+		 * 
+		 */
+		protected function tweenStartHandler():void
+		{
+			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
 		}
 		
 		/**
 		 * 缓动结束方法
 		 * 
-		 * @param update	是否更新滑动块
-		 * 
 		 */
 		protected function tweenCompleteHandler():void
 		{
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
+		}
+		
+		/**
+		 * 缓动进行方法
+		 * 
+		 */
+		protected function tweenUpdateHandler():void
+		{
+			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/** @inheritDoc*/
