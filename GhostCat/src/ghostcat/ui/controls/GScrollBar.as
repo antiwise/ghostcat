@@ -101,20 +101,35 @@ package ghostcat.ui.controls
 			return _scrollContent;
 		}
 		
+		/**
+		 * 缓动目标值 
+		 * @return 
+		 * 
+		 */
+		public function get tweenTargetValue():Number
+		{
+			if (!scrollContent)
+				return NaN;
+			
+			return (direction == UIConst.HORIZONTAL) ? _scrollContent.tweenTargetH : _scrollContent.tweenTargetV;
+		}
+		
 		/** @inheritDoc*/
 		public override function get value():Number
 		{
+			if (!scrollContent)
+				return NaN;
+			
 			return (direction == UIConst.HORIZONTAL) ? _scrollContent.scrollH : _scrollContent.scrollV;
 		}
 		public override function set value(v:Number):void
 		{
-			super.value = v;
-			
 			if (direction == UIConst.HORIZONTAL)
 				_scrollContent.scrollH = v; 
 			else
 				_scrollContent.scrollV = v;
 				
+			super.value = v;
 		}
 		
 		/**
@@ -284,15 +299,16 @@ package ghostcat.ui.controls
 					TweenUtil.to(_scrollContent,duration,{scrollH : v, ease : easing, 
 						onUpdate:update ? tweenUpdateWithThumb : tweenUpdateHandler, 
 						onStart:tweenStartHandler, onComplete:tweenCompleteHandler
-					})
+					});
+				
+					dispatchEvent(new Event(Event.CHANGE));
 				}
 				else
 				{
 					this.value = v;
 					if (update)
 						updateThumb();
-					
-					tweenCompleteHandler();				}
+				}
 			}
 			else
 			{	
@@ -306,7 +322,9 @@ package ghostcat.ui.controls
 					TweenUtil.to(_scrollContent,duration,{scrollV : v, ease : easing, 
 						onUpdate:update ? tweenUpdateWithThumb : tweenUpdateHandler, 
 						onStart:tweenStartHandler, onComplete:tweenCompleteHandler
-					})
+					});
+					
+					dispatchEvent(new Event(Event.CHANGE));
 				}
 				else 
 				{
@@ -349,7 +367,6 @@ package ghostcat.ui.controls
 		protected function tweenUpdateHandler():void
 		{
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
-			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/** @inheritDoc*/
