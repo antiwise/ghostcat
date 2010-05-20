@@ -14,7 +14,11 @@ package ghostcat.ui.controls
 	import ghostcat.ui.scroll.IScrollContent;
 	import ghostcat.ui.scroll.ScrollTextContent;
 	import ghostcat.util.easing.Circ;
+	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
+	
+	
+	[Event(name="tween_end",type="ghostcat.util.easing.TweenEvent")]
 	
 	/**
 	 * 滚动条 
@@ -275,14 +279,27 @@ package ghostcat.ui.controls
 			if (duration > 0)
 			{
 				TweenUtil.removeTween(_scrollContent,false);
-				TweenUtil.to(this,duration,{value : v, ease : easing, onUpdate:update ? updateThumb : null})
+				TweenUtil.to(this,duration,{value : v, ease : easing, onUpdate:update ? updateThumb : null, onComplete:tweenCompleteHandler})
 			}
 			else
 			{
 				this.value = v;
 				if (update)
 					updateThumb();
+				
+				tweenCompleteHandler();
 			}
+		}
+		
+		/**
+		 * 缓动结束方法
+		 * 
+		 * @param update	是否更新滑动块
+		 * 
+		 */
+		protected function tweenCompleteHandler():void
+		{
+			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
 		}
 		
 		/** @inheritDoc*/
