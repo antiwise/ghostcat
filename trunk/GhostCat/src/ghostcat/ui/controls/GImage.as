@@ -183,7 +183,7 @@ package ghostcat.ui.controls
 			_clipContent = v;
 			scrollRect = v ? new Rectangle(0,0,width,height) : null;
 		}
-		
+				
 		/**
 		 * 数据源
 		 * @param v
