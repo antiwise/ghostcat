@@ -47,14 +47,14 @@ package ghostcat.operation.effect
 			if (asBitmap)
 			{
 				this.bitmap = new Bitmap();
-				para = {x:rect.x,y:rect.y,width:rect.width,height:rect.height,ease:easing};
+				para = {x:rect.x,y:rect.y,scaleX:rect.width / target.width,scaleY:rect.height / target.height,ease:easing};
 			}
 			else
 			{
 				var targetRect:Rectangle = Geom.getRect(target,target);
 				var sx:Number = targetRect.x / targetRect.width;
 				var sy:Number = targetRect.y / targetRect.height;
-				para = {x:rect.x - sx * rect.width,y:rect.y - sy * rect.height,width:rect.width,height:rect.height,ease:easing};
+				para = {x:rect.x - sx * rect.width,y:rect.y - sy * rect.height,scaleX:rect.width / target.width,scaleY:rect.height / target.height,ease:easing};
 			}
 			super(asBitmap ? bitmap : target, duration, para, invert,clearTarget);
 		}

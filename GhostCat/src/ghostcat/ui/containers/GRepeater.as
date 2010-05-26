@@ -43,7 +43,7 @@ package ghostcat.ui.containers
 			super(skin, replace);
 			
 			setContent(new Sprite());//重新设置Content，避免冲突
-			setLayout(new LinearLayout());
+			setLayout(layout);
 			
 			if (skin is DisplayObject)
 				skin = skin["constructor"];
@@ -82,7 +82,7 @@ package ghostcat.ui.containers
 				v = new ClassFactory(v);
 			
 			this.ref = v;
-			render();
+//			render();
 		}
 		
 		/**
