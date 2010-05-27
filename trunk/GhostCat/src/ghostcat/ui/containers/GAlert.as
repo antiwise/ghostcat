@@ -20,7 +20,7 @@ package ghostcat.ui.containers
 	 */
 	public class GAlert extends GMovieClipPanel
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(AlertSkin);
+		public static var defaultSkin:* = AlertSkin;
 		/**
 		 * 默认按钮 
 		 */

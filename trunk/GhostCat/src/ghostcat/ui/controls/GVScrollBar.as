@@ -12,7 +12,7 @@ package ghostcat.ui.controls
 	 */
 	public class GVScrollBar extends GScrollBar
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(VScrollBarSkin);
+		public static var defaultSkin:* = VScrollBarSkin;
 		
 		public function GVScrollBar(skin:*=null, replace:Boolean=true)
 		{

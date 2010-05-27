@@ -26,7 +26,7 @@ package ghostcat.ui
 		
 	public class CursorSprite extends GBase
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(CursorGroup);
+		public static var defaultSkin:* = CursorGroup;
 		
 		/*系统自带的默认Cursor定义*/
 		public static const CURSOR_ARROW:String = "arrow";
@@ -72,12 +72,18 @@ package ghostcat.ui
 		 * @param skin	皮肤动画，内部是数个默认光标的实例，以实例名为准
 		 * 
 		 */		
-		public function CursorSprite(skin:DisplayObjectContainer=null)
+		public function CursorSprite(skin:*=null)
 		{
 			super(null);
 			
 			if (!skin)
-				skin = defaultSkin.newInstance();
+				skin = defaultSkin;
+			
+			if (skin is Class)
+				skin = new ClassFactory(skin);
+			
+			if (skin is ClassFactory)
+				skin = skin.newInstance();
 			
 			this.acceptContentPosition = false;
 			
@@ -85,7 +91,6 @@ package ghostcat.ui
 				_instance = this;
 			
 			DisplayUtil.setMouseEnabled(this,false);
-			
 			
 			cursors = new Object();
 			for (var i:int;i < skin.numChildren;i++)

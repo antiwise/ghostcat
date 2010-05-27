@@ -16,7 +16,7 @@ package ghostcat.ui.controls
 	 */
 	public class GRadioButton extends GButton
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(RadioButtonIconSkin);
+		public static var defaultSkin:* = RadioButtonIconSkin;
 		
 		private var _groupName:String;
 		

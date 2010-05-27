@@ -201,7 +201,13 @@ package ghostcat.manager
 		{
 			var objs:Array = SearchUtil.findChildrenByClass(obj,TextField);
 			for each (var item:TextField in objs)
-				item.text = getString(item.text);
+			{
+				var s:String = getString(item.text);
+				if (s.indexOf("<html>") != -1)
+					item.htmlText = s;
+				else
+					item.text = s;
+			}
 		}
 	}
 }

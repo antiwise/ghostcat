@@ -22,7 +22,7 @@ package ghostcat.ui
 	 */
 	public class ToolTipSprite extends GBase
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(ToolTipSkin);
+		public static var defaultSkin:* = ToolTipSkin;
 		/**
 		 * 延迟显示的毫秒数 
 		 */		

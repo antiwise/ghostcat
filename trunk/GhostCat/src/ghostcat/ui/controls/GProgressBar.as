@@ -22,7 +22,7 @@ package ghostcat.ui.controls
 	 */
 	public class GProgressBar extends GPercentBar
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(ProgressSkin);
+		public static var defaultSkin:* = ProgressSkin;
 		
 		public function GProgressBar(skin:*=null, replace:Boolean=true, mode:String="scaleX", fields:Object=null)
 		{
