@@ -28,7 +28,7 @@ package ghostcat.ui.controls
 	 */
 	public class GComboBox extends GButton
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(ComboBoxSkin);
+		public static var defaultSkin:* = ComboBoxSkin;
 		
 		public var fields:Object = {listField:"list",openButtonField:"openButton"};
 		

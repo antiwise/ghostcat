@@ -14,7 +14,7 @@ package ghostcat.ui.controls
 	 */
 	public class GCheckBox extends GButton
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(CheckBoxIconSkin);
+		public static var defaultSkin:* = CheckBoxIconSkin;
 		
 		/**
 		 * 值

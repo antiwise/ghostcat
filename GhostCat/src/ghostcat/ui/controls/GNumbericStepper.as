@@ -22,7 +22,7 @@ package ghostcat.ui.controls
 	 */
 	public class GNumbericStepper extends GNumberic
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(NumberStepperSkin);
+		public static var defaultSkin:* = NumberStepperSkin;
 		
 		public var upArrow:GButton;
 		public var downArrow:GButton;

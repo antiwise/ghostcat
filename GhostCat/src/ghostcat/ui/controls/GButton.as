@@ -18,7 +18,7 @@ package ghostcat.ui.controls
 	 */	
 	public class GButton extends GButtonBase
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(ButtonSkin)
+		public static var defaultSkin:* = ButtonSkin
 		
 		public function GButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{

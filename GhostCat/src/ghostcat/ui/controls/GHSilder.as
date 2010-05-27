@@ -11,7 +11,7 @@ package ghostcat.ui.controls
 	 */
 	public class GHSilder extends GSilder
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(HSilderSkin)
+		public static var defaultSkin:* = HSilderSkin
 		
 		public function GHSilder(skin:* =null, replace:Boolean=true, fields:Object=null)
 		{

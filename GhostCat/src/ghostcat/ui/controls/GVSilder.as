@@ -11,7 +11,7 @@ package ghostcat.ui.controls
 	 */
 	public class GVSilder extends GSilder
 	{
-		public static var defaultSkin:ClassFactory = new ClassFactory(VSilderSkin)
+		public static var defaultSkin:* = VSilderSkin
 		
 		public function GVSilder(skin:* =null, replace:Boolean=true, fields:Object=null)
 		{
