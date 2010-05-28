@@ -138,7 +138,7 @@ package ghostcat.ui.controls
 		public var pageLength:Number;
 		
 		/**
-		 * 页数 
+		 * 页数（需设置pageLength）
 		 * @return 
 		 * 
 		 */
@@ -148,13 +148,13 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 总页数
+		 * 总页数（需设置pageLength）
 		 * @return 
 		 * 
 		 */
 		public function get maxPage():int
 		{
-			return (pageLength && maxValue) ? Math.ceil(maxValue / pageLength) : 1;
+			return (pageLength && maxValue) ? (1 + Math.ceil(maxValue / pageLength)) : 1;
 		}
 		
 		/** @inheritDoc*/
