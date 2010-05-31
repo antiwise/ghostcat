@@ -132,29 +132,48 @@ package ghostcat.ui.controls
 			super.value = v;
 		}
 		
+
+		private var _pageLength:Number;
+		
 		/**
 		 * 单页长度 
 		 */
-		public var pageLength:Number;
+		public function get pageLength():Number
+		{
+			if (_pageLength)
+			{
+				return _pageLength;
+			}
+			else
+			{
+				var sr:Rectangle = (_scrollContent as DisplayObject).scrollRect;
+				return direction == UIConst.HORIZONTAL ? sr.width : sr.height;
+			}
+		};
+		
+		public function set pageLength(v:Number):void
+		{
+			_pageLength = v;
+		};
 		
 		/**
-		 * 页数（需设置pageLength）
+		 * 页数
 		 * @return 
 		 * 
 		 */
 		public function get page():int
 		{
-			return pageLength ? Math.ceil(value / pageLength + 1) : 1;
+			return Math.ceil(value / pageLength) + 1;
 		}
 		
 		/**
-		 * 总页数（需设置pageLength）
+		 * 总页数
 		 * @return 
 		 * 
 		 */
 		public function get maxPage():int
 		{
-			return (pageLength && maxValue) ? (1 + Math.ceil(maxValue / pageLength)) : 1;
+			return Math.ceil(maxValue / pageLength) + 1;
 		}
 		
 		/** @inheritDoc*/
