@@ -493,6 +493,7 @@
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
     <classEntry path="ghostcat.algorithm.Arithmetic"/>
+    <classEntry path="ghostcat.ui.controls.GListGroupBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
