@@ -10,6 +10,7 @@ package ghostcat.display.game
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
+	import ghostcat.events.TickEvent;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
@@ -274,6 +275,13 @@ package ghostcat.display.game
 			super.updateSize();
 			render();
 		}
+		
+		override protected function updateDisplayList():void
+		{
+			super.updateDisplayList();
+			render();
+		}
+		
 		
 		/**
 		 * 

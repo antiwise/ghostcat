@@ -531,7 +531,7 @@ package ghostcat.ui.controls
 				else
 					index = j * columnCount + i;
 				
-				var d:* = (index < data.length) ? data[index] : null;
+				var d:* = (data && index < data.length) ? data[index] : null;
 				item.data = d;
 				
 				if (toggleOnClick)

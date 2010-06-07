@@ -50,7 +50,7 @@ package ghostcat.ui.containers
 				
 			if (skin is Class)
 				this.renderSkin = new ClassFactory(skin)
-			else if (ref is ClassFactory)
+			else if (skin is ClassFactory)
 				this.renderSkin = skin as ClassFactory;
 				
 			if (ref is Class)
@@ -58,8 +58,7 @@ package ghostcat.ui.containers
 			else if (ref is ClassFactory)
 				this.ref = ref as ClassFactory;
 			
-			contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
-			
+			this.contentPane.addEventListener(MouseEvent.CLICK,clickHandler);
 			this.data = [];
 			
 			addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
@@ -108,7 +107,7 @@ package ghostcat.ui.containers
 				else
 					contentPane.removeChild(display);
 			}
-			if (data)
+			if (data && ref)
 			{
 				for (i = 0;i < data.length;i++)
 				{

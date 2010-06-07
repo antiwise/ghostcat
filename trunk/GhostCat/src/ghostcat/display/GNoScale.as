@@ -17,7 +17,7 @@ package ghostcat.display
 		private var _width:Number;
 		
 		/**
-		 * 是否接受内容的大小 
+		 * 是否接受皮肤的大小 
 		 */
 		public var enabledAutoSize:Boolean = true;
 		

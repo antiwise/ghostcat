@@ -120,6 +120,10 @@ package ghostcat.ui.layout
 		{
 			var width:Number = 0;
 			var height:Number = 0;
+			
+			if (type == UIConst.TILE)
+				return;//暂时取消TILE布局
+			
 			for (var i:int = 0;i < target.numChildren;i++)
 			{
 				var obj:DisplayObject = target.getChildAt(i);

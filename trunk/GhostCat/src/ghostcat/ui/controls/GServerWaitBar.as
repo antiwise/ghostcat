@@ -20,6 +20,16 @@ package ghostcat.ui.controls
 	 */
 	public class GServerWaitBar extends GPercentBar
 	{
+		/**
+		 * 加载完成文字
+		 */
+		public var loadCompleteText:String = "加载完成";
+		
+		/**
+		 * 加载失败文字 
+		 */
+		public var loadFailText:String = "加载失败";
+		
 		protected var loadHelper:LoadHelper;
 		
 		public function GServerWaitBar(skin:*=null, replace:Boolean=true, fields:Object=null)
@@ -60,14 +70,14 @@ package ghostcat.ui.controls
 		
 		protected function completeHandler(event:Event):void
 		{
-			label = "加载完成";
+			label = loadCompleteText;
 			
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
-			label = "加载失败";
+			label = loadFailText;
 			
 			dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR))
 		}

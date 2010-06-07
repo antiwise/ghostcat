@@ -19,6 +19,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.GBase;
 	import ghostcat.manager.FontManager;
+	import ghostcat.manager.LanguageManager;
 	import ghostcat.parse.display.TextFieldParse;
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
@@ -470,7 +471,7 @@ package ghostcat.ui.controls
 		 */
 		public function set htmlText(v:String):void
 		{
-			data = "<html>"+v+"</html>"
+			data = "<html>"+LanguageManager.getString(v)+"</html>"
 		}
 		
 		/**

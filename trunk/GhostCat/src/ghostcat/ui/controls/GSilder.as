@@ -325,7 +325,8 @@ package ghostcat.ui.controls
 			}
 			else
 			{
-				thumb.visible = true;
+				if (thumb)
+					thumb.visible = true;
 				this.visible = !isNaN(p);
 			}
 		}
