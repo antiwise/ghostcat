@@ -94,10 +94,9 @@ package ghostcat.ui.layout
 			
 			if (_target)
 			{
-				if (_target is GBase)
+				_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				if (_target is GBase && (_target as GBase).content)
 					(_target as GBase).content.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
-				else
-					_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
 				
 				if (isRoot)
 				{
