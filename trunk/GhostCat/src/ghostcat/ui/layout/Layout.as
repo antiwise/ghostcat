@@ -83,6 +83,8 @@ package ghostcat.ui.layout
 			if (_target)
 			{
 				_target.removeEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				if (_target is GBase && (_target as GBase).content)
+					(_target as GBase).content.removeEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
 				
 				_target.removeEventListener(ResizeEvent.RESIZE,resizeHandler);
 				if (_target.stage)
