@@ -5,7 +5,7 @@ package ghostcat.ui.controls
 	import ghostcat.util.core.ClassFactory;
 
 	/**
-	 * 提供一个新方法实现分页滚动
+	 * 提供一个新方法实现多项分页列表
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -35,6 +35,23 @@ package ghostcat.ui.controls
 				width : w,
 				height : h
 			})
+		}
+		
+		/**
+		 * 分页设置数据 
+		 * @param source
+		 * @param pageLen	每页数据个数
+		 * 
+		 */
+		public function setPageData(source:Array,pageLen:int = 1):void
+		{
+			var len:int = Math.ceil(source.length / pageLen);
+			var result:Array = [];
+			for (var i:int = 0;i < len;i++)
+			{
+				result[i] = source.slice(i * pageLen,pageLen);
+			}
+			this.data = result;
 		}
 	}
 }
