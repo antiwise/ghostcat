@@ -37,8 +37,6 @@ package
 		
 		protected override function init():void
 		{
-			new EnabledSWFScreen(stage)
-			
 			RootManager.register(this);
 			
 			s = new BitmapScreen(400,400,false);
@@ -92,6 +90,9 @@ package
 			group.addEventListener(Event.CHANGE,radioChangeHandler);
 			
 			addChild(new FPS());
+			new EnabledSWFScreen(stage)
+			
+			
 		}
 		
 		private function checkChangeHandler(event:Event):void

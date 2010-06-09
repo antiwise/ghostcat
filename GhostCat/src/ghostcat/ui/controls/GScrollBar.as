@@ -102,7 +102,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 缓动目标值 
+		 * 缓动目标值（无缓动时为NaN）
 		 * @return 
 		 * 
 		 */
@@ -223,11 +223,15 @@ package ghostcat.ui.controls
 		public function resetContent(x:Boolean = true,y:Boolean = true):void
 		{
 			if (x)
-				_scrollContent.scrollH = _scrollContent.tweenTargetH = 0.0;
-			
+			{
+				_scrollContent.scrollH = 0.0;
+				_scrollContent.tweenTargetH = NaN;
+			}
 			if (y)
-				_scrollContent.scrollV = _scrollContent.tweenTargetV = 0.0;
-				
+			{
+				_scrollContent.scrollV = 0.0;
+				_scrollContent.tweenTargetV = NaN;
+			}	
 			updateThumb();
 		}
 		/**
@@ -283,7 +287,11 @@ package ghostcat.ui.controls
 		 */
 		protected override function upArrowClickHandler(event:MouseEvent):void
 		{
-			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) - detra,true)
+			var t:Number = direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV;
+			if (isNaN(t))
+				t = direction == UIConst.HORIZONTAL ? scrollContent.scrollH : scrollContent.scrollV;
+			
+			tweenToValue(t - detra,true)
 		}
 		
 		/**
@@ -293,7 +301,11 @@ package ghostcat.ui.controls
 		 */
 		protected override function downArrowClickHandler(event:MouseEvent):void
 		{
-			tweenToValue((direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV) + detra,true);
+			var t:Number = direction == UIConst.HORIZONTAL ? scrollContent.tweenTargetH : scrollContent.tweenTargetV;
+			if (isNaN(t))
+				t = direction == UIConst.HORIZONTAL ? scrollContent.scrollH : scrollContent.scrollV;
+			
+			tweenToValue(t + detra,true);
 		}
 		
 		/**
@@ -376,6 +388,11 @@ package ghostcat.ui.controls
 		 */
 		protected function tweenCompleteHandler():void
 		{
+			if (direction == UIConst.HORIZONTAL)
+				_scrollContent.tweenTargetH = NaN; 
+			else
+				_scrollContent.tweenTargetV = NaN;
+			
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
 		}
 		

@@ -79,8 +79,8 @@ package ghostcat.ui.containers
 		
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
-		private var _tweenTargetH:Number = 0;
-		private var _tweenTargetV:Number = 0;
+		private var _tweenTargetH:Number = NaN;
+		private var _tweenTargetV:Number = NaN;
 		
 		/**
 		 * 是否在设置滚动区域时绘制透明背景

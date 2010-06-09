@@ -13,8 +13,8 @@ package ghostcat.ui.scroll
 	public class ScrollTextContent extends EventDispatcher implements IScrollContent
 	{
 		private var target:TextField;
-		private var _tweenTargetH:Number = 0;
-		private var _tweenTargetV:Number = 0;
+		private var _tweenTargetH:Number = NaN;
+		private var _tweenTargetV:Number = NaN;
 		
 		public function ScrollTextContent(target:TextField)
 		{
