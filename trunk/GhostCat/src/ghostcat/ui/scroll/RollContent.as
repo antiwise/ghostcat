@@ -15,8 +15,8 @@ package ghostcat.ui.scroll
 		
 		private var _maxScrollH:int = int.MAX_VALUE;
 		private var _maxScrollV:int = int.MAX_VALUE;
-		private var _tweenTargetH:Number = 0;
-		private var _tweenTargetV:Number = 0;
+		private var _tweenTargetH:Number = NaN;
+		private var _tweenTargetV:Number = NaN;
 		
 		public function RollContent(target:DisplayObject)
 		{
