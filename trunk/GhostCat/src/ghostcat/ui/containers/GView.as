@@ -1,12 +1,18 @@
 package ghostcat.ui.containers
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.display.GNoScale;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.Layout;
+	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 容器
@@ -20,14 +26,11 @@ package ghostcat.ui.containers
 	public class GView extends GNoScale
 	{
 		/**
-		 * 背景容器
-		 */
-		public var backContent:DisplayObject
-		
-		/**
 		 * 布局器
 		 */
 		public var layout:Layout;
+		
+		private var background:DisplayObject;
 		
 		/**
 		 * 对象容器 
@@ -43,6 +46,37 @@ package ghostcat.ui.containers
 				skin = new Sprite();
 			
 			super(skin, replace);
+		}
+		
+		/**
+		 * 设置背景 
+		 * @param skin
+		 * 
+		 */
+		public function setBackgroundSkin(skin:*):void
+		{
+			if (background)
+				$removeChild(background);
+			
+			if (skin)
+			{
+				if (skin is String)
+					skin = getDefinitionByName(skin as String);
+				
+				if (skin is Class)
+					skin = new ClassFactory(skin);
+				
+				if (skin is ClassFactory)
+					skin = (skin as ClassFactory).newInstance();
+				
+				if (skin is BitmapData)
+					skin = new Bitmap(skin as BitmapData)
+						
+				background = skin as DisplayObject;
+				
+				$addChildAt(background,0);
+			}
+				
 		}
 		
 		/**
@@ -186,12 +220,14 @@ package ghostcat.ui.containers
 			target.removeEventListener(Event.REMOVED_FROM_STAGE,invalidateLayoutHandler);
 			target.removeEventListener(Event.ADDED_TO_STAGE,invalidateLayoutHandler);
 		}
-//		/** @inheritDoc*/
-//		protected override function updateSize() : void
-//		{
-//			super.updateSize();
-//			invalidateLayout();
-//		}
+		/** @inheritDoc*/
+		protected override function updateSize() : void
+		{
+			super.updateSize();
+			
+			if (background)
+				Geom.scaleToFit(background,this,UIConst.FILL);
+		}
 		
 		/**
 		 * 之后更新布局
