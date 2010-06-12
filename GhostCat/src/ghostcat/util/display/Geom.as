@@ -32,7 +32,7 @@ package ghostcat.util.display
 			if (!(displayObj.width && displayObj.height))
 				return;
 			
-			var rect:Rectangle = getRect(container);
+			var rect:Rectangle = getRect(container,displayObj.parent);
         	displayObj.scaleX *= rect.width / displayObj.width;
             displayObj.scaleY *= rect.height / displayObj.height;
             
