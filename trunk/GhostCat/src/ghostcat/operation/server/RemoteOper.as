@@ -65,13 +65,13 @@ package ghostcat.operation.server
 		protected function resultHandler(data:*):void
 		{
 			this.lastResult = data;
-			result();
+			result(data);
 		}
 		
 		protected function faultHandler(data:*):void
 		{
 			this.lastResult = data;
-			fault();
+			fault(data);
 		}
 	}
 }
