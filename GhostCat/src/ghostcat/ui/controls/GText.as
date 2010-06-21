@@ -471,7 +471,7 @@ package ghostcat.ui.controls
 		 */
 		public function set htmlText(v:String):void
 		{
-			data = "<html>"+LanguageManager.getString(v)+"</html>"
+			data = v ? ("<html>"+LanguageManager.getString(v)+"</html>") : null
 		}
 		
 		/**

@@ -42,7 +42,7 @@ package ghostcat.ui.controls
 		public var type:String = UIConst.VERTICAL;
 		
 		/**
-		 * 是否自动更新Item的大小 
+		 * 是否自动更新Item的皮肤大小 
 		 */
 		public var autoReszieItemContent:Boolean = true;
 		

@@ -102,6 +102,9 @@ package ghostcat.display.bitmap
 		
 		private function tickHandler(event:TickEvent):void
 		{
+			if (!enabled)
+				return;
+			
 			var o:Boolean = isMouseOver();
 			if (mouseOver != o)
 			{

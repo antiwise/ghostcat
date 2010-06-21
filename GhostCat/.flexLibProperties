@@ -494,6 +494,7 @@
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
     <classEntry path="ghostcat.algorithm.Arithmetic"/>
     <classEntry path="ghostcat.ui.controls.GListGroupBase"/>
+    <classEntry path="ghostcat.util.display.BitmapGrid9Util"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
