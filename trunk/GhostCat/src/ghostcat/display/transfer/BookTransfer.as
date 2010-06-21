@@ -7,7 +7,7 @@ package ghostcat.display.transfer
 	import flash.geom.Rectangle;
 
 	/**
-	 * 翻页效果 
+	 * 翻页效果（只支持注册点在左上角）
 	 * @author flashyiyi
 	 * 
 	 */

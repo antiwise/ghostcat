@@ -179,7 +179,15 @@ package ghostcat.ui.controls
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
-			
+			createButtons();
+		}
+		
+		/**
+		 * 创建按钮
+		 * 
+		 */
+		protected function createButtons():void
+		{
 			var upArrowField:String = fields.upArrowField;
 			var downArrowField:String = fields.downArrowField;
 			var thumbField:String = fields.thumbField;

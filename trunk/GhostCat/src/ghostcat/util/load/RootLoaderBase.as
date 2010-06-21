@@ -26,6 +26,10 @@ package ghostcat.util.load
 	 */	
 	public class RootLoaderBase extends MovieClip
 	{
+		/**
+		 * 是否加载完成
+		 */
+		public var loadCompleted:Boolean = false;
 		public function RootLoaderBase()
 		{	
 			if (this["constructor"] == RootLoaderBase)  
@@ -44,19 +48,32 @@ package ghostcat.util.load
 			
 			root.loaderInfo.addEventListener(ProgressEvent.PROGRESS, progressHandler);
 			root.loaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 		
+		//Complete事件失效时的备用处理
+		private function enterFrameHandler(event:Event):void
+		{
+			if (root.loaderInfo.bytesLoaded == root.loaderInfo.bytesTotal)
+				completeHandler(new Event(Event.COMPLETE));
+		}
 		
 		protected function completeHandler(event:Event):void
 		{
+			if (loadCompleted)
+				return;
+			
 			this.gotoAndStop(2);
 			
 			root.loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progressHandler);
 			root.loaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
+			removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
 			
 			dispatchEvent(event);
 			
 			loadComplete();
+			
+			loadCompleted = true;
 		}
 		
 		protected function progressHandler(event:ProgressEvent):void

@@ -19,10 +19,31 @@ package ghostcat.display.movieclip
 	 */	
 	public class TimeLine extends EventDispatcher
 	{
+		private var _mc:MovieClip;
+
 		/**
 		 * 对应的动画对象
 		 */
-		public var mc:MovieClip;
+		public function get mc():MovieClip
+		{
+			return _mc;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set mc(value:MovieClip):void
+		{
+			if (_mc)
+				_mc.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			
+			_mc = value;
+			if (_mc.totalFrames > 1)
+				_mc.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+			
+			_labels = _mc.currentLabels.concat();//currentLabels取值很慢，必须缓存
+		}
+
 		
 		/**
 		 * 帧方法字典
@@ -42,9 +63,6 @@ package ghostcat.display.movieclip
 		public function TimeLine(mc:MovieClip)
 		{
 			this.mc = mc;
-			mc.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
-			
-			_labels = mc.currentLabels.concat();//currentLabels取值很慢，必须缓存
 		}
 		
 		/**

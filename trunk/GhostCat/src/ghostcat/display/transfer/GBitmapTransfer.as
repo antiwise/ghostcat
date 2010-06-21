@@ -52,6 +52,12 @@ package ghostcat.display.transfer
 			createBitmapData();
 			invalidateDisplayList();
 		}
+		
+		protected override function init():void
+		{
+			super.init();
+			updateTargetMove();
+		}
 		                
 		/**
 		 * 更新目标位置
@@ -59,6 +65,9 @@ package ghostcat.display.transfer
 		 */
 		public function updateTargetMove():void
 		{
+			if (!stage)
+				return;
+			
 			var rect:Rectangle = _target.getBounds(this);
 			x = rect.x + this.x;
 			y = rect.y + this.y;
