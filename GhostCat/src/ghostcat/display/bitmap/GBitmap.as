@@ -3,12 +3,15 @@ package ghostcat.display.bitmap
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
+	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.display.IGBase;
 	import ghostcat.events.GEvent;
@@ -18,6 +21,7 @@ package ghostcat.display.bitmap
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.util.Tick;
+	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.core.UniqueCall;
 	import ghostcat.util.display.GraphicsUtil;
 	
@@ -80,25 +84,37 @@ package ghostcat.display.bitmap
 		 */
 		public var enabledScale:Boolean = false;
 		
+		/**
+		 * 是否在第一次设置content时接受content的坐标 
+		 */		
+		public var acceptContentPosition:Boolean = true;
+		
+		/**
+		 * 内容是否初始化
+		 */
+		protected var contentInited:Boolean = false;
+		
 		private var _enableMouseEvent:Boolean = false;
 		
 		private var _oldPosition:Point = new Point();
-		
 		private var _position:Point = new Point();
+		
+		private var _width:Number;
+		private var _height:Number;
+		
+		private var _bitmapData:BitmapData;
 		
 		/**
 		 * 鼠标事件对象
 		 */
 		public var bitmapMouseChecker:BitmapMouseChecker;
 		
-		public function GBitmap(source:*=null, pixelSnapping:String="auto", smoothing:Boolean=false)
+		public function GBitmap(skin:*=null, pixelSnapping:String="auto", smoothing:Boolean=false, replace:Boolean=true)
 		{
-			if (source is Bitmap)
-				source = (source as Bitmap).bitmapData;
-			else if (source is DisplayObject)
-				source = new DrawParse(source as DisplayObject).createBitmapData();
+			super(null, pixelSnapping, smoothing);
 			
-			super(source, pixelSnapping, smoothing);
+			if (skin)
+				setContent(skin,replace);
 			
 			if (bitmapData)
 			{
@@ -110,10 +126,68 @@ package ghostcat.display.bitmap
 			addEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
 		}
 		
-		private var _width:Number;
-		private var _height:Number;
-		
-		private var _bitmapData:BitmapData;
+		/**
+		 * 设置皮肤。
+		 * 
+		 * @param skin		皮肤	
+		 * @param replace	是否替换原图元
+		 * 
+		 */		
+		public function setContent(skin:*,replace:Boolean=true):void
+		{
+			if (skin is String)
+				skin = getDefinitionByName(skin as String);
+			
+			if (skin is Class)
+				skin = new ClassFactory(skin);
+			
+			if (skin is ClassFactory)
+				skin = (skin as ClassFactory).newInstance();
+			
+			if (bitmapData == skin)
+				return;
+			
+			var oldIndex:int;
+			var oldParent:DisplayObjectContainer;
+			
+			if (replace && skin && skin is DisplayObject)
+			{
+				//新设置内容的时候，获取内容的坐标
+				if (acceptContentPosition && !contentInited)
+				{
+					this.x = skin.x;
+					this.y = skin.y;
+				}
+				
+				if (bitmapData == null)
+				{
+					//加入舞台
+					if (skin.parent)
+					{
+						oldParent = skin.parent;
+						oldIndex = skin.parent.getChildIndex(skin);
+					}
+				}
+				
+				if (!contentInited)
+				{
+					this.visible = skin.visible;
+					this.name = skin.name;
+				}
+			}
+			
+			if (skin is Bitmap)
+				bitmapData = (skin as Bitmap).bitmapData;
+			else if (skin is DisplayObject)
+				bitmapData = new DrawParse(skin as DisplayObject).createBitmapData();
+			else if (skin is BitmapData)
+				bitmapData = skin as BitmapData;
+			
+			if (oldParent && !(oldParent is Loader))
+				oldParent.addChildAt(this,oldIndex);
+			
+			this.contentInited = true;
+		}
 		
 		/**
 		 * 是否激活模拟鼠标事件
@@ -185,6 +259,19 @@ package ghostcat.display.bitmap
 				Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,priority);
 			else
 				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
+		private var _owner:DisplayObject;
+		
+		/** @inheritDoc */	
+		public function get owner():DisplayObject
+		{
+			return _owner;
+		}
+		
+		public function set owner(value:DisplayObject):void
+		{
+			_owner = value;
 		}
 		
 		/** @inheritDoc */	

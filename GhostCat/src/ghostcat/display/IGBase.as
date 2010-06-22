@@ -1,5 +1,7 @@
 package ghostcat.display
 {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 
 	/**
@@ -25,6 +27,14 @@ package ghostcat.display
 		 */
 		function set paused(v:Boolean):void
 		function get paused():Boolean;
+		
+		/**
+		 * 拥有者
+		 * @param v
+		 * 
+		 */
+		function set owner(v:DisplayObject):void
+		function get owner():DisplayObject;
 		
 		/**
 		 * 是否激活时基

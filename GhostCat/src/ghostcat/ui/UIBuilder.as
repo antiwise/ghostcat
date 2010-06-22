@@ -64,8 +64,8 @@ package ghostcat.ui
 						{
 							ref.params[0] = obj;	
 							displayObj = ref.newInstance();//创建
-							if (displayObj is GBase)
-								(displayObj as GBase).owner = target;
+							if (displayObj is IGBase)
+								(displayObj as IGBase).owner = target;
 						}
 						catch (e:ArgumentError)
 						{
