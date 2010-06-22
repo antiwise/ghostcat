@@ -83,10 +83,24 @@ package ghostcat.display
 			super(skin,replace);
 		}
 		
+		private var _owner:DisplayObject;
+
 		/**
 		 * 拥有者
 		 */
-		public var owner:DisplayObject;
+		public function get owner():DisplayObject
+		{
+			return _owner;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set owner(value:DisplayObject):void
+		{
+			_owner = value;
+		}
+
 		
 		/**
 		 * 自身

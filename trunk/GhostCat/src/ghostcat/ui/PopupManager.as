@@ -21,7 +21,7 @@ package ghostcat.ui
 	import ghostcat.util.display.Geom;
 	
 	/**
-	 * 弹出窗口管理类 
+	 * 弹出窗口管理类
 	 * 
 	 * @author flashyiyi
 	 * 
