@@ -156,6 +156,9 @@ package ghostcat.ui.controls
 				v = minValue;
 			
 			setValue(v,false);
+			
+			textField.scrollH = 0;
+			textField.scrollV = 0;
 		}
 		/** @inheritDoc*/
 		public override function destory() : void

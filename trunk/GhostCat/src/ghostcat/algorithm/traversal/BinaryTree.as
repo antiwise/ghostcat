@@ -3,7 +3,7 @@ package ghostcat.algorithm.traversal
 	/**
 	 * 顺序结构2叉树
 	 * 
-	 * （首位空出，左子树：i*2，右子树：i*2+1，父节点：i/2
+	 * （首位空出，左子树：i*2，右子树：i*2+1，父节点：i/2）
 	 *  
 	 * @author flashyiyi
 	 * 
@@ -15,6 +15,11 @@ package ghostcat.algorithm.traversal
 		public function BinaryTree()
 		{
 			clear();
+		}
+		
+		public function getRootIndex():int
+		{
+			return 1;
 		}
 		
 		public function getValue(index:int):*

@@ -5,11 +5,13 @@ package ghostcat.manager
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.ContextMenuEvent;
+	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.util.Tick;
 	
 	/**
@@ -116,6 +118,27 @@ package ghostcat.manager
             	navigateToURL(new URLRequest(url),"_blank");
             }
 		}
+		
+		/**
+		 * 增加全局错误监听 
+		 * @param onUncaughtError
+		 * 
+		 */
+		public static function addUncaughtErrorListener(onUncaughtError:Function = null):void
+		{
+			if (onUncaughtError == null)
+				onUncaughtError = defaultUncaughtError;
+			
+			if (stage && stage.loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
+				stage.loaderInfo["uncaughtErrorEvents"].addEventListener("uncaughtError",onUncaughtError);
+		}
+		
+		private static function defaultUncaughtError(e:Event):void
+		{
+			Debug.trace("UncaughtError",e)
+			e.preventDefault();
+		}
+
 		
 		/**
 		 * 设置缩放模式 
