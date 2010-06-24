@@ -99,7 +99,7 @@ package ghostcat.ui.controls
 				list.height = list.rowHeight * maxLine;
 		}
 		
-		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, fields:Object=null)
+		public function GComboBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, fields:Object=null, autoRefreshLabelField:Boolean = true)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -107,7 +107,7 @@ package ghostcat.ui.controls
 			if (fields)
 				this.fields = fields;
 				
-			super(skin, replace, separateTextField, textPadding);
+			super(skin, replace, separateTextField, textPadding, autoRefreshLabelField);
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void

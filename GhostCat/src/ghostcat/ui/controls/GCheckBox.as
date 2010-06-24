@@ -21,7 +21,7 @@ package ghostcat.ui.controls
 		 */
 		public var value:*;
 		
-		public function GCheckBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
+		public function GCheckBox(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, autoRefreshLabelField:Boolean = true)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -31,7 +31,7 @@ package ghostcat.ui.controls
 			
 			this.toggle = true;
 			
-			super(skin, replace,separateTextField,textPadding);
+			super(skin, replace,separateTextField,textPadding,autoRefreshLabelField);
 		}
 	}
 }

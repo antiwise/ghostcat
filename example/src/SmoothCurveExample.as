@@ -63,7 +63,7 @@ package
 			graphics.lineStyle(0,0x0,1);
 			roupe.parse(this);
 			
-			end.invalidatePosition();
+			end.vaildPosition();
 		}
 		
 		private function mouseDownHandler(event:MouseEvent):void
