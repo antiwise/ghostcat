@@ -30,6 +30,10 @@ package ghostcat.algorithm
 		 */
 		public var parent:QuadTree;
 		/**
+		 * 起始节点
+		 */
+		public var root:QuadTree;
+		/**
 		 * 图形范围 
 		 */
 		public var rect:Rectangle;
@@ -41,6 +45,7 @@ package ghostcat.algorithm
 		public function QuadTree(rect:Rectangle)
 		{
 			this.rect = rect;
+			this.root = this;
 		}
 		
 		/**
@@ -61,12 +66,13 @@ package ghostcat.algorithm
 			q3 = new QuadTree(new Rectangle(rect.x, rect.y + hh, hw, hh));
 			q4 = new QuadTree(new Rectangle(rect.x, rect.y, hw, hh));
 			
+			q1.parent = q2.parent = q3.parent = q4.parent = this;
+			q1.root = q2.root = q3.root = q4.root = this.root;
+			
 			q1.createChildren(deep - 1);
 			q2.createChildren(deep - 1);
 			q3.createChildren(deep - 1);
 			q4.createChildren(deep - 1);
-			
-			q1.parent = q2.parent = q3.parent = q4.parent = this;
 		}
 		
 		/**
@@ -111,7 +117,7 @@ package ghostcat.algorithm
 		 * @return 
 		 * 
 		 */
-		public function remove(v:*, x:Number, y:Number):QuadTree
+		public function remove(v:*, x:Number = NaN, y:Number = NaN):QuadTree
 		{
 			if (!isIn(x,y))
 				return null;
@@ -144,28 +150,27 @@ package ghostcat.algorithm
 		 */
 		public function isIn(x:Number, y:Number):Boolean
 		{
-			return (isNaN(x) || x >= rect.x && x <= rect.right) && (isNaN(y) || y >= rect.y && y <= rect.bottom);
+			return (isNaN(x) || x >= rect.x && x < rect.right) && (isNaN(y) || y >= rect.y && y < rect.bottom);
 		}
 		
 		/**
 		 * 获得一个范围内的所有数据
 		 * 
 		 * @param rect
-		 * @param deep	设为-1则不限制层数
 		 * 
 		 */
-		public function getDataInRect(rect:Rectangle,deep:int = -1):Array
+		public function getDataInRect(rect:Rectangle):Array
 		{
-			if (deep == 0 || !this.rect.intersects(rect))
+			if (!this.rect.intersects(rect))
 				return [];
 			
 			var result:Array = data.concat();
 			if (hasChildren)
 			{
-				result.push.apply(null,q1.getDataInRect(rect,deep - 1));
-				result.push.apply(null,q2.getDataInRect(rect,deep - 1));
-				result.push.apply(null,q3.getDataInRect(rect,deep - 1));
-				result.push.apply(null,q4.getDataInRect(rect,deep - 1));
+				result.push.apply(null,q1.getDataInRect(rect));
+				result.push.apply(null,q2.getDataInRect(rect));
+				result.push.apply(null,q3.getDataInRect(rect));
+				result.push.apply(null,q4.getDataInRect(rect));
 			}
 			return result;
 		}

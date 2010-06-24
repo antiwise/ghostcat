@@ -135,6 +135,7 @@ package ghostcat.text
 		public static function clone(v:TextField,replace:Boolean = false):TextField
 		{
 			var c:TextField = new TextField();
+			c.name = v.name;
 			c.autoSize = v.autoSize;
 			c.embedFonts = v.embedFonts;
 			c.defaultTextFormat = v.defaultTextFormat;

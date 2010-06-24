@@ -71,7 +71,6 @@ package ghostcat.display.graphics
 			enabled = enabled;
 			
 			this.positionCall.frame = false;
-//			this.delayUpatePosition = true;//设置此属性是为了消除闪烁
 		}
 
 		private function onMouseDownHandler(event : MouseEvent) : void

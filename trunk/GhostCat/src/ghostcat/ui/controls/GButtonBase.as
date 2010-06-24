@@ -61,11 +61,6 @@ package ghostcat.ui.controls
 		private var _mouseDown:Boolean = false;
 		private var _mouseOver:Boolean = false;
 		
-		private var _autoSize:String = TextFieldAutoSize.NONE;
-		private var _separateTextField:Boolean = false;
-		private var _enabledTruncateToFit:Boolean = false;
-		private var _enabledVerticalCenter:Boolean = false;
-		
 		private var mouseDownTimer:Timer;
 		private var mouseDownDelayTimer:int;
 		
@@ -80,37 +75,72 @@ package ghostcat.ui.controls
 		public var labelField:String;
 		
 		/**
-		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 * 是否创建Label文本框（此属性必须用构造函数的第5个参数设置）
 		 */
-		public var textPadding:Padding;
+		private var autoRefreshLabelField:Boolean = true;
+		
+		/**
+		 * 根据文本框更新图形大小
+		 * 
+		 */
+		public function adjustContextSize():void
+		{
+			if (labelTextField)
+				labelTextField.adjustContextSize();
+		}
+		
+		/**
+		 * 删除Label文本框 
+		 * 
+		 */
+		public function removeLabelTextField():void
+		{
+			if (labelTextField)
+			{
+				labelTextField.destory();
+				labelTextField = null;
+			}
+		}
 		
 		/**
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
 		 * 要正确适应文本，首先必须在创建时将separateTextField参数设为true，其次可以根据textPadding来决定边距
 		 */
-		public var enabledAdjustContextSize:Boolean = false;
+		public function get enabledAdjustContextSize():Boolean
+		{
+			return labelTextField ? labelTextField.enabledAdjustContextSize : false;
+		}
+
+		public function set enabledAdjustContextSize(value:Boolean):void
+		{
+			if (labelTextField)
+				labelTextField.enabledAdjustContextSize = value;
+		}
 		
 		/**
-		 * 是否自动在更新数据的时候刷新文本框
+		 * 动态创建的TextField的初始位置（如果是从skin中创建，此属性无效）
 		 */
-		public var autoRefreshLabelField:Boolean = true;
+		public function get textPadding():Padding
+		{
+			return labelTextField ? labelTextField.textPadding : null;
+		}
 		
-		/**
-		 * 是否在更新Skin的时候自动刷新文本框
-		 */
-		public var autoRefreshLabelFieldWithContent:Boolean = false;
+		public function set textPadding(value:Padding):void
+		{
+			if (labelTextField)
+				labelTextField.textPadding = value;
+		}
 		
 		/**
 		 * Label自动大小
 		 */
 		public function get autoSize():String
 		{
-			return _autoSize;
+			return labelTextField ? labelTextField.autoSize : null;
 		}
 
 		public function set autoSize(value:String):void
 		{
-			_autoSize = value;
 			if (labelTextField)
 				labelTextField.autoSize = value;
 		}
@@ -120,13 +150,11 @@ package ghostcat.ui.controls
 		 */
 		public function get separateTextField():Boolean
 		{
-			return _separateTextField;
+			return labelTextField ? labelTextField.separateTextField : false;
 		}
 		
 		public function set separateTextField(v:Boolean):void
 		{
-			_separateTextField = v;
-			
 			if (labelTextField)
 				labelTextField.separateTextField = v;
 		}
@@ -138,17 +166,13 @@ package ghostcat.ui.controls
 		 */
 		public function get enabledTruncateToFit():Boolean
 		{
-			return _enabledTruncateToFit;
-			
+			return labelTextField ? labelTextField.enabledTruncateToFit : false;
 		}
 		
 		public function set enabledTruncateToFit(v:Boolean):void
 		{
-			_enabledTruncateToFit = v;
-			
 			if (labelTextField)
 				labelTextField.enabledTruncateToFit = v;
-			
 		}
 		
 		/**
@@ -156,17 +180,14 @@ package ghostcat.ui.controls
 		 */
 		public function get enabledVerticalCenter():Boolean
 		{
-			return _enabledVerticalCenter;
+			return labelTextField ? labelTextField.enabledVerticalCenter : false;
 		}
 		
 		public function set enabledVerticalCenter(v:Boolean):void
 		{
-			_enabledVerticalCenter = v;
-			
 			if (labelTextField)
 				labelTextField.enabledVerticalCenter = v;
 		}
-		
 		
 		/**
 		 * 激活文本自适应
@@ -174,11 +195,6 @@ package ghostcat.ui.controls
 		 */
 		public function enabledAutoLayout(padding:Padding,autoSize:String = TextFieldAutoSize.LEFT):void
 		{
-			this._separateTextField = true;
-			this._autoSize = autoSize;
-			this.enabledAdjustContextSize = true;
-			this.textPadding = padding;
-			
 			if (labelTextField)
 				labelTextField.enabledAutoLayout(padding,autoSize);
 		}
@@ -251,7 +267,7 @@ package ghostcat.ui.controls
 			return _mouseOver;
 		}
 		
-		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
+		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, autoRefreshLabelField:Boolean = true)
 		{
 			this.buttonStates = 
 			{
@@ -265,12 +281,12 @@ package ghostcat.ui.controls
 				selectedDisabled:this.selectedDisabledState
 			};
 			
-			AbstractUtil.preventConstructor(this,GButtonBase);
-			
-			this.textPadding = textPadding;
-			this._separateTextField = separateTextField;
+			this.autoRefreshLabelField = autoRefreshLabelField;
 			
 			super(skin, replace);
+			
+			this.separateTextField = separateTextField;
+			this.textPadding = textPadding;
 			
 			this.mouseChildren = false;
 		}
@@ -304,10 +320,8 @@ package ghostcat.ui.controls
 			
 			if (label != null)
 			{
-				if (labelTextField)
+				if (labelTextField && autoRefreshLabelField)
 					labelTextField.text = label;
-				else if (autoRefreshLabelField)
-					refreshLabelField();
 			}
 		} 
 		/** @inheritDoc*/
@@ -327,17 +341,21 @@ package ghostcat.ui.controls
 		public function refreshLabelField():void
 		{
 			if (labelTextField)
+			{
+				//复制原属性
+				var newText:GText = new GText(content,false,separateTextField,textPadding,autoRefreshLabelField);
+				newText.enabledAdjustContextSize = enabledAdjustContextSize;
+				newText.enabledTruncateToFit = enabledTruncateToFit;
+				newText.enabledVerticalCenter = enabledVerticalCenter;
+				newText.autoSize = autoSize;
+				
 				labelTextField.destory();
-			
-			labelTextField = new GText(content,false,separateTextField,textPadding);
-			labelTextField.enabledAdjustContextSize = this.enabledAdjustContextSize;
-			labelTextField.enabledTruncateToFit = this.enabledTruncateToFit;
-			labelTextField.enabledVerticalCenter = this.enabledVerticalCenter;
-			
-			if (labelTextField.autoSize == TextFieldAutoSize.NONE)
-				labelTextField.autoSize = _autoSize;
+				labelTextField = newText;
+			}
 			else
-				_autoSize = labelTextField.autoSize;
+			{
+				labelTextField = new GText(content,false);
+			}
 			
 			if (!labelTextField.parent)
 				addChild(labelTextField)
@@ -362,9 +380,8 @@ package ghostcat.ui.controls
 		{
 			super.setContent(skin,replace);
 			
-			if (autoRefreshLabelFieldWithContent)
+			if (autoRefreshLabelField)
 				refreshLabelField();
-			
 			createMovieClip();
 		}
 		
@@ -520,6 +537,7 @@ package ghostcat.ui.controls
 			_mouseOver = true;
 		}
 		
+		//激活连续点击
 		private function set enabledIncessancy(v:Boolean):void
 		{
 			if (mouseDownTimer)

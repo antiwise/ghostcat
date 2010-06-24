@@ -24,6 +24,7 @@ package ghostcat.ui.controls
 	import ghostcat.text.TextFieldUtil;
 	import ghostcat.text.TextUtil;
 	import ghostcat.text.UBB;
+	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.layout.Layout;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.ui.layout.Padding;
@@ -84,16 +85,38 @@ package ghostcat.ui.controls
 		private var _textFormat:String;
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
+		private var isSkinText:Boolean = false;//文本框是否是由皮肤提供
 		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		
 		public var textField:TextField;
 		
+		private var _textPadding:Padding;
+
 		/**
-		 * 自动创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 * 当enabledAdjustContextSize为true时，会根据此属性调整皮肤大小以适应文本框，否则会以此来决定新创建的TextField的相对位置
 		 */
-		public var textPadding:Padding;
+		public function get textPadding():Padding
+		{
+			return _textPadding;
+		}
+
+		public function set textPadding(value:Padding):void
+		{
+			_textPadding = value;
+			
+			if (enabledAdjustContextSize)
+			{
+				adjustContextSize();
+			}
+			else
+			{
+				if (_textPadding && textField && !isSkinText)
+					_textPadding.adjectRect(textField,this);
+			}
+		}
+
 		
 		/**
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
@@ -194,11 +217,9 @@ package ghostcat.ui.controls
 		{
 			this.separateTextField = true;
 			
-			this.textPadding = padding;
-			this.enabledAdjustContextSize = true;
 			this.autoSize = autoSize;
-			
-			this.adjustContextSize();
+			this.enabledAdjustContextSize = true;
+			this.textPadding = padding;
 		}
 		
 		/**
@@ -341,15 +362,16 @@ package ghostcat.ui.controls
 		
 		private var _asTextBitmap:Boolean;
 		
-		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
+		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, enabledAdjustContextSize:Boolean = false)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
 			if (textPadding)
-				this.textPadding = textPadding;
+				this._textPadding = textPadding;
 			
 			this._separateTextField = separateTextField;
+			this.enabledAdjustContextSize = enabledAdjustContextSize;
 			
 			super(skin, replace);
 		}
@@ -379,24 +401,30 @@ package ghostcat.ui.controls
 			}
 			
 			textField = SearchUtil.findChildByClass(skin,TextField) as TextField;
-			
-			if (!textField)
+				
+			if (!textField)//如果皮肤不存在文本框则创建
 			{
+				isSkinText = false;
+				
 				textField = TextFieldParse.createTextField();
 				addChild(textField);
 				
 				this._separateTextField = true;
 				
-				if (textPadding)
-					textPadding.adjectRect(textField,this);
+//				//根据textPadding设置文本框位置
+//				if (_textPadding)
+//					_textPadding.adjectRect(textField,this.content);
 			}
 			else
 			{
+				isSkinText = true;
+				
 				if (autoRebuildEmbedText && textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
 					rebuildTextField();
 				
 				if (this._separateTextField)
 					separateTextField = true;//提取文本框
+				
 			}
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）
@@ -413,8 +441,6 @@ package ghostcat.ui.controls
 				oldFont.font = fontFamilyReplacer[oldFont.font];
 				this.applyTextFormat(oldFont,true);
 			}
-			
-			
 			
 			if (!this.text)
 				super.data = textField.text;
@@ -482,9 +508,9 @@ package ghostcat.ui.controls
 		{
 			if (content)
 			{
-				if (textPadding)
+				if (_textPadding)
 				{
-					textPadding.invent().adjectRectBetween(content,textField);
+					_textPadding.invent().adjectRectBetween(content,textField);
 				}
 				else
 				{
@@ -677,8 +703,8 @@ package ghostcat.ui.controls
 		{
 			super.updateSize();
 			
-			if (textPadding)
-				textPadding.adjectRect(textField,this);
+			if (_textPadding)
+				_textPadding.adjectRect(textField,this);
 		}
 		
 		/** @inheritDoc*/

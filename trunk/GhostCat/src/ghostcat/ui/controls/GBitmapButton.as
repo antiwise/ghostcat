@@ -31,11 +31,11 @@ package ghostcat.ui.controls
 	 */	
 	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
-		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null)
+		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
 		{
 			movie = new GBitmapMovieClip(bitmaps,labels);
 			
-			super(movie.content, true, true,textPadding);
+			super(movie.content, true, true,textPadding,enabledAdjustContextSize);
 		}
 		
 		/** @inheritDoc*/

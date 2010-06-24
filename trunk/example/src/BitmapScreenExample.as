@@ -2,8 +2,12 @@ package
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import flash.geom.Transform;
 	
+	import ghostcat.algorithm.QuadTree;
 	import ghostcat.community.physics.PhysicsItem;
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.debug.EnabledSWFScreen;
@@ -91,8 +95,6 @@ package
 			
 			addChild(new FPS());
 			new EnabledSWFScreen(stage)
-			
-			
 		}
 		
 		private function checkChangeHandler(event:Event):void

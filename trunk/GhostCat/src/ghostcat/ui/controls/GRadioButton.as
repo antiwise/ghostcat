@@ -28,15 +28,15 @@ package ghostcat.ui.controls
 		
 		private var _value:*;
 		
-		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
+		public function GRadioButton(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, autoRefreshLabelField:Boolean = true)
 		{
 			if (!skin)
 				skin = defaultSkin;
 			
 			if (!textPadding)
-				textPadding = new Padding(20,0);
+				textPadding = new Padding(15,0);
 			
-			super(skin, replace,separateTextField,textPadding);
+			super(skin, replace,separateTextField,textPadding,autoRefreshLabelField);
 		}
 		
 		
