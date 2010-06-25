@@ -101,7 +101,7 @@ package ghostcat.display.movieclip
         /** @inheritDoc*/
         public override function get totalFrames():int
         {
-        	return mc ? mc.totalFrames : 0;
+        	return timeLine ? timeLine.totalFrames : 0;
         }
 		
         /**
