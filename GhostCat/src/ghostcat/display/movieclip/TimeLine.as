@@ -42,6 +42,7 @@ package ghostcat.display.movieclip
 				_mc.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 			
 			_labels = _mc.currentLabels.concat();//currentLabels取值很慢，必须缓存
+			totalFrames = _mc.totalFrames;
 		}
 
 		
@@ -146,6 +147,11 @@ package ghostcat.display.movieclip
 		}
 		
 		/**
+		 * 总帧数
+		 */
+		public var totalFrames:int;
+		
+		/**
 		 * 取得某个标签的长度
 		 * @param labelName		标签名称
 		 * @return 
@@ -156,7 +162,7 @@ package ghostcat.display.movieclip
             var index:int = getLabelIndex(labelName);
             if (index + 1 < labels.length)
                 return labels[index + 1].frame - labels[index].frame;
-            return mc.totalFrames - labels[index].frame;
+            return totalFrames - labels[index].frame;
         }
         
         /**
