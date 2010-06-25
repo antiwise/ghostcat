@@ -2,7 +2,6 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
@@ -55,10 +54,9 @@ package
 				var m:Item = new Item(new DrawParse(new TestHuman()).createBitmapData())
 				m.x = Math.random() * stage.stageWidth;
 				m.y = Math.random() * stage.stageHeight;
-				m.enabledDelayUpdate = false;
 				this.addChild(m); 
 				
-				m.r = q;
+				m.quad = q.add(m,m.x,m.y);
 			}
 			
 			//创建物理
@@ -101,32 +99,27 @@ package
 			if (item.y > stage.stageHeight && item.velocity.y > 0)
 				item.velocity.y = -item.velocity.y;
 		}
+		
 	}
 }
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.events.Event;
+
 import ghostcat.algorithm.QuadTree;
 import ghostcat.display.bitmap.GBitmap;
-import ghostcat.events.TickEvent;
 
-class Item extends GBitmap
+class Item extends Bitmap
 {
 	public var quad:QuadTree;
-	public var r:QuadTree;
-	public function Item(skin:*):void
+	public function Item(bitmap:BitmapData):void
 	{
-		super(skin);
-		this.enabledTick = true;
+		super(bitmap);
+		addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 	}
-	protected override function tickHandler(event:TickEvent):void
+	
+	private function enterFrameHandler(event:Event):void
 	{
-		if (!quad)
-		{
-			quad = r.add(this,position.x,position.y);//加入4叉树
-			return;
-		}
-		if (!quad.isIn(oldPosition.x,oldPosition.y))//如果不在原范围内，则重新加入树
-		{
-			quad.remove(this);
-			quad = r.add(this,position.x,position.y);
-		}
+		quad = quad.reinsert(this,x,y);
 	}
 }

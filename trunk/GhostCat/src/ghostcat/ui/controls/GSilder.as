@@ -23,15 +23,20 @@ package ghostcat.ui.controls
 	 */
 	public class GSilder extends GNoScale
 	{
-		public var upArrow:GButton;
-		public var downArrow:GButton;
-		public var thumb:GButton;
+		public var upArrow:GButtonBase;
+		public var downArrow:GButtonBase;
+		public var thumb:GButtonBase;
 		public var background:DisplayObject;
 		
 		/**
 		 * (此屬性功能已取消)
 		 */
-		public var clickToMove:Boolean = true;
+//		public var clickToMove:Boolean = true;
+		
+		/**
+		 * 按钮类型
+		 */
+		public var buttonRef:Class;
 		
 		/**
 		 * 激活滚动条按钮自适应
@@ -188,32 +193,35 @@ package ghostcat.ui.controls
 		 */
 		protected function createButtons():void
 		{
+			var ref:Class = buttonRef ? buttonRef : GButton;
+			
 			var upArrowField:String = fields.upArrowField;
 			var downArrowField:String = fields.downArrowField;
 			var thumbField:String = fields.thumbField;
 			var backgroundField:String =  fields.backgroundField;
 			
+			
 			if (content.hasOwnProperty(upArrowField))
 			{
-				this.upArrow = new GButton(content[upArrowField]);
+				this.upArrow = new ref(content[upArrowField]);
 				this.upArrow.incessancyClick = true;
 				this.upArrow.addEventListener(MouseEvent.CLICK,upArrowClickHandler);
 			}
 			else
-				this.upArrow = new GButton(new Shape())
+				this.upArrow = new ref(new Shape())
 				
 			if (content.hasOwnProperty(downArrowField))
 			{
-				this.downArrow = new GButton(content[downArrowField]);
+				this.downArrow = new ref(content[downArrowField]);
 				this.downArrow.incessancyClick = true;
 				this.downArrow.addEventListener(MouseEvent.CLICK,downArrowClickHandler);
 			}
 			else
-				this.downArrow = new GButton(new Shape())
+				this.downArrow = new ref(new Shape())
 				
 			if (content.hasOwnProperty(thumbField))
 			{
-				this.thumb = new GButton(content[thumbField]);
+				this.thumb = new ref(content[thumbField]);
 				thumb.addEventListener(MouseEvent.MOUSE_DOWN,thumbMouseDownHandler);
 			}
 				
