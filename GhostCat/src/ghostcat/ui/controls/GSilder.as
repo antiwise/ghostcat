@@ -31,7 +31,7 @@ package ghostcat.ui.controls
 		/**
 		 * (此屬性功能已取消)
 		 */
-//		public var clickToMove:Boolean = true;
+		public var clickToMove:Boolean = true;
 		
 		/**
 		 * 按钮类型

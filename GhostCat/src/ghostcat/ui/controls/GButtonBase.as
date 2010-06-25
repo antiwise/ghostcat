@@ -72,7 +72,7 @@ package ghostcat.ui.controls
 		public var labelField:String;
 		
 		/**
-		 * 是否创建Label文本框（此属性必须用构造函数的第5个参数设置）
+		 * 是否创建Label文本框（此属性必须用GButtonBase构造函数的第5个参数来设置）
 		 */
 		private var autoRefreshLabelField:Boolean = true;
 		
