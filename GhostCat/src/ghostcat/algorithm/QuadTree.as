@@ -142,6 +142,28 @@ package ghostcat.algorithm
 		}
 		
 		/**
+		 * 检测是否还在当前区间内，并返回新的区间 
+		 * @param v
+		 * @param x
+		 * @param y
+		 * @return 
+		 * 
+		 */
+		public function reinsert(v:*, x:Number, y:Number):QuadTree
+		{
+			if (!isIn(x,y))
+			{
+				var result:QuadTree = root.add(v,x,y);
+				if (result)
+				{
+					remove(v);
+					return result;
+				}
+			}
+			return this;
+		}
+		
+		/**
 		 * 判断坐标是否在界限内，设为NaN则不做限制 
 		 * @param x
 		 * @param y
