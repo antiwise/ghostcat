@@ -159,14 +159,20 @@
 			else
 				isLoader = (this.type == LOADER);
 			
+			if (embedClass && alawayUseEmbedClass || !request)
+			{
+				var bytes:ByteArray = new embedClass();
+				embedClass = null;
+			}
+			
 			if (isLoader)
 			{
 				var loader:Loader = new Loader();
 				_loader = loader;
 				
-				if (embedClass && alawayUseEmbedClass || !request)
+				if (bytes)
 				{
-					loadEmbedClass();
+					loadEmbedClass(bytes);
 				}
 				else
 				{
@@ -174,19 +180,18 @@
 					loader.contentLoaderInfo.addEventListener(Event.INIT,initHandler);
 					loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,fault);
-					
 					if (useCurrentDomain)
 					{
 						var loaderContext:LoaderContext = new LoaderContext(checkPolicyFile,ApplicationDomain.currentDomain);
 						if (Security.sandboxType == Security.REMOTE)
 							loaderContext.securityDomain = SecurityDomain.currentDomain;
-						
-						loader.load(request,loaderContext);
 					}
 					else
 					{
-						loader.load(request,new LoaderContext(checkPolicyFile));
+						loaderContext = new LoaderContext(checkPolicyFile);
 					}
+					
+					loader.load(request,loaderContext);
 				}
 			}
 			else
@@ -195,16 +200,15 @@
 				urlLoader.dataFormat = dataFormat;
 				_loader = urlLoader;
 				
-				if (embedClass && alawayUseEmbedClass || !request)
+				if (bytes)
 				{
-					loadEmbedClass();
+					loadEmbedClass(bytes);
 				}
 				else
 				{
 					urlLoader.addEventListener(Event.COMPLETE,result);
 					urlLoader.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 					urlLoader.addEventListener(IOErrorEvent.IO_ERROR,fault);
-					
 					urlLoader.load(request);
 				}
 			}
@@ -235,32 +239,36 @@
 			(event.target as EventDispatcher).removeEventListener(IOErrorEvent.IO_ERROR,fault);
 		
 			if (embedClass)
-				loadEmbedClass();
+			{
+				var bytes:ByteArray = new embedClass();
+				embedClass = null;
+			
+				loadEmbedClass(bytes);
+			}
 			else
+			{
 				super.fault(event);
+			}
 		}
 		
-		protected function loadEmbedClass():void
+		private function loadEmbedClass(byteArr:ByteArray):void
 		{
-			var byteArr:ByteArray = new embedClass();
-			embedClass = null;
-			
 			if (_loader is Loader)
 			{
 				var oper:Loader = _loader as Loader;
 				oper.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
-				oper.loadBytes(byteArr,new LoaderContext(true,ApplicationDomain.currentDomain));
+				oper.loadBytes(byteArr,new LoaderContext(false,useCurrentDomain ? ApplicationDomain.currentDomain: null));
 			}
 			else if (_loader is URLLoader)
 			{
 				var urlLoader:URLLoader = _loader as URLLoader;
-				
+			
 				if (urlLoader.dataFormat == URLLoaderDataFormat.BINARY)
 					urlLoader.data = byteArr;
-				else if (urlLoader.dataFormat == URLLoaderDataFormat.TEXT)
-					urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
-				else
+				else if (urlLoader.dataFormat == URLLoaderDataFormat.VARIABLES)
 					urlLoader.data = new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
+				else
+					urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
 				
 				super.result(_loader);
 			}
