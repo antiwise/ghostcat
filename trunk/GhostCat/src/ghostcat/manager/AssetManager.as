@@ -43,16 +43,6 @@ package ghostcat.manager
 		public var packageBase:String="";
 		
 		/**
-		 * 加载时显示的图标 
-		 */
-		public var loadIcon:Class;
-		
-		/**
-		 * 加载错误时显示的图标
-		 */
-		public var errorIcon:Class;
-		
-		/**
 		 * 使用的队列
 		 */
 		public var queue:Queue;

@@ -362,7 +362,7 @@ package ghostcat.ui.controls
 		
 		private var _asTextBitmap:Boolean;
 		
-		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, enabledAdjustContextSize:Boolean = false)
+		public function GText(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null)
 		{
 			if (!skin)
 				skin = defaultSkin;
@@ -371,7 +371,6 @@ package ghostcat.ui.controls
 				this._textPadding = textPadding;
 			
 			this._separateTextField = separateTextField;
-			this.enabledAdjustContextSize = enabledAdjustContextSize;
 			
 			super(skin, replace);
 		}

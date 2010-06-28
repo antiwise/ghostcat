@@ -13,6 +13,7 @@ package ghostcat.operation
 	 */
 	public class LoadGIFOper extends LoadOper
 	{
+		private var _result:Array;
 		/**
 		 * 
 		 * @param url	数据地址
@@ -36,16 +37,19 @@ package ghostcat.operation
 		 */
 		public override function get data() : *
 		{
+			if (_result != null)
+				return _result;
+			
 			var bytes:ByteArray = super.data as ByteArray;
 			var gif:GIFDecoder = new GIFDecoder();
 			gif.read(bytes);
 			
-			var result:Array = [];
+			_result = [];
 			var len:int = gif.getFrameCount();
 			for (var i:int = 0;i < len;i++)
-				result.push(gif.getFrame(i))
+				_result.push(gif.getFrame(i))
 				
-			return result;
+			return _result;
 		}
 	}
 }
