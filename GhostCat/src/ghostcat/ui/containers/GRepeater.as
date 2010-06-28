@@ -153,6 +153,20 @@ package ghostcat.ui.containers
 				renderItem(index)
 		}
 		
+		/**
+		 * 由数据获得对象
+		 * @param v
+		 * 
+		 */
+		public function getRender(v:*):DisplayObject
+		{
+			var index:int = data.indexOf(v);
+			if (index != -1)
+				return getChildAt(index)
+			else
+				return null;
+		}
+		
 		/** @inheritDoc*/
 		public override function set data(v:*) : void
 		{

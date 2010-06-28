@@ -28,6 +28,16 @@ package ghostcat.display.loader
 		public static var assetQueue:Queue = new Queue();
 		
 		/**
+		 * 加载时显示的图标 
+		 */
+		public static var loadIcon:Class;
+		
+		/**
+		 * 加载错误时显示的图标
+		 */
+		public static var errorIcon:Class;
+		
+		/**
 		 * 通过类名来获得默认文件地址。地址始终是小写。
 		 * 这个方法用于动态加载。可以同样利用jsfl将库中的类按类名分散到各个文件里（这个jsfl已经提供），
 		 * 分散到目录的文件更容易管理，且不容易出现重名。
@@ -107,7 +117,7 @@ package ghostcat.display.loader
 		 */		
 		public function load():void
 		{
-			var c:Class = AssetManager.instance.loadIcon;
+			var c:Class = AssetLoader.loadIcon;
 			if (c)
 				setContent(new c());
 			
@@ -132,20 +142,25 @@ package ghostcat.display.loader
 		private function rhander(event:OperationEvent):void
 		{
 			if (!cls)
-				cls = AssetManager.instance.getAssetByName(ref);
+			{
+				try
+				{
+					cls = getDefinitionByName(ref) as Class;
+				}
+				catch (e:Error){}
+			}
 			
-			var c:Class = cls;
-			if (c)
-				setContent(new c());
+			if (cls)
+				setContent(cls);
 			
 			doHandler();
 		}
 		
 		private function fhander(event:OperationEvent):void
 		{
-			var c:Class = AssetManager.instance.errorIcon;
+			var c:Class = AssetLoader.errorIcon;
 			if (c)
-				setContent(new c());
+				setContent(c);
 		}
 		
 		/**

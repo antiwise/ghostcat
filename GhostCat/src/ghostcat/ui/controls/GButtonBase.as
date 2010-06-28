@@ -340,7 +340,7 @@ package ghostcat.ui.controls
 			if (labelTextField)
 			{
 				//复制原属性
-				var newText:GText = new GText(content,false,separateTextField,textPadding,autoRefreshLabelField);
+				var newText:GText = new GText(content,false,separateTextField,textPadding);
 				newText.enabledAdjustContextSize = enabledAdjustContextSize;
 				newText.enabledTruncateToFit = enabledTruncateToFit;
 				newText.enabledVerticalCenter = enabledVerticalCenter;

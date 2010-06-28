@@ -1,5 +1,6 @@
-package com.kunlun.appceo.ui.popup
+package ghostcat.ui.controls
 {
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;

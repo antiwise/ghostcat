@@ -7,6 +7,7 @@
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -18,7 +19,11 @@
 	import flash.utils.ByteArray;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.manager.FileCacherManager;
 	import ghostcat.text.URL;
+	import ghostcat.util.data.LocalStorage;
+	
+	import mx.utils.object_proxy;
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]
@@ -52,9 +57,25 @@
 		public static var alawayUseEmbedClass:Boolean = false;
 		
 		/**
+		 * SharedObject缓存版本号(为空则禁用)
+		 */
+		public static var sharedObjectCacheVersion:String;
+		
+		/**
+		 * 原始地址
+		 */
+		public var url:String;
+		
+		/**
 		 * 路径
 		 */		
 		public var request:URLRequest;
+		
+		/**
+		 * 是否禁用SharedObject缓存
+		 */
+		public var disibledCache:Boolean;
+		
 		
 		private var _name:String;
 
@@ -133,9 +154,16 @@
 		public function LoadOper(url:*=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
 			if (url is String)
-				url = new URLRequest(url + postfix);
+			{
+				this.url = url;
+				this.request = new URLRequest(url + postfix);
+			}
+			else if (url is URLRequest)
+			{
+				this.request = url as URLRequest;
+				this.url = this.request.url
+			}
 			
-			this.request = url;
 			this.embedClass = embedClass;
 			
 			if (embedClass)
@@ -159,10 +187,15 @@
 			else
 				isLoader = (this.type == LOADER);
 			
+			var bytes:ByteArray;
 			if (embedClass && alawayUseEmbedClass || !request)
 			{
-				var bytes:ByteArray = new embedClass();
+				bytes = new embedClass();
 				embedClass = null;
+			}
+			else if (sharedObjectCacheVersion && url && !disibledCache)
+			{
+				bytes = FileCacherManager.instance.load(url,sharedObjectCacheVersion);
 			}
 			
 			if (isLoader)
@@ -226,6 +259,9 @@
 			evt.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			evt.removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
+			if (sharedObjectCacheVersion && url && !disibledCache)
+				FileCacherManager.instance.save(url,sharedObjectCacheVersion);
+			
 			super.result(event);		
 		}
 		
@@ -259,7 +295,7 @@
 				oper.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
 				oper.loadBytes(byteArr,new LoaderContext(false,useCurrentDomain ? ApplicationDomain.currentDomain: null));
 			}
-			else if (_loader is URLLoader)
+			else
 			{
 				var urlLoader:URLLoader = _loader as URLLoader;
 			
