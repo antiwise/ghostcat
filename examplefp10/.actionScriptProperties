@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="BeepExample.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
-  <compiler additionalCompilerArguments="-debug=false" autoRSLOrdering="false" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="10.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+<actionScriptProperties mainApplicationPath="Test.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
+  <compiler additionalCompilerArguments="" autoRSLOrdering="false" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="10.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -31,9 +31,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="BeepExample.as"/>
     <application path="AttentExample.as"/>
     <application path="GhostCatFP10Example.as"/>
+    <application path="BeepExample.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

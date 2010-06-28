@@ -2,6 +2,11 @@ package ghostcat.util
 {
 	import flash.utils.ByteArray;
 
+	/**
+	 * 伪随机数 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class RandomSeed
 	{
 		private static const MULTIPLIER_HIGH:uint=5;

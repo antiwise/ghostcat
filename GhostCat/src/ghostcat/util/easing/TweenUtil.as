@@ -256,7 +256,7 @@ package ghostcat.util.easing
 			if (this.invert && this.renderOnStart)
 			{	
 				for (key in this.toValues)
-					updateValue(this.target,key,this.toValues[key])
+					updateValue(key,this.toValues[key])
 				
 				this.renderOnStart = false;
 			}
@@ -284,7 +284,7 @@ package ghostcat.util.easing
 			{
 				for (key in this.toValues)
 				{
-					updateValue(this.target,key,(this.invert)?this.fromValues[key]:this.toValues[key]);
+					updateValue(key,(this.invert)?this.fromValues[key]:this.toValues[key]);
 				}
 			}
 			else 
@@ -292,8 +292,8 @@ package ghostcat.util.easing
 				for (key in this.toValues)
 				{
 					var t:int = (this.invert)?(this.duration - this.currentTime):this.currentTime;
-					var newValue:* = calculateValue(this,t,key);
-					updateValue(this.target,key,newValue);
+					var newValue:* = calculateValue(t,key);
+					updateValue(key,newValue);
 				}
 			}
 			
@@ -323,27 +323,33 @@ package ghostcat.util.easing
 		}
 		
 		
-		private static function calculateValue($o:TweenUtil,t:int,key:String):*
+		/**
+		 * 计算数值 
+		 * @param t	时间毫秒数
+		 * @param key	属性名
+		 * @return 
+		 * 
+		 */
+		public function calculateValue(t:int,key:String):*
 		{
-			var a:* = $o.fromValues[key];
-			var b:* = $o.toValues[key];
+			var a:* = fromValues[key];
+			var b:* = toValues[key];
 			if (a is Point)
 			{
-				return new Point($o.ease(t, a.x, b.x -  a.x, $o.duration),
-									$o.ease(t, a.y, b.y -  a.y, $o.duration))
+				return new Point(ease(t, a.x, b.x -  a.x, duration),ease(t, a.y, b.y -  a.y, duration))
 			}
 			else if (a is Rectangle)
 			{
-				return new Rectangle($o.ease(t, a.x, b.x -  a.x, $o.duration),
-									$o.ease(t, a.y, b.y -  a.y, $o.duration),
-									$o.ease(t, a.width, b.width -  a.width, $o.duration),
-									$o.ease(t, a.height, b.height -  a.height, $o.duration))
+				return new Rectangle(ease(t, a.x, b.x -  a.x, duration),
+									ease(t, a.y, b.y -  a.y, duration),
+									ease(t, a.width, b.width -  a.width, duration),
+									ease(t, a.height, b.height -  a.height, duration))
 			}
 			else if (a is Array)
 			{
 				var newArr:Array = [];
 				for (var i:int = 0;i < a.length;i++)
-					newArr.push($o.ease(t, a[i], b[i] -  a[i], $o.duration))
+					newArr.push(ease(t, a[i], b[i] -  a[i], duration))
 				
 				return newArr;
 			}
@@ -355,15 +361,15 @@ package ghostcat.util.easing
 				var r2:int = (b >> 16) & 0xFF;
 				var g2:int = (b >> 8) & 0xFF;
 				var b2:int = b & 0xFF;
-				var r3:int = MathUtil.limitIn($o.ease(t, r1, r2 -  r1, $o.duration),0,0xFF);
-				var g3:int = MathUtil.limitIn($o.ease(t, g1, g2 -  g1, $o.duration),0,0xFF);
-				var b3:int = MathUtil.limitIn($o.ease(t, b1, b2 -  b1, $o.duration),0,0xFF);
+				var r3:int = MathUtil.limitIn(ease(t, r1, r2 -  r1, duration),0,0xFF);
+				var g3:int = MathUtil.limitIn(ease(t, g1, g2 -  g1, duration),0,0xFF);
+				var b3:int = MathUtil.limitIn(ease(t, b1, b2 -  b1, duration),0,0xFF);
 				return ColorUtil.RGB(r3, g3, b3);
 			}
-			return $o.ease(t, a, b -  a, $o.duration)
+			return ease(t, a, b -  a, duration)
 		}
 		
-		private static function updateValue(target:*,key:String,value:*):void
+		private function updateValue(key:String,value:*):void
 		{
 			var displayObj:DisplayObject = target as DisplayObject;
 			switch (key)
