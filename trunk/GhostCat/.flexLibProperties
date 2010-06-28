@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" version="1">
+<flexLibProperties includeAllClasses="false" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
@@ -497,6 +497,9 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.util.SleepCheck"/>
+    <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
+    <classEntry path="ghostcat.operation.effect.PushEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

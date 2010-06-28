@@ -9,14 +9,14 @@ package ghostcat.util
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GTimer extends Timer
+	public class SleepTimer extends Timer
 	{
 		private var prevTimer:int;
 		
 		public var onTimer:Function;
 		public var onTimerComplete:Function;
 		
-		public function GTimer(delay:Number, repeatCount:int=0, onTimer:Function = null, onTimerComplete:Function = null)
+		public function SleepTimer(delay:Number, repeatCount:int=0, onTimer:Function = null, onTimerComplete:Function = null)
 		{
 			super(delay, repeatCount);
 			this.onTimer = onTimer;

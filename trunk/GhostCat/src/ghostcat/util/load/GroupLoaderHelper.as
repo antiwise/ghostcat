@@ -148,7 +148,8 @@ package ghostcat.util.load
 		{
 			removeEvents(event.currentTarget as EventDispatcher);
 			this.completeCount++;
-			this.dispatchEvent(event);
+			if (this.completeCount == this.loaders.length)
+				this.dispatchEvent(event);
 		}
 		
 		private function ioErrorHandler(event:IOErrorEvent):void

@@ -5,6 +5,7 @@
     <classEntry path="ghostcat.media.SoundUtil"/>
     <classEntry path="ghostcat.operation.FileLoadOper"/>
     <classEntry path="ghostcat.operation.FileSaveOper"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsTriangles"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
