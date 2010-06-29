@@ -500,6 +500,7 @@
     <classEntry path="ghostcat.util.SleepCheck"/>
     <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
     <classEntry path="ghostcat.operation.effect.PushEffect"/>
+    <classEntry path="ghostcat.manager.ViewManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

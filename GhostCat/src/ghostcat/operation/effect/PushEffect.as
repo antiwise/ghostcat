@@ -2,12 +2,14 @@ package ghostcat.operation.effect
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ReflectUtil;
+	import ghostcat.util.display.Geom;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
 	
@@ -16,89 +18,80 @@ package ghostcat.operation.effect
 	 * @author flashyiyi
 	 * 
 	 */
-	public class PushEffect extends Oper implements IEffect
+	public class PushEffect extends TweenOper
 	{
-		protected var _target:*;
-		
-		/**
-		 * 目标
-		 * @return 
-		 * 
-		 */
-		public function get target():*
-		{
-			return _target;
-		}
-		
-		public function set target(v:*):void
-		{
-			_target = v;
-		}
-		
-		/**
-		 * 持续时间
-		 */
-		public var duration:int;
 		public var ease:Function;
 		public var direct:String;
+		public var applyScrollRect:Boolean;
 		
 		private var cacheBitmap:Bitmap;
-		public function PushEffect(target:*=null,duration:int=100,direct:String = "left", ease:Function=null,clearTarget:* = 0,immediately:Boolean = false)
+		public function PushEffect(target:*=null,duration:int=100,direct:String = "left", ease:Function=null,applyScrollRect:Boolean = false)
 		{
-			super();
+			super(target,duration);
 			
 			this._target = target;
 			this.duration = duration;
-			this.immediately = immediately;
 			this.ease = ease;
 			this.direct = direct;
+			this.applyScrollRect = applyScrollRect;
 		}
 		
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
-			var target:DisplayObject;
-			if (_target is String)
-				target = ReflectUtil.eval(_target) as DisplayObject;
-			else
-				target = _target as DisplayObject;
-			
-			var params:Object = new Object();
+			if (!params)
+				params = new Object();
 			params.ease = ease;
 			
 			cacheBitmap = new DrawParse(this.target).createBitmap()
 			target.parent.addChild(cacheBitmap);
 			
+			if (applyScrollRect)
+				target.parent.scrollRect = Geom.getRect(target);
+			
 			switch (direct)
 			{
 				case UIConst.LEFT:
+					params.x = target.x;
 					target.x += target.width;
-					params.x = (-target.width).toString();
 					break;
 				case UIConst.RIGHT:
+					params.x = target.x;
 					target.x -= target.width;
-					params.x = target.width.toString();
 					break;
 				case UIConst.UP:
+					params.y = target.y;
 					target.y += target.height;
-					params.y = (-target.width).toString();
 					break;
 				case UIConst.DOWN:
+					params.y = target.y;
 					target.y -= target.height;
-					params.y = target.width.toString();
 					break;
 			}
 			
-			TweenUtil.removeTween(target,true);
-			
-			var tween:TweenUtil = new TweenUtil(target,duration,params);
-			tween.addEventListener(TweenEvent.TWEEN_END,result);
-			tween.update();
-			
-			var tween2:TweenUtil = new TweenUtil(cacheBitmap,duration,params);
-			tween2.update();
-			
 			super.execute();
+			
+			tween.addEventListener(TweenEvent.TWEEN_UPDATE,tweenUpdate);
+		}
+		
+		private function tweenUpdate(event:TweenEvent):void
+		{
+			var rect:Rectangle = Geom.getRect(tween.target);
+			switch (direct)
+			{
+				case UIConst.LEFT:
+					cacheBitmap.x = rect.x - rect.width;
+					break;
+				case UIConst.RIGHT:
+					cacheBitmap.x = rect.x + rect.width;
+					break;
+				case UIConst.UP:
+					cacheBitmap.y = rect.y - rect.height;
+					break;
+				case UIConst.DOWN:
+					cacheBitmap.y = rect.y + rect.height;
+					break;
+			}
 		}
 		
 		protected override function end(event:*=null):void
@@ -108,6 +101,13 @@ package ghostcat.operation.effect
 				cacheBitmap.bitmapData.dispose();
 				cacheBitmap.bitmapData = null;
 				cacheBitmap.parent.removeChild(cacheBitmap);
+				
+			}
+			if (tween)
+			{
+				tween.removeEventListener(TweenEvent.TWEEN_UPDATE,tweenUpdate);
+				if (applyScrollRect)
+					(tween.target as DisplayObject).parent.scrollRect = null;
 			}
 			super.end();
 		}

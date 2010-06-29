@@ -7,11 +7,8 @@ package ghostcat.manager
 	/**
 	 * 将某个事件绑定到一个某个特定类来进行处理。
 	 * 
-	 * 利用AS3自带的事件冒泡，显示对象可以通过对自己发布冒泡事件，让事件得以发布到应用的顶端，也就是stage。
-	 * 接着，使用此类将stage上的这个事件转移到特定类上，制定好处理规则。可以实现最简单的V->C的过程。
-	 * C->M不用说。M->V的过程可以利用FLEX的绑定，具体可参考例子BindingExample.as
 	 *  
-	 * 默认事件是这个，按钮设置了action属性后会自动发布ActionEvent
+	 * 默认事件是ActionEvent，按钮设置了action属性后会自动发布ActionEvent
 	 * @see ghostcat.events.ActionEvent
 	 * 
 	 * @author flashyiyi
@@ -68,12 +65,18 @@ package ghostcat.manager
 			list[command] = this;
 		}
 		
-		private function handler(event:Event):void
+		/**
+		 * 处理方法 
+		 * @param event
+		 * 
+		 */
+		protected function handler(event:Event):void
 		{
-			var action:String = event[actionField];
+			var action:String = event.hasOwnProperty(actionField) ? event[actionField] : null;
 			if (action == null)
 				return;
-			var parm:* = event[parmField];
+			
+			var parm:* = event.hasOwnProperty(actionField) ? event[parmField] : null;
 			if (!(parm is Array))
 				parm = [parm];
 			

@@ -90,18 +90,15 @@ package ghostcat.operation
 		{
 			super.execute();
 			
-			var target:*;
 			if (_target is String)
-				target = ReflectUtil.eval(_target);
-			else
-				target = _target;
+				_target = ReflectUtil.eval(_target);
 			
 			if (clearTarget is Boolean)
-				TweenUtil.removeTween(target,clearTarget);
+				TweenUtil.removeTween(_target,clearTarget);
 			else
-				TweenUtil.removeTween(target,clearTarget == 1);
+				TweenUtil.removeTween(_target,clearTarget == 1);
 			
-			tween = new TweenUtil(target,duration,params);
+			tween = new TweenUtil(_target,duration,params);
 			tween.addEventListener(TweenEvent.TWEEN_END,result);
 			
 			if (invert && updateWhenInvent)
