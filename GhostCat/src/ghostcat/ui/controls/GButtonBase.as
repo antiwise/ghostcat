@@ -61,6 +61,8 @@ package ghostcat.ui.controls
 		private var mouseDownTimer:Timer;
 		private var mouseDownDelayTimer:int;
 		
+		private var _autoRefreshLabelField:Boolean = true;
+		
 		/**
 		 * Label文本实例 
 		 */
@@ -74,7 +76,15 @@ package ghostcat.ui.controls
 		/**
 		 * 是否创建Label文本框（此属性已取消，必须用GButtonBase构造函数的第5个参数来设置）
 		 */
-		private var autoRefreshLabelField:Boolean = true;
+		public function get autoRefreshLabelField():Boolean
+		{
+			return _autoRefreshLabelField;
+		}
+		
+		public function set autoRefreshLabelField(v:Boolean):void
+		{
+			throw new Error("GButtonBase的autoRefreshLabelField属性已取消，必须用构造函数的第5个参数来设置");
+		}
 		
 		/**
 		 * 根据文本框更新图形大小
@@ -278,7 +288,7 @@ package ghostcat.ui.controls
 				selectedDisabled:this.selectedDisabledState
 			};
 			
-			this.autoRefreshLabelField = autoRefreshLabelField;
+			this._autoRefreshLabelField = autoRefreshLabelField;
 			
 			super(skin, replace);
 			
@@ -317,7 +327,7 @@ package ghostcat.ui.controls
 			
 			if (label != null)
 			{
-				if (labelTextField && autoRefreshLabelField)
+				if (labelTextField && _autoRefreshLabelField)
 					labelTextField.text = label;
 			}
 		} 
@@ -377,7 +387,7 @@ package ghostcat.ui.controls
 		{
 			super.setContent(skin,replace);
 			
-			if (autoRefreshLabelField)
+			if (_autoRefreshLabelField)
 				refreshLabelField();
 			createMovieClip();
 		}

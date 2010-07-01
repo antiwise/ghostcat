@@ -329,10 +329,13 @@ package ghostcat.ui.controls
 		{
 			var p:Number = percent;
 			if (upArrow)
-				upArrow.enabled = !isNaN(p) && p > 0;				
+				upArrow.enabled = !isNaN(p) && p > 0 && enabled;				
 			
 			if (downArrow)
-				downArrow.enabled = !isNaN(p) && p < 1;				
+				downArrow.enabled = !isNaN(p) && p < 1 && enabled;			
+			
+			if (thumb)
+				thumb.enabled = enabled
 			
 			if (hideThumbInstead)
 			{
@@ -354,7 +357,7 @@ package ghostcat.ui.controls
 		 */
 		protected function backgroundHandler(event:MouseEvent):void
 		{
-			if (isNaN(percent))
+			if (isNaN(percent) || !enabled)
 				return;
 			
 			if (direction == UIConst.HORIZONTAL)

@@ -39,7 +39,7 @@ package ghostcat.community.sort
 			if (!container)
 				throw new Error("未设置container属性")
 			
-			if (Util.isEmpty(dirtys) && onlyFilter)
+			if (onlyFilter && Util.isEmpty(dirtys))
 				return;
 			
 			var result:Array;

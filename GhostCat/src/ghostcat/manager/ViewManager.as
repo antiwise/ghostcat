@@ -50,8 +50,8 @@ package ghostcat.manager
 		{
 			if (root)
 			{
-				root.removeEventListener(Event.ADDED_TO_STAGE,addToStageHandler);
-				root.removeEventListener(Event.REMOVED_FROM_STAGE,removeFromStageHandler);
+				root.removeEventListener(Event.ADDED_TO_STAGE,addToStageHandler,true);
+				root.removeEventListener(Event.REMOVED_FROM_STAGE,removeFromStageHandler,true);
 			}
 		}
 		
