@@ -26,15 +26,24 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function createPage(itemRender:*, type:String = "tile" ,w:Number = NaN,h:Number = NaN):void
+		public function createPage(itemRender:*, type:String = "tile" ,w:Number = NaN,h:Number = NaN, initObj:Object = null):void
 		{
-			this.itemRender = new ClassFactory(GRepeater,{
+			var o:Object = {
 				type : type,
 				toggleOnClick : false,
 				itemRender : itemRender,
 				width : w,
 				height : h
-			})
+			};
+			
+			if (initObj)
+			{
+				for (var p:String in initObj)
+					o[p] = initObj[p];
+			}
+			
+			this.autoReszieItemContent = false;
+			this.itemRender = new ClassFactory(GRepeater,o);
 		}
 		
 		/**
@@ -49,7 +58,7 @@ package ghostcat.ui.controls
 			var result:Array = [];
 			for (var i:int = 0;i < len;i++)
 			{
-				result[i] = source.slice(i * pageLen,pageLen);
+				result[i] = source.slice(i * pageLen,(i + 1) * pageLen);
 			}
 			this.data = result;
 		}

@@ -6,6 +6,7 @@
     <classEntry path="ghostcat.operation.FileLoadOper"/>
     <classEntry path="ghostcat.operation.FileSaveOper"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsTriangles"/>
+    <classEntry path="ghostcat.community.sort.Sort3DManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
