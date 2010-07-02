@@ -83,7 +83,7 @@ package ghostcat.ui.controls
 		
 		public function set autoRefreshLabelField(v:Boolean):void
 		{
-			throw new Error("GButtonBase的autoRefreshLabelField属性已取消，必须用构造函数的第5个参数来设置");
+			throw new Error("GButtonBase的autoRefreshLabelField属性已失效，必须用构造函数的第5个参数来设置");
 		}
 		
 		/**
