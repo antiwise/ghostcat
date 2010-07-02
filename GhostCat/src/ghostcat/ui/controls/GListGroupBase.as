@@ -19,10 +19,11 @@ package ghostcat.ui.controls
 		
 		/**
 		 * 建立一个分页Render 
-		 * @param itemRender
-		 * @param type
-		 * @param w
-		 * @param h
+		 * 
+		 * @param itemRender	渲染器
+		 * @param type	布局类型
+		 * @param w		宽度
+		 * @param h		高度
 		 * @return 
 		 * 
 		 */
