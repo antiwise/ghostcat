@@ -75,6 +75,11 @@ package ghostcat.display.bitmap
 		public var destoryWhenRemove:Boolean = false;
 		
 		/**
+		 * 是否在销毁时回收位图
+		 */
+		public var disposeWhenDestory:Boolean = true;
+		
+		/**
 		 * 是否已经被销毁
 		 */
 		public var destoryed:Boolean = false;
@@ -691,7 +696,7 @@ package ghostcat.display.bitmap
 			if (bitmapMouseChecker)
 				bitmapMouseChecker.destory();
 			
-			if (bitmapData)
+			if (bitmapData && disposeWhenDestory)
 			{
 				bitmapData.dispose();
 				bitmapData = null;

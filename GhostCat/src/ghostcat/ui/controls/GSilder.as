@@ -34,9 +34,9 @@ package ghostcat.ui.controls
 		public var clickToMove:Boolean = true;
 		
 		/**
-		 * 按钮类型
+		 * 内部按钮类型（只能在重写时在super子句前面设置）
 		 */
-		public var buttonRef:Class;
+		protected var buttonRef:Class;
 		
 		/**
 		 * 激活滚动条按钮自适应
@@ -184,16 +184,17 @@ package ghostcat.ui.controls
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
-			createButtons();
+			createButtons(buttonRef);
 		}
 		
 		/**
 		 * 创建按钮
 		 * 
 		 */
-		protected function createButtons():void
+		protected function createButtons(ref:Class = null):void
 		{
-			var ref:Class = buttonRef ? buttonRef : GButton;
+			if (!ref)
+				ref = GButton;
 			
 			var upArrowField:String = fields.upArrowField;
 			var downArrowField:String = fields.downArrowField;

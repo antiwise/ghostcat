@@ -61,6 +61,11 @@ package ghostcat.util.data
             return null;
         }
 		
+		/**
+		 * 数据的保存时间 
+		 * @return 
+		 * 
+		 */
 		public function getlastTime():Date
 		{
 			try 
@@ -69,6 +74,21 @@ package ghostcat.util.data
 			} 
 			catch(e:Error) {};
 			return null;
+		}
+		
+		/**
+		 * 数据是否是今天保存过的 
+		 * @return 
+		 * 
+		 */
+		public function isToday():Boolean
+		{
+			var d:Date = getlastTime();
+			if (!d)
+				return false;
+			
+			var t:Date = new Date();
+			return t.fullYear == d.fullYear && t.month == d.month && t.date == d.date;
 		}
 
     }

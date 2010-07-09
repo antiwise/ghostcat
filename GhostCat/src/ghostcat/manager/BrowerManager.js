@@ -57,14 +57,7 @@
 	},
 	confirmClose:function (text) {
 		if (text != null)
-		{
-			window.onbeforeunload = onbeforeunload_handler;
-			function onbeforeunload_handler() 
-			{
-				var warning = text;
-				return warning;
-			}
-		}
+			window.onbeforeunload = function () {return text};
 		else
 			window.onbeforeunload = null;
 	},

@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import ghostcat.skin.RadioButtonIconSkin;
 	import ghostcat.ui.layout.Padding;
@@ -33,10 +34,9 @@ package ghostcat.ui.controls
 			if (!skin)
 				skin = defaultSkin;
 			
-			if (!textPadding)
-				textPadding = new Padding(15,0);
-			
 			super(skin, replace,separateTextField,textPadding,autoRefreshLabelField);
+			
+			textStartPoint = new Point(15,0);
 		}
 		
 		

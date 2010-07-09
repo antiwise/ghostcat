@@ -125,7 +125,7 @@ package ghostcat.ui
 		public var applicationDisabledOper:IEffect;
 		
 		/**
-		 * 是否自動禁用其他窗口
+		 * 是否自動禁用非活动窗口
 		 */
 		public var autoDisibledBackgroundPopup:Boolean;
 		

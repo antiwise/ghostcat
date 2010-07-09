@@ -89,6 +89,20 @@ package ghostcat.util.easing
 		}
 		
 		/**
+		 * 返回一个暂停的Tween对象（不进行播放，可用calculateValue取得某个时间内的特定值）
+		 *  
+		 * @param target
+		 * @param duration
+		 * @param params
+		 * @return 
+		 * 
+		 */
+		public static function test(target:Object, duration:int, params:Object, key:String, t:int):TweenUtil
+		{
+			return new TweenUtil(target,duration,params,false);
+		}
+		
+		/**
 		 * 是否反向播放
 		 */
 		public var invert:Boolean =false;
@@ -141,7 +155,7 @@ package ghostcat.util.easing
 		 */
 		public var renderOnStart:Boolean = true;
 		
-		public function TweenUtil(target:Object, duration:int, params:Object)
+		public function TweenUtil(target:Object, duration:int, params:Object, autoStart:Boolean = true)
 		{
 			if (!params)
 				params = new Object();
@@ -220,7 +234,8 @@ package ghostcat.util.easing
 			if (this.ease == null)
 				this.ease = Linear.easeOut;
 			
-			effects.push(this);
+			if (autoStart)
+				effects.push(this);
 		}
 		
 		private static function tickHandler(event:TickEvent):void

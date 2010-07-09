@@ -1,5 +1,7 @@
 package ghostcat.ui.controls
 {
+	import flash.geom.Point;
+	
 	import ghostcat.skin.CheckBoxIconSkin;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
@@ -26,12 +28,11 @@ package ghostcat.ui.controls
 			if (!skin)
 				skin = defaultSkin;
 				
-			if (!textPadding)
-				textPadding = new Padding(15,0);
-			
 			this.toggle = true;
 			
 			super(skin, replace,separateTextField,textPadding,autoRefreshLabelField);
+		
+			textStartPoint = new Point(15,0);
 		}
 	}
 }
