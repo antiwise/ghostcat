@@ -6,6 +6,7 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.display.transfer.BookTransfer;
 	import ghostcat.display.transfer.PixelShowTransfer;
+	import ghostcat.manager.BrowerManager;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.effect.PushEffect;
 	import ghostcat.ui.UIConst;
@@ -31,6 +32,8 @@ package
 			
 			be.step = 0.0;
 			TweenUtil.to(be,1000,{step:1.0});
+			
+			BrowerManager.instance.confirmClose();
 		}
 	}
 }

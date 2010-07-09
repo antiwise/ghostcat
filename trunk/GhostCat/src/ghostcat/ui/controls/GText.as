@@ -92,10 +92,28 @@ package ghostcat.ui.controls
 		 */		
 		public var textField:TextField;
 		
-		private var _textPadding:Padding;
-
 		/**
-		 * 当enabledAdjustContextSize为true时，会根据此属性调整皮肤大小以适应文本框，否则会以此来决定新创建的TextField的相对位置
+		 * 动态创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 */
+		public function get textStartPoint():Point
+		{
+			return textField && !isSkinText ? new Point(textField.x,textField.y) : null;
+		}
+
+		public function set textStartPoint(value:Point):void
+		{
+			if (textField && !isSkinText)
+			{
+				textField.x = value.x;
+				textField.y = value.y;
+			}
+		}
+		
+
+		private var _textPadding:Padding;
+		
+		/**
+		 * 当enabledAdjustContextSize为true时，会根据此属性调整皮肤大小以适应文本框
 		 */
 		public function get textPadding():Padding
 		{
@@ -110,11 +128,11 @@ package ghostcat.ui.controls
 			{
 				adjustContextSize();
 			}
-			else
-			{
-				if (_textPadding && textField && !isSkinText)
-					_textPadding.adjectRect(textField,this);
-			}
+//			else
+//			{
+//				if (_textPadding && textField && !isSkinText)
+//					_textPadding.adjectRect(textField,this);
+//			}
 		}
 
 		

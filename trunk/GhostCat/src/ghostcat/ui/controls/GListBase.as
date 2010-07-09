@@ -496,7 +496,7 @@ package ghostcat.ui.controls
 				return;
 			
 			var o:DisplayObject = event.target as DisplayObject;
-			while (o.parent != this)
+			while (o && o.parent != this)
 				o = o.parent;
 			
 			if (ref.isClass(o))

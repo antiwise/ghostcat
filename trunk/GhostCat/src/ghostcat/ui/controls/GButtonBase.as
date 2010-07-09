@@ -3,6 +3,7 @@ package ghostcat.ui.controls
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.Timer;
 	import flash.utils.clearTimeout;
@@ -124,8 +125,26 @@ package ghostcat.ui.controls
 				labelTextField.enabledAdjustContextSize = value;
 		}
 		
+		
 		/**
 		 * 动态创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 */
+		public function get textStartPoint():Point
+		{
+			return labelTextField ? labelTextField.textStartPoint : null;
+		}
+
+		public function set textStartPoint(value:Point):void
+		{
+			if (labelTextField)
+				labelTextField.textStartPoint = value;
+		}
+		
+		
+		/**
+		 * 文本自适应边距 
+		 * @return 
+		 * 
 		 */
 		public function get textPadding():Padding
 		{
