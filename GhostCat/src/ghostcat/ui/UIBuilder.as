@@ -128,7 +128,7 @@ package ghostcat.ui
 			var children:Array = SearchUtil.findChildrenByClass(skin,IGBase);
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
-			for (var i:int = 0;i < children.length;i++)
+			for (var i:int = children.length - 1;i >= 0;i--)
 			{
 				var obj:DisplayObject = children[i] as DisplayObject;
 				if (obj is IGBase)

@@ -354,8 +354,10 @@ package ghostcat.ui.controls
 			{
 				if (_columnCount > 0)
 					return _columnCount;
-				else
+				else if (super.width > 0)
 					return Math.ceil(super.width / columnWidth);
+				else
+					return 1;
 			}
 		}
 
