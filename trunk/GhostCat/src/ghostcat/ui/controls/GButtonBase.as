@@ -285,12 +285,22 @@ package ghostcat.ui.controls
 			return _mouseDown;
 		}
 		
+		public function set mouseDown(v:Boolean):void
+		{
+			_mouseDown = v;
+		}
+		
 		/**
 		 * 鼠标是否触发
 		 */
 		public function get mouseOver():Boolean
 		{
 			return _mouseOver;
+		}
+		
+		public function set mouseOver(v:Boolean):void
+		{
+			_mouseOver = v;
 		}
 		
 		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, autoRefreshLabelField:Boolean = true)
@@ -428,7 +438,7 @@ package ghostcat.ui.controls
 			
 			super.selected = v;
 			
-			tweenTo(_mouseOver ? OVER : UP);
+			tweenTo(mouseOver ? OVER : UP);
 			
 			dispatchEvent(new Event(Event.CHANGE))
 		}
@@ -510,11 +520,11 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseDownHandler(event:MouseEvent):void
 		{
-			if (_mouseDown)
+			if (mouseDown)
 				return;
 			
 			tweenTo(DOWN);
-			_mouseDown = true;
+			mouseDown = true;
 			if (incessancyClick)
 				mouseDownDelayTimer = setTimeout(enabledIncessancyHandler,incessancyDelay);
 		}
@@ -531,12 +541,12 @@ package ghostcat.ui.controls
 		 */
 		protected function mouseUpHandler(event:MouseEvent):void
 		{
-			if (!_mouseDown)
+			if (!mouseDown)
 				return;
 			
-			tweenTo(_mouseOver ? OVER : UP);
+			tweenTo(mouseOver ? OVER : UP);
 			
-			_mouseDown = false;
+			mouseDown = false;
 			enabledIncessancy = false;
 			
 			if (trackAsMenu)
@@ -552,7 +562,7 @@ package ghostcat.ui.controls
 		{	
 			if (event.buttonDown)
 			{
-				if (trackAsMenu || _mouseDown)
+				if (trackAsMenu || mouseDown)
 					tweenTo(DOWN);
 			}
 			else
@@ -560,7 +570,7 @@ package ghostcat.ui.controls
 				tweenTo(OVER);
 			}
 			
-			_mouseOver = true;
+			mouseOver = true;
 		}
 		
 		//激活连续点击
@@ -603,7 +613,7 @@ package ghostcat.ui.controls
 		{
 			tweenTo(UP);
 						
-			_mouseOver = false;
+			mouseOver = false;
 		}
 		
 		/**
