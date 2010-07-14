@@ -7,6 +7,7 @@ package ghostcat.display
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	
 	import ghostcat.events.GEvent;
@@ -38,7 +39,7 @@ package ghostcat.display
 		public var autoDestoryContent:Boolean = true;
 		
 		/**
-		 * 是否修改同时修改Content的大小
+		 * 是否用修改Content的大小来取代修改自身大小（可以保留Content的九宫格）
 		 */
 		public var resizeContent:Boolean = true;
 		
@@ -173,6 +174,22 @@ package ghostcat.display
 			else
 				super.height = value;
 		}
+		
+//		public override function get scrollRect():Rectangle
+//		{
+//			if (content && resizeContent)
+//				return content.scrollRect;
+//			else
+//				return super.scrollRect;
+//		}
+//		
+//		public override function set scrollRect(value:Rectangle):void
+//		{
+//			if (content && resizeContent)
+//				content.scrollRect = value;
+//			else
+//				super.scrollRect = value;
+//		}
 		
 		/**
 		 * 设置皮肤。

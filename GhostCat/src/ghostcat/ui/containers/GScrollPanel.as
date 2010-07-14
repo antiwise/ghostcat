@@ -91,7 +91,7 @@ package ghostcat.ui.containers
 		{
 			if (fields)
 				this.fields = fields;
-				
+			
 			super(skin,replace);
 			
 			this.scrollRect = new Rectangle(0,0,content.width,content.height);

@@ -23,6 +23,17 @@ package ghostcat.gxml.spec
 	public class Spec implements ISpec
 	{
 		private var _root:*;
+		
+		/**
+		 * 是否允许用逗号分隔Text成为数组
+		 */
+		public var enabledDotSplit:Boolean = true;
+		
+		/**
+		 * 是否允许反射 
+		 */
+		public var enabledReflect:Boolean = true;
+		
 		public function Spec(root:*=null)
 		{
 			this.root = root;
@@ -55,8 +66,10 @@ package ghostcat.gxml.spec
 				var str:String = xml.toString();
 				if (str.length >= 2 && str.charAt(0) == '"' && str.charAt(str.length - 1) == '"')//加双引号解除转义
 					obj = [str.slice(1,str.length - 1)];
-				else
+				else if (enabledDotSplit)
 					obj = str.split(",");
+				else
+					obj = [str];
 				
 				for (var i:int = 0;i < obj.length;i++)
 				{
@@ -69,7 +82,7 @@ package ghostcat.gxml.spec
 			else if (isClass(xml))//是类
 			{
 				var params:Array = getConstructorParams(xml);//获得构造函数参数
-				obj = ReflectXMLUtil.XMLToObject(xml,root,params);//创建
+				obj = ReflectXMLUtil.XMLToObject(xml,root,params,enabledReflect);//创建
 				createChildren(obj,xml);//创建类的子对象
 			}
 			else//是属性
@@ -136,10 +149,10 @@ package ghostcat.gxml.spec
 					if (ref == Array)//在这里判断是否真的是数组，不是则取第一个元素用原来的处理方式
 						source[name] = child;
 					else if (child.length > 0)
-						ReflectXMLUtil.setProperty(source,name,child[0],root);
+						ReflectXMLUtil.setProperty(source,name,child[0],root,enabledReflect);
 				}
 				else
-					ReflectXMLUtil.setProperty(source,name,child,root);
+					ReflectXMLUtil.setProperty(source,name,child,root,enabledReflect);
 			}
 		}
 		
