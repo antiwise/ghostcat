@@ -3,6 +3,7 @@ package
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.net.FileReference;
 	import flash.utils.getTimer;
 	
 	import ghostcat.community.physics.PhysicsItem;
