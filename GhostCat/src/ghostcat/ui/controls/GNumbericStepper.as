@@ -24,8 +24,13 @@ package ghostcat.ui.controls
 	{
 		public static var defaultSkin:* = NumberStepperSkin;
 		
-		public var upArrow:GButton;
-		public var downArrow:GButton;
+		/**
+		 * 内部按钮类型（只能在重写时在super子句前面设置）
+		 */
+		protected var buttonRef:Class;
+		
+		public var upArrow:GButtonBase;
+		public var downArrow:GButtonBase;
 		
 		public var fields:Object = {upArrowField:"upArrow",downArrowField:"downArrow"}
 		
@@ -55,19 +60,26 @@ package ghostcat.ui.controls
 		public override function setContent(skin:*, replace:Boolean=true) : void
 		{
 			super.setContent(skin,replace);
+			createButtons(buttonRef);
+		}
+		
+		public function createButtons(ref:Class):void
+		{
+			if (!ref)
+				ref = GButton;
 			
 			var upArrowField:String = fields.upArrowField;
 			var downArrowField:String = fields.downArrowField;
 			
 			if (content.hasOwnProperty(upArrowField))
 			{
-				upArrow = new GButton(content[upArrowField]);
+				upArrow = new ref(content[upArrowField]);
 				upArrow.addEventListener(MouseEvent.CLICK,upArrowHandler);
 				upArrow.incessancyClick = true;
 			}
 			if (content.hasOwnProperty(downArrowField))
 			{
-				downArrow = new GButton(content[downArrowField]);
+				downArrow = new ref(content[downArrowField]);
 				downArrow.addEventListener(MouseEvent.CLICK,downArrowHandler);
 				downArrow.incessancyClick = true;
 			}
