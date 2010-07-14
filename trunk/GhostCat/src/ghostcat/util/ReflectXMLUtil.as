@@ -40,12 +40,12 @@ package ghostcat.util
 		 * @param value	值
 		 * @param root	执行此方法的对象，是反射外部属性的依据。缺省为obj本身。
 		 */
-		public static function setProperty(obj:*,key:String,value:*,root:*=null):void
+		public static function setProperty(obj:*,key:String,value:*,root:*=null,enabledReflect:Boolean = true):void
 		{
 			if (!root)
 				root = obj;
 				
-			if (new RegExp("^{.*}$").test(value.toString()))
+			if (enabledReflect && new RegExp("^{.*}$").test(value.toString()))
 			{
 				var prop:String = value.toString().substring(1,value.toString().length - 1);
 				obj[key] = ReflectUtil.eval(prop,root);
@@ -87,14 +87,14 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function XMLToObject(v:XML,root:*=null,constructor:Array=null):Object
+		public static function XMLToObject(v:XML,root:*=null,constructor:Array=null,enabledReflect:Boolean = true):Object
 		{
 			var target:*;
 			
 			var ref:Class = ReflectUtil.getDefinitionByName(v.name().toString()) as Class;
 			
 			target = ClassFactory.apply(ref,constructor);
-			parseXML(v,target,root);
+			parseXML(v,target,root,enabledReflect);
 			return target;
 		}
 		
@@ -107,12 +107,12 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function parseXML(v:XML,target:*,root:*=null):void
+		public static function parseXML(v:XML,target:*,root:*=null,enabledReflect:Boolean = true):void
 		{
 			var source:XMLList = v.attributes();
 			for (var i:int = 0; i < source.length(); i++)
 			{
-				setProperty(target,source[i].name(),source[i].toString(),root);
+				setProperty(target,source[i].name(),source[i].toString(),root,enabledReflect);
 			}
 		}
 		
