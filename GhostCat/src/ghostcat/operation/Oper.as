@@ -16,7 +16,11 @@ package ghostcat.operation
 	 * 队列基类
 	 * 
 	 * 队列可使用Queue（顺序加载）或者GroupOper（并发加载）启动。加载队列本身同时也是一个加载器。
-	 * 
+	 *
+	 * 事件调用顺序：result -> resultFuncition -> end -> 触发OPERATION_COMPLETE事件 -> 触发队列的CHILD_OPERATION_COMPLETE -> 执行下个队列
+	 * 重写result方法要注意它的super.result会立即启动下个队列，因此需要放在最后（如果没有队列则会中断）。或者用重写resultFuncition代替，它一定是在队列切换前执行的。
+	 * 而end方法无论成功或者失败都已经执行，可以在此放置回收代码。 
+	 *
 	 * @author flashyiyi
 	 * 
 	 */
@@ -99,13 +103,14 @@ package ghostcat.operation
 		}
 		
 		/**
-		 * 成功函数
+		 * 调用成功函数
 		 * 
 		 */		
 		public function result(event:*=null):void
 		{
 			lastResult = event;
 			
+			resultFunction(event);
 			end(event);
 			
 			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
@@ -128,13 +133,14 @@ package ghostcat.operation
 		}
 		
 		/**
-		 * 失败函数
+		 * 调用失败函数
 		 * 
 		 */		
 		public function fault(event:*=null):void
 		{
 			lastResult = event;
 			
+			failFunction(event);
 			end(event);
 			
 			var e:OperationEvent = new OperationEvent(OperationEvent.OPERATION_ERROR);
@@ -169,9 +175,29 @@ package ghostcat.operation
 			
 			queue.commitChild(this);
 		}
+
+		/**
+		 * 成功函数
+		 * @param event
+		 * 
+		 */
+		protected function resultFunction(event:*=null):void
+		{
+			
+		}
+
+		/**
+		 * 失败函数
+		 * @param event
+		 * 
+		 */
+		protected function failFunction(event:*=null):void
+		{
+			
+		}
 		
 		/**
-		 * 结束方法 
+		 * 结束函数 
 		 * @param event
 		 * 
 		 */

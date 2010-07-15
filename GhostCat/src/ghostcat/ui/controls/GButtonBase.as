@@ -23,6 +23,7 @@ package ghostcat.ui.controls
 	 * 按钮
 	 * 
 	 * 只支持Effect
+	 * 也可以用重写mouseOver,mouseDown,selected,enabled存取器的方式来实现状态切换
 	 * 
 	 * @author flashyiyi
 	 * 
