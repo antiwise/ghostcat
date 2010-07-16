@@ -15,6 +15,7 @@ package ghostcat.ui.controls
 	import flash.utils.ByteArray;
 	
 	import ghostcat.display.GNoScale;
+	import ghostcat.display.IGBase;
 	import ghostcat.display.loader.ImageLoader;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.layout.LayoutUtil;
