@@ -20,7 +20,7 @@ package ghostcat.util
 		public var propertys:Array;
 		public var propertysAccess:Object;
 		public var propertysType:Object;
-		
+		public var metaDatas:Object;
 		
 		private static var describeTypeCache:Dictionary = new Dictionary(true);
 		
@@ -31,7 +31,13 @@ package ghostcat.util
 			
 			//类定义
 			this.xml = describeType(obj);
+			this.metaDatas = {};
 			
+			var meta:Object;
+			meta = parseMetaData(xml.factory[0].metadata);
+			if (meta)
+				this.metaDatas["this"] = meta;
+				
 			//方法列表
 			this.methods = [];
 			
@@ -46,6 +52,7 @@ package ghostcat.util
 			this.propertysAccess = {};
 			this.propertysType = {};
 			
+			
 			for each(child in xml..accessor)
 			{
 				name = child.@name.toString();
@@ -53,6 +60,10 @@ package ghostcat.util
 				propertys.push(name);
 				propertysAccess[name] = child.@access.toString();
 				propertysType[name] = getDefinitionByName(child.@type);
+				
+				meta = parseMetaData(child.metadata);
+				if (meta)
+					metaDatas[name] = meta;
 			}
 			
 			for each(child in xml..variable)
@@ -61,7 +72,29 @@ package ghostcat.util
 				
 				propertys.push(name);
 				propertysType[name] = getDefinitionByName(child.@type);
+				
+				meta = parseMetaData(child.metadata);
+				if (meta)
+					metaDatas[name] = meta;
 			}
+		}
+		
+		private function parseMetaData(xmlList:XMLList):Object
+		{
+			var result:Object;
+			for each (var m:XML in xmlList)
+			{
+				if (!result)
+					result = {};
+				
+				var o:Object = {}; 
+				for each (var child:XML in m.*)
+				{
+					o[child.@key.toString()] = child.@value.toString();
+				}
+				result[m.@name.toString()] = o;
+			}
+			return result;
 		}
 		
 		/**
@@ -295,6 +328,29 @@ package ghostcat.util
 					return prop.metadata[0];
 			}
 			return null;	
+		}
+		
+		/**
+		 * 获取一个类的特定属性下的MetaData
+		 * 
+		 * MetaData属于编译期标签，大部分将会在编译后被删除。
+		 * 如果要保留MetaData供这个方法读取的话，则需要在编译参数上加上-keep-as3-metadata+=xxx
+		 * 
+		 * @param obj	对象
+		 * @param property	属性名称，为空则为类本身
+		 * @param metaName	元标签的名称，为空则返回一个对象包含所有MetaData
+		 * @return 
+		 * 
+		 */
+		public static function getMetaDataObject(obj:*,property:String=null,metaName:String=null):Object
+		{
+			var ins:ReflectUtil = getDescribeTypeCache(obj);
+			var metas:Object;
+			metas = ins.metaDatas[property ? property : "this"];
+			if (!metaName)
+				return metas;
+			else
+				return metas ? metas[metaName] : null;
 		}
 		
 		/**

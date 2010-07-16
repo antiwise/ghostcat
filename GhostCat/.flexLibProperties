@@ -501,6 +501,7 @@
     <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
     <classEntry path="ghostcat.operation.effect.PushEffect"/>
     <classEntry path="ghostcat.manager.ViewManager"/>
+    <classEntry path="ghostcat.manager.InjectManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
