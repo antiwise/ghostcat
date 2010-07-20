@@ -141,7 +141,7 @@ package ghostcat.display
 			_toolTip = v;
 		}
 		/**
-		 * 提示的自定义显示，用于单个控件特殊的提示，可多个组件共享同一个实例。类型只能是字符串或者GBase对象。
+		 * 提示的自定义显示，用于单个控件特殊的提示，可多个组件共享同一个实例。类型只能是字符串或者GBase对象以及类。
 		 * 当类型是字符串时，将会从GToolTipSprite查找已注册的ToolTipObj。都不满足时，将使用GToolTipSprite的默认提示
 		 * 
 		 * 此属性在GToolTipSprite不存在实例时无效

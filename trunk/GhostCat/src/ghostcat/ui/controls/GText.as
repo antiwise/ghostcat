@@ -69,12 +69,13 @@ package ghostcat.ui.controls
 		 */
 		public static var fontEmbedReplacer:Object;
 		
-		public static function setFontReplace(name:String,fontName:String,embed:Boolean = false):void
+		public static function setFontReplace(name:String,fontName:String,embed:* = null):void
 		{
 			if (!fontFamilyReplacer)
 				fontFamilyReplacer = {};
 			fontFamilyReplacer[name] = fontName;
-			if (embed)
+			
+			if (embed is Boolean)
 			{
 				if (!fontEmbedReplacer)
 					fontEmbedReplacer = {};

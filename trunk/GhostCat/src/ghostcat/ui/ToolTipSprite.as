@@ -86,7 +86,7 @@ package ghostcat.ui
 		 * @param v	对象
 		 * 
 		 */		
-		public function registerToolTipObj(name:String,v:GBase):void
+		public function registerToolTipObj(name:String,v:*):void
 		{
 			toolTipObjs[name] = v;
 		}
@@ -217,6 +217,19 @@ package ghostcat.ui
 			setContent(obj);
 			(content as IToolTipSkin).data = toolTip;
 			(content as IToolTipSkin).show(target);
+		}
+		
+		/**
+		 * 更新内容 
+		 * 
+		 */
+		public function refresh():void
+		{
+			if (target is IToolTipManagerClient)
+			{
+				var client:IToolTipManagerClient = target as IToolTipManagerClient;
+				(content as IToolTipSkin).data = client.toolTip;
+			}
 		}
 		
 		/**
