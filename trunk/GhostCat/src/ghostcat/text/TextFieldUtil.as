@@ -216,6 +216,21 @@ package ghostcat.text
 		}
 		
 		/**
+		 * 获得TextField某坐标下的URL
+		 *  
+		 * @param textField
+		 * @param x
+		 * @param y
+		 * @return 
+		 * 
+		 */
+		public static function getUrlFromTextField(textField:TextField,x:Number,y:Number):String
+		{
+			var index:int = textField.getCharIndexAtPoint(x,y);
+			return index != -1 ? textField.getTextFormat(index,index + 1).url : null;
+		}
+		
+		/**
 		 * 获取一段文字的TextLineMetrics对象
 		 * @param s
 		 * @param format
