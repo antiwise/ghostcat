@@ -63,6 +63,14 @@ package ghostcat.util
 		}
 		
 		/**
+		 * 重写方法使得默认使用弱引用监听，这样更接近ENTER_FRAME的用法
+		 */
+		public override function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=true):void
+		{
+			super.addEventListener(type,listener,useCapture,priority,useWeakReference);
+		}
+		
+		/**
 		 * 清除掉积累的时间（在暂停之后）
 		 * 
 		 */
