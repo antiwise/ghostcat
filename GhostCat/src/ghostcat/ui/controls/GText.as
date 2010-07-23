@@ -88,6 +88,8 @@ package ghostcat.ui.controls
 		private var _separateTextField:Boolean = false;
 		private var isSkinText:Boolean = false;//文本框是否是由皮肤提供
 		
+		
+		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		

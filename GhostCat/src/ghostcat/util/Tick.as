@@ -40,7 +40,7 @@ package ghostcat.util
 		/**
 		 * 最大两帧间隔（防止待机后返回卡死） 
 		 */
-		static public var MAX_INTERVAL:int = 300;
+		static public var MAX_INTERVAL:int = 3000;
 		
 		/**
 		 * 速度系数

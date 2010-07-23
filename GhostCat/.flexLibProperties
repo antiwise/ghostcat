@@ -502,6 +502,7 @@
     <classEntry path="ghostcat.operation.effect.PushEffect"/>
     <classEntry path="ghostcat.manager.ViewManager"/>
     <classEntry path="ghostcat.manager.InjectManager"/>
+    <classEntry path="ghostcat.ui.controls.GButtonLite"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -4,6 +4,7 @@ package ghostcat.ui.controls
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.text.TextFieldType;
 	import flash.ui.Keyboard;
 	
 	import ghostcat.events.TickEvent;
@@ -54,7 +55,9 @@ package ghostcat.ui.controls
 		protected override function getTextFieldFromSkin(skin:DisplayObject) : void
 		{
 			super.getTextFieldFromSkin(skin);
+			
 			textField.multiline = false;
+			textField.type = TextFieldType.INPUT;
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void

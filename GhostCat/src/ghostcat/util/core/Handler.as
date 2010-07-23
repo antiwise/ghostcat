@@ -46,9 +46,9 @@ package ghostcat.util.core
 			if (h is Function)
 			{
 				if (params && params.length > 0)
-					return handler.apply(this.caller,params);
+					return h.apply(this.caller,params);
 				else
-					return handler.apply(this.caller,this.para);
+					return h.apply(this.caller,this.para);
 			}
 			else
 				return h;
