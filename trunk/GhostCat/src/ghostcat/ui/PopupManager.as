@@ -130,6 +130,11 @@ package ghostcat.ui
 		public var autoDisibledBackgroundPopup:Boolean;
 		
 		/**
+		 * 是否在addChild子窗口后设置坐标
+		 */
+		public var setPositionAfterAdd:Boolean;
+		
+		/**
 		 * 主程序是否激活 
 		 * @return 
 		 * 
@@ -269,6 +274,9 @@ package ghostcat.ui
 		 */
 		public function showPopup(obj:DisplayObject,owner:DisplayObject=null,modal:Boolean = true,centerMode:String = "rect",offest:Point = null):DisplayObject
 		{
+			if (setPositionAfterAdd)
+				popupLayer.addChild(obj);
+			
 			if (centerMode == CenterMode.RECT)
 			{
 				Geom.centerIn(obj,popupLayer.stage);
@@ -286,7 +294,8 @@ package ghostcat.ui
 				obj.y += offest.y;
 			}
 			
-			popupLayer.addChild(obj);
+			if (!setPositionAfterAdd)
+				popupLayer.addChild(obj);
 			
 			if (owner && obj is GBase)
 				(obj as GBase).owner = owner;

@@ -108,6 +108,8 @@ package ghostcat.ui.controls
 				this.fields = fields;
 				
 			super(skin, replace, separateTextField, textPadding, autoRefreshLabelField);
+			
+			this.mouseChildren = true;
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void

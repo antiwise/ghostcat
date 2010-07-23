@@ -38,7 +38,7 @@ package ghostcat.ui.controls
 		 */
 		public var sound:*;
 		
-		public function parse(target:GButtonBase):void
+		public function parse(target:GButtonLite):void
 		{
 			if (skin)
 				target.setPartContent(skin);

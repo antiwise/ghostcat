@@ -5,6 +5,7 @@ package ghostcat.text
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.text.TextLineMetrics;
 	
@@ -74,9 +75,10 @@ package ghostcat.text
 		{
 			var t:TextField = new TextField();
 			t.selectable = false;
+			t.autoSize = TextFieldAutoSize.LEFT;
 			t.embedFonts = textField.embedFonts;
 			t.text = textField.text.charAt(index);
-			t.setTextFormat(textField.getTextFormat(index,index+1),0,1);
+			t.setTextFormat(textField.getTextFormat(index,index + 1),0,1);
 			var rect:Rectangle = textField.getCharBoundaries(index);
 			var tRect:Rectangle = t.getCharBoundaries(0);
 			if (rect && tRect)
