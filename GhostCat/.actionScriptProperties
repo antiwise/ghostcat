@@ -23,6 +23,7 @@
 </compiler>
 <applications>
 <application path="GameUI.as"/>
+<application path="test.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>

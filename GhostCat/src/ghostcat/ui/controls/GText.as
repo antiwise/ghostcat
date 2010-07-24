@@ -1,3 +1,22 @@
+//	嵌入字体注意事项
+//
+//	当皮肤资源从外部加载时，里面的TextField想用主SWF里嵌入的字体，必须重新设置它的font（而且必须和原来的不同），
+//	否则就要重建TextField
+//	 
+//	重建TextField可以手动执行rebuildTextField方法或者设置GText.autoRebuildEmbedText=true，
+//	这样做之后可以正常显示嵌入字体，但会在初始化时多消耗一些性能，显示上有可能稍有不同。
+//	此外在GButton，GButtonBase里，如果没有让构造函数的第5个参数autoRefreshLabelField为false的话，
+//	这种情况下Button里如果还包含其他的GText对象，它的文字将会无法改变，而只能通过Button的label属性改变。
+//	基本上只有这个缺点。使用无Label的GButtonLite同样没有这个问题。
+//	
+//	不想重建TextField，那么就要靠setFontReplace方法来自动替换TextField内的字体。
+//	比如资源里使用宋体，主SWF嵌入的宋体就要取一个别名，然后设置setFontReplace("宋体",别名,true)，
+//	别名必须和原字体不同，否则FLASH不会进行替换。
+//
+//	还有就是注意CS5创建的SWF里中文字体别名用的是字体英文名，但如果设置了仿粗/斜体，字体名却是中文名，
+//	因此你需要用setFontReplace来进行统一	
+
+
 package ghostcat.ui.controls
 {
 	import flash.display.Bitmap;
@@ -33,18 +52,16 @@ package ghostcat.ui.controls
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.MatrixUtil;
 	import ghostcat.util.display.SearchUtil;
-	
+
 	[Event(name="change",type="flash.events.Event")]
 	
 	/**
 	 * 文本框
 	 * 
 	 * 标签规则：内容将作为背景存在，以内部找到的第一个TextField为标准，否则重新创建
-	 * 
 	 * @author flashyiyi
 	 * 
 	 */	
-	
 	public class GText extends GBase
 	{
 		public static var defaultSkin:ClassFactory = new ClassFactory(TextField,{autoSize:TextFieldAutoSize.LEFT});
@@ -69,6 +86,13 @@ package ghostcat.ui.controls
 		 */
 		public static var fontEmbedReplacer:Object;
 		
+		/**
+		 * 设置字体替换
+		 * @param name	原字体名
+		 * @param fontName	新字体名
+		 * @param embed	更改嵌入模式（为空则不改变）
+		 * 
+		 */
 		public static function setFontReplace(name:String,fontName:String,embed:* = null):void
 		{
 			if (!fontFamilyReplacer)
