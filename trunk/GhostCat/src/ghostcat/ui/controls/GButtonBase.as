@@ -196,6 +196,15 @@ package ghostcat.ui.controls
 				labelTextField.enabledAutoLayout(padding,autoSize);
 		}
 		
+		/**
+		 * 
+		 * @param skin	皮肤
+		 * @param replace	是否替换
+		 * @param separateTextField	是否将原本的文本框内容提出到contant外（历史原因一般保持默认值）
+		 * @param textPadding	设置文本自适应位置（历史原因一般保持默认值）
+		 * @param autoRefreshLabelField	是否创建Label的TextField，为真时有可能会影响皮肤内部的GText对象。
+		 * 
+		 */
 		public function GButtonBase(skin:*=null, replace:Boolean=true, separateTextField:Boolean = false, textPadding:Padding=null, autoRefreshLabelField:Boolean = true)
 		{
 			this._autoRefreshLabelField = autoRefreshLabelField;
