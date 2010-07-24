@@ -1,1 +1,0 @@
-"C:\Program Files\Adobe\Adobe Flash Builder 4\sdks\3.5.0\bin\asdoc.exe"  /? 
