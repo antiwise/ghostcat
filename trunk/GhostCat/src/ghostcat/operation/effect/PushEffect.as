@@ -14,7 +14,7 @@ package ghostcat.operation.effect
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**
-	 * 用改变状态的新对象推挤缓存的原对象的效果，用来处理单元件的内容切换
+	 * 用自己将缓存的原对象推开的效果，用来处理单元件的内容切换
 	 * @author flashyiyi
 	 * 
 	 */

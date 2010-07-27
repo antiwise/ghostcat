@@ -151,7 +151,7 @@ package ghostcat.util.easing
 		 */
 		public var onComplete:Function;
 		/**
-		 * 是否在倒放最开始的时候显示初值
+		 * 是否在倒放最开始的时候显示初值,复数使用需要保持原值可设为false
 		 */
 		public var renderOnStart:Boolean = true;
 		

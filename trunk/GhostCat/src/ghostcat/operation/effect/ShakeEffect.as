@@ -14,6 +14,11 @@ package ghostcat.operation.effect
 	public class ShakeEffect extends TweenOper
 	{
 		/**
+		 * 要改变的属性
+		 */
+		public var field:String;
+		
+		/**
 		 * 振动周期
 		 */
 		public var cycle:int;
@@ -45,7 +50,7 @@ package ghostcat.operation.effect
 		
 		private const pi2:Number = Math.PI * 2;
 		private var startTime:int;
-		private var oldY:Number;
+		private var oldValue:Number;
 		
 		/** @inheritDoc*/
 		public override function get target():*
@@ -58,12 +63,13 @@ package ghostcat.operation.effect
 			contentTarget = v;
 		}
 		
-		public function ShakeEffect(target:DisplayObject=null, duration:Number = 1000, cycle:int = 100, fromValue:Number = 5.0, toValue:Number = 0.0,ease:Function = null)
+		public function ShakeEffect(target:DisplayObject=null, duration:Number = 1000, cycle:int = 100, fromValue:Number = 5.0, toValue:Number = 0.0,ease:Function = null,field:String = "y")
 		{
 			this.contentTarget = target;
 			this.cycle = cycle;
 			this.fromValue = fromValue;
 			this.toValue = toValue;
+			this.field = field;
 			
 			super(this, duration, {}, invert);
 		}
@@ -72,7 +78,7 @@ package ghostcat.operation.effect
 		public override function execute() : void
 		{
 			startTime = getTimer();
-			oldY = contentTarget.y;
+			oldValue = contentTarget[field];
 			
 			currentValue = fromValue;
 			params = {currentValue:toValue,ease:ease,onUpdate:updateHandler};
@@ -82,7 +88,7 @@ package ghostcat.operation.effect
 		
 		private function updateHandler():void
 		{
-			contentTarget.y = oldY + currentValue * Math.sin((getTimer() - startTime) / cycle * pi2);
+			contentTarget[field] = oldValue + currentValue * Math.sin((getTimer() - startTime) / cycle * pi2);
 		}
 	}
 }
