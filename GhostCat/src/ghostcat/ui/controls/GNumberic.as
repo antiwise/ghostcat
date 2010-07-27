@@ -72,6 +72,11 @@ package ghostcat.ui.controls
 		public var offestTextShowTime:int = 1000;
 		
 		/**
+		 * 变化文本字体
+		 */
+		public var offestTextFormat:TextFormat;
+		
+		/**
 		 * 是否缩放变化文本
 		 */
 		public var scaleOffestText:Boolean = false;
@@ -181,7 +186,7 @@ package ghostcat.ui.controls
 				n.text = (offestValues[i] >= 0 ? "+" : "") + offestValues[i].toString();
 				n.y = prevText.y + prevText.textHeight + offestTextGap;
 				
-				var tf:TextFormat = n.defaultTextFormat;
+				var tf:TextFormat = offestTextFormat ? offestTextFormat : n.defaultTextFormat;
 				if (scaleOffestText)
 					tf.size = Number(tf.size) * (1 - 1 / (showOffestTextNum + 1));
 				n.setTextFormat(tf,0,n.length);

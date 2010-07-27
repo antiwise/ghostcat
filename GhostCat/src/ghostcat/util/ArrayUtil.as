@@ -8,6 +8,22 @@ package ghostcat.util
 	public final class ArrayUtil
 	{
 		/**
+		 * 创建一个数组
+		 * @param length	长度
+		 * @param fill	填充
+		 * 
+		 */
+		public function create(length:int,fill:* = null):Array
+		{
+			var arr:Array = [];
+			while (arr.length < length)
+			{
+				arr.push(fill);
+			}
+			return arr;
+		}
+		
+		/**
 		 * 将一个数组附加在另一个数组之后
 		 * 
 		 * @param arr	目标数组
