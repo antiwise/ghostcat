@@ -110,14 +110,16 @@ package ghostcat.ui.controls
 		private var _textFormat:String;
 		private var _autoSize:String = TextFieldAutoSize.NONE;
 		private var _separateTextField:Boolean = false;
-		private var isSkinText:Boolean = false;//文本框是否是由皮肤提供
-		
-		
 		
 		/**
 		 * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
 		 */		
 		public var textField:TextField;
+		
+		/**
+		 * 文本框是否是由皮肤提供
+		 */
+		public var isSkinText:Boolean;
 		
 		/**
 		 * 动态创建的TextField的初始位置（如果是从skin中创建，此属性无效）
@@ -167,7 +169,7 @@ package ghostcat.ui.controls
 		 * 是否自动根据文本调整Skin体积。当separateTextField为false时，此属性无效。
 		 * 要正确适应文本，首先必须在创建时将separateTextField参数设为true，其次可以根据textPadding来决定边距
 		 */
-		public var enabledAdjustContextSize:Boolean = false;
+		public var enabledAdjustContextSize:Boolean;
 		
 		/**
 		 * 是否激活多语言 
@@ -177,12 +179,12 @@ package ghostcat.ui.controls
 		/**
 		 * 是否激活截断文本
 		 */
-		public var enabledTruncateToFit:Boolean = false;
+		public var enabledTruncateToFit:Boolean;
 		
 		/**
 		 * 文本是否垂直居中
 		 */
-		public var enabledVerticalCenter:Boolean = false;
+		public var enabledVerticalCenter:Boolean;
 		
 		/**
 		 * 限定输入内容的正则表达式
@@ -192,12 +194,12 @@ package ghostcat.ui.controls
 		/**
 		 * 在输入文字的时候也发布Change事件
 		 */
-		public var changeWhenInput:Boolean = false;
+		public var changeWhenInput:Boolean;
 		
 		/**
 		 * 文字是否竖排
 		 */		
-		public var vertical:Boolean = false;
+		public var vertical:Boolean;
 		
 		/**
 		 * ANSI的最大输入限制字数（中文算两个字）
@@ -207,12 +209,12 @@ package ghostcat.ui.controls
 		/**
 		 * 是否强制使用HTML文本
 		 */
-		public var useHtml:Boolean = false;
+		public var useHtml:Boolean;
 		
 		/**
 		 * 是否转换UBB（只在HTML文本中有效）
 		 */
-		public var ubb:Boolean = false;
+		public var ubb:Boolean;
 		
 		/**
 		 * 是否将文本从Skin中剥离。剥离后Skin缩放才不会影响到文本的正常显示
