@@ -19,7 +19,7 @@ package ghostcat.ui.controls
 		public function GFrameBase(skin:*=null, replace:Boolean=true)
 		{
 			super(skin, replace);
-			this.data = 1;
+			this.frame = 1;
 		}
 		
 		public function set frame(v:int):void
