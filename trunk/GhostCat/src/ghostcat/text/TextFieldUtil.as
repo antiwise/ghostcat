@@ -158,6 +158,8 @@ package ghostcat.text
 			c.wordWrap = v.wordWrap;
 			c.transform.colorTransform = v.transform.colorTransform;
 			c.filters = v.filters;
+			c.mouseEnabled = v.mouseEnabled;
+			c.mouseWheelEnabled = v.mouseWheelEnabled;
 			
 			if (replace && v.parent)
 			{
