@@ -72,7 +72,7 @@ package ghostcat.ui.controls
 		public static var textChangeHandler:Function;
 		
 		/**
-		 * 将它设置为true，将通过外部嵌入字体，否则使用SWF内的字体
+		 * 将它设置为true，将会自动重建所有Embed的TextField以便通过外部嵌入字体，否则使用SWF内的字体
 		 */
 		public static var autoRebuildEmbedText:Boolean = false;
 		
@@ -87,23 +87,35 @@ package ghostcat.ui.controls
 		public static var fontEmbedReplacer:Object;
 		
 		/**
+		 * 字体准线调整
+		 */
+		public static var fontOffestYReplacer:Object;
+		
+		/**
 		 * 设置字体替换
 		 * @param name	原字体名
 		 * @param fontName	新字体名
 		 * @param embed	更改嵌入模式（为空则不改变）
-		 * 
+		 * @param offestY	调整字体的y轴位置
 		 */
-		public static function setFontReplace(name:String,fontName:String,embed:* = null):void
+		public static function setFontReplace(oldFont:String,newFont:String,embed:* = null,offestY:Number = NaN):void
 		{
 			if (!fontFamilyReplacer)
 				fontFamilyReplacer = {};
-			fontFamilyReplacer[name] = fontName;
+			fontFamilyReplacer[oldFont] = newFont;
 			
 			if (embed is Boolean)
 			{
 				if (!fontEmbedReplacer)
 					fontEmbedReplacer = {};
-				fontEmbedReplacer[name] = embed;
+				fontEmbedReplacer[oldFont] = embed;
+			}
+			
+			if (!isNaN(offestY))
+			{
+				if (!fontOffestYReplacer)
+					fontOffestYReplacer = {};
+				fontOffestYReplacer[oldFont] = offestY;	
 			}
 		}
 		
@@ -121,17 +133,24 @@ package ghostcat.ui.controls
 		 */
 		public var isSkinText:Boolean;
 		
+		private var _textStartPoint:Point;
+		
 		/**
-		 * 动态创建的TextField的初始位置（如果是从skin中创建，此属性无效）
+		 * TextField的初始位置（如果是从skin中创建，此属性只读，否则可以通过修改它来设置TextField的位置）
 		 */
 		public function get textStartPoint():Point
 		{
-			return textField && !isSkinText ? new Point(textField.x,textField.y) : null;
+			return _textStartPoint;
 		}
 
 		public function set textStartPoint(value:Point):void
 		{
-			if (textField && !isSkinText)
+			if (isSkinText)
+				return;
+			
+			_textStartPoint = value;
+			
+			if (textField)
 			{
 				textField.x = value.x;
 				textField.y = value.y;
@@ -460,6 +479,7 @@ package ghostcat.ui.controls
 //				//根据textPadding设置文本框位置
 //				if (_textPadding)
 //					_textPadding.adjectRect(textField,this.content);
+				_textStartPoint = new Point();
 			}
 			else
 			{
@@ -470,7 +490,8 @@ package ghostcat.ui.controls
 				
 				if (this._separateTextField)
 					separateTextField = true;//提取文本框
-				
+					
+				_textStartPoint = new Point(textField.x,textField.y);
 			}
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）
@@ -482,11 +503,16 @@ package ghostcat.ui.controls
 				
 				this.textField.embedFonts = fontEmbedReplacer[oldFont.font];
 			}
+			if (fontOffestYReplacer && fontOffestYReplacer[oldFont.font])
+			{
+				this.textField.y = _textStartPoint.y + fontOffestYReplacer[oldFont.font];
+			}
 			if (fontFamilyReplacer && fontFamilyReplacer[oldFont.font])
 			{
 				oldFont.font = fontFamilyReplacer[oldFont.font];
 				this.applyTextFormat(oldFont,true);
 			}
+			
 			
 			if (!this.text)
 				super.data = textField.text;
