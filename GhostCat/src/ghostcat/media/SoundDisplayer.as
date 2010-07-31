@@ -6,6 +6,11 @@ package ghostcat.media
 	import ghostcat.display.GNoScale;
 	import ghostcat.events.TickEvent;
 
+	/**
+	 * 显示音波 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SoundDisplayer extends GNoScale
 	{
 		public function SoundDisplayer(width:Number,height:Number)
