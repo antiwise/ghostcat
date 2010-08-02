@@ -64,6 +64,11 @@ package ghostcat.ui.controls
 		public var useCurrentDomain:Boolean = false;
 		
 		/**
+		 * 是否自动unload
+		 */
+		public var autoUnload:Boolean = true;
+		
+		/**
 		 * 是否使用中转Loader（可以绕过图片沙箱）
 		 */
 		public var useTempLoader:Boolean = false;
@@ -318,6 +323,17 @@ package ghostcat.ui.controls
 			else if (sized)
 				LayoutUtil.silder(content,this,horizontalAlign,verticalAlign);
 			
+		}
+		
+		public override function destory():void
+		{
+			if (destoryed)
+				return;
+			
+			if (content is Loader && autoUnload)
+				(content as Loader).unload();
+			
+			super.destory();
 		}
 	}
 }
