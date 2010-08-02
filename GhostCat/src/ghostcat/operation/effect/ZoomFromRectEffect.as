@@ -69,7 +69,8 @@ package ghostcat.operation.effect
 				this.bitmap.y = temp.y;
 				this.bitmap.bitmapData = temp.bitmapData;
 				this.sourceTarget.visible = false;
-				(this.sourceTarget as DisplayObject).parent.addChild(bitmap);
+				if ((this.sourceTarget as DisplayObject).parent)
+					(this.sourceTarget as DisplayObject).parent.addChild(bitmap);
 			}
 			
 			super.execute();
