@@ -74,6 +74,11 @@ package ghostcat.ui.controls
 		public var trackAsMenu:Boolean = false;
 		
 		/**
+		 * 在设置enabled时是否禁用鼠标
+		 */
+		public var enabledWithMouseEnabled:Boolean = true;
+		
+		/**
 		 * 是否允许按下时模拟连续点击
 		 */
 		public var incessancyClick:Boolean = false;
@@ -165,7 +170,11 @@ package ghostcat.ui.controls
 			if (super.enabled == v)
 				return;
 			
-			this.mouseEnabled = super.enabled = v;
+			super.enabled = v
+			
+			if (enabledWithMouseEnabled)
+				this.mouseEnabled = v;
+			
 			tweenTo(UP);
 		}
 		

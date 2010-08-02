@@ -30,9 +30,9 @@ package ghostcat.manager
 		/**
 		 * getString是最常用的方法，移到静态方法里方便调用
 		 */		
-		static public function getString(res:String,parms:Array=null):String
+		static public function getString(res:String,parms:Array=null,args:Array = null):String
 		{
-			return instance.getString(res,parms)
+			return instance.getString(res,parms,args)
 		}
 		
 		/**
@@ -103,7 +103,7 @@ package ghostcat.manager
 						var value:String = textLine.slice(pos + 1);
 						resource[textType][key] = value;
 					}
-					else if (key)
+					else if (key && textLine.length > 0)
 					{
 						resource[textType][key] += "\n" + textLine;//没有=则是上一行的继续
 					}
@@ -160,36 +160,49 @@ package ghostcat.manager
 		 * 
 		 * @param res	文本标示，格式为@文件名.标签名
 		 * @param parms	替换参数，将会按顺序替换文本里的{0},{1},{2}
+		 * @param args 	附加参数，会传到customConversion的函数参数内
 		 * @return 
 		 * 
 		 */		
-		public function getString(res:String,parms:Array=null):String
+		public function getString(res:String,parms:Array = null,args:Array = null):String
 		{
 			var result:String = getOriginString(res);
 			
-			if (result==null)
+			if (result == null)
 				return null;
+			else
+				return result.replace(/\{(.+?)\}/g,replaceFun);
 			
-			if (parms)
-			{
-				for (var i:int = 0;i<parms.length;i++)
+			function replaceFun(matchedSubstring:String,capturedMatch:String,index:int,str:String):String 
+			{ 
+				var n:Number = parseFloat(capturedMatch);
+				if (!isNaN(n))
 				{
-					result = result.replace(new RegExp("\\{"+i+"\\}","g"),parms[i] != null ? parms[i] : "");
+					if (parms && n < parms.length)
+						return parms[n];
 				}
-			}
-			for (var conv:* in customConversion)
-			{
-				var text:String
-				if (customConversion[conv] is Function)
-					text = customConversion[conv]();
 				else
-					text = customConversion[conv];
-				
-				if (text.charAt(0)=="#")
-					text = ReflectUtil.eval(text.slice(1));
-				result = result.replace(new RegExp("\\{"+conv+"\\}","g"),text);
+				{
+					if (customConversion && customConversion.hasOwnProperty(capturedMatch))
+					{
+						var text:String;
+						if (customConversion[capturedMatch] is Function)
+							text = (customConversion[capturedMatch] as Function).apply(null,args);
+						else
+							text = customConversion[capturedMatch];
+						
+						if (text.charAt(0)=="#")
+							text = ReflectUtil.eval(text.slice(1));
+						
+						return text;
+					}
+					else
+					{
+						return getString(capturedMatch,null,args);
+					}
+				}
+				return capturedMatch
 			}
-			return result;
 		}
 		
 		/**
