@@ -65,14 +65,14 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function getMapping(arr:Array, value:*, field:* = 0):Object
+		public static function getMapping(arr:Array, field:*,value:*):Object
         {
             for (var i:int = 0;i<arr.length;i++)
             {
             	var o:* = arr[i];
             	
                 if (o[field] == value)
-                	return o[i];
+                	return o;
             }
             return null;
         }

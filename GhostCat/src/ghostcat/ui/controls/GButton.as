@@ -39,6 +39,9 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		protected override function createMovieClip() : void
 		{
+			if (movie)
+				movie.destory();
+			
 			movie = new GMovieClip(content,false);
 		}
 	}
