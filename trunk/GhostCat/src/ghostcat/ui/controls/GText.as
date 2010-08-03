@@ -496,18 +496,18 @@ package ghostcat.ui.controls
 			
 			this.textFormat = textFormat ? textFormat : defaultTextFormat;//应用字体样式（如果有）
 			var oldFont:TextFormat = this.textField.defaultTextFormat;//替换字体
-			if (fontEmbedReplacer && fontEmbedReplacer[oldFont.font])
+			if (fontEmbedReplacer && fontEmbedReplacer.hasOwnProperty(oldFont.font))
 			{
 				if (!this.textField.embedFonts && fontEmbedReplacer[oldFont.font])
 					rebuildTextField();
 				
 				this.textField.embedFonts = fontEmbedReplacer[oldFont.font];
 			}
-			if (fontOffestYReplacer && fontOffestYReplacer[oldFont.font])
+			if (fontOffestYReplacer && fontOffestYReplacer.hasOwnProperty(oldFont.font))
 			{
-				this.textField.y = _textStartPoint.y + fontOffestYReplacer[oldFont.font];
+				this.textField.y = _textStartPoint.y + Number(oldFont.size) * fontOffestYReplacer[oldFont.font];
 			}
-			if (fontFamilyReplacer && fontFamilyReplacer[oldFont.font])
+			if (fontFamilyReplacer && fontFamilyReplacer.hasOwnProperty(oldFont.font))
 			{
 				oldFont.font = fontFamilyReplacer[oldFont.font];
 				this.applyTextFormat(oldFont,true);
