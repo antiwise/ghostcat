@@ -1,31 +1,30 @@
-package ghostcat.manager
+ï»¿package ghostcat.manager
 {
 	import flash.utils.Dictionary;
 	
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.Singleton;
-
-/**
-*Ìá¹©ÁËµ¥¶ÀµÄÒÀÀµ×¢Èë¹¦ÄÜ£¬ÓëMVCÎŞ¹Ø¡£
-*ÏÈÓÃregister·½·¨½«¶à¸öÊµÀı×¢²á
-*InjectManager.instance.register(new Model(1),new Model(2));
-*
-*È»ºóÔÚĞèÒª×¢ÈëµÄÏÔÊ¾ÀàÀïÌí¼ÓÊôĞÔ£¬²¢¼ÓÉÏInjectÔª±êÇ©
-*[Inject(id="1")]
-*public var m1:Model;
-*        
-*[Inject(id="2")]
-*public var m2:Model;
-*
-*²¢ÔÚ¹¹Ôìº¯ÊıÖĞÏÔÊ½µ÷ÓÃInjectManager.instance.inject(this)À´Íê³É×¢Èë£¬µ÷ÓÃ´Ë·½·¨ºóÀàµÄm1,m2ÊôĞÔ½«»á±»Á¢¼´¸³Öµ³ÉÖ®Ç°×¢²á¹ıµÄÊµÀı¡£
-*[Inject]±êÇ©µÄ²ÎÊıÊÇÎªÁËÇø·ÖÍ¬ÀàĞÍµÄ²»Í¬ÊµÀı£¬[Inject(id="1")]±íÊ¾Ö»ÓĞÊôĞÔidµÄÖµÎª1µÄ¶ÔÏó²Å»á±»×¢ÈëÕâ¸öÊôĞÔ£¬Èç¹ûÒÀÈ»ÓĞ¶à¸öÂú×ãÌõ¼şµÄ¶ÔÏóÔòÈ¡µÚÒ»¸ö£¬Èç¹û¶ÔÏóÖ»´æÔÚÒ»¸ö£¬Ôò²»ĞèÒª²ÎÊı¡£
-*
-*µ±µ÷ÓÃ¹ıViewManager.register(stage)×¢²á¹ıÎèÌ¨ºó£¬InjectManager»¹ÄÜÍ¨¹ıÍ¬ÑùµÄ·½·¨Á¢¼´×¢ÈëÆÁÄ»ÖĞ´æÔÚµÄÏÔÊ¾¶ÔÏó¡£
-*ViewManager.register(stage,false)µÚ2¸ö²ÎÊı±íÊ¾ÊÇ·ñÔÊĞí±£´æÍ¬ÀàĞÍµÄ²»Í¬ÊµÀı£¬ÉèÖÃÎªtrue½«»áÏûºÄ¸ü¶àĞÔÄÜ¡£
-*
-*
-*InjectManagerÊÇÔÊĞí¶à´ÎÊµÀı»¯µÄ¡£
-*/
+	
+	/**
+	 * æä¾›äº†å•ç‹¬çš„ä¾èµ–æ³¨å…¥åŠŸèƒ½ï¼Œä¸MVCæ— å…³ã€‚
+	 * å…ˆç”¨registeræ–¹æ³•å°†å¤šä¸ªå®ä¾‹æ³¨å†Œ
+	 * InjectManager.instance.register(new Model(1),new Model(2));
+	 *
+	 * ç„¶ååœ¨éœ€è¦æ³¨å…¥çš„æ˜¾ç¤ºç±»é‡Œæ·»åŠ å±æ€§ï¼Œå¹¶åŠ ä¸ŠInjectå…ƒæ ‡ç­¾
+	 * [Inject(id="1")]
+	 * public var m1:Model;
+	 *        
+	 * [Inject(id="2")]
+	 * public var m2:Model;
+	 *
+	 * å¹¶åœ¨æ„é€ å‡½æ•°ä¸­æ˜¾å¼è°ƒç”¨InjectManager.instance.inject(this)æ¥å®Œæˆæ³¨å…¥ï¼Œè°ƒç”¨æ­¤æ–¹æ³•åç±»çš„m1,m2å±æ€§å°†ä¼šè¢«ç«‹å³èµ‹å€¼æˆä¹‹å‰æ³¨å†Œè¿‡çš„å®ä¾‹ã€‚
+	 * [Inject]æ ‡ç­¾çš„å‚æ•°æ˜¯ä¸ºäº†åŒºåˆ†åŒç±»å‹çš„ä¸åŒå®ä¾‹ï¼Œ[Inject(id="1")]è¡¨ç¤ºåªæœ‰å±æ€§idçš„å€¼ä¸º1çš„å¯¹è±¡æ‰ä¼šè¢«æ³¨å…¥è¿™ä¸ªå±æ€§ï¼Œå¦‚æœä¾ç„¶æœ‰å¤šä¸ªæ»¡è¶³æ¡ä»¶çš„å¯¹è±¡åˆ™å–ç¬¬ä¸€ä¸ªï¼Œå¦‚æœå¯¹è±¡åªå­˜åœ¨ä¸€ä¸ªï¼Œåˆ™ä¸éœ€è¦å‚æ•°ã€‚
+	 *
+	 * å½“è°ƒç”¨è¿‡ViewManager.register(stage)æ³¨å†Œè¿‡èˆå°åï¼ŒInjectManagerè¿˜èƒ½é€šè¿‡åŒæ ·çš„æ–¹æ³•ç«‹å³æ³¨å…¥å±å¹•ä¸­å­˜åœ¨çš„æ˜¾ç¤ºå¯¹è±¡ã€‚
+	 * ViewManager.register(stage,false)ç¬¬2ä¸ªå‚æ•°è¡¨ç¤ºæ˜¯å¦å…è®¸ä¿å­˜åŒç±»å‹çš„ä¸åŒå®ä¾‹ï¼Œè®¾ç½®ä¸ºtrueå°†ä¼šæ¶ˆè€—æ›´å¤šæ€§èƒ½ã€‚
+	 *
+	 * InjectManageræ˜¯å…è®¸å¤šæ¬¡å®ä¾‹åŒ–çš„ã€‚
+	 */
 	
 	public class InjectManager extends Singleton
 	{
@@ -54,7 +53,7 @@ package ghostcat.manager
 					var list:Array = dict[cls];
 					if (!list)
 						dict[cls] = list = [];
-						
+					
 					list.push(target);
 				}
 			}
