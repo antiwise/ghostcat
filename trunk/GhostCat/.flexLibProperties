@@ -502,6 +502,7 @@
     <classEntry path="ghostcat.manager.InjectManager"/>
     <classEntry path="ghostcat.ui.controls.GButtonLite"/>
     <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
+    <classEntry path="ghostcat.util.Iterator"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
