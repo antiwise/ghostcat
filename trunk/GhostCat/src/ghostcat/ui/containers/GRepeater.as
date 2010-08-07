@@ -8,12 +8,14 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.IGBase;
+	import ghostcat.events.GEvent;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.controls.GButtonBase;
 	import ghostcat.ui.layout.LinearLayout;
 	import ghostcat.util.core.ClassFactory;
 	 
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
+	[Event(name="refresh_complete",type="ghostcat.events.GEvent")]
 	
 	/**
 	 * 根据data复制对象排列的容器
@@ -124,6 +126,8 @@ package ghostcat.ui.containers
 				}
 			}
 			layout.vaildLayout();
+			
+			dispatchEvent(new GEvent(GEvent.REFRESH_COMPLETE));
 		}
 		
 		/**
