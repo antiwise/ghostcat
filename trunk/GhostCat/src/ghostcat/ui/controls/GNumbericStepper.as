@@ -58,6 +58,7 @@ package ghostcat.ui.controls
 			
 			textField.multiline = false;
 			textField.type = TextFieldType.INPUT;
+			textField.restrict = "0-9\\-";
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
@@ -132,7 +133,7 @@ package ghostcat.ui.controls
 		/** @inheritDoc*/
 		protected override function textFocusOutHandler(event:Event) : void
 		{
-			super.textFocusOutHandler(event);
+//			super.textFocusOutHandler(event);
 			accaptText();
 		}
 		/** @inheritDoc*/
