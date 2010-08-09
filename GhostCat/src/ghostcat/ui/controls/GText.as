@@ -419,6 +419,21 @@ package ghostcat.ui.controls
 			textField.multiline = v;
 		}
 		
+		/**
+		 * 文字输入限制
+		 * @return 
+		 * 
+		 */
+		public function get restrict():String
+		{
+			return textField.restrict;
+		}
+		
+		public function set restrict(v:String):void
+		{
+			textField.restrict = v;
+		}
+		
 		private var _editable:Boolean;
 		
 		/**

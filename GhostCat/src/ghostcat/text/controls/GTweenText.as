@@ -98,7 +98,7 @@ package ghostcat.text.controls
 				t += invert ? -delay : delay;
 				
 				var o:Object = Util.copy(params);
-				o.delay = t;
+				o.delay = o.delay ? o.delay + t : t;
 				
 				if (o.hasOwnProperty("alpha") && !bitmap)
 					(separateTexts[i] as DisplayObject).blendMode = BlendMode.LAYER;
