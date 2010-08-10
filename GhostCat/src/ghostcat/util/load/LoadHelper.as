@@ -3,6 +3,7 @@ package ghostcat.util.load
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.utils.getTimer;
@@ -27,7 +28,7 @@ package ghostcat.util.load
 		 */
 		public static const PROPERTY:int = 1;
 		
-		private var loadInfo:EventDispatcher;
+		private var loadInfo:IEventDispatcher;
 		private var startTime:int;
 		private var _bytesLoaded:int;
 		private var _bytesTotal:int;
@@ -36,13 +37,13 @@ package ghostcat.util.load
 		 * 此类用于计算载入进度相关数据
 		 * 
 		 */
-		public function LoadHelper(loader:EventDispatcher):void
+		public function LoadHelper(loader:IEventDispatcher):void
 		{
 			if (loader)
 				this.loader = loader;
 		}
 		
-		public function set loader(v:EventDispatcher):void
+		public function set loader(v:IEventDispatcher):void
 		{
 			removeEvents();
 			
@@ -146,6 +147,7 @@ package ghostcat.util.load
 		private function openHandler(event:Event):void
 		{
 			startTime = getTimer();
+			this.dispatchEvent(event);
 		}
 		
 		private function progressHandler(event:ProgressEvent):void

@@ -5,6 +5,7 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.SharedObject;
@@ -21,6 +22,7 @@
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
 	import ghostcat.text.URL;
+	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.data.LocalStorage;
 	
 	import mx.utils.object_proxy;
@@ -35,7 +37,7 @@
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class LoadOper extends RetryOper
+	public class LoadOper extends RetryOper implements IProgressTargetClient
 	{
 		public static const AUTO:String = "auto";
 		public static const URLLOADER:String = "urlloader";
@@ -352,7 +354,7 @@
 		 * 获取加载事件发送器，可由此监听下载进度
 		 * Loader是其contentLoaderInfo,URLLoader则是其本身。只当execute执行后才有值。
 		 */
-		public function get eventDispatcher():EventDispatcher
+		public function get eventDispatcher():IEventDispatcher
 		{
 			return (_loader is Loader)?(_loader as Loader).contentLoaderInfo: _loader;
 		}

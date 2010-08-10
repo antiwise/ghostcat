@@ -1,6 +1,7 @@
 package ghostcat.operation.load
 {
 	import flash.display.Loader;
+	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.events.OperationEvent;
@@ -9,6 +10,7 @@ package ghostcat.operation.load
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.text.URL;
+	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.load.GroupLoaderHelper;
 	
 	/**
@@ -16,12 +18,9 @@ package ghostcat.operation.load
 	 * @author flashyiyi
 	 * 
 	 */
-	public class QueueLoadOper extends Oper
+	public class QueueLoadOper extends Oper implements IProgressTargetClient
 	{
-		/**
-		 * 名称
-		 */
-		public var name:String;
+		private var _name:String;
 		
 		/**
 		 * 资源加载的基本地址
@@ -36,7 +35,7 @@ package ghostcat.operation.load
 		/**
 		 * 加载信息 
 		 */
-		public var eventDispatcher:GroupLoaderHelper;
+		public var loadHelper:GroupLoaderHelper;
 		
 		/**
 		 * 子队列
@@ -54,6 +53,29 @@ package ghostcat.operation.load
 		public var readyHandler:Function;
 		
 		/**
+		 * 名称
+		 */
+		public function get name():String
+		{
+			return _name;
+		}
+		
+		public function set name(v:String):void
+		{
+			_name = v;
+		}
+		
+		/**
+		 * 对外事件发送者 
+		 * @return 
+		 * 
+		 */
+		public function get eventDispatcher():IEventDispatcher
+		{
+			return loadHelper;
+		}
+		
+		/**
 		 * 获得路径全称
 		 * @param v
 		 * 
@@ -69,7 +91,7 @@ package ghostcat.operation.load
 			
 			this.assetBase = assetBase;
 			this.opers = new Dictionary();
-			this.eventDispatcher = new GroupLoaderHelper();
+			this.loadHelper = new GroupLoaderHelper();
 		}
 		
 		/**
@@ -79,7 +101,7 @@ package ghostcat.operation.load
 		 */
 		public function setBytesTotal(v:int):void
 		{
-			eventDispatcher.bytesTotal = v;
+			loadHelper.bytesTotal = v;
 		}
 		
 		/**
@@ -90,6 +112,16 @@ package ghostcat.operation.load
 		public function get children():Array
 		{
 			return subQueue ? subQueue.children : null;
+		}
+		
+		/**
+		 * 当前加载文件 
+		 * @return 
+		 * 
+		 */
+		public function get currentChild():LoadOper
+		{
+			return subQueue && subQueue.children && subQueue.children.length > 0 ? subQueue.children[0] : null;
 		}
 		
 		/**
@@ -130,7 +162,7 @@ package ghostcat.operation.load
 		private function operStartHandler(event:OperationEvent):void
 		{
 			event.oper.removeEventListener(OperationEvent.OPERATION_START,operStartHandler);
-			this.eventDispatcher.addLoader((event.oper as LoadOper).eventDispatcher);
+			loadHelper.addLoader((event.oper as LoadOper).eventDispatcher);
 		}
 		
 		protected function startLoad():void
