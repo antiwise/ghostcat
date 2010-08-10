@@ -190,7 +190,7 @@
 		public function set label(v:String):void
 		{
 			if (labelTextField)
-				labelTextField.text = v;
+				labelTextField.text = v ? v : "";
 		}
 		
 		public function get label():String

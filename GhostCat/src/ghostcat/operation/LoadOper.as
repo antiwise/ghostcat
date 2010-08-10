@@ -341,7 +341,7 @@
 		
 		/**
 		 * 获取loaderInfo对象
-		 * 独立应用域的数据必须从这个属性的applicationDomain里取得。
+		 * 独立应用域的数据必须从这个属性的applicationDomain里取得。只当execute执行后才有值。
 		 */		
 		public function get loaderInfo():LoaderInfo
 		{
@@ -350,7 +350,7 @@
 		
 		/**
 		 * 获取加载事件发送器，可由此监听下载进度
-		 * Loader是其contentLoaderInfo,URLLoader则是其本身
+		 * Loader是其contentLoaderInfo,URLLoader则是其本身。只当execute执行后才有值。
 		 */
 		public function get eventDispatcher():EventDispatcher
 		{

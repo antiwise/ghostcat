@@ -15,6 +15,7 @@ package ghostcat.manager
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
 	import ghostcat.text.URL;
+	import ghostcat.operation.load.QueueLoadOper;
 
 	/**
 	 * 资源管理类
@@ -28,7 +29,6 @@ package ghostcat.manager
 		{
 			return Singleton.getInstanceOrCreate(AssetManager) as AssetManager;
 		}
-		
 		
 		private var progressBar:GProgressBar;
 		
@@ -110,48 +110,33 @@ package ghostcat.manager
 			if (name)
 				oper.name = name;
 			
-			oper.addEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
-			oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			if (progressBar)
+				progressBar.commitTarget(oper);
 			
+			oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
 			oper.commit(queue);
 			return oper;
-		}
-		
-		//获得加载资源数组
-		private function getResources(res:Array,ids:Array=null,names:Array = null):Array
-		{
-			var list:Array = [];
-			for (var i:int = 0;i < res.length;i++)
-			{
-				var oper:LoadOper = new LoadOper(getFullUrl(res[i]));
-				if (ids && ids[i])
-					oper.id = ids[i];
-				
-				if (names && names[i])
-					oper.name = names[i];
-				
-				oper.addEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
-				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-				
-				list.push(oper);
-			}
-			return list;
-		}
-		
-		protected function changeProgressTargetHandler(event:OperationEvent):void
-		{
-			if (progressBar)
-				progressBar.setTarget((event.oper as LoadOper).eventDispatcher,(event.oper as LoadOper).name);
 		}
 		
 		protected function loadCompleteHandler(event:OperationEvent):void
 		{
 			var oper:Oper = event.oper;
-			if (oper.id)
-				opers[oper.id] = oper;
-			
-			oper.removeEventListener(OperationEvent.OPERATION_START,changeProgressTargetHandler);
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			
+			if (oper is QueueLoadOper)
+			{
+				var queue:QueueLoadOper = oper as QueueLoadOper;
+				for each (var child:Oper in queue.opers)
+				{
+					if (child.id)
+						opers[child.id] = child;
+				}
+			}
+			else
+			{
+				if (oper.id)
+					opers[oper.id] = oper;
+			}
 		}
 		
 		/**
@@ -164,11 +149,28 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,ids:Array=null,names:Array = null):Queue
+		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1):QueueLoadOper
 		{
-			var subQueue:Queue = new Queue(getResources(res,ids,names));
-			subQueue.commit(queue);
-			return subQueue;
+			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
+			loader.loadResources(res,ids,names);
+			
+			if (progressBar)
+			{
+				if (bytesTotal == -1)
+				{
+					progressBar.commitTarget.apply(null,loader.children);
+				}
+				else
+				{
+					loader.setBytesTotal(bytesTotal);
+					progressBar.commitTarget(loader);
+				}
+			}
+			
+			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			loader.commit(queue);
+			
+			return loader;
 		}
 		
 		/**
@@ -181,31 +183,33 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXMLFile(filePath:String):Queue
+		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1):QueueLoadOper
 		{
-			var subQueue:Queue = new Queue();
-			var oper:LoadTextOper = new LoadTextOper(getFullUrl(filePath),null,false,resConfigHandler);
-			oper.commit(queue);
-			subQueue.commit(queue);
+			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
+			loader.loadResourcesFromXMLFile(filePath);
 			
-			return subQueue;
-			
-			function resConfigHandler(event:OperationEvent):void
+			if (progressBar)
 			{
-				var xml:XML = new XML((event.oper as LoadTextOper).data);
-				var res:Array = [];
-				var ids:Array = [];
-				var names:Array = [];
-				for each (var child:XML in xml.children())
+				if (bytesTotal == -1)
 				{
-					res.push(child.@url.toString());
-					ids.push(child.@id.toString());
-					names.push(child.@tip.toString())
+					loader.readyHandler = resConfigHandler;
+					function resConfigHandler():void
+					{
+						progressBar.commitTarget.apply(null,loader.children);
+					}	
 				}
-				subQueue.children = getResources(res,ids,names);
+				else
+				{
+					loader.setBytesTotal(bytesTotal);
+					progressBar.commitTarget(loader);
+				}
 			}
+			
+			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
+			loader.commit(queue);
+			
+			return loader;
 		}
-		
 		
 		/**
 		 * 根据载入时的名称获取加载器，继而可以取得加载完成的资源

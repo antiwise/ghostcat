@@ -14,6 +14,11 @@ package ghostcat.ui.controls
 	public class GButtonState
 	{
 		/**
+		 * 将未设置的状态置为默认值
+		 */
+		public static var resetToDefault:Boolean = true;
+		
+		/**
 		 * 鼠标状态对应的颜色变化 
 		 */
 		public var colorTransform:ColorTransform;
@@ -43,8 +48,15 @@ package ghostcat.ui.controls
 			if (skin)
 				target.setPartContent(skin);
 			
-			target.content.transform.colorTransform = colorTransform ? colorTransform : new ColorTransform();
-			target.content.filters = filters ? filters : [];
+			if (colorTransform)
+				target.content.transform.colorTransform = colorTransform;
+			else if (resetToDefault)
+				target.content.transform.colorTransform = new ColorTransform();
+				
+			if (filters)
+				target.content.filters = filters;
+			else if (resetToDefault)
+				target.content.filters = [];
 			
 			if (oper)
 			{
