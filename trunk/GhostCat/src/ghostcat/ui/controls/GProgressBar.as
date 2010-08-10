@@ -37,7 +37,7 @@ package ghostcat.ui.controls
 			super(skin, replace, mode, fields);
 		}
 		
-		private var _target:EventDispatcher;
+		private var _target:IEventDispatcher;
 		
 		/**
 		 * 辅助加载器 
@@ -50,6 +50,11 @@ package ghostcat.ui.controls
 		public var resName:String;
 		
 		/**
+		 * 资源对应的Oper 
+		 */
+		public var oper:IProgressTargetClient;
+		
+		/**
 		 * 进度条更新方法（参数为进度条）
 		 */
 		public var progressFunction:Function;
@@ -60,13 +65,20 @@ package ghostcat.ui.controls
 		 * @return 
 		 * 
 		 */
-		public function get target():EventDispatcher
+		public function get target():IEventDispatcher
 		{
 			return _target;
 		}
 		
-		public function set target(v:EventDispatcher):void
+		public function set target(v:IEventDispatcher):void
 		{
+			if (v is IProgressTargetClient)
+			{
+				this.oper = v as IProgressTargetClient;
+				this.resName = this.oper.name;
+				v = this.oper.eventDispatcher;
+			}
+			
 			if (_target == v)
 				return;
 			
@@ -110,22 +122,26 @@ package ghostcat.ui.controls
 		{
 			for (var i:int = 0;i < lists.length;i++)
 			{
-				if (lists[i] is Oper)
-					(lists[i] as Oper).addEventListener(OperationEvent.OPERATION_START,changeOperTargetHandler,false,0,true);
-				else if (lists[i] is EventDispatcher)
-					(lists[i] as EventDispatcher).addEventListener(Event.INIT,changeTargetHandler,false,0,true);
+				if (lists[i] is IEventDispatcher)
+				{
+					(lists[i] as IEventDispatcher).addEventListener(OperationEvent.OPERATION_START,changeTargetHandler,false,0,true);
+					(lists[i] as IEventDispatcher).addEventListener(Event.OPEN,changeTargetHandler,false,0,true);
+				}
 			}
 		}
 		
-		private function changeOperTargetHandler(event:Event):void
+		/**
+		 * 目标变换函数 
+		 * @param event
+		 * 
+		 */
+		protected function changeTargetHandler(event:Event):void
 		{
-			var oper:Oper = event.currentTarget as Oper;
-			setTarget(oper["eventDispatcher"] as EventDispatcher,oper["name"]);
-		}
-		
-		private function changeTargetHandler(event:Event):void
-		{
-			setTarget(event.currentTarget as EventDispatcher);
+			var currentTarget:IEventDispatcher = event.currentTarget as IEventDispatcher;
+			currentTarget.removeEventListener(OperationEvent.OPERATION_START,changeTargetHandler);
+			currentTarget.removeEventListener(Event.OPEN,changeTargetHandler);
+			
+			this.target = currentTarget;
 		}
 		
 		/**

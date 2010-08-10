@@ -3,6 +3,7 @@ package ghostcat.util.load
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.utils.getTimer;
@@ -21,6 +22,7 @@ package ghostcat.util.load
 		private var startTime:int;
 		private var _bytesTotal:int = -1;
 		private var completeCount:int;
+		private var openCount:int;
 		
 		/**
 		 * 加载器列表
@@ -39,18 +41,19 @@ package ghostcat.util.load
 			}
 		}
 		
-		public function addLoader(v:EventDispatcher):void
+		public function addLoader(v:IEventDispatcher):void
 		{
 			if (!loaders)
 				loaders = [];
 			
-			var loadInfo:EventDispatcher;
+			var loadInfo:IEventDispatcher;
 			
 			if (v is Loader)
 				loadInfo = (v as Loader).contentLoaderInfo;
 			else
 				loadInfo = v;
 			
+			loadInfo.addEventListener(Event.OPEN,openHandler);
 			loadInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 			loadInfo.addEventListener(Event.COMPLETE,completeHandler);
 			loadInfo.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
@@ -149,6 +152,13 @@ package ghostcat.util.load
 			return (min>0)?(min.toString()+"分"):""+sec.toString()+"秒";
 		}
 		
+		private function openHandler(event:Event):void
+		{
+			this.openCount++;
+			if (this.openCount == 1)
+				this.dispatchEvent(event);
+		}
+		
 		private function progressHandler(event:ProgressEvent):void
 		{
 			var e:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS,false,false,bytesLoaded,bytesTotal);
@@ -171,6 +181,7 @@ package ghostcat.util.load
 		
 		private function removeEvents(loadInfo:EventDispatcher):void
 		{
+			loadInfo.removeEventListener(Event.OPEN,openHandler);
 			loadInfo.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			loadInfo.removeEventListener(Event.COMPLETE,completeHandler);
 			loadInfo.removeEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);

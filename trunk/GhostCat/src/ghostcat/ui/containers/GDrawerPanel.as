@@ -75,7 +75,7 @@ package ghostcat.ui.containers
 			_opened = v;
 			TweenUtil.removeTween(this);
 			if (v)
-				TweenUtil.to(this,duration,{scrollRect:allRect ? allRect : content.getRect(content),ease:easing,onUpdate:this.vaildSize});
+				TweenUtil.to(this,duration,{scrollRect:allRect ? allRect : content.getRect(this),ease:easing,onUpdate:this.vaildSize});
 			else
 				TweenUtil.to(this,duration,{scrollRect:drawerRect,ease:easing,onUpdate:this.vaildSize});
 		}
@@ -90,7 +90,7 @@ package ghostcat.ui.containers
 			_opened = opened;
 			
 			if (_opened || !drawerRect)
-				this.scrollRect = allRect ? allRect : content.getRect(content);
+				this.scrollRect = allRect ? allRect : content.getRect(this);
 			else
 				this.scrollRect = drawerRect;
 			

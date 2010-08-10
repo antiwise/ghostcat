@@ -50,6 +50,7 @@ package ghostcat.ui.containers
 			{
 				this.labelButton = new GButton(this.content[fields.labelButtonField]);
 				this.labelButton.addEventListener(MouseEvent.CLICK,labelClickHandler);
+				this.drawRect = this.labelButton.getRect(this);
 			}
 			
 			if (this.content[fields.listField])
