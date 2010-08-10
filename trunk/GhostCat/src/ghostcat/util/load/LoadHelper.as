@@ -60,7 +60,7 @@ package ghostcat.util.load
 		}
 		
 		/**
-		 * 检测模式：0 读取属性 1 由时间获得
+		 * 检测模式：0 事件获得 1 读取属性
 		 */
 		public var mode:int = 0;
 		

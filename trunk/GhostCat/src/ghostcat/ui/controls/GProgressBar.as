@@ -2,9 +2,12 @@ package ghostcat.ui.controls
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	
+	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.Oper;
 	import ghostcat.skin.ProgressSkin;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.load.LoadHelper;
@@ -96,6 +99,33 @@ package ghostcat.ui.controls
 		{
 			this.target = v;
 			this.resName = resName;
+		}
+		
+		/**
+		 * 设置目标变换 
+		 * @param opers
+		 * 
+		 */
+		public function commitTarget(...lists):void
+		{
+			for (var i:int = 0;i < lists.length;i++)
+			{
+				if (lists[i] is Oper)
+					(lists[i] as Oper).addEventListener(OperationEvent.OPERATION_START,changeOperTargetHandler,false,0,true);
+				else if (lists[i] is EventDispatcher)
+					(lists[i] as EventDispatcher).addEventListener(Event.INIT,changeTargetHandler,false,0,true);
+			}
+		}
+		
+		private function changeOperTargetHandler(event:Event):void
+		{
+			var oper:Oper = event.currentTarget as Oper;
+			setTarget(oper["eventDispatcher"] as EventDispatcher,oper["name"]);
+		}
+		
+		private function changeTargetHandler(event:Event):void
+		{
+			setTarget(event.currentTarget as EventDispatcher);
 		}
 		
 		/**

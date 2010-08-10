@@ -1,4 +1,4 @@
-package ghostcat.media
+package ghostcat.util
 {
 	import flash.events.IEventDispatcher;
 	import flash.events.NetStatusEvent;

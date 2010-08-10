@@ -19,8 +19,7 @@ package ghostcat.util.load
 	public class GroupLoaderHelper extends EventDispatcher
 	{
 		private var startTime:int;
-		private var _bytesLoaded:int;
-		private var _bytesTotal:int;
+		private var _bytesTotal:int = -1;
 		private var completeCount:int;
 		
 		/**
@@ -28,15 +27,16 @@ package ghostcat.util.load
 		 */
 		public var loaders:Array;
 		
-		public function GroupLoaderHelper(loaders:Array):void
+		public function GroupLoaderHelper(loaders:Array = null):void
 		{
 			this.completeCount = 0;
-			this._bytesLoaded = 0;
-			this._bytesTotal = 0;
 			this.startTime = getTimer();
 			
-			for (var i:int = 0;i < loaders.length;i++)
-				addLoader(loaders[i]);
+			if (loaders)
+			{
+				for (var i:int = 0;i < loaders.length;i++)
+					addLoader(loaders[i]);
+			}
 		}
 		
 		public function addLoader(v:EventDispatcher):void
@@ -81,11 +81,21 @@ package ghostcat.util.load
 		 */
 		public function get bytesTotal():int
 		{
+			if (_bytesTotal != -1)
+				return _bytesTotal;
+			
 			var v:int = 0;
 			for each (var loadInfo:EventDispatcher in loaders)
+			{
 				v += loadInfo["bytesTotal"];
+			}
 			
 			return v;
+		}
+		
+		public function set bytesTotal(v:int):void
+		{
+			_bytesTotal = v;
 		}
 		
 		/**
@@ -141,7 +151,8 @@ package ghostcat.util.load
 		
 		private function progressHandler(event:ProgressEvent):void
 		{
-			this.dispatchEvent(event);
+			var e:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS,false,false,bytesLoaded,bytesTotal);
+			this.dispatchEvent(e);
 		}
 		
 		private function completeHandler(event:Event):void

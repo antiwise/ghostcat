@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="false" version="1">
+<flexLibProperties includeAllClasses="true" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
@@ -138,6 +138,7 @@
     <classEntry path="ghostcat.display.transfer.LightSweep"/>
     <classEntry path="ghostcat.display.transfer.MiniMap"/>
     <classEntry path="ghostcat.display.transfer.Paper3D"/>
+    <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
@@ -188,6 +189,7 @@
     <classEntry path="ghostcat.fileformat.mp3.MP3Decoder"/>
     <classEntry path="ghostcat.fileformat.png.PNGEncoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFDecoder"/>
+    <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
     <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DebugIDTag"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DoABCTag"/>
@@ -229,12 +231,14 @@
     <classEntry path="ghostcat.manager.EventManager"/>
     <classEntry path="ghostcat.manager.FileCacherManager"/>
     <classEntry path="ghostcat.manager.FontManager"/>
+    <classEntry path="ghostcat.manager.InjectManager"/>
     <classEntry path="ghostcat.manager.InputManager"/>
     <classEntry path="ghostcat.manager.LanguageManager"/>
     <classEntry path="ghostcat.manager.LocalManager"/>
     <classEntry path="ghostcat.manager.PathAnalyzer"/>
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
+    <classEntry path="ghostcat.manager.ViewManager"/>
     <classEntry path="ghostcat.media.SoundDisplayer"/>
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
@@ -271,12 +275,14 @@
     <classEntry path="ghostcat.operation.effect.IEffect"/>
     <classEntry path="ghostcat.operation.effect.LightOnceEffect"/>
     <classEntry path="ghostcat.operation.effect.MoviePathEffect"/>
+    <classEntry path="ghostcat.operation.effect.PushEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
     <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
     <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
+    <classEntry path="ghostcat.operation.load.QueueLoadOper"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
@@ -368,6 +374,7 @@
     <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GButtonBase"/>
+    <classEntry path="ghostcat.ui.controls.GButtonLite"/>
     <classEntry path="ghostcat.ui.controls.GButtonState"/>
     <classEntry path="ghostcat.ui.controls.GCheckBox"/>
     <classEntry path="ghostcat.ui.controls.GColorPicker"/>
@@ -421,12 +428,14 @@
     <classEntry path="ghostcat.util.CountDown"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
     <classEntry path="ghostcat.util.Guid"/>
+    <classEntry path="ghostcat.util.Iterator"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.RandomSeed"/>
     <classEntry path="ghostcat.util.RandomUtil"/>
     <classEntry path="ghostcat.util.ReflectUtil"/>
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
+    <classEntry path="ghostcat.util.SleepCheck"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
@@ -495,14 +504,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.SleepCheck"/>
-    <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
-    <classEntry path="ghostcat.operation.effect.PushEffect"/>
-    <classEntry path="ghostcat.manager.ViewManager"/>
-    <classEntry path="ghostcat.manager.InjectManager"/>
-    <classEntry path="ghostcat.ui.controls.GButtonLite"/>
-    <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
-    <classEntry path="ghostcat.util.Iterator"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
