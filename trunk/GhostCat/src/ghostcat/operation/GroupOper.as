@@ -53,7 +53,7 @@ package ghostcat.operation
 			
 			finishCount = 0;
 			
-			for (var i:int = 0; i<children.length; i++)
+			for (var i:int = 0; i < children.length; i++)
 			{
 				var oper:Oper = children[i] as Oper;
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);

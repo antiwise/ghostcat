@@ -131,6 +131,16 @@ package ghostcat.ui.controls
 		}
 		
 		/**
+		 * 设置一组目标变换 
+		 * @param opers
+		 * 
+		 */
+		public function commitTargets(list:Array):void
+		{
+			commitTarget.apply(null,list);
+		}
+		
+		/**
 		 * 目标变换函数 
 		 * @param event
 		 * 
