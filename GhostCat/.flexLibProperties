@@ -178,6 +178,7 @@
     <classEntry path="ghostcat.events.SelectEvent"/>
     <classEntry path="ghostcat.events.TickEvent"/>
     <classEntry path="ghostcat.events.TimeLineEvent"/>
+    <classEntry path="ghostcat.events.TreeEvent"/>
     <classEntry path="ghostcat.extend.IFrame"/>
     <classEntry path="ghostcat.extend.JSBridge"/>
     <classEntry path="ghostcat.extend.RadioPlayer"/>
@@ -188,6 +189,7 @@
     <classEntry path="ghostcat.fileformat.jpg.JPGEncoder"/>
     <classEntry path="ghostcat.fileformat.mp3.MP3Decoder"/>
     <classEntry path="ghostcat.fileformat.png.PNGEncoder"/>
+    <classEntry path="ghostcat.fileformat.swf.SWCFile"/>
     <classEntry path="ghostcat.fileformat.swf.SWFDecoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
     <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
@@ -221,6 +223,8 @@
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
+    <classEntry path="ghostcat.gxml.spec.ItemGroup"/>
+    <classEntry path="ghostcat.gxml.spec.ItemGroupSpec"/>
     <classEntry path="ghostcat.gxml.spec.ItemSpec"/>
     <classEntry path="ghostcat.gxml.spec.Spec"/>
     <classEntry path="ghostcat.manager.AssetManager"/>
@@ -239,6 +243,7 @@
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
     <classEntry path="ghostcat.manager.ViewManager"/>
+    <classEntry path="ghostcat.media.GVideo"/>
     <classEntry path="ghostcat.media.SoundDisplayer"/>
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
@@ -367,6 +372,7 @@
     <classEntry path="ghostcat.ui.containers.GResizePanel"/>
     <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
     <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
+    <classEntry path="ghostcat.ui.containers.GTree"/>
     <classEntry path="ghostcat.ui.containers.GVBox"/>
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
@@ -400,6 +406,8 @@
     <classEntry path="ghostcat.ui.controls.GText"/>
     <classEntry path="ghostcat.ui.controls.GVScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
+    <classEntry path="ghostcat.ui.controls.GWaiting"/>
+    <classEntry path="ghostcat.ui.controls.IProgressTargetClient"/>
     <classEntry path="ghostcat.ui.html.GFrameView"/>
     <classEntry path="ghostcat.ui.html.SimpleHTML"/>
     <classEntry path="ghostcat.ui.html.TableCreater"/>
@@ -426,16 +434,19 @@
     <classEntry path="ghostcat.ui.validators.GValidator"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
+    <classEntry path="ghostcat.util.EventUitl"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
     <classEntry path="ghostcat.util.Guid"/>
     <classEntry path="ghostcat.util.Iterator"/>
     <classEntry path="ghostcat.util.MathUtil"/>
+    <classEntry path="ghostcat.util.NetStatusEventHelper"/>
     <classEntry path="ghostcat.util.RandomSeed"/>
     <classEntry path="ghostcat.util.RandomUtil"/>
     <classEntry path="ghostcat.util.ReflectUtil"/>
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.util.SleepCheck"/>
+    <classEntry path="ghostcat.util.SleepTimer"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
@@ -504,6 +515,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.operation.ParallelOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

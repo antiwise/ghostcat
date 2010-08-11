@@ -12,10 +12,10 @@ package ghostcat.manager
 	import ghostcat.operation.LoadTextOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
+	import ghostcat.operation.load.QueueLoadOper;
+	import ghostcat.text.URL;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
-	import ghostcat.text.URL;
-	import ghostcat.operation.load.QueueLoadOper;
 
 	/**
 	 * 资源管理类
@@ -118,6 +118,11 @@ package ghostcat.manager
 			return oper;
 		}
 		
+		/**
+		 * 加载完成后保存结果 
+		 * @param event
+		 * 
+		 */
 		protected function loadCompleteHandler(event:OperationEvent):void
 		{
 			var oper:Oper = event.oper;
@@ -149,16 +154,17 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1):QueueLoadOper
+		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.loadResources(res,ids,names);
+			loader.queueLimit = queueLimit;
 			
 			if (progressBar)
 			{
 				if (bytesTotal == -1)
 				{
-					progressBar.commitTarget.apply(null,loader.children);
+					progressBar.commitTargets(loader.children);
 				}
 				else
 				{
@@ -183,10 +189,11 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1):QueueLoadOper
+		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.loadResourcesFromXMLFile(filePath);
+			loader.queueLimit = queueLimit;
 			
 			if (progressBar)
 			{
@@ -195,7 +202,7 @@ package ghostcat.manager
 					loader.readyHandler = resConfigHandler;
 					function resConfigHandler():void
 					{
-						progressBar.commitTarget.apply(null,loader.children);
+						progressBar.commitTargets(loader.children);
 					}	
 				}
 				else
@@ -276,7 +283,8 @@ package ghostcat.manager
 		 */
 		public function getSprite(ref:String):Sprite
 		{
-			return new (this.getAssetByName(ref))() as Sprite;
+			var cls:Class = this.getAssetByName(ref) as Class;
+			return new cls() as Sprite;
 		}
 		
 		/**
@@ -288,7 +296,8 @@ package ghostcat.manager
 		 */
 		public function getBitmapData(ref:String,width:int,height:int):BitmapData
 		{
-			return new (this.getAssetByName(ref))(width,height) as BitmapData;
+			var cls:Class = this.getAssetByName(ref) as Class;
+			return new cls(width,height) as BitmapData;
 		}
 	}
 }
