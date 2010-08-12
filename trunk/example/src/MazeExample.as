@@ -47,6 +47,7 @@ package
 			
 			screen = new GBitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT));
 			screen.enabledScale = true;
+			screen.enableMouseEvent = true;
 			screen.scaleX = screen.scaleY = 4;
 			addChild(screen);
 			
