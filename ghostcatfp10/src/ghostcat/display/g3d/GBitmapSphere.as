@@ -15,24 +15,39 @@
 	 */
 	public class GBitmapSphere extends Sprite
 	{
-		private var material:BitmapData;
+		/**
+		 * 贴图
+		 */
+		public var material:BitmapData;
 		
 		private var vertsVec:Vector.<Vector.<Vector3D>>;
 		
+		/**
+		 * 转换矩阵 
+		 */
 		public var matrix3D:Matrix3D;
+		/**
+		 * 半径
+		 */
 		public var radius:Number;
-		public var nMesh:Number;
 		
+		/**
+		 * 显示内部/外部
+		 */
+		public var culling:String;
+		
+		private var nMesh:Number;
 		private var vertices:Vector.<Number>;
 		private var indices:Vector.<int>;
 		private var uvtData:Vector.<Number>;
 		
-		public function GBitmapSphere(material:BitmapData,radius:Number = 200, nMesh:int = 30)
+		public function GBitmapSphere(material:BitmapData,radius:Number = 100, nMesh:int = 30)
 		{
 			this.material = material;
 			this.radius = radius;
 			this.nMesh = nMesh;
 			this.matrix3D = new Matrix3D();
+			this.culling = TriangleCulling.POSITIVE;
 			
 			setVertsVec();
 			render();
@@ -117,8 +132,11 @@
 			}
 			
 			graphics.clear();
-			graphics.beginBitmapFill(material);
-			graphics.drawTriangles(vertices,indices,uvtData,TriangleCulling.POSITIVE);
+			
+			if (material)
+				graphics.beginBitmapFill(material);
+			
+			graphics.drawTriangles(vertices,indices,uvtData,culling);
 			graphics.endFill();
 		}
 	}
