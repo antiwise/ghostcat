@@ -1,0 +1,125 @@
+﻿package ghostcat.display.g3d
+{
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.display.TriangleCulling;
+	import flash.geom.Matrix3D;
+	import flash.geom.Point;
+	import flash.geom.Vector3D;
+
+	/**
+	 * 位图贴图球体
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
+	public class GBitmapSphere extends Sprite
+	{
+		private var material:BitmapData;
+		
+		private var vertsVec:Vector.<Vector.<Vector3D>>;
+		
+		public var matrix3D:Matrix3D;
+		public var radius:Number;
+		public var nMesh:Number;
+		
+		private var vertices:Vector.<Number>;
+		private var indices:Vector.<int>;
+		private var uvtData:Vector.<Number>;
+		
+		public function GBitmapSphere(material:BitmapData,radius:Number = 200, nMesh:int = 30)
+		{
+			this.material = material;
+			this.radius = radius;
+			this.nMesh = nMesh;
+			this.matrix3D = new Matrix3D();
+			
+			setVertsVec();
+			render();
+		}
+		
+		/**
+		 * 创建多边形
+		 * 
+		 */
+		protected function setVertsVec():void
+		{
+			var i:int;
+			var j:int;
+			var istep:Number;
+			var jstep:Number;
+			
+			istep=2*Math.PI/nMesh;
+			jstep=Math.PI/nMesh;
+			
+			this.vertsVec=new Vector.<Vector.<Vector3D>>();
+			
+			for(i=0;i<=nMesh;i++)
+			{
+				var vector:Vector.<Vector3D> = new Vector.<Vector3D>();
+				for(j=0;j<=nMesh;j++)
+				{
+					vector[j]=new Vector3D(radius*Math.sin(istep*i)*Math.sin(jstep*j),-radius*Math.cos(jstep*j),-radius*Math.cos(istep*i)*Math.sin(jstep*j));
+				}
+			
+				vertsVec[i] = vector;
+			}
+			
+			indices = new Vector.<int>();
+			uvtData = new Vector.<Number>();
+			
+			var curVertsNum:int=0;
+			for(i=0;i<nMesh;i++)
+			{
+				for(j=0;j<nMesh;j++)
+				{
+					indices.push(curVertsNum,curVertsNum+1,curVertsNum+3,curVertsNum+1,curVertsNum+2,curVertsNum+3);
+					uvtData.push(i/nMesh,j/nMesh,(i+1)/nMesh,j/nMesh,(i+1)/nMesh,(j+1)/nMesh,i/nMesh,(j+1)/nMesh);
+					curVertsNum += 4;
+				}
+			}
+		}
+		
+		/**
+		 * 旋转矩阵并渲染 
+		 * @param rotx
+		 * @param roty
+		 * @param rotz
+		 * 
+		 */
+		public function rotateSphere(rotx:Number,roty:Number,rotz:Number):void {
+			
+			matrix3D.appendRotation(rotx,Vector3D.X_AXIS);
+			matrix3D.appendRotation(roty,Vector3D.Y_AXIS);
+			matrix3D.appendRotation(rotz,Vector3D.Z_AXIS);
+			
+			render();
+		}
+		
+		/**
+		 * 根据矩阵渲染图像 
+		 * 
+		 */
+		public function render():void
+		{
+			vertices = new Vector.<Number>();
+			for(var i:int = 0;i<nMesh;i++)
+			{
+				for(var j:int = 0;j<nMesh;j++)
+				{
+					var curv0:Vector3D = matrix3D.deltaTransformVector(vertsVec[i][j]);
+					var curv1:Vector3D = matrix3D.deltaTransformVector(vertsVec[i+1][j]);
+					var curv2:Vector3D = matrix3D.deltaTransformVector(vertsVec[i+1][j+1]);
+					var curv3:Vector3D = matrix3D.deltaTransformVector(vertsVec[i][j+1]);
+					
+					vertices.push(curv0.x,curv0.y,curv1.x,curv1.y,curv2.x,curv2.y,curv3.x,curv3.y);
+				}
+			}
+			
+			graphics.clear();
+			graphics.beginBitmapFill(material);
+			graphics.drawTriangles(vertices,indices,uvtData,TriangleCulling.POSITIVE);
+			graphics.endFill();
+		}
+	}
+}

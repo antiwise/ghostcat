@@ -2,6 +2,7 @@
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	import flash.utils.Dictionary;
 	
@@ -36,17 +37,14 @@
 				return;
 			
 			var i:int;
-			var distArray:Array=[];
-			var observerPos:Vector3D = new Vector3D();
+			var distArray:Array = [];
+			var data:Array = [];
 			
-			observerPos.x = container.root.transform.perspectiveProjection.projectionCenter.x;
-			observerPos.y = container.root.transform.perspectiveProjection.projectionCenter.y;
-			observerPos.z = -container.root.transform.perspectiveProjection.focalLength;
-			
-			for(i = 0; i < data.length; i++)
+			for (i = 0; i < container.numChildren; i++)
 			{
-				var curMid:Vector3D = (data[i] as DisplayObject).transform.getRelativeMatrix3D(container.root).position;
-				distArray[i] = Vector3D.distance(curMid,observerPos);
+				var child:DisplayObject = container.getChildAt(i);
+				data[i] = child;
+				distArray[i] = child.transform.getRelativeMatrix3D(container.root).position.z;
 			}
 			
 			var result:Array = distArray.sort(Array.NUMERIC|Array.RETURNINDEXEDARRAY|Array.DESCENDING);
