@@ -74,8 +74,9 @@ package ghostcat.algorithm.maze
 			return null;
 		}
 		
-		
-		
+		/**
+		 * 一边遍历一遍修改源地图造墙
+		 */
 		protected override function openNote(p:*, score:int, cost:int, parent:TraversalNote) : void
 		{
 			super.openNote(p,score,cost,parent);
