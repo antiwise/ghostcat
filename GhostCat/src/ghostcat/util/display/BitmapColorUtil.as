@@ -45,6 +45,17 @@ package ghostcat.util.display
 		}
 		
 		/**
+		 * 取左上角颜色设置为透明色
+		 * @param source	位图源
+		 * @return 
+		 * 
+		 */
+		public static function getTransparentBitmapDataByLeftTop(source:BitmapData):BitmapData
+		{
+			return getTransparentBitmapData(source,source.getPixel32(0,0));
+		}
+		
+		/**
 		 * 魔术套索
 		 *  
 		 * @param source

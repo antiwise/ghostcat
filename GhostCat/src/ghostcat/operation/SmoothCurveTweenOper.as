@@ -34,19 +34,12 @@ package ghostcat.operation
 		public override function execute() : void
 		{
 			super.execute();
-			
 			tween.addEventListener(TweenEvent.TWEEN_UPDATE,updateHandler);
 		}
 		/** @inheritDoc*/
-		public override function result(event:*=null) : void
+		protected override function end(event:*=null) : void
 		{
-			super.result(event);
-			tween.removeEventListener(TweenEvent.TWEEN_UPDATE,updateHandler);
-		}
-		/** @inheritDoc*/
-		public override function fault(event:*=null) : void
-		{
-			super.fault(event);
+			super.end(event);
 			tween.removeEventListener(TweenEvent.TWEEN_UPDATE,updateHandler);
 		}
 		
