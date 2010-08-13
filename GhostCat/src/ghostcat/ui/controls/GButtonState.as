@@ -48,12 +48,12 @@ package ghostcat.ui.controls
 			if (skin)
 				target.setPartContent(skin);
 			
-			if (colorTransform)
+			if (colorTransform != null)
 				target.content.transform.colorTransform = colorTransform;
 			else if (resetToDefault)
 				target.content.transform.colorTransform = new ColorTransform();
 				
-			if (filters)
+			if (filters != null)
 				target.content.filters = filters;
 			else if (resetToDefault)
 				target.content.filters = [];
