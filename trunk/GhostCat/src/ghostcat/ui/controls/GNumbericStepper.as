@@ -56,9 +56,9 @@ package ghostcat.ui.controls
 		{
 			super.getTextFieldFromSkin(skin);
 			
-			textField.multiline = false;
-			textField.type = TextFieldType.INPUT;
-			textField.restrict = "0-9\\-";
+			this.multiline = false;
+			this.restrict = "0-9\\-";
+			this.editable = true;
 		}
 		/** @inheritDoc*/
 		public override function setContent(skin:*, replace:Boolean=true) : void
