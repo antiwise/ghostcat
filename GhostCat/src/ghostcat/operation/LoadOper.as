@@ -173,6 +173,7 @@
 			
 			if (rhandler!=null)
 				this.addEventListener(OperationEvent.OPERATION_COMPLETE,rhandler);
+			
 			if (fhandler!=null)
 				this.addEventListener(OperationEvent.OPERATION_ERROR,fhandler);
 		}

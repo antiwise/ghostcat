@@ -13,7 +13,7 @@ package ghostcat.operation
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class Queue extends Oper
+	public class Queue extends Oper implements IQueue
 	{
 		private static var _defaultQueue:Queue;
 		

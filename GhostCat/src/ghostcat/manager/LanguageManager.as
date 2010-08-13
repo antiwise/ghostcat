@@ -4,8 +4,10 @@ package ghostcat.manager
 	import flash.events.Event;
 	import flash.text.TextField;
 	
+	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
+	import ghostcat.operation.load.QueueLoadOper;
 	import ghostcat.text.RegExpUtil;
 	import ghostcat.text.URL;
 	import ghostcat.ui.controls.GText;
@@ -34,6 +36,11 @@ package ghostcat.manager
 		{
 			return instance.getString(res,parms,args)
 		}
+		
+		/**
+		 * 文件默认路径
+		 */
+		public var assetBase:String = "";
 		
 		/**
 		 * 自定义转换器，键为{}内部的文字，值为文字属性或者函数。
@@ -76,19 +83,61 @@ package ghostcat.manager
 		 */		
 		public function load(url:String,embedClass:Class=null,queue:Queue=null):LoadOper
 		{
-			var loader:LoadOper = new LoadOper(url,embedClass,completeHandler);
+			var loader:LoadOper = new LoadOper(assetBase + url,embedClass,completeHandler);
 			loader.commit(queue);
 			return loader;
+		}
+		
+		/**
+		 * 同时加载多个语言包 
+		 * @param urls
+		 * @param queueLimit
+		 * @param queue
+		 * @return 
+		 * 
+		 */
+		public function loadMuit(urls:Array,queueLimit:int = 5,queue:Queue = null):QueueLoadOper
+		{
+			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
+			loader.queueLimit = queueLimit;
+			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,muitCompleteHandler);
+			loader.loadResources(urls);
+			loader.commit(queue);
+			return loader;
+		}
+		
+		private function muitCompleteHandler(event:Event):void
+		{
+			var oper:QueueLoadOper = event.currentTarget as QueueLoadOper;
+			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,muitCompleteHandler)
+			for each (var child:LoadOper in oper.opers)
+			{
+				var url:URL = new URL(child.request.url);
+				add(url.pathname.filename,child.data.toString());
+			}
 		}
 		
 		private function completeHandler(event:Event):void
 		{
 			var oper:LoadOper = event.currentTarget as LoadOper;
+			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,completeHandler)
+				
 			var url:URL = new URL(oper.request.url);
-			var textType:String = url.pathname.filename;
+			add(url.pathname.filename,oper.data.toString())
+		}
+		
+		/**
+		 * 增加多语言文本
+		 *  
+		 * @param textType	类别
+		 * @param text	内容
+		 * 
+		 */
+		public function add(textType:String,text:String):void
+		{
 			resource[textType] = {};
 					
-			var texts:Array = oper.data.toString().split(/\r?\n/);
+			var texts:Array = text.split(/\r?\n/);
 			var key:String; 
 			for (var i:int=0;i < texts.length;i++)
 			{

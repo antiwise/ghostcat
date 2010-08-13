@@ -3,14 +3,13 @@ package ghostcat.operation
 	import flash.events.Event;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.util.Util;
 
 	/**
 	 * 固定数量并发执行 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ParallelOper extends Oper
+	public class ParallelOper extends Oper implements IQueue
 	{
 		/**
 		 * 子Oper数组 
@@ -34,7 +33,8 @@ package ghostcat.operation
 			if (!children)
 				children = [];
 			
-			this.children = children;
+			for (var i:int = 0;i < children.length;i++)
+				commitChild(children[i] as Oper);
 		}
 		
 		public override function execute():void
@@ -49,7 +49,9 @@ package ghostcat.operation
 		 */			
 		public function commitChild(obj:Oper):void
 		{
+			obj.queue = this;
 			obj.step = Oper.WAIT;
+			
 			children.push(obj);
 			
 			doLoad();
@@ -61,6 +63,7 @@ package ghostcat.operation
 		 */
 		public function haltChild(obj:Oper):void
 		{
+			obj.queue = null;
 			obj.step = Oper.NONE;
 			
 			var index:int = running.indexOf(obj);
@@ -99,7 +102,9 @@ package ghostcat.operation
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 			
-			Util.remove(running,oper);
+			var index:int = running.indexOf(oper);
+			if (index != -1)
+				running.splice(index,1);
 			
 			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
 				doLoad();

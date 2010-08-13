@@ -515,6 +515,7 @@
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.operation.ParallelOper"/>
+    <classEntry path="ghostcat.operation.IQueue"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
