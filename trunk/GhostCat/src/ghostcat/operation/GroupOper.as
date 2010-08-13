@@ -9,9 +9,12 @@ package ghostcat.operation
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class GroupOper extends Oper
+	public class GroupOper extends Oper implements IQueue
 	{
-		public var children:Array;
+		/**
+		 * 子对象数组 
+		 */
+		public var children:Array = [];
 		/**
 		 * 完成数量
 		 */
@@ -24,7 +27,8 @@ package ghostcat.operation
 			if (!children)
 				children = [];
 			
-			this.children = children;
+			for (var i:int = 0;i < children.length;i++)
+				commitChild(children[i] as Oper);
 		}
 		
 		/**
@@ -33,6 +37,9 @@ package ghostcat.operation
 		 */			
 		public function commitChild(obj:Oper):void
 		{
+			obj.queue = this;
+			obj.step = Oper.WAIT;
+			
 			children.push(obj);
 		}
 		
@@ -42,6 +49,9 @@ package ghostcat.operation
 		 */
 		public function haltChild(obj:Oper):void
 		{
+			obj.queue = null;
+			obj.step = Oper.NONE;
+			
 			Util.remove(children,obj);
 			if (children.length==0)
 				result();

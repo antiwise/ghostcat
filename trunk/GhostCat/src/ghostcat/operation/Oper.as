@@ -44,7 +44,7 @@ package ghostcat.operation
 		/**
 		 * 当前所处的队列
 		 */		
-		public var queue:Queue;
+		public var queue:IQueue;
 		
 		/**
 		 * 当前状态
@@ -79,7 +79,7 @@ package ghostcat.operation
 			if (queue)
 			{
 				e = new OperationEvent(OperationEvent.CHILD_OPERATION_START);
-				e.oper = queue;
+				e.oper = queue as Oper;
 				e.childOper = this;
 				queue.dispatchEvent(e);
 			}
@@ -95,9 +95,9 @@ package ghostcat.operation
 				if (queue)
 				{
 					e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
-					e.oper = queue;
+					e.oper = queue as Oper;
 					e.childOper = this;
-					dispatchEvent(e);
+					queue.dispatchEvent(e);
 				}
 			}
 		}
@@ -121,10 +121,10 @@ package ghostcat.operation
 			if (queue)
 			{
 				e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
-				e.oper = queue;
+				e.oper = queue as Oper;
 				e.childOper = this;
 				e.result = event;
-				dispatchEvent(e);
+				queue.dispatchEvent(e);
 				
 				this.queue = null;
 			}
@@ -151,7 +151,7 @@ package ghostcat.operation
 			if (queue)
 			{
 				e = new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR);
-				e.oper = queue;
+				e.oper = queue as Oper;
 				e.childOper = this;
 				e.result = event;
 				dispatchEvent(e);

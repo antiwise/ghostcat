@@ -2,6 +2,7 @@ package ghostcat.events
 {
 	import flash.events.Event;
 	
+	import ghostcat.operation.IOper;
 	import ghostcat.operation.Oper;
 	
 	/**

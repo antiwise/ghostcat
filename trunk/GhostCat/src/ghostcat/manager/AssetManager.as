@@ -125,7 +125,7 @@ package ghostcat.manager
 		 */
 		protected function loadCompleteHandler(event:OperationEvent):void
 		{
-			var oper:Oper = event.oper;
+			var oper:Oper = event.currentTarget as Oper;
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
 			
 			if (oper is QueueLoadOper)

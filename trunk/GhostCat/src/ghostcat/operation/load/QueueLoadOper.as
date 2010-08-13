@@ -33,7 +33,7 @@ package ghostcat.operation.load
 		/**
 		 * 资源列表 
 		 */
-		public var opers:Dictionary;
+		public var opers:Array = [];
 		
 		/**
 		 * 加载信息 
@@ -83,13 +83,19 @@ package ghostcat.operation.load
 			return URL.isHTTP(v) ? v : assetBase + v;
 		}
 		
-		public function QueueLoadOper(assetBase:String = "")
+		public function QueueLoadOper(assetBase:String = "",queueLimit:int = 1,rhandler:Function=null,fhandler:Function=null)
 		{
 			super();
 			
 			this.assetBase = assetBase;
-			this.opers = new Dictionary();
+			this.queueLimit = queueLimit;
 			this.loadHelper = new GroupLoaderHelper();
+			
+			if (rhandler!=null)
+				this.addEventListener(OperationEvent.OPERATION_COMPLETE,rhandler);
+			
+			if (fhandler!=null)
+				this.addEventListener(OperationEvent.OPERATION_ERROR,fhandler);
 		}
 		
 		/**
@@ -124,27 +130,20 @@ package ghostcat.operation.load
 		 */
 		public function loadResources(res:Array,ids:Array=null,names:Array = null):void
 		{
-			var list:Array = [];
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(getFullUrl(res[i]));
 				oper.addEventListener(OperationEvent.OPERATION_START,operStartHandler);
 				
 				if (ids && ids[i])
-				{
 					oper.id = ids[i];
-					opers[oper.id] = oper;
-				}
 				
 				if (names && names[i])
-				{
 					oper.name = names[i];
-				}
-				
-				list.push(oper);
-			}
 			
-			this.children = list;
+				this.opers.push(oper);
+				this.commitChild(oper);
+			}
 		}
 		
 		private function operStartHandler(event:OperationEvent):void
