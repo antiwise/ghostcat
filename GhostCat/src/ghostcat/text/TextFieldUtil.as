@@ -138,6 +138,7 @@ package ghostcat.text
 		{
 			var c:TextField = new TextField();
 			c.name = v.name;
+			c.type = v.type;
 			c.autoSize = v.autoSize;
 			c.embedFonts = v.embedFonts;
 			c.defaultTextFormat = v.defaultTextFormat;
