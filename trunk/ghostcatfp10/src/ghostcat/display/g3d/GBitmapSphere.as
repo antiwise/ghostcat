@@ -102,13 +102,20 @@
 		 * @param rotz
 		 * 
 		 */
-		public function rotateSphere(rotx:Number,roty:Number,rotz:Number):void {
-			
+		public function rotate(rotx:Number,roty:Number,rotz:Number):void
+		{
 			matrix3D.appendRotation(rotx,Vector3D.X_AXIS);
 			matrix3D.appendRotation(roty,Vector3D.Y_AXIS);
 			matrix3D.appendRotation(rotz,Vector3D.Z_AXIS);
-			
-			render();
+		}
+		
+		/**
+		 * 重置旋转
+		 * 
+		 */
+		public function reset():void
+		{
+			matrix3D = new Matrix3D();
 		}
 		
 		/**

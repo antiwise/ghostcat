@@ -14,7 +14,7 @@ package
 	import ghostcat.display.g3d.GBitmapSphere;
 	
 
-	[SWF(width="500",height="500",backgroundColor="0")]
+	[SWF(width="750",height="500",backgroundColor="0")]
 	public class GhostCatFP10Example extends Sprite
 	{
 		public var sphere:GBitmapSphere;
@@ -30,7 +30,7 @@ package
 			
 			sphere = new GBitmapSphere(null,500);
 			sphere.culling = TriangleCulling.NEGATIVE;
-			sphere.x = 250;
+			sphere.x = 375;
 			sphere.y = 250;
 			
 			addChild(sphere);
@@ -51,12 +51,9 @@ package
 		{
 			var sw:Number = stage.stageWidth;
 			var sh:Number = stage.stageHeight;
-			
-			var m:Matrix3D = new Matrix3D();
-			m.appendRotation((stage.mouseX - sw / 2) / sw * 360,Vector3D.Y_AXIS);
-			m.appendRotation(-(stage.mouseY - sh / 2) / sw * 180,Vector3D.X_AXIS);
-			
-			sphere.matrix3D = m;
+			sphere.reset();
+			sphere.rotate(0,(stage.mouseX - sw / 2) / sw * 360,0);
+			sphere.rotate(-(stage.mouseY - sh / 2) / sh * 180,0,0);
 			sphere.render();
 		}
 	}
