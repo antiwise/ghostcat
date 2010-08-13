@@ -1,7 +1,9 @@
 package ghostcat.manager
 {
 	import flash.external.ExternalInterface;
+	import flash.net.URLRequest;
 	import flash.net.URLVariables;
+	import flash.net.navigateToURL;
 	
 	import ghostcat.util.core.Singleton;
 	
@@ -29,8 +31,11 @@ package ghostcat.manager
 		 */
 		public function get url():String
         {
+			if (!ExternalInterface.available) 
+				return null;
+			
         	return ExternalInterface.call("BrowerManager.getURL");
-        };
+		};
         /**
          * 浏览器除去参数后的地址
          * @return 
@@ -38,7 +43,10 @@ package ghostcat.manager
          */        
         public function get baseUrl():String
         {
-        	var url:String = this.url;
+			if (!ExternalInterface.available) 
+				return null;
+			
+			var url:String = this.url;
         	var p:int = url.indexOf("#");
         	if (p>0)
         		return url.substr(0,p - 1);
@@ -52,11 +60,17 @@ package ghostcat.manager
          */        
         public function set title(v:String):void
         {
-        	ExternalInterface.call("BrowerManager.setTitle",v);
+			if (!ExternalInterface.available) 
+				return;
+			
+			ExternalInterface.call("BrowerManager.setTitle",v);
         };
         public function get title():String
         {
-        	return ExternalInterface.call("BrowerManager.getTitle");
+			if (!ExternalInterface.available) 
+				return null;
+			
+			return ExternalInterface.call("BrowerManager.getTitle");
         };
         /**
          * 浏览器地址栏参数
@@ -65,7 +79,10 @@ package ghostcat.manager
          */        
         public function set urlVariables(values:URLVariables):void
         {
-        	var url:String = "";
+			if (!ExternalInterface.available) 
+				return;
+			
+			var url:String = "";
         	var para:String = values.toString();
         	if (para.length>0)
         	 	url += "#" + para;
@@ -74,7 +91,10 @@ package ghostcat.manager
         }
         public function get urlVariables():URLVariables
         {
-        	var url:String = this.url;
+			if (!ExternalInterface.available) 
+				return null;
+			
+			var url:String = this.url;
         	var p:int = url.indexOf("#");
         	if (p>0)
         		return new URLVariables(url.substr(p + 1));
@@ -89,7 +109,10 @@ package ghostcat.manager
          */        
         public function addFavorite(title:String=null,url:String=null):void
         {
-        	if (!url)
+			if (!ExternalInterface.available) 
+				return;
+			
+			if (!url)
         		url = this.url;
         	
         	if (!title)
@@ -104,7 +127,10 @@ package ghostcat.manager
          */        
         public function setHomePage(url:String=null):void
         {
-        	if (!url)
+			if (!ExternalInterface.available) 
+				return;
+			
+			if (!url)
         		url = this.url;
         		
         	ExternalInterface.call("BrowerManager.setHomePage",url);
@@ -120,7 +146,10 @@ package ghostcat.manager
          */
         public function setCookie(name:String, value:String, expires:Date=null, security:Boolean=false):void
         {
-        	expires || (expires = new Date(new Date().time + (1000 * 86400 * 365)));
+			if (!ExternalInterface.available) 
+				return;
+			
+			expires || (expires = new Date(new Date().time + (1000 * 86400 * 365)));
         	ExternalInterface.call("BrowerManager.setCookie",name,value,expires.time,security);
         }
         
@@ -133,7 +162,10 @@ package ghostcat.manager
          */        
         public function getCookie(name:String):String
         {
-        	return ExternalInterface.call("BrowerManager.getCookie",name);
+			if (!ExternalInterface.available) 
+				return null;
+			
+			return ExternalInterface.call("BrowerManager.getCookie",name);
         }
         
         /**
@@ -159,6 +191,9 @@ package ghostcat.manager
 		 */
 		public function alert(...params):void
 		{
+			if (!ExternalInterface.available) 
+				return;
+			
 			ExternalInterface.call("alert",params.toString());
 		}
 		
@@ -168,6 +203,9 @@ package ghostcat.manager
 		 */
 		public function reload():void
 		{
+			if (!ExternalInterface.available) 
+				return;
+			
 			ExternalInterface.call("location.reload");
 		}
 		
@@ -177,7 +215,33 @@ package ghostcat.manager
 		 */
 		public function disableScroll(objId:String = null):void
 		{
+			if (!ExternalInterface.available) 
+				return;
+			
 			ExternalInterface.call("BrowerManager.disableScroll",objId);
+		}
+		
+		/**
+		 * 打开地址（支持javascript:写法）
+		 * 
+		 * @param url
+		 * @return 
+		 * 
+		 */
+		public function getUrl(url:String,target:String = "_self"):void
+		{
+			if (url.substr(0,11) == "javascript:" && ExternalInterface.available)
+			{
+				var js:String = url.substr(11);
+				if (url.indexOf("(") == -1 && url.indexOf(")") == -1)
+					js += "()";
+				
+				ExternalInterface.call("eval",js);
+			}
+			else
+			{
+				navigateToURL(new URLRequest(url),target);
+			}
 		}
 	}
 }
