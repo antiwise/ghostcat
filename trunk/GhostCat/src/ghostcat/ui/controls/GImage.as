@@ -307,12 +307,12 @@ package ghostcat.ui.controls
 		 */
 		protected function layoutChildren():void
 		{
-			if (!content)
+			if (!content || hideContent)
 				return;
 			
 			if (content is Loader && !content.width && !content.height)
 				return;
-				
+			
 			if (scaleContent && sized)
 				Geom.scaleToFit(content,this,_scaleType);
 			else
@@ -322,7 +322,6 @@ package ghostcat.ui.controls
 				Geom.centerAtZero(content);
 			else if (sized)
 				LayoutUtil.silder(content,this,horizontalAlign,verticalAlign);
-			
 		}
 		
 		public override function destory():void
@@ -334,6 +333,18 @@ package ghostcat.ui.controls
 				(content as Loader).unload();
 			
 			super.destory();
+		}
+		
+		//因为hideContent = true时布局会出错，所以在设回false时再会再重新布局一次
+		public override function set hideContent(value:Boolean):void
+		{
+			if (value == super.hideContent)
+				return;
+			
+			super.hideContent = value;
+			
+			if (!value)
+				layoutChildren();
 		}
 	}
 }
