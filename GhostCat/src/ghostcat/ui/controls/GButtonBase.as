@@ -189,6 +189,8 @@ package ghostcat.ui.controls
 		/**
 		 * 激活文本自适应
 		 * 
+		 * 文本原左上坐标不变，向右下扩展。背景根据Padding调整到位置。
+		 * 
 		 */
 		public function enabledAutoLayout(padding:Padding,autoSize:String = TextFieldAutoSize.LEFT):void
 		{

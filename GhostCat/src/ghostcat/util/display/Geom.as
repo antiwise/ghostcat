@@ -32,7 +32,9 @@ package ghostcat.util.display
 			if (!(displayObj.width && displayObj.height))
 				return;
 			
-			var rect:Rectangle = getRect(container,displayObj.parent);
+			var parent:DisplayObjectContainer = displayObj.parent ? displayObj.parent : container;//没有parent则取container未父对象（如果不是这种情况则会出错，调用此方法时应当具有parent）
+			
+			var rect:Rectangle = getRect(container,parent);
         	displayObj.scaleX *= rect.width / displayObj.width;
             displayObj.scaleY *= rect.height / displayObj.height;
             
@@ -41,7 +43,7 @@ package ghostcat.util.display
             else if (type == UIConst.CROP)
             	displayObj.scaleX = displayObj.scaleY = Math.max(displayObj.scaleX,displayObj.scaleY);
             
-            var objRect:Rectangle = displayObj.getRect(displayObj.parent);
+            var objRect:Rectangle = displayObj.getRect(parent);
             displayObj.x += rect.x - objRect.x;
             displayObj.y += rect.y - objRect.y;
         }
