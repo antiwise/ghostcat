@@ -2,10 +2,13 @@ package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.TweenOper;
 	import ghostcat.operation.effect.IEffect;
+	import ghostcat.util.easing.Circ;
 	
 	/**
 	 * 切换显示容器
@@ -132,6 +135,20 @@ package ghostcat.ui.containers
 			
 			effect.removeEventListener(OperationEvent.OPERATION_COMPLETE,tweenCompleteHandler);
 		}
-
+		
+		/**
+		 * 添加默认移动切换效果（此为添加效果范例，不合要求可复制出代码自行修改）
+		 * 
+		 */
+		public function addMoveEffect(offestX:Number,toAlpha:Number = 1.0,dur:int = 300,ease:Function = null):void
+		{
+			if (ease == null)
+				ease = Circ.easeInOut;
+			
+			this.showFromRight = new TweenOper(null, dur, {x: -offestX,alpha:toAlpha,startAt: {x:0,alpha:1.0}, ease:ease}, true,1);
+			this.showFromLeft = new TweenOper(null, dur, {x:offestX,alpha:toAlpha,startAt: {x:0,alpha:1.0}, ease:ease}, true,1);
+			this.hideToRight = new TweenOper(null, dur, {x: -offestX,alpha:toAlpha, ease:ease}, false,1);
+			this.hideToLeft = new TweenOper(null, dur, {x:offestX,alpha:toAlpha, ease:ease}, false,1);
+		}
 	}
 }
