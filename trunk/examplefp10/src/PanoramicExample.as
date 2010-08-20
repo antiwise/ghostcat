@@ -25,13 +25,6 @@ package
 		
 		public function PanoramicExample()
 		{
-			addEventListener(Event.ADDED_TO_STAGE,initHandler);
-		}
-		
-		private function initHandler(event:Event):void
-		{
-			removeEventListener(Event.ADDED_TO_STAGE,initHandler);	
-			
 			sphere = new Panoramic(null,500);
 			sphere.x = 375;
 			sphere.y = 250;
@@ -83,6 +76,8 @@ package
 			sphere.rotate(0,(stage.mouseX - sw / 2) / sw * 360,0);
 			sphere.rotate(-(stage.mouseY - sh / 2) / sh * 180,0,0);
 			sphere.render();
+			
+			event.updateAfterEvent();
 		}
 	}
 }
