@@ -31,8 +31,8 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="PanoramicExample.as"/>
     <application path="AttentExample.as"/>
-    <application path="GhostCatFP10Example.as"/>
     <application path="BeepExample.as"/>
   </applications>
   <modules/>
