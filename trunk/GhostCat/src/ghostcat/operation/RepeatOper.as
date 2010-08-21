@@ -28,10 +28,11 @@ package ghostcat.operation
 		 */
 		public var index:int = 0;
 		
-		public function RepeatOper(children:Array=null,loop:int = -1)
+		public function RepeatOper(children:Array=null,loop:int = -1,holdInstance:Boolean = false)
 		{
 			this.children = children;
 			this.loop = loop;
+			this.holdInstance = holdInstance;
 		}
 		
 		public override function execute():void

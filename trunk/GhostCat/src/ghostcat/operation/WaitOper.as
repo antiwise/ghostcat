@@ -35,6 +35,7 @@ package ghostcat.operation
 		 * 限定值的類型
 		 */
 		public var type:Class;
+		
 		/**
 		 * 當返回為false時繼續 
 		 */
@@ -79,7 +80,7 @@ package ghostcat.operation
 			}
 			else
 			{
-				Tick.instance.addEventListener(TickEvent.TICK,tick);
+				Tick.instance.addEventListener(TickEvent.TICK,tick,false,0,false);
 			}
 		}
 		

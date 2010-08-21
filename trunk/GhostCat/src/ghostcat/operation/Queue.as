@@ -34,7 +34,7 @@ package ghostcat.operation
 		public var children:Array = [];
 		
 		
-		public function Queue(children:Array=null)
+		public function Queue(children:Array=null,holdInstance:Boolean = false)
 		{
 			super();
 			
@@ -42,6 +42,7 @@ package ghostcat.operation
 				children = [];
 			
 			this.children = children;
+			this.holdInstance = holdInstance;
 		}
 		
 		/**

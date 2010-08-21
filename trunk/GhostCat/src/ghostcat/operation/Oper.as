@@ -1,6 +1,7 @@
 package ghostcat.operation
 {
 	import flash.events.EventDispatcher;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.util.core.AbstractUtil;
@@ -31,6 +32,8 @@ package ghostcat.operation
 		public static const RUN:int = 2;
 		public static const END:int = 3;
 		
+		private static var instances:Dictionary = new Dictionary();//维持实例字典
+	
 		public function Oper()
 		{
 			AbstractUtil.preventConstructor(this,Oper);	
@@ -67,6 +70,11 @@ package ghostcat.operation
 		public var continueWhenFail:Boolean = true;
 		
 		/**
+		 * 是否在执行期间维持自身实例（必须在执行前设置）
+		 */
+		public var holdInstance:Boolean = false;
+		
+		/**
 		 * 立即执行
 		 * 
 		 */		
@@ -100,6 +108,9 @@ package ghostcat.operation
 					queue.dispatchEvent(e);
 				}
 			}
+			
+			if (holdInstance)
+				instances[this] = true;
 		}
 		
 		/**
@@ -203,7 +214,8 @@ package ghostcat.operation
 		 */
 		protected function end(event:*=null):void
 		{
-			
+			if (holdInstance)
+				delete instances[this];
 		}
 		
 		/**
