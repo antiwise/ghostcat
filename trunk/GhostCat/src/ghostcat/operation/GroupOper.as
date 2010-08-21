@@ -69,25 +69,24 @@ package ghostcat.operation
 			{
 				var oper:Oper = children[i] as Oper;
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);
-				oper.addEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
+				oper.addEventListener(OperationEvent.OPERATION_ERROR,childCompleteHandler);
 				oper.execute();
 			}
 		}
 		
 		private function childCompleteHandler(event:OperationEvent):void
 		{
-			endOperation(event.currentTarget as Oper);
-		}
-		
-		private function childErrorHandler(event:OperationEvent):void
-		{
-			endOperation(event.currentTarget as Oper);
+			var oper:Oper = event.currentTarget as Oper;
+			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
+				endOperation(event.currentTarget as Oper);
+			else
+				fault(event);
 		}
 		
 		private function endOperation(oper:Oper):void
 		{
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,childCompleteHandler);
-			oper.removeEventListener(OperationEvent.OPERATION_ERROR,childErrorHandler);
+			oper.removeEventListener(OperationEvent.OPERATION_ERROR,childCompleteHandler);
 			finishCount++;
 			
 			if (children.length == finishCount)
