@@ -110,6 +110,8 @@ package ghostcat.operation
 			
 			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
 				doLoad();
+			else
+				fault(event);
 		}
 		
 		/** @inheritDoc*/
