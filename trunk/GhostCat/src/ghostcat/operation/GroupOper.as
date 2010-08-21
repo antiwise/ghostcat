@@ -78,7 +78,7 @@ package ghostcat.operation
 		{
 			var oper:Oper = event.currentTarget as Oper;
 			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
-				endOperation(event.currentTarget as Oper);
+				endOperation(oper);
 			else
 				fault(event);
 		}
