@@ -94,6 +94,9 @@ package ghostcat.operation
 			
 			step = RUN;
 			
+			if (holdInstance)
+				instances[this] = true;
+			
 			if (immediately)//立即执行则立即触发完成事件
 			{
 				e = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
@@ -108,9 +111,6 @@ package ghostcat.operation
 					queue.dispatchEvent(e);
 				}
 			}
-			
-			if (holdInstance)
-				instances[this] = true;
 		}
 		
 		/**
