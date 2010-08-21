@@ -26,12 +26,14 @@ package ghostcat.operation
 		 */
 		public var queueLimit:int = 1;
 		
-		public function ParallelOper(children:Array=null)
+		public function ParallelOper(children:Array=null,holdInstance:Boolean = false)
 		{
 			super();
 			
 			if (!children)
 				children = [];
+			
+			this.holdInstance = holdInstance;
 			
 			for (var i:int = 0;i < children.length;i++)
 				commitChild(children[i] as Oper);
