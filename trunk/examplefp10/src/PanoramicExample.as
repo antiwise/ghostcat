@@ -42,9 +42,9 @@ package
 			
 			var p:Point = new Point(0,0);
 			sphere.addHotSpot(p,createPot(p.toString()));
-			p = new Point(0,1000);
+			p = new Point(0,100);
 			sphere.addHotSpot(p,createPot(p.toString()));
-			p = new Point(200,1000);
+			p = new Point(500,100);
 			sphere.addHotSpot(p,createPot(p.toString()));
 			
 			sphere.render();

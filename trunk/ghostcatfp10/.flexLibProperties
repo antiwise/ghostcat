@@ -8,6 +8,8 @@
     <classEntry path="ghostcat.parse.graphics.GraphicsTriangles"/>
     <classEntry path="ghostcat.community.sort.Sort3DManager"/>
     <classEntry path="ghostcat.display.g3d.GBitmapSphere"/>
+    <classEntry path="ghostcat.display.g3d.Panoramic"/>
+    <classEntry path="ghostcat.display.g3d.HotSpot"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
