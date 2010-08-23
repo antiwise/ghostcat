@@ -36,6 +36,11 @@
 		 */
 		public var culling:String;
 		
+		/**
+		 * 贴图平滑
+		 */
+		public var smooth:Boolean;
+		
 		private var nMesh:Number;
 		private var vertices:Vector.<Number>;
 		private var indices:Vector.<int>;
@@ -141,7 +146,7 @@
 			graphics.clear();
 			
 			if (material)
-				graphics.beginBitmapFill(material);
+				graphics.beginBitmapFill(material,null,false,smooth);
 			
 			graphics.drawTriangles(vertices,indices,uvtData,culling);
 			graphics.endFill();
