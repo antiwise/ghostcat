@@ -130,12 +130,7 @@ package ghostcat.ui.controls
 		
 			super.textFocusInHandler(event);
 		}
-		/** @inheritDoc*/
-		protected override function textFocusOutHandler(event:Event) : void
-		{
-//			super.textFocusOutHandler(event);
-			accaptText();
-		}
+		
 		/** @inheritDoc*/
 		protected override function textKeyDownHandler(event:KeyboardEvent):void
 		{
@@ -154,7 +149,7 @@ package ghostcat.ui.controls
 		 * 确认文本的数据
 		 * 
 		 */
-		public function accaptText():void
+		public override function accaptText():void
 		{
 			var v:Number = Number(textField.text);
 			if (isNaN(v))
