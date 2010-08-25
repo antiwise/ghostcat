@@ -1,10 +1,12 @@
 package ghostcat.ui.controls
 {
 	import flash.geom.ColorTransform;
+	import flash.text.TextFormat;
 	
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.SoundOper;
 	import ghostcat.operation.effect.IEffect;
+	import ghostcat.util.Util;
 
 	/**
 	 * 按钮状态
@@ -43,6 +45,16 @@ package ghostcat.ui.controls
 		 */
 		public var sound:*;
 		
+		/**
+		 * 文字样式
+		 */
+		public var textFormat:*;
+		
+		/**
+		 * 是否重置默认文字样式。设置后中途修改文字将不会恢复原本的颜色。
+		 */
+		public var overrideDefaultTextFormat:Boolean = false;
+		
 		public function parse(target:GButtonLite):void
 		{
 			if (skin)
@@ -72,6 +84,25 @@ package ghostcat.ui.controls
 					sound = new SoundOper(sound);
 				
 				(sound as SoundOper).execute();
+			}
+			
+			if (target is GButtonBase && (target as GButtonBase).labelTextField)
+			{
+				var textField:GText = (target as GButtonBase).labelTextField;
+				if (textFormat)
+				{
+					var t:TextFormat;
+					if (textFormat is TextFormat)
+						t = textFormat as TextFormat;
+					else
+						t = Util.createObject(TextFormat,textFormat);
+					
+					textField.applyTextFormat(t,overrideDefaultTextFormat);
+				}
+//				else if (resetToDefault)
+//				{
+//					textField.applyTextFormat();
+//				}
 			}
 		}
 		
