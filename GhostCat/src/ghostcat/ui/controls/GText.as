@@ -760,7 +760,6 @@ package ghostcat.ui.controls
 			
 			if (changeWhenInput)
 				this.data = textField.text;
-//				dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		/**
@@ -777,12 +776,21 @@ package ghostcat.ui.controls
 		protected function textFocusOutHandler(event:Event):void
 		{
 			if (editable)
-				this.data = textField.text;
+				accaptText();
 		}
 		
 		protected function textKeyDownHandler(event:KeyboardEvent):void
 		{
 			
+		}
+		
+		/**
+		 * 确认输入框的文本 
+		 * 
+		 */
+		public function accaptText():void
+		{
+			this.data = textField.text;
 		}
 		
 		/** @inheritDoc*/
