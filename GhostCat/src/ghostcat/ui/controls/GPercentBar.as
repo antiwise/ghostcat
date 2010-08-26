@@ -18,6 +18,9 @@
 	 */
 	public class GPercentBar extends GBase
 	{
+		/**
+		 * 多个模式是直接以value的实际值为准的，所以范围可以由minValue和maxValue调整。但SCALEX,SCALEY模式要除以100，也就是百分率是0-100的范围 
+		 */
 		public static const MOVIECLIP:String = "movieClip";
 		public static const SCALEX:String = "scaleX";
 		public static const SCALEY:String = "scaleY";
