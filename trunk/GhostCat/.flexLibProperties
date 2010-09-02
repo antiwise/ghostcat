@@ -191,7 +191,6 @@
     <classEntry path="ghostcat.fileformat.swf.SWCFile"/>
     <classEntry path="ghostcat.fileformat.swf.SWFDecoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
-    <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DebugIDTag"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DoABCTag"/>
     <classEntry path="ghostcat.fileformat.swf.tag.FileAttributesTag"/>
@@ -516,6 +515,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.operation.ParallelOper"/>
     <classEntry path="ghostcat.operation.IQueue"/>
+    <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

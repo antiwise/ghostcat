@@ -10,6 +10,7 @@
     <classEntry path="ghostcat.display.g3d.GBitmapSphere"/>
     <classEntry path="ghostcat.display.g3d.Panoramic"/>
     <classEntry path="ghostcat.display.g3d.HotSpot"/>
+    <classEntry path="ghostcat.other.SWFDump"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
