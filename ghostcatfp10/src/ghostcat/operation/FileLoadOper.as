@@ -31,15 +31,15 @@ package ghostcat.operation
 			typeFilter.push(new FileFilter(name,extensions.join(";")));
 		}
 			
-		public function FileLoadOper(rHandler:Function = null,eHandler:Function = null)
+		public function FileLoadOper(rHandler:Function = null,fHandler:Function = null)
 		{
 			this.file = new FileReference();
 			
 			if (rHandler!=null)
 				addEventListener(OperationEvent.OPERATION_COMPLETE,rHandler);
 			
-			if (eHandler!=null)
-				addEventListener(OperationEvent.OPERATION_ERROR,eHandler);
+			if (fHandler!=null)
+				addEventListener(OperationEvent.OPERATION_ERROR,fHandler);
 		}
 		
 		/** @inheritDoc*/
