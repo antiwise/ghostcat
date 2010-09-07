@@ -77,6 +77,11 @@ package ghostcat.ui.controls
 		public static var autoRebuildEmbedText:Boolean = false;
 		
 		/**
+		 * 将它设置为true，将会自动重建所有非Embed的TextField，以便处理某些IDE无法修改设备字体的字体的问题
+		 */
+		public static var autoRebuildText:Boolean = false;
+		
+		/**
 		 * 字体替换 
 		 */
 		public static var fontFamilyReplacer:Object;
@@ -470,6 +475,7 @@ package ghostcat.ui.controls
 		 */
 		protected function getTextFieldFromSkin(skin:DisplayObject):void
 		{
+			var isReBuild:Boolean = false;
 			if (textField)
 			{
 				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
@@ -500,8 +506,11 @@ package ghostcat.ui.controls
 			{
 				isSkinText = true;
 				
-				if (autoRebuildEmbedText && textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
+				if (autoRebuildEmbedText && textField.embedFonts || autoRebuildText && !textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
+				{
 					rebuildTextField();
+					isReBuild = true;
+				}
 				
 				if (this._separateTextField)
 					separateTextField = true;//提取文本框
@@ -513,10 +522,9 @@ package ghostcat.ui.controls
 			var oldFont:TextFormat = this.textField.defaultTextFormat;//替换字体
 			if (fontEmbedReplacer && fontEmbedReplacer.hasOwnProperty(oldFont.font))
 			{
-				if (!this.textField.embedFonts && fontEmbedReplacer[oldFont.font])
-					rebuildTextField();
-				
 				this.textField.embedFonts = fontEmbedReplacer[oldFont.font];
+				if (!isReBuild && (autoRebuildEmbedText && textField.embedFonts || autoRebuildText && !textField.embedFonts))
+					rebuildTextField();
 			}
 			if (fontOffestYReplacer && fontOffestYReplacer.hasOwnProperty(oldFont.font))
 			{
