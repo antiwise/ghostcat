@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.SpreadMethod;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -15,7 +16,7 @@ package
 	import flash.utils.getTimer;
 	
 	[SWF(width="1000",height="500",backgroundColor="0xFFFFFF",frameRate="60")]
-	public class FP10Test4 extends Sprite
+	public class FP10Test5 extends Sprite
 	{
 		public static const MAX:int = 5000;
 		public var list:Vector.<Sprite>;
@@ -34,20 +35,22 @@ package
 			{
 				var bitmap:Bitmap = new Bitmap(new BitmapData(10,10,false,Math.random() * 0xFF));
 				var sp:Sprite = new Sprite();
-				sp.mouseChildren = sp.mouseEnabled  = false;
 				sp.addChild(bitmap);
-				sp.x = (i % 100) * 10;
-				sp.y = (i / 100) * 10;
-				addChild(sp);
-				list[i] = sp;
+				var sp2:Sprite = new Sprite();
+				sp2.mouseChildren = sp2.mouseEnabled  = false;
+				sp2.addChild(sp);
+				sp2.x = (i % 100) * 10;
+				sp2.y = (i / 100) * 10;
+				addChild(sp2);
+				list[i] = sp2;
 				speedListX[i] = Math.random() - 0.5;
 				speedListY[i] = Math.random() - 0.5;
 			}
 		}
-		public function FP10Test4()
+		public function FP10Test5()
 		{
 			var t:TextField = new TextField();
-			t.text = "Sprite+Bitmap";
+			t.text = "Sprite+Sprite+Bitmap";
 			t.autoSize = "left";
 			t.opaqueBackground = 0xFFFFFF;
 			t.y = 20;

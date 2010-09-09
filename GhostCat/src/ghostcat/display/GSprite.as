@@ -4,6 +4,7 @@ package ghostcat.display
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.InteractiveObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -260,10 +261,14 @@ package ghostcat.display
 					this.name = skin.name;
 				}
 			}
+			
 			_content = skin;
 			
 			if (oldParent && !(oldParent is Loader) && oldParent != this)
 				oldParent.addChildAt(this,oldIndex);
+			
+			if (content is InteractiveObject)
+				(content as InteractiveObject).mouseEnabled = false;
 			
 			this.contentInited = true;
 		}

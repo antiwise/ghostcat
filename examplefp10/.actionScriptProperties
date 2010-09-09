@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="FP10Test4.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
+<actionScriptProperties mainApplicationPath="FP10Test5.as" projectUUID="672f4362-b9fa-42a6-b141-3312c37b86d8" version="6">
   <compiler additionalCompilerArguments="" autoRSLOrdering="false" copyDependentFiles="true" flexSDK="Flex 4.0" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="10.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -31,12 +31,14 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="FP10Test4.as"/>
-    <application path="FP10Test3.as"/>
-    <application path="FP10Test2.as"/>
-    <application path="FP10Test.as"/>
     <application path="PanoramicExample.as"/>
     <application path="AttentExample.as"/>
+    <application path="FP10Test.as"/>
+    <application path="FP10Test3.as"/>
+    <application path="FP10Test6.as"/>
+    <application path="FP10Test5.as"/>
+    <application path="FP10Test2.as"/>
+    <application path="FP10Test4.as"/>
     <application path="BeepExample.as"/>
   </applications>
   <modules/>

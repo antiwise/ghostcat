@@ -10,6 +10,7 @@ package
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
@@ -42,6 +43,13 @@ package
 		}
 		public function FP10Test()
 		{
+			var t:TextField = new TextField();
+			t.text = "Bitmap";
+			t.autoSize = "left";
+			t.opaqueBackground = 0xFFFFFF;
+			t.y = 20;
+			stage.addChild(t);
+			
 			stage.addChild(new FPS());
 			createMap();
 			
