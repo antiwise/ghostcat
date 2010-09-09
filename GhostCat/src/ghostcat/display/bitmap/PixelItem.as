@@ -30,14 +30,6 @@ package ghostcat.display.bitmap
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics,offest:Point):void
-		{
-			target.beginFill(color & 0xFFFFFF,uint(color >> 24)/0xFF);
-			target.drawRect(int(x + offest.x),int(y + offest.y),1,1);
-			target.endFill();
-		}
-		
-		/** @inheritDoc*/
 		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
 			return (Math.round(mouseX) == Math.round(x) && Math.round(mouseY) - Math.round(y)) ? [this] : null;

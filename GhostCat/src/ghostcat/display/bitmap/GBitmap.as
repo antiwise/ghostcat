@@ -114,6 +114,11 @@ package ghostcat.display.bitmap
 		 */
 		public var bitmapMouseChecker:BitmapMouseChecker;
 		
+		/**
+		 * 位图缓存对象 
+		 */
+		public var bitmapByteArrayCacher:BitmapByteArrayCacher;
+		
 		public function GBitmap(skin:*=null, pixelSnapping:String="auto", smoothing:Boolean=false, replace:Boolean=true)
 		{
 			super(null, pixelSnapping, smoothing);
@@ -220,6 +225,9 @@ package ghostcat.display.bitmap
 			{
 				_width = bitmapData.width;
 				_height = bitmapData.height;
+				
+				if (bitmapByteArrayCacher)
+					cache();
 			}
 		}
 		
@@ -663,20 +671,35 @@ package ghostcat.display.bitmap
 			bitmapMouseChecker.enabled = _enableMouseEvent;
 		}
 		
+		/**
+		 * 缓存成ByteArray，在BitmapScreen中显示时，重新执行cache前位图不会变更
+		 * 
+		 */
+		public function cache():void
+		{
+			bitmapByteArrayCacher = new BitmapByteArrayCacher(_bitmapData);
+		}
+		
+		/**
+		 * 解除缓存
+		 * 
+		 */
+		public function uncache():void
+		{
+			bitmapByteArrayCacher = null;
+		}
+		
 		/** @inheritDoc*/
 		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
-		}
-		
-		/** @inheritDoc*/
-		public function drawToShape(target:Graphics,offest:Point):void
-		{
-			var p:Point = new Point(x,y).add(offest);
-			GraphicsBitmapFill.drawBitmpData(target,bitmapData,p.x,p.y);
-		}
-		
+			{
+				if (bitmapByteArrayCacher)
+					bitmapByteArrayCacher.drawToBitmapData(target,position.add(offest));
+				else
+					target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
+			}
+		}		
 		
 		/** @inheritDoc*/
 		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array

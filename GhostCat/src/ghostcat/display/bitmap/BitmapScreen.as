@@ -9,6 +9,7 @@ package ghostcat.display.bitmap
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.sort.SortAllManager;
@@ -41,10 +42,6 @@ package ghostcat.display.bitmap
 		 * 采用copyPixel处理
 		 */
 		public static const MODE_BITMAP:String = "bitmap";
-		/**
-		 * 采用beginBitmapFill处理
-		 */
-		public static const MODE_SHAPE:String = "shape";
 		
 		private var _mode:String = MODE_BITMAP;
 		
@@ -83,9 +80,6 @@ package ghostcat.display.bitmap
 					break;
 				case MODE_BITMAP:
 					setContent(new Bitmap(new BitmapData(width,height,transparent,backgroundColor)));
-					break;
-				case MODE_SHAPE:
-					setContent(new Shape());
 					break;
 			}
 			
@@ -289,14 +283,6 @@ package ghostcat.display.bitmap
 				
 				bitmapData.unlock();
 			}
-			else if (mode == MODE_SHAPE)
-			{
-				if (redraw)
-					(content as Shape).graphics.clear();
-				
-				for each (obj in children)
-					drawChild(obj);		
-			}
 			else if (mode == MODE_SPRITE)
 			{
 				for each (obj in children)
@@ -371,11 +357,6 @@ package ghostcat.display.bitmap
 						m.translate(drawOffest.x,drawOffest.y);
 					bitmapData.draw(obj as DisplayObject,m,itemColorTransform);
 				}
-			}
-			else if (mode == MODE_SHAPE)
-			{
-				if (obj is IBitmapDataDrawer)
-					(obj as IBitmapDataDrawer).drawToShape((content as Shape).graphics,drawOffest);
 			}
 			else if (mode == MODE_SPRITE)
 			{
