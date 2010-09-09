@@ -10,6 +10,8 @@ package
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
+	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
@@ -18,8 +20,7 @@ package
 	{
 		public static const MAX:int = 5000;
 		public var bitmapData:BitmapData;
-		public var list:Vector.<int>;
-		public var color:Vector.<uint>;
+		public var list:Vector.<ByteArray>;
 		public var listX:Vector.<Number>;
 		public var listY:Vector.<Number>;
 		public var speedListX:Vector.<Number>;
@@ -30,9 +31,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP;
 			
-			
-			list = new Vector.<int>(MAX,true);
-			color = new Vector.<uint>(MAX,true);
+			list = new Vector.<ByteArray>(MAX,true);
 			listX = new Vector.<Number>(MAX,true);
 			listY = new Vector.<Number>(MAX,true);
 			speedListX = new Vector.<Number>(MAX,true);
@@ -40,16 +39,23 @@ package
 			dragList = new Dictionary();
 			for (var i:int = 0;i < MAX;i++)
 			{
+				var bitmap:BitmapData = new BitmapData(10,10,false,Math.random() * 0xFF);
 				listX[i] = (i % 100) * 10;
 				listY[i] = (i / 100) * 10;
-				list[i] = i;
-				color[i] = int(Math.random() * 0xFF);
+				list[i] = bitmap.getPixels(bitmap.rect);
 				speedListX[i] = Math.random() - 0.5;
 				speedListY[i] = Math.random() - 0.5;
 			}
 		}
 		public function FP10Test3()
 		{
+			var t:TextField = new TextField();
+			t.text = "setPixels";
+			t.autoSize = "left";
+			t.opaqueBackground = 0xFFFFFF;
+			t.y = 20;
+			stage.addChild(t);
+			
 			stage.addChild(new FPS());
 			
 			bitmapData = new BitmapData(stage.stageWidth,stage.stageHeight,false,0xFFFFFF);
@@ -72,7 +78,7 @@ package
 			var mh:Number = stage.stageHeight;
 			for (var i:int = 0;i < len;i++)
 			{
-				var p:int = list[i];
+				var p:ByteArray = list[i] as ByteArray;
 				var px:Number = listX[i];
 				var py:Number = listY[i];
 				if (dragList[p])
@@ -97,7 +103,8 @@ package
 				listX[i] = px;
 				listY[i] = py;
 				
-				bitmapData.fillRect(new Rectangle(px,py,10,10),color[i]);
+				p.position = 0;
+				bitmapData.setPixels(new Rectangle(px,py,10,10),p);
 			}
 			bitmapData.unlock();
 		}
@@ -106,14 +113,17 @@ package
 		{
 			for (var i:int = 0;i < MAX;i++)
 			{
-				var p:int = list[i];
+				var p:ByteArray = list[i];
 				var px:Number = listX[i];
 				var py:Number = listY[i];
 				if (mouseX >= px && mouseX <= px + 10 && mouseY >= py && mouseY <= py + 10)
 				{
 					if (!dragList.hasOwnProperty(p))
 					{
-						color[i] = 0xFF0000;
+						var bytes:ByteArray = list[i] as ByteArray;
+						var bitmap:BitmapData = new BitmapData(10,10,false,0xFF0000);
+						bytes.position = 0;
+						bytes.writeBytes(bitmap.getPixels(bitmap.rect));
 						dragList[p] = true;
 					}
 				}

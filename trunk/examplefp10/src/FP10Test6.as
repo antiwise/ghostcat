@@ -15,7 +15,7 @@ package
 	import flash.utils.getTimer;
 	
 	[SWF(width="1000",height="500",backgroundColor="0xFFFFFF",frameRate="60")]
-	public class FP10Test4 extends Sprite
+	public class FP10Test6 extends Sprite
 	{
 		public static const MAX:int = 5000;
 		public var list:Vector.<Sprite>;
@@ -32,10 +32,12 @@ package
 			dragList = new Dictionary();
 			for (var i:int = 0;i < MAX;i++)
 			{
-				var bitmap:Bitmap = new Bitmap(new BitmapData(10,10,false,Math.random() * 0xFF));
 				var sp:Sprite = new Sprite();
 				sp.mouseChildren = sp.mouseEnabled  = false;
-				sp.addChild(bitmap);
+				sp.cacheAsBitmap = true;
+				sp.graphics.beginFill(Math.random() * 0xFF);
+				sp.graphics.drawRect(0,0,10,10);
+				sp.graphics.endFill();
 				sp.x = (i % 100) * 10;
 				sp.y = (i / 100) * 10;
 				addChild(sp);
@@ -44,10 +46,10 @@ package
 				speedListY[i] = Math.random() - 0.5;
 			}
 		}
-		public function FP10Test4()
+		public function FP10Test6()
 		{
 			var t:TextField = new TextField();
-			t.text = "Sprite+Bitmap";
+			t.text = "Sprite+cacheAsBitmap";
 			t.autoSize = "left";
 			t.opaqueBackground = 0xFFFFFF;
 			t.y = 20;
