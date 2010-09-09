@@ -85,10 +85,10 @@ package
 			var space:GNoScale = new GNoScale();
 			space.setSize(100,10);
 			vbox.addChild(space);
-			
+			 
 			vbox.addChild(Util.createObject(GRadioButton,{label:"普通",groupName:"a"}));
 			vbox.addChild(Util.createObject(GRadioButton,{label:"copyPixel",groupName:"a",selected:true}));
-			vbox.addChild(Util.createObject(GRadioButton,{label:"beginBitmapFill",groupName:"a"}));
+			vbox.addChild(Util.createObject(GRadioButton,{label:"setPixles",groupName:"a"}));
 			
 			var group:GRadioButtonGroup = GRadioButtonGroup.getGroupByName("a");
 			group.addEventListener(Event.CHANGE,radioChangeHandler);
@@ -119,9 +119,13 @@ package
 					break;
 				case "copyPixel":
 					s.mode = BitmapScreen.MODE_BITMAP;
+					for each (var bitmap:GBitmap in s.children)
+						bitmap.uncache();
 					break;
-				case "beginBitmapFill":
-					s.mode = BitmapScreen.MODE_SHAPE;
+				case "setPixles":
+					s.mode = BitmapScreen.MODE_BITMAP;
+					for each (bitmap in s.children)
+						bitmap.cache();
 					break;
 				
 			}

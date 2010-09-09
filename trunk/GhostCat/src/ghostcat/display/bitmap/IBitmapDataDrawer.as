@@ -18,12 +18,6 @@ package ghostcat.display.bitmap
 		 * 
 		 */
 		function drawToBitmapData(target:BitmapData,offest:Point):void;
-		/**
-		 * 采用beginBitmapFill绘制到图形上
-		 * @param target
-		 * 
-		 */
-		function drawToShape(target:Graphics,offest:Point):void;
 		
 		/**
 		 * 检查鼠标当前点，并返回接受事件的对象组

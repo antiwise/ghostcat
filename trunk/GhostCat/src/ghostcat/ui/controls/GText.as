@@ -138,6 +138,11 @@ package ghostcat.ui.controls
 		 */
 		public var isSkinText:Boolean;
 		
+		/**
+		 * 文本框是否已经被重建过
+		 */
+		public var isRebuild:Boolean;
+		
 		private var _textStartPoint:Point;
 		
 		/**
@@ -475,7 +480,7 @@ package ghostcat.ui.controls
 		 */
 		protected function getTextFieldFromSkin(skin:DisplayObject):void
 		{
-			var isReBuild:Boolean = false;
+			isRebuild = false;
 			if (textField)
 			{
 				textField.removeEventListener(TextEvent.TEXT_INPUT,textInputHandler);
@@ -509,7 +514,6 @@ package ghostcat.ui.controls
 				if (autoRebuildEmbedText && textField.embedFonts || autoRebuildText && !textField.embedFonts)//如果需要用Embed标签来定义嵌入字体，则必须重新创建文本框
 				{
 					rebuildTextField();
-					isReBuild = true;
 				}
 				
 				if (this._separateTextField)
@@ -523,7 +527,7 @@ package ghostcat.ui.controls
 			if (fontEmbedReplacer && fontEmbedReplacer.hasOwnProperty(oldFont.font))
 			{
 				this.textField.embedFonts = fontEmbedReplacer[oldFont.font];
-				if (!isReBuild && (autoRebuildEmbedText && textField.embedFonts || autoRebuildText && !textField.embedFonts))
+				if (!isRebuild && (autoRebuildEmbedText && textField.embedFonts || autoRebuildText && !textField.embedFonts))
 					rebuildTextField();
 			}
 			if (fontOffestYReplacer && fontOffestYReplacer.hasOwnProperty(oldFont.font))
@@ -556,6 +560,7 @@ package ghostcat.ui.controls
 		 */
 		public function rebuildTextField():void
 		{
+			isRebuild = true;
 			this.textField = TextFieldUtil.clone(this.textField,true);//将TextField重新创建避免出现显示错误
 		}
 		

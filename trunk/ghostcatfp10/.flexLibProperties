@@ -11,6 +11,7 @@
     <classEntry path="ghostcat.display.g3d.Panoramic"/>
     <classEntry path="ghostcat.display.g3d.HotSpot"/>
     <classEntry path="ghostcat.other.SWFDump"/>
+    <classEntry path="ghostcat.text.fte.FTEHelper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

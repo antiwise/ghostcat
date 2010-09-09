@@ -190,13 +190,6 @@ package ghostcat.display.movieclip
 		}
 		
 		/** @inheritDoc*/
-		public function drawToShape(target:Graphics,offest:Point):void
-		{
-			var p:Point = new Point(x,y).add(offest);
-			GraphicsBitmapFill.drawBitmpData(target,(content as Bitmap).bitmapData,p.x,p.y);
-		}
-		
-		/** @inheritDoc*/
 		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;

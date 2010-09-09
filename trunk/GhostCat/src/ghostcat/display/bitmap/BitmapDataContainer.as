@@ -8,6 +8,7 @@ package ghostcat.display.bitmap
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.util.Util;
@@ -53,11 +54,16 @@ package ghostcat.display.bitmap
 		 * 位图数据
 		 */
 		public var bitmapData:BitmapData;
-		
+				
 		/**
 		 * 可以被绘制的显示对象
 		 */
 		public var source:IBitmapDrawable;
+		
+		/**
+		 * 位图缓存对象 
+		 */
+		public var bitmapByteArrayCacher:BitmapByteArrayCacher;
 		
 		public function BitmapDataContainer(source:IBitmapDrawable=null)
 		{
@@ -87,9 +93,30 @@ package ghostcat.display.bitmap
 				var m:Matrix = new Matrix();
 				m.translate(-rect.x,-rect.y);
 				bitmapData.draw(source,m);
+				
+				if (bitmapByteArrayCacher)
+					cache();
 			}
 		}
 		
+		/**
+		 * 缓存成ByteArray，在BitmapScreen中显示时，重新执行cache前位图不会变更
+		 * 
+		 */
+		public function cache():void
+		{
+			bitmapByteArrayCacher = new BitmapByteArrayCacher(bitmapData);
+		}
+		
+		/**
+		 * 解除缓存
+		 * 
+		 */
+		public function uncache():void
+		{
+			bitmapByteArrayCacher = null;
+		}
+			
 		/**
 		 * 获得全局坐标
 		 * @return 
@@ -113,27 +140,16 @@ package ghostcat.display.bitmap
 		/** @inheritDoc*/
 		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
-			target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition());
+			if (bitmapByteArrayCacher)
+				bitmapByteArrayCacher.drawToBitmapData(target,getGlobalPosition());
+			else
+				target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition());
 			
 			var children:Array = this.children;
 			if (children)
 			{
 				for (var i:int = 0;i < children.length;i++)
 					(children[i] as BitmapDataContainer).drawToBitmapData(target,offest);
-			}
-		}
-		
-		/** @inheritDoc*/
-		public function drawToShape(target:Graphics,offest:Point):void
-		{
-			var p:Point = getGlobalPosition().add(offest);
-			GraphicsBitmapFill.drawBitmpData(target,bitmapData,p.x,p.y);
-			
-			var children:Array = this.children;
-			if (children)
-			{
-				for (var i:int = 0;i < children.length;i++)
-					(children[i] as IBitmapDataDrawer).drawToShape(target,offest);
 			}
 		}
 		
