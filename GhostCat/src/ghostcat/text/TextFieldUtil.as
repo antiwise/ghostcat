@@ -249,5 +249,21 @@ package ghostcat.text
 			t.text = s;
 			return t.getLineMetrics(0);
 		}
+		
+		/**
+		 * 设置字体大小并调整文本框位置
+		 * @param textField
+		 * @param size
+		 * 
+		 */
+		public static function setTextSize(textField:TextField,size:int):void
+		{
+			var f:TextFormat = textField.defaultTextFormat;
+			textField.y += (int(f.size) - size) / 2;
+			
+			f.size = size;
+			textField.defaultTextFormat = f;
+			textField.setTextFormat(f,0,textField.length);
+		}
 	}
 }
