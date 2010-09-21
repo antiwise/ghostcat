@@ -197,9 +197,12 @@ package ghostcat.text
 		 * @param textField
 		 * 
 		 */
-		public static function autoFontSize(textField:TextField):void
+		public static function autoFontSize(textField:TextField,adjustY:Boolean = false):void
 		{
 			var text:String = textField.text;
+			var f:TextFormat = textField.getTextFormat();
+			var old_size:int = int(f.size);
+			
 			if (text == null || text.length == 0)
 				return;
 			
@@ -209,7 +212,7 @@ package ghostcat.text
 			
 			while (firstLine.width > textField.width - 2) 
 			{
-				var f:TextFormat = textField.getTextFormat();
+				f = textField.getTextFormat();
 				f.size = int(f.size) - 1;
 				if (f.size == 0)
 					return;
@@ -218,6 +221,9 @@ package ghostcat.text
 				
 				firstLine = textField.getLineMetrics(0);
 			}
+			
+			if (adjustY)
+				textField.y += (old_size - int(f.size)) / 2;
 		}
 		
 		/**
@@ -256,10 +262,11 @@ package ghostcat.text
 		 * @param size
 		 * 
 		 */
-		public static function setTextSize(textField:TextField,size:int):void
+		public static function setTextSize(textField:TextField,size:int,adjustY:Boolean = true):void
 		{
 			var f:TextFormat = textField.defaultTextFormat;
-			textField.y += (int(f.size) - size) / 2;
+			if (adjustY)
+				textField.y += (int(f.size) - size) / 2;
 			
 			f.size = size;
 			textField.defaultTextFormat = f;

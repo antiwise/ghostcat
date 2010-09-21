@@ -2,12 +2,15 @@ package ghostcat.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	
@@ -271,6 +274,28 @@ package ghostcat.display
 				(content as InteractiveObject).mouseEnabled = false;
 			
 			this.contentInited = true;
+		}
+		
+		/**
+		 * 将皮肤的属性转移到对象本身 
+		 * 
+		 */
+		public function moveContentProperty():void
+		{
+			if (!content)
+				return;
+			
+			this.transform.matrix = this.content.transform.matrix;
+			this.transform.colorTransform = this.content.transform.colorTransform;
+			this.scrollRect = this.content.scrollRect;
+			this.blendMode = this.content.blendMode;
+			this.filters = this.content.filters;
+			
+			this.content.transform.matrix = new Matrix();
+			this.content.transform.colorTransform = new ColorTransform();
+			this.content.scrollRect = null;
+			this.content.blendMode = BlendMode.NORMAL;
+			this.content.filters = null;
 		}
 		
 		private function addedToStageHandler(event:Event):void
