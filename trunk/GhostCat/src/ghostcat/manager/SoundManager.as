@@ -1,15 +1,19 @@
 package ghostcat.manager
 {
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundLoaderContext;
 	import flash.media.SoundMixer;
 	import flash.media.SoundTransform;
+	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	
-	import ghostcat.util.core.Singleton;
+	import ghostcat.operation.SoundOper;
 	import ghostcat.util.Tick;
+	import ghostcat.util.core.Singleton;
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**
@@ -61,7 +65,7 @@ package ghostcat.manager
          *  
          * @param name	名称
          * @param volume	声音
-         * @param len	变化需要的时间
+		 * @param len	变化需要的时间
          */	
         public function setVolume(name:String, volume:Number,len:Number = 0):void
         {
@@ -126,10 +130,18 @@ package ghostcat.manager
             		TweenUtil.to(sc,len,{volume:0.0,onComplete:sc.stop});
             }
         }
+		
+		public function stopAll(len:Number = 0):void
+		{
+			for (var name:String in activeSound)
+			{
+				stop(name,len)
+			}
+		}
 
         public function getActiveChannel(name:String):SoundChannel
         {
-            return activeSound[transName(name)];
+            return activeSound[name];
         }
         /**
          * 播放
@@ -141,50 +153,49 @@ package ghostcat.manager
          */		
         public function play(name:String, loop:int=1, volume:Number=-1,len:Number=0):void
         {
-        	name = transName(name);
-        	try
-	        {
-		    	var ref:Class = getDefinitionByName(name) as Class;
-		  		var channel:SoundChannel = ((new ref()) as Sound).play(0, (loop != -1)?loop:int.MAX_VALUE);
-		  		
-		        if (channel)
-		        {
-		            if (loop != 0 && loop != -1)
-		                channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
-		            
-					activeSound[name] = channel;
-					
-					if (len==0)
-					{
-						channel.soundTransform = new SoundTransform((volume != -1) ? volume : defaultVolume);
-		            }
-					else
-					{
-						channel.soundTransform = new SoundTransform(0);
-		            	TweenUtil.to(channel,len,{volume:(volume != -1) ? volume : defaultVolume}) 
-					}
-				}
-	        }
-	        catch(e:Error)
-	        {
-	        }	
-	    }
-         
-
-        private function soundCompleteListener(evt:Event):void
-        {
-            evt.currentTarget.removeEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
-			
-			for (var key:* in activeSound)
+			try
 			{
-				if (activeSound[key] == evt.currentTarget)
-				{
-					delete activeSound[key];
-					return;
-				}	
+				var ref:Class = getDefinitionByName(transName(name)) as Class;
 			}
-            
-        }
+			catch(e:Error){};
+			
+			var sound:Sound;
+			if (ref)
+			{
+				sound = (new ref()) as Sound;
+			}
+			else
+			{
+				sound  = new Sound();
+				sound.load(new URLRequest(name),new SoundLoaderContext(1000,true));
+				sound.addEventListener(IOErrorEvent.IO_ERROR,soundCompleteListener);
+			}
+			
+			var channel:SoundChannel = sound.play(0, loop != -1 ? loop : int.MAX_VALUE);
+			
+			if (loop != 0 && loop != -1)
+				channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
+			
+			activeSound[name] = channel;
+			
+			if (len == 0)
+			{
+				channel.soundTransform = new SoundTransform((volume != -1) ? volume : defaultVolume);
+			}
+			else
+			{
+				channel.soundTransform = new SoundTransform(0);
+				TweenUtil.to(channel,len,{volume:(volume != -1) ? volume : defaultVolume}) 
+			}
+			
+			function soundCompleteListener(evt:Event):void
+			{
+				channel.removeEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
+				sound.removeEventListener(IOErrorEvent.IO_ERROR, soundCompleteListener);
+				
+				delete activeSound[name];
+			}
+	    }
         
         private function transName(name:String):String
         {

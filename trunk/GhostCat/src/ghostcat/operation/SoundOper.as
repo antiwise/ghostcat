@@ -21,6 +21,7 @@ package ghostcat.operation
 	public class SoundOper extends Oper
 	{
 		public static var urlBase:String = "";
+		public static var enabledSound:Boolean = true;
 		
 		/**
 		 * 数据源 
@@ -113,6 +114,12 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
+			if (!enabledSound)
+			{
+				fault();
+				return;
+			}
+			
 			super.execute();
 			if (source is String)
 			{
