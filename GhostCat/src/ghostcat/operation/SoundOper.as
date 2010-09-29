@@ -116,7 +116,7 @@ package ghostcat.operation
 		{
 			if (!enabledSound)
 			{
-				fault();
+				result();
 				return;
 			}
 			
@@ -182,7 +182,8 @@ package ghostcat.operation
 		/** @inheritDoc*/
 		public override function result(event:* = null):void
 		{
-			channel.removeEventListener(Event.SOUND_COMPLETE,result);
+			if (channel)
+				channel.removeEventListener(Event.SOUND_COMPLETE,result);
 			super.result(event);
 		}
 		/** @inheritDoc*/
