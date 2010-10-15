@@ -56,6 +56,11 @@ package ghostcat.ui.controls
 		 */
 		public var toggleOnClick:Boolean = true;
 		
+		/**
+		 * 是否可选择
+		 */
+		public var selectAble:Boolean = true;
+		
 		private var _columnCount:int = -1;
 		
 		private var _selectedData:*;
@@ -503,7 +508,7 @@ package ghostcat.ui.controls
 			
 			if (ref.isClass(o))
 			{
-				if (toggleOnClick)
+				if (toggleOnClick && selectAble)
 					selectedItem = o;
 				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
 				e.data = (o as GBase).data;
@@ -536,7 +541,7 @@ package ghostcat.ui.controls
 				var d:* = (data && index < data.length) ? data[index] : null;
 				item.data = d;
 				
-				if (toggleOnClick)
+				if (selectAble)
 					item.selected = d && (d == selectedData);
 				
 				if (autoReszieItemContent)
