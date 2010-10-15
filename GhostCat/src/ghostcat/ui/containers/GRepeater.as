@@ -33,14 +33,14 @@ package ghostcat.ui.containers
 		public var renderSkin:ClassFactory;
 		
 		/**
-		 * 是否点击选中（同时附带toggle=true的效果）
+		 * 是否点击选中
 		 */
 		public var toggleOnClick:Boolean;
 		
 		/**
 		 * 是否可单选
 		 */
-		public var toggle:Boolean;
+		public var toggle:Boolean = true;
 		
 		private var _selectedData:*;
 		private var _labelField:String;
@@ -294,7 +294,7 @@ package ghostcat.ui.containers
 			
 			_selectedData = v;
 			
-			if (toggle || toggleOnClick)
+			if (toggle)
 			{
 				for (var i:int = 0;i < contentPane.numChildren;i++)
 				{
