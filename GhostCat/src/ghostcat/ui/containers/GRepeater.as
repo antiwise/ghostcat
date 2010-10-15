@@ -33,7 +33,7 @@ package ghostcat.ui.containers
 		public var renderSkin:ClassFactory;
 		
 		/**
-		 * 是否点击选中
+		 * 是否点击选中（同时附带toggle=true的效果）
 		 */
 		public var toggleOnClick:Boolean;
 		
