@@ -38,9 +38,9 @@ package ghostcat.ui.containers
 		public var toggleOnClick:Boolean;
 		
 		/**
-		 * 是否可选择
+		 * 是否可单选
 		 */
-		public var selectAble:Boolean = true;
+		public var toggle:Boolean;
 		
 		private var _selectedData:*;
 		private var _labelField:String;
@@ -255,7 +255,7 @@ package ghostcat.ui.containers
 		 */
 		protected function itemClickHandler(event:ItemClickEvent):void
 		{
-			if (toggleOnClick && selectAble && event.data)
+			if (toggleOnClick && event.data)
 				selectedData = event.data;
 		}
 		
@@ -294,7 +294,7 @@ package ghostcat.ui.containers
 			
 			_selectedData = v;
 			
-			if (selectAble)
+			if (toggle || toggleOnClick)
 			{
 				for (var i:int = 0;i < contentPane.numChildren;i++)
 				{

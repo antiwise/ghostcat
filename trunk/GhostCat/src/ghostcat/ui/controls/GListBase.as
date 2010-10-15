@@ -57,9 +57,9 @@ package ghostcat.ui.controls
 		public var toggleOnClick:Boolean = true;
 		
 		/**
-		 * 是否可选择
+		 * 是否可单选
 		 */
-		public var selectAble:Boolean = true;
+		public var toggle:Boolean;
 		
 		private var _columnCount:int = -1;
 		
@@ -225,7 +225,7 @@ package ghostcat.ui.controls
 		public function set selectedData(v:*):void
 		{
 			var oldSelectedItem:DisplayObject = getRender(_selectedData);
-			if (oldSelectedItem && oldSelectedItem is GBase)
+			if (oldSelectedItem && oldSelectedItem is GBase && (toggle || toggleOnClick))
 				(oldSelectedItem as GBase).selected = false;
 			
 			_selectedData = v;
@@ -233,7 +233,7 @@ package ghostcat.ui.controls
 			var item:DisplayObject = selectedItem;
 			oldSelectedItem = item;
 			
-			if (item && item is GBase)
+			if (item && item is GBase && (toggle || toggleOnClick))
 				(item as GBase).selected = true;
 				
 			dispatchEvent(new Event(Event.CHANGE));
@@ -508,7 +508,7 @@ package ghostcat.ui.controls
 			
 			if (ref.isClass(o))
 			{
-				if (toggleOnClick && selectAble)
+				if (toggleOnClick)
 					selectedItem = o;
 				var e:ItemClickEvent = new ItemClickEvent(ItemClickEvent.ITEM_CLICK);
 				e.data = (o as GBase).data;
@@ -541,8 +541,8 @@ package ghostcat.ui.controls
 				var d:* = (data && index < data.length) ? data[index] : null;
 				item.data = d;
 				
-				if (selectAble)
-					item.selected = d && (d == selectedData);
+				if (toggle || toggleOnClick)
+					item.selected = d && d == selectedData;
 				
 				if (autoReszieItemContent)
 				{
