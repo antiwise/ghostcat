@@ -172,11 +172,17 @@ package ghostcat.operation
 		protected function playSound(s:Sound):SoundChannel
 		{
 			channel = s.play(startTime,(loops >= 0) ? loops : int.MAX_VALUE,soundTransform);
-			channel.addEventListener(Event.SOUND_COMPLETE,result);
+			if (channel)
+			{
+				channel.addEventListener(Event.SOUND_COMPLETE,result);
 			
-			if (tweenQueue)
-				tweenQueue.execute();
-			
+				if (tweenQueue)
+					tweenQueue.execute();
+			}
+			else
+			{
+				result();//无声卡直接播放完成
+			}
 			return channel;
 		}
 		/** @inheritDoc*/
@@ -184,13 +190,18 @@ package ghostcat.operation
 		{
 			if (channel)
 				channel.removeEventListener(Event.SOUND_COMPLETE,result);
+			
 			super.result(event);
 		}
 		/** @inheritDoc*/
 		public override function fault(event:* = null):void
 		{
-			event.currentTarget.removeEventListener(IOErrorEvent.IO_ERROR,fault);
-			event.currentTarget.removeEventListener(Event.COMPLETE,loadSoundComplete);
+			if (event)
+			{
+				event.currentTarget.removeEventListener(IOErrorEvent.IO_ERROR,fault);
+				event.currentTarget.removeEventListener(Event.COMPLETE,loadSoundComplete);
+			}
+			
 			if (channel)
 				channel.removeEventListener(Event.SOUND_COMPLETE,result);
 			

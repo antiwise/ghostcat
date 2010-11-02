@@ -209,8 +209,10 @@ package ghostcat.ui.controls
 				this.upArrow.addEventListener(MouseEvent.CLICK,upArrowClickHandler);
 			}
 			else
+			{
 				this.upArrow = new ref(new Shape())
-				
+				this.upArrow.y = getBounds(this).y;
+			}	
 			if (content.hasOwnProperty(downArrowField))
 			{
 				this.downArrow = new ref(content[downArrowField]);
@@ -218,8 +220,11 @@ package ghostcat.ui.controls
 				this.downArrow.addEventListener(MouseEvent.CLICK,downArrowClickHandler);
 			}
 			else
-				this.downArrow = new ref(new Shape())
-				
+			{
+				this.downArrow = new ref(new Shape());
+				this.downArrow.y = getBounds(this).bottom;
+			}
+			
 			if (content.hasOwnProperty(thumbField))
 			{
 				this.thumb = new ref(content[thumbField]);
