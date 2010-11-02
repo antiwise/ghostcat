@@ -52,11 +52,16 @@ package ghostcat.ui.controls
 		 * 拖动起点
 		 */
 		protected var thumbAreaStart:Number;
+		
 		/**
 		 * 拖动长度
 		 */
 		protected var thumbAreaLength:Number;
 		
+		/**
+		 * 是否在拖动滑块
+		 */
+		protected var isThumbDrag:Boolean;
 		
 		private var _target:DisplayObject;
 		
@@ -297,7 +302,8 @@ package ghostcat.ui.controls
 			else
 				rect = new Rectangle(thumb.x,thumbAreaStart,0,thumbAreaLength);
 				
-			DragManager.startDrag(thumb,rect,null,null,thumbMouseMoveHandler);
+			isThumbDrag = true;
+			DragManager.startDrag(thumb,rect,null,thumbMouseUpHandler,thumbMouseMoveHandler);
 		}
 		
 		protected function upArrowClickHandler(event:MouseEvent):void
@@ -310,6 +316,11 @@ package ghostcat.ui.controls
 		{
 			value += detra;
 			updateThumb();
+		}
+		
+		protected function thumbMouseUpHandler(event:Event):void
+		{
+			isThumbDrag = false;
 		}
 		
 		/**
