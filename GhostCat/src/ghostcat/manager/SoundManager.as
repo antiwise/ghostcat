@@ -172,6 +172,8 @@ package ghostcat.manager
 			}
 			
 			var channel:SoundChannel = sound.play(0, loop != -1 ? loop : int.MAX_VALUE);
+			if (!channel)
+				return;
 			
 			if (loop != 0 && loop != -1)
 				channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
