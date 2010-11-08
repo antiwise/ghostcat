@@ -517,6 +517,7 @@
     <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
+    <classEntry path="ghostcat.display.game.Avatar"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
