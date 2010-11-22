@@ -1,11 +1,13 @@
 package
 {
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.geom.Transform;
+	import flash.net.URLLoader;
 	
 	import ghostcat.algorithm.QuadTree;
 	import ghostcat.community.physics.PhysicsItem;

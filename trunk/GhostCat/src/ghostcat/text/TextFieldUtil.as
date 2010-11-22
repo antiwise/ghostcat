@@ -197,7 +197,7 @@ package ghostcat.text
 		 * @param textField
 		 * 
 		 */
-		public static function autoFontSize(textField:TextField,adjustY:Boolean = false):void
+		public static function autoFontSize(textField:TextField,adjustY:Boolean = false,resetY:Boolean = false):void
 		{
 			var text:String = textField.text;
 			var f:TextFormat = textField.getTextFormat();
@@ -221,6 +221,9 @@ package ghostcat.text
 				
 				firstLine = textField.getLineMetrics(0);
 			}
+			
+			if (resetY)
+				textField.y = 0;
 			
 			if (adjustY)
 				textField.y += (old_size - int(f.size)) / 2;

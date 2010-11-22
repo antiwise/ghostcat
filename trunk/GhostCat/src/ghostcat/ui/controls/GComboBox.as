@@ -196,6 +196,7 @@ package ghostcat.ui.controls
 		{
 			this.data = list.selectedData;
 			
+			dispatchEvent(new Event(Event.CHANGE));
 //			hideList();
 		}
 		

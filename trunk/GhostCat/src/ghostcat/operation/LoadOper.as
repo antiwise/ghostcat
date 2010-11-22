@@ -179,6 +179,22 @@
 		}
 		
 		/**
+		 * 将加载完的数据存入ShareObject
+		 * @param version
+		 * 
+		 */
+		public function saveToShareObject(version:String = null):void
+		{
+			if (!version)
+				version = sharedObjectCacheVersion;
+			
+			if (!version)
+				return;
+			
+			FileCacherManager.instance.saveBytes(url,bytes,sharedObjectCacheVersion);
+		}
+		
+		/**
 		 * 立即加载，扩展名为swf,jpg,png,gif的将会使用Loader加载。
 		 * 
 		 */		
@@ -369,6 +385,36 @@
 				return (_loader as Loader).content;
 			else if (_loader is URLLoader)
 				return (_loader as URLLoader).data;
+			else
+				return null;
+		}
+		
+		/**
+		 * 载入数据的二进制形式 
+		 * @return 
+		 * 
+		 */
+		public function get bytes():ByteArray
+		{
+			if (_loader is Loader)
+			{
+				return (_loader as Loader).contentLoaderInfo.bytes;
+			}
+			else if (_loader is URLLoader)
+			{
+				var d:* = (_loader as URLLoader).data;
+				if (d is ByteArray)
+				{
+					return d as ByteArray;
+				}
+				else
+				{
+					var bytes:ByteArray = new ByteArray();
+					bytes.writeUTFBytes(d.toString());
+					bytes.position = 0;
+					return bytes;
+				}
+			}
 			else
 				return null;
 		}

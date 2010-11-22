@@ -27,5 +27,22 @@ package ghostcat.display.movieclip
 			result.sortOn("frame",Array.NUMERIC);
 			return result;
 		}
+		
+		/**
+		 * 获得FrameLabel数组的标签 
+		 * @param list
+		 * @return 
+		 * 
+		 */
+		public static function getLabels(list:Array):Array
+		{
+			var result:Array = [];
+			for (var i:int = 0;i < list.length;i++)
+			{
+				var f:FrameLabel = list[i] as FrameLabel;
+				result.push(f.name);
+			}
+			return result;
+		}
 	}
 }
