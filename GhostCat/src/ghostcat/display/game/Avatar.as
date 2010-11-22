@@ -93,8 +93,10 @@ package ghostcat.display.game
 		 * @return 
 		 * 
 		 */
-		public function getContainerByClass(v:Class):DisplayObjectContainer
+		public function getContainerByClass(v:*):DisplayObjectContainer
 		{
+			if (v is String)
+				v = getDefinitionByName(v);
 			return SearchUtil.findChildByClass(this.content,v) as DisplayObjectContainer;
 		}
 		
@@ -104,8 +106,10 @@ package ghostcat.display.game
 		 * @return 
 		 * 
 		 */
-		public function getContainersByClass(v:Class):Array
+		public function getContainersByClass(v:*):Array
 		{
+			if (v is String)
+				v = getDefinitionByName(v);
 			return SearchUtil.findChildrenByClass(this.content,v);
 		}
 		
@@ -127,8 +131,10 @@ package ghostcat.display.game
 		 * @param skin	部位实例，使用数字作为参数则是通过跳帧选择
 		 * 
 		 */
-		public function setPartByClass(v:Class,skin:*):void
+		public function setPartByClass(v:*,skin:*):void
 		{
+			if (v is String)
+				v = getDefinitionByName(v);
 			var c:DisplayObjectContainer = getContainerByClass(v);
 			setPartToContainer(c,skin);
 		}
@@ -139,8 +145,10 @@ package ghostcat.display.game
 		 * @param skin	部位实例，使用数字作为参数则是通过跳帧选择
 		 * 
 		 */
-		public function setPartsByClass(v:Class,skin:*):void
+		public function setPartsByClass(v:*,skin:*):void
 		{
+			if (v is String)
+				v = getDefinitionByName(v);
 			var list:Array = getContainersByClass(v);
 			if (list)
 			{

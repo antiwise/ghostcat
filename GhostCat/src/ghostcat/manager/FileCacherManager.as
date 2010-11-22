@@ -57,6 +57,13 @@ package ghostcat.manager
 			return o ? o.version : null
 		}
 		
+		/**
+		 * 加载并将数据存入缓存 
+		 * @param url
+		 * @param version
+		 * @return 
+		 * 
+		 */
 		public function save(url:String,version:String):Boolean
 		{
 			var oldVer:String = getVersion(url);
@@ -80,6 +87,37 @@ package ghostcat.manager
 			}
 		}
 		
+		/**
+		 * 将数据存入缓存 
+		 * @param url
+		 * @param bytes
+		 * @param version
+		 * @return 
+		 * 
+		 */
+		public function saveBytes(url:String,bytes:ByteArray,version:String):Boolean
+		{
+			var oldVer:String = getVersion(url);
+			if (oldVer && oldVer >= version)
+				return false;
+			
+			try
+			{
+				sharedObject.setProperty(url,{version:version,data:bytes});
+				sharedObject.flush(minDiskSpace);
+			}
+			catch (e:Error){};
+		
+			return true;
+		}
+		
+		/**
+		 * 从缓存中加载文件 
+		 * @param url
+		 * @param version
+		 * @return 
+		 * 
+		 */
 		public function load(url:String,version:String = null):ByteArray
 		{
 			var oldVer:String = getVersion(url);
