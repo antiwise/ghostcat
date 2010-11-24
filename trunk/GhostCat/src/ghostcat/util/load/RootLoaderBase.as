@@ -4,6 +4,7 @@ package ghostcat.util.load
 	import flash.display.MovieClip;
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.utils.getDefinitionByName;
 
@@ -47,6 +48,7 @@ package ghostcat.util.load
 			root.loaderInfo.removeEventListener(Event.INIT, initHandler);
 			
 			root.loaderInfo.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+			root.loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			root.loaderInfo.addEventListener(Event.COMPLETE, completeHandler);
 			addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
@@ -66,6 +68,7 @@ package ghostcat.util.load
 			this.gotoAndStop(2);
 			
 			root.loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progressHandler);
+			root.loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			root.loaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
 			removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
 			
@@ -77,6 +80,11 @@ package ghostcat.util.load
 		}
 		
 		protected function progressHandler(event:ProgressEvent):void
+		{
+			dispatchEvent(event);
+		}
+		
+		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
 			dispatchEvent(event);
 		}
