@@ -1,5 +1,6 @@
 package ghostcat.ui.controls
 {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -67,6 +68,11 @@ package ghostcat.ui.controls
 		 * 是否自动unload
 		 */
 		public var autoUnload:Boolean = true;
+		
+		/**
+		 * 是否自动回收位图
+		 */
+		public var autoDispose:Boolean = false;
 		
 		/**
 		 * 是否使用中转Loader（可以绕过图片沙箱）
@@ -247,7 +253,9 @@ package ghostcat.ui.controls
 				v = loader;
 			}
 			
-			setContent(v as DisplayObject, replace);
+			clearContent();
+			
+			setContent(v, replace);
 			
 			if (v && !(v is Loader))
 				layoutChildren();
@@ -329,10 +337,18 @@ package ghostcat.ui.controls
 			if (destoryed)
 				return;
 			
+			clearContent();
+			
+			super.destory();
+		}
+		
+		protected function clearContent():void
+		{
 			if (content is Loader && autoUnload)
 				(content as Loader).unload();
 			
-			super.destory();
+			if (content is Bitmap && autoDispose)
+				(content as Bitmap).bitmapData.dispose()
 		}
 		
 		//因为hideContent = true时布局会出错，所以在设回false时再会再重新布局一次
