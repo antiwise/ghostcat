@@ -32,6 +32,16 @@ package ghostcat.display.loader
 			return loader ? loader.content : null;
 		}
 		
+		public function get bytes():ByteArray
+		{
+			if (loader && loader.contentLoaderInfo.bytes)
+				return loader.contentLoaderInfo.bytes;
+			else if (urlLoader && urlLoader.data)
+				return urlLoader.data as ByteArray;
+			else
+				return null;
+		}
+		
 		public function BytesSWFLoader()
 		{
 			super();
@@ -50,11 +60,16 @@ package ghostcat.display.loader
 			urlLoader.load(url);
 		}
 		
-		private function urlLoaderComplete(event:Event):void
+		public function loadBytes(bytes:ByteArray,context:LoaderContext = null):void
 		{
 			loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
-			loader.loadBytes((event.currentTarget as URLLoader).data as ByteArray,context);
+			loader.loadBytes(bytes,context);
+		}
+		
+		private function urlLoaderComplete(event:Event):void
+		{
+			loadBytes(this.bytes,this.context);
 		}
 		
 		private function ioErrorComplete(event:Event):void
