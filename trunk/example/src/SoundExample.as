@@ -1,11 +1,14 @@
 package
 {
+	import flash.display.BitmapData;
+	
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
 	import ghostcat.media.SoundDisplayer;
 	import ghostcat.operation.SoundOper;
 	import ghostcat.ui.containers.GAlert;
+	import ghostcat.util.display.BitmapCharUtil;
 	
 	[SWF(width="600",height="600")]
 	/**
@@ -16,7 +19,7 @@ package
 	public class SoundExample extends GBase
 	{
 		public function SoundExample()
-		{
+		{			
 			RootManager.register(this);
 			
 			GAlert.show("音乐开始");

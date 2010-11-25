@@ -518,6 +518,7 @@
     <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
+    <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
