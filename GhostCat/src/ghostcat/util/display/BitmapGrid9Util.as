@@ -1,6 +1,7 @@
 package ghostcat.util.display
 {
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
