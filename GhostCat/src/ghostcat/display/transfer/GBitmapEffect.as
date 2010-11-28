@@ -2,13 +2,18 @@ package ghostcat.display.transfer
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	
+	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 	import ghostcat.util.core.Handler;
 
 	/**
 	 * 缓存原始位图，用于处理位图实时特效
 	 * 
 	 * 特效方法都在ghostcat.display.transfer.effect包内
+	 * start方法将开启逐帧事件renderTickHandler
 	 *  
 	 * @author flashyiyi
 	 * 
@@ -37,6 +42,7 @@ package ghostcat.display.transfer
 		public var clearCanvas:Boolean = false;
 		
 		private var _deep:Number = 1.0;
+		private var _enabledTickRender:Boolean;
 		
 		/**
 		 * 当byAlpha为真时，此属性和deep属性的意义相同 
@@ -92,14 +98,27 @@ package ghostcat.display.transfer
 		}
 		
 		/** @inheritDoc*/
-		public override function renderTarget():void
+		public override function createBitmapData():void
 		{
-			super.renderTarget();
+			super.createBitmapData();
 			
 			if (normalBitmapData)
 				normalBitmapData.dispose();
-			
-			normalBitmapData = bitmapData.clone();
+				
+			this.normalBitmapData = this.bitmapData.clone();
+		}
+		
+		/** @inheritDoc*/
+		public override function renderTarget() : void
+		{
+			if (!normalBitmapData)
+				return;
+		
+			var rect: Rectangle = target.getBounds(target);
+			var m:Matrix = new Matrix();
+			m.translate(-rect.x + paddingLeft, -rect.y + paddingTop);
+			normalBitmapData.fillRect(normalBitmapData.rect,0);
+			normalBitmapData.draw(_target,m);	
 			
 			renderEffect();
 		}
@@ -117,12 +136,47 @@ package ghostcat.display.transfer
 				this.command.call(normalBitmapData,bitmapData,deep);
 		}
 		
+		
+		/**
+		 * 开始逐帧事件 
+		 * 
+		 */
+		public function start():void
+		{
+			this.enabledTickRender = true;
+		}
+		
+		public function set enabledTickRender(v:Boolean):void
+		{
+			if (_enabledTickRender == v)
+				return;
+			
+			_enabledTickRender = v;
+			
+			if (_enabledTickRender)
+				Tick.instance.addEventListener(TickEvent.TICK,renderTickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,renderTickHandler);
+		}
+		
+		/**
+		 * enabledTickRender开启的逐帧事件 
+		 * @param event
+		 * 
+		 */
+		protected function renderTickHandler(event:TickEvent):void
+		{
+			//
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			if (normalBitmapData)
 				normalBitmapData.dispose();
-		
+				
+			this.enabledTickRender = false;
+			
 			super.destory();
 		}
 	}

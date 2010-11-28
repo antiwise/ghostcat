@@ -9,6 +9,7 @@ package
 	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.display.movieclip.GMovieClipBase;
+	import ghostcat.display.transfer.Boost;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.util.display.BitmapSeparateUtil;
@@ -43,9 +44,6 @@ package
 		
 		protected override function init():void
 		{
-			new EnabledSWFScreen(stage);
-			
-			RootManager.register(this);//注册舞台（非必须）
 			
 			//切割图形
 			var source:Array = BitmapSeparateUtil.separateBitmapData(new stand().bitmapData,56,91).concat(BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91));
@@ -61,6 +59,10 @@ package
 			man = new GBitmapMovieClip(source,labels);
 			man.frameRate = 10;
 			addChild(man);
+			
+			var b:Boost = new Boost(man);
+			b.enabledTick = true;
+			addChildAt(b,0);
 			
 			
 			this.enabledTick = true;

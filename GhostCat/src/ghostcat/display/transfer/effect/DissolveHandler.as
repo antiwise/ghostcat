@@ -34,6 +34,7 @@ package ghostcat.display.transfer.effect
 			var bitmapData:BitmapData = params[1];
 			var deep:Number = params[2];
 			
+			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.pixelDissolve(normalBitmapData,normalBitmapData.rect,new Point(),randSeed,(1 - deep) * bitmapData.width * bitmapData.height);
 		}
 	}
