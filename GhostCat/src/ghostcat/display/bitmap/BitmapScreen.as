@@ -26,9 +26,6 @@ package ghostcat.display.bitmap
 	 * MODE_BITMAP 采用copyPixels像素的方式将位图复制到一个Bitmap上，
 	 * 无论物体是否运动速度都一样，因此在大量物体运动时效率较高，但只有少量物品运动则相对较低
 	 * 
-	 * MODE_SHAPE 采用beginBitmapFill方法将位图绘制到一个Shape上，
-	 * 这种方法在FP9时很慢，但在FP10内，渲染数据源为同一个位图时，比同等情况的copyPixels快很多，而且支持Matrix缩放
-	 * 
 	 * @author flashyiyi
 	 * 
 	 */
