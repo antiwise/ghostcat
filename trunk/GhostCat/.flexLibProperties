@@ -383,6 +383,7 @@
 <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
 <classEntry path="ghostcat.filter.FilterProxy"/>
 <classEntry path="ghostcat.util.data.XMLUtil"/>
+<classEntry path="ghostcat.display.game.SpinGravitationItem"/>
 <classEntry path="ghostcat.display.IToolTipManagerClient"/>
 <classEntry path="ghostcat.display.loader.GMovieClipLoader"/>
 <classEntry path="ghostcat.util.easing.Expo"/>
@@ -410,6 +411,7 @@
 <classEntry path="ghostcat.display.transition.TransitionSimpleLayer"/>
 <classEntry path="ghostcat.util.display.RotationUtil"/>
 <classEntry path="ghostcat.community.physics.PhysicsItem"/>
+<classEntry path="ghostcat.display.residual.MotionBlurScreen"/>
 <classEntry path="ghostcat.fileformat.swf.tag.SetBackgroundColorTag"/>
 <classEntry path="ghostcat.ui.controls.GButtonLite"/>
 <classEntry path="ghostcat.parse.graphics.GraphicsFill"/>
