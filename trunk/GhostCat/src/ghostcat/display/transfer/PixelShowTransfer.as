@@ -10,7 +10,7 @@ package ghostcat.display.transfer
 	import ghostcat.ui.UIConst;
 	
 	/**
-	 * 
+	 * 以像素线（未显示部分以最末的像素进行复制）的方式呈现图像
 	 * @author flashyiyi
 	 * 
 	 */

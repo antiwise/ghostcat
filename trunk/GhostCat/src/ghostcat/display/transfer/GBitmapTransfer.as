@@ -24,6 +24,23 @@ package ghostcat.display.transfer
 		protected var _target:DisplayObject;
 		protected var renderCaller:UniqueCall = new UniqueCall(renderTarget);
 		
+		/**
+		 * 比原图扩展的缓存位图左边距
+		 */
+		public var paddingLeft:int;
+		/**
+		 * 比原图扩展的缓存位图右边距
+		 */
+		public var paddingRight:int;
+		/**
+		 * 比原图扩展的缓存位图上边距
+		 */
+		public var paddingTop:int;
+		/**
+		 * 比原图扩展的缓存位图下边距
+		 */
+		public var paddingBottom:int;
+		
 		public function GBitmapTransfer(target:DisplayObject=null):void
 		{
 			super();
@@ -69,8 +86,8 @@ package ghostcat.display.transfer
 				return;
 			
 			var rect:Rectangle = _target.getBounds(this);
-			x = rect.x + this.x;
-			y = rect.y + this.y;
+			x = rect.x + this.x - paddingLeft;
+			y = rect.y + this.y - paddingTop;
 		}
 		
 		/**
@@ -87,21 +104,21 @@ package ghostcat.display.transfer
 		 * 创建位图 
 		 * 
 		 */
-		protected function createBitmapData():void
+		public function createBitmapData():void
 		{
 			if (bitmapData)
 				bitmapData.dispose();
 			
 			var rect: Rectangle = _target.getBounds(_target);
 			if (rect.width && rect.height)
-				bitmapData = new BitmapData(rect.width,rect.height,true,0);
+				bitmapData = new BitmapData(rect.width + paddingLeft + paddingRight,rect.height + paddingTop + paddingBottom,true,0);
 		}
 		/** @inheritDoc*/
 		protected override function updateDisplayList(): void
 		{
 			super.updateDisplayList();
 			
-			if (_target && stage)
+			if (_target)
 				renderTarget();
 		}
 		
@@ -116,7 +133,7 @@ package ghostcat.display.transfer
 			
 			var rect: Rectangle = _target.getBounds(_target);
 			var m:Matrix = new Matrix();
-			m.translate(-rect.x, -rect.y);
+			m.translate(-rect.x + paddingLeft, -rect.y + paddingTop);
 			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.draw(_target,m);	
 		}
