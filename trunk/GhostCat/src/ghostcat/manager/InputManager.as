@@ -29,7 +29,7 @@
      * @author flashyiyi
      * 
      */    
-    public class InputManager extends Singleton
+    public class InputManager extends EventDispatcher
     {
     	public static var MUTLI_INTERVAL:int = 300;
     	
@@ -118,6 +118,12 @@
 		 */		
 		public var inactiveTime:int = 60000;
 		
+		static private var _instance:InputManager;
+		static public function get instance():InputManager
+		{
+			return _instance;
+		}
+		
     	/**
     	 * 注册并开始使用，必须首先执行这个方法
     	 * 
@@ -127,15 +133,18 @@
     	 */    	
     	public static function register(source:DisplayObject,activeRightClick:Boolean = true):void
         {
-        	var ins:InputManager = Singleton.getInstanceOrCreate(InputManager) as InputManager;
-        	ins._objAtMouse = ins.stage = source.stage;
-        	
-        	if (activeRightClick && ExternalInterface.available)//鼠标右键
-        	{
-        		ExternalInterface.call("eval",new rightClickJSCode().toString());
-        		ExternalInterface.call("RightClick.init",getQualifiedClassName(source.root));
-        		ExternalInterface.addCallback("openRightClick", ins.rightClickHandler);
-        	}
+			if (!_instance)
+			{
+				_instance = new InputManager();
+				_instance._objAtMouse = _instance.stage = source.stage;
+				
+				if (activeRightClick && ExternalInterface.available)//鼠标右键
+				{
+					ExternalInterface.call("eval",new rightClickJSCode().toString());
+					ExternalInterface.call("RightClick.init",getQualifiedClassName(source.root));
+					ExternalInterface.addCallback("openRightClick", _instance.rightClickHandler);
+				}
+			}
         }
         
         private function rightClickHandler():void 
@@ -152,11 +161,6 @@
 				objAtMouse.dispatchEvent(e);
 			}
 		}
-        
-        public static function get instance():InputManager
-        {
-        	return Singleton.getInstance(InputManager) as InputManager;
-        }
 		
 		private var _stage:Stage;
 		

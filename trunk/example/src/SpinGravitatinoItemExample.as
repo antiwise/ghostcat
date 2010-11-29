@@ -14,37 +14,56 @@ package
 	import flash.text.TextField;
 	
 	import ghostcat.display.game.SpinGravitationItem;
-	import ghostcat.display.transfer.RadialBlur;
 	import ghostcat.filter.ColorMatrixFilterProxy;
 	
-	
+	[SWF(width = "500",height = "400")]
 	public class SpinGravitatinoItemExample extends Sprite
 	{
-		public var body:Shape;
 		public var target:Shape;
-		public var item:SpinGravitationItem;
 		public function SpinGravitatinoItemExample()
 		{
-			body = new Shape();
-			body.x = 50;
-			body.y = 50;
+			for (var i:int = 0;i < 50;i++)
+				createRandomItem();
+			
+			target = new Shape();
+			target.x = -1000;
+			addChild(target);
+			
+			stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+		}
+		
+		private function createRandomItem():void
+		{
+			var body:Shape = new Shape();
+			body.x = Math.random() * 500;
+			body.y = Math.random() * 400;
 			body.graphics.beginFill(0,1);
 			body.graphics.drawCircle(0,0,5);
 			body.graphics.endFill();
 			addChild(body);
 			
-			item = new SpinGravitationItem(body);
-			
-			target = new Shape();
-			addChild(target);
-			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-			stage.addEventListener(MouseEvent.CLICK,clickHandler);
-		}
+			var item:SpinGravitationItem = new SpinGravitationItem(body);	
+			addEventListener(Event.ENTER_FRAME,tickHandler);
+			item.addEventListener(Event.COMPLETE,completeHandler);
 		
-		private function clickHandler(event:MouseEvent):void
-		{
-			item.start(target);
+			function tickHandler(event:Event):void
+			{
+				if (new Point(body.x - target.x,body.y - target.y).length < 100)
+				{
+					removeEventListener(Event.ENTER_FRAME,tickHandler);
+					
+					item.start(target);
+				}
+			}
+			
+			
+			function completeHandler(event:Event):void
+			{
+				item.removeEventListener(Event.COMPLETE,completeHandler);
+				
+				removeChild(body);
+				createRandomItem();
+			}
 		}
 		
 		private function mouseMoveHandler(event:MouseEvent):void

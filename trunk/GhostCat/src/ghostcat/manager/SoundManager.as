@@ -1,6 +1,7 @@
 package ghostcat.manager
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -22,11 +23,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class SoundManager extends Singleton
+	public class SoundManager extends EventDispatcher
 	{
+		static private var _instance:SoundManager;
 		static public function get instance():SoundManager
 		{
-			return Singleton.getInstanceOrCreate(SoundManager) as SoundManager;
+			if (!_instance)
+				_instance = new SoundManager();
+			
+			return _instance;
 		}
 		
 		/**

@@ -10,7 +10,7 @@ package ghostcat.display.game
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 
-
+	[Event(name="complete",type="flash.events.Event")]
 	/**
 	 * 旋转引力生成器
 	 * @author flashyiyi
@@ -19,6 +19,7 @@ package ghostcat.display.game
 	public class SpinGravitationItem extends EventDispatcher
 	{
 		public var body:DisplayObject;
+		public var completeHandler:Function;
 		
 		protected var target:DisplayObject;
 		protected var radius:Number;
@@ -28,7 +29,7 @@ package ghostcat.display.game
 		
 		private var startRotation:Number;
 		private var startTime:int;
-		private var spinTime:int;
+		private var spinTime:int;		
 		
 		public function SpinGravitationItem(body:DisplayObject=null)
 		{
@@ -50,7 +51,7 @@ package ghostcat.display.game
 			
 			this.step = 1;
 			
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,0,false);
 		}
 		
 		public function stop():void
@@ -61,7 +62,7 @@ package ghostcat.display.game
 		
 		protected function tickHandler(event:TickEvent):void
 		{
-			if (step == 0 || step == 3)
+			if (step == 0)
 				return;
 				
 			if (step == 1)
@@ -79,16 +80,15 @@ package ghostcat.display.game
 				}
 				else
 				{
-					if (dp.length > radius)
+					if (dp.length < radius)
 					{
-						dp.x += radius * Math.cos(rotate + Math.PI / 2);
-						dp.y += radius * Math.sin(rotate + Math.PI / 2);
+						dp.x = -dp.x;
+						dp.y = -dp.y;
 					}
-					else
-					{
-						dp.x = -dp.x + radius * Math.cos(rotate + Math.PI / 2);
-						dp.y = -dp.y + radius * Math.sin(rotate + Math.PI / 2);
-					}
+					
+					dp.x += radius * Math.cos(rotate + Math.PI / 2);
+					dp.y += radius * Math.sin(rotate + Math.PI / 2);
+					
 					var dl:Number = event.interval * speed / 1000;
 					dp.normalize(dl);
 						
@@ -107,6 +107,10 @@ package ghostcat.display.game
 				if (t > 1.0)
 				{
 					dispatchEvent(new Event(Event.COMPLETE));
+					
+					if (completeHandler != null)
+						completeHandler(this);
+					
 					stop();
 				}
 			}

@@ -2,6 +2,7 @@ package ghostcat.manager
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.text.TextField;
 	
 	import ghostcat.events.OperationEvent;
@@ -22,11 +23,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class LanguageManager extends Singleton
+	public class LanguageManager extends EventDispatcher
 	{
+		static private var _instance:LanguageManager;
 		static public function get instance():LanguageManager
 		{
-			return Singleton.getInstanceOrCreate(LanguageManager) as LanguageManager;
+			if (!_instance)
+				_instance = new LanguageManager();
+			
+			return _instance;
 		}
 		
 		/**

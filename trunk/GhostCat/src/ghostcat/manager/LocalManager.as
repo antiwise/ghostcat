@@ -1,5 +1,6 @@
 package ghostcat.manager
 {
+	import flash.events.EventDispatcher;
 	import flash.net.SharedObject;
 	import flash.utils.getQualifiedClassName;
 	
@@ -11,16 +12,20 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class LocalManager extends Singleton
+	public class LocalManager extends EventDispatcher
 	{
 		/**
 		 * 最小占用磁盘空间，建议将其设置到一个合适的值，避免重复提示用户增加缓存
 		 */
 		public var minDiskSpace:int = 0;
 		
+		static private var _instance:LocalManager;
 		static public function get instance():LocalManager
 		{
-			return Singleton.getInstanceOrCreate(LocalManager) as LocalManager;
+			if (!_instance)
+				_instance = new LocalManager();
+			
+			return _instance;
 		}
 		
 		/**

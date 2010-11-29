@@ -1,6 +1,7 @@
 package ghostcat.manager
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.net.SharedObject;
@@ -16,11 +17,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class FileCacherManager extends Singleton
+	public class FileCacherManager extends EventDispatcher
 	{
+		static private var _instance:FileCacherManager;
 		static public function get instance():FileCacherManager
 		{
-			return Singleton.getInstanceOrCreate(FileCacherManager) as FileCacherManager;
+			if (!_instance)
+				_instance = new FileCacherManager();
+			
+			return _instance;
 		}
 		/**
 		 * 最小占用空间 
