@@ -3,6 +3,7 @@ package ghostcat.manager
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	
@@ -23,11 +24,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class AssetManager extends Singleton
+	public class AssetManager extends EventDispatcher
 	{
+		static private var _instance:AssetManager;
 		static public function get instance():AssetManager
 		{
-			return Singleton.getInstanceOrCreate(AssetManager) as AssetManager;
+			if (!_instance)
+				_instance = new AssetManager();
+			
+			return _instance;
 		}
 		
 		private var progressBar:GProgressBar;

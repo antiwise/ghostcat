@@ -2,12 +2,13 @@ package ghostcat.display.transfer
 {
 	import flash.display.DisplayObject;
 	import flash.display.GradientType;
+	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	/**
-	 * 翻页效果（只支持注册点在左上角）
+	 * 翻页效果
 	 * @author flashyiyi
 	 * 
 	 */
@@ -16,9 +17,12 @@ package ghostcat.display.transfer
 		private var _point:Point = new Point();
 		
 		/**
-		 * 基准点 
-		 * @return 
-		 * 
+		 * 阴影透明度 
+		 */
+		public var shadowAlpha:Number = 1.0;
+		
+		/**
+		 * 左上角基准点 
 		 */
 		public function get point():Point
 		{
@@ -30,10 +34,31 @@ package ghostcat.display.transfer
 			_point = value;
 			invalidateRenderBitmap();
 		}
+		
+		public var canvas:Shape;
 
 		public function BookTransfer(target:DisplayObject=null)
 		{
+			this.canvas = new Shape();
+			this.addChild(this.canvas);
+			
 			super(target);
+		}
+		
+		/**
+		 * 翻转图像以适应非左上角移动的情况
+		 * @param h
+		 * @param v
+		 * 
+		 */
+		public function filp(h:Boolean,v:Boolean):void
+		{
+			this.canvas.scaleX = h ? -1 : 1;
+			this.canvas.x = h ? bitmapData.width : 0;
+			this.canvas.scaleY = v ? -1 : 1;
+			this.canvas.y = v ? bitmapData.height : 0;
+			
+			showBitmapData();
 		}
 		
 		/** @inheritDoc*/
@@ -68,26 +93,28 @@ package ghostcat.display.transfer
 			
 			var m:Matrix = new Matrix();
 			m.createBox(1,1,0,rect.x,rect.y);
-			graphics.clear();
-			graphics.beginBitmapFill(bitmapData,m,false);
+			m.concat(this.canvas.transform.matrix);
+			canvas.graphics.clear();
+			canvas.graphics.beginBitmapFill(bitmapData,m,false);
 			drawBack();
 			
 			m = new Matrix();
 			m.createGradientBox(rect.width,rect.height,r,p.x,p.y);
-			graphics.beginGradientFill(GradientType.LINEAR,[0,0],[0.75 * step,0.0],[0,50 * step],m);
+			canvas.graphics.beginGradientFill(GradientType.LINEAR,[0,0],[shadowAlpha * 0.75 * step,0.0],[0,50 * step],m);
 			drawBack();
 			
 			m = new Matrix();
 			m.createBox(1,1,0,rect.x,rect.y);
+			m.concat(this.canvas.transform.matrix);
 			m.scale(-1,1);
 			m.rotate(r * 2);
 			m.translate(t.x,t.y);
-			graphics.beginBitmapFill(bitmapData,m,false);
+			canvas.graphics.beginBitmapFill(bitmapData,m,false);
 			drawFront();
 			
 			m = new Matrix();
 			m.createGradientBox(t.x - p.x,t.y - p.y,r,p.x,p.y);
-			graphics.beginGradientFill(GradientType.LINEAR,[0,0],[0.5,0.0],[0,255],m);
+			canvas.graphics.beginGradientFill(GradientType.LINEAR,[0,0],[shadowAlpha * 0.5,0.0],[0,255],m);
 			drawFront();
 			
 			function drawBack():void
@@ -95,33 +122,33 @@ package ghostcat.display.transfer
 				if (op)
 					return;
 				
-				graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
-				graphics.lineTo(rect.right,rect.y);
-				graphics.lineTo(rect.right,rect.bottom);
-				graphics.lineTo(rect.x,rect.bottom);
-				graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
-				graphics.endFill();
+				canvas.graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
+				canvas.graphics.lineTo(rect.right,rect.y);
+				canvas.graphics.lineTo(rect.right,rect.bottom);
+				canvas.graphics.lineTo(rect.x,rect.bottom);
+				canvas.graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
+				canvas.graphics.endFill();
 			}
 			
 			function drawFront():void
 			{
 				if (op)
-					graphics.moveTo(rect.x + op.x,rect.y + op.y);
+					canvas.graphics.moveTo(rect.x + op.x,rect.y + op.y);
 				else
-					graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
+					canvas.graphics.moveTo(rect.x + p2.x,rect.y + p2.y);
 				
 				if (p2.y)
-					graphics.lineTo(rect.x + p2.x + p2.y * Math.cos(r * 2 - Math.PI / 2),rect.y + p2.y + p2.y * Math.sin(r * 2 - Math.PI / 2));
+					canvas.graphics.lineTo(rect.x + p2.x + p2.y * Math.cos(r * 2 - Math.PI / 2),rect.y + p2.y + p2.y * Math.sin(r * 2 - Math.PI / 2));
 				
-				graphics.lineTo(rect.x + t.x,rect.y + t.y);
+				canvas.graphics.lineTo(rect.x + t.x,rect.y + t.y);
 				
 				if (p1.x)
-					graphics.lineTo(rect.x + p1.x + p1.x * Math.cos(r * 2),rect.y + p1.y + p1.x * Math.sin(r * 2));
+					canvas.graphics.lineTo(rect.x + p1.x + p1.x * Math.cos(r * 2),rect.y + p1.y + p1.x * Math.sin(r * 2));
 				
 				if (!op)
-					graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
+					canvas.graphics.lineTo(rect.x + p1.x,rect.y + p1.y);
 				
-				graphics.endFill();
+				canvas.graphics.endFill();
 			}
 		}
 	}

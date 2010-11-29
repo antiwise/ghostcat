@@ -1,5 +1,6 @@
 package ghostcat.manager
 {
+	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
@@ -13,15 +14,19 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class BrowerManager extends Singleton
+	public class BrowerManager extends EventDispatcher
 	{
 		[Embed(source = "BrowerManager.js",mimeType="application/octet-stream")]
 		private static var jsCode:Class;
 		ExternalInterface.available && ExternalInterface.call("eval",new jsCode().toString());
 		
+		static private var _instance:BrowerManager;
 		static public function get instance():BrowerManager
 		{
-			return Singleton.getInstanceOrCreate(BrowerManager) as BrowerManager;
+			if (!_instance)
+				_instance = new BrowerManager();
+			
+			return _instance;
 		}
 		
 		/**

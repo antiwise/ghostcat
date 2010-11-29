@@ -1,5 +1,6 @@
 ﻿package ghostcat.manager
 {
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.util.ReflectUtil;
@@ -26,11 +27,15 @@
 	 * InjectManager是允许多次实例化的。
 	 */
 	
-	public class InjectManager extends Singleton
+	public class InjectManager extends EventDispatcher
 	{
+		static private var _instance:InjectManager;
 		static public function get instance():InjectManager
 		{
-			return Singleton.getInstanceOrCreate(InjectManager) as InjectManager;
+			if (!_instance)
+				_instance = new InjectManager();
+			
+			return _instance;
 		}
 		
 		protected var dict:Dictionary;

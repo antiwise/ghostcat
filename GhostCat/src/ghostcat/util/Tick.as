@@ -2,6 +2,7 @@ package ghostcat.util
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
 	
 	import ghostcat.events.TickEvent;
@@ -21,15 +22,15 @@ package ghostcat.util
 	 * @author flashyiyi
 	 * 
 	 */	
-	public class Tick extends Singleton
+	public class Tick extends EventDispatcher
 	{
-		private var displayObject:Sprite;//用来提供事件的对象
-		
-		private var prevTime:int;//上次记录的时间
-		
+		static private var _instance:Tick;
 		static public function get instance():Tick
 		{
-			return Singleton.getInstanceOrCreate(Tick) as Tick;
+			if (!_instance)
+				_instance = new Tick();
+			
+			return _instance;
 		}
 		
 		/**
@@ -55,6 +56,9 @@ package ghostcat.util
 		 * Tick事件的发布影响的内容非常多，一般情况不建议设置此属性，而是设置所有需要暂停物品的pause属性。
 		 */		
 		public var pause:Boolean = false;
+		
+		private var displayObject:Sprite;//用来提供事件的对象
+		private var prevTime:int;//上次记录的时间
 		
 		public function Tick()
 		{

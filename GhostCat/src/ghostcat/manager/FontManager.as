@@ -1,5 +1,6 @@
 package ghostcat.manager
 {
+	import flash.events.EventDispatcher;
 	import flash.text.Font;
 	import flash.text.FontStyle;
 	import flash.text.TextField;
@@ -7,8 +8,8 @@ package ghostcat.manager
 	import flash.utils.Dictionary;
 	
 	import ghostcat.text.TextUtil;
-	import ghostcat.util.core.Singleton;
 	import ghostcat.util.Util;
+	import ghostcat.util.core.Singleton;
 
 	/**
 	 * 这个类用于保存字体样式以及帮助嵌入字体。
@@ -16,11 +17,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class FontManager extends Singleton
+	public class FontManager extends EventDispatcher
 	{
+		static private var _instance:FontManager;
 		static public function get instance():FontManager
 		{
-			return Singleton.getInstanceOrCreate(FontManager) as FontManager;
+			if (!_instance)
+				_instance = new FontManager();
+			
+			return _instance;
 		}
 		
 		private var textFormats:Dictionary = new Dictionary();

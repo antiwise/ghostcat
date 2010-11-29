@@ -1,9 +1,11 @@
 package ghostcat.manager
 {
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
+	import ghostcat.util.core.EventHandler;
 	import ghostcat.util.core.Singleton;
 	
 	/**
@@ -12,11 +14,15 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class CacheManager extends Singleton
+	public class CacheManager extends EventDispatcher
 	{
+		static private var _instance:CacheManager;
 		static public function get instance():CacheManager
 		{
-			return Singleton.getInstanceOrCreate(CacheManager) as CacheManager;
+			if (!_instance)
+				_instance = new CacheManager();
+			
+			return _instance;
 		}
 		
 		public var dict:Dictionary = new Dictionary();

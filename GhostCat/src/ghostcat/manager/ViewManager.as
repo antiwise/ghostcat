@@ -16,15 +16,19 @@ package ghostcat.manager
 	 */
 	public class ViewManager extends Singleton
 	{ 
+		static private var _instance:ViewManager;
 		static public function get instance():ViewManager
 		{
-			return Singleton.getInstance(ViewManager) as ViewManager;
+			return _instance;
 		}
 		
 		static public function register(root:IEventDispatcher):void
 		{
-			var v:ViewManager = Singleton.create(ViewManager);
-			v.register(root);
+			if (!_instance)
+			{
+				_instance = new ViewManager();
+				_instance.register(root);
+			}
 		}
 		
 		protected var root:IEventDispatcher;
