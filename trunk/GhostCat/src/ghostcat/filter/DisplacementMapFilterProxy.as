@@ -115,7 +115,6 @@ package ghostcat.filter
 			_radius = v;
 			updateMaskCall.invalidate();
 			updateCall.invalidate();
-			
 		}
 
 		/**
@@ -147,6 +146,7 @@ package ghostcat.filter
 		{
 			if (!mask)
 				updateMask();
+			
 			switch (type)
 			{
 				case BUBBLE:
@@ -197,33 +197,37 @@ package ghostcat.filter
 		 * @return 
 		 * 
 		 */
-		public static function createBubbleMask(radius:Number = 128):BitmapData
+		public static function createBubbleMask(radius:Number = 128,inner:Number = 100):BitmapData
 		{
 			var data:BitmapData = new BitmapData(radius*2,radius*2,false);
-			for (var x:int = -radius; x<radius; x++)
+			for (var x:int = -radius; x < radius; x++)
 			{
-				for (var y:int = -radius; y<radius; y++) 
+				for (var y:int = -radius; y < radius; y++) 
 				{
-					var i:Number = x/radius*128;//数据规整到256方便运算
-					var j:Number = y/radius*128;
+					var i:Number = x / radius * 128;//数据规整到256方便运算
+					var j:Number = y / radius * 128;
 					var l:Number = new Point(i,j).length;
 					var color:uint;
-					if (l<=128)
+					if (l <= 128)
 					{
-						if (l>100)//在圆外圈
+						if (l > inner)//在圆外圈
 						{
-							color = int(i*Math.sqrt(128*128-l*l)/80+128)<<16;
-							color += int(j*Math.sqrt(128*128-l*l)/80+128)<<8;
-							color += int(Math.sqrt(128*128-l*l)*0.7*Math.sqrt(128*128-l*l)/80);
+							color = int(i * Math.sqrt(128 * 128 - l * l) / 80 + 128) << 16;
+							color += int(j * Math.sqrt(128 * 128 - l * l) / 80 + 128) << 8;
+							color += int(Math.sqrt(128 * 128 - l * l) * 0.7 * Math.sqrt(128 * 128 - l * l) / 80);
 							color += 128;
 						}
-						else //原的内部
-							color = ((i+128)<<16)+((j+128)<<8)+int(Math.sqrt(128*128-l*l)*0.7)+128;
+						else //圆的内部
+						{
+							color = ((i + 128) << 16) + ((j + 128) << 8) + int(Math.sqrt(128 * 128 - l * l) * 0.7) + 128;
+						}
 					}
 					else
+					{
 						color = 0x808080;//中性灰
+					}
 					
-					data.setPixel(x+radius,y+radius,color);
+					data.setPixel(x + radius,y + radius,color);
 				}
 			}
 			return data;

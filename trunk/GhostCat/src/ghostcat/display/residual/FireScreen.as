@@ -19,54 +19,112 @@ package ghostcat.display.residual
 	public class FireScreen extends ResidualScreen
 	{
 		private var maskBitmapData:BitmapData;
+		private var maskBitmapDatas:Array;
 		private var maskIndex:int = 0;
 		
 		private var displacementMapFilter:DisplacementMapFilter;
 		
-		public function FireScreen(width:Number,height:Number)
+		public function FireScreen(width:Number,height:Number,cacheNumber:int = 0)
 		{
 			super(width,height);
 			
-			maskBitmapData = new BitmapData(width,height);
+			this.maskBitmapData = new BitmapData(width,height);
 			
 			this.fadeSpeed = 0.9;
 			this.blurSpeed = 4;
 			this.offest = new Point(0,-4);
 			this.itemColorTransform = new ColorTransform(0,0,0,1,255);
 		
-			displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
+			this.displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
+		
+			if (cacheNumber)
+				createMaskBitmapDatas(cacheNumber);
 		}
+		
 		/** @inheritDoc*/
 		protected override function updateSize():void
 		{
-			if (mode != MODE_BITMAP)
-				return;
-			
 			super.updateSize();
-			
-			var newBitmapData:BitmapData = new BitmapData(width,height);
-			if (maskBitmapData)
+		
+			if (maskBitmapDatas)
 			{
-				newBitmapData.copyPixels(maskBitmapData,maskBitmapData.rect,new Point());
-				maskBitmapData.dispose();
+				createMaskBitmapDatas(maskBitmapDatas.length);
 			}
-			maskBitmapData = newBitmapData;
-			displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
+			else
+			{
+				if (maskBitmapData)
+					maskBitmapData.dispose();
+			
+				this.maskBitmapData = new BitmapData(width,height);
+				this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
+			}
 		}
+		
+		private function createDisplacementMapFilter(maskBitmapData:BitmapData):DisplacementMapFilter
+		{
+			return new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
+		}
+		
+		private function createPerlinNoise(maskBitmapData:BitmapData,t:int):void
+		{
+			maskBitmapData.perlinNoise(16, 16, 1, t, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
+		}
+		
 		/** @inheritDoc*/
 		protected override function updateDisplayList() : void
 		{
 			super.updateDisplayList();
 			
-			maskBitmapData.perlinNoise(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest])
-			
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
-			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
+			if (maskBitmapDatas)
+			{
+				maskIndex++;
+				if (maskIndex >= maskBitmapDatas.length)
+					maskIndex = 0;
+				
+				this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
+				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
+			}
+			else
+			{
+				createPerlinNoise(this.maskBitmapData,getTimer());
+				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
+			}
 		}
+		
+		public function createMaskBitmapDatas(cacheNumber:int):void
+		{
+			destoryMaskBitmapDatas();
+			
+			maskBitmapDatas = [];
+			for (var i:int = 0;i < cacheNumber;i++)
+			{
+				var maskBitmapData:BitmapData = new BitmapData(width,height);
+				createPerlinNoise(maskBitmapData,i);
+				maskBitmapDatas.push(maskBitmapData);
+			}
+		}
+		
+		public function destoryMaskBitmapDatas():void
+		{
+			if (!maskBitmapDatas)
+				return;
+			
+			for (var i:int = 0;i < maskBitmapDatas.length;i++)
+			{
+				var maskBitmapData:BitmapData = maskBitmapDatas[i] as BitmapData;
+				maskBitmapData.dispose();
+			}
+			
+			maskBitmapDatas = null;
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
 			super.destory();
+			
+			this.destoryMaskBitmapDatas();
 			
 			if (maskBitmapData)
 				maskBitmapData.dispose()

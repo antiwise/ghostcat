@@ -51,7 +51,7 @@ package ghostcat.display.transfer
 		 * @param v
 		 * 
 		 */
-		public function filp(h:Boolean,v:Boolean):void
+		public function turn(h:Boolean,v:Boolean):void
 		{
 			this.canvas.scaleX = h ? -1 : 1;
 			this.canvas.x = h ? bitmapData.width : 0;
