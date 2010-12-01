@@ -71,6 +71,23 @@ package ghostcat.util.display
 		}
 		
 		/**
+		 * 获得位图有像素的范围
+		 * 
+		 * @param source
+		 * @return 
+		 * 
+		 */
+		public static function getSoildRect(source:BitmapData):Rectangle
+		{
+			var mask:BitmapData = source.clone();
+			mask.threshold(mask,mask.rect,new Point(),">",0,0xFFFFFFFF,0xFFFFFFFF);
+			var clipRect:Rectangle = mask.getColorBoundsRect(0xFFFFFFFF,0xFFFFFFFF,true);
+			mask.dispose();
+			
+			return clipRect;
+		}
+		
+		/**
 		 * 清除位图内容 
 		 * 
 		 * @param source

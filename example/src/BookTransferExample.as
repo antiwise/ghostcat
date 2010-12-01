@@ -18,7 +18,7 @@ package
 		public function BookTransferExample()
 		{
 			t = new BookTransfer(new cls());
-			t.filp(true,true);
+			t.turn(true,true);
 			t.x += 200;
 			addChild(t);
 			
@@ -27,7 +27,7 @@ package
 		
 		private function mouseMoveHandler(event:MouseEvent):void
 		{
-			t.point = new Point(t.mouseX,t.mouseY);
+			t.point = new Point(t.canvas.mouseX,t.canvas.mouseY);
 		}
 	}
 }

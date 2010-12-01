@@ -122,7 +122,6 @@
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="ghostcat.display.other.GContextMenu"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
-    <classEntry path="ghostcat.display.residual.FireScreen2"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
     <classEntry path="ghostcat.display.residual.ResidualShapeScreen"/>
     <classEntry path="ghostcat.display.residual.SleepResidualScreen"/>
@@ -522,6 +521,7 @@
     <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
     <classEntry path="ghostcat.display.transfer.Boost"/>
     <classEntry path="ghostcat.display.transfer.RadialBlur"/>
+    <classEntry path="ghostcat.filter.WaveFilterProxy"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
