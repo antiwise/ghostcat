@@ -1,0 +1,3 @@
+1.加载GhostCat\bin\GhostCat.swc
+2.导入GhostCat下所有源码，以及加载GhostCat\asset\GhostCatAsset.swc
+3.使用Flash Builder通过导入已有工程的方式导入GhostCat目录，生成库工程
