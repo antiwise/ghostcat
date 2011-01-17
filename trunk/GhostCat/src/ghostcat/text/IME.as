@@ -9,6 +9,7 @@ package ghostcat.text
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.display.IGBase;
 	import ghostcat.util.ArrayUtil;
@@ -274,7 +275,7 @@ package ghostcat.text
 					text = ERROR_TEXT;
 					
 				skin.data = text;
-				CallLater.callLater(refresh);
+				setTimeout(refresh,0);
 				
 				function refresh():void
 				{

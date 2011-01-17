@@ -52,12 +52,12 @@ package ghostcat.ui.controls
 		public var hideNullItem:Boolean = true;
 		
 		/**
-		 * 是否点击选中（同时附带toggle=true的效果）
+		 * 是否点击选中
 		 */
 		public var toggleOnClick:Boolean = true;
 		
 		/**
-		 * 是否可单选
+		 * 是否支持单选（如果要手动控制选择状态这个值必须为false）
 		 */
 		public var toggle:Boolean = true;
 		

@@ -38,7 +38,7 @@ package ghostcat.ui.containers
 		public var toggleOnClick:Boolean;
 		
 		/**
-		 * 是否可单选
+		 * 是否可单选（如果要手动控制选择状态这个值必须为false）
 		 */
 		public var toggle:Boolean = true;
 		
