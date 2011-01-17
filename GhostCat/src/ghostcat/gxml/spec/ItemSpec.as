@@ -56,6 +56,9 @@ package ghostcat.gxml.spec
 		/** @inheritDoc*/
 		public override function createObject(xml:XML):*
 		{
+			if (!xml)
+				return null;
+			
 			replaceClassName(xml);
 			
 			if (root)

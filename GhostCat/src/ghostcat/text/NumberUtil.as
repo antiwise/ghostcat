@@ -107,7 +107,7 @@ package ghostcat.text
 		 * @return 转换完毕的字符串
 		 * 
 		 */		
-		public static function toDurTimeString(time:int,format:String="hh:mm:ss"):String
+		public static function toDurTimeString(time:Number,format:String="hh:mm:ss"):String
 		{
 			var ms:Number = (time % 1000) / 10;
 			time /= 1000;
@@ -149,7 +149,7 @@ package ghostcat.text
 		 * 转换为汉字数字
 		 * 
 		 */		
-		public static function toChineseNumber(n:int):String
+		public static function toChineseNumber(n:Number):String
 		{
 			var result:String = "";
 			var level:int = 0;
@@ -213,15 +213,16 @@ package ghostcat.text
 		 * 在数字中添加千位分隔符
 		 * 
 		 */		 	
-		public static function addNumberSeparator(value:int):String
+		public static function addNumberSeparator(value:Number):String
 		{
 			var result:String = "";
 			while (value >= 1000)
 			{
 				var v:int = value % 1000;
 				result =  "," + fillZeros(v.toString(),3) + result;
-				value = value / 1000;
+				value = Math.floor(value / 1000);
 			}
+			value = Math.floor(value);
 			return result = String(value) + result;
 		}
 		

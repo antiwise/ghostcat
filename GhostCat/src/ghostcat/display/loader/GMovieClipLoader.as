@@ -69,7 +69,7 @@ package ghostcat.display.loader
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
-			
+			dispatchEvent(event);
 		}
 		
 		protected function swfLoadCompleteHandler(event:Event):void
@@ -77,6 +77,8 @@ package ghostcat.display.loader
 			var loadInfo:LoaderInfo = event.currentTarget as LoaderInfo;
 			loadInfo.removeEventListener(Event.COMPLETE,swfLoadCompleteHandler);
 			setContent(loadInfo.loader.content);
+			
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 	}
 }

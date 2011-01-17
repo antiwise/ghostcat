@@ -64,7 +64,7 @@ package ghostcat.display.loader
 		
 		protected function ioErrorHandler(event:IOErrorEvent):void
 		{
-			
+			dispatchEvent(event);
 		}
 		
 		protected function swfLoadCompleteHandler(event:Event):void
