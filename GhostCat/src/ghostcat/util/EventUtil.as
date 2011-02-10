@@ -11,7 +11,7 @@ package ghostcat.util
 	 * @author flashyiyi
 	 * 
 	 */
-	public class EventUitl
+	public class EventUtil
 	{
 		/**
 		 * 添加一个只执行一次的事件 
