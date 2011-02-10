@@ -42,7 +42,7 @@ package ghostcat.ui.controls
 			if (movie)
 				movie.destory();
 			
-			movie = new GMovieClip(content,false);
+			movie = new GMovieClip(content,false,!enabledLabelMovie);
 		}
 	}
 }

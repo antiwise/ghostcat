@@ -431,7 +431,7 @@
     <classEntry path="ghostcat.ui.validators.GValidator"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
-    <classEntry path="ghostcat.util.EventUitl"/>
+    <classEntry path="ghostcat.util.EventUtil"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
     <classEntry path="ghostcat.util.Guid"/>
     <classEntry path="ghostcat.util.Iterator"/>

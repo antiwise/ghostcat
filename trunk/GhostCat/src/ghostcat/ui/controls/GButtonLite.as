@@ -93,6 +93,27 @@ package ghostcat.ui.controls
 		 */
 		public var incessancyInterval:int = 50;
 		
+		private var _enabledLabelMovie:Boolean = true;
+
+		/**
+		 * 是否允许使用标签过渡动画（设为假可提高性能）
+		 */
+		public function get enabledLabelMovie():Boolean
+		{
+			return _enabledLabelMovie;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set enabledLabelMovie(value:Boolean):void
+		{
+			_enabledLabelMovie = value;
+			if (movie)
+				movie.paused = !value;
+		}
+
+		
 		/** 按钮状态（up） */
 		public const upState:GButtonState = new GButtonState();
 		/** 按钮状态（over） */
@@ -274,15 +295,22 @@ package ghostcat.ui.controls
 			
 			if (content && movie && movie.labels)
 			{
-				if (movie.hasLabel(movie.curLabelName+"-"+next))
+				if (_enabledLabelMovie)
 				{
-					movie.setLabel(movie.curLabelName+"-"+next,1);
-					movie.queueLabel(next,-1);
-				}
-				else if (movie.hasLabel("*-"+next))
-				{
-					movie.setLabel("*-"+next,1);
-					movie.queueLabel(next,-1);
+					if (movie.hasLabel(movie.curLabelName+"-"+next))
+					{
+						movie.setLabel(movie.curLabelName+"-"+next,1);
+						movie.queueLabel(next,-1);
+					}
+					else if (movie.hasLabel("*-"+next))
+					{
+						movie.setLabel("*-"+next,1);
+						movie.queueLabel(next,-1);
+					}
+					else
+					{
+						movie.setLabel(next,-1);
+					}
 				}
 				else
 				{
