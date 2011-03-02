@@ -248,6 +248,25 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 清空所有资源
+		 * 
+		 */
+		public function clearOper():void
+		{
+			opers = new Dictionary();
+		}
+		
+		/**
+		 * 对所有SWF文件执行unload。当你加载SWF文件却只希望保留它的应用域时而不使用舞台时，就需要执行unload以保证舞台上的对象不会影响性能
+		 * 
+		 */
+		public function unloadAll():void
+		{
+			for each (var child:LoadOper in opers)
+				child.unload();
+		}
+		
+		/**
 		 * 根据名称获得类
 		 * 
 		 * @param ref

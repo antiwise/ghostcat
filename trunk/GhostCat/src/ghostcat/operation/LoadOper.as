@@ -359,6 +359,16 @@
 		}
 		
 		/**
+		 * 卸载SWF
+		 * 
+		 */
+		public function unload():void
+		{
+			if (_loader is Loader)
+				(_loader as Loader).unload();
+		}
+		
+		/**
 		 * 获取loaderInfo对象
 		 * 独立应用域的数据必须从这个属性的applicationDomain里取得。只当execute执行后才有值。
 		 */		
