@@ -46,12 +46,11 @@ package ghostcat.operation
 			super(url,embedClass,rhandler,fhandler)
 		
 			this.type = LoadOper.URLLOADER;
-			this.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
 		public override function get data() : *
 		{
-			var bytes:ByteArray = super.data as ByteArray;
+			var bytes:ByteArray = super.bytes;
 			if (compress)
 			{
 				try
