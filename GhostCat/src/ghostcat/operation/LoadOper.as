@@ -49,7 +49,7 @@
 		public static var postfix:String = "";
 		
 		/**
-		 * 使用Loader的扩展名
+		 * 使用Loader作为加载器的文件扩展名
 		 */
 		public static var LOADER_TYPE:Array = ["swf","gif","png","jpg"];
 		
@@ -103,7 +103,7 @@
 		/**
 		 * 载入格式
 		 */		
-		public var dataFormat:String;
+		public var dataFormat:String = URLLoaderDataFormat.TEXT;
 		
 		/**
 		 * 加载对象
@@ -117,7 +117,7 @@
 		public var stopAtInit:Boolean = false;
 		
 		/**
-		 * 嵌入入资源
+		 * 嵌入资源
 		 */
 		protected var embedClass:Class;
 		
@@ -191,11 +191,11 @@
 			if (!version)
 				return;
 			
-			FileCacherManager.instance.saveBytes(url,bytes,sharedObjectCacheVersion);
+			FileCacherManager.instance.saveBytes(url,this.bytes,version);
 		}
 		
 		/**
-		 * 立即加载，扩展名为swf,jpg,png,gif的将会使用Loader加载。
+		 * 立即加载，扩展名为swf,jpg,png,gif的将会使用Loader加载，可以用LOADER_TYPE修改规则。
 		 * 
 		 */		
 		public override function execute():void
@@ -249,7 +249,7 @@
 			else
 			{
 				var urlLoader:URLLoader = new URLLoader();
-				urlLoader.dataFormat = dataFormat;
+				urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 				_loader = urlLoader;
 				
 				if (bytes)
@@ -279,7 +279,7 @@
 			evt.removeEventListener(IOErrorEvent.IO_ERROR,fault);
 			
 			if (sharedObjectCacheVersion && url && !disibledCache)
-				FileCacherManager.instance.save(url,sharedObjectCacheVersion);
+				saveToShareObject();
 			
 			super.result(event);		
 		}
@@ -317,14 +317,7 @@
 			else
 			{
 				var urlLoader:URLLoader = _loader as URLLoader;
-			
-				if (urlLoader.dataFormat == URLLoaderDataFormat.BINARY)
-					urlLoader.data = byteArr;
-				else if (urlLoader.dataFormat == URLLoaderDataFormat.VARIABLES)
-					urlLoader.data = new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
-				else
-					urlLoader.data = byteArr.readUTFBytes(byteArr.bytesAvailable);
-				
+				urlLoader.data = byteArr;
 				super.result(_loader);
 			}
 		}
@@ -335,7 +328,7 @@
 			{
 				var loader:Loader = _loader as Loader;
 				if (loader.content is MovieClip)
-					(loader.content as MovieClip).stop();
+					MovieClip(loader.content).stop();
 			}
 		}
 		
@@ -352,10 +345,10 @@
 			super.halt();
 		
 			if (_loader is Loader)
-				(_loader as Loader).close();
+				Loader(_loader).close();
 			
 			if (_loader is URLLoader)
-				(_loader as URLLoader).close();
+				URLLoader(_loader).close();
 		}
 		
 		/**
@@ -365,7 +358,7 @@
 		public function unload():void
 		{
 			if (_loader is Loader)
-				(_loader as Loader).unload();
+				Loader(_loader).unload();
 		}
 		
 		/**
@@ -374,7 +367,7 @@
 		 */		
 		public function get loaderInfo():LoaderInfo
 		{
-			return (_loader is Loader)?(_loader as Loader).contentLoaderInfo: null;
+			return _loader is Loader ? Loader(_loader).contentLoaderInfo: null;
 		}
 		
 		/**
@@ -383,7 +376,7 @@
 		 */
 		public function get eventDispatcher():IEventDispatcher
 		{
-			return (_loader is Loader)?(_loader as Loader).contentLoaderInfo: _loader;
+			return _loader is Loader ? Loader(_loader).contentLoaderInfo: _loader;
 		}
 		
 		/**
@@ -392,11 +385,23 @@
 		public function get data():*
 		{
 			if (_loader is Loader)
-				return (_loader as Loader).content;
+			{
+				return Loader(_loader).content;
+			}
 			else if (_loader is URLLoader)
-				return (_loader as URLLoader).data;
+			{
+				var byteArr:ByteArray = URLLoader(_loader).data as ByteArray;
+				if (dataFormat == URLLoaderDataFormat.BINARY)
+					return byteArr;
+				else if (dataFormat == URLLoaderDataFormat.VARIABLES)
+					return new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
+				else
+					return byteArr.toString();
+			}
 			else
+			{
 				return null;
+			}
 		}
 		
 		/**
@@ -407,24 +412,9 @@
 		public function get bytes():ByteArray
 		{
 			if (_loader is Loader)
-			{
-				return (_loader as Loader).contentLoaderInfo.bytes;
-			}
+				return Loader(_loader).contentLoaderInfo.bytes;
 			else if (_loader is URLLoader)
-			{
-				var d:* = (_loader as URLLoader).data;
-				if (d is ByteArray)
-				{
-					return d as ByteArray;
-				}
-				else
-				{
-					var bytes:ByteArray = new ByteArray();
-					bytes.writeUTFBytes(d.toString());
-					bytes.position = 0;
-					return bytes;
-				}
-			}
+				return URLLoader(_loader).data as ByteArray;
 			else
 				return null;
 		}
