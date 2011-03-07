@@ -154,6 +154,8 @@ package ghostcat.manager
 		 * 
 		 * @param res	资源路径列表
 		 * @param names 资源的名称，用于在进度条中显示
+		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度
+		 * @param queueLimit 同时加载的文件数量
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * @return 
