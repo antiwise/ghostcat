@@ -522,6 +522,7 @@
     <classEntry path="ghostcat.display.transfer.Boost"/>
     <classEntry path="ghostcat.display.transfer.RadialBlur"/>
     <classEntry path="ghostcat.filter.WaveFilterProxy"/>
+    <classEntry path="ghostcat.util.display.BitmapScrollController"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
