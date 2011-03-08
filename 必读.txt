@@ -1,0 +1,42 @@
+导入工程方法
+
+
+以下3选1
+1.加载GhostCat\bin\GhostCat.swc
+2.导入GhostCat下所有源码，以及加载GhostCat\asset\GhostCatAsset.swc
+3.使用Flash Builder通过导入已有工程的方式导入GhostCat目录，生成库工程
+生成的工程是库，没有可执行的程序。如需测试要自己编写程序调用这个库
+
+
+性能问题
+
+
+加载的用来作为组件皮肤的SWF，发布的时候要保证SWF的舞台为空，否则会浪费少许性能。文件多的时候，积累起来可能会到10%。（FLA里舞台上可以放上元件来方便修改，但发布时要清空）
+动画按钮GButton的完全形态会消耗一定额外性能，而GButtonBase起就基本完全不消耗性能了。将GButton的enabledLabelMovie设置为false也可以到达这个效果，但这样就只有8态而没有各态之间的动态效果了。
+GMovieClip只要存在就会消耗少量性能，要限制他的数量，或者不用时设置paused。
+做到这三点，基本可以保证在屏幕无更新时CPU占用为0。
+
+
+嵌入字体注意事项
+
+
+当皮肤资源从外部加载时，里面的TextField想用主SWF里嵌入的字体，必须重新设置它的font（而且必须和原来的不同），否则就要重建TextField
+	 
+重建TextField可以手动执行rebuildTextField方法或者设置GText.autoRebuildEmbedText=true，这样做之后可以正常显示嵌入字体，但会在初始化时多消耗一些性能，显示上有可能稍有不同。
+此外在GButton，GButtonBase里，如果没有让构造函数的第5个参数autoRefreshLabelField为false的话，这种情况下Button里如果还包含其他的GText对象，它的文字将会无法改变，而只能通过Button的label属性改变。
+基本上只有这个缺点。使用无Label的GButtonLite同样没有这个问题。
+	
+不想重建TextField，那么就要靠setFontReplace方法来自动替换TextField内的字体。
+比如资源里使用宋体，主SWF嵌入的宋体就要取一个别名，然后设置setFontReplace("宋体",别名,true)，别名必须和原字体不同，否则FLASH不会进行替换。
+还有就是注意CS5创建的SWF里中文字体别名用的是字体英文名，但如果设置了仿粗/斜体，字体名却是中文名，因此你需要用setFontReplace来进行统一
+
+
+注意配置
+
+
+不少系统类都可以进行配置，比如:
+PopupManager.instance.queue = new Queue();//让弹出框架用独立队列（否则用全局队列，会和其他队列操作一起进行）
+PopupManager.instance.autoDisibledBackgroundPopup = true;//在弹出新窗口后，自动锁定就窗口，否则需要用PopupManager.lockOwner）锁定。
+LoadOper.postfix = "?ct=" + this.version;//设置下载文件后缀，避免缓存影响导致不更新
+LoadOper.sharedObjectCacheVersion = "v1.0";//开启SharedObject缓存文件机制，加载的会全部缓存到SharedObject
+LoadOper.LOADER_TYPE = ["swf"];//指定哪些文件用Loader加载，不在数组范围内的文件会先用二进制方式加载
