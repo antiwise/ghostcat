@@ -36,7 +36,7 @@ GMovieClip只要存在就会消耗少量性能，要限制他的数量，或者不用时设置paused。
 
 不少系统类都可以进行配置，比如:
 PopupManager.instance.queue = new Queue();//让弹出框架用独立队列（否则用全局队列，会和其他队列操作一起进行）
-PopupManager.instance.autoDisibledBackgroundPopup = true;//在弹出新窗口后，自动锁定就窗口，否则需要用PopupManager.lockOwner）锁定。
+PopupManager.instance.autoDisibledBackgroundPopup = true;//在弹出新窗口后，自动锁定就窗口，否则需要用PopupManager.lockOwner锁定。
 LoadOper.postfix = "?ct=" + this.version;//设置下载文件后缀，避免缓存影响导致不更新
 LoadOper.sharedObjectCacheVersion = "v1.0";//开启SharedObject缓存文件机制，加载的会全部缓存到SharedObject
 LoadOper.LOADER_TYPE = ["swf"];//指定哪些文件用Loader加载，不在数组范围内的文件会先用二进制方式加载
