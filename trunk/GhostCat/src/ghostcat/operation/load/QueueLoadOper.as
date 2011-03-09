@@ -203,7 +203,7 @@ package ghostcat.operation.load
 		
 		public override function result(event:*=null):void
 		{
-			Debug.trace("LOAD","QueueLoadOper: " + loadHelper.realBytesTotal)
+			Debug.trace("LOAD","QueueLoadOper Complete: " + loadHelper.realBytesTotal)
 			super.result(event);
 		}
 	}
