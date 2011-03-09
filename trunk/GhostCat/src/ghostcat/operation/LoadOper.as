@@ -418,5 +418,25 @@
 			else
 				return null;
 		}
+		
+		/**
+		 * 获得已加载的数据大小 
+		 * @return 
+		 * 
+		 */
+		public function get bytesLoaded():int
+		{
+			return this.eventDispatcher["bytesLoaded"];
+		}
+		
+		/**
+		 * 获得数据总大小 
+		 * @return 
+		 * 
+		 */
+		public function get bytesTotal():int
+		{
+			return this.eventDispatcher["bytesTotal"];
+		}
 	}
 }

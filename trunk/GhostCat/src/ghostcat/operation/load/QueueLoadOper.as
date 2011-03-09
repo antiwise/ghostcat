@@ -5,6 +5,7 @@ package ghostcat.operation.load
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.LoadTextOper;
@@ -198,6 +199,12 @@ package ghostcat.operation.load
 				resConfigOper.execute();
 			else
 				super.execute();
+		}
+		
+		public override function result(event:*=null):void
+		{
+			Debug.trace("LOAD","QueueLoadOper: " + loadHelper.realBytesTotal)
+			super.result(event);
 		}
 	}
 }
