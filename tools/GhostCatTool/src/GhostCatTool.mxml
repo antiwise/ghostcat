@@ -14,8 +14,6 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import flashx.textLayout.conversion.TextFilter;
-			import spark.primitives.RichText;
 			import mx.managers.SystemManager;
 			import mx.controls.ComboBox;
 			import mx.controls.Alert;

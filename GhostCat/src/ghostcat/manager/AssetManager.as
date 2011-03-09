@@ -259,13 +259,25 @@ package ghostcat.manager
 		}
 		
 		/**
-		 * 对所有SWF文件执行unload。当你加载SWF文件却只希望保留它的应用域时而不使用舞台时，就需要执行unload以保证舞台上的对象不会影响性能
+		 * 对所有SWF文件执行unload
 		 * 
 		 */
 		public function unloadAll():void
 		{
 			for each (var child:LoadOper in opers)
 				child.unload();
+		}
+		
+		/**
+		 * 获得总数据大小 
+		 */
+		public function getTotalBytes():int
+		{
+			var t:int;
+			for each (var child:LoadOper in opers)
+				t += child.bytesTotal;
+			
+			return t;
 		}
 		
 		/**

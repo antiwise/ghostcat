@@ -86,12 +86,20 @@ package ghostcat.util.load
 		{
 			if (_bytesTotal != -1)
 				return _bytesTotal;
-			
+			else
+				return realBytesTotal;
+		}
+		
+		/**
+		 * 获得实际的总字节数
+		 * @return 
+		 * 
+		 */
+		public function get realBytesTotal():int
+		{
 			var v:int = 0;
 			for each (var loadInfo:EventDispatcher in loaders)
-			{
 				v += loadInfo["bytesTotal"];
-			}
 			
 			return v;
 		}
