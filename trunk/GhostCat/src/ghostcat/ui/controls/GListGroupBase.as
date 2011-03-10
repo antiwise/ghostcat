@@ -1,11 +1,15 @@
 package ghostcat.ui.controls
 {
+	import flash.display.DisplayObject;
+	
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GRepeater;
 	import ghostcat.util.core.ClassFactory;
+	
+	import mx.core.Repeater;
 
 	/**
-	 * 提供一个新方法实现多项分页列表
+	 * 提供多项分页列表
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -18,7 +22,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 建立一个分页Render 
+		 * 建立一个分页Render，原本的itemRender属性失效
 		 * 
 		 * @param itemRender	渲染器
 		 * @param type	布局类型
@@ -48,7 +52,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 分页设置数据 
+		 * 执行createPage后，需要用它来设置分页设置数据
 		 * @param source
 		 * @param pageLen	每页数据个数
 		 * 
@@ -62,6 +66,27 @@ package ghostcat.ui.controls
 				result[i] = source.slice(i * pageLen,(i + 1) * pageLen);
 			}
 			this.data = result;
+		}
+		
+		/**
+		 * 执行createPage后，需要用它来来由数据获得元素
+		 * @param v
+		 * 
+		 */
+		public function getRenderInPage(v:*):DisplayObject
+		{
+			if (data)
+			{
+				for each (var child:Array in data)
+				{
+					if (child.indexOf(v) != -1)
+					{
+						var rep:GRepeater = getRender(child) as GRepeater;
+						return rep ? rep.getRender(v) : null;
+					}
+				}
+			}
+			return null;
 		}
 	}
 }
