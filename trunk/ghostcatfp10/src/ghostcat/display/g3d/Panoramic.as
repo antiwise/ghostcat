@@ -5,6 +5,11 @@ package ghostcat.display.g3d
 	import flash.display.TriangleCulling;
 	import flash.geom.Point;
 	
+	/**
+	 * 全景 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Panoramic extends GBitmapSphere
 	{
 		public var hotSpots:Array = [];
