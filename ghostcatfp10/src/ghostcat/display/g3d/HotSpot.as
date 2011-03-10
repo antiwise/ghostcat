@@ -4,6 +4,11 @@ package ghostcat.display.g3d
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
 
+	/**
+	 * 热点 
+	 * @author Administrator
+	 * 
+	 */
 	public class HotSpot
 	{
 		public var panoramic:Panoramic;
