@@ -24,8 +24,6 @@ package ghostcat.operation.load
 	 */
 	public class QueueLoadOper extends ParallelOper implements IProgressTargetClient
 	{
-		private var _name:String;
-		
 		/**
 		 * 资源加载的基本地址
 		 */
@@ -56,12 +54,7 @@ package ghostcat.operation.load
 		 */
 		public function get name():String
 		{
-			return _name;
-		}
-		
-		public function set name(v:String):void
-		{
-			_name = v;
+			return currentChild ? currentChild.name : null;
 		}
 		
 		/**
