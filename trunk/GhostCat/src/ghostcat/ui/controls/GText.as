@@ -285,7 +285,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 让文本框适应文本大小
+		 * 让文本框适应文本大小（文本框不动，皮肤根据padding改变自己的大小和位置）
 		 * @return 
 		 * 
 		 */
@@ -636,7 +636,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 根据文本框更新图形大小
+		 * 根据文本框更新图形大小（文本框不动，皮肤根据padding改变自己的大小和位置）
 		 * 
 		 */
 		public function adjustContextSize():void
@@ -664,6 +664,17 @@ package ghostcat.ui.controls
 		{
 			if (TextFieldUtil.truncateToFit(textField) && showToolTip)
 				this.toolTip = this.text;
+		}
+		
+		/**
+		 * 根据文本框大小设置文本字体
+		 * @param adjustY	自动调整文本框的y值
+		 * @param resetY	每次调整都将y设回0（否则重复设置data并调整大小会出问题）
+		 * 
+		 */
+		public function autoFontSize(adjustY:Boolean = false,resetY:Boolean = false):void
+		{
+			TextFieldUtil.autoFontSize(textField,adjustY,resetY);
 		}
 		
 		/**

@@ -194,7 +194,9 @@ package ghostcat.text
 		
 		/**
 		 * 根据文本框大小自动缩小字体
-		 * @param textField
+		 * @param textField 文本框
+		 * @param adjustY	自动调整文本框的y值
+		 * @param resetY	每次调整都将y设回0（否则重复设置data并调整大小会出问题）
 		 * 
 		 */
 		public static function autoFontSize(textField:TextField,adjustY:Boolean = false,resetY:Boolean = false):void
