@@ -47,7 +47,10 @@ package ghostcat.ui.controls
 		/**
 		 * 资源的名字
 		 */
-		public var resName:String;
+		public function get resName():String
+		{
+			return oper ? oper.name : null;
+		}
 		
 		/**
 		 * 资源对应的Oper 
@@ -75,7 +78,6 @@ package ghostcat.ui.controls
 			if (v is IProgressTargetClient)
 			{
 				this.oper = v as IProgressTargetClient;
-				this.resName = this.oper.name;
 				v = this.oper.eventDispatcher;
 			}
 			
@@ -104,13 +106,11 @@ package ghostcat.ui.controls
 		 * 设置目标
 		 * 
 		 * @param v	资源加载器的loadInfo
-		 * @param resName	资源名称
 		 * 
 		 */
-		public function setTarget(v:EventDispatcher,resName:String = null):void
+		public function setTarget(v:EventDispatcher):void
 		{
 			this.target = v;
-			this.resName = resName;
 		}
 		
 		/**
