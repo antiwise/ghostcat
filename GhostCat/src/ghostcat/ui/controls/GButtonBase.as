@@ -244,11 +244,8 @@ package ghostcat.ui.controls
 		{
 			super.data = v;
 			
-			if (label != null)
-			{
-				if (labelTextField && _autoRefreshLabelField)
-					labelTextField.text = label;
-			}
+			if (_autoRefreshLabelField)
+				refreshLabelData();
 		} 
 		
 		/**
@@ -277,8 +274,21 @@ package ghostcat.ui.controls
 			if (!labelTextField.parent)
 				addChild(labelTextField)
 			
+			refreshLabelData();
+		}
+		
+		/**
+		 * 更新标签内容 
+		 * 
+		 */
+		private function refreshLabelData():void
+		{
 			if (label != null)
+			{
 				labelTextField.text = label;
+				if (labelTextField.toolTip != null)
+					toolTip = labelTextField.toolTip;//复制截断文本的ToolTip
+			}
 		}
 				
 		/**

@@ -360,6 +360,26 @@ package ghostcat.ui.controls
 			if (asTextBitmap)
 				reRenderTextBitmap();
 		}
+		
+		/**
+		 * 设置文本框大小 
+		 * @param w
+		 * @param h
+		 * 
+		 */
+		public function setTextFieldSize(w:Number = NaN,h:Number = NaN,autoSize:String = TextFieldAutoSize.NONE):void
+		{
+			if (textField)
+			{
+				textField.autoSize = autoSize;
+				
+				if (!isNaN(w))
+					textField.width = w;
+				
+				if (!isNaN(h))
+					textField.height = h;
+			}
+		}
 
 
 		/**
@@ -427,6 +447,21 @@ package ghostcat.ui.controls
 		public function set multiline(v:Boolean):void
 		{
 			textField.multiline = v;
+		}
+		
+		/**
+		 * 是否自动断行
+		 * @return 
+		 * 
+		 */
+		public function get wordWrap():Boolean
+		{
+			return textField.wordWrap;
+		}
+		
+		public function set wordWrap(v:Boolean):void
+		{
+			textField.wordWrap = v;
 		}
 		
 		/**
