@@ -8,12 +8,12 @@ package ghostcat.display.game
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.display.GBase;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
+	import ghostcat.display.GBase;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
 	
@@ -543,6 +543,5 @@ package ghostcat.display.game
 		
 			super.destory();
 		}
-
 	}
 }
