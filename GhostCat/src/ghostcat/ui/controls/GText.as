@@ -380,6 +380,16 @@ package ghostcat.ui.controls
 					textField.height = h;
 			}
 		}
+		
+		/**
+		 * 获得文本框大小 
+		 * @return 
+		 * 
+		 */
+		public function getTextFieldSize():Rectangle
+		{
+			return textField ? new Rectangle(textField.x,textField.y,textField.width,textField.height) : null
+		}
 
 
 		/**

@@ -1,5 +1,7 @@
 package ghostcat.util
 {
+	import flash.utils.Dictionary;
+
 	/**
 	 * 数组类
 	 * @author flashyiyi
@@ -15,12 +17,18 @@ package ghostcat.util
 		 */
 		public function create(length:int,fill:* = null):Array
 		{
-			var arr:Array = [];
-			while (arr.length < length)
+			if (fill == null)
 			{
-				arr.push(fill);
+				return new Array(length);
 			}
-			return arr;
+			else
+			{
+				var arr:Array = [];
+				for (var i:int = 0; i < length; i++) 
+					arr[i] = fill;
+				
+				return arr;
+			}
 		}
 		
 		/**
@@ -38,18 +46,50 @@ package ghostcat.util
 		/**
 		 * 获得两个数组的共用元素
 		 * 
-		 * @param array1	对象1
-		 * @param array2	对象2
+		 * @param array1	数组对象1
+		 * @param array2	数组对象2
+		 * @param result	共有元素
+		 * @param array1only	数组1独有元素
+		 * @param array2only	数组2独有元素
+		 * @return 	共有元素
 		 * 
 		 */
-		public static function hasShare(array1:Array,array2:Array):Array
+		public static function hasShare(array1:Array,array2:Array,result:Array = null,array1only:Array = null,array2only:Array = null):Array
 		{
-			var result:Array = [];
-			for each (var obj:* in array1)
+			if (result == null)
+				result = [];
+			
+			var array2dict:Dictionary = new Dictionary();
+			var obj:*;
+			for each (obj in array2)
+				array2dict[obj] = null;
+			
+			if (array2only != null)
+				var resultDict:Dictionary = new Dictionary();
+			
+			for each (obj in array1)
             {
-                if (array2.indexOf(obj)!=-1)
-                   	result.push(obj);
-            }
+                if (array2dict.hasOwnProperty(obj))
+				{
+					result[result.length] = obj;
+					if (resultDict)
+						resultDict[obj] = null;
+				}
+				else if (array1only != null)
+				{
+					array1only[array1only.length] = obj;
+				}
+			}
+			
+			if (array2only != null)
+			{
+				for each (obj in array2)
+				{
+					if (!resultDict.hasOwnProperty(obj))
+						array2only[array2only.length] = obj;
+				}
+			}
+			
             return result;
 		}
 		
@@ -94,7 +134,7 @@ package ghostcat.util
             {
             	var o:* = arr[i];
             	
-                result.push(o[field]);
+                result[i] = o[field];
             }
             return result;
         }

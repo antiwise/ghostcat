@@ -79,7 +79,7 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		private static function execCharRange(v:String):String
+		public static function execCharRange(v:String):String
 		{
 			var list:Array = v.split(",");
 			var result:String = "";
