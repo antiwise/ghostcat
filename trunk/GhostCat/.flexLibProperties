@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="1">
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
@@ -34,10 +34,8 @@
     <classEntry path="ghostcat.community.GroupManager"/>
     <classEntry path="ghostcat.community.IGroupManager"/>
     <classEntry path="ghostcat.community.MutiGroupManager"/>
-    <classEntry path="ghostcat.community.command.CollideCommand"/>
     <classEntry path="ghostcat.community.command.DrawPriority45Command"/>
     <classEntry path="ghostcat.community.command.DrawPriorityCommand"/>
-    <classEntry path="ghostcat.community.filter.OnlyCheckScreenFilter"/>
     <classEntry path="ghostcat.community.physics.PhysicsItem"/>
     <classEntry path="ghostcat.community.physics.PhysicsManager"/>
     <classEntry path="ghostcat.community.physics.PhysicsUtil"/>
@@ -68,6 +66,7 @@
     <classEntry path="ghostcat.display.IDisplayObjectContainer"/>
     <classEntry path="ghostcat.display.IGBase"/>
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
@@ -78,19 +77,16 @@
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
+    <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
-    <classEntry path="ghostcat.display.game.Collision"/>
-    <classEntry path="ghostcat.display.game.CollisionSprite"/>
     <classEntry path="ghostcat.display.game.Display45Util"/>
-    <classEntry path="ghostcat.display.game.ICollisionClient"/>
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
+    <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
     <classEntry path="ghostcat.display.game.Tile"/>
     <classEntry path="ghostcat.display.game.Tile45"/>
     <classEntry path="ghostcat.display.game.Tile45TopLeft"/>
-    <classEntry path="ghostcat.display.game.TileGameItem"/>
-    <classEntry path="ghostcat.display.game.TileGameLayer"/>
     <classEntry path="ghostcat.display.game.ViewportCamera"/>
     <classEntry path="ghostcat.display.game.Wall"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
@@ -110,7 +106,6 @@
     <classEntry path="ghostcat.display.loader.LoaderCreater"/>
     <classEntry path="ghostcat.display.loader.StreamLoader"/>
     <classEntry path="ghostcat.display.loader.StreamTextLoader"/>
-    <classEntry path="ghostcat.display.movieclip.CollisionMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.FrameLabelUtil"/>
     <classEntry path="ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
@@ -129,6 +124,7 @@
     <classEntry path="ghostcat.display.screenshot.ScreenShotUtil"/>
     <classEntry path="ghostcat.display.transfer.Bloom"/>
     <classEntry path="ghostcat.display.transfer.BookTransfer"/>
+    <classEntry path="ghostcat.display.transfer.Boost"/>
     <classEntry path="ghostcat.display.transfer.Cataclasm"/>
     <classEntry path="ghostcat.display.transfer.GBitmapEffect"/>
     <classEntry path="ghostcat.display.transfer.GBitmapTransfer"/>
@@ -137,6 +133,7 @@
     <classEntry path="ghostcat.display.transfer.MiniMap"/>
     <classEntry path="ghostcat.display.transfer.Paper3D"/>
     <classEntry path="ghostcat.display.transfer.PixelShowTransfer"/>
+    <classEntry path="ghostcat.display.transfer.RadialBlur"/>
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
@@ -162,7 +159,6 @@
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler"/>
     <classEntry path="ghostcat.display.transition.maskmovie.ShutterMaskHandler"/>
     <classEntry path="ghostcat.events.ActionEvent"/>
-    <classEntry path="ghostcat.events.CollideEvent"/>
     <classEntry path="ghostcat.events.DragEvent"/>
     <classEntry path="ghostcat.events.GEvent"/>
     <classEntry path="ghostcat.events.InputEvent"/>
@@ -190,6 +186,7 @@
     <classEntry path="ghostcat.fileformat.swf.SWCFile"/>
     <classEntry path="ghostcat.fileformat.swf.SWFDecoder"/>
     <classEntry path="ghostcat.fileformat.swf.SWFFile"/>
+    <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DebugIDTag"/>
     <classEntry path="ghostcat.fileformat.swf.tag.DoABCTag"/>
     <classEntry path="ghostcat.fileformat.swf.tag.FileAttributesTag"/>
@@ -217,6 +214,16 @@
     <classEntry path="ghostcat.filter.FilterProxy"/>
     <classEntry path="ghostcat.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
+    <classEntry path="ghostcat.filter.WaveFilterProxy"/>
+    <classEntry path="ghostcat.game.Viewport"/>
+    <classEntry path="ghostcat.game.collision.CollideManager"/>
+    <classEntry path="ghostcat.game.collision.ICollision"/>
+    <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
+    <classEntry path="ghostcat.game.item.GameItem"/>
+    <classEntry path="ghostcat.game.item.IGameItem"/>
+    <classEntry path="ghostcat.game.item.MovieGameItem"/>
+    <classEntry path="ghostcat.game.layer.GameLayer"/>
+    <classEntry path="ghostcat.game.sort.SortItem"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
@@ -249,12 +256,14 @@
     <classEntry path="ghostcat.operation.FunctionOper"/>
     <classEntry path="ghostcat.operation.GroupOper"/>
     <classEntry path="ghostcat.operation.IOper"/>
+    <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.operation.IfOper"/>
     <classEntry path="ghostcat.operation.LoadGIFOper"/>
     <classEntry path="ghostcat.operation.LoadOper"/>
     <classEntry path="ghostcat.operation.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
     <classEntry path="ghostcat.operation.Oper"/>
+    <classEntry path="ghostcat.operation.ParallelOper"/>
     <classEntry path="ghostcat.operation.PopupOper"/>
     <classEntry path="ghostcat.operation.Queue"/>
     <classEntry path="ghostcat.operation.RandomOper"/>
@@ -466,8 +475,10 @@
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
     <classEntry path="ghostcat.util.data.XMLUtil"/>
+    <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
     <classEntry path="ghostcat.util.display.BitmapGrid9Util"/>
+    <classEntry path="ghostcat.util.display.BitmapScrollController"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
     <classEntry path="ghostcat.util.display.BitmapUtil"/>
     <classEntry path="ghostcat.util.display.ColorContant"/>
@@ -512,17 +523,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.operation.ParallelOper"/>
-    <classEntry path="ghostcat.operation.IQueue"/>
-    <classEntry path="ghostcat.fileformat.swf.SWFSelf"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
-    <classEntry path="ghostcat.display.game.Avatar"/>
-    <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
-    <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
-    <classEntry path="ghostcat.display.transfer.Boost"/>
-    <classEntry path="ghostcat.display.transfer.RadialBlur"/>
-    <classEntry path="ghostcat.filter.WaveFilterProxy"/>
-    <classEntry path="ghostcat.util.display.BitmapScrollController"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
