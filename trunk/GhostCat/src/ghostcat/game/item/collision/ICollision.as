@@ -1,4 +1,4 @@
-package ghostcat.game.collision
+package ghostcat.game.item.collision
 {
 	public interface ICollision
 	{

@@ -18,7 +18,7 @@ package ghostcat.util
 		 */		
 		public static function limitIn(v:Number,min:Number,max:Number):Number
 		{
-			return Math.min(Math.max(v,min),max);
+			return v < min ? min : v > max ? max : v;
 		}
 		
 		/**
@@ -33,16 +33,13 @@ package ghostcat.util
 		{
 			var a:Number;
 			if (dx == 0) 
-				a = Math.PI/2;
+				a = Math.PI / 2;
 			else if (dx > 0) 
 				a = Math.atan(Math.abs(dy/dx));
 			else
 				a = Math.PI - Math.atan(Math.abs(dy/dx));
 			
-			if (dy >= 0) 
-				return a;
-			else 
-				return -a;
+			return dy >= 0 ? a : -a;
 			
 		}
 		

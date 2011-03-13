@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.util.sleep
 {
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;

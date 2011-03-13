@@ -3,6 +3,7 @@ package ghostcat.display.bitmap
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -13,6 +14,7 @@ package ghostcat.display.bitmap
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.sort.SortAllManager;
+	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
@@ -41,8 +43,6 @@ package ghostcat.display.bitmap
 		public static const MODE_BITMAP:String = "bitmap";
 		
 		private var _mode:String = MODE_BITMAP;
-		
-		private var sort:SortAllManager;//用于Sprite的排序器
 		
 		/**
 		 * 绘制全局偏移量
@@ -78,21 +78,6 @@ package ghostcat.display.bitmap
 				case MODE_BITMAP:
 					setContent(new Bitmap(new BitmapData(width,height,transparent,backgroundColor)));
 					break;
-			}
-			
-			if (value == MODE_SPRITE)
-			{
-				sort = new SortAllManager(SortAllManager.SORT_Y,content as Sprite);
-				sort.addAll(children);
-			}
-			else
-			{
-				if (sort)
-				{
-					sort.removeAll();
-					sort.container = null;
-					sort = null;
-				}
 			}
 		}
 		
@@ -132,16 +117,7 @@ package ghostcat.display.bitmap
 		 */
 		public function enabledSortY():void
 		{
-			sortFields = SortAllManager.SORT_Y;
-		}
-		
-		/**
-		 * 激活45度排序 
-		 * 
-		 */
-		public function enabledSort45():void
-		{
-			sortFields = SortAllManager.SORT_45;
+			sortFields = ["y"];
 		}
 		
 		/**
@@ -260,7 +236,7 @@ package ghostcat.display.bitmap
 			if (sortFields)
 			{
 				if (mode == MODE_SPRITE)
-					sort.calculateAll(false);
+					DepthSortUtil.sortAll(children,content as DisplayObjectContainer,sortFields);
 				else
 					children.sortOn(sortFields, [Array.NUMERIC]);
 			}
