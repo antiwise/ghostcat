@@ -193,11 +193,6 @@ package ghostcat.display
 			_selected = v;
 		}
 		
-		/**
-		 * Tick执行优先级
-		 */
-		public var priority:int = 0;
-		
 		/** @inheritDoc */	
 		public function get paused():Boolean
 		{
@@ -212,7 +207,7 @@ package ghostcat.display
 			_paused = v;
 			
 			if (!_paused && _enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,priority);
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
 			else
 				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}

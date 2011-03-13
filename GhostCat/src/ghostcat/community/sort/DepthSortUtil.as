@@ -34,7 +34,7 @@ package ghostcat.community.sort
 			}
 		}
 		
-		public function sort(child:DisplayObject,container:DisplayObjectContainer,sortFields:* = null):void
+		static public function sort(child:DisplayObject,container:DisplayObjectContainer,sortFields:* = null):void
 		{
 			if (sortFields == null)
 				sortFields = "y";
@@ -75,7 +75,9 @@ package ghostcat.community.sort
 					}
 				}
 			}
-			container.addChild(child);
+			
+			if (container.getChildIndex(v) != l - 1)
+				container.addChild(child);
 		}
 	}
 }

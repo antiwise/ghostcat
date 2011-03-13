@@ -212,17 +212,14 @@
     <classEntry path="ghostcat.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.filter.WaveFilterProxy"/>
-    <classEntry path="ghostcat.game.Viewport"/>
     <classEntry path="ghostcat.game.layer.collision.CollisionManager"/>
     <classEntry path="ghostcat.game.item.collision.ICollision"/>
-    <classEntry path="ghostcat.game.item.BitmapLabelMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
     <classEntry path="ghostcat.game.item.IGameItem"/>
-    <classEntry path="ghostcat.game.item.LabelMovieGameItem"/>
-    <classEntry path="ghostcat.game.layer.GameLayer"/>
-    <classEntry path="ghostcat.game.item.sort.ISortItem"/>
-    <classEntry path="ghostcat.game.item.sort.Sort45Item"/>
-    <classEntry path="ghostcat.game.item.sort.SortYItem"/>
+    <classEntry path="ghostcat.game.layer.GameLayerBase"/>
+    <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
+    <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
+    <classEntry path="ghostcat.game.item.sort.SortYCalculater"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
@@ -523,7 +520,15 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.game.item.BitmapGameItem"/>
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
-    <classEntry path="ghostcat.game.layer.sort.PrioritySortManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
+    <classEntry path="ghostcat.display.game.CollisionSprite"/>
+    <classEntry path="ghostcat.game.layer.GameLayer"/>
+    <classEntry path="ghostcat.game.layer.BitmapGameLayer"/>
+    <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortYManager"/>
+    <classEntry path="ghostcat.game.layer.position.SimplePositionManager"/>
+    <classEntry path="ghostcat.game.layer.position.IPositionManager"/>
+    <classEntry path="ghostcat.game.layer.collision.ICollisionManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

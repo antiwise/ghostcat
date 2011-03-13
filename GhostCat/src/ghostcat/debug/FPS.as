@@ -2,11 +2,13 @@ package ghostcat.debug
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
-	import ghostcat.util.Tick;
 	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
 
 	/**
 	 * 这个类提供了FPS监控功能，可以用作性能优化的标准
@@ -33,12 +35,16 @@ package ghostcat.debug
 		{
 			super();
 			
+			var b:Bitmap = new Bitmap(new BitmapData(80,20,false,0x0));
+			addChild(b);
+			
 			mouseEnabled = mouseChildren = false;
         	
 			fpsTextField = new TextField();
 			fpsTextField.width = 60;
 			fpsTextField.height = 16;
 			fpsTextField.selectable = false;
+			fpsTextField.defaultTextFormat = new TextFormat(null,null,0xFFFFFF);
 			addChild(fpsTextField);
 			
 			bitmap = new Bitmap(new BitmapData(20,20,true,0x00FFFFFF));

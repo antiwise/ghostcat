@@ -4,6 +4,7 @@ package ghostcat.game.item
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.TickEvent;
+	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.util.Tick;
 
 	/**
@@ -26,6 +27,17 @@ package ghostcat.game.item
 			this.bitmapDatas = bitmapDatas;
 			this.frameRate = frameRate;
 			this.currentFrame = 0;
+			
+			this.enabledTick = true;
+		}
+		
+		/**
+		 * 随机设置时间初值，可以错开图片更新时机增加性能 
+		 * 
+		 */
+		public function randomFrameTimer():void
+		{
+			this.frameTimer += Math.random() * 1000 / frameRate;
 		}
 		
 		public function get currentFrame():int
@@ -35,6 +47,9 @@ package ghostcat.game.item
 
 		public function set currentFrame(value:int):void
 		{
+			if (!bitmapDatas)
+				return;
+			
 			var totalFrame:int = bitmapDatas.length;
 			if (value >= totalFrame)
 				value = totalFrame - 1;
@@ -45,7 +60,7 @@ package ghostcat.game.item
 		
 		public function get totalFrame():int
 		{
-			return bitmapDatas.length;
+			return bitmapDatas ? bitmapDatas.length : 0;
 		}
 
 		/** @inheritDoc */	
@@ -69,6 +84,9 @@ package ghostcat.game.item
 		
 		protected function tickHandler(event:TickEvent):void
 		{
+			if (!bitmapDatas)
+				return;
+				
 			frameTimer -= event.interval;
 			while (frameTimer < 0) 
 			{
