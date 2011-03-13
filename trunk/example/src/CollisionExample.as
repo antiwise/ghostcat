@@ -28,6 +28,7 @@ package
 	 * @author flashyiyi
 	 * 
 	 */
+	
 	public class CollisionExample extends GBase
 	{
 		public var b:CollisionSprite;

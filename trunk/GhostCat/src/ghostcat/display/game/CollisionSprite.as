@@ -7,10 +7,10 @@ package ghostcat.display.game
 	/**
 	 * 支持不规则碰撞的显示对象
 	 * 
-	 * @author Administrator
+	 * @author flashyiyi
 	 * 
 	 */
-	public class CollisionSprite extends GBase implements ICollisionClient
+	public class CollisionSprite extends GBase
 	{
 		/**
 		 * 碰撞检测块。这个属性指示的是图形的实体。

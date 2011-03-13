@@ -3,8 +3,9 @@ package ghostcat.game.item.sort
 	import flash.display.DisplayObject;
 	
 	import ghostcat.display.game.Display45Util;
+	import ghostcat.game.item.IGameItem;
 
-	public class Sort45Item implements ISortItem
+	public class Sort45Calculater implements ISortCalculater
 	{
 		/**
 		 * 网格宽高比
@@ -18,9 +19,7 @@ package ghostcat.game.item.sort
 		public var target:DisplayObject;
 		public var offestY:Number = 0.0;
 		
-		private var _priority:Number;
-		
-		public function Sort45Item(target:DisplayObject)
+		public function Sort45Calculater(target:DisplayObject)
 		{
 			this.target = target;
 		}
@@ -31,12 +30,7 @@ package ghostcat.game.item.sort
 			var targetY:Number = target.y + offestY;
 			var x:Number = targetX + targetY * wh
 			var y:Number = targetY - targetX / wh;
-			_priority = x + y * maxViewportWidth; 
-		}
-		
-		public function get priority():Number
-		{
-			return _priority;
+			IGameItem(target).priority = x + y * maxViewportWidth; 
 		}
 	}
 }
