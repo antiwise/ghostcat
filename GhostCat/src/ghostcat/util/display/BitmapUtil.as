@@ -54,6 +54,34 @@ package ghostcat.util.display
 		}
 		
 		/**
+		 * 水平翻转
+		 */
+		public static function flipH(source:BitmapData,disposeSource:Boolean = true):BitmapData
+		{
+			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent);
+			var m:Matrix = new Matrix();
+			m.a = -m.a;
+			result.draw(source,m);
+			if (disposeSource)
+				source.dispose()
+			return result;
+		}
+		
+		/**
+		 * 垂直翻转
+		 */		
+		public static function flipV(source:BitmapData,disposeSource:Boolean = true):BitmapData
+		{
+			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent);
+			var m:Matrix = new Matrix();
+			m.d = -m.d;
+			result.draw(source,m);
+			if (disposeSource)
+				source.dispose()
+			return result;
+		}
+		
+		/**
 		 * 截取BitmapData
 		 * 
 		 * @param source

@@ -1,13 +1,85 @@
 package ghostcat.game.item
 {
-	import ghostcat.display.movieclip.GBitmapMovieClip;
+	import flash.events.Event;
 	
-	public class BitmapMovieGameItem extends GBitmapMovieClip implements IGameItem
+	import ghostcat.display.bitmap.IBitmapDataDrawer;
+	import ghostcat.events.TickEvent;
+	import ghostcat.util.Tick;
+
+	/**
+	 * 动画对象 
+	 * @author flashyiyi
+	 * 
+	 */
+	public class BitmapMovieGameItem extends BitmapGameItem
 	{
-		public function BitmapMovieGameItem(bitmaps:Array=null, labels:Array=null, paused:Boolean=false)
+		public var bitmapDatas:Array;
+		public var frameRate:Number;
+		
+		private var _enabledTick:Boolean;
+		private var _currentFrame:int;
+		private var frameTimer:int;
+		public function BitmapMovieGameItem(bitmapDatas:Array,frameRate:Number)
 		{
-			super(bitmaps, labels, paused);
-			this.enabledDelayUpdate = false;
+			super(null);
+			
+			this.bitmapDatas = bitmapDatas;
+			this.frameRate = frameRate;
+			this.currentFrame = 0;
 		}
+		
+		public function get currentFrame():int
+		{
+			return _currentFrame;
+		}
+
+		public function set currentFrame(value:int):void
+		{
+			var totalFrame:int = bitmapDatas.length;
+			if (value >= totalFrame)
+				value = totalFrame - 1;
+			
+			_currentFrame = value;
+			bitmapData = bitmapDatas[value];
+		}
+		
+		public function get totalFrame():int
+		{
+			return bitmapDatas.length;
+		}
+
+		/** @inheritDoc */	
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
+		}
+		
+		public function set enabledTick(v:Boolean):void
+		{
+			if (_enabledTick == v)
+				return;
+			
+			_enabledTick = v;
+			
+			if (_enabledTick)
+				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+		
+		protected function tickHandler(event:TickEvent):void
+		{
+			frameTimer -= event.interval;
+			while (frameTimer < 0) 
+			{
+				if (currentFrame == bitmapDatas.length - 1)
+					currentFrame = 0;
+				else
+					currentFrame++;
+				
+				frameTimer += 1000 / frameRate;
+			}
+		}
+		
 	}
 }

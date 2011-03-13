@@ -11,7 +11,7 @@ package ghostcat.util
 	 * @author flashyiyi
 	 * 
 	 */
-	public class EventUtil
+	final public class EventUtil
 	{
 		/**
 		 * 添加一个只执行一次的事件 
@@ -22,7 +22,7 @@ package ghostcat.util
 		 * @param param	参数列表
 		 * 
 		 */
-		public static function addEventListenerOnce(target:IEventDispatcher,type:String,handler:Function,useParam:Boolean = false, param:Array = null):void
+		static public function addEventListenerOnce(target:IEventDispatcher,type:String,handler:Function,useParam:Boolean = false, param:Array = null):void
 		{
 			target.addEventListener(type,eventHandler);
 			function eventHandler(e:Event):void

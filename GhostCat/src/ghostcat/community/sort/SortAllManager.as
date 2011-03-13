@@ -18,8 +18,6 @@ package ghostcat.community.sort
 	{
 		public static const SORT_Y:Array = ["y"];
 		
-		public static const SORT_45:Function = Display45Util.SORT_45;
-		
 		public var sortFields:*;
 		
 		public function SortAllManager(sortFields:*,cotainer:DisplayObjectContainer = null)
@@ -42,20 +40,7 @@ package ghostcat.community.sort
 			if (onlyFilter && Util.isEmpty(dirtys))
 				return;
 			
-			var result:Array;
-			if (sortFields is Array) 
-				result = data.sortOn(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
-			else if (sortFields is Function)
-				result = data.sort(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
-			else
-				return;
-				
-			for (var i:int = 0; i < result.length; i++)
-			{
-				var v:DisplayObject = data[result[i]] as DisplayObject;
-				if (v.parent == container && container.getChildIndex(v) != i)
-					container.setChildIndex(v,i);
-			}
+			DepthSortUtil.sortAll(data,container,sortFields);
 			
 			dirtys = new Dictionary();
 		}

@@ -40,7 +40,7 @@ package ghostcat.util.data
         		bytes.writeDouble(obj);
         	else if (obj is Array)
         	{
-        		bytes.writeShort(obj);
+        		bytes.writeShort(obj.length);
         		for (var i:int = 0; i < obj.length;i++)
         			copyToByteArray(obj[i],bytes);
         	}

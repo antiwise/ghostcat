@@ -1,12 +1,15 @@
 package ghostcat.game.item
 {
-	import ghostcat.display.GBase;
+	import flash.display.Sprite;
 	
-	public class GameItem extends GBase implements IGameItem
+	import ghostcat.display.GBase;
+	import ghostcat.display.GSprite;
+	
+	public class GameItem extends Sprite implements IGameItem
 	{
-		public function GameItem(skin:*=null)
+		public function GameItem()
 		{
-			super(skin);
+			super();
 		}
 	}
 }
