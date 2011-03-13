@@ -143,7 +143,7 @@ package ghostcat.display.bitmap
 			if (bitmapByteArrayCacher)
 				bitmapByteArrayCacher.drawToBitmapData(target,getGlobalPosition());
 			else
-				target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition());
+				target.copyPixels(bitmapData,bitmapData.rect,getGlobalPosition(),null,null,true);
 			
 			var children:Array = this.children;
 			if (children)

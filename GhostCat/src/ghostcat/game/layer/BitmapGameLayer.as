@@ -17,7 +17,7 @@ package ghostcat.game.layer
 			super();
 			
 			this.isBitmapEngine = true;
-			this.screen = new Bitmap(new BitmapData(width,height,false));
+			this.screen = new Bitmap(new BitmapData(width,height));
 			this.addChild(this.screen);
 		}
 		
