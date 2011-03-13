@@ -695,7 +695,7 @@ package ghostcat.display.bitmap
 				if (bitmapByteArrayCacher)
 					bitmapByteArrayCacher.drawToBitmapData(target,position.add(offest));
 				else
-					target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
+					target.copyPixels(bitmapData,bitmapData.rect,position.add(offest),null,null,true);
 			}
 		}		
 		

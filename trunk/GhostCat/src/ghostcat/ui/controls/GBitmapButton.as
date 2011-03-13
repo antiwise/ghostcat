@@ -94,7 +94,7 @@ package ghostcat.ui.controls
 		{
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,position.add(offest));
+				target.copyPixels(bitmapData,bitmapData.rect,position.add(offest),null,null,true);
 		}
 		
 		/** @inheritDoc*/
