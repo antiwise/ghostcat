@@ -4,7 +4,7 @@ package ghostcat.game.layer.sort
 	{
 		public function SortYManager()
 		{
-			super(["y"]);
+			super("y");
 		}
 	}
 }
