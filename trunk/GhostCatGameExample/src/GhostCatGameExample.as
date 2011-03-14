@@ -1,14 +1,19 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
+	import flash.geom.Transform;
 	
 	import ghostcat.community.sort.SortAllManager;
+	import ghostcat.debug.Debug;
 	import ghostcat.debug.FPS;
 	import ghostcat.game.layer.BitmapGameLayer;
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.game.layer.sort.SortYManager;
 	import ghostcat.util.display.BitmapSeparateUtil;
+	import ghostcat.util.display.DisplayLayoutAnalyse;
+	import ghostcat.util.display.MatrixUtil;
 	
 	[SWF(width="800",height="600",frameRate="60",backgroundColor="0xFFFFFF")]
 	public class GhostCatGameExample extends Sprite
@@ -28,6 +33,13 @@ package
 		public function GhostCatGameExample()
 		{
 			instanse = this;
+			var m:Matrix = new Matrix();
+			m.scale(0.5,2);
+			m.rotate(Math.PI / 2);
+			m.translate(100,100);
+			Debug.DEBUG = true;
+			Debug.traceObject(null,MatrixUtil.toObject(m));
+			return;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
 			layer = new BitmapGameLayer(800,600);

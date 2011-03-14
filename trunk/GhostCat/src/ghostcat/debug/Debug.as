@@ -128,7 +128,7 @@ package ghostcat.debug
 			if (filters && filters.length > 0)
 			{
 				for each (key in filters)
-				result += " " + key + "=" + obj[key];
+					result += " " + key + "=" + obj[key];
 			}
 			else
 			{

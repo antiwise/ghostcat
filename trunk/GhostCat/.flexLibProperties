@@ -77,7 +77,6 @@
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
     <classEntry path="ghostcat.display.game.Collision"/>
-    <classEntry path="ghostcat.display.game.CollisionSprite"/>
     <classEntry path="ghostcat.display.game.Display45Util"/>
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
@@ -509,6 +508,8 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
+    <classEntry path="ghostcat.util.data.XMLConversionUtil"/>
+    <classEntry path="ghostcat.util.display.DisplayLayoutAnalyse"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
