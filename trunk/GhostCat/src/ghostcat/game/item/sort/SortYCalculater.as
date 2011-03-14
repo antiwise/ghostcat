@@ -2,7 +2,6 @@ package ghostcat.game.item.sort
 {
 	import flash.display.DisplayObject;
 	
-	import ghostcat.game.item.IGameItem;
 
 	public class SortYCalculater implements ISortCalculater
 	{
@@ -14,9 +13,9 @@ package ghostcat.game.item.sort
 			this.target = target;
 		}
 		
-		public function calculate():void
+		public function calculate():Number
 		{
-			IGameItem(target).priority = target.y + offestY;
+			return target.y + offestY;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="1">
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="1">
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
@@ -39,7 +39,6 @@
     <classEntry path="ghostcat.community.physics.PhysicsUtil"/>
     <classEntry path="ghostcat.community.physics.RoupeLink"/>
     <classEntry path="ghostcat.community.sort.SortAllManager"/>
-    <classEntry path="ghostcat.community.sort.DepthSortUtil"/>
     <classEntry path="ghostcat.community.tween.TweenGroupByValue"/>
     <classEntry path="ghostcat.community.tween.TweenGroupDelay"/>
     <classEntry path="ghostcat.debug.Debug"/>
@@ -77,6 +76,8 @@
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
+    <classEntry path="ghostcat.display.game.Collision"/>
+    <classEntry path="ghostcat.display.game.CollisionSprite"/>
     <classEntry path="ghostcat.display.game.Display45Util"/>
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
@@ -212,14 +213,6 @@
     <classEntry path="ghostcat.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.filter.WaveFilterProxy"/>
-    <classEntry path="ghostcat.game.layer.collision.CollisionManager"/>
-    <classEntry path="ghostcat.game.item.collision.ICollision"/>
-    <classEntry path="ghostcat.game.item.GameItem"/>
-    <classEntry path="ghostcat.game.item.IGameItem"/>
-    <classEntry path="ghostcat.game.layer.GameLayerBase"/>
-    <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
-    <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
-    <classEntry path="ghostcat.game.item.sort.SortYCalculater"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
@@ -446,8 +439,6 @@
     <classEntry path="ghostcat.util.ReflectUtil"/>
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
-    <classEntry path="ghostcat.util.sleep.SleepCheck"/>
-    <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
@@ -518,17 +509,6 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.game.item.BitmapGameItem"/>
-    <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
-    <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
-    <classEntry path="ghostcat.display.game.CollisionSprite"/>
-    <classEntry path="ghostcat.game.layer.GameLayer"/>
-    <classEntry path="ghostcat.game.layer.BitmapGameLayer"/>
-    <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
-    <classEntry path="ghostcat.game.layer.sort.SortYManager"/>
-    <classEntry path="ghostcat.game.layer.position.SimplePositionManager"/>
-    <classEntry path="ghostcat.game.layer.position.IPositionManager"/>
-    <classEntry path="ghostcat.game.layer.collision.ICollisionManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

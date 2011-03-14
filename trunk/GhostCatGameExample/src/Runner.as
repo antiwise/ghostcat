@@ -37,8 +37,8 @@ package
 		{
 			super.tickHandler(event);
 			
-			position.x += RUNX[type] * 2;
-			position.y += RUNY[type] * 2;
+			position.x += RUNX[type] * event.interval / 20;
+			position.y += RUNY[type] * event.interval / 20;
 			
 			if (position.x < -width)
 				position.x = GhostCatGameExample.instanse.STAGE_W;
