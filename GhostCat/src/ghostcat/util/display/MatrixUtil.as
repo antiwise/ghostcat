@@ -12,6 +12,31 @@ package ghostcat.util.display
 	public final class MatrixUtil
 	{
 		/**
+		 * 通过一组属性来创建Matrix
+		 * @param obj
+		 * @return 
+		 * 
+		 */
+		public static function createFromObject(obj:Object):Matrix
+		{
+			var m:Matrix = new Matrix();
+			m.createBox(obj.scaleX,obj.scaleY,obj.rotation / 180 * Math.PI,obj.x,obj.y);
+			return m;
+		}
+		
+		/**
+		 * 从Matrix中输出一组属性
+		 * @param m
+		 * @return 
+		 * 
+		 */
+		public static function toObject(m:Matrix):Object
+		{
+			var rotate:Number = Math.atan(m.b / m.a);
+			return {x:m.tx,y:m.ty,rotation:rotate * 180 / Math.PI,scaleX:m.b / Math.sin(rotate),scaleY:m.d / Math.cos(rotate)};
+		}
+		
+		/**
 		 * 获得对象到另一个对象的Matrix
 		 *  
 		 * @param obj

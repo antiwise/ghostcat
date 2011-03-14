@@ -3,9 +3,12 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
+	import flexunit.utils.Collection;
+	
 	import ghostcat.debug.DebugScreen;
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
+	import ghostcat.display.game.Collision;
 	import ghostcat.display.game.CollisionSprite;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
@@ -31,7 +34,8 @@ package
 	
 	public class CollisionExample extends GBase
 	{
-		public var b:CollisionSprite;
+		public var collision:Collision;
+		public var body:GBase;
 		
 		public var point:GBase;
 			
@@ -40,9 +44,11 @@ package
 			RootManager.register(this);
 			
 			//建立一个支持检测碰撞的图元
-			b = new CollisionSprite(new TestCollision())
-			Geom.centerIn(b,stage);
-			addChild(b);
+			body = new GBase(new TestCollision())
+			Geom.centerIn(body,stage);
+			addChild(body);
+			
+			collision = new Collision(body.content);
 			
 			//建立一个点
 			point = new GBase(new EllipseParse(new GraphicsEllipse(0,0,6,6),null,new GraphicsFill(0)).createShape());
@@ -61,13 +67,15 @@ package
 			point.y = mouseY;
 			
 			//检测碰撞，并将点的位置重新设置在碰撞处
-			if (b.collision.hitTestPoint(new Point(mouseX,mouseY),point.oldPosition))
+			if (collision.hitTestPoint(new Point(mouseX,mouseY),point.oldPosition))
 			{
-				b.filters = [new GlowFilter(0xFFFFFF,1,30,30)];
-				point.position = b.collision.lastVergePoint;
+				body.filters = [new GlowFilter(0xFFFFFF,1,30,30)];
+				point.position = collision.lastVergePoint;
 			}
 			else
-				b.filters = [];
+			{
+				body.filters = [];
+			}
 		}
 	}
 }
