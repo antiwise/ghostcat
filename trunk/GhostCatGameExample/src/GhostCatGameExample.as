@@ -14,6 +14,7 @@ package
 	import ghostcat.game.layer.BitmapGameLayer;
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.position.Tile45PositionManager;
 	import ghostcat.game.layer.sort.SortYManager;
 	import ghostcat.gxml.spec.Spec;
 	import ghostcat.util.data.Json;
@@ -43,6 +44,7 @@ package
 			
 			layer = new BitmapGameLayer(800,600);
 			layer.sort = new SortYManager();
+//			layer.position = new Tile45PositionManager(1,1,400);
 			addChild(layer);
 			
 			for (var i:int = 0;i < MAX_RUNNER;i++)
