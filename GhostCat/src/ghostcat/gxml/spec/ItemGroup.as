@@ -17,10 +17,23 @@ package ghostcat.gxml.spec
 		 * id属性名
 		 */
 		public var idField:String = "id";
+		
+		private var _data:Array = [];
+		
 		/**
 		 * 数据列表
 		 */
-		public var data:Array = [];
+		public function get data():Array
+		{
+			return _data;
+		}
+
+		public function set data(value:Array):void
+		{
+			_data = value;
+			refreshMap();
+		}
+
 		/**
 		 * 数据ID字典
 		 */
@@ -46,6 +59,18 @@ package ghostcat.gxml.spec
 		public function getItemById(id:*):*
 		{
 			return map[id];
+		}
+		
+		/**
+		 * 更新Map 
+		 * 
+		 */
+		public function refreshMap():void
+		{
+			for each (var item:* in data)
+			{
+				map[item[idField]] = item;
+			}
 		}
 	}
 }

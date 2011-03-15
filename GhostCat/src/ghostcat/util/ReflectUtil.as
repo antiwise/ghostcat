@@ -169,7 +169,7 @@ package ghostcat.util
 		{
 			var ins:ReflectUtil = getDescribeTypeCache(obj);
 			var result:Object = {};
-			for (var k:String in ins.propertys)
+			for each (var k:String in ins.propertys)
 			{
 				if (obj.hasOwnProperty(k))
 				{

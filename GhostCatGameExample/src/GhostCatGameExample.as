@@ -1,7 +1,11 @@
 package
 {
+	import flash.display.DisplayObject;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Transform;
 	
 	import ghostcat.community.sort.SortAllManager;
@@ -11,6 +15,8 @@ package
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.game.layer.sort.SortYManager;
+	import ghostcat.gxml.spec.Spec;
+	import ghostcat.util.data.Json;
 	import ghostcat.util.display.BitmapSeparateUtil;
 	import ghostcat.util.display.DisplayLayoutAnalyse;
 	import ghostcat.util.display.MatrixUtil;
@@ -33,13 +39,6 @@ package
 		public function GhostCatGameExample()
 		{
 			instanse = this;
-			var m:Matrix = new Matrix();
-			m.scale(0.5,2);
-			m.rotate(Math.PI / 2);
-			m.translate(100,100);
-			Debug.DEBUG = true;
-			Debug.traceObject(null,MatrixUtil.toObject(m));
-			return;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
 			layer = new BitmapGameLayer(800,600);

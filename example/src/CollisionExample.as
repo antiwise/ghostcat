@@ -9,7 +9,6 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.display.game.Collision;
-	import ghostcat.display.game.CollisionSprite;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.EllipseParse;
