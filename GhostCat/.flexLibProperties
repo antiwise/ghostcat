@@ -213,6 +213,7 @@
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.filter.WaveFilterProxy"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
+    <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
     <classEntry path="ghostcat.gxml.spec.ItemGroup"/>
@@ -509,7 +510,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
+    <classEntry path="ghostcat.game.layer.camera.ICamera"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

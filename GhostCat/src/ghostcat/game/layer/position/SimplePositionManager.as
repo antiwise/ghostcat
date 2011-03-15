@@ -4,15 +4,24 @@ package ghostcat.game.layer.position
 
 	public class SimplePositionManager implements IPositionManager
 	{
+		public var offestX:Number;
+		public var offestY:Number;
+		
+		public function SimplePositionManager(offestX:Number = 0.0,offestY:Number = 0.0):void
+		{
+			this.offestX = offestX;
+			this.offestY = offestY;
+		}
+		
 		public function getObjectPosition(obj:*):Point
 		{
-			return new Point(obj.x,obj.y);
+			return new Point(obj.x - offestX,obj.y - offestY);
 		}
 		
 		public function setObjectPosition(obj:*, p:Point):void
 		{
-			obj.x = p.x;
-			obj.y = p.y;
+			obj.x = p.x + offestX;
+			obj.y = p.y + offestY;
 		}
 		
 	}

@@ -6,6 +6,7 @@ package ghostcat.game.layer
 	
 	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.events.TickEvent;
+	import ghostcat.game.layer.camera.ICamera;
 	import ghostcat.game.layer.collision.ICollisionManager;
 	import ghostcat.game.layer.position.IPositionManager;
 	import ghostcat.game.layer.sort.ISortManager;
@@ -17,9 +18,11 @@ package ghostcat.game.layer
 	public class GameLayerBase extends Sprite
 	{
 		public var isBitmapEngine:Boolean;
+		
 		public var children:Array = [];;
 		public var childrenInScreen:Array = [];
-		public var camera:*;
+		
+		public var camera:ICamera;
 		public var collision:ICollisionManager;
 		public var position:IPositionManager;
 		public var sort:ISortManager;
@@ -79,8 +82,14 @@ package ghostcat.game.layer
 		
 		protected function tickHandler(event:TickEvent):void
 		{
+			if (camera)
+				camera.render(this);
+			
 			if (sort)
 				sort.sortAll(this);
+			
+			if (collision)
+				collision.collideAll(this);
 		}
 	}
 }
