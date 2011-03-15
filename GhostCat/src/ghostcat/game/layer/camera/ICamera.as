@@ -4,6 +4,6 @@ package ghostcat.game.layer.camera
 
 	public interface ICamera
 	{
-		function render(layer:GameLayerBase):void
+		function render():void
 	}
 }

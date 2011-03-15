@@ -83,13 +83,13 @@ package ghostcat.game.layer
 		protected function tickHandler(event:TickEvent):void
 		{
 			if (camera)
-				camera.render(this);
+				camera.render();
 			
 			if (sort)
-				sort.sortAll(this);
+				sort.sortAll();
 			
 			if (collision)
-				collision.collideAll(this);
+				collision.collideAll();
 		}
 	}
 }

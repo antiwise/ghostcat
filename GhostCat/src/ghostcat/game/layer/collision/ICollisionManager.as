@@ -4,6 +4,6 @@ package ghostcat.game.layer.collision
 
 	public interface ICollisionManager
 	{
-		function collideAll(layer:GameLayerBase):void;
+		function collideAll():void;
 	}
 }
