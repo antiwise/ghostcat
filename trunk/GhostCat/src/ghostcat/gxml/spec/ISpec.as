@@ -21,7 +21,7 @@ package ghostcat.gxml.spec
 		 * @param source	数据源
 		 * 
 		 */
-		function createObject(xml:XML):*
+		function createObject(value:XML):*
 		
 		/**
 		 * 附加子对象
@@ -31,7 +31,7 @@ package ghostcat.gxml.spec
 		 * @param xml	数据源
 		 * 
 		 */
-		function addChild(source:*,child:*,xml:XML):void
+		function addChild(source:*,child:*,value:XML):void
 		
 		/**
 		 * 给子对象赋初值
@@ -41,6 +41,6 @@ package ghostcat.gxml.spec
 		 * @param xml	数据源
 		 * 
 		 */
-		function applyProperties(source:*,child:*,xml:XML):void
+		function applyProperties(source:*,child:*,value:XML):void
 	}
 }

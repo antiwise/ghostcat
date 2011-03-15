@@ -469,6 +469,7 @@
     <classEntry path="ghostcat.util.display.ColorContant"/>
     <classEntry path="ghostcat.util.display.ColorConvertUtil"/>
     <classEntry path="ghostcat.util.display.ColorUtil"/>
+    <classEntry path="ghostcat.util.display.DisplayLayoutAnalyse"/>
     <classEntry path="ghostcat.util.display.DisplayUtil"/>
     <classEntry path="ghostcat.util.display.FilterUtil"/>
     <classEntry path="ghostcat.util.display.Geom"/>
@@ -508,8 +509,7 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.data.XMLConversionUtil"/>
-    <classEntry path="ghostcat.util.display.DisplayLayoutAnalyse"/>
+    <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

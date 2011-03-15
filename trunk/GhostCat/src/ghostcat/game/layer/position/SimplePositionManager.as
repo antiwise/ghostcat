@@ -4,10 +4,6 @@ package ghostcat.game.layer.position
 
 	public class SimplePositionManager implements IPositionManager
 	{
-		public function SimplePositionManager()
-		{
-		}
-		
 		public function getObjectPosition(obj:*):Point
 		{
 			return new Point(obj.x,obj.y);
