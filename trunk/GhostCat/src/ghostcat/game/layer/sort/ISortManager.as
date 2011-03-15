@@ -4,6 +4,6 @@ package ghostcat.game.layer.sort
 
 	public interface ISortManager
 	{
-		function sortAll(layer:GameLayerBase):void;
+		function sortAll():void;
 	}
 }

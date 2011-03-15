@@ -28,7 +28,7 @@ package
 		static public var instanse:GhostCatGameExample;
 		public const STAGE_W:int = 800;
 		public const STAGE_H:int = 600;
-		public const MAX_RUNNER:int = 1000;
+		public const MAX_RUNNER:int = 500;
 		
 		[Embed(source="walk.png")]
 		public var walk:Class;
@@ -43,8 +43,8 @@ package
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
 			layer = new BitmapGameLayer(800,600);
-			layer.sort = new SortYManager();
-//			layer.position = new Tile45PositionManager(1,1,400);
+			layer.sort = new SortYManager(layer);
+//			layer.position = new Tile45PositionManager(layer,1,1,400);
 			addChild(layer);
 			
 			for (var i:int = 0;i < MAX_RUNNER;i++)

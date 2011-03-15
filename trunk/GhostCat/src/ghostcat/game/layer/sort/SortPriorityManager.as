@@ -13,13 +13,15 @@ package ghostcat.game.layer.sort
 	
 	public class SortPriorityManager implements ISortManager
 	{
+		public var layer:GameLayerBase;
 		public var sortFields:*;
-		public function SortPriorityManager(sortFields:* = "priority")
+		public function SortPriorityManager(layer:GameLayerBase,sortFields:* = "priority")
 		{
+			this.layer = layer;
 			this.sortFields = sortFields;
 		}
 		
-		public function sort(layer:GameLayerBase,child:*):void
+		public function sort(child:*):void
 		{
 			var i:int;
 			var l:int;
@@ -89,7 +91,7 @@ package ghostcat.game.layer.sort
 			return false;
 		}
 		
-		public function sortAll(layer:GameLayerBase):void
+		public function sortAll():void
 		{
 			if (layer.isBitmapEngine)
 			{

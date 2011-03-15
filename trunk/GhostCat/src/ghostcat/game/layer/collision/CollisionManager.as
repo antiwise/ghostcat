@@ -8,6 +8,7 @@ package ghostcat.game.layer.collision
 	
 	public class CollisionManager implements ICollisionManager
 	{
+		public var layer:GameLayerBase;
 		/**
 		 * 检测字段 
 		 */
@@ -17,13 +18,14 @@ package ghostcat.game.layer.collision
 		 */
 		public var limitInScreen:Boolean;
 		public var collisions:Array = [];
-		public function CollisionManager(field:String = "collision",limitInScreen:Boolean = false)
+		public function CollisionManager(layer:GameLayerBase,field:String = "collision",limitInScreen:Boolean = false)
 		{
+			this.layer = layer;
 			this.field = field;
 			this.limitInScreen = limitInScreen;
 		}
 		
-		public function collideAll(layer:GameLayerBase):void
+		public function collideAll():void
 		{
 			this.collisions = [];
 			
