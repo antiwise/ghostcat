@@ -57,27 +57,20 @@ package ghostcat.game.layer
 		
 		public function setObjectPosition(obj:DisplayObject,p:Point):void
 		{
-			if (!position)
-			{
-				obj.x = p.x;
-				obj.y = p.y;
-			}
-			else
-			{
-				position.setObjectPosition(obj,p);
-			}
+			if (position)
+				p = position.transform(p);
+			
+			obj.x = p.x;
+			obj.y = p.y;
 		}
 		
 		public function getObjectPosition(obj:DisplayObject):Point
 		{
-			if (!position)
-			{
-				return new Point(obj.x,obj.y);
-			}
-			else
-			{
-				return position.getObjectPosition(obj);
-			}
+			var p:Point = new Point(obj.x,obj.y);
+			if (position)
+				p = position.untransform(p);
+			
+			return p;
 		}
 		
 		protected function tickHandler(event:TickEvent):void

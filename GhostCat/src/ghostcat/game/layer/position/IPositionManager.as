@@ -6,7 +6,7 @@ package ghostcat.game.layer.position
 
 	public interface IPositionManager
 	{
-		function setObjectPosition(obj:*,p:Point):void
-		function getObjectPosition(obj:*):Point;
+		function transform(p:Point):Point
+		function untransform(p:Point):Point;
 	}
 }

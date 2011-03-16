@@ -11,21 +11,20 @@ package ghostcat.game.layer.position
 			super(tileWidth,tileHeight,offestX,offestY);
 		}
 		
-		public override function getObjectPosition(obj:*):Point
-		{
-			var x:Number = obj.x;
-			var y:Number = obj.y;
-			var wh:Number = tileWidth / tileHeight;
-			return new Point((x + y * wh) / tileWidth - offestX,(y - x / wh) / tileHeight - offestY);
-		}
-		
-		public override function setObjectPosition(obj:*, p:Point):void
+		public override function untransform(p:Point):Point
 		{
 			var x:Number = p.x;
 			var y:Number = p.y;
 			var wh:Number = tileWidth / tileHeight;
-			obj.x = (x - y * wh) / 2 * tileWidth + offestX;
-			obj.y = (x / wh + y) / 2 * tileHeight + offestY;
+			return new Point((x + y * wh) / tileWidth - offestX,(y - x / wh) / tileHeight - offestY);
+		}
+		
+		public override function transform(p:Point):Point
+		{
+			var x:Number = p.x;
+			var y:Number = p.y;
+			var wh:Number = tileWidth / tileHeight;
+			return new Point((x - y * wh) / 2 * tileWidth + offestX, (x / wh + y) / 2 * tileHeight + offestY);
 		}
 	}
 }

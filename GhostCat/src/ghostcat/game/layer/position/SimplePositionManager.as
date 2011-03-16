@@ -13,15 +13,14 @@ package ghostcat.game.layer.position
 			this.offestY = offestY;
 		}
 		
-		public function getObjectPosition(obj:*):Point
+		public function untransform(p:Point):Point
 		{
-			return new Point(obj.x - offestX,obj.y - offestY);
+			return new Point(p.x - offestX,p.y - offestY);
 		}
 		
-		public function setObjectPosition(obj:*, p:Point):void
+		public function transform(p:Point):Point
 		{
-			obj.x = p.x + offestX;
-			obj.y = p.y + offestY;
+			return new Point(p.x + offestX,p.y + offestY);
 		}
 		
 	}
