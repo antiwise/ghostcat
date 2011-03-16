@@ -1,24 +1,52 @@
-package ghostcat.gxml.conversion
+package ghostcat.gxml.jsonspec
 {
 	import flash.media.Sound;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.gxml.jsonspec.IJSONSpec;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.ReflectXMLUtil;
+	import ghostcat.util.Util;
+	import ghostcat.util.core.ClassFactory;
+	
+	import mx.events.CalendarLayoutChangeEvent;
 
 	/**
-	 * 对象转换为XML的转换器（可以兼容封闭对象）
+	 * 对象转换为封闭的转换器
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ObjectToXMLSpec implements IJSONSpec
+	public class JSONSpec implements IJSONSpec
 	{
 		/**
 		 * 类名转换属性
 		 */
 		public var classRefName:String = "classRef";
+		
+		/**
+		 * 构造函数参数 
+		 */
+		public var paramsName:String = "params";
+		
+		private var _root:*;
+		
+		public function JSONSpec(root:*=null):void
+		{
+			this.root = root;
+		}
+		
+		/**
+		 * 基础对象，用于反射外部属性
+		 */
+		public function get root():*
+		{
+			return _root;
+		}
+		
+		public function set root(v:*):void
+		{
+			_root = v;
+		}
 		
 		/**
 		 * 创建对象以及值
@@ -30,34 +58,46 @@ package ghostcat.gxml.conversion
 		{
 			if (obj is Array)
 			{
-				var source:XMLList = new XMLList();
+				var arr:Array = [];
 				for (var i:int = 0; i < obj.length;i++)
 				{
 					var item:* = obj[i];
 					var v:* = createObject(item);
-					applyProperties(source,v,obj);
-					addChild(source,v,i);
+					applyProperties(arr,v,obj);
+					addChild(arr,v,i);
 				}
-				return source;
+				return arr;
 			}
-			else if (isObject(obj))//是类
+			else if (obj && obj["constructor"] == Object)
 			{
-				var xml:XML = <xml/>;
-				xml.setName(getName(obj));
-				createChildren(xml,obj);//创建类的子对象
-				return xml;
-			}
-			else if (obj != null)//是属性
-			{
-				xml = <xml/>;
-				xml.setName(getName(obj));
-				xml.appendChild(obj);
-				return xml;
+				var name:String = getName(obj);
+				if (name)
+					var ref:Class = getDefinitionByName(name) as Class;
+					
+				if (!ref)
+					ref = Object;
+					
+				var params:Array = getConstructorParams(obj);//获得构造函数参数
+				var target:* = ClassFactory.apply(ref,params);
+				this.createChildren(target,obj);
+				return target;
 			}
 			else
 			{
-				return null;
+				return obj;
 			}
+		}
+		
+		/**
+		 * 获得构造函数参数
+		 * @return 
+		 * 
+		 */
+		protected function getConstructorParams(source:*):Array
+		{
+			var obj:Array = source[paramsName];
+			delete source[paramsName];
+			return obj;
 		}
 		
 		/**
@@ -69,18 +109,7 @@ package ghostcat.gxml.conversion
 		 */
 		public function addChild(source:*,child:*,name:*):void
 		{
-			if (source is XMLList)
-			{
-				XMLList(source)[name] = child;
-			}
-			else if (source is XML)
-			{	
-				var xml:XML = <xml/>;
-				xml.setName(name)
-				xml.appendChild(child);
-				
-				XML(source).appendChild(xml);
-			}
+			source[name] = child;
 		}
 		
 		/**
@@ -104,9 +133,6 @@ package ghostcat.gxml.conversion
 		 */
 		protected function createChildren(source:*,obj:*):void
 		{
-			if (obj["constructor"] != Object)
-				obj = ReflectUtil.getPropertyList(obj);
-			
 			for (var p:String in obj)
 			{
 				var item:* = obj[p];
@@ -139,18 +165,8 @@ package ghostcat.gxml.conversion
 			}
 			else
 			{
-				return ReflectUtil.getQName(obj);
+				return null;
 			}
-		}
-		
-		public function get root():*
-		{
-			return null;
-		}
-		
-		public function set root(v:*):void
-		{
-			
 		}
 	}
 }
