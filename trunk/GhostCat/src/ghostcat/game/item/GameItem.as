@@ -5,13 +5,19 @@ package ghostcat.game.item
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
 	import ghostcat.game.item.collision.ICollision;
+	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
 	
-	public class GameItem extends Sprite
+	public class GameItem extends Sprite implements ICollisionClient
 	{
 		public var sortCalculater:ISortCalculater;
-		public var collision:ICollision;
 		public var priority:Number;
+		
+		private var _collision:ICollision;
+		public function get collision():ICollision
+		{
+			return _collision;
+		}
 		
 		public override function set x(v:Number):void
 		{	
