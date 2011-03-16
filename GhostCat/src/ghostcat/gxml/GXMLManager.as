@@ -4,8 +4,9 @@ package ghostcat.gxml
 	import ghostcat.gxml.spec.ISpec;
 	import ghostcat.gxml.spec.ItemGroupSpec;
 	import ghostcat.gxml.spec.ItemSpec;
+	import ghostcat.gxml.spec.Spec;
 	import ghostcat.util.core.Singleton;
-
+	
 	/**
 	 * XML解析类
 	 * 
@@ -23,13 +24,17 @@ package ghostcat.gxml
 		 * @return 
 		 * 
 		 */
-		public static function create(xml:XML,spec:ISpec):*
+		public static function create(xml:XML,spec:ISpec = null):*
 		{
+			if (!spec)
+				spec = new Spec();
+			
 			return spec.createObject(xml);
 		}
 		
 		/**
 		 * 创建显示对象
+		 *  <f:Sprite xmlns:f="flash.display"><f:Shape/></f:Sprite>
 		 * 
 		 * @param xml	XML数据
 		 * @param classNames	类名替换
@@ -51,6 +56,10 @@ package ghostcat.gxml
 		
 		/**
 		 * 创建数据组
+		 * <items>
+		 * <item id="1" a="属性1" b="属性2"/>
+		 * <item id="2" a="属性1" b="属性2"/>
+		 * </items>  
 		 * 
 		 * @param xml	XML数据
 		 * @param classNames	类名替换（应当将根节点替换成ItemGroup类型的对象，而子节点的类型应当具有id属性）
@@ -79,7 +88,7 @@ package ghostcat.gxml
 		public static  function exec(xmlList:XMLList,spec:ISpec):void
 		{
 			for each (var item:XML in xmlList)
-				spec.createObject(item);
+			spec.createObject(item);
 		}
 	}
 }

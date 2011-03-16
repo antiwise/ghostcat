@@ -16,6 +16,8 @@ package
 	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.game.layer.position.Tile45PositionManager;
 	import ghostcat.game.layer.sort.SortYManager;
+	import ghostcat.gxml.conversion.ObjectToXMLSpec;
+	import ghostcat.gxml.jsonspec.JSONDisplaySpec;
 	import ghostcat.gxml.spec.Spec;
 	import ghostcat.util.data.Json;
 	import ghostcat.util.display.BitmapSeparateUtil;
@@ -39,6 +41,9 @@ package
 		
 		public function GhostCatGameExample()
 		{
+			var o:* = (new JSONDisplaySpec().createObject({classRef:"flash.display::Sprite",children:[{classRef:"flash.display::Shape"}]}));
+			return;
+			
 			instanse = this;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
