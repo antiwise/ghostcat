@@ -6,14 +6,20 @@ package ghostcat.game.item
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.game.item.collision.ICollision;
+	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
 	import ghostcat.game.item.sort.SortYCalculater;
 
-	public class BitmapGameItem extends Bitmap implements IBitmapDataDrawer
+	public class BitmapGameItem extends Bitmap implements ICollisionClient,IBitmapDataDrawer
 	{
 		public var sortCalculater:ISortCalculater;
-		public var collision:ICollision;
 		public var priority:Number;
+		
+		private var _collision:ICollision;
+		public function get collision():ICollision
+		{
+			return _collision;
+		}
 		
 		public override function set x(v:Number):void
 		{	
