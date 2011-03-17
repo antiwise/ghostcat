@@ -9,9 +9,11 @@ package ghostcat.game.item
 	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
 	import ghostcat.game.item.sort.SortYCalculater;
+	import ghostcat.game.layer.camera.ICamera;
 
 	public class BitmapGameItem extends Bitmap implements ICollisionClient,IBitmapDataDrawer
 	{
+		public var camera:ICamera;
 		public var sortCalculater:ISortCalculater;
 		public var priority:Number;
 		
@@ -58,6 +60,9 @@ package ghostcat.game.item
 		{
 			if (sortCalculater)
 				priority = sortCalculater.calculate();
+		
+			if (camera)
+				camera.refreshItem(this);
 		}
 		
 		public override function get x():Number

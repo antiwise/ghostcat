@@ -10,17 +10,12 @@ package ghostcat.game.layer.collision
 	public class MutualCollisionManager implements ICollisionManager
 	{
 		public var layer:GameLayerBase;
-		/**
-		 * 检测字段 
-		 */
-		public var field:String = "collision";
-	
+		
 		public var result:Array = [];
 		public var collisionList:Array;
-		public function MutualCollisionManager(layer:GameLayerBase,field:String = "collision")
+		public function MutualCollisionManager(layer:GameLayerBase)
 		{
 			this.layer = layer;
-			this.field = field;
 		}
 		
 		public function collideAll():void
