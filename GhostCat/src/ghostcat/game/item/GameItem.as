@@ -7,9 +7,11 @@ package ghostcat.game.item
 	import ghostcat.game.item.collision.ICollision;
 	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
+	import ghostcat.game.layer.camera.ICamera;
 	
 	public class GameItem extends Sprite implements ICollisionClient
 	{
+		public var camera:ICamera;
 		public var sortCalculater:ISortCalculater;
 		public var priority:Number;
 		
@@ -48,6 +50,9 @@ package ghostcat.game.item
 		{
 			if (sortCalculater)
 				priority = sortCalculater.calculate();
+			
+			if (camera)
+				camera.refreshItem(this);
 		}
 		
 		public function get oldX():Number

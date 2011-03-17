@@ -544,6 +544,9 @@
     <classEntry path="ghostcat.game.layer.collision.BlockCollisionManager"/>
     <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
     <classEntry path="ghostcat.filter.PerlinNoiseCacher"/>
+    <classEntry path="ghostcat.algorithm.BoxsGrid"/>
+    <classEntry path="ghostcat.game.layer.camera.SimpleCamera"/>
+    <classEntry path="ghostcat.game.layer.camera.BoxsGridCamera"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

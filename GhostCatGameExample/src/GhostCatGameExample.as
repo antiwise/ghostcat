@@ -52,7 +52,6 @@ package
 		
 		public function GhostCatGameExample()
 		{
-			trace(BitmapDataChannel.RED | BitmapDataChannel.GREEN);
 			instanse = this;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
