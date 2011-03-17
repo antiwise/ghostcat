@@ -39,8 +39,7 @@ package ghostcat.game.item
 			_x = v;
 			super.x = v - regX;
 			
-			if (sortCalculater)
-				priority = sortCalculater.calculate();
+			updatePosition();
 		}
 		
 		public override function set y(v:Number):void
@@ -52,6 +51,11 @@ package ghostcat.game.item
 			_y = v;
 			super.y = v - regY;
 			
+			updatePosition();
+		}
+		
+		protected function updatePosition():void
+		{
 			if (sortCalculater)
 				priority = sortCalculater.calculate();
 		}
@@ -78,7 +82,8 @@ package ghostcat.game.item
 		
 		public function BitmapGameItem(bitmapData:BitmapData) 
 		{
-			super(bitmapData);	
+			super(bitmapData);
+			updatePosition();
 		}
 		
 		/** @inheritDoc*/

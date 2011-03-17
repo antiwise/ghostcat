@@ -1,5 +1,6 @@
 package
 {
+	import flash.display.BitmapDataChannel;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
@@ -34,10 +35,13 @@ package
 	public class GhostCatGameExample extends Sprite
 	{
 		static public var instanse:GhostCatGameExample;
+		
 		public const STAGE_W:int = 800;
 		public const STAGE_H:int = 600;
 		public const viewportRect:Rectangle = new Rectangle(-33,-80,STAGE_W + 67 * 2,STAGE_H + 91 * 2);
 		public const MAX_RUNNER:int = 500;
+		public const RUNX:Array = [ 0,-1, 1, 0,-1, 1,-1, 1];
+		public const RUNY:Array = [ 1, 0, 0,-1, 1, 1,-1,-1];
 		
 		[Embed(source="walk.png")]
 		public var walk:Class;
@@ -48,12 +52,13 @@ package
 		
 		public function GhostCatGameExample()
 		{
+			trace(BitmapDataChannel.RED | BitmapDataChannel.GREEN);
 			instanse = this;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
 			layer = new GameLayer();
 			layer.sort = new SortYManager(layer);
-//			layer.position = new Tile45PositionManager(layer,1,1,400);
+//			layer.position = new Tile45PositionManager(1,0.5,350,100);
 			addChild(layer);
 			
 			for (var i:int = 0;i < MAX_RUNNER;i++)
@@ -76,8 +81,8 @@ package
 			{
 				var position:Point = item.position;
 				
-				position.x += Runner.RUNX[item.type] * event.interval / 20;
-				position.y += Runner.RUNY[item.type] * event.interval / 20;
+				position.x += RUNX[item.type] * event.interval / 20;
+				position.y += RUNY[item.type] * event.interval / 20;
 				
 				if (position.x < viewportRect.x)
 					position.x = viewportRect.right;
