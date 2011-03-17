@@ -7,20 +7,25 @@ package ghostcat.game.layer.collision
 	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.layer.GameLayerBase;
 	
-	public class CollisionManager implements ICollisionManager
+	public class MutualCollisionManager implements ICollisionManager
 	{
 		public var layer:GameLayerBase;
-		
+		/**
+		 * 检测字段 
+		 */
+		public var field:String = "collision";
+	
+		public var result:Array = [];
 		public var collisionList:Array;
-		public var collisions:Array = [];
-		public function CollisionManager(layer:GameLayerBase)
+		public function MutualCollisionManager(layer:GameLayerBase,field:String = "collision")
 		{
 			this.layer = layer;
+			this.field = field;
 		}
 		
 		public function collideAll():void
 		{
-			this.collisions = [];
+			this.result = [];
 			
 			var list:Array = collisionList ? collisionList : layer.children;
 			var l:int = list.length;
@@ -38,7 +43,7 @@ package ghostcat.game.layer.collision
 						{
 							if (c1.hitTest(c2))
 							{
-								this.collisions[this.collisions.length] = [o1,o2];
+								this.result[this.result.length] = [o1,o2];
 							}
 						}
 					}

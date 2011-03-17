@@ -43,6 +43,25 @@ package ghostcat.algorithm.traversal
 		}
 		
 		/**
+		 * 创建地图 
+		 * @param width
+		 * @param height
+		 * 
+		 */
+		public function createMap(width:int,height:int):void
+		{
+			this.map = [];
+			for (var j:int = 0;j < height;j++)
+			{
+				var line:Array = [];
+				for (var i:int = 0;i < width;i++)
+					line[i] = false;
+				
+				this.map[j] = line;
+			}
+		}
+		
+		/**
 		 * 初始化
 		 * 
 		 */
@@ -199,7 +218,7 @@ package ghostcat.algorithm.traversal
 		 * @return 
 		 * 
 		 */
-		protected function isBlock(v:Point,cur:Point):Boolean
+		public function isBlock(v:Point,cur:Point):Boolean
 		{
 			var mapHeight : int = _map.length;
 			var mapWidth : int = _map[0].length;
