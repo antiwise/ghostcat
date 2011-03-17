@@ -36,6 +36,7 @@ package ghostcat.game.layer.position
 			for (var j:int = 0;j <= height;j++)
 				drawLine(s.graphics,0,j,width,j);
 			
+			s.cacheAsBitmap = true;
 			return s;
 		}
 		

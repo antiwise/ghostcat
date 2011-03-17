@@ -15,16 +15,14 @@ package ghostcat.game.layer.position
 		{
 			var x:Number = p.x;
 			var y:Number = p.y;
-			var wh:Number = tileWidth / tileHeight;
-			return new Point((x + y * wh) / tileWidth - offestX,(y - x / wh) / tileHeight - offestY);
+			return new Point((x + y) / tileWidth - offestX,(y - x) / tileHeight - offestY);
 		}
 		
 		public override function transform(p:Point):Point
 		{
 			var x:Number = p.x;
 			var y:Number = p.y;
-			var wh:Number = tileWidth / tileHeight;
-			return new Point((x - y * wh) / 2 * tileWidth + offestX, (x / wh + y) / 2 * tileHeight + offestY);
+			return new Point((x - y) / 2 * tileWidth + offestX, (x + y) / 2 * tileHeight + offestY);
 		}
 	}
 }

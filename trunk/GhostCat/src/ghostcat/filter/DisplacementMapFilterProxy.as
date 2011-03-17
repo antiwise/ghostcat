@@ -284,6 +284,21 @@ package ghostcat.filter
 		}
 		
 		/**
+		 * 创建默认的DisplacementMapFilter
+		 * @param bitmapData	位图MASK（红绿）
+		 * @param pos	起始位置
+		 * @param deep	强度
+		 * @return 
+		 * 
+		 */
+		public static function createDefaultFilter(bitmapData:BitmapData, pos:Point=null,deep:Number = 10):DisplacementMapFilter
+		{
+			if (!pos)
+				pos = new Point()
+			return new DisplacementMapFilter(bitmapData,pos,BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep)
+		}
+		
+		/**
 		 * 放大镜（水泡）效果
 		 * 
 		 * @param bitmapData	水泡遮罩，需由createBubbleMask方法生成
@@ -294,9 +309,7 @@ package ghostcat.filter
 		 */		
 		public static function createBubbleFilter(bitmapData:BitmapData, pos:Point=null,deep:Number = -128):DisplacementMapFilter
 		{
-			if (!pos)
-				pos = new Point()
-			return new DisplacementMapFilter(bitmapData,pos,BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep)
+			return createDefaultFilter(bitmapData,pos,deep);
 		}
 		
 		/**
@@ -310,9 +323,7 @@ package ghostcat.filter
 		 */		
 		public static function createWaveFilter(bitmapData:BitmapData, pos:Point=null,deep:Number = 9):DisplacementMapFilter
 		{
-			if (!pos)
-				pos = new Point()
-			return new DisplacementMapFilter(bitmapData,pos,BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep)
+			return createDefaultFilter(bitmapData,pos,deep);			
 		}
 	}
 }

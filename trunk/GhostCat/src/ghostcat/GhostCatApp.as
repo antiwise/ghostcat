@@ -17,6 +17,7 @@ package ghostcat
 	 */
 	public class GhostCatApp extends GSprite
 	{
+		ghostcat.FrameworkClasses;
 		public var application:GBase;
 		public var popupLayer:GBase;
 		public var cursor:CursorSprite;

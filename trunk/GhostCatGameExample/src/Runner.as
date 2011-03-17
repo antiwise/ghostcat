@@ -11,8 +11,6 @@ package
 	
 	public class Runner extends BitmapMovieGameItem
 	{
-		static public const RUNX:Array = [ 0,-1, 1, 0,-1, 1,-1, 1];
-		static public const RUNY:Array = [ 1, 0, 0,-1, 1, 1,-1,-1];
 		public var type:int;
 		public var position:Point;
 		public function Runner(type:int)

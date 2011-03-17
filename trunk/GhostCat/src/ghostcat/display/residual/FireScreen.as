@@ -10,6 +10,7 @@ package ghostcat.display.residual
 	import flash.utils.getTimer;
 	
 	import ghostcat.debug.FPS;
+	import ghostcat.filter.PerlinNoiseCacher;
 
 	/**
 	 * 火焰效果
@@ -21,6 +22,8 @@ package ghostcat.display.residual
 		private var maskBitmapData:BitmapData;
 		private var maskBitmapDatas:Array;
 		private var maskIndex:int = 0;
+		private var cacher:PerlinNoiseCacher;
+		private var cacheNumber:int;
 		
 		private var displacementMapFilter:DisplacementMapFilter;
 		
@@ -28,17 +31,17 @@ package ghostcat.display.residual
 		{
 			super(width,height);
 			
-			this.maskBitmapData = new BitmapData(width,height);
-			
 			this.fadeSpeed = 0.9;
 			this.blurSpeed = 4;
 			this.offest = new Point(0,-4);
+			this.cacheNumber = cacheNumber;
 			this.itemColorTransform = new ColorTransform(0,0,0,1,255);
-		
-			this.displacementMapFilter = new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
-		
+			
+			this.maskBitmapData = new BitmapData(width,height);
+			this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
+			
 			if (cacheNumber)
-				createMaskBitmapDatas(cacheNumber);
+				createCacher();
 		}
 		
 		/** @inheritDoc*/
@@ -46,18 +49,17 @@ package ghostcat.display.residual
 		{
 			super.updateSize();
 		
-			if (maskBitmapDatas)
-			{
-				createMaskBitmapDatas(maskBitmapDatas.length);
-			}
-			else
-			{
-				if (maskBitmapData)
-					maskBitmapData.dispose();
+			if (maskBitmapData)
+				maskBitmapData.dispose();
 			
-				this.maskBitmapData = new BitmapData(width,height);
-				this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
-			}
+			this.maskBitmapData = new BitmapData(width,height);
+			this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
+		
+			if (cacher)
+				cacher.destory();
+			
+			if (cacheNumber)
+				createCacher();
 		}
 		
 		private function createDisplacementMapFilter(maskBitmapData:BitmapData):DisplacementMapFilter
@@ -65,9 +67,10 @@ package ghostcat.display.residual
 			return new DisplacementMapFilter(maskBitmapData,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
 		}
 		
-		private function createPerlinNoise(maskBitmapData:BitmapData,t:int):void
+		private function createCacher():void
 		{
-			maskBitmapData.perlinNoise(16, 16, 1, t, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
+			cacher = new PerlinNoiseCacher(width,height,cacheNumber);
+			cacher.create(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
 		}
 		
 		/** @inheritDoc*/
@@ -76,47 +79,14 @@ package ghostcat.display.residual
 			super.updateDisplayList();
 			
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
-			if (maskBitmapDatas)
-			{
-				maskIndex++;
-				if (maskIndex >= maskBitmapDatas.length)
-					maskIndex = 0;
-				
-				this.displacementMapFilter = createDisplacementMapFilter(maskBitmapData);
-				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
-			}
-			else
-			{
-				createPerlinNoise(this.maskBitmapData,getTimer());
-				bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
-			}
-		}
-		
-		public function createMaskBitmapDatas(cacheNumber:int):void
-		{
-			destoryMaskBitmapDatas();
+			var t:int = getTimer();
 			
-			maskBitmapDatas = [];
-			for (var i:int = 0;i < cacheNumber;i++)
-			{
-				var maskBitmapData:BitmapData = new BitmapData(width,height);
-				createPerlinNoise(maskBitmapData,i);
-				maskBitmapDatas.push(maskBitmapData);
-			}
-		}
-		
-		public function destoryMaskBitmapDatas():void
-		{
-			if (!maskBitmapDatas)
-				return;
+			if (cacher)
+				cacher.parse(maskBitmapData,t);
+			else	
+				maskBitmapData.perlinNoise(16, 16, 1, t, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
 			
-			for (var i:int = 0;i < maskBitmapDatas.length;i++)
-			{
-				var maskBitmapData:BitmapData = maskBitmapDatas[i] as BitmapData;
-				maskBitmapData.dispose();
-			}
-			
-			maskBitmapDatas = null;
+			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
 		}
 		
 		/** @inheritDoc*/
@@ -124,7 +94,8 @@ package ghostcat.display.residual
 		{
 			super.destory();
 			
-			this.destoryMaskBitmapDatas();
+			if (cacher)
+				cacher.destory();
 			
 			if (maskBitmapData)
 				maskBitmapData.dispose()

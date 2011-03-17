@@ -10,6 +10,7 @@ package ghostcat.parse.display
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.parse.DisplayParse;
+	import ghostcat.util.display.MatrixUtil;
 
 	/**
 	 * 绘制到位图
@@ -78,15 +79,24 @@ package ghostcat.parse.display
 				return null;
 			
 			var bounds:Rectangle = displayObj.getBounds(displayObj);
-			var width:int = Math.ceil(bounds.width);
-			var height:int = Math.ceil(bounds.height);
-			
 			if (!matrix)
 			{
 				matrix = new Matrix();
 				matrix.tx -= bounds.x;
 				matrix.ty -= bounds.y;
 			}
+//			else
+//			{
+//				var rotate:Number = Math.atan(matrix.b / matrix.a);
+//				bounds.x += matrix.tx;
+//				bounds.y += matrix.ty;
+//				bounds.width *= matrix.b / Math.sin(rotate);
+//				bounds.height *= matrix.d / Math.cos(rotate);
+//			}
+			
+			var width:int = Math.ceil(bounds.width);
+			var height:int = Math.ceil(bounds.height);
+			
 			
 			var bitmap:Bitmap;
 			try

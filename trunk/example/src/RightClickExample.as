@@ -36,7 +36,7 @@ package
 			addChild(shape);
 			
 			//对舞台增加一个火焰效果
-			addChild(Util.createObject(new FireScreen(350,350,16),{children:[shape]}));
+			addChild(Util.createObject(new FireScreen(350,350,20),{children:[shape]}));
 		
 			GAlert.show("点击右键看看吧\n可以连续点击","嘿嘿")
 		}
@@ -46,7 +46,7 @@ package
 			trace (event.localX, event.localY ,InputManager.instance.mutliMouse)
 			
 			shape.graphics.beginFill(0xFF0000);
-			shape.graphics.drawCircle(event.localX,event.localY,3 * InputManager.instance.mutliMouse);
+			shape.graphics.drawCircle(event.stageX,event.stageY,3 * InputManager.instance.mutliMouse);
 		}
 		
 		private function h(event:InputEvent):void
