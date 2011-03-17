@@ -225,7 +225,7 @@
     <classEntry path="ghostcat.game.layer.GameLayer"/>
     <classEntry path="ghostcat.game.layer.GameLayerBase"/>
     <classEntry path="ghostcat.game.layer.camera.ICamera"/>
-    <classEntry path="ghostcat.game.layer.collision.CollisionManager"/>
+    <classEntry path="ghostcat.game.layer.collision.MutualCollisionManager"/>
     <classEntry path="ghostcat.game.layer.collision.ICollisionManager"/>
     <classEntry path="ghostcat.game.layer.position.IPositionManager"/>
     <classEntry path="ghostcat.game.layer.position.SimplePositionManager"/>
@@ -234,9 +234,6 @@
     <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortYManager"/>
-    <classEntry path="ghostcat.game.util.DepthSortUtil"/>
-    <classEntry path="ghostcat.game.util.Display45Util"/>
-    <classEntry path="ghostcat.game.util.Separate45Util"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.conversion.ObjectToXMLSpec"/>
     <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
@@ -545,6 +542,8 @@
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONSpec"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONDisplaySpec"/>
+    <classEntry path="ghostcat.game.layer.collision.BlockCollisionManager"/>
+    <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

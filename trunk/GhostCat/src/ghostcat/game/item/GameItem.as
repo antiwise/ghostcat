@@ -13,6 +13,9 @@ package ghostcat.game.item
 		public var sortCalculater:ISortCalculater;
 		public var priority:Number;
 		
+		private var _oldX:Number;
+		private var _oldY:Number;
+		
 		private var _collision:ICollision;
 		public function get collision():ICollision
 		{
@@ -24,6 +27,7 @@ package ghostcat.game.item
 			if (x == v)
 				return;
 			
+			_oldX = super.x;
 			super.x = v;
 			
 			if (sortCalculater)
@@ -35,10 +39,21 @@ package ghostcat.game.item
 			if (y == v)
 				return;
 			
+			_oldY = super.y;
 			super.y = v;
 			
 			if (sortCalculater)
 				priority = sortCalculater.calculate();
+		}
+		
+		public function get oldX():Number
+		{
+			return _oldX;
+		}
+		
+		public function get oldY():Number
+		{
+			return _oldY;
 		}
 		
 		public function GameItem()
