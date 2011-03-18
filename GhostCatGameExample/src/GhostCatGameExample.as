@@ -105,8 +105,8 @@ package
 			this.positionBN = Util.createObject(GCheckBox,{label:"45度坐标",y:65});
 			addChild(this.positionBN);
 			
-			addChild(Util.createObject(GText,{text:"舞台宽度：",y:80}));
-			addChild(Util.createObject(GText,{text:"舞台高度：",y:110}));
+			addChild(Util.createObject(GText,{text:"场景宽度：",y:80}));
+			addChild(Util.createObject(GText,{text:"场景高度：",y:110}));
 			addChild(Util.createObject(GText,{text:"人物数量：",y:140}))
 			
 			this.stageW = Util.createObject(GText,{text:"5000",editable:true,y:95});
