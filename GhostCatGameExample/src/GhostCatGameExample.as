@@ -192,9 +192,11 @@ package
 				if (position.y > viewportRect.bottom)
 					position.y = viewportRect.y;
 				
-				this.layer.setObjectPosition(item,position);
-				
-				item.tick(event.interval);
+				if (this.layer.childrenInScreenDict[item])
+				{
+					this.layer.setObjectPosition(item,position);
+					item.tick(event.interval);
+				}
 			}
 			
 			this.layer.camera.setPosition(mouseX / 800 * (STAGE_W - 800),mouseY / 600 * (STAGE_H - 600));
