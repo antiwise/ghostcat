@@ -7,6 +7,11 @@ package ghostcat.game.layer.collision
 	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.game.util.GameMoveByPathOper;
 
+	/**
+	 * 障碍格子碰撞
+	 * @author Administrator
+	 * 
+	 */
 	public class BlockCollisionManager implements ICollisionManager
 	{
 		public var layer:GameLayerBase;
@@ -22,6 +27,13 @@ package ghostcat.game.layer.collision
 			this.astar = new AStar(blockMap);
 		}
 		
+		/**
+		 * 寻路 
+		 * @param start
+		 * @param end
+		 * @return 
+		 * 
+		 */
 		public function getPath(start:Point, end:Point):Array
 		{
 			return this.astar.find(start,end);

@@ -7,6 +7,11 @@ package ghostcat.game.layer.collision
 	import ghostcat.game.item.collision.ICollisionClient;
 	import ghostcat.game.layer.GameLayerBase;
 	
+	/**
+	 * 物体间碰撞 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class MutualCollisionManager implements ICollisionManager
 	{
 		public var layer:GameLayerBase;

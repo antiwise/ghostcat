@@ -67,8 +67,8 @@ package
 		public var boxsGridBN:GCheckBox;
 		public var sortBN:GCheckBox;
 		public var positionBN:GCheckBox;
-		public var stageW:GText;
-		public var stageH:GText;
+		public var stageWText:GText;
+		public var stageHText:GText;
 		public var runnerNumText:GText;
 		public var confirmBN:GButton;
 		
@@ -109,13 +109,16 @@ package
 			addChild(Util.createObject(GText,{text:"场景高度：",y:110}));
 			addChild(Util.createObject(GText,{text:"人物数量：",y:140}))
 			
-			this.stageW = Util.createObject(GText,{text:"5000",editable:true,y:95});
-			addChild(stageW);
+			this.stageWText = Util.createObject(GText,{text:"5000",editable:true,y:95});
+			this.stageWText.applyTextFormat({underline : true},true);
+			addChild(stageWText);
 			
-			this.stageH = Util.createObject(GText,{text:"4000",editable:true,y:125});
-			addChild(stageH);
+			this.stageHText = Util.createObject(GText,{text:"4000",editable:true,y:125});
+			this.stageHText.applyTextFormat({underline : true},true);
+			addChild(stageHText);
 			
 			this.runnerNumText = Util.createObject(GText,{text:"2000",editable:true,y:155});
+			this.runnerNumText.applyTextFormat({underline : true},true);
 			addChild(runnerNumText);
 			
 			this.confirmBN = Util.createObject(GButton,{label:"确认",width:80,y:175});
@@ -126,8 +129,8 @@ package
 		
 		private function confirmBNHandler(event:MouseEvent):void
 		{
-			var n1:int = int(stageW.text)
-			var n2:int = int(stageH.text)
+			var n1:int = int(stageWText.text)
+			var n2:int = int(stageHText.text)
 			var n3:int = int(runnerNumText.text)
 				
 			if (n1 && n2 && n3)
