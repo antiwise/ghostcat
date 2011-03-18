@@ -84,8 +84,8 @@ package ghostcat.util.display
 			var rect:Rectangle = displayObj.getRect(displayObj);
 			
 			var m:Matrix = displayObj.transform.matrix.clone();
-			m.c = Math.tan(Math.atan2(dx,rect.height));
-			m.b = Math.tan(Math.atan2(dy,rect.width));
+			m.c = dx / rect.height;
+			m.b = dy / rect.width;
 			displayObj.transform.matrix = m;
 		}
 	}

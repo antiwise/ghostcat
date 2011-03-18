@@ -33,7 +33,6 @@ package
 			stage.addEventListener(MouseEvent.MOUSE_DOWN,f);
 			
 			shape = new Shape();
-			shape.cacheAsBitmap = true;
 			addChild(shape);
 			
 			//对舞台增加一个火焰效果

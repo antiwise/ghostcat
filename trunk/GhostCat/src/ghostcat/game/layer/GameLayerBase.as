@@ -38,6 +38,12 @@ package ghostcat.game.layer
 			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
+		public function setPosition(p:Point):void
+		{
+			this.x = -p.x;
+			this.y = -p.y;
+		}
+		
 		public function addObject(v:*):void
 		{
 			children.push(v);

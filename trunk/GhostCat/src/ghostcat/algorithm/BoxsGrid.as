@@ -69,12 +69,18 @@ package ghostcat.algorithm
 			var oldlist:Array = this.dict[item];
 			if (list != oldlist)
 			{
-				var index:int = oldlist.indexOf(item);
-				if (index != -1)
-					oldlist.splice(index,1);
-			
-				list.push(item);
-				this.dict[item] = list;
+				if (oldlist)
+				{
+					var index:int = oldlist.indexOf(item);
+					if (index != -1)
+						oldlist.splice(index,1);
+				}
+				
+				if (list)
+				{
+					list.push(item);
+					this.dict[item] = list;
+				}
 			}
 		}
 		
@@ -88,9 +94,8 @@ package ghostcat.algorithm
 		{
 			var x:int = int((p.x - rect.x) / boxWidth);
 			var y:int = int((p.y - rect.y) / boxHeight);
-			var l:int = y * w + x;
-			var il:int = Math.ceil(p.width / boxWidth);
-			var jl:int = Math.ceil(p.height / boxHeight);
+			var il:int = Math.ceil((p.x - rect.x + p.width) / boxWidth) - x;
+			var jl:int = Math.ceil((p.y - rect.y + p.height) / boxHeight) - y;
 			var result:Array = [];
 			for (var j:int = 0;j < jl;j++)
 			{
