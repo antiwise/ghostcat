@@ -2,6 +2,7 @@ package ghostcat.game.layer.camera
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.algorithm.BoxsGrid;
 	import ghostcat.game.layer.GameLayerBase;
@@ -53,14 +54,26 @@ package ghostcat.game.layer.camera
 				screenRect.width,
 				screenRect.height);
 			
-			var news:Array = this.boxs.getDataInRect(r);
+			var newsDict:Dictionary = new Dictionary();
+			var news:Array = this.boxs.getDataInRect(r,newsDict);
 			var outArray:Array = [];
 			var inArray:Array = [];
 			ArrayUtil.hasShare(layer.childrenInScreen,news,null,outArray,inArray);
-			layer.childrenInScreen = news.concat(extendsItems);
+			
+			var child:DisplayObject;
+			if (extendsItems)
+			{
+				for each (child in extendsItems)
+				{
+					news[news.length] = child;
+					newsDict[child] = true;
+				}
+			}
+			layer.childrenInScreen = news;
+			layer.childrenInScreenDict = newsDict;
+			
 			if (removeOutSideItems && !this.layer.isBitmapEngine)
 			{
-				var child:DisplayObject;
 				for each (child in outArray)
 					layer.removeChild(child);
 				
