@@ -104,7 +104,6 @@ package ghostcat.algorithm
 				for (var i:int = 0;i < il;i++)
 				{
 					result.push.apply(null,boxs[(y + j) * w + x + i]);
-					trace(i);
 				}
 			}
 			return result;	
