@@ -94,14 +94,17 @@ package ghostcat.algorithm
 		{
 			var x:int = int((p.x - rect.x) / boxWidth);
 			var y:int = int((p.y - rect.y) / boxHeight);
-			var il:int = Math.ceil((p.x - rect.x + p.width) / boxWidth) - x;
-			var jl:int = Math.ceil((p.y - rect.y + p.height) / boxHeight) - y;
+			var il:int = Math.ceil((p.x - rect.x + p.width) / boxWidth);
+			il = il < w ? il - x : w - x;
+			var jl:int = Math.ceil((p.y - rect.y + p.height) / boxHeight);
+			jl = jl < h ? jl - y : h - y;
 			var result:Array = [];
 			for (var j:int = 0;j < jl;j++)
 			{
 				for (var i:int = 0;i < il;i++)
 				{
 					result.push.apply(null,boxs[(y + j) * w + x + i]);
+					trace(i);
 				}
 			}
 			return result;	
