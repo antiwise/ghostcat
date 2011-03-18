@@ -19,10 +19,17 @@ package ghostcat.game.layer.camera
 		 * 屏幕大小 
 		 */
 		public var screenRect:Rectangle;
+		
 		/**
 		 * 始终显示的对象
 		 */
 		public var extendsItems:Array = [];
+		
+		/**
+		 * 是否移除屏幕外的对象
+		 */
+		public var removeOutSideItems:Boolean = true;
+		
 		public function BoxsGridCamera(layer:GameLayerBase,screenRect:Rectangle,rect:Rectangle,boxWidth:Number,boxHeight:Number)
 		{
 			super(layer);
@@ -51,7 +58,7 @@ package ghostcat.game.layer.camera
 			var inArray:Array = [];
 			ArrayUtil.hasShare(layer.childrenInScreen,news,null,outArray,inArray);
 			layer.childrenInScreen = news.concat(extendsItems);
-			if (!this.layer.isBitmapEngine)
+			if (removeOutSideItems && !this.layer.isBitmapEngine)
 			{
 				var child:DisplayObject;
 				for each (child in outArray)
