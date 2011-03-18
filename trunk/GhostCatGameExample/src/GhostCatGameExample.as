@@ -77,6 +77,7 @@ package
 		{
 			RootManager.register(this);
 			this.scrollRect = new Rectangle(0,0,800,600);
+			stage.addChildAt(new Bitmap(new BitmapData(800,600,false,0xFFFFFF)),0);
 			
 			instanse = this;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
