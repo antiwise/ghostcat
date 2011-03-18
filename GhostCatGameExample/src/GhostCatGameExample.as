@@ -192,9 +192,10 @@ package
 				if (position.y > viewportRect.bottom)
 					position.y = viewportRect.y;
 				
+				this.layer.setObjectPosition(item,position);
+				
 				if (this.layer.childrenInScreenDict[item])
 				{
-					this.layer.setObjectPosition(item,position);
 					item.tick(event.interval);
 				}
 			}

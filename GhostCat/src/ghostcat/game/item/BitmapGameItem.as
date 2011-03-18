@@ -34,7 +34,7 @@ package ghostcat.game.item
 		
 		public override function set x(v:Number):void
 		{	
-			if (x == v)
+			if (_x == v)
 				return;
 			
 			_oldX = _x;
@@ -46,7 +46,7 @@ package ghostcat.game.item
 		
 		public override function set y(v:Number):void
 		{
-			if (y == v)
+			if (_y == v)
 				return;
 			
 			_oldY = _y;
@@ -54,6 +54,22 @@ package ghostcat.game.item
 			super.y = v - regY;
 			
 			updatePosition();
+		}
+		
+		public function setPosition(x:Number,y:Number,updatePos:Boolean = true):void
+		{
+			if (this.x == x && this.y == y)
+				return;
+			
+			_oldX = _x;
+			_oldY = _y;
+			_x = x;
+			_y = y;
+			super.x = x - regX;
+			super.y = y - regY;
+						
+			if (updatePos)
+				updatePosition();
 		}
 		
 		protected function updatePosition():void
