@@ -29,6 +29,7 @@ package
 	import ghostcat.gxml.conversion.ObjectToXMLSpec;
 	import ghostcat.gxml.jsonspec.JSONDisplaySpec;
 	import ghostcat.gxml.spec.Spec;
+	import ghostcat.manager.RootManager;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GText;
@@ -74,6 +75,9 @@ package
 		
 		public function GhostCatGameExample()
 		{
+			RootManager.register(this);
+			this.scrollRect = new Rectangle(0,0,800,600);
+			
 			instanse = this;
 			source = BitmapSeparateUtil.separateBitmapData(new walk().bitmapData,67,91);
 			
