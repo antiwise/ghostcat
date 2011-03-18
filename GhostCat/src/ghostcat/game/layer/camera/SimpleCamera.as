@@ -18,8 +18,13 @@ package ghostcat.game.layer.camera
 		
 		public function render():void
 		{
-			this.layer.x = -position.x;
-			this.layer.y = -position.y;
+			this.layer.setPosition(this.position);
+		}
+		
+		public function setPosition(x:Number,y:Number):void
+		{
+			this.position.x = x;
+			this.position.y = y;
 		}
 		
 		public function refreshItem(item:DisplayObject):void

@@ -7,10 +7,22 @@ package ghostcat.game.layer.camera
 	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.util.ArrayUtil;
 	
+	/**
+	 * 剔除屏幕外的对象
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BoxsGridCamera extends SimpleCamera
 	{
 		public var boxs:BoxsGrid;
+		/**
+		 * 屏幕大小 
+		 */
 		public var screenRect:Rectangle;
+		/**
+		 * 始终显示的对象
+		 */
+		public var extendsItems:Array = [];
 		public function BoxsGridCamera(layer:GameLayerBase,screenRect:Rectangle,rect:Rectangle,boxWidth:Number,boxHeight:Number)
 		{
 			super(layer);
@@ -38,15 +50,15 @@ package ghostcat.game.layer.camera
 			var outArray:Array = [];
 			var inArray:Array = [];
 			ArrayUtil.hasShare(layer.childrenInScreen,news,null,outArray,inArray);
-			layer.childrenInScreen = news;
+			layer.childrenInScreen = news.concat(extendsItems);
 			if (!this.layer.isBitmapEngine)
 			{
-				var child:DisplayObject
+				var child:DisplayObject;
 				for each (child in outArray)
-					layer.addChild(child);
+					layer.removeChild(child);
 				
 				for each (child in inArray)
-					layer.removeChild(child);
+					layer.addChild(child);
 			}
 		}
 		

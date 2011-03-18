@@ -12,15 +12,23 @@ package ghostcat.game.layer
 	public class BitmapGameLayer extends GameLayerBase
 	{
 		public var screen:Bitmap;
+		public var offest:Point;
 		public function BitmapGameLayer(width:Number,height:Number)
 		{
 			super();
 			
 			this.isBitmapEngine = true;
+			this.offest = new Point();
+			
 			this.screen = new Bitmap(new BitmapData(width,height));
 			this.addChild(this.screen);
 		}
 		
+		public override function setPosition(p:Point):void
+		{
+			this.offest.x = -p.x;
+			this.offest.y = -p.y;
+		}
 		
 		protected override function tickHandler(event:TickEvent):void
 		{
@@ -32,7 +40,7 @@ package ghostcat.game.layer
 			{
 				var child:* = childrenInScreen[i];
 				if (child is IBitmapDataDrawer)
-					IBitmapDataDrawer(child).drawToBitmapData(this.screen.bitmapData,new Point());
+					IBitmapDataDrawer(child).drawToBitmapData(this.screen.bitmapData,offest);
 			}
 		}
 		

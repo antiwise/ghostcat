@@ -6,6 +6,7 @@ package ghostcat.game.layer.camera
 
 	public interface ICamera
 	{
+		function setPosition(x:Number,y:Number):void
 		function render():void
 		function refreshItem(item:DisplayObject):void
 	}

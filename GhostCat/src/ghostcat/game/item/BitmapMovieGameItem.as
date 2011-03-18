@@ -99,5 +99,10 @@ package ghostcat.game.item
 			}
 		}
 		
+		public function destory():void
+		{
+			this.enabledTick = false;
+		}
+		
 	}
 }
