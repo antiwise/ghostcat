@@ -78,7 +78,7 @@ package ghostcat.algorithm
 				
 				if (list)
 				{
-					list.push(item);
+					list[list.length] = item;
 					this.dict[item] = list;
 				}
 			}
