@@ -27,7 +27,7 @@ package ghostcat.display.residual
 		
 		private var displacementMapFilter:DisplacementMapFilter;
 		
-		public function FireScreen(width:Number,height:Number,cacheNumber:int = 0)
+		public function FireScreen(width:Number,height:Number,cacheNumber:int = 20)
 		{
 			super(width,height);
 			
@@ -70,7 +70,7 @@ package ghostcat.display.residual
 		private function createCacher():void
 		{
 			cacher = new PerlinNoiseCacher(width,height,cacheNumber);
-			cacher.create(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
+			cacher.create(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN);
 		}
 		
 		/** @inheritDoc*/
@@ -79,12 +79,12 @@ package ghostcat.display.residual
 			super.updateDisplayList();
 			
 			var bitmapData:BitmapData = (content as Bitmap).bitmapData;
-			var t:int = getTimer();
+			var t:int = Math.random() * 100;
 			
 			if (cacher)
 				cacher.parse(maskBitmapData,t);
 			else	
-				maskBitmapData.perlinNoise(16, 16, 1, t, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offest]);
+				maskBitmapData.perlinNoise(16, 16, 1, t, false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN);
 			
 			bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),displacementMapFilter);
 		}

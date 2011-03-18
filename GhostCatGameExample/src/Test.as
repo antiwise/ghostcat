@@ -34,9 +34,11 @@ package
 		private var t:TextField;
 
 		private var p1:PerlinNoiseCacher;
-
 		private var p2:PerlinNoiseCacher;
 
+		private var time:int;
+
+		private var bitmap:Bitmap;
 		public function Test()
 		{
 			t = new TextField();
@@ -44,23 +46,24 @@ package
 			t.scaleX = 20;
 			t.scaleY = 20;
 			
-			p1 = new PerlinNoiseCacher(1000,500,20);
-			p1.create(8,8,1,getTimer());
+			p1 = new PerlinNoiseCacher(1000,500,40);
+			p1.create(8,8,1,getTimer(),false,true,3,false,[new Point(5,0)]);
 			
-			p2 = new PerlinNoiseCacher(1000,500,20);
-			p2.create(36,36,1,getTimer());
-		
-			addChild(t);
+			p2 = new PerlinNoiseCacher(1000,500,40);
+			p2.create(36,36,1,getTimer(),false,true,3,false,[new Point(5,0)]);
 		
 			addEventListener(Event.ENTER_FRAME,tickHandler);
 		}
 		
 		protected function tickHandler(event:Event):void
 		{
-			var mask1:BitmapData = p1.getBitmapData(getTimer() / 1000);
-			var mask2:BitmapData = p2.getBitmapData(getTimer() / 1000);;
+			var mask1:BitmapData = p1.getBitmapData(getTimer());
+			var mask2:BitmapData = p2.getBitmapData(getTimer());
 			
-			t.filters = [new DisplacementMapFilter(mask1,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,10,10),new DisplacementMapFilter(mask2,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,40,40)]
+			t.filters = [
+				new DisplacementMapFilter(mask1,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,10,10),
+				new DisplacementMapFilter(mask2,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,40,40)
+			]
 		}
 		
 	}

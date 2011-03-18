@@ -66,12 +66,14 @@ package ghostcat.algorithm
 		public function reinsert(item:DisplayObject):void
 		{
 			var list:Array = isIn(item);
-			if (list != this.dict[item])
+			var oldlist:Array = this.dict[item];
+			if (list != oldlist)
 			{
-				var index:int = list.indexOf(item);
+				var index:int = oldlist.indexOf(item);
 				if (index != -1)
-					list.splice(index,1);
+					oldlist.splice(index,1);
 			
+				list.push(item);
 				this.dict[item] = list;
 			}
 		}
