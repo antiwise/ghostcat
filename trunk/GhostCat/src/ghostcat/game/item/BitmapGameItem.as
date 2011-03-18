@@ -95,7 +95,7 @@ package ghostcat.game.item
 		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,new Point(_x - regX + offest.x,_y - regY + offest.y),null,null,true);
+				target.copyPixels(bitmapData,bitmapData.rect,new Point(_x - regX + offest.x,_y - regY + offest.y),null,null,bitmapData.transparent);
 		}		
 		
 		/** @inheritDoc*/

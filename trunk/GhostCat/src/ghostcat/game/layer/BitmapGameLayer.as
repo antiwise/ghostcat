@@ -13,14 +13,14 @@ package ghostcat.game.layer
 	{
 		public var screen:Bitmap;
 		public var offest:Point;
-		public function BitmapGameLayer(width:Number,height:Number)
+		public function BitmapGameLayer(width:Number,height:Number,transparent:Boolean = false,fillColor:uint = 0xFFFFFF)
 		{
 			super();
 			
 			this.isBitmapEngine = true;
 			this.offest = new Point();
 			
-			this.screen = new Bitmap(new BitmapData(width,height));
+			this.screen = new Bitmap(new BitmapData(width,height,transparent,fillColor));
 			this.addChild(this.screen);
 		}
 		
@@ -35,12 +35,10 @@ package ghostcat.game.layer
 			super.tickHandler(event);
 			
 			this.screen.bitmapData.fillRect(this.screen.bitmapData.rect,0xFFFFFF);
-			var l:int = childrenInScreen.length;
-			for (var i:int = 0;i < l;i++)
+			for each (var child:IBitmapDataDrawer in childrenInScreen)
 			{
-				var child:* = childrenInScreen[i];
-				if (child is IBitmapDataDrawer)
-					IBitmapDataDrawer(child).drawToBitmapData(this.screen.bitmapData,offest);
+				if (child)
+					child.drawToBitmapData(this.screen.bitmapData,offest);
 			}
 		}
 		

@@ -24,7 +24,7 @@ package ghostcat.game.layer.camera
 		/**
 		 * 始终显示的对象
 		 */
-		public var extendsItems:Array = [];
+		public var extendsItems:Dictionary;
 		
 		/**
 		 * 是否移除屏幕外的对象
@@ -54,31 +54,39 @@ package ghostcat.game.layer.camera
 				screenRect.width,
 				screenRect.height);
 			
+			var oldDict:Dictionary = layer.childrenInScreenDict; 
 			var newsDict:Dictionary = new Dictionary();
 			var news:Array = this.boxs.getDataInRect(r,newsDict);
-			var outArray:Array = [];
-			var inArray:Array = [];
-			ArrayUtil.hasShare(layer.childrenInScreen,news,null,outArray,inArray);
 			
-			var child:DisplayObject;
+			var child:*;
 			if (extendsItems)
 			{
-				for each (child in extendsItems)
+				for (child in extendsItems)
 				{
-					news[news.length] = child;
-					newsDict[child] = true;
+					if (!newsDict[child])
+					{
+						news[news.length] = child;
+						newsDict[child] = true;
+					}
 				}
 			}
+			
 			layer.childrenInScreen = news;
 			layer.childrenInScreenDict = newsDict;
 			
 			if (removeOutSideItems && !this.layer.isBitmapEngine)
 			{
-				for each (child in outArray)
-					layer.removeChild(child);
-				
-				for each (child in inArray)
-					layer.addChild(child);
+				for (child in oldDict)
+				{
+					if (!newsDict[child])
+						layer.removeChild(DisplayObject(child));
+		
+				}
+				for (child in newsDict)
+				{
+					if (!oldDict[child])
+						layer.addChild(DisplayObject(child));
+				}
 			}
 		}
 		
