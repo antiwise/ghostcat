@@ -2,11 +2,13 @@ package ghostcat.game.layer
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.TickEvent;
+	import ghostcat.game.item.BitmapGameItem;
 	import ghostcat.util.Tick;
 
 	public class BitmapGameLayer extends GameLayerBase

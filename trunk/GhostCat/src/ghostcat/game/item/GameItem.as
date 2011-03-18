@@ -46,6 +46,20 @@ package ghostcat.game.item
 			updatePosition();
 		}
 		
+		public function setPosition(x:Number,y:Number,updatePos:Boolean = true):void
+		{
+			if (this.x == x && this.y == y)
+				return;
+			
+			_oldX = super.x;
+			_oldY = super.y;
+			super.x = x;
+			super.y = y;
+					
+			if (updatePos)
+				updatePosition();
+		}
+		
 		protected function updatePosition():void
 		{
 			if (sortCalculater)
