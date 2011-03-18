@@ -166,7 +166,6 @@ package
 				item.camera = layer.camera;
 				item.position = new Point(Math.random() * viewportRect.width  + viewportRect.x,
 										Math.random() * viewportRect.height + viewportRect.y);
-				
 				layer.addObject(item);
 				layer.setObjectPosition(item,item.position);
 			}
@@ -194,6 +193,8 @@ package
 					position.y = viewportRect.y;
 				
 				this.layer.setObjectPosition(item,position);
+				
+				item.tick(event.interval);
 			}
 			
 			this.layer.camera.setPosition(mouseX / 800 * (STAGE_W - 800),mouseY / 600 * (STAGE_H - 600));
@@ -222,6 +223,7 @@ class Runner extends BitmapMovieGameItem
 		this.regY = 80;
 		this.setType(type);
 		this.randomFrameTimer();
+		this.enabledTick = false;
 	}
 	
 	public function setType(type:int):void

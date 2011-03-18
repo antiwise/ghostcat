@@ -84,10 +84,15 @@ package ghostcat.game.item
 		
 		protected function tickHandler(event:TickEvent):void
 		{
+			tick(event.interval);
+		}
+		
+		public function tick(t:int):void
+		{
 			if (!bitmapDatas)
 				return;
-				
-			frameTimer -= event.interval;
+			
+			frameTimer -= t;
 			while (frameTimer < 0) 
 			{
 				if (currentFrame == bitmapDatas.length - 1)

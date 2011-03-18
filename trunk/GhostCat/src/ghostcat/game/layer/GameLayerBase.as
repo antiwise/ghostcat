@@ -3,6 +3,7 @@ package ghostcat.game.layer
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.events.TickEvent;
@@ -19,8 +20,10 @@ package ghostcat.game.layer
 	{
 		public var isBitmapEngine:Boolean;
 		
-		public var children:Array = [];;
+		public var children:Array = [];
+		public var childrenDict:Dictionary = new Dictionary(true);
 		public var childrenInScreen:Array = [];
+		public var childrenInScreenDict:Dictionary = new Dictionary(true);
 		
 		public var camera:ICamera;
 		public var collision:ICollisionManager;
@@ -47,7 +50,9 @@ package ghostcat.game.layer
 		public function addObject(v:*):void
 		{
 			children.push(v);
+			childrenDict[v] = true;
 			childrenInScreen.push(v);
+			childrenInScreenDict[v] = true;
 		}
 		
 		public function removeObject(v:*):void
@@ -55,10 +60,12 @@ package ghostcat.game.layer
 			var index:int = children.indexOf(v);
 			if (index != -1)
 				children.splice(index, 1);
+			delete childrenDict[v];
 			
 			index = childrenInScreen.indexOf(v);
 			if (index != -1)
 				childrenInScreen.splice(index, 1);
+			delete childrenInScreenDict[v];
 		}
 		
 		public function setObjectPosition(obj:DisplayObject,p:Point):void

@@ -90,7 +90,7 @@ package ghostcat.algorithm
 		 * @param rect
 		 * 
 		 */
-		public function getDataInRect(p:Rectangle):Array
+		public function getDataInRect(p:Rectangle,dict:Dictionary = null):Array
 		{
 			var x:int = int((p.x - rect.x) / boxWidth);
 			var y:int = int((p.y - rect.y) / boxHeight);
@@ -103,7 +103,13 @@ package ghostcat.algorithm
 			{
 				for (var i:int = 0;i < il;i++)
 				{
-					result.push.apply(null,boxs[(y + j) * w + x + i]);
+					var box:Array = boxs[(y + j) * w + x + i];
+					result.push.apply(null,box);
+					if (dict)
+					{
+						for each (var child:* in box)
+							dict[child] = true;
+					}
 				}
 			}
 			return result;	
