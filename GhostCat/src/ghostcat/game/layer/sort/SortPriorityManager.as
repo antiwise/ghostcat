@@ -6,16 +6,15 @@ package ghostcat.game.layer.sort
 	
 	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.game.item.sort.ISortCalculater;
-	import ghostcat.game.layer.BitmapGameLayer;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.BitmapUtil;
 	
 	public class SortPriorityManager implements ISortManager
 	{
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
 		public var sortFields:*;
-		public function SortPriorityManager(layer:GameLayerBase,sortFields:* = "priority")
+		public function SortPriorityManager(layer:GameLayer,sortFields:* = "priority")
 		{
 			this.layer = layer;
 			this.sortFields = sortFields;

@@ -4,7 +4,7 @@ package ghostcat.game.item
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.TickEvent;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.Tick;
 
 	/**

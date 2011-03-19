@@ -1,6 +1,6 @@
 package ghostcat.game.layer.sort
 {
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 
 	public interface ISortManager
 	{

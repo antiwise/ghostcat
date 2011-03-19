@@ -3,14 +3,14 @@ package ghostcat.game.layer.camera
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	
 	public class SimpleCamera implements ICamera
 	{
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
 		public var position:Point;
 		
-		public function SimpleCamera(layer:GameLayerBase)
+		public function SimpleCamera(layer:GameLayer)
 		{
 			this.layer = layer;
 			this.position = new Point();
@@ -18,7 +18,8 @@ package ghostcat.game.layer.camera
 		
 		public function render():void
 		{
-			this.layer.setPosition(this.position);
+			this.layer.x = -this.position.x;
+			this.layer.y = -this.position.y;
 		}
 		
 		public function setPosition(x:Number,y:Number):void

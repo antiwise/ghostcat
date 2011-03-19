@@ -14,33 +14,24 @@ package
 	import flash.geom.Transform;
 	import flash.text.TextFormat;
 	
-	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.debug.Debug;
 	import ghostcat.debug.FPS;
 	import ghostcat.events.TickEvent;
-	import ghostcat.game.layer.BitmapGameLayer;
+	import ghostcat.game.BitmapGameViewport;
+	import ghostcat.game.GameViewport;
 	import ghostcat.game.layer.GameLayer;
-	import ghostcat.game.layer.GameLayerBase;
 	import ghostcat.game.layer.camera.BoxsGridCamera;
 	import ghostcat.game.layer.camera.SimpleCamera;
 	import ghostcat.game.layer.position.Tile45PositionManager;
 	import ghostcat.game.layer.sort.SortYManager;
 	import ghostcat.game.util.GameMoveByPathOper;
-	import ghostcat.gxml.conversion.ObjectToXMLSpec;
-	import ghostcat.gxml.jsonspec.JSONDisplaySpec;
-	import ghostcat.gxml.spec.Spec;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.ui.controls.GCheckBox;
 	import ghostcat.ui.controls.GText;
-	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
-	import ghostcat.util.data.Json;
 	import ghostcat.util.display.BitmapSeparateUtil;
-	import ghostcat.util.display.DisplayLayoutAnalyse;
-	import ghostcat.util.display.MatrixUtil;
-	import ghostcat.util.easing.Circ;
 	
 	[SWF(width="800",height="600",frameRate="60",backgroundColor="0xFFFFFF")]
 	public class GhostCatGameExample extends Sprite
@@ -59,7 +50,8 @@ package
 		public var walk:Class;
 
 		public var source:Array;
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
+		public var viewport:GameViewport;
 		
 		//UI
 		
@@ -140,13 +132,10 @@ package
 		
 		public function init(isBitmapEngine:Boolean,isSort:Boolean,isBoxsGrid:Boolean,is45:Boolean,stageW:int,stageH:int,runnerNum:int):void
 		{
-			if (layer)
+			if (viewport)
 			{
-				for each (var item:Runner in layer.children)
-					item.destory();
-					
-				layer.destory();
-				removeChild(layer);
+				viewport.destory();
+				removeChild(viewport);
 			}
 			
 			this.STAGE_W = stageW;
@@ -154,15 +143,18 @@ package
 			this.viewportRect = new Rectangle(-33,-80,STAGE_W + 67 * 2,STAGE_H + 91 * 2);
 			this.MAX_RUNNER = runnerNum;
 			
-			layer = isBitmapEngine ? new BitmapGameLayer(800,600) : new GameLayer();
+			viewport = isBitmapEngine ? new BitmapGameViewport(800,600) : new GameViewport();
+			addChildAt(viewport,0);
+			
+			layer = new GameLayer();
 			layer.sort = isSort ? new SortYManager(layer) : null;
 			layer.position = is45 ? new Tile45PositionManager(1,0.5) : null;
 			layer.camera = isBoxsGrid ? new BoxsGridCamera(layer,new Rectangle(-100,-100,1000,800),viewportRect,400,300) : new SimpleCamera(layer);
-			addChildAt(layer,0);
+			viewport.addLayer(layer);
 			
 			for (var i:int = 0;i < MAX_RUNNER;i++)
 			{
-				item = new Runner(int(Math.random() * 8));
+				var item:Runner = new Runner(int(Math.random() * 8));
 				item.camera = layer.camera;
 				item.position = new Point(Math.random() * viewportRect.width  + viewportRect.x,
 										Math.random() * viewportRect.height + viewportRect.y);

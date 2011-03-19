@@ -5,7 +5,7 @@ package ghostcat.game.util
 	import flash.utils.getTimer;
 	
 	import ghostcat.events.TickEvent;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
 	import ghostcat.util.Tick;
@@ -23,7 +23,7 @@ package ghostcat.game.util
 	public class GameMoveByPathOper extends Oper
 	{
 		public var path:Array;
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
 		public var speed:Number;
 		public var item:DisplayObject;
 		public var ease:Function;
@@ -36,7 +36,7 @@ package ghostcat.game.util
 		public var oldPosition:Point;
 		public var position:Point;
 		
-		public function GameMoveByPathOper(path:Array,speed:Number,item:DisplayObject,layer:GameLayerBase = null,ease:Function = null)
+		public function GameMoveByPathOper(path:Array,speed:Number,item:DisplayObject,layer:GameLayer = null,ease:Function = null)
 		{
 			super();
 			

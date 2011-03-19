@@ -4,7 +4,7 @@ package ghostcat.game.layer.collision
 	
 	import ghostcat.algorithm.traversal.AStar;
 	import ghostcat.algorithm.traversal.MapModel;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	import ghostcat.game.util.GameMoveByPathOper;
 
 	/**
@@ -14,13 +14,13 @@ package ghostcat.game.layer.collision
 	 */
 	public class BlockCollisionManager implements ICollisionManager
 	{
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
 		public var blockMap:MapModel;
 		public var astar:AStar;
 		public var result:Array = [];
 		public var collisionList:Array;
 		public var enabled:Boolean;
-		public function BlockCollisionManager(layer:GameLayerBase,blockMap:MapModel)
+		public function BlockCollisionManager(layer:GameLayer,blockMap:MapModel)
 		{
 			this.layer = layer;
 			this.blockMap = blockMap;

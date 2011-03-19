@@ -4,6 +4,7 @@
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.algorithm.Arithmetic"/>
+    <classEntry path="ghostcat.algorithm.BoxsGrid"/>
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
     <classEntry path="ghostcat.algorithm.Point3D"/>
     <classEntry path="ghostcat.algorithm.QSort"/>
@@ -211,21 +212,26 @@
     <classEntry path="ghostcat.filter.ConvolutionFilterProxy"/>
     <classEntry path="ghostcat.filter.DisplacementMapFilterProxy"/>
     <classEntry path="ghostcat.filter.FilterProxy"/>
+    <classEntry path="ghostcat.filter.PerlinNoiseCacher"/>
     <classEntry path="ghostcat.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
+    <classEntry path="ghostcat.game.BitmapGameViewport"/>
+    <classEntry path="ghostcat.game.GameViewport"/>
     <classEntry path="ghostcat.game.item.BitmapGameItem"/>
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
     <classEntry path="ghostcat.game.item.collision.ICollision"/>
+    <classEntry path="ghostcat.game.item.collision.ICollisionClient"/>
     <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
     <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
     <classEntry path="ghostcat.game.item.sort.SortYCalculater"/>
-    <classEntry path="ghostcat.game.layer.BitmapGameLayer"/>
     <classEntry path="ghostcat.game.layer.GameLayer"/>
-    <classEntry path="ghostcat.game.layer.GameLayerBase"/>
+    <classEntry path="ghostcat.game.layer.camera.BoxsGridCamera"/>
     <classEntry path="ghostcat.game.layer.camera.ICamera"/>
-    <classEntry path="ghostcat.game.layer.collision.MutualCollisionManager"/>
+    <classEntry path="ghostcat.game.layer.camera.SimpleCamera"/>
+    <classEntry path="ghostcat.game.layer.collision.BlockCollisionManager"/>
     <classEntry path="ghostcat.game.layer.collision.ICollisionManager"/>
+    <classEntry path="ghostcat.game.layer.collision.MutualCollisionManager"/>
     <classEntry path="ghostcat.game.layer.position.IPositionManager"/>
     <classEntry path="ghostcat.game.layer.position.SimplePositionManager"/>
     <classEntry path="ghostcat.game.layer.position.Tile45PositionManager"/>
@@ -233,9 +239,15 @@
     <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortYManager"/>
+    <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
+    <classEntry path="ghostcat.gxml.GJSONManager"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.conversion.ObjectToXMLSpec"/>
     <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
+    <classEntry path="ghostcat.gxml.jsonspec.IJSONSpec"/>
+    <classEntry path="ghostcat.gxml.jsonspec.JSONDisplaySpec"/>
+    <classEntry path="ghostcat.gxml.jsonspec.JSONItemSpec"/>
+    <classEntry path="ghostcat.gxml.jsonspec.JSONSpec"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
     <classEntry path="ghostcat.gxml.spec.ISpec"/>
     <classEntry path="ghostcat.gxml.spec.ItemGroup"/>
@@ -539,14 +551,6 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
-    <classEntry path="ghostcat.gxml.jsonspec.JSONSpec"/>
-    <classEntry path="ghostcat.gxml.jsonspec.JSONDisplaySpec"/>
-    <classEntry path="ghostcat.game.layer.collision.BlockCollisionManager"/>
-    <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
-    <classEntry path="ghostcat.filter.PerlinNoiseCacher"/>
-    <classEntry path="ghostcat.algorithm.BoxsGrid"/>
-    <classEntry path="ghostcat.game.layer.camera.SimpleCamera"/>
-    <classEntry path="ghostcat.game.layer.camera.BoxsGridCamera"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
