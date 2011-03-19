@@ -5,7 +5,7 @@ package ghostcat.game.layer.camera
 	import flash.utils.Dictionary;
 	
 	import ghostcat.algorithm.BoxsGrid;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.ArrayUtil;
 	
 	/**
@@ -31,7 +31,7 @@ package ghostcat.game.layer.camera
 		 */
 		public var removeOutSideItems:Boolean = true;
 		
-		public function BoxsGridCamera(layer:GameLayerBase,screenRect:Rectangle,rect:Rectangle,boxWidth:Number,boxHeight:Number)
+		public function BoxsGridCamera(layer:GameLayer,screenRect:Rectangle,rect:Rectangle,boxWidth:Number,boxHeight:Number)
 		{
 			super(layer);
 			

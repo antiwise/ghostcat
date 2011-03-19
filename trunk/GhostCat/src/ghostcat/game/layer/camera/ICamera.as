@@ -2,7 +2,7 @@ package ghostcat.game.layer.camera
 {
 	import flash.display.DisplayObject;
 	
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 
 	public interface ICamera
 	{

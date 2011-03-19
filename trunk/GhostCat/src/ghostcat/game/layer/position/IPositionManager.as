@@ -2,7 +2,7 @@ package ghostcat.game.layer.position
 {
 	import flash.geom.Point;
 	
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 
 	public interface IPositionManager
 	{

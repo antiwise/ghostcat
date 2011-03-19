@@ -5,7 +5,7 @@ package ghostcat.game.layer.collision
 	
 	import ghostcat.game.item.collision.ICollision;
 	import ghostcat.game.item.collision.ICollisionClient;
-	import ghostcat.game.layer.GameLayerBase;
+	import ghostcat.game.layer.GameLayer;
 	
 	/**
 	 * 物体间碰撞 
@@ -14,11 +14,11 @@ package ghostcat.game.layer.collision
 	 */
 	public class MutualCollisionManager implements ICollisionManager
 	{
-		public var layer:GameLayerBase;
+		public var layer:GameLayer;
 		
 		public var result:Array = [];
 		public var collisionList:Array;
-		public function MutualCollisionManager(layer:GameLayerBase)
+		public function MutualCollisionManager(layer:GameLayer)
 		{
 			this.layer = layer;
 		}
