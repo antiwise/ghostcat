@@ -13,7 +13,7 @@ package ghostcat.display.graphics
 	import ghostcat.parse.graphics.IGraphicsLineStyle;
 
 	/**
-	 * 选择框
+	 * 用鼠标拖出一个框来选择
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -31,6 +31,11 @@ package ghostcat.display.graphics
 		
 		private var start:Point;
 		private var end:Point;
+		
+		/**
+		 * 选择的矩形
+		 */
+		public var rect:Rectangle;
 		
 		/**
 		 * 完成回调函数（参数是选择的矩形）
@@ -96,7 +101,8 @@ package ghostcat.display.graphics
 			var minY:Number = Math.min(start.y,end.y);
 			var maxX:Number = Math.max(start.x,end.x);
 			var maxY:Number = Math.max(start.y,end.y);
-			var rect:Rectangle = new Rectangle(minX,minY,maxX - minX,maxY - minY);
+			
+			this.rect = new Rectangle(minX,minY,maxX - minX,maxY - minY);
 			
 			var e:SelectEvent = new SelectEvent(SelectEvent.SELECT);
 			e.rect = rect;
