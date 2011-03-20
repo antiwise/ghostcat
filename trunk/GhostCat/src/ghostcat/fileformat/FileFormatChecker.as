@@ -37,12 +37,8 @@ package ghostcat.fileformat
 				key += bytes.readUnsignedByte().toString(16).toUpperCase();
 				var index:int = FORMAT_DATA.indexOf(key);
 				if (index != -1)
-				{
-					trace(key);
 					return FORMAT_NAME[index];
-				}
 			}
-			trace(key);
 			return null;
 		}
 	}
