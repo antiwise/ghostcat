@@ -551,6 +551,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
+    <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

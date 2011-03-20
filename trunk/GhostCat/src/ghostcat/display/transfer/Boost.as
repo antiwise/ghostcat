@@ -11,6 +11,11 @@ package ghostcat.display.transfer
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
 	
+	/**
+	 * 向上出现烟雾（未完成）
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Boost extends GBitmapEffect
 	{
 		private var _enabledTickRender:Boolean;
