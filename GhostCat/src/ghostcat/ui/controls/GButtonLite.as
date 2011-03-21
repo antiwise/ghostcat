@@ -407,7 +407,8 @@ package ghostcat.ui.controls
 		 */
 		protected function incessancyHandler(event:TimerEvent):void
 		{
-			dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			if (mouseOver)
+				dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		}
 		
 		/**
