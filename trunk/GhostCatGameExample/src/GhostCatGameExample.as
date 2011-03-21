@@ -200,6 +200,8 @@ package
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
+import flash.media.Sound;
+import flash.utils.ByteArray;
 
 import ghostcat.events.TickEvent;
 import ghostcat.game.item.BitmapMovieGameItem;

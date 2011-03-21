@@ -2,8 +2,11 @@ package ghostcat.ui.controls
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.text.TextFieldType;
 	import flash.ui.Keyboard;
 	
@@ -11,6 +14,7 @@ package ghostcat.ui.controls
 	import ghostcat.skin.NumberStepperSkin;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.core.EventHandler;
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**
@@ -38,6 +42,12 @@ package ghostcat.ui.controls
 		public var maxValue:Number;
 		public var minValue:Number;
 		public var detra:int = 1;
+		
+		/**
+		 * 是否激活鼠标拖动快速改变数值
+		 */
+		public var enabeldDragChange:Boolean = false;
+		private var mouseDownPoint:Point;//鼠标按下时的坐标
 		
 		public function GNumbericStepper(skin:*=null, replace:Boolean=true, enabledAdjustContextSize:Boolean=false, textPadding:Padding=null, fields:Object=null)
 		{
@@ -79,12 +89,14 @@ package ghostcat.ui.controls
 			{
 				upArrow = new ref(content[upArrowField]);
 				upArrow.addEventListener(MouseEvent.CLICK,upArrowHandler);
+				upArrow.addEventListener(MouseEvent.MOUSE_DOWN,arrowDownHandler);
 				upArrow.incessancyClick = true;
 			}
 			if (content.hasOwnProperty(downArrowField))
 			{
 				downArrow = new ref(content[downArrowField]);
 				downArrow.addEventListener(MouseEvent.CLICK,downArrowHandler);
+				downArrow.addEventListener(MouseEvent.MOUSE_DOWN,arrowDownHandler);
 				downArrow.incessancyClick = true;
 			}
 		}
@@ -107,6 +119,42 @@ package ghostcat.ui.controls
 			data += detra;
 			if (!isNaN(maxValue))
 				data = Math.min(data,maxValue);
+		}
+		
+		protected function arrowDownHandler(event:MouseEvent):void
+		{
+			if (enabeldDragChange && stage)
+			{
+				stage.addEventListener(MouseEvent.MOUSE_MOVE,arrowMoveHandler);
+				stage.addEventListener(MouseEvent.MOUSE_UP,arrowUpHandler);
+				
+				mouseDownPoint = new Point(mouseX,mouseY);
+			}
+		}
+		
+		protected function arrowMoveHandler(event:MouseEvent):void
+		{
+			if (enabeldDragChange)
+			{
+				data += (mouseX - mouseDownPoint.x + mouseDownPoint.y - mouseY) * detra;
+				
+				if (!isNaN(minValue))
+					data = Math.max(data,minValue);
+				
+				if (!isNaN(maxValue))
+					data = Math.min(data,maxValue);
+				
+				mouseDownPoint = new Point(mouseX,mouseY);
+			}
+		}
+		
+		protected function arrowUpHandler(event:MouseEvent):void
+		{
+			var stage:IEventDispatcher = event.currentTarget as IEventDispatcher;
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE,arrowMoveHandler);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,arrowUpHandler);
+			
+			mouseDownPoint = null;
 		}
 		
 		/**
@@ -182,6 +230,12 @@ package ghostcat.ui.controls
 			
 			if (downArrow) 
 				downArrow.destory();
+			
+			if (stage)
+			{
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE,arrowMoveHandler);
+				stage.removeEventListener(MouseEvent.MOUSE_UP,arrowUpHandler);
+			}
 		
 			super.destory();
 		}
