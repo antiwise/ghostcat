@@ -23,7 +23,7 @@ package ghostcat.game.item
 		
 		public function isRunning():Boolean
 		{
-			return oldX == x && oldY == y;
+			return oldX != x || oldY != y;
 		}
 		
 		public function BitmapAvatarItem(standAnims:Array,runAnims:Array,frameRate:Number)
