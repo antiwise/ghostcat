@@ -53,6 +53,15 @@ package ghostcat.algorithm.traversal
 		function getArounds(p:*) : Array;
 		
 		/**
+		 * 是否是墙壁
+		 * @param v	目标点
+		 * @param cur	当前点
+		 * @return 
+		 * 
+		 */
+		function isBlock(v:*,cur:* = null):Boolean
+		
+		/**
 		 * 判断是否结束
 		 * 
 		 * @param cur	当前节点

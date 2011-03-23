@@ -10,24 +10,33 @@ package ghostcat.algorithm.traversal
 	 */	
 	public class MapModel implements IMapModel
 	{
-		private const COST_STRAIGHT : int = 10;//水平分值
+		static public const COST_STRAIGHT : int = 10;//水平分值
+		static public const COST_DIAGONAL : int = 14;//斜向分值
 		
-		private const COST_DIAGONAL : int = 14;//斜向分值
+		/**
+		 * 地图宽度 
+		 */
+		public var width:int;
 		
+		/**
+		 * 地图高度
+		 */
+		public var height:int;
 		
 		/**
 		 * 是否启用斜向移动
 		 */		
 		public var diagonal:Boolean = true;
 		
+		protected var noteMap:Array;//node缓存
+		protected var _map:Array;//地图
+		protected var isArray2D:Boolean;//是否是二维数组
+		
 		public function MapModel(map:Array = null)
 		{
 			if (map)
 				this.map = map;
 		}
-		
-		private var noteMap : Array;//node缓存
-		private var _map:Array;
 		
 		/**
 		 * 地图数据
@@ -40,25 +49,49 @@ package ghostcat.algorithm.traversal
 		public function set map(value:Array):void
 		{
 			_map = value;
+			
+			if (value[0] is Array)
+			{
+				width = (value[0] as Array).length;
+				height = value.length;
+				isArray2D = true;
+			}
+			else
+			{
+				isArray2D = false;
+			}
 		}
 		
 		/**
 		 * 创建地图 
 		 * @param width
 		 * @param height
+		 * @param isArray2D
 		 * 
 		 */
-		public function createMap(width:int,height:int):void
+		public function createMap(width:int,height:int,isArray2D:Boolean = false):void
 		{
-			this.map = [];
-			for (var j:int = 0;j < height;j++)
+			var m:Array = [];
+			
+			if (isArray2D)
 			{
-				var line:Array = [];
-				for (var i:int = 0;i < width;i++)
-					line[i] = false;
-				
-				this.map[j] = line;
+				for (var j:int = 0;j < height;j++)
+				{
+					var line:Array = [];
+					for (var i:int = 0;i < width;i++)
+						line[i] = false;
+					
+					m[j] = line;
+				}
 			}
+			else
+			{
+				var l:int = width * height;
+				for (i = 0;i < l;i++)
+					m[i] = false;
+			}
+			
+			this.map = m;
 		}
 		
 		/**
@@ -67,7 +100,7 @@ package ghostcat.algorithm.traversal
 		 */
 		public function reset():void
 		{
-			this.noteMap = [];
+			this.noteMap = new Array(width * height);
 		}
 		
 		/**
@@ -79,9 +112,8 @@ package ghostcat.algorithm.traversal
 		 */
 		public function setNode(v:*,node:TraversalNote):void
 		{
-			if (this.noteMap[v.y] == null)
-				this.noteMap[v.y] = [];
-			this.noteMap[v.y][v.x] = node;
+			var p:Point = Point(v);
+			this.noteMap[p.y * width + p.x] = node;
 		}
 		
 		/**
@@ -93,9 +125,8 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getNode(v:*):TraversalNote
 		{
-			if (this.noteMap[v.y] == null) 
-				return null;
-			return this.noteMap[v.y][v.x];
+			var p:Point = Point(v);
+			return this.noteMap[p.y * width + p.x];
 		}
 
 		
@@ -109,7 +140,7 @@ package ghostcat.algorithm.traversal
 		 */
 		public function reachEnd(cur:*,end:*):Boolean
 		{
-			return (cur as Point).equals(end as Point);
+			return Point(cur).equals(Point(end));
 		}
 		
 		/**
@@ -124,7 +155,9 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getCostAddon(start:*,cur:*,next:*,end:*):int
 		{
-			return (next.x == cur.x || next.y == cur.y) ? COST_STRAIGHT : COST_DIAGONAL;
+			var p1:Point = Point(cur);
+			var p2:Point = Point(next);
+			return (p1.x == p2.x || p1.y == p2.y) ? COST_STRAIGHT : COST_DIAGONAL;
 		}
 		
 		/**
@@ -139,7 +172,9 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getScoreAddon(start:*,cur:*,next:*,end:*):int
 		{
-			return (Math.abs(end.x - next.x) + Math.abs(end.y - next.y)) * COST_STRAIGHT;
+			var p1:Point = Point(next);
+			var p2:Point = Point(end);
+			return (Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y)) * COST_STRAIGHT;
 		}
 		
 		/**
@@ -153,60 +188,61 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getArounds(v:*) : Array
 		{
+			var p:Point = Point(v);
 			var result : Array = [];
-			var cur : Point = new Point(v.x,v.y);
-			var p : Point;
+			var cur : Point = new Point(p.x,p.y);
+			var t : Point;
 			var canDiagonal : Boolean;
 			
 			//右
-			p = new Point(v.x + 1, v.y);
-			var canRight : Boolean = !isBlock(p,cur);
+			t = new Point(p.x + 1, p.y);
+			var canRight : Boolean = !isBlock(t,cur);
 			if (canRight)
-				result.push(p);
+				result[result.length] = t;
 			
 			//下
-			p = new Point(v.x, v.y + 1);
-			var canDown : Boolean = !isBlock(p,cur);
+			t = new Point(p.x, p.y + 1);
+			var canDown : Boolean = !isBlock(t,cur);
 			if (canDown)
-				result.push(p);
+				result[result.length] = t;
 			
 			//左
-			p = new Point(v.x - 1, v.y);
-			var canLeft : Boolean = !isBlock(p,cur);
+			t = new Point(p.x - 1, p.y);
+			var canLeft : Boolean = !isBlock(t,cur);
 			if (canLeft)
-				result.push(p);
+				result[result.length] = t;
 			
 			//上
-			p = new Point(v.x, v.y - 1);
-			var canUp : Boolean = !isBlock(p,cur);
+			t = new Point(p.x, p.y - 1);
+			var canUp : Boolean = !isBlock(t,cur);
 			if (canUp)
-				result.push(p);
+				result[result.length] = t;
 				
 			if (diagonal)
 			{
 				//右下
-				p = new Point(v.x + 1, v.y + 1);
-				canDiagonal = !isBlock(p,cur);
+				t = new Point(p.x + 1, p.y + 1);
+				canDiagonal = !isBlock(t,cur);
 				if (canDiagonal && canRight && canDown)
-					result.push(p);
+					result[result.length] = t;
 				
 				//左下
-				p = new Point(v.x - 1, v.y + 1);
-				canDiagonal = !isBlock(p,cur);
+				t = new Point(p.x - 1, p.y + 1);
+				canDiagonal = !isBlock(t,cur);
 				if (canDiagonal && canLeft && canDown)
-					result.push(p);
+					result[result.length] = t;
 				
 				//左上
-				p = new Point(v.x - 1, v.y - 1);
-				canDiagonal = !isBlock(p,cur);
+				t = new Point(p.x - 1, p.y - 1);
+				canDiagonal = !isBlock(t,cur);
 				if (canDiagonal && canLeft && canUp)
-					result.push(p);
+					result[result.length] = t;
 				
 				//右上
-				p = new Point(v.x + 1, v.y - 1);
-				canDiagonal = !isBlock(p,cur);
+				t = new Point(p.x + 1, p.y - 1);
+				canDiagonal = !isBlock(t,cur);
 				if (canDiagonal && canRight && canUp)
-					result.push(p);
+					result[result.length] = t;
 			}
 			return result;
 		}
@@ -218,15 +254,13 @@ package ghostcat.algorithm.traversal
 		 * @return 
 		 * 
 		 */
-		public function isBlock(v:Point,cur:Point):Boolean
+		public function isBlock(v:*,cur:* = null):Boolean
 		{
-			var mapHeight : int = _map.length;
-			var mapWidth : int = _map[0].length;
-			
-			if (v.x < 0 || v.x >= mapWidth || v.y < 0 || v.y >= mapHeight)
+			var p:Point = Point(v);
+			if (p.x < 0 || p.x >= width || p.y < 0 || p.y >= height)
 				return true;
-			
-			return _map[v.y][v.x];
+			else
+				return isArray2D ? _map[p.y][p.x] : _map[p.y * width + p.x];
 		}
 		
 		/**
@@ -237,12 +271,12 @@ package ghostcat.algorithm.traversal
 		 */
 		public function toBitmap():Bitmap
 		{
-			var bitmap:Bitmap =  new Bitmap(new BitmapData(_map[0].length,_map.length))
-			for (var j:int = 0;j < _map.length;j++)
+			var bitmap:Bitmap =  new Bitmap(new BitmapData(width,height))
+			for (var j:int = 0;j < height;j++)
 			{
-				for (var i:int = 0;i < _map[j].length;i++)
+				for (var i:int = 0;i < width;i++)
 				{
-					if (_map[j][i])
+					if (isBlock(new Point(i,j)))
 						bitmap.bitmapData.setPixel(i,j,0x0);
 				}
 			}

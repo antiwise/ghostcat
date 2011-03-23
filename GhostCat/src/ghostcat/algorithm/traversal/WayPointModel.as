@@ -34,9 +34,7 @@ package ghostcat.algorithm.traversal
 		private var noteMap : Array;//node缓存
 		private var _map:Array;
 		
-		/**
-		 * 地图数据
-		 */
+		/** @inheritDoc */	
 		public function get map():Array
 		{
 			return _map;
@@ -47,78 +45,38 @@ package ghostcat.algorithm.traversal
 			_map = value;
 		}
 		
-		/**
-		 * 初始化
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function reset():void
 		{
 			this.noteMap = [];
 		}
 		
-		/**
-		 * 保存Node
-		 * 
-		 * @param v	键
-		 * @param node
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function setNode(v:*,node:TraversalNote):void
 		{
 			this.noteMap[v] = node;
 		}
 		
-		/**
-		 * 取出Node
-		 * 
-		 * @param v	键
-		 * @return 
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function getNode(v:*):TraversalNote
 		{
 			return this.noteMap[v];
 		}
 
 		
-		/**
-		 * 判断两个节点是否相同
-		 * 
-		 * @param p1	节点1
-		 * @param p2	节点2
-		 * @return 	是否相同的布尔值
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function reachEnd(cur:*,end:*):Boolean
 		{
 			return cur == end;
 		}
 		
-		/**
-		 * 获得Cost对于父节点Cost的加值
-		 * 
-		 * @param start	首节点
-		 * @param cur	父节点
-		 * @param next	当前节点
-		 * @param end	终点
-		 * @return 
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function getCostAddon(start:*,cur:*,next:*,end:*):int
 		{
 			return wayMap[cur][next];
 		}
 		
-		/**
-		 * 获得Score对于Cost的加值
-		 *  
-		 * @param start	首节点
-		 * @param cur	父节点
-		 * @param next	当前节点
-		 * @param end	终点
-		 * @return 
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function getScoreAddon(start:*,cur:*,next:*,end:*):int
 		{
 			var endPoint:Point = points[end];
@@ -128,14 +86,7 @@ package ghostcat.algorithm.traversal
 			return Point.distance(nextPoint,endPoint) - Point.distance(curPoint,endPoint);
 		}
 		
-		/**
-		 * 提供可遍历的节点
-		 * 
-		 * 
-		 * @param v	当前节点
-		 * @return 
-		 * 
-		 */
+		/** @inheritDoc */	
 		public function getArounds(v:*) : Array
 		{
 			var result : Array = [];
@@ -147,6 +98,12 @@ package ghostcat.algorithm.traversal
 					result.push(i);
 			}
 			return result;
+		}
+		
+		/** @inheritDoc */	
+		public function isBlock(v:*,cur:* = null):Boolean
+		{
+			return v != cur && wayMap[cur][v] > 0;
 		}
 		
 		public function toString():String

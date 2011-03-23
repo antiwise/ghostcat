@@ -10,26 +10,39 @@ package ghostcat.algorithm.traversal
 	 */
 	public class Map3DModel implements IMapModel
 	{
-		private const COST_STRAIGHT : int = 10;//水平分值
+		static public const COST_STRAIGHT : int = 10;//水平分值
+		static public const COST_DIAGONAL : int = 14;//斜向分值
+		static public const COST_DIAGONAL_3D : int = 17;//3D斜向分值
 		
-		private const COST_DIAGONAL : int = 14;//斜向分值
+		/**
+		 * 地图宽度 
+		 */
+		public var width:int;
 		
-		private const COST_DIAGONAL_3D : int = 17;//3D斜向分值
+		/**
+		 * 地图高度
+		 */
+		public var height:int;
 		
-		private var _map : Array;
+		/**
+		 * 地图深度
+		 */
+		public var depth:int;
 		
 		/**
 		 * 是否启用斜向移动
 		 */		
 		public var diagonal:Boolean = true;
 		
+		private var _map : Array;
+		private var noteMap : Array;//node缓存
+		private var isArray2D:Boolean;//是否是二维数组
+		
 		public function Map3DModel(map:Array = null)
 		{
 			if (map)
 				this.map = map;
 		}
-		
-		private var noteMap : Array;//node缓存
 		
 		/**
 		 * 地图数据
@@ -42,6 +55,18 @@ package ghostcat.algorithm.traversal
 		public function set map(value:Array):void
 		{
 			_map = value;
+			
+			if (value[0] is Array)
+			{
+				width = (value[0] as Array).length;
+				height = value.length;
+				depth = (value[0][0] as Array).length;
+				isArray2D = true;
+			}
+			else
+			{
+				isArray2D = false;
+			}
 		}
 
 		/**
@@ -50,7 +75,7 @@ package ghostcat.algorithm.traversal
 		 */
 		public function reset():void
 		{
-			this.noteMap = [];
+			this.noteMap = new Array(width * height * depth);
 		}
 		
 		/**
@@ -62,11 +87,8 @@ package ghostcat.algorithm.traversal
 		 */
 		public function setNode(v:*,node:TraversalNote):void
 		{
-			if (this.noteMap[v.z] == null)
-				this.noteMap[v.z] = [];
-			if (this.noteMap[v.z][v.y] == null)
-				this.noteMap[v.z][v.y] = [];
-			this.noteMap[v.z][v.y][v.x] = node;
+			var p:Point3D = Point3D(v);
+			this.noteMap[p.z * width * height + p.y * width + p.x] = node;
 		}
 		
 		/**
@@ -78,11 +100,8 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getNode(v:*):TraversalNote
 		{
-			if (this.noteMap[v.z] == null) 
-				return null;
-			if (this.noteMap[v.z][v.y] == null) 
-				return null;
-			return this.noteMap[v.z][v.y][v.x];
+			var p:Point3D = Point3D(v);
+			return this.noteMap[p.z * width * height + p.y * width + p.x];
 		}
 
 		
@@ -111,12 +130,14 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getCostAddon(start:*,cur:*,next:*,end:*):int
 		{
+			var p1:Point3D = Point3D(cur);
+			var p2:Point3D = Point3D(next);
 			var equelCount:int = 0;
-			if (next.x == cur.x)
+			if (p2.x == p1.x)
 				equelCount++;
-			if (next.y == cur.y)
+			if (p2.y == p1.y)
 				equelCount++;
-			if (next.z == cur.z)
+			if (p2.z == p1.z)
 				equelCount++;
 			
 			if (equelCount == 3)
@@ -137,7 +158,9 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getScoreAddon(start:*,cur:*,next:*,end:*):int
 		{
-			return (Math.abs(end.x - next.x) + Math.abs(end.y - next.y) + Math.abs(end.z - next.z)) * COST_STRAIGHT;
+			var p1:Point3D = Point3D(next);
+			var p2:Point3D = Point3D(end);
+			return (Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y) + Math.abs(p2.z - p1.z)) * COST_STRAIGHT;
 		}
 		
 		/**
@@ -149,143 +172,140 @@ package ghostcat.algorithm.traversal
 		 */
 		public function getArounds(v:*) : Array
 		{
-			var result : Array = [];
-			var p : Point3D;
-			var canDiagonal : Boolean;
+			var p:Point3D = Point3D(v);
+			var result:Array = [];
+			var t:Point3D;
+			var canDiagonal:Boolean;
 			
 			//右
-			p = new Point3D(v.x + 1, v.y, v.z);
-			var canRight : Boolean = !isBlock(p);
+			t = new Point3D(p.x + 1, p.y, p.z);
+			var canRight : Boolean = !isBlock(t);
 			if (canRight)
-				result.push(p);
+				result[result.length] = t;
 			
 			//下
-			p = new Point3D(v.x, v.y + 1, v.z);
-			var canDown : Boolean = !isBlock(p);
+			t = new Point3D(p.x, p.y + 1, p.z);
+			var canDown : Boolean = !isBlock(t);
 			if (canDown)
-				result.push(p);
+				result[result.length] = t;
 			
 			//左
-			p = new Point3D(v.x - 1, v.y, v.z);
-			var canLeft : Boolean = !isBlock(p);
+			t = new Point3D(p.x - 1, p.y, p.z);
+			var canLeft : Boolean = !isBlock(t);
 			if (canLeft)
-				result.push(p);
+				result[result.length] = t;
 			
 			//上
-			p = new Point3D(v.x, v.y - 1, v.z);
-			var canUp : Boolean = !isBlock(p);
+			t = new Point3D(p.x, p.y - 1, p.z);
+			var canUp : Boolean = !isBlock(t);
 			if (canUp)
-				result.push(p);
+				result[result.length] = t;
 				
 			//前
-			p = new Point3D(v.x, v.y, v.z + 1);
-			var canFront : Boolean = !isBlock(p);
+			t = new Point3D(p.x, p.y, p.z + 1);
+			var canFront : Boolean = !isBlock(t);
 			if (canFront)
-				result.push(p);
+				result[result.length] = t;
 			
 			//后
-			p = new Point3D(v.x, v.y, v.z - 1);
-			var canBehind : Boolean = !isBlock(p);
+			t = new Point3D(p.x, p.y, p.z - 1);
+			var canBehind : Boolean = !isBlock(t);
 			if (canBehind)
-				result.push(p);
+				result[result.length] = t;
 				
 			if (diagonal)
 			{
 				//右下
-				p = new Point3D(v.x + 1, v.y + 1, v.z);
-				canDiagonal = !isBlock(p);
+				t = new Point3D(p.x + 1, p.y + 1, p.z);
+				canDiagonal = !isBlock(t);
 				if (canDiagonal && canRight && canDown)
-					result.push(p);
+					result[result.length] = t;
 				
 				//左下
-				p = new Point3D(v.x - 1, v.y + 1, v.z);
-				canDiagonal = !isBlock(p);
+				t = new Point3D(p.x - 1, p.y + 1, p.z);
+				canDiagonal = !isBlock(t);
 				if (canDiagonal && canLeft && canDown)
-					result.push(p);
+					result[result.length] = t;
 				
 				//左上
-				p = new Point3D(v.x - 1, v.y - 1, v.z);
-				canDiagonal = !isBlock(p);
+				t = new Point3D(p.x - 1, p.y - 1, p.z);
+				canDiagonal = !isBlock(t);
 				if (canDiagonal && canLeft && canUp)
-					result.push(p);
+					result[result.length] = t;
 				
 				//右上
-				p = new Point3D(v.x + 1, v.y - 1, v.z);
-				canDiagonal = !isBlock(p);
+				t = new Point3D(p.x + 1, p.y - 1, p.z);
+				canDiagonal = !isBlock(t);
 				if (canDiagonal && canRight && canUp)
-					result.push(p);
+					result[result.length] = t;
 					
 				/////////////////////////////////////////
 				
 				if (canFront)
 				{
 					//前右下
-					p = new Point3D(v.x + 1, v.y + 1, v.z + 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x + 1, p.y + 1, p.z + 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canRight && canDown)
-						result.push(p);
+						result[result.length] = t;
 					
 					//前左下
-					p = new Point3D(v.x - 1, v.y + 1, v.z + 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x - 1, p.y + 1, p.z + 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canLeft && canDown)
-						result.push(p);
+						result[result.length] = t;
 					
 					//前左上
-					p = new Point3D(v.x - 1, v.y - 1, v.z + 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x - 1, p.y - 1, p.z + 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canLeft && canUp)
-						result.push(p);
+						result[result.length] = t;
 					
 					//前右上
-					p = new Point3D(v.x + 1, v.y - 1, v.z + 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x + 1, p.y - 1, p.z + 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canRight && canUp)
-						result.push(p);
+						result[result.length] = t;
 				}	
 				////////////////////////////////////	
 				
 				if (canBehind)
 				{
 					//后右下
-					p = new Point3D(v.x + 1, v.y + 1, v.z - 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x + 1, p.y + 1, p.z - 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canRight && canDown)
-						result.push(p);
+						result[result.length] = t;
 					
 					//后左下
-					p = new Point3D(v.x - 1, v.y + 1, v.z - 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x - 1, p.y + 1, p.z - 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canLeft && canDown)
-						result.push(p);
+						result[result.length] = t;
 					
 					//后左上
-					p = new Point3D(v.x - 1, v.y - 1, v.z - 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x - 1, p.y - 1, p.z - 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canLeft && canUp)
-						result.push(p);
+						result[result.length] = t;
 					
 					//后右上
-					p = new Point3D(v.x + 1, v.y - 1, v.z - 1);
-					canDiagonal = !isBlock(p);
+					t = new Point3D(p.x + 1, p.y - 1, p.z - 1);
+					canDiagonal = !isBlock(t);
 					if (canDiagonal && canRight && canUp)
-						result.push(p);
+						result[result.length] = t;
 				}
 			}
 			return result;
 		}
 		
-		//是否是墙壁
-		private function isBlock(v:Point3D):Boolean
+		public function isBlock(v:*,cur:* = null):Boolean
 		{
-			var mapDeep : int = _map.length;
-			var mapHeight : int = _map[0].length;
-			var mapWidth : int = _map[0][0].length;
-			
-			if (v.x < 0 || v.x >= mapWidth || v.y < 0 || v.y >= mapHeight || v.z < 0 || v.z >= mapDeep)
+			var p:Point3D = Point3D(v);
+			if (p.x < 0 || p.x >= width || p.y < 0 || p.y >= height || p.z < 0 || p.z >= depth)
 				return true;
-			
-			return _map[v.z][v.y][v.x];
+			else
+				return isArray2D ? _map[p.z][p.y][p.x] : _map[p.z * width * height + p.y * width + p.x];
 		}
 	}
 }

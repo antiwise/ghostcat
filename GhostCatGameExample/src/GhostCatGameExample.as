@@ -149,7 +149,7 @@ package
 			layer = new GameLayer();
 			layer.sort = isSort ? new SortYManager(layer) : null;
 			layer.position = is45 ? new Tile45PositionManager(1,0.5) : null;
-			layer.camera = isBoxsGrid ? new BoxsGridCamera(layer,new Rectangle(-100,-100,1000,800),viewportRect,400,300) : new SimpleCamera(layer);
+			layer.camera = isBoxsGrid ? new BoxsGridCamera(layer,new Rectangle(0,0,800,600),viewportRect,400,300) : new SimpleCamera(layer,new Rectangle(0,0,800,600),viewportRect);
 			viewport.addLayer(layer);
 			
 			for (var i:int = 0;i < MAX_RUNNER;i++)

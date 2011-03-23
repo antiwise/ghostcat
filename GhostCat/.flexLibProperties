@@ -552,6 +552,7 @@
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
+    <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

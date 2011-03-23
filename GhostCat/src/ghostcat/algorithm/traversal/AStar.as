@@ -12,7 +12,7 @@ package ghostcat.algorithm.traversal
 	{
 		protected var heapOpenList : BinaryHeap;//开放列表，为二叉堆，将自动排序
 		
-		public function AStar(mapModel : MapModel, maxTry : int = 5000)
+		public function AStar(mapModel : IMapModel, maxTry : int = 5000)
 		{
 			super(mapModel,maxTry);
 		}
