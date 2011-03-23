@@ -553,6 +553,7 @@
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
+    <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
