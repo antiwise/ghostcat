@@ -9,8 +9,15 @@ package ghostcat.game.layer.camera
 	public class SimpleCamera implements ICamera
 	{
 		public var layer:GameLayer;
+		
+		/**
+		 * 当前左上角坐标 
+		 */
 		public var position:Point;
 		
+		/**
+		 * 追踪目标
+		 */
 		public var target:*;
 		
 		/**
