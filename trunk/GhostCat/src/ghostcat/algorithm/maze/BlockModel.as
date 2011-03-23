@@ -18,8 +18,9 @@ package ghostcat.algorithm.maze
 			super(map);
 			this.diagonal = false;
 		}
+		
 		/** @inheritDoc */	
-		public override function isBlock(v:Point, cur:Point) : Boolean
+		public override function isBlock(v:*, cur:* = null) : Boolean
 		{
 			var mapHeight : int = map.length;
 			var mapWidth : int = map[0].length;

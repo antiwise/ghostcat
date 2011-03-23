@@ -25,7 +25,7 @@ package ghostcat.algorithm.traversal
 		 */
 		protected var openList : Array;
 		
-		public function Traversal(mapModel : MapModel, maxTry : int = 5000)
+		public function Traversal(mapModel : IMapModel, maxTry : int = 5000)
 		{
 			AbstractUtil.preventConstructor(this,Traversal,"Traversal为抽象类，必须实现find方法！");
 			

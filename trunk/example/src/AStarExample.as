@@ -77,12 +77,12 @@ package
 					var isBlock : Boolean = Math.random() < 0.3;
 					map[j][i] = isBlock;
 					
-					screen.bitmapData.setPixel(i,j,isBlock ? 0x000000 : 0xFFFFFF);
+					this.screen.bitmapData.setPixel(i,j,isBlock ? 0x000000 : 0xFFFFFF);
 				}
 			}
 			
 			this.playPoint = new Point();
-			screen.bitmapData.setPixel(0,0,0xFF0000);
+			this.screen.bitmapData.setPixel(0,0,0xFF0000);
 			
 			this.mapModel.map = this.map;//创建地图数据
 			this.aStar = new AStar(this.mapModel);//根据数据生成A*类
@@ -104,9 +104,9 @@ package
 			if (this.path == null || this.path.length == 0)
 				return;
 			
-			screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFFFFFF);
+			this.screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFFFFFF);
 			playPoint = this.path.shift() as Point;
-			screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFF0000);
+			this.screen.bitmapData.setPixel(playPoint.x,playPoint.y,0xFF0000);
 			
 		}
 	}

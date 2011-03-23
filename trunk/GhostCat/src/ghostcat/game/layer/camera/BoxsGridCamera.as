@@ -16,10 +16,6 @@ package ghostcat.game.layer.camera
 	public class BoxsGridCamera extends SimpleCamera
 	{
 		public var boxs:BoxsGrid;
-		/**
-		 * 屏幕大小 
-		 */
-		public var screenRect:Rectangle;
 		
 		/**
 		 * 始终显示的对象
@@ -31,11 +27,15 @@ package ghostcat.game.layer.camera
 		 */
 		public var removeOutSideItems:Boolean = true;
 		
+		/**
+		 * 进行屏幕判断需要多判断的范围
+		 */
+		public var exScreenRect:int = 100;
+		
 		public function BoxsGridCamera(layer:GameLayer,screenRect:Rectangle,rect:Rectangle,boxWidth:Number,boxHeight:Number)
 		{
-			super(layer);
+			super(layer,screenRect,rect);
 			
-			this.screenRect = screenRect;
 			this.boxs = new BoxsGrid(rect,boxWidth,boxHeight);
 		}
 		
@@ -49,10 +49,10 @@ package ghostcat.game.layer.camera
 			super.render();
 			
 			var r:Rectangle = new Rectangle(
-				screenRect.x + position.x,
-				screenRect.y + position.y,
-				screenRect.width,
-				screenRect.height);
+				screenRect.x + position.x - exScreenRect,
+				screenRect.y + position.y - exScreenRect,
+				screenRect.width + exScreenRect + exScreenRect,
+				screenRect.height + exScreenRect + exScreenRect);
 			
 			var oldDict:Dictionary = layer.childrenInScreenDict; 
 			var newsDict:Dictionary = new Dictionary();
