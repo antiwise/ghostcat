@@ -20,7 +20,7 @@ package ghostcat.game.layer.camera
 		/**
 		 * 始终显示的对象
 		 */
-		public var extendsItems:Dictionary;
+		public var extendsItems:Array;
 		
 		/**
 		 * 是否移除屏幕外的对象
@@ -61,7 +61,7 @@ package ghostcat.game.layer.camera
 			var child:*;
 			if (extendsItems)
 			{
-				for (child in extendsItems)
+				for each (child in extendsItems)
 				{
 					if (!newsDict[child])
 					{
