@@ -1,8 +1,6 @@
 package ghostcat.util
 {
 	import flash.external.ExternalInterface;
-	
-	import ghostcat.text.RegExpUtil;
 
 	/**
 	 * 表达式计算
