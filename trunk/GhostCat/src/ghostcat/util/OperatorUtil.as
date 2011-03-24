@@ -15,6 +15,12 @@ package ghostcat.util
 			return i <= 0 || exp.charAt(i - 1) == "(";
 		}
 		
+		//是否是一元运算符
+		private static function isOperatorOneTarget(ch:String):Boolean
+		{
+			return ch == "!";
+		}
+		
 		private static function isNumber(exp:String,i:int):Boolean
 		{
 			if (i >= exp.length || i < 0)
@@ -29,7 +35,7 @@ package ghostcat.util
 			if (i >= exp.length || i < 0)
 				return null;
 			
-			if (isStart(exp,i) && exp.charAt(i) != "!")//避免将负数的减号作为运算符
+			if (isStart(exp,i) && !isOperatorOneTarget(exp.charAt(i)))//避免将负数的减号作为运算符
 				return null;
 			
 			if (i + 1 < exp.length)
@@ -144,9 +150,21 @@ package ghostcat.util
 			var op:String = operators.pop(); 
 			var operand1:Number = operands.pop();
 			var operand2:Number;
-			if (op != "!")
+			if (!isOperatorOneTarget(op))//如果是一元运算符，只取一个值
 				operand2 = operands.pop(); 
 			operands.push(getValue(op,operand1,operand2)); 
+		}
+		
+		private static function replaceAll(str:String,oldValue:String,newValue:String):String
+		{
+			var newStr:String = str;
+			do
+			{
+				str = newStr;
+				newStr = str.replace(oldValue,newValue);
+			}
+			while (newStr != str)
+			return newStr;
 		}
 		
 		/**
@@ -161,7 +179,7 @@ package ghostcat.util
 			{
 				for (var p:String in params)
 				{
-					exp.replace(new RegExp(p,"g"),params[p]);
+					exp = replaceAll(exp,p,params[p]);
 				}
 			}
 			exp = exp.replace(/\s/g,"");
