@@ -3,7 +3,6 @@
   <includeClasses>
     <classEntry path="ghostcat.FrameworkClasses"/>
     <classEntry path="ghostcat.GhostCatApp"/>
-    <classEntry path="ghostcat.algorithm.Arithmetic"/>
     <classEntry path="ghostcat.algorithm.BoxsGrid"/>
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
     <classEntry path="ghostcat.algorithm.Point3D"/>
@@ -554,6 +553,7 @@
     <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
+    <classEntry path="ghostcat.util.OperatorUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

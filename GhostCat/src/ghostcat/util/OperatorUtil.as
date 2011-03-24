@@ -1,4 +1,4 @@
-package ghostcat.algorithm
+package ghostcat.util
 {
 	import flash.external.ExternalInterface;
 	
@@ -9,7 +9,7 @@ package ghostcat.algorithm
 	 * @author flashyiyi
 	 * 
 	 */
-	public class Arithmetic
+	public class OperatorUtil
 	{
 		//一个运算区域的开头（字符串开始或者"("之后）
 		private static function isStart(exp:String,i:int):Boolean
@@ -171,9 +171,6 @@ package ghostcat.algorithm
 			var operators:Array = [];
 			var operands:Array = [];
 			
-			var op:String;
-			var operand1:Number;
-			var operand2:Number;
 			var pos:int=0;
 			
 			while (pos < exp.length) 
