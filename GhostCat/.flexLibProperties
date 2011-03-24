@@ -554,6 +554,7 @@
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
     <classEntry path="ghostcat.util.OperatorUtil"/>
+    <classEntry path="ghostcat.util.data.E4XUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
