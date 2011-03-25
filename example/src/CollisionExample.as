@@ -3,8 +3,6 @@ package
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	
-	import flexunit.utils.Collection;
-	
 	import ghostcat.debug.DebugScreen;
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
