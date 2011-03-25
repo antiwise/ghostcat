@@ -9,16 +9,10 @@ package ghostcat.util
 	 */
 	public class OperatorUtil
 	{
-		//一个运算区域的开头（字符串开始或者"("之后）
-		private static function isStart(exp:String,i:int):Boolean
-		{
-			return i <= 0 || exp.charAt(i - 1) == "(";
-		}
-		
 		//是否是一元运算符
 		private static function isOperatorOneTarget(ch:String):Boolean
 		{
-			return ch == "!";
+			return ch == "!" || ch == "sin"|| ch == "cos"|| ch == "tan"|| ch == "cot"|| ch == "log" || ch == "sqrt" || ch == "round" || ch == "ceil" || ch == "floor";
 		}
 		
 		private static function isNumber(exp:String,i:int):Boolean
@@ -27,30 +21,50 @@ package ghostcat.util
 				return false;
 			
 			var op:String = exp.charAt(i);
-			return op >= '0' && op <= "9" || op == "." || op == "-" && (getOperator(exp,i - 1) || isStart(exp,i));
+			return op >= "0" && op <= "9" || op == "." || op == "-";
 		}
 		
 		private static function getOperator(exp:String,i:int):String 
 		{ 
-			if (i >= exp.length || i < 0)
-				return null;
-			
-			if (isStart(exp,i) && !isOperatorOneTarget(exp.charAt(i)))//避免将负数的减号作为运算符
-				return null;
-			
+			var mustOneTarget:Boolean = (i == 0 || !isNumber(exp,i - 1) && exp.charAt(i - 1) != ")");//当没有前一个数字，必须是一元运算符
+			var op:String;
+			if (i + 4 < exp.length)
+			{
+				op = exp.slice(i,i + 5);
+				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
+					(op == "round" || op == "floor"))
+					return op;
+			}
+			if (i + 3 < exp.length)
+			{
+				op = exp.slice(i,i + 4);
+				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
+					(op == "sqrt" || op == "ceil"))
+					return op;
+			}
+			if (i + 2 < exp.length)
+			{
+				op = exp.slice(i,i + 3);
+				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
+					(op == "pow" || op == "sin" || op == "cos" || op == "tan" || op == "cot" || op == "log"))
+					return op;
+			}
 			if (i + 1 < exp.length)
 			{
-				var op2:String = exp.charAt(i) + exp.charAt(i + 1);
-				if (op2 == "<<" || op2 == ">>" || op2 == ">=" || op2 == "<=" || 
-					op2 == "==" || op2 == "=" || op2 == "!=" || op2 == "&&" || op2 == "||")
-					return op2;
+				op = exp.slice(i,i + 2);
+				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
+					(op == "<<" || op == ">>" || op == ">=" || op == "<=" || 
+					op == "==" || op == "=" || op == "!=" || op == "&&" || op == "||"))
+					return op;
 			}
-			
-			var op:String = exp.charAt(i);
-			if (op == "+" || (op == "-" && !getOperator(exp,i - 1)) || op == "*" || op == "/" || op == "%" ||
-				op == ">" || op == "<" || op == "=" || op == "&" || op == "^" || op == "|" || op == "!")
-				return op;
-			
+			if (i < exp.length)
+			{
+				op = exp.charAt(i);
+				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
+					(op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
+					op == ">" || op == "<" || op == "=" || op == "&" || op == "^" || op == "|" || op == "!"))
+					return op;
+			}
 			return null;
 		}
 		
@@ -59,7 +73,19 @@ package ghostcat.util
 			switch(op)
 			{ 
 				case ")": 
-					return uint.MAX_VALUE; 
+					return uint.MAX_VALUE;
+				case "round":
+				case "floor":
+				case "ceil":
+				case "sqrt":
+				case "sin":
+				case "cos":
+				case "tan":
+				case "cot":
+				case "log":
+					return 13;
+				case "pow":
+					return 12;
 				case "!":
 					return 11;
 				case "*": 
@@ -102,6 +128,28 @@ package ghostcat.util
 		{ 
 			switch (op) 
 			{ 
+				case "!":
+					return operand1 ? 0 : 1;
+				case "round":
+					return Math.round(operand1);
+				case "floor":
+					return Math.floor(operand1);
+				case "ceil":
+					return Math.ceil(operand1);
+				case "sqrt":
+					return Math.sqrt(operand1);
+				case "log":
+					return Math.log(operand1);
+				case "sin":
+					return Math.sin(operand1);
+				case "cos":
+					return Math.cos(operand1);
+				case "tan":
+					return Math.tan(operand1);
+				case "cot":
+					return 1 / Math.tan(operand1);
+				case "pow":
+					return Math.pow(operand2,operand1);
 				case "*": 
 					return operand2 * operand1; 
 				case "/": 
@@ -139,8 +187,6 @@ package ghostcat.util
 					return operand2 && operand1 ? 1 : 0;
 				case "||":
 					return operand2 || operand1 ? 1 : 0;
-				case "!":
-					return operand1 ? 0 : 1;
 			}
 			return NaN;
 		}
@@ -193,12 +239,21 @@ package ghostcat.util
 			{ 
 				var ch:String = exp.charAt(pos);
 				var operator:String = getOperator(exp,pos);
-				if (ch == "(") 
+				if (operator) 
+				{ 
+					//如果优先级顺序由增加变为减少，则计算比它优先级高的数据直到优先级回到这一级
+					while (getPriority(operator) <= getPriority(operators[operators.length - 1]) && operators.length)
+						execOperator(operators,operands);
+					
+					operators.push(operator);
+					pos += operator.length; 
+				}
+				else if (ch == "(") 
 				{
 					operators.push(ch); 
 					pos++; 
 				}
-				else if(ch == ")") 
+				else if (ch == ")") 
 				{
 					//如果遇到)，则计算数据直到遇到一个(
 					while (operators[operators.length - 1] != "(" && operators.length) 
@@ -207,16 +262,7 @@ package ghostcat.util
 					operators.pop(); 
 					pos++; 
 				}
-				else if (operator) 
-				{ 
-					//如果优先级顺序由增加变为减少，则计算比它优先级高的数据直到优先级回到这一级
-					while (getPriority(operator) <= getPriority(operators[operators.length - 1]) && operators.length)
-						execOperator(operators,operands);
-					
-					operators.push(operator);
-					pos += operator.length; 
-				} 
-				else 
+				else if (isNumber(exp,pos))
 				{
 					var v:String = "";
 					while (isNumber(exp,pos) && pos < exp.length)
@@ -224,7 +270,11 @@ package ghostcat.util
 						v = v + exp.charAt(pos);
 						pos++; 
 					}
-					operands.push(Number(v)); 
+					operands.push(Number(v));
+				}
+				else
+				{
+					return NaN;
 				}
 			}
 			
