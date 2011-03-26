@@ -10,9 +10,17 @@ package ghostcat.game.layer.sort
 	import ghostcat.util.Util;
 	import ghostcat.util.display.BitmapUtil;
 	
+	/**
+	 * 深度排序器 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SortPriorityManager implements ISortManager
 	{
 		public var layer:GameLayer;
+		/**
+		 * 排序依据 
+		 */
 		public var sortFields:*;
 		public function SortPriorityManager(layer:GameLayer,sortFields:* = "priority")
 		{

@@ -8,6 +8,11 @@ package ghostcat.game
 	import ghostcat.events.TickEvent;
 	import ghostcat.game.layer.GameLayer;
 
+	/**
+	 * 位图场景 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BitmapGameViewport extends GameViewport
 	{
 		public var screen:Bitmap;

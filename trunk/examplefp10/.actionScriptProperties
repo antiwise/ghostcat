@@ -33,12 +33,6 @@
   <applications>
     <application path="PanoramicExample.as"/>
     <application path="AttentExample.as"/>
-    <application path="FP10Test.as"/>
-    <application path="FP10Test3.as"/>
-    <application path="FP10Test6.as"/>
-    <application path="FP10Test5.as"/>
-    <application path="FP10Test2.as"/>
-    <application path="FP10Test4.as"/>
     <application path="BeepExample.as"/>
   </applications>
   <modules/>

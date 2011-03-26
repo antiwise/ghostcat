@@ -2,6 +2,11 @@ package ghostcat.game.item.sort
 {
 	import flash.display.DisplayObject;
 	
+	/**
+	 * 等角深度计算模块
+	 * @author flashyiyi
+	 * 
+	 */
 	public class Sort45Calculater implements ISortCalculater
 	{
 		/**

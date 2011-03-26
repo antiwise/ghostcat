@@ -3,6 +3,11 @@ package ghostcat.text
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
+	/**
+	 * HTML代码辅助类 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class HTMLUtil
 	{
 		/**

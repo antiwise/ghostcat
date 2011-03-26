@@ -4,9 +4,20 @@ package ghostcat.game.layer.position
 	import flash.display.Shape;
 	import flash.geom.Point;
 
+	/**
+	 * 网格坐标转换器 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class TilePositionManager extends SimplePositionManager
 	{
+		/**
+		 * 网格宽度
+		 */
 		public var tileWidth:Number;
+		/**
+		 * 网格高度
+		 */
 		public var tileHeight:Number;
 		public function TilePositionManager(tileWidth:Number,tileHeight:Number,offestX:Number = 0.0,offestY:Number = 0.0):void
 		{

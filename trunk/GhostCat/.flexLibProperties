@@ -21,6 +21,7 @@
     <classEntry path="ghostcat.algorithm.traversal.BFS"/>
     <classEntry path="ghostcat.algorithm.traversal.BinaryHeap"/>
     <classEntry path="ghostcat.algorithm.traversal.BinaryTree"/>
+    <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
     <classEntry path="ghostcat.algorithm.traversal.IMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.Map3DModel"/>
@@ -175,6 +176,7 @@
     <classEntry path="ghostcat.extend.IFrame"/>
     <classEntry path="ghostcat.extend.JSBridge"/>
     <classEntry path="ghostcat.extend.RadioPlayer"/>
+    <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
     <classEntry path="ghostcat.fileformat.gif.GIFDecoder"/>
     <classEntry path="ghostcat.fileformat.gif.GIFEncoder"/>
     <classEntry path="ghostcat.fileformat.gif.LZWEncoder"/>
@@ -216,6 +218,7 @@
     <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.game.BitmapGameViewport"/>
     <classEntry path="ghostcat.game.GameViewport"/>
+    <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
     <classEntry path="ghostcat.game.item.BitmapGameItem"/>
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
@@ -471,6 +474,7 @@
     <classEntry path="ghostcat.util.Iterator"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.NetStatusEventHelper"/>
+    <classEntry path="ghostcat.util.OperatorUtil"/>
     <classEntry path="ghostcat.util.RandomSeed"/>
     <classEntry path="ghostcat.util.RandomUtil"/>
     <classEntry path="ghostcat.util.ReflectUtil"/>
@@ -493,6 +497,7 @@
     <classEntry path="ghostcat.util.data.ByteArrayReader"/>
     <classEntry path="ghostcat.util.data.ConversionUtil"/>
     <classEntry path="ghostcat.util.data.DataCompress"/>
+    <classEntry path="ghostcat.util.data.E4XUtil"/>
     <classEntry path="ghostcat.util.data.Hash"/>
     <classEntry path="ghostcat.util.data.Json"/>
     <classEntry path="ghostcat.util.data.LocalStorage"/>
@@ -550,11 +555,6 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
-    <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
-    <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
-    <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
-    <classEntry path="ghostcat.util.OperatorUtil"/>
-    <classEntry path="ghostcat.util.data.E4XUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
