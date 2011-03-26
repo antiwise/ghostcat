@@ -44,12 +44,8 @@ package ghostcat.display.transfer
 			this.scaleSpeed = scaleSpeed;
 			this.rotationSpeed = rotationSpeed;
 			this.lightSpeed = lightSpeed;
-		}
-		
-		public override function set target(value: DisplayObject): void
-		{
-			super.target = value;
-			start();
+			
+			this.start();
 		}
 		
 		public override function start():void

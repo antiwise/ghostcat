@@ -6,6 +6,11 @@ package ghostcat.game.layer.camera
 	
 	import ghostcat.game.layer.GameLayer;
 	
+	/**
+	 * 普通摄像机 
+	 * @author tangwei
+	 * 
+	 */
 	public class SimpleCamera implements ICamera
 	{
 		public var layer:GameLayer;

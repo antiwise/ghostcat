@@ -3,6 +3,11 @@ package ghostcat.game.item.sort
 	import flash.display.DisplayObject;
 	
 
+	/**
+	 * 深度计算模块 
+	 * @author tangwei
+	 * 
+	 */
 	public class SortYCalculater implements ISortCalculater
 	{
 		public var target:DisplayObject;

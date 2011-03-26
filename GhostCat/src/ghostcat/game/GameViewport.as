@@ -6,6 +6,11 @@ package ghostcat.game
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.Tick;
 	
+	/**
+	 * 场景 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class GameViewport extends Sprite
 	{
 		public var layers:Array = [];
