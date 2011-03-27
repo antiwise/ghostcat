@@ -44,6 +44,7 @@
 		private var _mutliRightMouse:int;
 		private var _mutliKey:int;
 		private var _mouseDown:Boolean = false;
+		private var _mouseDownPoint:Point;
 		private var _keyDownCode:int = 0;
 		private var _mouseLeave:Boolean = false;
 		private var _objAtMouse:DisplayObject;
@@ -90,6 +91,14 @@
 		public function get mouseDown():Boolean
 		{
 			return _mouseDown;
+		}
+		
+		/**
+		 * 鼠标按下的位置 
+		 */
+		public function get mouseDownPoint():Point
+		{
+			return _mouseDownPoint;
 		}
 		/**
 		 * 上一次按下的键盘码
@@ -321,6 +330,7 @@
         		
         	lastMouseTime = getTimer();
         	_mouseDown = true;
+			_mouseDownPoint = new Point(event.stageX,event.stageY);
         	
         	refreshLastTime();
         }
