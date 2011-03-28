@@ -5,7 +5,6 @@
     <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.algorithm.BoxsGrid"/>
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
-    <classEntry path="ghostcat.algorithm.Point3D"/>
     <classEntry path="ghostcat.algorithm.QSort"/>
     <classEntry path="ghostcat.algorithm.QuadTree"/>
     <classEntry path="ghostcat.algorithm.bezier.Bezier"/>
@@ -24,9 +23,7 @@
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
     <classEntry path="ghostcat.algorithm.traversal.IMapModel"/>
-    <classEntry path="ghostcat.algorithm.traversal.Map3DModel"/>
     <classEntry path="ghostcat.algorithm.traversal.MapModel"/>
-    <classEntry path="ghostcat.algorithm.traversal.SimpleAStar"/>
     <classEntry path="ghostcat.algorithm.traversal.Traversal"/>
     <classEntry path="ghostcat.algorithm.traversal.TraversalNote"/>
     <classEntry path="ghostcat.algorithm.traversal.WayPointModel"/>

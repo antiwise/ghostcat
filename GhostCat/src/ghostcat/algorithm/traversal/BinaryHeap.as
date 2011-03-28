@@ -61,7 +61,7 @@ package ghostcat.algorithm.traversal
 			var s:int = index;//s 当前节点
 			while (s > 1)
 			{
-				var p:int = int(s / 2);//p 父节点
+				var p:int = int(s * 0.5);//p 父节点
 				if (sortMetord(data[s],data[p]))
 				{
 					var t:* = data[s];

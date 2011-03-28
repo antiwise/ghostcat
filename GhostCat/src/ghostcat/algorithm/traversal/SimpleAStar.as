@@ -11,7 +11,7 @@ package ghostcat.algorithm.traversal
 	 * 
 	 * ----------------------------
 	 * 
-	 * 速度比AStar稍快，但只能用于2维网格寻路，数据源只需要实现getArounds方法，其他接口均无效
+	 * 数据源只需要实现getArounds方法，其他接口均无效
 	 * 
 	 */	
 	public class SimpleAStar
