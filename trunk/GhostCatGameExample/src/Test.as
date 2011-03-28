@@ -10,15 +10,15 @@ package
 		public function Test()
 		{
 			graphics.lineStyle(0,0x000000);
-			for (var i:int = 0;i < 4;i++)
+			for (var i:int = 0;i < 5;i++)
 			{
 				graphics.moveTo(0,i * 10);
-				graphics.lineTo(30,i * 10);
+				graphics.lineTo(50,i * 10);
 				graphics.moveTo(i * 10,0);
-				graphics.lineTo(i * 10,30);
+				graphics.lineTo(i * 10,50);
 			}
 			
-			var path:Array = [new Point(0,0),new Point(1,0),new Point(2,0),new Point(2,1),new Point(2,2)];
+			var path:Array = [new Point(0,0),new Point(1,0),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,3),new Point(4,3),new Point(5,3)];
 			path = PathOptimizer.findPath(path);
 			
 			graphics.lineStyle(0,0xFF0000);
