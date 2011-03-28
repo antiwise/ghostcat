@@ -54,7 +54,7 @@ package ghostcat.util
 				op = exp.slice(i,i + 2);
 				if ((!mustOneTarget || isOperatorOneTarget(op)) && 
 					(op == "<<" || op == ">>" || op == ">=" || op == "<=" || 
-					op == "==" || op == "=" || op == "!=" || op == "&&" || op == "||"))
+					op == "==" || op == "!=" || op == "&&" || op == "||"))
 					return op;
 			}
 			if (i < exp.length)

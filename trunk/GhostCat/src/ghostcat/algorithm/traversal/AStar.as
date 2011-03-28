@@ -92,3 +92,5 @@ package ghostcat.algorithm.traversal
 		}
 	}
 }
+
+//http://eidiot.net/2007/04/17/a-star-pathfinding/

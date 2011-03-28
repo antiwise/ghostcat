@@ -6,6 +6,11 @@ package ghostcat.algorithm
 	
 	import ghostcat.util.Util;
 
+	/**
+	 * 降数据按坐标范围划分并随时存取
+	 * @author flashyiyi
+	 * 
+	 */
 	public class BoxsGrid
 	{
 		public var rect:Rectangle;
@@ -35,6 +40,12 @@ package ghostcat.algorithm
 				this.boxs[i] = [];
 		}
 		
+		/**
+		 * 获得对象所在的方块数组 
+		 * @param item
+		 * @return 
+		 * 
+		 */
 		public function isIn(item:DisplayObject):Array
 		{
 			var x:int = int((item.x - rect.x) / boxWidth);
@@ -44,6 +55,11 @@ package ghostcat.algorithm
 			return boxs[y * w + x];
 		}
 		
+		/**
+		 * 增加对象 
+		 * @param item
+		 * 
+		 */
 		public function add(item:DisplayObject):void
 		{
 			var box:Array = isIn(item);
@@ -52,6 +68,11 @@ package ghostcat.algorithm
 			this.dict[item] = box;
 		}
 		
+		/**
+		 * 移除对象 
+		 * @param item
+		 * 
+		 */
 		public function remove(item:DisplayObject):void
 		{
 			var list:Array = this.dict[item];
@@ -63,6 +84,11 @@ package ghostcat.algorithm
 			}
 		}
 		
+		/**
+		 * 重新插入对象 
+		 * @param item
+		 * 
+		 */
 		public function reinsert(item:DisplayObject):void
 		{
 			var list:Array = isIn(item);
@@ -85,7 +111,7 @@ package ghostcat.algorithm
 		}
 		
 		/**
-		 * 获得一个范围内的所有数据
+		 * 获得一个范围内的所有对象
 		 * 
 		 * @param rect
 		 * 
