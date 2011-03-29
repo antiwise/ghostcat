@@ -19,6 +19,8 @@ package
 	import ghostcat.display.bitmap.GBitmap;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.TextFieldParse;
+	import ghostcat.ui.controls.GCheckBox;
+	import ghostcat.util.Util;
 	
 	/**
 	 * A* 算法演示
@@ -27,7 +29,7 @@ package
 	 * 
 	 */	
 	
-	[SWF(width="500",height="500")]
+	[SWF(width="500",height="525")]
 	public class PathOptimizerExample extends Sprite
 	{
 		private const MAP_WIDTH : int = 20;
@@ -36,8 +38,12 @@ package
 		private var screen : Bitmap;
 		private var wayScreen: Bitmap;
 		private var wayShape:Shape;
+		private var gridShape:Shape;
 		private var playPoint : Point;
 		private var map : Array;
+		
+		private var bn1:GCheckBox;
+		private var bn2:GCheckBox;
 		
 		private var aStar : Traversal;
 		private var mapModel : MapModel;
@@ -50,16 +56,27 @@ package
 			
 			screen = new Bitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT,false));
 			screen.scaleX = screen.scaleY = 25;
+			screen.y = 25;
 			addChild(screen);
 			
 			wayScreen = new Bitmap(new BitmapData(MAP_WIDTH,MAP_HEIGHT,true,0x0));
 			wayScreen.scaleX = wayScreen.scaleY = 25;
+			wayScreen.y = 25;
 			addChild(wayScreen);
 			
-			addChild(BlockUtil.createGridShape(MAP_WIDTH,MAP_HEIGHT,25,0x808080))
+			gridShape = BlockUtil.createGridShape(MAP_WIDTH,MAP_HEIGHT,25,0x808080)
+			gridShape.y = 25;
+			addChild(gridShape)
 			
 			wayShape = new Shape();
+			wayShape.y = 25;
 			addChild(wayShape);
+			
+			bn1 = Util.createObject(GCheckBox,{x:5,y:5,label:"减少节点"});
+			addChild(bn1);
+			
+			bn2 = Util.createObject(GCheckBox,{x:110,y:5,label:"防止贴墙"});
+			addChild(bn2);
 			
 			this.mapModel = new MapModel();
 			this.reset();
@@ -92,6 +109,9 @@ package
 		
 		private function clickHandler(event : MouseEvent) : void
 		{
+			if (!screen.getRect(this).contains(event.stageX,event.stageY))
+				return;
+			
 			wayShape.graphics.clear();
 			wayShape.graphics.lineStyle(0,0xFF0000);
 			wayScreen.bitmapData.fillRect(wayScreen.bitmapData.rect,0);
@@ -109,7 +129,7 @@ package
 				this.path = this.aStar.find(start, end);//获得行走路径
 				if (path && path.length)
 				{
-					var newpath:Array = PathOptimizer.optimize(path,playPoint,new Point(screen.mouseX,screen.mouseY));
+					var newpath:Array = PathOptimizer.optimize(path,playPoint,new Point(screen.mouseX,screen.mouseY),bn1.selected,bn2.selected ? 0.2 : 0.0);
 					
 					p = newpath.shift();
 					
@@ -131,5 +151,7 @@ package
 				}
 			}
 		}
+		
+		
 	}
 }

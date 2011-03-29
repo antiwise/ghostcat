@@ -19,15 +19,15 @@ package ghostcat.algorithm.traversal
 		 * @return 
 		 * 
 		 */
-		static public function optimize(path:Array,start:Point = null,end:Point = null,useShortPath:Boolean = true):Array
+		static public function optimize(path:Array,start:Point = null,end:Point = null,useShortPath:Boolean = true,offest:Number = 0.0):Array
 		{
 			if (useShortPath)
 				path = short(path);
 			
-			const DX1:Array = [0,0,1,0,0,1,0,0,1];
-			const DY1:Array = [0,0,0,0,0,0,1,1,1];
-			const DX2:Array = [0,1,1,0,0,1,0,1,1];
-			const DY2:Array = [0,0,0,1,0,1,1,1,1];
+			const DX1:Array = [0,0 + offest,1,0,0,1,0,0 + offest,1];
+			const DY1:Array = [0,0,0,0 + offest,0,0 + offest,1,1,1];
+			const DX2:Array = [0,1 - offest,1,0,0,1,0,1 - offest,1];
+			const DY2:Array = [0,0,0,1 - offest,0,1 - offest,1,1,1];
 			
 			if (start)
 				path[0] = start;
