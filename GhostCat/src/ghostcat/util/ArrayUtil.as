@@ -15,20 +15,20 @@ package ghostcat.util
 		 * @param fill	填充
 		 * 
 		 */
-		public function create(length:int,fill:* = null):Array
+		public static function create(len:Array,fill:* = null):Array
 		{
-			if (fill == null)
+			len = len.concat();
+			
+			var arr:Array = [];
+			var l:int = len.shift();
+			for (var i:int = 0; i < l; i++)
 			{
-				return new Array(length);
-			}
-			else
-			{
-				var arr:Array = [];
-				for (var i:int = 0; i < length; i++) 
+				if (len.length)
+					arr[i] = create(len,fill);
+				else
 					arr[i] = fill;
-				
-				return arr;
-			}
+			}	
+			return arr;
 		}
 		
 		/**

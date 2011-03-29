@@ -56,10 +56,10 @@ package ghostcat.algorithm.maze
 		 * @return 
 		 * 
 		 */
-		public static function blockMapToShape(source:Array,space:Number = 10):Shape
+		public static function blockMapToShape(source:Array,space:Number = 10,color:uint = 0x0):Shape
 		{
 			var shape:Shape = new Shape();
-			shape.graphics.lineStyle(0);
+			shape.graphics.lineStyle(0,color);
 			for (var j:int = 0;j < source.length;j++)
 			{
 				for (var i:int = 0;i < source[j].length;i++)
@@ -96,7 +96,7 @@ package ghostcat.algorithm.maze
 		 * @return 
 		 * 
 		 */
-		public static function boolMapToBitmap(source:Array):Bitmap
+		public static function boolMapToBitmap(source:Array,space:Number = 1,color:uint = 0x0):Bitmap
 		{
 			var bitmap:Bitmap =  new Bitmap(new BitmapData(source[0].length,source.length))
 			for (var j:int = 0;j < source.length;j++)
@@ -104,10 +104,37 @@ package ghostcat.algorithm.maze
 				for (var i:int = 0;i < source[j].length;i++)
 				{
 					if (source[j][i])
-						bitmap.bitmapData.setPixel(i,j,0x0);
+						bitmap.bitmapData.setPixel(i,j,color);
 				}
 			}
+			bitmap.scaleX = bitmap.scaleY = space;
 			return bitmap;
+		}
+		
+		/**
+		 * 创建边线 
+		 * @param width
+		 * @param height
+		 * @param space
+		 * @return 
+		 * 
+		 */
+		public static function createGridShape(width:int,height:int,space:Number = 10,color:uint = 0x0):Shape
+		{
+			var shape:Shape = new Shape();
+			shape.graphics.lineStyle(0,color);
+			for (var i:int = 0;i <= width;i++)
+			{
+				shape.graphics.moveTo(i * space,0);
+				shape.graphics.lineTo(i * space,height * space);
+			}
+			
+			for (i = 0;i <= height;i++)
+			{
+				shape.graphics.moveTo(0,i * space);
+				shape.graphics.lineTo(width * space,i * space);
+			}
+			return shape;
 		}
 		
 		/**
