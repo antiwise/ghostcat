@@ -2,10 +2,26 @@ package ghostcat.algorithm.traversal
 {
 	import flash.geom.Point;
 
+	/**
+	 * 寻路路径优化
+	 * @author flashyiyi
+	 * 
+	 */
 	public class PathOptimizer
 	{
+		/**
+		 * 在路径通过的网格的范围内寻找最少拐弯的按像素的直线路径
+		 * 
+		 * @param path	路径节点数组
+		 * @param start	详细起点（值为浮点数）
+		 * @param end	详细终点（值为浮点数）
+		 * @return 
+		 * 
+		 */
 		static public function optimize(path:Array,start:Point = null,end:Point = null):Array
 		{
+			path = short(path);
+			
 			const DX1:Array = [0,0,1,0,0,1,0,0,1];
 			const DY1:Array = [0,0,0,0,0,0,1,1,1];
 			const DX2:Array = [0,1,1,0,0,1,0,1,1];
@@ -22,7 +38,8 @@ package ghostcat.algorithm.traversal
 				end = path[path.length - 1];
 			
 			var cur:Point;//视线基准点
-			var pos:int = 1;//总体步骤
+			
+			var pos:int = 1;//总步骤
 			var pos1:int = 1;//左视线前进步骤
 			var pos2:int = 1;//右视线前进步骤
 			
@@ -86,7 +103,12 @@ package ghostcat.algorithm.traversal
 				{
 					//终点判断，两条视线都必须能够到达终点
 					nc1 = nc2 = new Point(end.x - cur.x,end.y - cur.y);
-					if (!(nc1.x * c1.y - c1.x * nc1.y <= 0 && nc2.x * c2.y - c2.x * nc2.y >= 0))
+					if (nc1.x * c1.y - c1.x * nc1.y <= 0 && nc2.x * c2.y - c2.x * nc2.y >= 0)
+					{
+						result.push(path[path.length - 1]);
+						return result;
+					}
+					else
 					{
 						pos = pos2 = pos1 = Math.min(pos1,pos2);
 						cur = cur.add(c1.length < c2.length ? c1 : c2);
@@ -94,15 +116,38 @@ package ghostcat.algorithm.traversal
 						
 						result.push(cur);
 					}
-					else
-					{
-						result.push(path[path.length - 1]);
-						return result;
-					}
 				}
 			}
 			
 			return null;
+		}
+		
+		/**
+		 * 获得只有拐点的短路径
+		 * @param path	路径点数组
+		 * @return 
+		 * 
+		 */
+		static public function short(path:Array):Array
+		{
+			path = path.concat();
+			
+			var oldType:int = -1;
+			var result:Array = [];
+			var p1:Point = path.shift();
+			while (path.length)
+			{
+				var p2:Point = path.shift();
+				var type:int = (int(p2.y) < int(p1.y) ? 0 : int(p2.y) > int(p1.y) ? 2 : 1) * 3 + (int(p2.x) < int(p1.x) ? 0 : int(p2.x) > int(p1.x) ? 2 : 1);
+				
+				if (type != oldType)
+					result.push(p1);
+				
+				oldType = type;
+				p1 = p2;
+			}
+			result.push(p2);
+			return result;
 		}
 	}
 }
