@@ -15,12 +15,14 @@ package ghostcat.algorithm.traversal
 		 * @param path	路径节点数组
 		 * @param start	详细起点（值为浮点数）
 		 * @param end	详细终点（值为浮点数）
+		 * @param useShortPath	是否先简化路径。如果输入路径是按8方向方式生成的，结果会出错
 		 * @return 
 		 * 
 		 */
-		static public function optimize(path:Array,start:Point = null,end:Point = null):Array
+		static public function optimize(path:Array,start:Point = null,end:Point = null,useShortPath:Boolean = true):Array
 		{
-			path = short(path);
+			if (useShortPath)
+				path = short(path);
 			
 			const DX1:Array = [0,0,1,0,0,1,0,0,1];
 			const DY1:Array = [0,0,0,0,0,0,1,1,1];
