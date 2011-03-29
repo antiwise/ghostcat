@@ -10,11 +10,11 @@ package ghostcat.algorithm.traversal
 	public class PathOptimizer
 	{
 		/**
-		 * 在路径通过的网格的范围内寻找最少拐弯的按像素的直线路径
+		 * 在路径通过的网格的范围内寻找最少拐弯的像素精度的直线路径
 		 * 
-		 * @param path	路径节点数组
-		 * @param start	详细起点（值为浮点数）
-		 * @param end	详细终点（值为浮点数）
+		 * @param path	路径节点数组（网格坐标）
+		 * @param start	详细起点（值为浮点数形式的网格坐标）
+		 * @param end	详细终点（值为浮点数形式的网格坐标）
 		 * @param useShortPath	是否先简化路径。如果输入路径是按8方向方式生成的，结果会出错
 		 * @return 
 		 * 
@@ -126,7 +126,7 @@ package ghostcat.algorithm.traversal
 		
 		/**
 		 * 获得只有拐点的短路径
-		 * @param path	路径点数组
+		 * @param path	路径点数组（网格坐标）
 		 * @return 
 		 * 
 		 */
