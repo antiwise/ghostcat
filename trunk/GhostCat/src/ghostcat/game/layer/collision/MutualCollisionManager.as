@@ -4,7 +4,7 @@ package ghostcat.game.layer.collision
 	import flash.events.IEventDispatcher;
 	
 	import ghostcat.game.item.collision.ICollision;
-	import ghostcat.game.item.collision.ICollisionClient;
+	import ghostcat.game.layer.collision.client.ICollisionClient;
 	import ghostcat.game.layer.GameLayer;
 	
 	/**

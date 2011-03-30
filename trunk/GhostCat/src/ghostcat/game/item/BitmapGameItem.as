@@ -6,7 +6,7 @@ package ghostcat.game.item
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.game.item.collision.ICollision;
-	import ghostcat.game.item.collision.ICollisionClient;
+	import ghostcat.game.layer.collision.client.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
 	import ghostcat.game.item.sort.SortYCalculater;
 	import ghostcat.game.layer.camera.ICamera;
