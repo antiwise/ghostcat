@@ -62,7 +62,7 @@ package ghostcat.algorithm.traversal
 					var p1:Point = path[pos - 1];//上一个坐标
 					var p2:Point = path[pos];//当前坐标
 					//计算方向
-					var type:int = (int(p2.y) < int(p1.y) ? 0 : int(p2.y) > int(p1.y) ? 2 : 1) * 3 + (int(p2.x) < int(p1.x) ? 0 : int(p2.x) > int(p1.x) ? 2 : 1);
+					var type:int = (int(p2.y) < int(p1.y) ? 0 : int(p2.y) > int(p1.y) ? 6 : 3) + (int(p2.x) < int(p1.x) ? 0 : int(p2.x) > int(p1.x) ? 2 : 1);
 					
 					//新的交线端点
 					var nc1:Point = new Point(int(p1.x) + DX1[type] - cur.x, int(p1.y) + DY1[type] - cur.y);
@@ -140,7 +140,7 @@ package ghostcat.algorithm.traversal
 			while (path.length)
 			{
 				var p2:Point = path.shift();
-				var type:int = (int(p2.y) < int(p1.y) ? 0 : int(p2.y) > int(p1.y) ? 2 : 1) * 3 + (int(p2.x) < int(p1.x) ? 0 : int(p2.x) > int(p1.x) ? 2 : 1);
+				var type:int = (int(p2.y) < int(p1.y) ? 0 : int(p2.y) > int(p1.y) ? 6 : 3) + (int(p2.x) < int(p1.x) ? 0 : int(p2.x) > int(p1.x) ? 2 : 1);
 				
 				if (type != oldType)
 					result.push(p1);

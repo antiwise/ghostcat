@@ -224,7 +224,7 @@
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
     <classEntry path="ghostcat.game.item.collision.ICollision"/>
-    <classEntry path="ghostcat.game.item.collision.ICollisionClient"/>
+    <classEntry path="ghostcat.game.layer.collision.client.ICollisionClient"/>
     <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
     <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
     <classEntry path="ghostcat.game.item.sort.SortYCalculater"/>

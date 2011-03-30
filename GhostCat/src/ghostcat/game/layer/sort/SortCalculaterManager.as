@@ -24,7 +24,7 @@ package ghostcat.game.layer.sort
 			this.calculater = calculater;
 		}
 		
-		protected override  function sortFunction(child1:DisplayObject, child2:DisplayObject):Boolean
+		protected override function sortFunction(child1:DisplayObject, child2:DisplayObject):Boolean
 		{
 			calculater.target = child1;
 			var v1:int = calculater.calculate();

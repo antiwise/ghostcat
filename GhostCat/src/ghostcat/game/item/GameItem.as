@@ -5,7 +5,7 @@ package ghostcat.game.item
 	import ghostcat.display.GBase;
 	import ghostcat.display.GSprite;
 	import ghostcat.game.item.collision.ICollision;
-	import ghostcat.game.item.collision.ICollisionClient;
+	import ghostcat.game.layer.collision.client.ICollisionClient;
 	import ghostcat.game.item.sort.ISortCalculater;
 	import ghostcat.game.layer.camera.ICamera;
 	
