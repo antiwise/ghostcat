@@ -19,10 +19,14 @@ package
 	import ghostcat.events.TickEvent;
 	import ghostcat.game.BitmapGameViewport;
 	import ghostcat.game.GameViewport;
+	import ghostcat.game.item.sort.Sort45Calculater;
+	import ghostcat.game.item.sort.SortYCalculater;
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.game.layer.camera.BoxsGridCamera;
 	import ghostcat.game.layer.camera.SimpleCamera;
 	import ghostcat.game.layer.position.Tile45PositionManager;
+	import ghostcat.game.layer.sort.SortCalculaterManager;
+	import ghostcat.game.layer.sort.SortSizeManager;
 	import ghostcat.game.layer.sort.SortYManager;
 	import ghostcat.game.util.GameMoveByPathOper;
 	import ghostcat.manager.RootManager;

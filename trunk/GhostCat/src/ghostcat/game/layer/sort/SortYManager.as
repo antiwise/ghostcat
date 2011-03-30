@@ -3,7 +3,7 @@ package ghostcat.game.layer.sort
 	import ghostcat.game.layer.GameLayer;
 
 	/**
-	 * 以Y作为深度的排序器 
+	 * 根据对象的y属性排序
 	 * @author flashyiyi
 	 * 
 	 */

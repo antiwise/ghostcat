@@ -44,6 +44,11 @@ package ghostcat.game.layer.camera
 			this.boxs.reinsert(item);
 		}
 		
+		public function removeItem(item:DisplayObject):void
+		{
+			this.boxs.remove(item);
+		}
+		
 		override public function render():void
 		{
 			super.render();

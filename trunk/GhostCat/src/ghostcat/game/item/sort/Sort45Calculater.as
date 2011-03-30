@@ -18,7 +18,18 @@ package ghostcat.game.item.sort
 		 */
 		static public var maxViewportWidth:Number = 50000;
 		
-		public var target:DisplayObject;
+		private var _target:DisplayObject;
+
+		public function get target():DisplayObject
+		{
+			return _target;
+		}
+
+		public function set target(value:DisplayObject):void
+		{
+			_target = value;
+		}
+
 		public var offestY:Number = 0.0;
 		
 		public function Sort45Calculater(target:DisplayObject)
@@ -28,8 +39,8 @@ package ghostcat.game.item.sort
 		
 		public function calculate():Number
 		{
-			var targetX:Number = target.x;
-			var targetY:Number = target.y + offestY;
+			var targetX:Number = _target.x;
+			var targetY:Number = _target.y + offestY;
 			var x:Number = targetX + targetY * wh
 			var y:Number = targetY - targetX / wh;
 			return x + y * maxViewportWidth; 

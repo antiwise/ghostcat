@@ -9,7 +9,7 @@ package ghostcat.game.layer.sort
 	import ghostcat.util.display.Geom;
 	
 	/**
-	 * 根据底面边框排序 
+	 * 根据底面边框排序，获得边框需要让物品实现ISortSizeClient
 	 * @author flashyiyi
 	 * 
 	 */
