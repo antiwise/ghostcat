@@ -5,6 +5,7 @@
     <classEntry path="ghostcat.GhostCatApp"/>
     <classEntry path="ghostcat.algorithm.BoxsGrid"/>
     <classEntry path="ghostcat.algorithm.LevelUpUtil"/>
+    <classEntry path="ghostcat.algorithm.Point3D"/>
     <classEntry path="ghostcat.algorithm.QSort"/>
     <classEntry path="ghostcat.algorithm.QuadTree"/>
     <classEntry path="ghostcat.algorithm.bezier.Bezier"/>
@@ -23,7 +24,10 @@
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
     <classEntry path="ghostcat.algorithm.traversal.IMapModel"/>
+    <classEntry path="ghostcat.algorithm.traversal.Map3DModel"/>
     <classEntry path="ghostcat.algorithm.traversal.MapModel"/>
+    <classEntry path="ghostcat.algorithm.traversal.PathOptimizer"/>
+    <classEntry path="ghostcat.algorithm.traversal.SimpleAStar"/>
     <classEntry path="ghostcat.algorithm.traversal.Traversal"/>
     <classEntry path="ghostcat.algorithm.traversal.TraversalNote"/>
     <classEntry path="ghostcat.algorithm.traversal.WayPointModel"/>
@@ -236,8 +240,12 @@
     <classEntry path="ghostcat.game.layer.position.Tile45PositionManager"/>
     <classEntry path="ghostcat.game.layer.position.TilePositionManager"/>
     <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortHitTestManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortSizeManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortYManager"/>
+    <classEntry path="ghostcat.game.layer.sort.client.ISortHitTestClient"/>
+    <classEntry path="ghostcat.game.layer.sort.client.ISortSizeClient"/>
     <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
     <classEntry path="ghostcat.gxml.GJSONManager"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
@@ -552,7 +560,7 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
-    <classEntry path="ghostcat.algorithm.traversal.PathOptimizer"/>
+    <classEntry path="ghostcat.game.layer.sort.SortCalculaterManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

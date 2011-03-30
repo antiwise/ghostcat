@@ -11,8 +11,17 @@ package ghostcat.game.item
 	
 	public class GameItem extends Sprite implements ICollisionClient
 	{
+		/**
+		 * 设置了摄像机后，会自动调用其refreshItem方法
+		 */
 		public var camera:ICamera;
+		/**
+		 * 设置了排序器后，会自动计算排序深度，并赋值给priority
+		 */
 		public var sortCalculater:ISortCalculater;
+		/**
+		 * 排序深度 
+		 */
 		public var priority:Number;
 		
 		private var _oldX:Number;

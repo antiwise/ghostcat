@@ -11,7 +11,7 @@ package ghostcat.game.layer.sort
 	import ghostcat.util.display.BitmapUtil;
 	
 	/**
-	 * 深度排序器 
+	 * 根据对象的priority属性排序，priority属性可以通过设置对象的sortCalculater属性自动更新
 	 * @author flashyiyi
 	 * 
 	 */
@@ -75,7 +75,7 @@ package ghostcat.game.layer.sort
 			}
 		}
 		
-		private function sortFunction(child1:DisplayObject, child2:DisplayObject):Boolean
+		protected function sortFunction(child1:DisplayObject, child2:DisplayObject):Boolean
 		{
 			if (sortFields is String)
 			{
@@ -100,13 +100,20 @@ package ghostcat.game.layer.sort
 		
 		public function sortAll():void
 		{
+			var data:Array = layer.childrenInScreen;
 			if (layer.isBitmapEngine)
 			{
-				layer.childrenInScreen.sortOn(sortFields,Array.NUMERIC);
+				if (sortFields is String)
+					data.sortOn([sortFields],Array.NUMERIC);
+				else if (sortFields is Array)
+					data.sortOn(sortFields,Array.NUMERIC);
+				else if (sortFields is Function)
+					data.sort(sortFields,Array.NUMERIC);
+				else
+					data.sort(Array.NUMERIC);
 			}
 			else
 			{
-				var data:Array = layer.childrenInScreen;
 				var result:Array;
 				if (sortFields is String)
 					result = data.sortOn([sortFields],Array.NUMERIC|Array.RETURNINDEXEDARRAY);
@@ -115,7 +122,7 @@ package ghostcat.game.layer.sort
 				else if (sortFields is Function)
 					result = data.sort(sortFields,Array.NUMERIC|Array.RETURNINDEXEDARRAY);
 				else
-					return;
+					result = data.sort(Array.NUMERIC|Array.RETURNINDEXEDARRAY);
 				
 				for (var i:int = 0; i < result.length; i++)
 				{

@@ -8,7 +8,7 @@ package ghostcat.game.layer.sort
 	import ghostcat.game.layer.sort.client.ISortHitTestClient;
 	
 	/**
-	 * 以物体坐标是否在障碍之上为依据排序
+	 * 以物体坐标是否在障碍之上为依据排序，获得障碍范围需要让物品实现ISortHitTestClient
 	 * @author flashyiyi
 	 * 
 	 */

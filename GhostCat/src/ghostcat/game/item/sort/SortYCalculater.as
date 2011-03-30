@@ -10,7 +10,18 @@ package ghostcat.game.item.sort
 	 */
 	public class SortYCalculater implements ISortCalculater
 	{
-		public var target:DisplayObject;
+		private var _target:DisplayObject;
+
+		public function get target():DisplayObject
+		{
+			return _target;
+		}
+
+		public function set target(value:DisplayObject):void
+		{
+			_target = value;
+		}
+
 		public var offestY:Number = 0.0;
 		
 		public function SortYCalculater(target:DisplayObject)
@@ -20,7 +31,7 @@ package ghostcat.game.item.sort
 		
 		public function calculate():Number
 		{
-			return target.y + offestY;
+			return _target.y + offestY;
 		}
 	}
 }

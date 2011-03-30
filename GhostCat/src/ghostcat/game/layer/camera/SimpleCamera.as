@@ -77,6 +77,23 @@ package ghostcat.game.layer.camera
 			this.position.y = y;
 		}
 		
+		/**
+		 * 更新所有目标的状态 
+		 * 
+		 */
+		public function refreshAllItem():void
+		{
+			for each (var child:DisplayObject in this.layer.children)
+			{
+				refreshItem(child);
+			}
+		}
+		
+		/**
+		 * 更新一个目标的状态 
+		 * @param item
+		 * 
+		 */
 		public function refreshItem(item:DisplayObject):void
 		{
 			//
