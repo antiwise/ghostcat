@@ -76,6 +76,7 @@ package
 			addChild(bn1);
 			
 			bn2 = Util.createObject(GCheckBox,{x:110,y:5,label:"防止贴墙"});
+			bn2.selected = true;
 			addChild(bn2);
 			
 			this.mapModel = new MapModel();
