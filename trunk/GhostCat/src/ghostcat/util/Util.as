@@ -1,6 +1,8 @@
 package ghostcat.util
 {
+	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
+	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * 
@@ -145,12 +147,23 @@ package ghostcat.util
 		/**
 		 * 复制对象
 		 *  
-		 * @param obj
+		 * @param obj	要复制的对象
+		 * @param includeClass	是否包括自定义类，否则输出的是普通的Object
+		 * @param otherClasses	复制时涉及到的其他自定义类
 		 * @return 
 		 * 
 		 */
-		public static function clone(obj:*):*
+		public static function clone(obj:*,includeClass:Boolean = false,otherClasses:Array = null):*
 		{
+			if (includeClass)
+				registerClassAlias(getQualifiedClassName(obj),obj["constructor"]);
+			
+			if (otherClasses)
+			{
+				for each (var cls:Class in otherClasses)
+					registerClassAlias(getQualifiedClassName(cls),cls);
+			}
+			
 			var bytes:ByteArray = new ByteArray();
 			bytes.writeObject(obj);
 			bytes.position = 0;

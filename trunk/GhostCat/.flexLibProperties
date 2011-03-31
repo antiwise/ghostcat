@@ -561,6 +561,10 @@
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.game.layer.sort.SortCalculaterManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortSizeManager"/>
+    <classEntry path="ghostcat.game.layer.sort.client.ISortSizeClient"/>
+    <classEntry path="ghostcat.game.layer.sort.SortHitTestManager"/>
+    <classEntry path="ghostcat.game.layer.sort.client.ISortHitTestClient"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

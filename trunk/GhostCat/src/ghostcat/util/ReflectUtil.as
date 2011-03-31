@@ -161,7 +161,7 @@ package ghostcat.util
 		 * 取得属性列表
 		 * 
 		 * @param obj	对象
-		 * @param writeable	是否必须可读
+		 * @param writeable	是否必须可写
 		 * @return 
 		 * 
 		 */
