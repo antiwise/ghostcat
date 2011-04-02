@@ -34,7 +34,7 @@ package ghostcat.operation.server
 		/**
 		 * gateWay URL
 		 */
-		public var baseUrl:String;
+		public var baseUrl:String = "";
 				
 		/**
 		 * 使用的队列
@@ -48,8 +48,7 @@ package ghostcat.operation.server
 		
 		/**
 		 * 
-		 * @param gateway	gateWay URL
-		 * @param service	服务类的基础包名
+		 * @param gateway	gateWay URL（以/结尾）
 		 * 
 		 */
 		public function HttpServiceProxy(baseUrl:String)
@@ -75,22 +74,9 @@ package ghostcat.operation.server
 		 * @return 
 		 * 
 		 */
-		public function operate(method:String,para:Object=null,rHander:Function=null,fHander:Function=null):LoadOper
+		public function operate(url:String,method:String = "get",para:Object=null,rHander:Function=null,fHander:Function=null):HTTPOper
 		{
-			if (baseUrl)
-				method = baseUrl + "/" + method;
-			
-			var request:URLRequest = new URLRequest(method);
-			if (para)
-			{
-				var vars:URLVariables = new URLVariables();
-				for (var key:String in para)
-					vars[key] = para[key];
-				
-				request.data = vars;
-			}
-			
-			var oper:LoadOper = new LoadOper(request, null,rHander, fHander);
+			var oper:HTTPOper = new HTTPOper(baseUrl + url,method,para,rHander, fHander);
 			oper.timeout = timeout;
 			oper.maxRetry = maxRetry;
 			oper.commit(queue);

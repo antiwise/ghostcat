@@ -14,8 +14,8 @@ package ghostcat.ui
 	import ghostcat.util.core.ClassFactory;
 
 	/**
-	 * 提示类
-	 * 实现IToolTipManagerClient即可启用
+	 * 提示类，需要手动加载到某个容器内，将一直处于最高层。
+	 * 此类会一直检测鼠标下的物体，实现IToolTipManagerClient就会根据其toolTipObj自动弹出。
 	 * 
 	 * @author flashyiyi
 	 * 

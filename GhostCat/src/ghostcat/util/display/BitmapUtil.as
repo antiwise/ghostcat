@@ -34,6 +34,21 @@ package ghostcat.util.display
 		}
 		
 		/**
+		 * 用绘制的位图替换原来的显示对象，保持原来的坐标 
+		 * @param displayObj
+		 * @return 
+		 * 
+		 */
+		public static function replaceWithBitmap(displayObj:DisplayObject,pixelSnapping:String = "auto",smoothing:Boolean = false):Bitmap
+		{
+			var bitmap:Bitmap = new Bitmap(drawToBitmap(displayObj),pixelSnapping,smoothing);
+			var rect:Rectangle = displayObj.getBounds(displayObj);
+			bitmap.x = displayObj.x + rect.x;
+			bitmap.y = displayObj.y + rect.y;
+			return bitmap;
+		}
+		
+		/**
 		 * 缩放BitmapData
 		 * 
 		 * @param source
