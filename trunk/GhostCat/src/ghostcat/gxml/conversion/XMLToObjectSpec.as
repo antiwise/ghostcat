@@ -4,7 +4,7 @@ package ghostcat.gxml.conversion
 	import ghostcat.gxml.spec.ISpec;
 
 	/**
-	 * XML转换为Object的转换器，用于输出JSON，不进行反射
+	 * XML转换为Object的转换器，用于输出JSON对象，不进行反射
 	 * @author flashyiyi
 	 * 
 	 */
