@@ -13,6 +13,7 @@ package ghostcat.ui.controls
 	import ghostcat.operation.effect.AlphaClipEffect;
 	import ghostcat.skin.ComboBoxSkin;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.containers.GList;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
@@ -35,7 +36,7 @@ package ghostcat.ui.controls
 		/**
 		 * 列表实例
 		 */
-		public var list:GList;
+		public var list:ghostcat.ui.containers.GList;
 		
 		/**
 		 * 展开按钮
@@ -121,7 +122,7 @@ package ghostcat.ui.controls
 			
 			openButton = new GButton(content[openButtonField]);
 			
-			list = new GList(content[listField],true,UIConst.VERTICAL);
+			list = new ghostcat.ui.containers.GList(content[listField],true,UIConst.VERTICAL);
 			list.width = int(this.width);
 			list.height = int(list.rowHeight * maxLine);
 			
