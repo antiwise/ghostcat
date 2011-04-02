@@ -16,7 +16,7 @@ package ghostcat.gxml.conversion
 	public class ObjectToXMLSpec implements IJSONSpec
 	{
 		/**
-		 * 类名转换属性
+		 * 表示XML名称的属性
 		 */
 		public var classRefName:String = "classRef";
 		

@@ -1,8 +1,13 @@
 package ghostcat.util.display
 {
-	import ghostcat.ui.controls.SelectGroup;
+	import ghostcat.ui.containers.SelectGroup;
 
-	public class SelectGroup extends ghostcat.ui.controls.SelectGroup
+	/**
+	 * 兼容性保留
+	 * @author flashyiyi
+	 * 
+	 */
+	public class SelectGroup extends ghostcat.ui.containers.SelectGroup
 	{
 		public function SelectGroup(children:Array,clickToggle:Boolean = false,field:String = "selected")
 		{

@@ -12,7 +12,7 @@ package ghostcat.gxml.jsonspec
 	import mx.events.CalendarLayoutChangeEvent;
 
 	/**
-	 * 对象转换为封闭的转换器
+	 * JSON对象转换为封闭类的转换器
 	 * @author flashyiyi
 	 * 
 	 */

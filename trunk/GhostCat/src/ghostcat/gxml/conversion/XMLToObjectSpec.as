@@ -16,7 +16,7 @@ package ghostcat.gxml.conversion
 		public var enabledDotSplit:Boolean = true;
 		
 		/**
-		 * 类名转换属性
+		 * XML名称转换成的属性
 		 */
 		public var classRefName:String = "classRef";
 		

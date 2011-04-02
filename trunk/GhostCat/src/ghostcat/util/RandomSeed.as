@@ -11,8 +11,8 @@ package ghostcat.util
 	{
 		private static const MULTIPLIER_HIGH:uint=5;
 		private static const ADDEND:uint=11;
-		private static const MULTIPLIER_LOW:uint=58989;
-		private static const MULTIPLIER_MID:uint=57068;
+		private static const MULTIPLIER_LOW:uint=0xE66D;
+		private static const MULTIPLIER_MID:uint=0xDEEC;
 		
 		private var seedHigh:uint;
 		private var seedLow:uint;
