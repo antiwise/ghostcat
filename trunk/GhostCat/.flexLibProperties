@@ -329,7 +329,6 @@
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
-    <classEntry path="ghostcat.operation.server.ActionGroupOper"/>
     <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
     <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
@@ -569,6 +568,8 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
+    <classEntry path="ghostcat.operation.server.JSONOper"/>
+    <classEntry path="ghostcat.operation.server.HTTPOper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

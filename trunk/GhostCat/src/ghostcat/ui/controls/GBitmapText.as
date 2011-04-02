@@ -30,7 +30,7 @@ package ghostcat.ui.controls
 		private var execfontCharRange:String;
 		
 		/**
-		 * 字体表示的文本范围
+		 * 字体表示的文本范围（0-9,a,U+80FF）
 		 */
 		public function get fontCharRange():String
 		{
@@ -51,6 +51,9 @@ package ghostcat.ui.controls
 
 		/**
 		 * 设置图形字体 
+		 * 
+		 * @param font	字体位图
+		 * @param charRange	包含的字符集（0-9,a,U+80FF）
 		 * 
 		 */
 		public function setFontBitmapData(font:BitmapData,charRange:String = "0-9"):void

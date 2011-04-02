@@ -1,0 +1,69 @@
+algorithm	算法
+	bezier	贝尔法曲线相关
+	maze	迷宫生成相关
+	traversal	遍历寻路相关
+community	大量物品群体行为
+	physics	物理相关
+	sort	景深相关
+	tween	缓动相关
+debug 调试
+display	显示
+	bitmap	位图相关
+	game	游戏相关
+	graphics	编辑图元工具
+	loader 加载器
+	movieclip	动画相关
+	other	其他
+	residulal	残影特效，火焰
+	screenshot	截屏工具
+	transfer	各种特效，爆炸，翻页，水波，倒影等等
+		effect	供GBitmapEffect使用的特效函数
+	transition	图像过渡效果
+		maskmovie	供TransitionMaskLayer使用的函数组
+events	事件
+extend	JS通信相关
+fileformat	文件格式读取相关
+filter	滤镜特效相关
+game	游戏相关
+	item	游戏物体
+		collsion	碰撞定义模块
+		sort	排序定义模块
+	layer	游戏容器
+		camera	摄像机
+		collision	碰撞
+		position	坐标变换
+		sort	景深排序
+	util	游戏工具类
+gxml	将XML和JSON转换为自定义对象组（类似MXML）
+	conversion	XML和JSON互转
+	jsonspec	JSON转换为自定义对象组
+	spec	XML转换为自定义对象组
+manager	管理类
+media	媒体相关
+operation	各种命令模式功能的实现
+	effect	一般用于UI的缓动效果
+	load	特殊加载器
+	quest	任务
+	server	服务器请求
+other	其他
+parse	绘图类
+skin	皮肤包
+text	文本相关
+ui	UI相关
+	containers	容器
+	controls	组件
+	html	HTML模拟
+	layout	布局
+	scroll	滚动
+	tooltip	提示
+	validators	数据验证
+util	工具类
+	core	系统级功能
+	data	数据处理
+	display 显示相关
+	easing	缓动相关
+	encrypy 加密相关
+	load	加载相关
+	sleep	自动降帧相关
+
+	
