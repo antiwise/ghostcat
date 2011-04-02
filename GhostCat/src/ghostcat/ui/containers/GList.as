@@ -23,7 +23,7 @@ package ghostcat.ui.containers
 	 */
 	public class GList extends GScrollPanel
 	{
-		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton);
+//		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton);
 		/**
 		 * 列表容器 
 		 */
@@ -40,11 +40,11 @@ package ghostcat.ui.containers
 			
 			this.type = type;
 			
+//			if (!itemRender)
+//				itemRender = defaultItemRender;
+
 			if (itemRender is Class)
 				itemRender = new ClassFactory(itemRender);
-			
-			if (!itemRender)
-				itemRender = defaultItemRender;
 			
 			_itemRender = itemRender;
 			

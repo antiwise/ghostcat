@@ -16,6 +16,7 @@ package ghostcat.ui.containers
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.skin.ListBackground;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.controls.GButton;
 	import ghostcat.util.core.ClassFactory;
 	
 	import mx.events.PropertyChangeEvent;
@@ -34,6 +35,7 @@ package ghostcat.ui.containers
 	public class GListBase extends Tile
 	{
 		public static var defaultSkin:ClassFactory =  new ClassFactory(ListBackground);
+		public static var defaultItemRender:ClassFactory = new ClassFactory(GButton);
 		
 		/**
 		 * 类型 
@@ -76,9 +78,12 @@ package ghostcat.ui.containers
 		 */
 		public function GListBase(skin:*=null,replace:Boolean = true, type:String = UIConst.VERTICAL,itemRender:* = null)
 		{
+			if (!itemRender)
+				itemRender = defaultItemRender;
+			
 			if (itemRender is Class)
 				itemRender = new ClassFactory(itemRender);
-				
+			
 			if (skin)
 			{
 				if (skin is DisplayObject)

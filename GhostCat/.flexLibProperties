@@ -224,7 +224,6 @@
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
     <classEntry path="ghostcat.game.item.collision.ICollision"/>
-    <classEntry path="ghostcat.game.layer.collision.client.ICollisionClient"/>
     <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
     <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
     <classEntry path="ghostcat.game.item.sort.SortYCalculater"/>
@@ -235,11 +234,13 @@
     <classEntry path="ghostcat.game.layer.collision.BlockCollisionManager"/>
     <classEntry path="ghostcat.game.layer.collision.ICollisionManager"/>
     <classEntry path="ghostcat.game.layer.collision.MutualCollisionManager"/>
+    <classEntry path="ghostcat.game.layer.collision.client.ICollisionClient"/>
     <classEntry path="ghostcat.game.layer.position.IPositionManager"/>
     <classEntry path="ghostcat.game.layer.position.SimplePositionManager"/>
     <classEntry path="ghostcat.game.layer.position.Tile45PositionManager"/>
     <classEntry path="ghostcat.game.layer.position.TilePositionManager"/>
     <classEntry path="ghostcat.game.layer.sort.ISortManager"/>
+    <classEntry path="ghostcat.game.layer.sort.SortCalculaterManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortHitTestManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortPriorityManager"/>
     <classEntry path="ghostcat.game.layer.sort.SortSizeManager"/>
@@ -247,6 +248,7 @@
     <classEntry path="ghostcat.game.layer.sort.client.ISortHitTestClient"/>
     <classEntry path="ghostcat.game.layer.sort.client.ISortSizeClient"/>
     <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
+    <classEntry path="ghostcat.ghostcat_internal"/>
     <classEntry path="ghostcat.gxml.GJSONManager"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
     <classEntry path="ghostcat.gxml.conversion.ObjectToXMLSpec"/>
@@ -403,15 +405,23 @@
     <classEntry path="ghostcat.ui.containers.GDrawerPanel"/>
     <classEntry path="ghostcat.ui.containers.GEffectPanel"/>
     <classEntry path="ghostcat.ui.containers.GHBox"/>
+    <classEntry path="ghostcat.ui.containers.GHListBase"/>
+    <classEntry path="ghostcat.ui.containers.GList"/>
+    <classEntry path="ghostcat.ui.containers.GListBase"/>
+    <classEntry path="ghostcat.ui.containers.GListGroupBase"/>
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
     <classEntry path="ghostcat.ui.containers.GRepeater"/>
     <classEntry path="ghostcat.ui.containers.GResizePanel"/>
     <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
+    <classEntry path="ghostcat.ui.containers.GTileBox"/>
+    <classEntry path="ghostcat.ui.containers.GTileListBase"/>
     <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
     <classEntry path="ghostcat.ui.containers.GTree"/>
     <classEntry path="ghostcat.ui.containers.GVBox"/>
+    <classEntry path="ghostcat.ui.containers.GVListBase"/>
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
+    <classEntry path="ghostcat.ui.containers.SelectGroup"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GBitmapText"/>
     <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
@@ -447,7 +457,6 @@
     <classEntry path="ghostcat.ui.controls.GVSilder"/>
     <classEntry path="ghostcat.ui.controls.GWaiting"/>
     <classEntry path="ghostcat.ui.controls.IProgressTargetClient"/>
-    <classEntry path="ghostcat.ui.controls.SelectGroup"/>
     <classEntry path="ghostcat.ui.html.GFrameView"/>
     <classEntry path="ghostcat.ui.html.SimpleHTML"/>
     <classEntry path="ghostcat.ui.html.TableCreater"/>
@@ -560,11 +569,6 @@
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
     <classEntry path="ghostcat.util.sleep.SleepCheck"/>
     <classEntry path="ghostcat.util.sleep.SleepTimer"/>
-    <classEntry path="ghostcat.game.layer.sort.SortCalculaterManager"/>
-    <classEntry path="ghostcat.game.layer.sort.SortSizeManager"/>
-    <classEntry path="ghostcat.game.layer.sort.client.ISortSizeClient"/>
-    <classEntry path="ghostcat.game.layer.sort.SortHitTestManager"/>
-    <classEntry path="ghostcat.game.layer.sort.client.ISortHitTestClient"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
