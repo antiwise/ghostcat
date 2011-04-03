@@ -1,10 +1,12 @@
 package ghostcat.manager
 {
+	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	import flash.net.navigateToURL;
+	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.util.core.Singleton;
 	
@@ -224,6 +226,19 @@ package ghostcat.manager
 				return;
 			
 			ExternalInterface.call("BrowerManager.disableScroll",objId);
+		}
+		
+		/**
+		 * 设置FLASH容器作为焦点 
+		 * @param root
+		 * 
+		 */
+		public function setCapture(root:DisplayObject):void
+		{
+			if (!ExternalInterface.available) 
+				return;
+			
+			ExternalInterface.call("BrowerManager.setCapture",getQualifiedClassName(root));
 		}
 		
 		/**

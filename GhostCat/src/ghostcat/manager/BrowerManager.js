@@ -81,5 +81,8 @@
 			if (e && e.preventDefault)  
 				e.preventDefault(); 
 		}   
+ 	},
+ 	setCapture:function (name) {
+ 		document.getElementById(name).setCapture();
  	}
 }
