@@ -31,9 +31,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="Test.as"/>
     <application path="GhostCatGameExample.as"/>
     <application path="PathOptimizerExample.as"/>
+    <application path="Test.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

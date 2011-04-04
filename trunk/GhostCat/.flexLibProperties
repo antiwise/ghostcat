@@ -386,9 +386,7 @@
     <classEntry path="ghostcat.text.UBB"/>
     <classEntry path="ghostcat.text.URL"/>
     <classEntry path="ghostcat.text.Utf8"/>
-    <classEntry path="ghostcat.text.controls.GBitmapText"/>
     <classEntry path="ghostcat.text.controls.GTweenText"/>
-    <classEntry path="ghostcat.text.controls.GradientText"/>
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.Focus"/>
@@ -566,10 +564,9 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.util.sleep.SleepCheck"/>
-    <classEntry path="ghostcat.util.sleep.SleepTimer"/>
     <classEntry path="ghostcat.operation.server.JSONOper"/>
-    <classEntry path="ghostcat.operation.server.HTTPOper"/>
+    <classEntry path="ghostcat.extend.JSTimer"/>
+    <classEntry path="ghostcat.util.data.BigNumberUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
