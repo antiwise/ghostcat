@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.text.TextField;
 	
@@ -6,8 +6,10 @@ package ghostcat.text
 	import ghostcat.util.easing.TweenUtil;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 文本缓动 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class TextTweenUtil
 	{
 		/**

@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -7,8 +7,11 @@ package ghostcat.text
 	import flash.text.TextFieldType;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 密码相关
+	 *  
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class PassWordUtil
 	{
 		/**

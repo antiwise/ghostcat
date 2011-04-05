@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.events.Event;
 	import flash.events.FocusEvent;
@@ -17,8 +17,15 @@ package ghostcat.text
 	import ghostcat.util.display.Geom;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 自制输入法系统
+	 * Shift键切换中英文
+	 * 
+	 * 处理输入法问题也可以通过JS，请参考：
+	 * http://blog.sebastian-martens.de/2009/05/swfinputs-solving-mozilla-transparent-mode-win-special-chars-within-inputs/
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class IME
 	{
 		public static var ERROR_TEXT:String = "<html><font color='#990000'>(录入错误)</font></html>";

@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	/**
 	 * 字符串差异比较类 
@@ -8,8 +8,13 @@ package ghostcat.text
 	public final class StringCompareUtil
 	{
 		/**
-		 * 兼容性保留
-		 */	
+		 * 比较字符串
+		 * 
+		 * @param s1	原字符串
+		 * @param s2	新字符串
+		 * @return 返回一个数组，数组的元素由[是否是删除,在原字符串中的索引,添加或者删除的字符串]组成,索引坐标以原始字符串为准
+		 * 
+		 */
 		public static function compare(s1:String,s2:String):Array   
 		{   
 			var actions:Array = [];//全部操作  

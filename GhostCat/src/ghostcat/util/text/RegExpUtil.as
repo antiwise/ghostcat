@@ -1,11 +1,15 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	public final class RegExpUtil
 	{
 		/**
-		 * 兼容性保留
-		 */	
-		public static function matchAscii(str:String):Array
+         * 匹配半角字符
+         * 
+         * @param str
+         * @return 
+         * 
+         */        
+        public static function matchAscii(str:String):Array
         {
         	return str.match(/[\x00-\xFF]*/g);
         }

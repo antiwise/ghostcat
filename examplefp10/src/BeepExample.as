@@ -4,8 +4,9 @@ package
 	import flash.net.FileReference;
 	
 	import ghostcat.display.GBase;
-	import ghostcat.media.BeepMusic;
-	import ghostcat.media.SoundDisplayer;
+	import ghostcat.display.media.SoundDisplayer;
+	import ghostcat.util.media.BeepMusic;
+	import ghostcat.util.text.TextUtil;
 	
 	[SWF(width="200",height="200",backgroundColor="0x0")]
 	public class BeepExample extends GBase

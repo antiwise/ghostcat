@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	/**
 	 * 处理文本与数字有关的部分
@@ -9,8 +9,10 @@ package ghostcat.text
 	public final class NumberUtil
 	{
 		/**
-		 * 兼容性保留
-		 */	
+		 * 创建时间
+		 * @param v
+		 * 
+		 */
 		public static function createDate(v:*):Date
 		{
 			if (isNaN(Number(v)))

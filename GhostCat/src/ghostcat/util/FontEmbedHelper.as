@@ -1,6 +1,6 @@
 package ghostcat.util
 {
-	import ghostcat.text.NumberUtil;
+	import ghostcat.util.text.NumberUtil;
 
 	/**
 	 * 帮组嵌入字体的类

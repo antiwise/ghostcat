@@ -3,7 +3,7 @@ package ghostcat.ui.validators
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	import ghostcat.text.TextUtil;
+	import ghostcat.util.text.TextUtil;
 	import ghostcat.ui.layout.Padding;
 	
 	/**

@@ -3,7 +3,7 @@ package ghostcat.operation
 	import flash.events.Event;
 	import flash.media.SoundChannel;
 	
-	import ghostcat.media.SoundUtil;
+	import ghostcat.util.media.SoundUtil;
 
 	/**
 	 * 正弦声波

@@ -2,7 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="ghostcat.fileformat.wav.WAVWriter"/>
-    <classEntry path="ghostcat.media.SoundUtil"/>
+    <classEntry path="ghostcat.util.media.SoundUtil"/>
     <classEntry path="ghostcat.operation.FileLoadOper"/>
     <classEntry path="ghostcat.operation.FileSaveOper"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsTriangles"/>
@@ -11,7 +11,7 @@
     <classEntry path="ghostcat.display.g3d.Panoramic"/>
     <classEntry path="ghostcat.display.g3d.HotSpot"/>
     <classEntry path="ghostcat.other.SWFDump"/>
-    <classEntry path="ghostcat.text.fte.FTEHelper"/>
+    <classEntry path="ghostcat.display.fte.FTEHelper"/>
     <classEntry path="ghostcat.util.VectorUtil"/>
   </includeClasses>
   <includeResources/>

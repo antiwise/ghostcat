@@ -1,9 +1,12 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.utils.ByteArray;
 
 	/**
-	 * 兼容性保留
+	 * 一些处理编码的方法。目前只有关于ANSI的。
+	 * 
+	 * @author flashyiyi
+	 * 
 	 */	
 	public final class ANSI
 	{

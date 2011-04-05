@@ -1,8 +1,11 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	/**
-	 * 兼容性保留
-	 */	
+	 * 文件路径解析类
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class FilePath
 	{
 		/**
