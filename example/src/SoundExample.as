@@ -5,7 +5,7 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
 	import ghostcat.manager.RootManager;
-	import ghostcat.media.SoundDisplayer;
+	import ghostcat.display.media.SoundDisplayer;
 	import ghostcat.operation.SoundOper;
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.display.BitmapCharUtil;

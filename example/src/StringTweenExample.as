@@ -8,7 +8,7 @@ package
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FilterProxyOper;
-	import ghostcat.text.controls.GTweenText;
+	import ghostcat.ui.controls.GTweenText;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
