@@ -1,15 +1,10 @@
 package ghostcat.text
 {
 	/**
-	 * 字符串差异比较类 
-	 * @author flashyiyi
-	 * 
-	 */
+	 * 兼容性保留
+	 */	
 	public final class StringCompareUtil
 	{
-		/**
-		 * 兼容性保留
-		 */	
 		public static function compare(s1:String,s2:String):Array   
 		{   
 			var actions:Array = [];//全部操作  
