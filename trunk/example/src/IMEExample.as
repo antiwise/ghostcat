@@ -6,7 +6,7 @@ package
 	
 	import ghostcat.display.GSprite;
 	import ghostcat.manager.RootManager;
-	import ghostcat.text.IME;
+	import ghostcat.util.text.IME;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.ui.tooltip.ToolTipSkin;
 	import ghostcat.util.Util;
