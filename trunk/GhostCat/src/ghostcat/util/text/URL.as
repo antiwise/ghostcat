@@ -1,12 +1,15 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.net.URLVariables;
 	
 	import ghostcat.util.Util;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * URL解析
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class URL
 	{
 		public static function isHTTP(v:String):Boolean

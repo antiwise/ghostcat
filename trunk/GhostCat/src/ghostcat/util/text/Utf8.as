@@ -1,8 +1,9 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	/**
-	 * 兼容性保留
-	 */	
+	 * UTF8转换
+	 * 
+	 */
 	public class Utf8
 	{
 		public static function encode(text : String) : String

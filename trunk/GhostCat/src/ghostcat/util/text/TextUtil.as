@@ -1,10 +1,13 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.utils.ByteArray;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 关于文本处理的静态方法
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class TextUtil
 	{
 		/**

@@ -106,6 +106,8 @@
     <classEntry path="ghostcat.display.loader.LoaderCreater"/>
     <classEntry path="ghostcat.display.loader.StreamLoader"/>
     <classEntry path="ghostcat.display.loader.StreamTextLoader"/>
+    <classEntry path="ghostcat.display.media.GVideo"/>
+    <classEntry path="ghostcat.display.media.SoundDisplayer"/>
     <classEntry path="ghostcat.display.movieclip.FrameLabelUtil"/>
     <classEntry path="ghostcat.display.movieclip.GBitmapMovieClip"/>
     <classEntry path="ghostcat.display.movieclip.GConcatMovieClip"/>
@@ -176,6 +178,7 @@
     <classEntry path="ghostcat.events.TreeEvent"/>
     <classEntry path="ghostcat.extend.IFrame"/>
     <classEntry path="ghostcat.extend.JSBridge"/>
+    <classEntry path="ghostcat.extend.JSTimer"/>
     <classEntry path="ghostcat.extend.RadioPlayer"/>
     <classEntry path="ghostcat.fileformat.FileFormatChecker"/>
     <classEntry path="ghostcat.fileformat.gif.GIFDecoder"/>
@@ -279,8 +282,6 @@
     <classEntry path="ghostcat.manager.RootManager"/>
     <classEntry path="ghostcat.manager.SoundManager"/>
     <classEntry path="ghostcat.manager.ViewManager"/>
-    <classEntry path="ghostcat.media.GVideo"/>
-    <classEntry path="ghostcat.media.SoundDisplayer"/>
     <classEntry path="ghostcat.operation.ColorTransfromOper"/>
     <classEntry path="ghostcat.operation.DelayOper"/>
     <classEntry path="ghostcat.operation.FilterProxyOper"/>
@@ -329,7 +330,9 @@
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
     <classEntry path="ghostcat.operation.quest.QuestGroup"/>
+    <classEntry path="ghostcat.operation.server.HTTPOper"/>
     <classEntry path="ghostcat.operation.server.HttpServiceProxy"/>
+    <classEntry path="ghostcat.operation.server.JSONOper"/>
     <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
     <classEntry path="ghostcat.other.BubbleCreater"/>
@@ -390,6 +393,7 @@
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.Focus"/>
+    <classEntry path="ghostcat.ui.GBuilderBase"/>
     <classEntry path="ghostcat.ui.PopupManager"/>
     <classEntry path="ghostcat.ui.RootLoader"/>
     <classEntry path="ghostcat.ui.ToolTipSprite"/>
@@ -503,6 +507,7 @@
     <classEntry path="ghostcat.util.core.Singleton"/>
     <classEntry path="ghostcat.util.core.UniqueCall"/>
     <classEntry path="ghostcat.util.core.WeakReference"/>
+    <classEntry path="ghostcat.util.data.BigNumberUtil"/>
     <classEntry path="ghostcat.util.data.BitArray"/>
     <classEntry path="ghostcat.util.data.BitUtil"/>
     <classEntry path="ghostcat.util.data.ByteArrayReader"/>
@@ -564,9 +569,23 @@
     <classEntry path="ghostcat.util.load.GroupLoaderHelper"/>
     <classEntry path="ghostcat.util.load.LoadHelper"/>
     <classEntry path="ghostcat.util.load.RootLoaderBase"/>
-    <classEntry path="ghostcat.operation.server.JSONOper"/>
-    <classEntry path="ghostcat.extend.JSTimer"/>
-    <classEntry path="ghostcat.util.data.BigNumberUtil"/>
+    <classEntry path="ghostcat.util.sleep.SleepCheck"/>
+    <classEntry path="ghostcat.util.sleep.SleepTimer"/>
+    <classEntry path="ghostcat.util.text.ANSI"/>
+    <classEntry path="ghostcat.util.text.FilePath"/>
+    <classEntry path="ghostcat.util.text.HTMLUtil"/>
+    <classEntry path="ghostcat.util.text.IME"/>
+    <classEntry path="ghostcat.util.text.NumberUtil"/>
+    <classEntry path="ghostcat.util.text.PassWordUtil"/>
+    <classEntry path="ghostcat.util.text.PinYin"/>
+    <classEntry path="ghostcat.util.text.RegExpUtil"/>
+    <classEntry path="ghostcat.util.text.StringCompareUtil"/>
+    <classEntry path="ghostcat.util.text.TextFieldUtil"/>
+    <classEntry path="ghostcat.util.text.TextTweenUtil"/>
+    <classEntry path="ghostcat.util.text.TextUtil"/>
+    <classEntry path="ghostcat.util.text.UBB"/>
+    <classEntry path="ghostcat.util.text.URL"/>
+    <classEntry path="ghostcat.util.text.Utf8"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

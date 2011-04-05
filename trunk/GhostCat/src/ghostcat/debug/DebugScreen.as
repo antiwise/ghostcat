@@ -19,7 +19,7 @@ package ghostcat.debug
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
-	import ghostcat.text.TextFieldUtil;
+	import ghostcat.util.text.TextFieldUtil;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.DisplayUtil;

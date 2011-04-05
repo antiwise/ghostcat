@@ -1,11 +1,13 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * HTML代码辅助类 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class HTMLUtil
 	{
 		/**

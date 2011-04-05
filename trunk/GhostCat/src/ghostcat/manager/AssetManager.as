@@ -14,7 +14,7 @@ package ghostcat.manager
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.load.QueueLoadOper;
-	import ghostcat.text.URL;
+	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
 

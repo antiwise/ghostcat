@@ -8,7 +8,7 @@ package ghostcat.operation
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
-	import ghostcat.text.ANSI;
+	import ghostcat.util.text.ANSI;
 
 	/**
 	 * 这个类在提供读取ANSI编码文件的功能，文件无需是UTF8也可以正常读取

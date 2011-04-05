@@ -11,7 +11,7 @@ package ghostcat.ui.controls
 	import ghostcat.util.Util;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
-	import ghostcat.text.TextFieldUtil;
+	import ghostcat.util.text.TextFieldUtil;
 	
 	[Event(name="tween_start",type="ghostcat.util.easing.TweenEvent")]
 	[Event(name="tween_end",type="ghostcat.util.easing.TweenEvent")]

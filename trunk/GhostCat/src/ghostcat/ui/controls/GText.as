@@ -40,9 +40,9 @@ package ghostcat.ui.controls
 	import ghostcat.manager.FontManager;
 	import ghostcat.manager.LanguageManager;
 	import ghostcat.parse.display.TextFieldParse;
-	import ghostcat.text.TextFieldUtil;
-	import ghostcat.text.TextUtil;
-	import ghostcat.text.UBB;
+	import ghostcat.util.text.TextFieldUtil;
+	import ghostcat.util.text.TextUtil;
+	import ghostcat.util.text.UBB;
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.layout.Layout;
 	import ghostcat.ui.layout.LinearLayout;

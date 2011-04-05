@@ -1,4 +1,4 @@
-package ghostcat.text
+package ghostcat.util.text
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
@@ -13,8 +13,11 @@ package ghostcat.text
 	import ghostcat.util.display.MatrixUtil;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 文本框处理类 
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public final class TextFieldUtil
 	{
 		static public const TEXT_WIDTH_PADDING:int = 5;

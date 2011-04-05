@@ -12,7 +12,7 @@ package ghostcat.operation.load
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.ParallelOper;
 	import ghostcat.operation.Queue;
-	import ghostcat.text.URL;
+	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.Util;
 	import ghostcat.util.load.GroupLoaderHelper;

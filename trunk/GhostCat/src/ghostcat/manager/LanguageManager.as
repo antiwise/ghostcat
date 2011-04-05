@@ -9,8 +9,8 @@ package ghostcat.manager
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.load.QueueLoadOper;
-	import ghostcat.text.RegExpUtil;
-	import ghostcat.text.URL;
+	import ghostcat.util.text.RegExpUtil;
+	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.Singleton;

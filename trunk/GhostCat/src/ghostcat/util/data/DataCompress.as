@@ -3,8 +3,8 @@ package ghostcat.util.data
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.text.NumberUtil;
-	import ghostcat.text.TextUtil;
+	import ghostcat.util.text.NumberUtil;
+	import ghostcat.util.text.TextUtil;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.Util;
 

@@ -1,8 +1,5 @@
-package ghostcat.text
+package ghostcat.util.text
 {
-	/**
-	 * 兼容性保留
-	 */	
 	public class UBB
 	{
 		public static function decode(v:String):String

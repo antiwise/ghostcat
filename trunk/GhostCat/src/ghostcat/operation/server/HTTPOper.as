@@ -8,7 +8,7 @@ package ghostcat.operation.server
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.RetryOper;
-	import ghostcat.text.URL;
+	import ghostcat.util.text.URL;
 	
 	/**
 	 * 请求HTTP 

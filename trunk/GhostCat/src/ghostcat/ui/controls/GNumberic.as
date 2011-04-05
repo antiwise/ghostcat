@@ -7,8 +7,8 @@ package ghostcat.ui.controls
 	import flash.text.TextFormat;
 	import flash.utils.setTimeout;
 	
-	import ghostcat.text.NumberUtil;
-	import ghostcat.text.TextFieldUtil;
+	import ghostcat.util.text.NumberUtil;
+	import ghostcat.util.text.TextFieldUtil;
 	import ghostcat.ui.containers.GBox;
 	import ghostcat.ui.containers.GView;
 	import ghostcat.ui.layout.Padding;

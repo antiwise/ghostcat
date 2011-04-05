@@ -21,7 +21,7 @@
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
-	import ghostcat.text.URL;
+	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.data.LocalStorage;
 	
