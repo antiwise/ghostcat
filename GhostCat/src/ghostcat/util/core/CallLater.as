@@ -19,17 +19,15 @@ package ghostcat.util.core
 	public final class CallLater
 	{
 		private static var globeDirty:Dictionary = new Dictionary();
-		
 		private static var objectDirty:Dictionary = new Dictionary();
 		
-		private static function waitToCallLater(h:Handler,uniqueOn:*):void
+		private static function waitToCallLater(handler:Function,para:Array,uniqueOn:*):void
 		{
 			var dirty:Dictionary = uniqueOn ? objectDirty[uniqueOn] : globeDirty;
-			
-			if (dirty && dirty[h.handler])
+			if (dirty && dirty[handler])
 			{
-				h.call();
-				delete dirty[h.handler];
+				handler.apply(null,para);
+				delete dirty[handler];
 		
 				//如果对象的Dirty已清空，则删除对象字典
 				if (uniqueOn && Util.isEmpty(dirty))
@@ -65,15 +63,15 @@ package ghostcat.util.core
 		 */
 		public static function callLater(handler:Function,para:Array = null,unique:Boolean = false,uniqueOn:*=null):void
 		{
-			var h:Handler = new Handler(handler,para);
-			
 			if (unique)
 			{
-				setDirty(h.handler,uniqueOn);
-				setTimeout(waitToCallLater,0,h,uniqueOn);
+				setDirty(handler,uniqueOn);
+				CallLaterQueue.instance.callLaterByTime(waitToCallLater,[handler,para,uniqueOn]);
 			}
 			else
-				setTimeout(h.call,0);
+			{
+				CallLaterQueue.instance.callLaterByTime(handler);
+			}
 		}
 		
 		/**
@@ -89,20 +87,14 @@ package ghostcat.util.core
 		 */
 		public static function callLaterNextFrame(handler:Function,para:Array = null,unique:Boolean = false,uniqueOn:*=null):void
 		{
-			var h:Handler = new Handler(handler,para);
-			
 			if (unique)
-				setDirty(h.handler,uniqueOn);
-			
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
-			
-			function tickHandler(event:TickEvent):void
 			{
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-				if (unique)
-					waitToCallLater(h,uniqueOn);
-				else
-					h.call();
+				setDirty(handler,uniqueOn);
+				CallLaterQueue.instance.callLaterByTick(waitToCallLater,[handler,para,uniqueOn]);
+			}
+			else
+			{
+				CallLaterQueue.instance.callLaterByTick(handler);
 			}
 		}
 	}

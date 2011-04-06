@@ -69,13 +69,13 @@ package ghostcat.filter
 			return _index;
 		}
 		
-		public function FilterProxy(filter:BitmapFilter = null,autoUpdateIndex:Boolean = false,callLaterInv:Number = NaN)
+		public function FilterProxy(filter:BitmapFilter = null,autoUpdateIndex:Boolean = false,callLater:Boolean = false)
 		{
 			super();
 			
 			this.filter = filter;
 			this.autoUpdateIndex = autoUpdateIndex;
-			this.callLaterInv = callLaterInv;
+			this.callLater = callLater;
 		}
 		
 		/**
@@ -178,7 +178,7 @@ package ghostcat.filter
 			if (filter) 
 				filter[name] = value;
 			
-			if (!callLater)
+			if (callLater)
 				caller.invalidate()
 			else
 				updateFilter();
