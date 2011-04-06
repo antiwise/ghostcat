@@ -11,6 +11,10 @@ package ghostcat.game.item.sort
 	public class SortYCalculater implements ISortCalculater
 	{
 		private var _target:DisplayObject;
+		/**
+		 * 最大场景宽度
+		 */
+		static public var maxViewportWidth:Number = 50000;
 
 		public function get target():DisplayObject
 		{
@@ -31,7 +35,7 @@ package ghostcat.game.item.sort
 		
 		public function calculate():Number
 		{
-			return _target.y + offestY;
+			return _target.x + (_target.y + offestY) * maxViewportWidth
 		}
 	}
 }
