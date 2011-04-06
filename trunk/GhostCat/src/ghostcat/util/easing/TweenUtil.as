@@ -343,10 +343,10 @@ package ghostcat.util.easing
 				if (this.toValues.hasOwnProperty("motionBlur"))
 					(target as DisplayObject).filters = [];
 				
+				effects.splice(effects.indexOf(this), 1);
+				
 				if (this.onComplete!=null)
 					this.onComplete();
-				
-				effects.splice(effects.indexOf(this), 1);
 				
 				if (this.enabledDispatchEvent)
 					this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
