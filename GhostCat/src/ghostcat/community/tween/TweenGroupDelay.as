@@ -35,6 +35,10 @@ package ghostcat.community.tween
 		 * 是否在倒放开始时即确认Tween属性
 		 */
 		public var renderOnStart:Boolean = true;
+		/**
+		 * 各个Tween是否发布事件
+		 */
+		public var enabledDispatchEvent:Boolean = false;
 		
 		public function TweenGroupDelay(duration:int,params:Object,delay:int = 100,invert:Boolean = false)
 		{
@@ -56,6 +60,7 @@ package ghostcat.community.tween
 			var o:Object = Util.copy(params);
 			var index:int =  invert ? (data.length - data.indexOf(v) - 1) :data.indexOf(v);
 			o.delay = index * delay;
+			o.enabledDispatchEvent = this.enabledDispatchEvent;
 			if (renderOnStart)
 				o.renderOnStart = true;
 			

@@ -32,6 +32,11 @@ package ghostcat.community.tween
 		 */
 		public var renderOnStart:Boolean = true;
 		
+		/**
+		 * 各个Tween是否发布事件
+		 */
+		public var enabledDispatchEvent:Boolean = false;
+		
 		public function TweenGroupByValue(duration:int,params:Object)
 		{
 			this.duration = duration;
@@ -68,6 +73,8 @@ package ghostcat.community.tween
 				var o:Object = Util.copy(params);
 				if (renderOnStart)
 					o.renderOnStart = true;
+				
+				o.enabledDispatchEvent = this.enabledDispatchEvent;
 				
 				var tween:TweenUtil = TweenUtil.to(child,duration,o);
 				tween.update();

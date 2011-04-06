@@ -27,6 +27,8 @@ package ghostcat.util.easing
 	 * tint2，将会以附加的方法增加颜色
 	 * dynamicPoint，是一个显示对象，将会以它的x,y属性作为Tween的终点。这两个值在过程中可变化追踪
 	 * startAt，可以在这里设置初值
+	 * renderOnStart，是否在最初就赋予初值，此属性默认为true，有问题的话可以设回false
+	 * enabledDispatchEvent，设置为false将不会发布TweenEvent事件。但如果只是组件用的Tween不需要在意发布事件这种程度的性能问题。
 	 * motionBlur，用它代替移动可以产生动态模糊效果
 	 * 
 	 * @author flashyiyi
@@ -47,6 +49,11 @@ package ghostcat.util.easing
 		 * 是否在执行onUpdate回调函数的时候带上currentTime/duration的系数作为参数
 		 */
 		public static var updateWithCurrentTime:Boolean = false;
+		
+		/**
+		 * 是否允许发布事件
+		 */
+		public static var enabledDispatchEvent:Boolean = true;
 		
 		/**
 		 * 延迟执行某个函数，但最早也只会在下一帧执行。
@@ -154,6 +161,10 @@ package ghostcat.util.easing
 		 * 是否在倒放最开始的时候显示初值,复数使用需要保持原值可设为false
 		 */
 		public var renderOnStart:Boolean = true;
+		/**
+		 * 是否允许发布事件
+		 */
+		public var enabledDispatchEvent:Boolean = true;
 		
 		public function TweenUtil(target:Object, duration:int, params:Object, autoStart:Boolean = true)
 		{
@@ -162,6 +173,7 @@ package ghostcat.util.easing
 			
 			this.target = target;
 			this.duration = duration;
+			this.enabledDispatchEvent = TweenUtil.enabledDispatchEvent;
 			
 			for (var key:String in params)
 			{
@@ -173,6 +185,7 @@ package ghostcat.util.easing
 					case "onStart":
 					case "onUpdate":
 					case "onComplete":
+					case "enabledDispatchEvent":
 						this[key] = params[key];
 						break;
 					case "onStartHandler":
@@ -291,7 +304,8 @@ package ghostcat.util.easing
 				if (this.onStart!=null)
 					this.onStart();
 				
-				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
+				if (this.enabledDispatchEvent)
+					this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
 			}
 			
 			//更新属性
@@ -320,7 +334,8 @@ package ghostcat.util.easing
 				else
 					this.onUpdate();
 			}
-			this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
+			if (this.enabledDispatchEvent)
+				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_UPDATE));
 			
 			//如果已经结束则执行结束回调函数并删除
 			if (this.currentTime >= this.duration)
@@ -333,7 +348,8 @@ package ghostcat.util.easing
 				
 				effects.splice(effects.indexOf(this), 1);
 				
-				this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
+				if (this.enabledDispatchEvent)
+					this.dispatchEvent(new TweenEvent(TweenEvent.TWEEN_END));
 			}
 		}
 		
