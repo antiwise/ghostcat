@@ -26,8 +26,8 @@ package ghostcat.util.core
 		
 		public function CallLaterQueue():void
 		{
-			this.timer = new Timer(0);
-			this.timer.addEventListener(TimerEvent.TIMER,timerHandler);
+			this.timer = new Timer(0,1);
+			this.timer.addEventListener(TimerEvent.TIMER_COMPLETE,timerHandler);
 			this.timeQueue = [];
 			this.timeQueuePara = [];
 			
@@ -56,22 +56,39 @@ package ghostcat.util.core
 		
 		private function timerHandler(event:TimerEvent):void
 		{
-			var l:int = timeQueue.length;
-			for (var i:int = 0;i < l;i++)
-				(timeQueue[i] as Function).apply(null,timeQueuePara[i]);
-			
+			var list:Array = timeQueue.concat();
+			var listPara:Array = timeQueuePara.concat();
 			timeQueue.length = 0;
 			timeQueuePara.length = 0;
+			
+			var l:int = list.length;
+			for (var i:int = 0;i < l;i++)
+			{
+				var para:Array = listPara[i];
+				if (para)
+					(list[i] as Function).apply(null,listPara[i]);
+				else
+					(list[i] as Function)();
+			}
 		}
 		
 		private function tickHandler(event:TickEvent):void
 		{
-			var l:int = tickQueue.length;
-			for (var i:int = 0;i < l;i++)
-				(tickQueue[i] as Function).apply(null,tickQueuePara[i]);
-			
+			var list:Array = tickQueue.concat();
+			var listPara:Array = tickQueuePara.concat();
 			tickQueue.length = 0;
 			tickQueuePara.length = 0;
+			
+			var l:int = list.length;
+			for (var i:int = 0;i < l;i++)
+			{
+				var para:Array = listPara[i];
+				if (para)
+					(list[i] as Function).apply(null,listPara[i]);
+				else
+					(list[i] as Function)();
+			}
+			
 		}
 	}
 }
