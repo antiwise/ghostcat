@@ -99,12 +99,12 @@ package ghostcat.ui.controls
 				
 				var o:Object = Util.copy(params);
 				o.delay = o.delay ? o.delay + t : t;
-				
+				o.enabledDispatchEvent = false;
+				o.onComplete = tweenEndHandler;
 				if (o.hasOwnProperty("alpha") && !bitmap)
 					(separateTexts[i] as DisplayObject).blendMode = BlendMode.LAYER;
 				
 				var tween:TweenUtil = TweenUtil.to(separateTexts[i],duration,o);
-				tween.addEventListener(TweenEvent.TWEEN_END,tweenEndHandler);
 			}
 			
 			TweenUtil.update();
@@ -112,10 +112,8 @@ package ghostcat.ui.controls
 			dispatchEvent(new TweenEvent(TweenEvent.TWEEN_START));
 		}
 		
-		private function tweenEndHandler(event:TweenEvent):void
+		private function tweenEndHandler():void
 		{
-			(event.currentTarget as EventDispatcher).removeEventListener(TweenEvent.TWEEN_END,tweenEndHandler);
-			
 			completeCount--;
 			if (completeCount == 0)
 			{
