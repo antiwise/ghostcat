@@ -9,9 +9,7 @@ package ghostcat.util.core
 	
 
 	/**
-	 * CallLater机制
-	 * 
-	 * 这是一个很重要的优化性能的方法
+	 * 带setDirty机制的CallLater
 	 * 
 	 * @author flashyiyi
 	 * 
