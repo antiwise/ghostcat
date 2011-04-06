@@ -27,9 +27,9 @@ package ghostcat.filter
 		public var autoUpdateIndex:Boolean = false;
 	
 		/**
-		 * 是否每帧后延迟更新
+		 * 是否延迟更新
 		 */
-		public var callLaterInv:Number;
+		public var callLater:Boolean;
 	
 		/**
 		 * 滤镜的所有者
@@ -113,8 +113,8 @@ package ghostcat.filter
 				
 			}
 			
-			if (!isNaN(callLaterInv))
-				this.caller = new UniqueCall(updateFilter,false,callLaterInv);
+			if (callLater)
+				this.caller = new UniqueCall(updateFilter);
 		}
 		
 		/**
@@ -178,15 +178,10 @@ package ghostcat.filter
 			if (filter) 
 				filter[name] = value;
 			
-			if (isNaN(callLaterInv))
-			{
-				updateFilter();
-			}
-			else
-			{
-				caller.inv = callLaterInv;
+			if (!callLater)
 				caller.invalidate()
-			}
+			else
+				updateFilter();
 		}
 	}
 }
