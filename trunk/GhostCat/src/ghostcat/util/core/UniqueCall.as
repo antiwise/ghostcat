@@ -23,11 +23,6 @@ package ghostcat.util.core
 		public var frame:Boolean = false;
 		
 		/**
-		 * 执行间隔（仅在frame=false时有效）
-		 */
-		public var inv:int;
-		
-		/**
 		 * 执行的函数
 		 */
 		public var handler:Function;
@@ -43,13 +38,11 @@ package ghostcat.util.core
 		 * 
 		 * @param handler	执行的函数
 		 * @param frame	是否是在下一帧执行
-		 * @param inv 是否再固定间隔后延迟执行
 		 */
-		public function UniqueCall(handler:Function,frame:Boolean = false,inv:Number = NaN)
+		public function UniqueCall(handler:Function,frame:Boolean = false)
 		{
 			this.handler = handler;
 			this.frame = frame;
-			this.inv = inv;
 		}
 		
 		public function invalidate(...para):void
@@ -61,9 +54,9 @@ package ghostcat.util.core
 			this.para = para;
 			
 			if (frame)
-				tick.addEventListener(TickEvent.TICK,tickHandler);	
+				CallLaterQueue.instance.callLaterByTick(vaildNow);	
 			else
-				setTimeout(vaildNow,inv);
+				CallLaterQueue.instance.callLaterByTime(vaildNow);	
 		}
 		
 		public function vaildNow():void
@@ -75,12 +68,6 @@ package ghostcat.util.core
 			
 			dirty = false;
 			para = null;
-		}
-		
-		private function tickHandler(event:TickEvent):void
-		{
-			tick.removeEventListener(TickEvent.TICK,tickHandler);
-			vaildNow();
 		}
 	}
 }
