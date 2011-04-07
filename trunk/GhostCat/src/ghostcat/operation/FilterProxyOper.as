@@ -31,7 +31,7 @@ package ghostcat.operation
 		/**
 		 * 是否每帧后延迟更新
 		 */
-		public var callLaterInv:Number;
+		public var callLater:Boolean;
 		
 		public override function set target(v:*) : void
 		{
@@ -43,21 +43,20 @@ package ghostcat.operation
 			return filterTarget;
 		}
 		
-		public function FilterProxyOper(target:* = null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false, autoUpdateIndex:Boolean = false, callLaterInv:Number = NaN)
+		public function FilterProxyOper(target:* = null,filter:BitmapFilter=null,duration:int=100, params:Object=null, invert:Boolean=false, autoUpdateIndex:Boolean = false, callLater:Boolean = false)
 		{
 			this.filter = filter;
 			this.filterTarget = target;
 			
 			this.autoUpdateIndex = autoUpdateIndex;
-			this.callLaterInv = callLaterInv;
+			this.callLater = callLater;
 			
 			super(null, duration, params, invert);
 		}
 		
 		public override function execute() : void
 		{
-			var proxy:FilterProxy = new FilterProxy(filter.clone(),autoUpdateIndex,callLaterInv);
-			
+			var proxy:FilterProxy = new FilterProxy(filter.clone(),autoUpdateIndex,callLater);
 			var target:*;
 			if (filterTarget is String)
 				target = ReflectUtil.eval(filterTarget);

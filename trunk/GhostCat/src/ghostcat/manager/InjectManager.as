@@ -47,6 +47,11 @@
 			dict = new Dictionary();
 		}
 		
+		/**
+		 * 注册需要被注入的对象 
+		 * @param reg
+		 * 
+		 */
 		public function register(...reg):void
 		{
 			for (var i:int = 0;i < reg.length;i++)
@@ -64,6 +69,11 @@
 			}
 		}
 		
+		/**
+		 * 将对象注入目标对象的属性 
+		 * @param target
+		 * 
+		 */
 		public function inject(target:*):void
 		{
 			var pList:Object = ReflectUtil.getPropertyTypeList(target,true);
@@ -75,12 +85,20 @@
 			}
 		}
 		
+		/**
+		 * 通过类获得需要的被注入对象 
+		 * @param cls	类名
+		 * @param filter	过滤参数
+		 * @return 
+		 * 
+		 */
 		public function retrieve(cls:Class,filter:Object = null):*
 		{
 			var list:Array = dict[cls];
 			if (!list)
 			{
-				var vm:ViewManager = Singleton.getInstance(ViewManager);
+				//从显示列表获取
+				var vm:ViewManager = ViewManager.instance;
 				return vm ? vm.getView(cls,filter) : null;
 			}
 			

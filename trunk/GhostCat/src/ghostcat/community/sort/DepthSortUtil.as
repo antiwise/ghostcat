@@ -13,7 +13,7 @@ package ghostcat.community.sort
 		static public function sortAll(children:Array,container:DisplayObjectContainer,sortFields:* = null):void
 		{
 			if (sortFields == null)
-				sortFields = "y";
+				sortFields = ["y","x"];
 			
 			if (sortFields is String)
 				sortFields = [sortFields];
@@ -37,7 +37,7 @@ package ghostcat.community.sort
 		static public function sort(child:DisplayObject,container:DisplayObjectContainer,sortFields:* = null):void
 		{
 			if (sortFields == null)
-				sortFields = "y";
+				sortFields = ["y","x"];
 			
 			var l:int = container.numChildren;
 			for (var i:int = 0; i < l; i++)

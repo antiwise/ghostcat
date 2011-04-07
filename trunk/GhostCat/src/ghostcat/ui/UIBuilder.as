@@ -1,11 +1,12 @@
 package ghostcat.ui
 {
 	import flash.display.DisplayObject;
+	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.display.IData;
 	import ghostcat.display.IGBase;
-	import ghostcat.ui.controls.GButtonBase;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.SearchUtil;
@@ -21,7 +22,7 @@ package ghostcat.ui
 		/**
 		 * 自动构建UI组件。会根据target的公开属性来自动查询Skin内的同名元件并转换。
 		 * 
-		 * @param target	目标
+		 * @param target	目标容器
 		 * @param params	规定需要转换的对象的实际类型，键为属性名，值为属性类型（可以使用ClassFactory），将值设为空则不做任何限制。
 		 * @param limitIn	是否限制只转换parms属性规定的对象
 		 */
@@ -119,7 +120,7 @@ package ghostcat.ui
 		
 		/**
 		 * 销毁子对象
-		 * @param target
+		 * @param target	目标容器
 		 * @param all	是否销毁不在属性值里的对象
 		 */
 		public static function destory(target:GBase,all:Boolean = false):void
@@ -142,24 +143,52 @@ package ghostcat.ui
 		
 		/**
 		 * 自动按钮事件 
-		 * @param target
+		 * @param target	目标容器
 		 * @param remove	是否是卸载
+		 * @param useWeak	是否使用弱引用
+		 * @param handlerPostfix	事件方法的后缀
 		 * 
 		 */
-		public static function autoBNHandlers(target:DisplayObject,remove:Boolean = false,useWeak:Boolean = false):void
+		public static function autoBNHandlers(target:DisplayObject,remove:Boolean = false,useWeak:Boolean = false,handlerPostfix:String = "Handler"):void
 		{
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			for (var p:String in types)
 			{
-				if (target.hasOwnProperty(p) && target.hasOwnProperty(p + "Handler") && target[p + "Handler"] is Function)
+				var handler:String = p + handlerPostfix;
+				if (target.hasOwnProperty(p) && target.hasOwnProperty(handler) && target[handler] is Function)
 				{
-					if (target["p"] is GButtonBase)
+					var obj:IEventDispatcher = target[p] as IEventDispatcher;
+					if (obj)
 					{
 						if (remove)
-							(target["p"] as GButtonBase).removeEventListener(MouseEvent.CLICK,target[p + "Handler"])
+							obj.removeEventListener(MouseEvent.CLICK,target[handler])
 						else
-							(target["p"] as GButtonBase).addEventListener(MouseEvent.CLICK,target[p + "Handler"],false,0,useWeak)
+							obj.addEventListener(MouseEvent.CLICK,target[handler],false,0,useWeak)
 					}
+				}
+			}
+		}
+		
+		/**
+		 * 自动设置数据 
+		 * @param target	目标容器
+		 * @param data	数据
+		 * @param names	数据名称和组件名称的对应（数据名:组件名），默认相同
+		 * 
+		 */
+		public static function autoSetData(target:DisplayObject,data:*,names:Object = null):void
+		{
+			for (var p:String in data)
+			{
+				var name:String;
+				if (names && names.hasOwnProperty(p))
+					name = names[p];
+				else
+					name = p;
+				
+				if (target.hasOwnProperty(name) && target[name] is IData)
+				{
+					IData(target[name]).data = data[p];
 				}
 			}
 		}

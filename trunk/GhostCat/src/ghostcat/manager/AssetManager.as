@@ -14,9 +14,9 @@ package ghostcat.manager
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.load.QueueLoadOper;
-	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
+	import ghostcat.util.text.URL;
 
 	/**
 	 * 资源管理类
@@ -256,6 +256,17 @@ package ghostcat.manager
 		public function clearOper():void
 		{
 			opers = new Dictionary();
+		}
+		
+		/**
+		 * 将所有数据保存至ShareObject 
+		 * @param version	版本号，为空则使用LoaderOper内的版本号
+		 * 
+		 */
+		public function saveAllOperToShareObject(version:String = null):void
+		{
+			for each (var oper:LoadOper in oper)
+				oper.saveToShareObject(version);
 		}
 		
 		/**
