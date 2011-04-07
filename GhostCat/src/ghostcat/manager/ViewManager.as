@@ -14,7 +14,7 @@ package ghostcat.manager
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ViewManager extends Singleton
+	public class ViewManager extends EventDispatcher
 	{ 
 		static private var _instance:ViewManager;
 		static public function get instance():ViewManager
@@ -40,12 +40,12 @@ package ghostcat.manager
 		public var multi:Boolean;
 		
 		/**
-		 * 加入舞台的回调函数
+		 * 加入舞台的回调函数（参数为显示对象）
 		 */
 		public var addToStageFunction:Function;
 		
 		/**
-		 * 移出舞台的回调函数
+		 * 移出舞台的回调函数（参数为显示对象）
 		 */
 		public var removeFromStageFunction:Function;
 		

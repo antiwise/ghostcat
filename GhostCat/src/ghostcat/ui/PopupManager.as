@@ -5,6 +5,7 @@ package ghostcat.ui
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -26,11 +27,15 @@ package ghostcat.ui
 	 * @author flashyiyi
 	 * 
 	 */
-	public class PopupManager extends Singleton
+	public class PopupManager extends EventDispatcher
 	{
+		static private var _instance:PopupManager;
 		static public function get instance():PopupManager
 		{
-			return Singleton.getInstanceOrCreate(PopupManager) as PopupManager;
+			if (!_instance)
+				_instance = new PopupManager();
+			
+			return _instance;
 		}
 		
 		/**

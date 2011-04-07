@@ -7,7 +7,7 @@ package ghostcat.algorithm
 	import ghostcat.util.Util;
 
 	/**
-	 * 降数据按坐标范围划分并随时存取
+	 * 数据按坐标范围划分并随时存取
 	 * @author flashyiyi
 	 * 
 	 */
