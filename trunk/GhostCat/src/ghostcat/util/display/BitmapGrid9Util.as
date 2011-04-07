@@ -4,16 +4,10 @@ package ghostcat.util.display
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.skin.ListBackground;
-	import ghostcat.ui.controls.GListBase;
-	
-	import mx.controls.listClasses.ListBase;
-
 	/**
 	 * 位图Grid-9（可以在放大时采用平铺方式）
 	 * @author flashyiyi
