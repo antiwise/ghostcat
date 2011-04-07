@@ -16,7 +16,7 @@ package ghostcat.community.sort
 	 */
 	public class SortAllManager extends GroupManager
 	{
-		public static const SORT_Y:Array = ["y","x"];
+		public static const SORT_Y:Array = ["y"];
 		
 		public var sortFields:*;
 		

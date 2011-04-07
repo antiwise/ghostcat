@@ -11,7 +11,7 @@ package ghostcat.game.layer.sort
 	{
 		public function SortYManager(layer:GameLayer)
 		{
-			super(layer,["y","x"]);
+			super(layer,"y");
 		}
 	}
 }
