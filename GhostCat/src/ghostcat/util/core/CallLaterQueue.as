@@ -37,6 +37,12 @@ package ghostcat.util.core
 			this.tickQueuePara = [];
 		}
 		
+		/**
+		 * 延迟调用函数，并在此函数执行完后调用
+		 * @param f
+		 * @param para
+		 * 
+		 */
 		public function callLaterByTime(f:Function,para:Array = null):void
 		{
 			timeQueue[timeQueue.length] = f;
@@ -48,6 +54,12 @@ package ghostcat.util.core
 			}
 		}
 		
+		/**
+		 * 延迟调用函数，并在下一帧后调用
+		 * @param f
+		 * @param para
+		 * 
+		 */
 		public function callLaterByTick(f:Function,para:Array = null):void
 		{
 			tickQueue[tickQueue.length] = f;
