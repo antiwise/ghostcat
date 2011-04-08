@@ -7,7 +7,7 @@ package ghostcat.algorithm.traversal
 	 * @author flashyiyi
 	 * 
 	 */
-	public final class StraightPathCreater
+	public final class FindStraightPath
 	{
 		/**
 		 * 
@@ -33,26 +33,30 @@ package ghostcat.algorithm.traversal
 			var i:int;
 			var j:int;
 			var p:Point;
+			var corner:Point;
 			var old:Point = start.clone();
 			var result:Array = [];
 			
 			if (lx > ly)
 			{
-				for (i = 0;i < lx;i++)
+				for (i = 0;i <= lx;i++)
 				{
-					j = k ? Math.round(i * k) : 0;
-					p = new Point(startX + i * offestX,startY + j * offestY);
+					j = k ? Math.round(i * offestX * k) : 0;
+					p = new Point(startX + i * offestX,startY + j);
 					if (map.isBlock(p))
 						return null;
 					
 					if (p.y != old.y)
 					{
 						if (!map.isBlock(new Point(p.x, old.y)))
-							if (diagonal) result[result.length] = new Point(p.x, old.y);
+							corner = new Point(p.x, old.y);
 						else if (!map.isBlock(new Point(old.x, p.y)))
-							if (diagonal) result[result.length] = new Point(old.x, p.y);
+							corner = new Point(old.x, p.y);
 						else
 							return null;
+						
+						if (!diagonal)
+							result[result.length] = corner;
 					}
 					
 					result[result.length] = p;
@@ -62,21 +66,24 @@ package ghostcat.algorithm.traversal
 			else
 			{
 				
-				for (j = 0;j < ly;j++)
+				for (j = 0;j <= ly;j++)
 				{
-					i = k ? Math.round(j / k) : 0;
-					p = new Point(startX + i * offestX,startY + j * offestY);
+					i = k ? Math.round(j * offestY / k) : 0;
+					p = new Point(startX + i,startY + j * offestY);
 					if (map.isBlock(p))
 						return null;
 					
 					if (p.x != old.x)
 					{
 						if (!map.isBlock(new Point(old.x, p.y)))
-							if (diagonal) result[result.length] = new Point(old.x, p.y);
+							corner = new Point(old.x, p.y);
 						else if (!map.isBlock(new Point(p.x, old.y)))
-							if (diagonal) result[result.length] = new Point(p.x, old.y);
+							corner = new Point(p.x, old.y);
 						else
 							return null;
+						
+						if (!diagonal)
+							result[result.length] = corner;
 					}
 					
 					result[result.length] = p;

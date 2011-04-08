@@ -3,6 +3,7 @@ package ghostcat.util.display
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -17,7 +18,7 @@ package ghostcat.util.display
 	public final class BitmapUtil
 	{
 		/**
-		 * 绘制一个位图。这个位图能确保容纳整个图像。
+		 * 绘制并创建一个位图。这个位图能确保容纳整个图像。
 		 * 
 		 * @param displayObj
 		 * @return 
@@ -46,6 +47,20 @@ package ghostcat.util.display
 			bitmap.x = displayObj.x + rect.x;
 			bitmap.y = displayObj.y + rect.y;
 			return bitmap;
+		}
+		
+		/**
+		 * 缩放绘制位图填充某个区域 
+		 * @param source
+		 * @param target
+		 * @param targetRect
+		 * @param smoothing 平滑
+		 */
+		public static function drawToRectangle(source:IBitmapDrawable,target:BitmapData,targetRect:Rectangle,smoothing:Boolean = false):void
+		{
+			var m:Matrix = new Matrix();
+			m.createBox(targetRect.width / source["width"],targetRect.height / source["height"],0,targetRect.x,targetRect.y);
+			target.draw(source,m,null,null,null,smoothing);
 		}
 		
 		/**
