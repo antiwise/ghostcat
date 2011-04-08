@@ -5,7 +5,7 @@ package
 	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GButton;
-	import ghostcat.ui.controls.GList;
+	import ghostcat.ui.containers.GList;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.util.easing.Circ;
 	

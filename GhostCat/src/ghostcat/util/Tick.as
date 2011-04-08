@@ -1,5 +1,6 @@
 package ghostcat.util
 {
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -57,12 +58,12 @@ package ghostcat.util
 		 */		
 		public var pause:Boolean = false;
 		
-		private var displayObject:Sprite;//用来提供事件的对象
+		private var displayObject:Shape;//用来提供事件的对象
 		private var prevTime:int;//上次记录的时间
 		
 		public function Tick()
 		{
-			displayObject = new Sprite();
+			displayObject = new Shape();
 			displayObject.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
 		}
 		

@@ -41,7 +41,7 @@ package ghostcat.ui.controls
 		/**
 		 * 激活滚动条按钮自适应
 		 */
-		public var enabledArrowResize:Boolean = true;
+		public var enabledArrowResize:Boolean = false;
 		
 		/**
 		 * 当不可用时是隐藏Thumb还是自身
