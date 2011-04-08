@@ -343,7 +343,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function getBitmapData(ref:String,width:int,height:int):BitmapData
+		public function getBitmapData(ref:String,width:int = 0,height:int = 0):BitmapData
 		{
 			var cls:Class = this.getAssetByName(ref) as Class;
 			return new cls(width,height) as BitmapData;
