@@ -12,7 +12,7 @@ package ghostcat.operation.server
 	import ghostcat.operation.Queue;
 
 	/**
-	 * Remoting实现类
+	 * Remoting服务实现类
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -97,7 +97,7 @@ package ghostcat.operation.server
 			return oper;
 		}
 			
-		protected function onConnectionError(event:ErrorEvent):void
+		protected function onConnectionError(event:Event):void
 		{
 			this.faultHander(event);
 		}
