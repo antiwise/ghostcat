@@ -11,9 +11,9 @@ package ghostcat.algorithm.traversal
 	{
 		/**
 		 * 
-		 * @param map
-		 * @param start
-		 * @param end
+		 * @param map	二维阻碍数据
+		 * @param start	起点网格坐标
+		 * @param end	终点网格坐标
 		 * @param diagonal	是否八方向
 		 * @return 
 		 * 

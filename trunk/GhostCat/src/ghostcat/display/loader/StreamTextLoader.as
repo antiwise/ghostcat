@@ -5,6 +5,9 @@ package ghostcat.display.loader
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
+	import flash.text.TextField;
+	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 	
 	import ghostcat.ui.controls.GText;
 	
@@ -14,15 +17,34 @@ package ghostcat.display.loader
 	 * @author flashyiyi
 	 * 
 	 */
-	public class StreamTextLoader extends GText
+	public class StreamTextLoader extends TextField
 	{
+		/**
+		 * 文本编码 
+		 */
 		public var charSet:String="utf-8";
+		
 		/**
 		 * 载入完毕
 		 */
 		public var loadComplete:Boolean = false;
 		
-		private var stream:URLStream;
+		/**
+		 * 加载的数据 
+		 */
+		public var bytes:ByteArray;
+		
+		/**
+		 * 数据流 
+		 */
+		public var stream:URLStream;
+		
+		/**
+		 * 更新间隔
+		 */
+		public var refreshInv:int = 0;
+		
+		private var prevRefreshTime:int = 500;
 		
 		public function StreamTextLoader(request:URLRequest = null)
 		{
@@ -44,7 +66,11 @@ package ghostcat.display.loader
 		public function load(request:URLRequest):void
 		{
 			loadComplete = false;
+			
+			bytes = new ByteArray();
 			stream.load(request);
+			
+			prevRefreshTime = getTimer();
 		}
 		
 		/**
@@ -59,25 +85,30 @@ package ghostcat.display.loader
 		
 		private function refreshProgress(event:Event):void
 		{
-			text = text + stream.readMultiByte(stream.bytesAvailable,charSet);
+			refreshFun();
+		}
+		
+		private function refreshFun(isEnd:Boolean = false):void
+		{
+			if (isEnd || getTimer() - prevRefreshTime >= refreshInv)
+			{
+				stream.readBytes(bytes,bytes.length);
+				bytes.position = 0;
+				text = bytes.readMultiByte(bytes.bytesAvailable,charSet);
+				prevRefreshTime = getTimer();
+			}
 		}
 		
 		private function completeHandler(event:Event):void
 		{
-			refreshProgress(event);
+			refreshFun(true);
 			loadComplete = true;
-		}
-		/** @inheritDoc*/
-		public override function destory() : void
-		{
-			if (destoryed)
-				return;
 			
 			stream.removeEventListener(ProgressEvent.PROGRESS,refreshProgress);
-			stream.removeEventListener(Event.COMPLETE,refreshProgress);
+			stream.removeEventListener(Event.COMPLETE,completeHandler);
 			stream.close();
-		
-			super.destory();
+			stream = null;
+			bytes = null;
 		}
 	}
 }
