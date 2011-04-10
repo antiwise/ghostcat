@@ -588,6 +588,8 @@
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.util.core.CallLaterQueue"/>
     <classEntry path="ghostcat.algorithm.traversal.FindStraightPath"/>
+    <classEntry path="ghostcat.ui.containers.Group"/>
+    <classEntry path="ghostcat.algorithm.traversal.FindNearPoint"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

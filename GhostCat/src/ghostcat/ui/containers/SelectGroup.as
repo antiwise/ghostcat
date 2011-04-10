@@ -6,12 +6,29 @@ package ghostcat.ui.containers
 	import flash.events.MouseEvent;
 	
 	[Event(name="change",type="flash.events.Event")]
+	/**
+	 * 在一组对象中选中一个对象（通过设置visible或者enabled属性）
+	 * @author flashyiyi
+	 * 
+	 */
 	public class SelectGroup extends EventDispatcher
 	{
+		/**
+		 * 包含的对象 
+		 */
 		public var children:Array;
+		
+		/**
+		 * 选择改变的属性
+		 */
 		public var field:String;
-		private var _selectedIndex:int = -1;
+		
+		/**
+		 * 发布事件的目标 
+		 */
 		public var eventTarget:EventDispatcher;
+		
+		private var _selectedIndex:int = -1;
 		
 		public function SelectGroup(children:Array,clickToggle:Boolean = false,field:String = "selected")
 		{
