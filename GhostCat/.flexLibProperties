@@ -590,6 +590,9 @@
     <classEntry path="ghostcat.algorithm.traversal.FindStraightPath"/>
     <classEntry path="ghostcat.ui.containers.Group"/>
     <classEntry path="ghostcat.algorithm.traversal.FindNearPoint"/>
+    <classEntry path="ghostcat.operation.server.SocketProxy"/>
+    <classEntry path="ghostcat.operation.server.SocketReceiveOper"/>
+    <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

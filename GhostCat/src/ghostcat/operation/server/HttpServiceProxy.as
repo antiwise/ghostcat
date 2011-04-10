@@ -13,8 +13,9 @@ package ghostcat.operation.server
 	import ghostcat.operation.LoadOper;
 	import ghostcat.operation.Queue;
 
+	
 	/**
-	 * HTTP服务
+	 * HTTP服务实现类
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -84,7 +85,7 @@ package ghostcat.operation.server
 			return oper;
 		}
 			
-		protected function onConnectionError(event:ErrorEvent):void
+		protected function onConnectionError(event:Event):void
 		{
 			this.faultHander(event);
 		}
