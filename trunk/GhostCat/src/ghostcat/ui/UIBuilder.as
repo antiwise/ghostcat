@@ -1,6 +1,7 @@
 package ghostcat.ui
 {
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	
@@ -144,7 +145,7 @@ package ghostcat.ui
 		/**
 		 * 自动按钮事件 
 		 * @param target	目标容器
-		 * @param remove	是否是卸载
+		 * @param remove	指定为true则是取消监听事件
 		 * @param useWeak	是否使用弱引用
 		 * @param handlerPostfix	事件方法的后缀
 		 * 
@@ -173,7 +174,7 @@ package ghostcat.ui
 		 * 自动设置数据 
 		 * @param target	目标容器
 		 * @param data	数据
-		 * @param names	数据名称和组件名称的对应（数据名:组件名），默认相同
+		 * @param names	数据名称和组件名称的对应（数据名:组件名），默认两者相同
 		 * 
 		 */
 		public static function autoSetData(target:DisplayObject,data:*,names:Object = null):void
@@ -191,6 +192,25 @@ package ghostcat.ui
 					IData(target[name]).data = data[p];
 				}
 			}
+		}
+		
+		/**
+		 * 获得被取名的皮肤的列表 
+		 * @param skin
+		 * @return 
+		 * 
+		 */
+		public static function getSkinNameList(skin:DisplayObject):Array
+		{
+			var list:Array = SearchUtil.findChildrenByClass(skin,InteractiveObject);
+			
+			var result:Array = [];
+			for each (var child:DisplayObject in list)
+			{
+				if (child.name && child.name.slice(0,8) != "instance")
+					result[result.length] = child.name;
+			}
+			return result;
 		}
 		
 		/**

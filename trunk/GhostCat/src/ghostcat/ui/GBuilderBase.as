@@ -23,6 +23,7 @@ package ghostcat.ui
 				UIBuilder.destory(this);
 			
 			super.setContent(skin,replace);
+			
 			UIBuilder.buildAll(this);
 		}
 		
