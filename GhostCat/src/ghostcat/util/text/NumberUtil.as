@@ -181,6 +181,14 @@ package ghostcat.util.text
 		private static const punctuationMapping:Array = [[",",".",":",";","?","\\","\/","[","]","`"],
 			["，","。","：","；","？","、","、","【","】","·"]]
 		
+		/**
+		 * 转换中文标点 
+		 * @param v
+		 * @param m1	是右单引号
+		 * @param m2	是右双引号
+		 * @return 
+		 * 
+		 */
 		public static function toChinesePunctuation(v:String,m1:Boolean = false,m2:Boolean = false):String
 		{
 			var result:String = "";

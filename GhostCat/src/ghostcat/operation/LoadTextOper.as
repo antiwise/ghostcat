@@ -61,7 +61,7 @@ package ghostcat.operation
 				{
 				}
 			}
-			return isANSI ? ANSI.readTextFromByteArray(bytes) : bytes.toString();
+			return isANSI ? bytes.readMultiByte(bytes.bytesAvailable, "gb2312") : bytes.toString();
 		}
 		
 	}

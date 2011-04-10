@@ -19,11 +19,11 @@ package ghostcat.util.text
          */        
         public static function escapeByANSI(str:String):String
         {
-        	var arr:Array = unicodeToANSI(str);
+        	var arr:String = unicodeToANSI(str);
         	var result:String = "";
         	for (var i:int = 0;i < arr.length;i++)
         	{
-        		var data:int = arr[i];
+        		var data:int = arr.charCodeAt(i);
         		if (data <= 0xFF)
         			result += escape(String.fromCharCode(data));
         		else
@@ -42,17 +42,19 @@ package ghostcat.util.text
          */
         public static function unescapeFromANSI(str:String):String
         {
-        	var arr:Array = [];
+        	var arr:String = "";
         	var i:int = 0;
         	while (i < str.length)
         	{
         		var char:String = str.charAt(i);
         		var charCode:int = str.charCodeAt(i);
         		if (char!="%")
-        			arr.push(charCode);
-        		else
+				{
+        			arr = arr + String.fromCharCode(charCode);
+				}
+				else
         		{
-        			arr.push(parseInt(str.substr(i+1,2),16))
+					arr = arr + String.fromCharCode(parseInt(str.substr(i+1,2),16));
         			i+=2;
         		}
         		i++;
@@ -63,14 +65,13 @@ package ghostcat.util.text
         /**
          * 将UTF8转换为gb2312
          * 
-         * @param str	字符串
-         * @return 
-         * 由于flash中的字符串编码一定就是utf-8，所以返回值只能是数组
+         * @param str	UTF8字符串
+         * @return 一个ANSI字符串
          * 
          */        
-        public static function unicodeToANSI(str:String):Array
+        public static function unicodeToANSI(str:String):String
         {
-        	var result:Array =[];
+        	var result:String = "";
         	var temp:int;//缓存半个汉字
         	var byte:ByteArray =new ByteArray();
         	byte.writeMultiByte(str,"gb2312");
@@ -80,16 +81,18 @@ package ghostcat.util.text
         		var data:int = byte.readByte();
         		if ((data & 0xFF) == data)
         		{
-        			result.push(data);
+        			result = result + String.fromCharCode(data);
         			temp = 0;
         		}
         		else
         		{	
         			if (temp == 0)
+					{
         				temp = data & 0xFF;
-        			else
+					}
+					else
         			{
-        				result.push((temp << 8) | (data & 0xFF));
+						result = result + String.fromCharCode((temp << 8) | (data & 0xFF));
         				temp = 0;
         			}
         		}
@@ -100,16 +103,17 @@ package ghostcat.util.text
         /**
          * 将gb2312转换为UTF8
          * 
-         * @param arr	ANSI字符值数组
-         * @return 
+         * @param str	ANSI字符串
+         * @return	一个UTF8的字符串
          * 
          */        
-        public static function ANSIToUnicode(arr:Array):String
+        public static function ANSIToUnicode(str:String):String
         {
-        	var byte:ByteArray =new ByteArray();
-        	for(var i:int = 0; i < arr.length;i++)
+        	var byte:ByteArray = new ByteArray();
+			var l:int = str.length;
+        	for(var i:int = 0; i < l;i++)
         	{	
-        		var data:int = arr[i];
+        		var data:int = str.charCodeAt(i);
         		if ((data & 0xFF) == data)
         		{
         			byte.writeByte(data);
@@ -127,9 +131,9 @@ package ghostcat.util.text
         /**
   		 * 从ByteArray中读取ANSI编码文本
   		 */
-  		public static function readTextFromByteArray(data:ByteArray):String
+  		public static function readTextFromByteArray(data:ByteArray,charSet:String = "gb2312"):String
   		{
-  			return data.readMultiByte(data.bytesAvailable, "gb2312");
+  			return data.readMultiByte(data.bytesAvailable, charSet);
   		}
   		
   		/**

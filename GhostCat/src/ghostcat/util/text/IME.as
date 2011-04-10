@@ -20,8 +20,7 @@ package ghostcat.util.text
 	 * 自制输入法系统
 	 * Shift键切换中英文
 	 * 
-	 * 处理输入法问题也可以通过JS，请参考：
-	 * http://blog.sebastian-martens.de/2009/05/swfinputs-solving-mozilla-transparent-mode-win-special-chars-within-inputs/
+	 * 用法参考example/IMEExample.as，需要加载词库
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -65,7 +64,7 @@ package ghostcat.util.text
 		/**
 		 * 
 		 * @param str	输入法词库
-		 * 在GameUIExample内就有一个现成的词库：pinyin.txt
+		 * 在example内就有一个现成的词库：pinyin.txt
 		 * 
 		 */		
 		public function IME(str:String,skin:IGBase=null) 
@@ -93,8 +92,8 @@ package ghostcat.util.text
 			for (var i:int = 0;i< data.length;i++)
 			{
 				var imeItem:IMEItem = data[i] as IMEItem;
-				if (imeItem.key.substr(0,str.length)==str)
-					result = result.concat(imeItem.list);
+				if (imeItem.key.substr(0,str.length) == str)
+					result.push.apply(null,imeItem.list);
 			}
 			return result;
 		}
@@ -190,6 +189,7 @@ package ghostcat.util.text
 			}
 			else
 			{
+				//其他字符可以输入
 				event.preventDefault();
 				
 				if (char == "'")

@@ -17,8 +17,14 @@ package ghostcat.text
 	import ghostcat.util.display.Geom;
 
 	/**
-	 * 兼容性保留
-	 */	
+	 * 自制输入法系统
+	 * Shift键切换中英文
+	 * 
+	 * 用法参考example/IMEExample.as，需要加载词库
+	 * 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class IME
 	{
 		public static var ERROR_TEXT:String = "<html><font color='#990000'>(录入错误)</font></html>";
@@ -58,7 +64,7 @@ package ghostcat.text
 		/**
 		 * 
 		 * @param str	输入法词库
-		 * 在GameUIExample内就有一个现成的词库：pinyin.txt
+		 * 在example内就有一个现成的词库：pinyin.txt
 		 * 
 		 */		
 		public function IME(str:String,skin:IGBase=null) 
@@ -86,8 +92,8 @@ package ghostcat.text
 			for (var i:int = 0;i< data.length;i++)
 			{
 				var imeItem:IMEItem = data[i] as IMEItem;
-				if (imeItem.key.substr(0,str.length)==str)
-					result = result.concat(imeItem.list);
+				if (imeItem.key.substr(0,str.length) == str)
+					result.push.apply(null,imeItem.list);
 			}
 			return result;
 		}
@@ -183,6 +189,7 @@ package ghostcat.text
 			}
 			else
 			{
+				//其他字符可以输入
 				event.preventDefault();
 				
 				if (char == "'")
