@@ -1,4 +1,4 @@
-package ghostcat.util.hitTest
+package ghostcat.util.collision
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;

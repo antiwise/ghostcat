@@ -1,4 +1,4 @@
-package ghostcat.util.hitTest
+package  ghostcat.util.collision
 {
 	//像素级精确碰撞算法优化
 	//代码：Aone
