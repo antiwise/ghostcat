@@ -44,7 +44,7 @@ package ghostcat.ui.controls
 		public var enabledArrowResize:Boolean = false;
 		
 		/**
-		 * 当不可用时是隐藏Thumb还是自身
+		 * 当不可用时用隐藏Thumb来代替隐藏自身
 		 */
 		public var hideThumbInstead:Boolean = true;
 		

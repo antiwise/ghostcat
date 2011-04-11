@@ -31,9 +31,9 @@ package ghostcat.operation.server
 		/**
 		 * 指令与id对照表
 		 * 格式为：{id:类/函数/字符串}
-		 * 字符串会被反射为类。
-		 * 类会被实例化，构造函数参数为ByteArray数据，然后调用类的execute方法。
 		 * 函数会被执行，参数为ByteArray数据。
+		 * 字符串会被反射为类。
+		 * 类会被实例化，构造函数参数为ByteArray数据。
 		 */
 		public var opers:Object;
 		
@@ -123,7 +123,7 @@ package ghostcat.operation.server
 			
 			if (oper is Class)
 			{
-				new oper(body).execute();
+				new oper(body);
 			}
 			else if (oper is Function)
 			{
