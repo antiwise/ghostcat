@@ -45,7 +45,7 @@ package ghostcat.ui.containers
 		/**
 		 * 是否自动缩放Item的皮肤大小 
 		 */
-		public var autoReszieItemContent:Boolean = true;
+		public var autoReszieItemContent:Boolean = false;
 		
 		/**
 		 * 是否隐藏空对象
