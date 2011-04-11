@@ -9,8 +9,7 @@ package
 	import ghostcat.manager.RootManager;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
-	import ghostcat.util.display.HitTest;
-	import ghostcat.util.display.HitTestPhysics;
+	import ghostcat.util.hitTest.HitTest;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]
@@ -49,12 +48,6 @@ package
 				b.alpha = 0.5;
 			else
 				b.alpha = 1.0;
-			
-			var p:Point = HitTestPhysics.hitTestBitmap(b,point.content);
-			point.graphics.clear();
-			point.graphics.lineStyle(0,0xFF0000);
-			point.graphics.lineTo(p.x*10,p.y*10);
-			
 		}
 	}
 }

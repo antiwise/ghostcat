@@ -6,7 +6,6 @@ package
 	import ghostcat.debug.DebugScreen;
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
-	import ghostcat.display.game.Collision;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.EllipseParse;
@@ -15,6 +14,7 @@ package
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
+	import ghostcat.util.hitTest.Collision;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]
@@ -33,7 +33,6 @@ package
 	{
 		public var collision:Collision;
 		public var body:GBase;
-		
 		public var point:GBase;
 			
 		protected override function init():void
