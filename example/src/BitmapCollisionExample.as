@@ -9,9 +9,9 @@ package
 	import flash.utils.getTimer;
 	
 	import ghostcat.util.display.BitmapColorUtil;
-	import ghostcat.util.hitTest.BitmapCollision;
+	import ghostcat.util.collision.BitmapCollision;
 	
-	[SWF(frameRate="25",width="1000",height="1000")]
+	[SWF(frameRate="20",width="1000",height="1000")]
 	public class BitmapCollisionExample extends Sprite 
 	{
 		[Embed(source="p5.png")]
@@ -41,6 +41,7 @@ package
 			addEventListener(Event.ENTER_FRAME,tickHandler);
 			
 			this.textField = new TextField();
+			this.textField.autoSize = "left";
 			stage.addChild(this.textField);
 		}
 		
@@ -53,9 +54,9 @@ package
 			
 			var t:int = getTimer();
 			var b:Boolean;
-			for (var i:int = 0;i < 100;i++)
+			for (var i:int = 0;i < 1000;i++)
 				b = this.collision1.hitTestObject(this.collision2);
-			this.textField.text = "100次计算记时: "+(getTimer() - t).toString();
+			this.textField.text = "1000次计算记时: "+(getTimer() - t).toString();
 			this.transform.colorTransform = b ? new ColorTransform(1,1,1,1,255) : new ColorTransform();
 		}
 		

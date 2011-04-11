@@ -14,7 +14,7 @@ package
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
-	import ghostcat.util.hitTest.Collision;
+	import ghostcat.util.collision.Collision;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]
