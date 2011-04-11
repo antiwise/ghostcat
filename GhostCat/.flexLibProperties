@@ -79,14 +79,13 @@
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
-    <classEntry path="ghostcat.display.game.Collision"/>
+    <classEntry path="ghostcat.util.hitTest.Collision"/>
     <classEntry path="ghostcat.display.game.Display45Util"/>
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
     <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
     <classEntry path="ghostcat.display.game.Tile"/>
     <classEntry path="ghostcat.display.game.Tile45"/>
-    <classEntry path="ghostcat.display.game.Tile45TopLeft"/>
     <classEntry path="ghostcat.display.game.ViewportCamera"/>
     <classEntry path="ghostcat.display.game.Wall"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
@@ -534,9 +533,7 @@
     <classEntry path="ghostcat.util.display.FilterUtil"/>
     <classEntry path="ghostcat.util.display.Geom"/>
     <classEntry path="ghostcat.util.display.GraphicsUtil"/>
-    <classEntry path="ghostcat.util.display.HitTest"/>
-    <classEntry path="ghostcat.util.display.HitTestGroup"/>
-    <classEntry path="ghostcat.util.display.HitTestPhysics"/>
+    <classEntry path="ghostcat.util.hitTest.HitTest"/>
     <classEntry path="ghostcat.util.display.InstanceWatcher"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
@@ -591,8 +588,8 @@
     <classEntry path="ghostcat.ui.containers.Group"/>
     <classEntry path="ghostcat.algorithm.traversal.FindNearPoint"/>
     <classEntry path="ghostcat.operation.server.SocketProxy"/>
-    <classEntry path="ghostcat.operation.server.SocketReceiveOper"/>
     <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
+    <classEntry path="ghostcat.util.hitTest.BitmapCollision"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,16 +1,15 @@
-package ghostcat.display.game
+package ghostcat.util.hitTest
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.SearchUtil;
-
+	
 	/**
 	 * 碰撞检测块。
-	 * 使用多个方框和圆形的组合来处理碰撞，这种方法比位图碰撞要快得多，而且可以适应绝大多数情况。
+	 * 使用多个方框和圆形的组合来处理碰撞。
 	 * 
 	 * @author flashyiyi
 	 * 
