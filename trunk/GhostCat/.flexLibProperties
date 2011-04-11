@@ -23,6 +23,8 @@
     <classEntry path="ghostcat.algorithm.traversal.BinaryTree"/>
     <classEntry path="ghostcat.algorithm.traversal.BitMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.DFS"/>
+    <classEntry path="ghostcat.algorithm.traversal.FindNearPoint"/>
+    <classEntry path="ghostcat.algorithm.traversal.FindStraightPath"/>
     <classEntry path="ghostcat.algorithm.traversal.IMapModel"/>
     <classEntry path="ghostcat.algorithm.traversal.Map3DModel"/>
     <classEntry path="ghostcat.algorithm.traversal.MapModel"/>
@@ -79,7 +81,6 @@
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
-    <classEntry path="ghostcat.util.hitTest.Collision"/>
     <classEntry path="ghostcat.display.game.Display45Util"/>
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
@@ -334,6 +335,8 @@
     <classEntry path="ghostcat.operation.server.JSONOper"/>
     <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
+    <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
+    <classEntry path="ghostcat.operation.server.SocketProxy"/>
     <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
@@ -421,6 +424,7 @@
     <classEntry path="ghostcat.ui.containers.GVListBase"/>
     <classEntry path="ghostcat.ui.containers.GView"/>
     <classEntry path="ghostcat.ui.containers.GViewState"/>
+    <classEntry path="ghostcat.ui.containers.Group"/>
     <classEntry path="ghostcat.ui.containers.SelectGroup"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GBitmapText"/>
@@ -496,9 +500,13 @@
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
+    <classEntry path="ghostcat.util.collision.BitmapCollision"/>
+    <classEntry path="ghostcat.util.collision.Collision"/>
+    <classEntry path="ghostcat.util.collision.HitTest"/>
     <classEntry path="ghostcat.util.core.AbstractUtil"/>
     <classEntry path="ghostcat.util.core.Asyn"/>
     <classEntry path="ghostcat.util.core.CallLater"/>
+    <classEntry path="ghostcat.util.core.CallLaterQueue"/>
     <classEntry path="ghostcat.util.core.ClassFactory"/>
     <classEntry path="ghostcat.util.core.EventHandler"/>
     <classEntry path="ghostcat.util.core.Handler"/>
@@ -533,7 +541,6 @@
     <classEntry path="ghostcat.util.display.FilterUtil"/>
     <classEntry path="ghostcat.util.display.Geom"/>
     <classEntry path="ghostcat.util.display.GraphicsUtil"/>
-    <classEntry path="ghostcat.util.hitTest.HitTest"/>
     <classEntry path="ghostcat.util.display.InstanceWatcher"/>
     <classEntry path="ghostcat.util.display.MatrixUtil"/>
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
@@ -583,13 +590,8 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
-    <classEntry path="ghostcat.util.core.CallLaterQueue"/>
-    <classEntry path="ghostcat.algorithm.traversal.FindStraightPath"/>
-    <classEntry path="ghostcat.ui.containers.Group"/>
-    <classEntry path="ghostcat.algorithm.traversal.FindNearPoint"/>
-    <classEntry path="ghostcat.operation.server.SocketProxy"/>
-    <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
-    <classEntry path="ghostcat.util.hitTest.BitmapCollision"/>
+    <classEntry path="ghostcat.operation.server.SocketOper"/>
+    <classEntry path="ghostcat.operation.server.SocketDataCreater"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

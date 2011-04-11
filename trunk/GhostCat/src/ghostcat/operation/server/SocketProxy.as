@@ -54,6 +54,12 @@ package ghostcat.operation.server
 			this.cache = new ByteArray();
 		}
 		
+		/**
+		 * 发送消息 
+		 * @param id
+		 * @param bytes
+		 * 
+		 */
 		public function operate(id:uint,bytes:ByteArray):void
 		{
 			this.socket.writeUnsignedInt(2 + bytes.length);
@@ -107,7 +113,7 @@ package ghostcat.operation.server
 		}
 		
 		/**
-		 * 创建指令
+		 * 执行指令
 		 * @param id
 		 * @param body
 		 * 
@@ -129,6 +135,25 @@ package ghostcat.operation.server
 			{
 				oper(body);
 			}
+		}
+		
+		/**
+		 * 获得Oper对应的id
+		 * @param oper
+		 * @return 
+		 * 
+		 */
+		public function getOperId(oper:*):int
+		{
+			if (!(oper is Class || oper is Function || oper is String))
+				oper = oper["constructor"] as Class;
+		
+			for (var p:String in opers)
+			{
+				if (opers[p] == oper)
+					return int(p);
+			}
+			return -1;
 		}
 		
 		protected function onConnectionError(event:Event):void
