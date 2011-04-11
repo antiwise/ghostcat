@@ -88,9 +88,10 @@ package ghostcat.util.display
 		 */
 		public static function flipH(source:BitmapData,disposeSource:Boolean = true):BitmapData
 		{
-			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent);
+			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent,0xFFFFFF);
 			var m:Matrix = new Matrix();
 			m.a = -m.a;
+			m.tx = source.width;
 			result.draw(source,m);
 			if (disposeSource)
 				source.dispose()
@@ -102,9 +103,10 @@ package ghostcat.util.display
 		 */		
 		public static function flipV(source:BitmapData,disposeSource:Boolean = true):BitmapData
 		{
-			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent);
+			var result:BitmapData = new BitmapData(source.width,source.height,source.transparent,0xFFFFFF);
 			var m:Matrix = new Matrix();
 			m.d = -m.d;
+			m.ty = source.height;
 			result.draw(source,m);
 			if (disposeSource)
 				source.dispose()

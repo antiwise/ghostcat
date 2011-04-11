@@ -77,22 +77,25 @@ package ghostcat.display.game
 		public function hitTestObject(obj:BitmapCollision):Boolean
 		{
 			var l:int = hP.length;
-			for (var i:int = 0;i < l; i++)
+			for (var k:int = 0;k < l; k++)
 			{
-				var p1:Array = hP[i];
-				var i2:int = i + y - obj.y;
+				var p1:Array = hP[k];
+				var i2:int = k + y - obj.y;
 				if (i2 >= 0 && i2 < obj.height)
 				{
 					var p2:Array = obj.hP[i2];
-					if (p1.length && p2.length)
+					for (var i:int = 0;i < p1.length;i += 2)
 					{
-						var a1:int = p1[0];
-						var a2:int = p1[1];
+						var a1:int = p1[i];
+						var a2:int = p1[i + 1];
 						var dx:int = obj.x - x;
-						var b1:int = p2[0] + dx;
-						var b2:int = p2[1] + dx;
-						if (!(a2 < b1 || b2 < a1))
-							return true;
+						for (var j:int = 0;j < p2.length;j += 2)
+						{
+							var b1:int = p2[j] + dx;
+							var b2:int = p2[j + 1] + dx;
+							if (!(a2 < b1 || b2 < a1))
+								return true;
+						}
 					}
 				}
 			}
