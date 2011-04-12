@@ -1,6 +1,7 @@
 package ghostcat.operation.server
 {
 	import flash.utils.ByteArray;
+	import flash.utils.getDefinitionByName;
 
 	/**
 	 * 	BOOL 布尔型
@@ -24,6 +25,11 @@ package ghostcat.operation.server
 	 *  [x(I32)y(I32)]表示[{x:0,y:0},{x:1,y:1}]
 	 *  x(x(I32))表示{x:{x:0}}
 	 *  [[I32]]表示[[1,2],[3,4]]
+	 * 
+	 * 	在属性名后或者类型标记前增加<flash.geom::Point>可以将这个属性的值转换为自定义类，诸如
+	 *  p<flash.geom::Point>(x(I32)y(I32))表示{p:new Point(1,2)}
+	 *  <flash.geom::Point>(x(I32)y(I32)) 表示new Point(1,2)
+	 *  [<flash.geom::Point>(x(I32)y(I32))] 表示[new Point(1,2),new Point(3,4)]
 	 */
 	
 	public final class SocketDataCreater
@@ -42,6 +48,7 @@ package ghostcat.operation.server
 			
 			var bytes:ByteArray = new ByteArray();
 			encodeFunction(obj,dataFormat,bytes);
+			bytes.position = 0;
 			return bytes;	
 		}
 		
@@ -105,28 +112,33 @@ package ghostcat.operation.server
 			{
 				for (var p:String in dataFormat)
 				{
-					encodeFunction(obj[p],dataFormat[p],bytes);
+					var str:String = p;
+					var index:int = str.indexOf("<");
+					if (index != -1 && str.charAt(str.length - 1) == ">")
+						str = str.slice(0,index);
+					
+					encodeFunction(str ? obj[str] : obj,dataFormat[p],bytes);
 				}
 			}
 		}
-		
 		
 		/**
 		 * 解码 
 		 * @param bytes
 		 * @param dataFormat
+		 * @param cls	根表示的类
 		 * @return 
 		 * 
 		 */
-		static public function decode(bytes:ByteArray,dataFormat:*):Object
+		static public function decode(bytes:ByteArray,dataFormat:*,cls:Class = null):Object
 		{
 			if (dataFormat is String)
 				dataFormat = conversionDataFormat(dataFormat);
 			
-			return decodeFunction(bytes,dataFormat);
+			return decodeFunction(bytes,dataFormat,cls);
 		}
 		
-		static private function decodeFunction(bytes:ByteArray,dataFormat:*):*
+		static private function decodeFunction(bytes:ByteArray,dataFormat:*,cls:Class = null):*
 		{
 			if (dataFormat is String)
 			{
@@ -171,10 +183,25 @@ package ghostcat.operation.server
 			}
 			else
 			{
-				var obj:Object = {};
+				var obj:Object = cls ? new cls() : {};
 				for (var p:String in dataFormat)
 				{
-					obj[p] = decodeFunction(bytes,dataFormat[p]);
+					var str:String = p;
+					var childRef:Class = null;
+					var index:int = str.indexOf("<");
+					if (index != -1 && str.charAt(str.length - 1) == ">")
+					{
+						str = str.slice(0,index);
+						childRef = getDefinitionByName(p.slice(index + 1,p.length - 1)) as Class
+					}
+					var child:* = decodeFunction(bytes,dataFormat[p],childRef);
+					if (str)
+						obj[str] = child;
+					else
+					{
+						obj = child;
+						break;
+					}
 				}
 				return obj;
 			}
@@ -189,10 +216,12 @@ package ghostcat.operation.server
 		 */
 		static public function conversionDataFormat(dataFormat:String):Object
 		{
-			var o:Object = {};
+			var o:Object;
 			var name:String;
 			var value:String;
-			var isSimple:Boolean = true;
+			
+			var child:*;
+			
 			var i:int = 0;
 			
 			name = "";
@@ -216,11 +245,14 @@ package ghostcat.operation.server
 							deep--;
 							if (deep == 0)
 							{
+								child = conversionDataFormat(value);
+								if (!o)
+									o = {};
+								
 								if (name)
-									o[name] = conversionDataFormat(value);
+									o[name] = child;
 								else
-									o = conversionDataFormat(value);
-								isSimple = false;
+									o = child;
 								name = "";
 								value = "";
 								break;
@@ -246,11 +278,14 @@ package ghostcat.operation.server
 							deep--;
 							if (deep == 0)
 							{
+								child = [conversionDataFormat(value)];
+								if (!o)
+									o = {};
+								
 								if (name)
-									o[name] = [conversionDataFormat(value)];
+									o[name] = child;
 								else
-									o = [conversionDataFormat(value)];
-								isSimple = false;
+									o = child;
 								name = "";
 								value = "";
 								break;
@@ -268,7 +303,7 @@ package ghostcat.operation.server
 				i++;
 			}
 			
-			return isSimple ? name : o;
+			return o ? o : name;
 		}
 	}
 }
