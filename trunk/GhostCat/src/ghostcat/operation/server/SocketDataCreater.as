@@ -22,6 +22,8 @@ package ghostcat.operation.server
 	 *  [I32]表示[0,1,3,4]
 	 *  p[I32]表示{p:[0,1,3,4]}
 	 *  [x(I32)y(I32)]表示[{x:0,y:0},{x:1,y:1}]
+	 *  x(x(I32))表示{x:{x:0}}
+	 *  [[I32]]表示[[1,2],[3,4]]
 	 */
 	
 	public final class SocketDataCreater
