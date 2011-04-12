@@ -126,7 +126,15 @@ package ghostcat.operation.server
 						if (index != -1) 
 							name = name.slice(0,index);
 					}
-					encodeFunction(name ? obj[name] : obj,dataFormat[p],bytes);
+					if (name)
+					{
+						encodeFunction(obj[name],dataFormat[p],bytes);
+					}
+					else
+					{
+						encodeFunction(obj,dataFormat[p],bytes);
+						break;
+					}
 				}
 			}
 		}
