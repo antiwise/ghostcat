@@ -26,7 +26,7 @@ package ghostcat.operation.server
 	 *  x(x(I32))表示{x:{x:0}}
 	 *  [[I32]]表示[[1,2],[3,4]]
 	 * 
-	 * 	在属性名后或者类型标记前增加<flash.geom::Point>可以将这个属性的值转换为自定义类，诸如
+	 * 	在属性名后或者类型标记前增加<flash.geom::Point>可以在反序列化时自动转换为自定义类，诸如
 	 *  p<flash.geom::Point>(x(I32)y(I32))表示{p:new Point(1,2)}
 	 *  <flash.geom::Point>(x(I32)y(I32)) 表示new Point(1,2)
 	 *  [<flash.geom::Point>(x(I32)y(I32))] 表示[new Point(1,2),new Point(3,4)]
