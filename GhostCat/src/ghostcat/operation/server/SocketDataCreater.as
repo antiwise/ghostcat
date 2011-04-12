@@ -18,10 +18,10 @@ package ghostcat.operation.server
 	 *  	
 	 *  BOOL 表示 true
 	 *  p(BOOL)表示{p:true}
-	 *  x(I32),y(I32)表示{x:0,y:0}
+	 *  x(I32)y(I32)表示{x:0,y:0}
 	 *  [I32]表示[0,1,3,4]
 	 *  p[I32]表示{p:[0,1,3,4]}
-	 *  [x(I32),y(I32)]表示[{x:0,y:0},{x:1,y:1}]
+	 *  [x(I32)y(I32)]表示[{x:0,y:0},{x:1,y:1}]
 	 */
 	
 	public final class SocketDataCreater
