@@ -113,10 +113,12 @@ package ghostcat.operation.server
 				for (var p:String in dataFormat)
 				{
 					var name:String = p;
-					var index:int = name.indexOf("<");
-					if (index != -1 && name.charAt(name.length - 1) == ">")
-						name = name.slice(0,index);
-					
+					if (name.charAt(name.length - 1) == ">")
+					{
+						var index:int = name.indexOf("<");
+						if (index != -1) 
+							name = name.slice(0,index);
+					}
 					encodeFunction(name ? obj[name] : obj,dataFormat[p],bytes);
 				}
 			}
@@ -130,12 +132,12 @@ package ghostcat.operation.server
 		 * @return 
 		 * 
 		 */
-		static public function decode(bytes:ByteArray,dataFormat:*,cls:Class = null):Object
+		static public function decode(bytes:ByteArray,dataFormat:*):Object
 		{
 			if (dataFormat is String)
 				dataFormat = conversionDataFormat(dataFormat);
 			
-			return decodeFunction(bytes,dataFormat,cls);
+			return decodeFunction(bytes,dataFormat);
 		}
 		
 		static private function decodeFunction(bytes:ByteArray,dataFormat:*,cls:Class = null):*
@@ -188,15 +190,20 @@ package ghostcat.operation.server
 				{
 					var name:String = p;
 					var childRef:Class = null;
-					var index:int = name.indexOf("<");
-					if (index != -1 && name.charAt(name.length - 1) == ">")
+					if (name.charAt(name.length - 1) == ">")
 					{
-						name = name.slice(0,index);
-						childRef = getDefinitionByName(p.slice(index + 1,p.length - 1)) as Class
+						var index:int = name.indexOf("<");
+						if (index != -1)
+						{
+							name = name.slice(0,index);
+							childRef = getDefinitionByName(p.slice(index + 1,p.length - 1)) as Class
+						}
 					}
 					var child:* = decodeFunction(bytes,dataFormat[p],childRef);
 					if (name)
+					{
 						obj[name] = child;
+					}
 					else
 					{
 						obj = child;
