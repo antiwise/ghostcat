@@ -519,7 +519,6 @@
     <classEntry path="ghostcat.util.data.BitUtil"/>
     <classEntry path="ghostcat.util.data.ByteArrayReader"/>
     <classEntry path="ghostcat.util.data.ConversionUtil"/>
-    <classEntry path="ghostcat.util.data.DataCompress"/>
     <classEntry path="ghostcat.util.data.E4XUtil"/>
     <classEntry path="ghostcat.util.data.Hash"/>
     <classEntry path="ghostcat.util.data.Json"/>
@@ -592,6 +591,7 @@
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.operation.server.SocketOper"/>
     <classEntry path="ghostcat.operation.server.SocketDataCreater"/>
+    <classEntry path="ghostcat.util.data.ByteArrayUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
