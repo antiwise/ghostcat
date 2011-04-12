@@ -30,6 +30,13 @@ package ghostcat.operation.server
 	 *  p<flash.geom::Point>(x(I32)y(I32))表示{p:new Point(1,2)}
 	 *  <flash.geom::Point>(x(I32)y(I32)) 表示new Point(1,2)
 	 *  [<flash.geom::Point>(x(I32)y(I32))] 表示[new Point(1,2),new Point(3,4)]
+	 *
+	 *  简单示例： 
+	 * 	var str:String = "[<flash.geom::Point>(x(I32)y(I32))]";
+	 *	var bytes:ByteArray = SocketDataCreater.encode([new Point(2,3),new Point(4,5)],str);
+	 *	var o:Object = SocketDataCreater.decode(bytes,str);
+	 *	trace(o);
+	 * 
 	 */
 	
 	public final class SocketDataCreater
