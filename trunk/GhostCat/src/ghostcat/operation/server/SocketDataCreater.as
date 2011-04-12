@@ -28,6 +28,13 @@ package ghostcat.operation.server
 	
 	public final class SocketDataCreater
 	{
+		/**
+		 * 编码 
+		 * @param obj
+		 * @param dataFormat
+		 * @return 
+		 * 
+		 */
 		static public function encode(obj:Object,dataFormat:*):ByteArray
 		{
 			if (dataFormat is String)
@@ -104,6 +111,13 @@ package ghostcat.operation.server
 		}
 		
 		
+		/**
+		 * 解码 
+		 * @param bytes
+		 * @param dataFormat
+		 * @return 
+		 * 
+		 */
 		static public function decode(bytes:ByteArray,dataFormat:*):Object
 		{
 			if (dataFormat is String)
@@ -168,7 +182,7 @@ package ghostcat.operation.server
 		}
 		
 		/**
-		 * 将字符串转换成需要的数据格式 
+		 * 将字符串转换中间需要的协议格式，这个结果也可以代替字符串使用 
 		 * @param dataFormat
 		 * @return 
 		 * 
