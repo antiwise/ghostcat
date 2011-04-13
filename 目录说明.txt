@@ -1,0 +1,7 @@
+GhostCat是库工程目录，为主要内容
+GhostCatfp10是针对FP10的附加类
+GhostCatLie是一个精简分支，与原版独立
+jsfl，tools则是一些工具
+其他全部为测试工程
+
+GhostCat目录下有参考以及教程

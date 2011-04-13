@@ -335,7 +335,9 @@
     <classEntry path="ghostcat.operation.server.JSONOper"/>
     <classEntry path="ghostcat.operation.server.RemoteOper"/>
     <classEntry path="ghostcat.operation.server.RemotingProxy"/>
+    <classEntry path="ghostcat.operation.server.SocketDataCreater"/>
     <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
+    <classEntry path="ghostcat.operation.server.SocketOper"/>
     <classEntry path="ghostcat.operation.server.SocketProxy"/>
     <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
@@ -379,18 +381,11 @@
     <classEntry path="ghostcat.text.ANSI"/>
     <classEntry path="ghostcat.text.FilePath"/>
     <classEntry path="ghostcat.text.HTMLUtil"/>
-    <classEntry path="ghostcat.text.IME"/>
     <classEntry path="ghostcat.text.NumberUtil"/>
-    <classEntry path="ghostcat.text.PassWordUtil"/>
-    <classEntry path="ghostcat.text.PinYin"/>
-    <classEntry path="ghostcat.text.RegExpUtil"/>
-    <classEntry path="ghostcat.text.StringCompareUtil"/>
     <classEntry path="ghostcat.text.TextFieldUtil"/>
     <classEntry path="ghostcat.text.TextTweenUtil"/>
     <classEntry path="ghostcat.text.TextUtil"/>
-    <classEntry path="ghostcat.text.UBB"/>
     <classEntry path="ghostcat.text.URL"/>
-    <classEntry path="ghostcat.text.Utf8"/>
     <classEntry path="ghostcat.text.controls.GTweenText"/>
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
@@ -518,6 +513,7 @@
     <classEntry path="ghostcat.util.data.BitArray"/>
     <classEntry path="ghostcat.util.data.BitUtil"/>
     <classEntry path="ghostcat.util.data.ByteArrayReader"/>
+    <classEntry path="ghostcat.util.data.ByteArrayUtil"/>
     <classEntry path="ghostcat.util.data.ConversionUtil"/>
     <classEntry path="ghostcat.util.data.E4XUtil"/>
     <classEntry path="ghostcat.util.data.Hash"/>
@@ -589,9 +585,6 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
-    <classEntry path="ghostcat.operation.server.SocketOper"/>
-    <classEntry path="ghostcat.operation.server.SocketDataCreater"/>
-    <classEntry path="ghostcat.util.data.ByteArrayUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
