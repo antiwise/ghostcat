@@ -2,7 +2,7 @@ package ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	
-	import ghostcat.display.IData;
+	import ghostcat.core.display.IData;
 	import ghostcat.display.IDisplayObject;
 
 	/**

@@ -5,11 +5,11 @@ package ghostcat.ui
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import ghostcat.display.GBase;
-	import ghostcat.display.IToolTipManagerClient;
+	import ghostcat.core.display.GBase;
+	import ghostcat.core.display.IToolTipManagerClient;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.Util;
-	import ghostcat.util.core.ClassFactory;
+	import ghostcat.core.util.Util;
+	import ghostcat.core.util.ClassFactory;
 
 	/**
 	 * 提示类，需要手动加载到某个容器内，将一直处于最高层。

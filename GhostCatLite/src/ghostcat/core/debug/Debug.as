@@ -1,4 +1,4 @@
-package ghostcat.debug
+package ghostcat.core.debug
 {
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
@@ -8,7 +8,7 @@ package ghostcat.debug
 	import flash.text.TextField;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.util.Util;
+	import ghostcat.core.util.Util;
 	
 	/**
 	 * 

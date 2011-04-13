@@ -1,4 +1,4 @@
-package ghostcat.display
+package ghostcat.core.display
 {
 	/**
 	 * data属性设置接口

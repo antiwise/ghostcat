@@ -10,7 +10,7 @@ package ghostcat.ui
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.core.display.GBase;
 	import ghostcat.events.ActionEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.ui.layout.Padding;

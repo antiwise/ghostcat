@@ -6,7 +6,7 @@ package ghostcat.ui
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.core.display.GBase;
 	import ghostcat.display.GNoScale;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.DragManager;

@@ -8,7 +8,7 @@ package ghostcat.ui
 	import ghostcat.skin.ArowSkin;
 	import ghostcat.ui.controls.GText;
 	import ghostcat.ui.layout.Padding;
-	import ghostcat.util.core.ClassFactory;
+	import ghostcat.core.util.ClassFactory;
 	import ghostcat.util.easing.TweenUtil;
 	
 	/**

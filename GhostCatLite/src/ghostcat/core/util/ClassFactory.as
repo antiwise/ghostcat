@@ -1,4 +1,4 @@
-package ghostcat.util.core
+package ghostcat.core.util
 {
 	import flash.utils.getDefinitionByName;
 

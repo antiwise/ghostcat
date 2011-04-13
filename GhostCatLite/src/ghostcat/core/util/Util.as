@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.core.util
 {
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;

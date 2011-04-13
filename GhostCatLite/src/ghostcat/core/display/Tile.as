@@ -1,4 +1,4 @@
-package ghostcat.display
+package ghostcat.core.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -10,9 +10,9 @@ package ghostcat.display
 	
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.display.DisplayUtil;
-	import ghostcat.util.display.Geom;
+	import ghostcat.core.util.ClassFactory;
+	import ghostcat.core.util.DisplayUtil;
+	import ghostcat.core.util.Geom;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
 	
