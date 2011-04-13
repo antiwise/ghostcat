@@ -9,7 +9,7 @@ package
 	import ghostcat.manager.RootManager;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
-	import ghostcat.util.hitTest.HitTest;
+	import ghostcat.util.collision.HitTest;
 	
 	
 	[SWF(width="520",height="400",frameRate="30")]

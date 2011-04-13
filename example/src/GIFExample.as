@@ -6,7 +6,7 @@ package
 	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.FunctionOper;
-	import ghostcat.operation.LoadGIFOper;
+	import ghostcat.operation.load.LoadGIFOper;
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.ui.controls.GHSilder;
 	import ghostcat.ui.controls.GProgressBar;
