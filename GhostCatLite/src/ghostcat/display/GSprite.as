@@ -14,7 +14,6 @@ package ghostcat.display
 	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	
-	import ghostcat.FrameworkClasses;
 	import ghostcat.events.GEvent;
 	import ghostcat.util.core.ClassFactory;
 
@@ -29,8 +28,6 @@ package ghostcat.display
 	 */	
 	public class GSprite extends Sprite implements IDisplayObjectContainer
 	{
-		ghostcat.FrameworkClasses;
-		
 		private var _content:DisplayObject;
 		
 		private var _replace:Boolean = true;
