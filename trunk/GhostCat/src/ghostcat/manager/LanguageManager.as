@@ -141,7 +141,11 @@ package ghostcat.manager
 		public function add(textType:String,text:String):void
 		{
 			resource[textType] = {};
-					
+			
+			//消除文件头
+			if (text.charCodeAt(0) == 65279)
+				text = text.slice(1);
+			
 			var texts:Array = text.split(/\r?\n/);
 			var key:String; 
 			for (var i:int=0;i < texts.length;i++)
