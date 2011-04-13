@@ -85,8 +85,7 @@
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
     <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
-    <classEntry path="ghostcat.display.game.Tile"/>
-    <classEntry path="ghostcat.display.game.Tile45"/>
+    <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.game.ViewportCamera"/>
     <classEntry path="ghostcat.display.game.Wall"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
@@ -291,7 +290,7 @@
     <classEntry path="ghostcat.operation.IOper"/>
     <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.operation.IfOper"/>
-    <classEntry path="ghostcat.operation.LoadGIFOper"/>
+    <classEntry path="ghostcat.operation.load.LoadGIFOper"/>
     <classEntry path="ghostcat.operation.LoadOper"/>
     <classEntry path="ghostcat.operation.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
@@ -378,7 +377,6 @@
     <classEntry path="ghostcat.skin.BoxSkin"/>
     <classEntry path="ghostcat.skin.PointSkin"/>
     <classEntry path="ghostcat.skin.ProgressSkin"/>
-    <classEntry path="ghostcat.text.ANSI"/>
     <classEntry path="ghostcat.text.FilePath"/>
     <classEntry path="ghostcat.text.HTMLUtil"/>
     <classEntry path="ghostcat.text.NumberUtil"/>
@@ -410,7 +408,7 @@
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
     <classEntry path="ghostcat.ui.containers.GRepeater"/>
     <classEntry path="ghostcat.ui.containers.GResizePanel"/>
-    <classEntry path="ghostcat.ui.containers.GScrollPanel"/>
+    <classEntry path="ghostcat.ui.scroll.GScrollPanel"/>
     <classEntry path="ghostcat.ui.containers.GTileBox"/>
     <classEntry path="ghostcat.ui.containers.GTileListBase"/>
     <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
@@ -436,7 +434,6 @@
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
-    <classEntry path="ghostcat.ui.controls.GList"/>
     <classEntry path="ghostcat.ui.controls.GListBase"/>
     <classEntry path="ghostcat.ui.controls.GListGroupBase"/>
     <classEntry path="ghostcat.ui.controls.GNumberic"/>
@@ -484,7 +481,7 @@
     <classEntry path="ghostcat.util.CountDown"/>
     <classEntry path="ghostcat.util.EventUtil"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
-    <classEntry path="ghostcat.util.Iterator"/>
+    <classEntry path="ghostcat.util.core.Iterator"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.NetStatusEventHelper"/>
     <classEntry path="ghostcat.util.OperatorUtil"/>
@@ -505,7 +502,6 @@
     <classEntry path="ghostcat.util.core.ClassFactory"/>
     <classEntry path="ghostcat.util.core.EventHandler"/>
     <classEntry path="ghostcat.util.core.Handler"/>
-    <classEntry path="ghostcat.util.core.HashMap"/>
     <classEntry path="ghostcat.util.core.Singleton"/>
     <classEntry path="ghostcat.util.core.UniqueCall"/>
     <classEntry path="ghostcat.util.core.WeakReference"/>

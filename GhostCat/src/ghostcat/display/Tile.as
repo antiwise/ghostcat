@@ -1,4 +1,4 @@
-package ghostcat.display.game
+package ghostcat.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -13,7 +13,6 @@ package ghostcat.display.game
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
-	import ghostcat.display.GBase;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
 	
