@@ -9,7 +9,7 @@ package ghostcat.ui
 	import ghostcat.events.OperationEvent;
 	import ghostcat.operation.Oper;
 	import ghostcat.skin.ProgressSkin;
-	import ghostcat.util.core.ClassFactory;
+	import ghostcat.core.util.ClassFactory;
 	import ghostcat.util.load.LoadHelper;
 	
 	[Event(name="complete",type="flash.events.Event")]

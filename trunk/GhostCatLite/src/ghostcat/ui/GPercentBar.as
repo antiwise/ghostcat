@@ -5,7 +5,7 @@
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
-	import ghostcat.display.GBase;
+	import ghostcat.core.display.GBase;
 	import ghostcat.util.easing.TweenUtil;
 
 	/**

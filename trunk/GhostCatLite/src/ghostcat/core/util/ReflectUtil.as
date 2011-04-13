@@ -1,11 +1,11 @@
-package ghostcat.util
+package ghostcat.core.util
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
 	import flash.utils.describeType;
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.debug.Debug;
+	import ghostcat.core.debug.Debug;
 
 	/**
 	 * 反射管理类

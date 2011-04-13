@@ -1,4 +1,4 @@
-package ghostcat.util.display
+package ghostcat.core.util
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

@@ -1,6 +1,6 @@
 package ghostcat.ui
 {
-	import ghostcat.display.GBase;
+	import ghostcat.core.display.GBase;
 	import ghostcat.ui.UIBuilder;
 	
 	/**

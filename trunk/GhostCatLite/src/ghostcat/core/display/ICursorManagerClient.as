@@ -1,4 +1,4 @@
-package ghostcat.display
+package ghostcat.core.display
 {
 	/**
 	 * 支持光标的对象需要实现的接口

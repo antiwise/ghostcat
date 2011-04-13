@@ -5,12 +5,12 @@ package ghostcat.ui
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	
-	import ghostcat.display.GBase;
-	import ghostcat.display.IData;
+	import ghostcat.core.display.GBase;
+	import ghostcat.core.display.IData;
 	import ghostcat.display.IGBase;
-	import ghostcat.util.ReflectUtil;
-	import ghostcat.util.core.ClassFactory;
-	import ghostcat.util.display.SearchUtil;
+	import ghostcat.core.util.ReflectUtil;
+	import ghostcat.core.util.ClassFactory;
+	import ghostcat.core.util.SearchUtil;
 
 	/**
 	 * 帮助快速创建界面的辅助类

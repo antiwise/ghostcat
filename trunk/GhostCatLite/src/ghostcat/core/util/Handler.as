@@ -1,6 +1,5 @@
-package ghostcat.util.core
+package ghostcat.core.util
 {
-	import ghostcat.util.ReflectUtil;
 
 	/**
 	 * 带参函数执行器 
