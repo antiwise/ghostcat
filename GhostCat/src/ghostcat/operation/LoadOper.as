@@ -21,9 +21,9 @@
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
-	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.data.LocalStorage;
+	import ghostcat.util.text.URL;
 	
 	import mx.utils.object_proxy;
 	
@@ -396,7 +396,13 @@
 				else if (dataFormat == URLLoaderDataFormat.VARIABLES)
 					return new URLVariables(byteArr.readUTFBytes(byteArr.bytesAvailable))
 				else
-					return byteArr.toString();
+				{
+					//删除文件头
+					var text:String = byteArr.toString();
+					if (text.charCodeAt(0) == 65279)
+						text = text.slice(1);
+					return text;
+				}
 			}
 			else
 			{

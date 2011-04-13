@@ -6,6 +6,8 @@
 	import flash.geom.Matrix3D;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
+	
+	import org.hamcrest.mxml.object.Null;
 
 	/**
 	 * 位图贴图球体
@@ -19,8 +21,6 @@
 		 * 贴图
 		 */
 		public var material:BitmapData;
-		
-		private var vertsVec:Vector.<Vector.<Vector3D>>;
 		
 		/**
 		 * 转换矩阵 
@@ -41,16 +41,19 @@
 		 */
 		public var smooth:Boolean;
 		
-		private var nMesh:Number;
-		private var vertices:Vector.<Number>;
-		private var indices:Vector.<int>;
-		private var uvtData:Vector.<Number>;
+		protected var nMesh:int;
+		protected var mMesh:int;
 		
-		public function GBitmapSphere(material:BitmapData,radius:Number = 100, nMesh:int = 30)
+		protected var vertices:Vector.<Vector.<Vector3D>>;
+		protected var indices:Vector.<int>;
+		protected var uvtData:Vector.<Number>;
+		
+		public function GBitmapSphere(material:BitmapData,radius:Number = 100, nMesh:int = 30, mMesh:int = 30)
 		{
 			this.material = material;
 			this.radius = radius;
 			this.nMesh = nMesh;
+			this.mMesh = mMesh;
 			this.matrix3D = new Matrix3D();
 			this.culling = TriangleCulling.POSITIVE;
 			
@@ -72,7 +75,7 @@
 			istep=2*Math.PI/nMesh;
 			jstep=Math.PI/nMesh;
 			
-			this.vertsVec=new Vector.<Vector.<Vector3D>>();
+			this.vertices=new Vector.<Vector.<Vector3D>>();
 			
 			for(i=0;i<=nMesh;i++)
 			{
@@ -82,7 +85,7 @@
 					vector[j]=new Vector3D(radius*Math.sin(istep*i)*Math.sin(jstep*j),-radius*Math.cos(jstep*j),-radius*Math.cos(istep*i)*Math.sin(jstep*j));
 				}
 			
-				vertsVec[i] = vector;
+				vertices[i] = vector;
 			}
 			
 			indices = new Vector.<int>();
@@ -129,17 +132,17 @@
 		 */
 		public function render():void
 		{
-			vertices = new Vector.<Number>();
+			var transformVertices:Vector.<Number> = new Vector.<Number>();
 			for(var i:int = 0;i<nMesh;i++)
 			{
 				for(var j:int = 0;j<nMesh;j++)
 				{
-					var curv0:Vector3D = matrix3D.deltaTransformVector(vertsVec[i][j]);
-					var curv1:Vector3D = matrix3D.deltaTransformVector(vertsVec[i+1][j]);
-					var curv2:Vector3D = matrix3D.deltaTransformVector(vertsVec[i+1][j+1]);
-					var curv3:Vector3D = matrix3D.deltaTransformVector(vertsVec[i][j+1]);
+					var curv0:Vector3D = matrix3D.deltaTransformVector(vertices[i][j]);
+					var curv1:Vector3D = matrix3D.deltaTransformVector(vertices[i+1][j]);
+					var curv2:Vector3D = matrix3D.deltaTransformVector(vertices[i+1][j+1]);
+					var curv3:Vector3D = matrix3D.deltaTransformVector(vertices[i][j+1]);
 					
-					vertices.push(curv0.x,curv0.y,curv1.x,curv1.y,curv2.x,curv2.y,curv3.x,curv3.y);
+					transformVertices.push(curv0.x,curv0.y,curv1.x,curv1.y,curv2.x,curv2.y,curv3.x,curv3.y);
 				}
 			}
 			
@@ -148,7 +151,7 @@
 			if (material)
 				graphics.beginBitmapFill(material,null,false,smooth);
 			
-			graphics.drawTriangles(vertices,indices,uvtData,culling);
+			graphics.drawTriangles(transformVertices,indices,uvtData,culling);
 			graphics.endFill();
 		}
 	}
