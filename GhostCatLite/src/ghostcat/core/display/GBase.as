@@ -85,6 +85,38 @@ package ghostcat.core.display
 		 */
 		protected var contentInited:Boolean = false;
 		
+		public override function set x(value:Number):void
+		{
+			super.x = value;
+			updatePosition();
+		}
+		
+		public override function set y(value:Number):void
+		{
+			super.y = value;
+			updatePosition();
+		}
+		public override function set width(value:Number):void
+		{
+			super.width = value;
+			updateSize();
+		}
+		
+		public override function set height(value:Number):void
+		{
+			super.height = value;
+			updateSize();
+		}
+		
+		protected function updatePosition() : void
+		{
+			
+		}
+		
+		protected function updateSize() : void
+		{
+		
+		}
 		
 		/**
 		 * 设置替换方式。此属性务必在设置skin之前设置，否则会导致源图像被破坏，达不到replace为false时的效果。 

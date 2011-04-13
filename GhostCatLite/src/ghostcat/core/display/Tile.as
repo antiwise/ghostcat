@@ -8,11 +8,10 @@ package ghostcat.core.display
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import ghostcat.core.util.ClassFactory;
+	import ghostcat.core.util.Geom;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.core.util.ClassFactory;
-	import ghostcat.core.util.DisplayUtil;
-	import ghostcat.core.util.Geom;
 	
 	[Event(name="add_repeat_item",type="ghostcat.events.RepeatEvent")]
 	
@@ -101,7 +100,7 @@ package ghostcat.core.display
 		public override function set width(value:Number) : void
 		{
 			rect.width = value;
-			invalidateSize();
+			render();
 		}
 		
 		public override function get width() : Number
@@ -114,7 +113,7 @@ package ghostcat.core.display
 		public override function set height(value:Number) : void
 		{
 			rect.height = value;
-			invalidateSize();
+			render();
 		}
 		/**
 		 * @inheritDoc
@@ -141,8 +140,21 @@ package ghostcat.core.display
 			unuseContents = [];
 			
 			setContentClass(itemClass);
-			
-			delayUpatePosition = true;//激活此属性坐标更新将会被延迟
+		}
+		
+		protected override function tickHandler(event:TickEvent):void
+		{
+			this.render();
+		}
+		
+		protected override function updatePosition() : void
+		{
+			this.render();
+		}
+		
+		protected override function updateSize() : void
+		{
+			this.render();
 		}
 		
 		/**
@@ -258,29 +270,12 @@ package ghostcat.core.display
 		
 		public function clear():void
 		{
-			DisplayUtil.removeAllChildren(this);
+			while (this.numChildren)
+				removeChildAt(0);
+			
 			contents = new Dictionary();
 			unuseContents = [];
 		}
-		
-		override protected function updatePosition() : void
-		{
-			super.updatePosition();
-			render();
-		}
-		
-		override protected function updateSize() : void
-		{
-			super.updateSize();
-			render();
-		}
-		
-		override protected function updateDisplayList():void
-		{
-			super.updateDisplayList();
-			render();
-		}
-		
 		
 		/**
 		 * 

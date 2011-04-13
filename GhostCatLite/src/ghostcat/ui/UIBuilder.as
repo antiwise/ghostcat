@@ -7,7 +7,6 @@ package ghostcat.ui
 	
 	import ghostcat.core.display.GBase;
 	import ghostcat.core.display.IData;
-	import ghostcat.display.IGBase;
 	import ghostcat.core.util.ReflectUtil;
 	import ghostcat.core.util.ClassFactory;
 	import ghostcat.core.util.SearchUtil;
@@ -66,8 +65,8 @@ package ghostcat.ui
 						{
 							ref.params[0] = obj;	
 							displayObj = ref.newInstance();//创建
-							if (displayObj is IGBase)
-								(displayObj as IGBase).owner = target;
+							if (displayObj is GBase)
+								(displayObj as GBase).owner = target;
 						}
 						catch (e:ArgumentError)
 						{
@@ -127,17 +126,17 @@ package ghostcat.ui
 		public static function destory(target:GBase,all:Boolean = false):void
 		{
 			var skin:DisplayObject = target.content;
-			var children:Array = SearchUtil.findChildrenByClass(skin,IGBase);
+			var children:Array = SearchUtil.findChildrenByClass(skin,GBase);
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = children.length - 1;i >= 0;i--)
 			{
 				var obj:DisplayObject = children[i] as DisplayObject;
-				if (obj is IGBase)
+				if (obj is GBase)
 				{
 					var name:String = obj.name;
 					if (all || types[name])
-						(obj as IGBase).destory();
+						(obj as GBase).destory();
 				}
 			}
 		}
