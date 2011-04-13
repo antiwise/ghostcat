@@ -13,6 +13,7 @@
     <classEntry path="ghostcat.other.SWFDump"/>
     <classEntry path="ghostcat.display.fte.FTEHelper"/>
     <classEntry path="ghostcat.util.VectorUtil"/>
+    <classEntry path="ghostcat.display.g3d.GBitmapObject3D"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

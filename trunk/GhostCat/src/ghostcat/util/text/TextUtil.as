@@ -104,6 +104,20 @@ package ghostcat.util.text
 		}
 		
 		/**
+		 * 删除UTF文件头 
+		 * @param text
+		 * @return 
+		 * 
+		 */
+		public static function removeBOM(text:String):String
+		{
+			if (text.charCodeAt(0) == 65279)
+				text = text.slice(1);
+			
+			return text;
+		}
+		
+		/**
 		 * 插入换行符使得字体可以竖排
 		 *  
 		 * @param str
