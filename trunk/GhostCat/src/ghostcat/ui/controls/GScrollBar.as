@@ -10,7 +10,7 @@ package ghostcat.ui.controls
 	import ghostcat.events.TickEvent;
 	import ghostcat.filter.FilterProxy;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.containers.GScrollPanel;
+	import ghostcat.ui.scroll.GScrollPanel;
 	import ghostcat.ui.scroll.IScrollContent;
 	import ghostcat.ui.scroll.ScrollTextContent;
 	import ghostcat.util.easing.Circ;

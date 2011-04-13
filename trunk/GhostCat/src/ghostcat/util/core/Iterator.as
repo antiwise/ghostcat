@@ -1,4 +1,4 @@
-package ghostcat.util
+package ghostcat.util.core
 {
 	/**
 	 * 迭代器

@@ -6,9 +6,10 @@ package ghostcat.ui.containers
 	
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.containers.GScrollPanel;
+	import ghostcat.ui.scroll.GScrollPanel;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.util.core.ClassFactory;
+	import ghostcat.ui.scroll.GScrollPanel;
 	
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]

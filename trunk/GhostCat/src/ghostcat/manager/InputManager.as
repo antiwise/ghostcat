@@ -15,8 +15,6 @@
     
     import ghostcat.events.InputEvent;
     import ghostcat.util.Util;
-    import ghostcat.util.core.HashMap;
-    import ghostcat.util.core.Singleton;
     
     /**
      * 输入设备管理类，附加功能为：

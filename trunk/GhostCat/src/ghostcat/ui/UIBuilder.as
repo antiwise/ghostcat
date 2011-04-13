@@ -30,7 +30,7 @@ package ghostcat.ui
 		static public function buildAll(target:GBase,params:Object=null,limitIn:Boolean=false):void
 		{
 			var skin:DisplayObject = target.content;
-			var children:Array = SearchUtil.findChildrenByClass(skin,DisplayObject);
+			var children:Array = SearchUtil.findChildrenByClass(skin,InteractiveObject);
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = 0;i < children.length;i++)

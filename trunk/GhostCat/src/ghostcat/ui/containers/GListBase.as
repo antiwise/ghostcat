@@ -11,7 +11,7 @@ package ghostcat.ui.containers
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.IGBase;
-	import ghostcat.display.game.Tile;
+	import ghostcat.display.Tile;
 	import ghostcat.events.ItemClickEvent;
 	import ghostcat.events.RepeatEvent;
 	import ghostcat.skin.ListBackground;
