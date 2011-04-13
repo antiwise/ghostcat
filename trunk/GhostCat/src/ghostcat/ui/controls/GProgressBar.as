@@ -59,6 +59,15 @@ package ghostcat.ui.controls
 		
 		/**
 		 * 进度条更新方法（参数为进度条）
+		 * public static function defaultProgressFunction(progress:GProgressBar):void
+		 * {
+		 *	progress.percent = progress.loadHelper.loadPercent;
+		 * 	progress.label = (progress.resName ? progress.resName + "\n" : "") +
+		 * 		(progress.loadHelper.loadPercent * 100).toFixed(1) + "%" + 
+		 * 		"(" + progress.loadHelper.bytesLoaded + "/" + progress.loadHelper.bytesTotal + ")" + 
+		 * 		"\n已用时：" + progress.loadHelper.progressTimeString +
+		 * 		"\n预计剩余时间：" + progress.loadHelper.progressNeedTimeString;
+		 * }
 		 */
 		public var progressFunction:Function;
 		
