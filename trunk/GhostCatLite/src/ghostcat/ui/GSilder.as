@@ -7,7 +7,6 @@ package ghostcat.ui
 	import flash.geom.Rectangle;
 	
 	import ghostcat.core.display.GBase;
-	import ghostcat.display.GNoScale;
 	import ghostcat.events.TickEvent;
 	import ghostcat.manager.DragManager;
 	
@@ -23,9 +22,9 @@ package ghostcat.ui
 	 */
 	public class GSilder extends GBase
 	{
-		public var upArrow:GButtonBase;
-		public var downArrow:GButtonBase;
-		public var thumb:GButtonBase;
+		public var upArrow:GButton;
+		public var downArrow:GButton;
+		public var thumb:GButton;
 		public var background:DisplayObject;
 		
 		/**
@@ -242,7 +241,7 @@ package ghostcat.ui
 				this.background.addEventListener(MouseEvent.MOUSE_DOWN,backgroundHandler);
 			}
 				
-			invalidateSize();
+			updateSize();
 		}
 		/** @inheritDoc*/
 		protected override function updateSize() : void

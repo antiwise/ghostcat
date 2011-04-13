@@ -5,9 +5,7 @@ package ghostcat.ui
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
-	import ghostcat.display.GNoScale;
-	import ghostcat.ui.controls.GHScrollBar;
-	import ghostcat.ui.controls.GVScrollBar;
+	import ghostcat.core.display.GBase;
 	
 	[Event(name="scroll",type="flash.events.Event")]
 	
@@ -19,27 +17,8 @@ package ghostcat.ui
 	 * @author flashyiyi
 	 * 
 	 */
-	public class GScrollPanel extends GNoScale implements IScrollContent
+	public class GScrollPanel extends GBase implements IScrollContent
 	{
-		/**
-		 * 横向滚动条
-		 */
-		public var hScrollBar:GScrollBar;
-		
-		/**
-		 * 纵向滚动条
-		 */
-		public var vScrollBar:GScrollBar;
-		
-		/**
-		 * 横向滚动皮肤
-		 */
-		public var hScrollBarSkin:DisplayObject;
-		/**
-		 * 纵向滚动条皮肤
-		 */
-		public var vScrollBarSkin:DisplayObject;
-		
 		private var _wheelDirect:String;
 
 		/**
@@ -70,9 +49,6 @@ package ghostcat.ui
 		{
 			_wheelSpeed = value;
 		}
-
-		
-		public var fields:Object = {vScrollBarField:"vScrollBar",hScrollBarField:"hScrollBar"};
 		
 		private var _oldScrollH:int;
 		private var _oldScrollV:int;
@@ -84,11 +60,8 @@ package ghostcat.ui
 		 */
 		public var createScrollArea:Boolean = true;
 		
-		public function GScrollPanel(skin:*,replace:Boolean = true,width:Number = NaN,height:Number = NaN,fields:Object = null)
+		public function GScrollPanel(skin:*,replace:Boolean = true,width:Number = NaN,height:Number = NaN)
 		{
-			if (fields)
-				this.fields = fields;
-			
 			super(skin,replace);
 			
 			this.scrollRect = new Rectangle(0,0,content.width,content.height);
@@ -102,121 +75,9 @@ package ghostcat.ui
 			addEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		}
 		/** @inheritDoc*/
-		public override function setContent(skin:*, replace:Boolean=true) : void
-		{
-			super.setContent(skin,replace);
-			
-			var vScrollBarField:String = fields[vScrollBarField];
-			var hScrollBarField:String = fields[hScrollBarField];
-			
-			if (hScrollBarField)
-			{
-				hScrollBarSkin = content[hScrollBarField] as DisplayObject;
-				hScrollBarSkin.parent.removeChild(hScrollBarSkin);
-			}
-			
-			if (vScrollBarField)
-			{
-				vScrollBarSkin = content[vScrollBarField] as DisplayObject;
-				vScrollBarSkin.parent.removeChild(vScrollBarSkin);
-			}
-		}
-		
-		/**
-		 * 生成横向滚动条
-		 * @param skin
-		 * 
-		 */
-		public function addHScrollBar(skin:* = null):void
-		{
-			removeHScrollBar();
-			
-			if (!skin)
-				skin = hScrollBarSkin;
-				
-			hScrollBar = new GHScrollBar(skin);
-			$addChild(hScrollBar);
-			hScrollBar.target = this;
-			hScrollBar.enabledArrowResize = true;
-			
-			invalidateSize();
-		}
-		
-		/**
-		 * 生成纵向滚动条
-		 * @param skin
-		 * 
-		 */
-		public function addVScrollBar(skin:* = null):void
-		{
-			removeVScrollBar();
-			
-			if (!skin)
-				skin = vScrollBarSkin;
-			
-			vScrollBar = new GVScrollBar(skin);
-			$addChild(vScrollBar);
-			vScrollBar.target = this;
-			vScrollBar.enabledArrowResize = true;
-			
-			invalidateSize();
-		}
-		
-		/**
-		 * 删除横向滚动条
-		 * 
-		 */
-		public function removeHScrollBar():void
-		{
-			if (hScrollBar)
-			{
-				hScrollBar.destory();
-				hScrollBar = null;
-			}
-		}
-		
-		/**
-		 * 删除纵向滚动条 
-		 * 
-		 */
-		public function removeVScrollBar():void
-		{
-			if (vScrollBar)
-			{
-				vScrollBar.destory();
-				vScrollBar = null;
-			}
-		}
-		/** @inheritDoc*/
-		protected override function updatePosition() : void
-		{
-			super.updatePosition();
-			if (hScrollBar)
-				hScrollBar.y = this.y + this.height;
-			
-			if (vScrollBar)
-				vScrollBar.x = this.x + this.width;
-		}
-		/** @inheritDoc*/
 		protected override function updateSize() : void
 		{
-			super.updateSize();
-			
 			this.scrollRect = new Rectangle(scrollRect.x,scrollRect.y,width,height);
-			
-			if (hScrollBar)
-			{
-				hScrollBar.x = 0;
-				hScrollBar.y = this.height - hScrollBar.height;
-				hScrollBar.width = this.width;
-			}
-			
-			if (vScrollBar)
-			{
-				vScrollBar.y = 0;
-				vScrollBar.x = this.width - vScrollBar.width;
-				vScrollBar.height = this.height;
-			}
 		}
 		
 		public override function set scrollRect(value:Rectangle) : void
@@ -318,12 +179,6 @@ package ghostcat.ui
 		{
 			if (destoryed)
 				return;
-			
-			if (hScrollBar)
-				hScrollBar.destory();
-			
-			if (vScrollBar)
-				vScrollBar.destory();
 			
 			removeEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		
