@@ -24,6 +24,18 @@ package ghostcat.util
 		
 		private static var describeTypeCache:Dictionary = new Dictionary(true);
 		
+		
+		/**
+		 * 预先缓存所有类定义解释
+		 * @param classes
+		 * 
+		 */
+		public static function cacheDescribeTypes(classes:Array):void
+		{
+			for each (var cls:* in classes)
+				getDescribeTypeCache(cls);
+		}
+		
 		public function ReflectUtil(obj:*):void
 		{
 			obj = getClass(obj);
