@@ -8,8 +8,6 @@ package ghostcat.ui
 	import ghostcat.display.GBase;
 	import ghostcat.display.IToolTipManagerClient;
 	import ghostcat.events.TickEvent;
-	import ghostcat.ui.tooltip.IToolTipSkin;
-	import ghostcat.ui.tooltip.ToolTipSkin;
 	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
 
