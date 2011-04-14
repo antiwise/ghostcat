@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="ghostcat.community.sort.Sort3DManager"/>
+    <classEntry path="ghostcat.display.fte.FTEHelper"/>
+    <classEntry path="ghostcat.display.fte.GRichText"/>
+    <classEntry path="ghostcat.display.g3d.GBitmapObject3D"/>
+    <classEntry path="ghostcat.display.g3d.GBitmapSphere"/>
+    <classEntry path="ghostcat.display.g3d.HotSpot"/>
+    <classEntry path="ghostcat.display.g3d.Panoramic"/>
+    <classEntry path="ghostcat.fileformat.wav.WAVWriter"/>
+    <classEntry path="ghostcat.operation.BeepOper"/>
+    <classEntry path="ghostcat.operation.FileLoadOper"/>
+    <classEntry path="ghostcat.operation.FileSaveOper"/>
+    <classEntry path="ghostcat.other.SWFDump"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsTriangles"/>
+    <classEntry path="ghostcat.ui.NativeCursor"/>
+    <classEntry path="ghostcat.util.VectorUtil"/>
+    <classEntry path="ghostcat.util.media.BeepMusic"/>
+    <classEntry path="ghostcat.util.media.SoundUtil"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
