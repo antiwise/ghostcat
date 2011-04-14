@@ -1,4 +1,4 @@
-﻿package ghostcat.operation
+﻿package ghostcat.operation.load
 {
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -26,6 +26,7 @@
 	import ghostcat.util.text.URL;
 	
 	import mx.utils.object_proxy;
+	import ghostcat.operation.RetryOper;
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]

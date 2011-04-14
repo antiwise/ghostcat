@@ -6,7 +6,7 @@ package ghostcat.display.loader
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.AssetManager;
 	import ghostcat.operation.FunctionOper;
-	import ghostcat.operation.LoadOper;
+	import ghostcat.operation.load.LoadOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.util.core.Handler;

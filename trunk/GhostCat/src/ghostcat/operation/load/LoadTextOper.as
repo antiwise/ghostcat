@@ -1,4 +1,4 @@
-package ghostcat.operation
+package ghostcat.operation.load
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

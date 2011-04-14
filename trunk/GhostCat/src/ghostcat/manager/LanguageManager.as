@@ -6,7 +6,7 @@ package ghostcat.manager
 	import flash.text.TextField;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.LoadOper;
+	import ghostcat.operation.load.LoadOper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.load.QueueLoadOper;
 	import ghostcat.util.text.RegExpUtil;

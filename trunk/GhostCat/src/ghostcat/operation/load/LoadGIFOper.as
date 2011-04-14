@@ -4,7 +4,6 @@ package ghostcat.operation.load
 	import flash.utils.ByteArray;
 	
 	import ghostcat.fileformat.gif.GIFDecoder;
-	import ghostcat.operation.LoadOper;
 
 	/**
 	 * 这个类在提供读取GIF动画为位图数组的功能

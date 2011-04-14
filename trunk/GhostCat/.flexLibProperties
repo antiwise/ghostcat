@@ -290,8 +290,8 @@
     <classEntry path="ghostcat.operation.IOper"/>
     <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.operation.IfOper"/>
-    <classEntry path="ghostcat.operation.LoadOper"/>
-    <classEntry path="ghostcat.operation.LoadTextOper"/>
+    <classEntry path="ghostcat.operation.load.LoadOper"/>
+    <classEntry path="ghostcat.operation.load.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
     <classEntry path="ghostcat.operation.Oper"/>
     <classEntry path="ghostcat.operation.ParallelOper"/>
