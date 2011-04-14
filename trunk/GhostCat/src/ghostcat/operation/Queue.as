@@ -5,6 +5,11 @@ package ghostcat.operation
 	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
 	
+	
+	[Event(name="child_operation_start",type="ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_complete",type="ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_error",type="ghostcat.events.OperationEvent")]
+	
 	/**
 	 * 队列系统
 	 * 
@@ -33,16 +38,27 @@ package ghostcat.operation
 		 */
 		public var children:Array = [];
 		
+		/**
+		 * 是否在队列不为空时自动执行
+		 */
+		public var autoStart:Boolean = true;
 		
 		public function Queue(children:Array=null,holdInstance:Boolean = false)
 		{
 			super();
 			
+			this.holdInstance = holdInstance;
+			
 			if (!children)
 				children = [];
 			
+			for (var i:int = 0;i < children.length;i++)
+			{
+				var obj:Oper = children[i] as Oper;
+				obj.queue = this;
+				obj.step = Oper.WAIT;
+			}			
 			this.children = children;
-			this.holdInstance = holdInstance;
 		}
 		
 		/**
@@ -55,7 +71,7 @@ package ghostcat.operation
 			obj.step = Oper.WAIT;
 			
 			children.push(obj);
-			if (children.length == 1)
+			if (autoStart && children.length == 1)
 				doLoad();
 		}
 		
@@ -83,6 +99,7 @@ package ghostcat.operation
 			if (children.length > 0)
 			{
 				var oper:Oper = children[0];
+				oper.addEventListener(OperationEvent.OPERATION_START,starthandler);
 				oper.addEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 				oper.addEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 				oper.execute();
@@ -93,9 +110,21 @@ package ghostcat.operation
 			}
 		}
 		
-		private function nexthandler(event:Event=null):void
+		private function starthandler(event:OperationEvent):void
+		{
+			var oper:Oper = event.currentTarget as Oper;
+			oper.removeEventListener(OperationEvent.OPERATION_START,starthandler);
+			
+			var e:OperationEvent = new OperationEvent(OperationEvent.CHILD_OPERATION_START);
+			e.oper = this;
+			e.childOper = oper;
+			dispatchEvent(e);
+		}
+		
+		private function nexthandler(event:OperationEvent=null):void
 		{
 			var oper:Oper = children[0] as Oper;
+			oper.removeEventListener(OperationEvent.OPERATION_START,starthandler);
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 			
@@ -105,6 +134,12 @@ package ghostcat.operation
 				doLoad();
 			else
 				fault(event);
+		
+			var e:OperationEvent = new OperationEvent(event.type == OperationEvent.OPERATION_COMPLETE ? OperationEvent.CHILD_OPERATION_COMPLETE : OperationEvent.CHILD_OPERATION_ERROR);
+			e.oper = this;
+			e.childOper = oper;
+			e.result = event.result;
+			dispatchEvent(e);
 		}
 		/** @inheritDoc*/
 		public override function commit(queue:Queue=null) : void

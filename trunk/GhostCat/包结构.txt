@@ -9,10 +9,12 @@ community	大量物品群体行为
 debug 调试
 display	显示
 	bitmap	位图相关
+	filter	滤镜特效相关
 	game	游戏相关
 	graphics	编辑图元工具
 	loader 加载器
 	movieclip	动画相关
+	media	媒体相关
 	other	其他
 	residulal	残影特效，火焰
 	screenshot	截屏工具
@@ -23,7 +25,6 @@ display	显示
 events	事件
 extend	JS通信相关
 fileformat	文件格式读取相关
-filter	滤镜特效相关
 game	游戏相关
 	item	游戏物体
 		collsion	碰撞定义模块
@@ -39,7 +40,6 @@ gxml	将XML和JSON转换为自定义对象组（类似MXML）
 	jsonspec	JSON转换为自定义对象组
 	spec	XML转换为自定义对象组
 manager	管理类
-media	媒体相关
 operation	各种命令模式功能的实现
 	effect	一般用于UI的缓动效果
 	load	特殊加载器

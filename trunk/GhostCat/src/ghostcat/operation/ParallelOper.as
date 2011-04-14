@@ -3,7 +3,10 @@ package ghostcat.operation
 	import flash.events.Event;
 	
 	import ghostcat.events.OperationEvent;
-
+	
+	[Event(name="child_operation_start",type="ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_complete",type="ghostcat.events.OperationEvent")]
+	[Event(name="child_operation_error",type="ghostcat.events.OperationEvent")]
 	/**
 	 * 固定数量并发执行 
 	 * @author flashyiyi
@@ -26,17 +29,27 @@ package ghostcat.operation
 		 */
 		public var queueLimit:int = 1;
 		
+		/**
+		 * 是否在队列不为空时自动执行
+		 */
+		public var autoStart:Boolean = true;
+		
 		public function ParallelOper(children:Array=null,holdInstance:Boolean = false)
 		{
 			super();
 			
+			this.holdInstance = holdInstance;
+			
 			if (!children)
 				children = [];
 			
-			this.holdInstance = holdInstance;
-			
 			for (var i:int = 0;i < children.length;i++)
-				commitChild(children[i] as Oper);
+			{
+				var obj:Oper = children[i] as Oper;
+				obj.queue = this;
+				obj.step = Oper.WAIT;
+			}
+			this.children = children;
 		}
 		
 		public override function execute():void
@@ -55,8 +68,8 @@ package ghostcat.operation
 			obj.step = Oper.WAIT;
 			
 			children.push(obj);
-			
-			doLoad();
+			if (autoStart && children.length == 1)
+				doLoad();
 		}
 		
 		/**
@@ -86,6 +99,7 @@ package ghostcat.operation
 					var oper:Oper = children.shift();
 					running.push(oper);
 					
+					oper.addEventListener(OperationEvent.OPERATION_START,starthandler);
 					oper.addEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 					oper.addEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 					oper.execute();
@@ -98,9 +112,21 @@ package ghostcat.operation
 			}
 		}
 		
-		private function nexthandler(event:Event):void
+		private function starthandler(event:OperationEvent):void
 		{
 			var oper:Oper = event.currentTarget as Oper;
+			oper.removeEventListener(OperationEvent.OPERATION_START,starthandler);
+			
+			var e:OperationEvent = new OperationEvent(OperationEvent.CHILD_OPERATION_START);
+			e.oper = this;
+			e.childOper = oper;
+			dispatchEvent(e);
+		}
+		
+		private function nexthandler(event:OperationEvent):void
+		{
+			var oper:Oper = event.currentTarget as Oper;
+			oper.removeEventListener(OperationEvent.OPERATION_START,starthandler);
 			oper.removeEventListener(OperationEvent.OPERATION_COMPLETE,nexthandler);
 			oper.removeEventListener(OperationEvent.OPERATION_ERROR,nexthandler);
 			
@@ -112,6 +138,12 @@ package ghostcat.operation
 				doLoad();
 			else
 				fault(event);
+		
+			var e:OperationEvent = new OperationEvent(event.type == OperationEvent.OPERATION_COMPLETE ? OperationEvent.CHILD_OPERATION_COMPLETE : OperationEvent.CHILD_OPERATION_ERROR);
+			e.oper = this;
+			e.childOper = oper;
+			e.result = event.result;
+			dispatchEvent(e);
 		}
 		
 		/** @inheritDoc*/
