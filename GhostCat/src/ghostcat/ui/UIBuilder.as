@@ -22,6 +22,7 @@ package ghostcat.ui
 	{
 		/**
 		 * 自动构建UI组件。会根据target的公开属性来自动查询Skin内的同名元件并转换。
+		 * 因为公开属性可能被混淆，可以在属性上标记[UI(name="")]来表示属性的真正名称。
 		 * 
 		 * @param target	目标容器
 		 * @param params	规定需要转换的对象的实际类型，键为属性名，值为属性类型（可以使用ClassFactory），将值设为空则不做任何限制。
@@ -33,21 +34,34 @@ package ghostcat.ui
 			var children:Array = SearchUtil.findChildrenByClass(skin,InteractiveObject);
 			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
+			//根据MetaData获得被混淆后真正的属性名称
+			var metaNames:Object = {};
+			var metaDatas:Object = ReflectUtil.getDescribeTypeCache(target).metaDatas;
+			for (var p:String in metaDatas)
+			{
+				var metaName:String = metaDatas[p].UI ? metaDatas[p].UI.name : null;
+				if (metaName)
+					metaNames[metaName] = p;
+			}
+			
 			for (var i:int = 0;i < children.length;i++)
 			{
 				var obj:DisplayObject = children[i] as DisplayObject;
-				var name:String = obj.name;
+				var skinName:String = obj.name;
+				
+				//根据元标签获得真实的名称
+				var name:String = metaNames[skinName] ?  metaNames[skinName] : skinName;
 				if (types[name])
 				{
 					var ref:ClassFactory;
 					if (params)//进行类型约定
 					{
-						if (params[name])
+						if (params[skinName])
 						{
-							if (params[name] is Class)
-								ref = new ClassFactory(params[name] as Class);
-							else if (params[name] is ClassFactory)
-								ref = params[name] as ClassFactory;
+							if (params[skinName] is Class)
+								ref = new ClassFactory(params[skinName] as Class);
+							else if (params[skinName] is ClassFactory)
+								ref = params[skinName] as ClassFactory;
 						}
 						else if (!limitIn)
 							ref = new ClassFactory(types[name] as Class);
@@ -74,7 +88,6 @@ package ghostcat.ui
 							//否则直接使用皮肤	
 							displayObj = obj;
 						}
-						
 						target[name] = displayObj;
 						delete types[name];//删除已完成生成的属性
 					}
