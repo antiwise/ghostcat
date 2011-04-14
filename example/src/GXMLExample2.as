@@ -4,7 +4,8 @@ package
 	import flash.filters.BlurFilter;
 	
 	import ghostcat.display.GSprite;
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.ColorMatrixFilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.gxml.GXMLManager;
 	import ghostcat.gxml.spec.ItemSpec;
 	import ghostcat.manager.RootManager;
@@ -62,7 +63,7 @@ package
 			var xml:XMLList = 
 			<>
 				<!-- 滤镜代理 -->
-				<f:FilterProxy id="f" xmlns:f="ghostcat.filter" xmlns:b="flash.filters">
+				<f:FilterProxy id="f" xmlns:f="ghostcat.display.filter" xmlns:b="flash.filters">
 					<constructor>
 						<b:BlurFilter>
 							<constructor>

@@ -1,5 +1,7 @@
 package ghostcat.ui.controls
 {
+	import flash.display.FrameLabel;
+	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.skin.ButtonSkin;
 	import ghostcat.ui.layout.Padding;
@@ -18,7 +20,18 @@ package ghostcat.ui.controls
 	 */	
 	public class GButton extends GButtonBase
 	{
-		public static var defaultSkin:* = ButtonSkin
+		static public var defaultSkin:* = ButtonSkin;
+		static public var defaultLabels:Array = [
+			new FrameLabel("up",1),new FrameLabel("over",2),
+			new FrameLabel("down",3),new FrameLabel("disabled",4),
+			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
+			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
+		];
+		
+		/**
+		 * 是否使用默认Labels覆盖设置 
+		 */
+		public var useDefaultLabels:Boolean = false;
 		
 		/**
 		 * 
@@ -43,6 +56,9 @@ package ghostcat.ui.controls
 				movie.destory();
 			
 			movie = new GMovieClip(content,false,!enabledLabelMovie);
+			
+			if (useDefaultLabels)
+				movie.labels = defaultLabels;
 		}
 	}
 }

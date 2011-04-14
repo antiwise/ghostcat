@@ -118,12 +118,6 @@ package ghostcat.display.movieclip
         {
         	return bitmaps.length;
         }
-		
-		/** @inheritDoc*/
-		public function set labels(v:Array):void
-		{
-			_labels = v;
-		}
         
         /**
          * 回收位图资源 
