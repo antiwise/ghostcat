@@ -10,7 +10,7 @@ package ghostcat.operation.server
 	import flash.net.URLVariables;
 	
 	import ghostcat.debug.Debug;
-	import ghostcat.operation.LoadOper;
+	import ghostcat.operation.load.LoadOper;
 	import ghostcat.operation.Queue;
 
 	

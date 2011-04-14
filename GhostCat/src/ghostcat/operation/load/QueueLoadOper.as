@@ -7,8 +7,6 @@ package ghostcat.operation.load
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.LoadOper;
-	import ghostcat.operation.LoadTextOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.ParallelOper;
 	import ghostcat.operation.Queue;

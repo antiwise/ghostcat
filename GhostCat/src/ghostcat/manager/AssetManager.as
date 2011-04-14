@@ -9,8 +9,8 @@ package ghostcat.manager
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.LoadOper;
-	import ghostcat.operation.LoadTextOper;
+	import ghostcat.operation.load.LoadOper;
+	import ghostcat.operation.load.LoadTextOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.load.QueueLoadOper;
