@@ -79,6 +79,7 @@ package ghostcat.operation.load
 		{
 			super();
 			
+			this.autoStart = false;
 			this.assetBase = assetBase;
 			this.queueLimit = queueLimit;
 			this.loadHelper = new GroupLoaderHelper();

@@ -9,9 +9,6 @@ package ghostcat.operation
 	[Event(name="operation_start",type="ghostcat.events.OperationEvent")]
 	[Event(name="operation_complete",type="ghostcat.events.OperationEvent")]
 	[Event(name="operation_error",type="ghostcat.events.OperationEvent")]
-	[Event(name="child_operation_start",type="ghostcat.events.OperationEvent")]
-	[Event(name="child_operation_complete",type="ghostcat.events.OperationEvent")]
-	[Event(name="child_operation_error",type="ghostcat.events.OperationEvent")]
 	
 	/**
 	 * 队列基类
@@ -84,14 +81,6 @@ package ghostcat.operation
 			e.oper = this;
 			dispatchEvent(e);
 			
-			if (queue)
-			{
-				e = new OperationEvent(OperationEvent.CHILD_OPERATION_START);
-				e.oper = queue as Oper;
-				e.childOper = this;
-				queue.dispatchEvent(e);
-			}
-			
 			step = RUN;
 			
 			if (holdInstance)
@@ -102,14 +91,6 @@ package ghostcat.operation
 				e = new OperationEvent(OperationEvent.OPERATION_COMPLETE);
 				e.oper = this;
 				dispatchEvent(e);
-				
-				if (queue)
-				{
-					e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
-					e.oper = queue as Oper;
-					e.childOper = this;
-					queue.dispatchEvent(e);
-				}
 			}
 		}
 		
@@ -129,16 +110,7 @@ package ghostcat.operation
 			e.result = event;
 			dispatchEvent(e);
 			
-			if (queue)
-			{
-				e = new OperationEvent(OperationEvent.CHILD_OPERATION_COMPLETE);
-				e.oper = queue as Oper;
-				e.childOper = this;
-				e.result = event;
-				queue.dispatchEvent(e);
-				
-				this.queue = null;
-			}
+			this.queue = null;
 			
 			step = END;
 		}
@@ -159,16 +131,7 @@ package ghostcat.operation
 			e.result = event;
 			dispatchEvent(e);
 			
-			if (queue)
-			{
-				e = new OperationEvent(OperationEvent.CHILD_OPERATION_ERROR);
-				e.oper = queue as Oper;
-				e.childOper = this;
-				e.result = event;
-				dispatchEvent(e);
-				
-				this.queue = null;
-			}
+			this.queue = null;
 			
 			step = END;
 		}
