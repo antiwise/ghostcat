@@ -18,7 +18,7 @@ package ghostcat.util.core
 		/**
 		 * 函数执行器
 		 * 
-		 * @param handler	函数
+		 * @param handler	函数（可以使用字符串进行反射，参考ReflectUtil.eval）
 		 * @param para	参数数组
 		 * @param caller	调用者
 		 * 
