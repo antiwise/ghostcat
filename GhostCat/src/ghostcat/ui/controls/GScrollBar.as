@@ -8,7 +8,7 @@ package ghostcat.ui.controls
 	import flash.text.TextField;
 	
 	import ghostcat.events.TickEvent;
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.scroll.GScrollPanel;
 	import ghostcat.ui.scroll.IScrollContent;

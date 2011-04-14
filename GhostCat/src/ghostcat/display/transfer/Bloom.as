@@ -5,7 +5,7 @@ package ghostcat.display.transfer
 	import flash.filters.BlurFilter;
 	import flash.geom.Point;
 	
-	import ghostcat.filter.ColorMatrixFilterProxy;
+	import ghostcat.display.filter.ColorMatrixFilterProxy;
 	import ghostcat.util.display.BitmapUtil;
 	
 

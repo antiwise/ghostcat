@@ -2,7 +2,7 @@ package ghostcat.operation
 {
 	import flash.filters.BitmapFilter;
 	
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.util.ReflectUtil;
 
 	/**

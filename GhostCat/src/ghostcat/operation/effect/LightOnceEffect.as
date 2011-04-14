@@ -2,7 +2,7 @@ package ghostcat.operation.effect
 {
 	import flash.filters.GlowFilter;
 	
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.operation.FunctionOper;
 	import ghostcat.operation.TweenOper;
 
