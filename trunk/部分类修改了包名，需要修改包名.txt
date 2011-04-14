@@ -14,7 +14,3 @@ ghostcat.ui.containers.GScrollPanel移至ghostcat.ui.scroll
 ghostcat.operation.LoadOper,
 ghostcat.operation.LoadTextOper,
 ghostcat.operation.LoadGIFOper移至ghostcat.operation.load
-
-此外，部分无实用价值的类已经删除
-
-非常抱歉，这种动静是最后一次了
