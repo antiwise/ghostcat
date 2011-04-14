@@ -2,6 +2,7 @@ package ghostcat.ui.controls
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.FrameLabel;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -11,6 +12,7 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
+	import ghostcat.display.movieclip.FrameLabelUtil;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.ui.layout.Padding;
@@ -31,8 +33,22 @@ package ghostcat.ui.controls
 	 */	
 	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
+		static public var defaultLabels:Array = [
+			new FrameLabel("up",1),new FrameLabel("over",2),
+			new FrameLabel("down",3),new FrameLabel("disabled",4),
+			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
+			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
+		];
+		/**
+		 * 是否使用默认Labels覆盖设置 
+		 */
+		public var useDefaultLabels:Boolean = false;
+		
 		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
 		{
+			if (useDefaultLabels)
+				labels = defaultLabels;
+			
 			movie = new GBitmapMovieClip(bitmaps,labels);
 			
 			super(movie.content, true, true,textPadding,enabledAdjustContextSize);

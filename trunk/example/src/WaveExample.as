@@ -5,7 +5,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import ghostcat.filter.DisplacementMapFilterProxy;
+	import ghostcat.display.filter.DisplacementMapFilterProxy;
 	
 	[SWF(width="1000",height="1000")]
 	public class WaveExample extends Sprite

@@ -5,7 +5,7 @@ package
 	
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GSprite;
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.manager.RootManager;
 	import ghostcat.operation.DelayOper;
 	import ghostcat.operation.FunctionOper;

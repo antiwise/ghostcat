@@ -13,7 +13,7 @@ package
 	import ghostcat.fileformat.swf.tag.ProductInfoTag;
 	import ghostcat.fileformat.swf.tag.SymbolClassTag;
 	import ghostcat.manager.RootManager;
-	import ghostcat.operation.LoadOper;
+	import ghostcat.operation.load.LoadOper;
 	import ghostcat.ui.containers.GAlert;
 	import ghostcat.util.ReflectUtil;
 	

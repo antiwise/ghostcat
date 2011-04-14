@@ -66,11 +66,6 @@ package ghostcat.display.movieclip
         	_totalFrames = v;
         }
 		/** @inheritDoc*/
-		public function set labels(v:Array):void
-        {
-        	_labels = v;
-        }
-		/** @inheritDoc*/
 		public override function destory():void
 		{
 			if (destoryed)

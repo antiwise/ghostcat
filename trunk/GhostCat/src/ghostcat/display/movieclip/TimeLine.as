@@ -146,6 +146,11 @@ package ghostcat.display.movieclip
 			return _labels;
 		}
 		
+		public function set labels(value:Array):void
+		{
+			_labels = value;
+		}
+		
 		/**
 		 * 总帧数
 		 */
