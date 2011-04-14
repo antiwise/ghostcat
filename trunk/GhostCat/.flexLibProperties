@@ -67,6 +67,7 @@
     <classEntry path="ghostcat.display.IDisplayObjectContainer"/>
     <classEntry path="ghostcat.display.IGBase"/>
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
+    <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
@@ -78,6 +79,13 @@
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
+    <classEntry path="ghostcat.display.filter.ColorMatrixFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.ConvolutionFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.DisplacementMapFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.FilterProxy"/>
+    <classEntry path="ghostcat.display.filter.PerlinNoiseCacher"/>
+    <classEntry path="ghostcat.display.filter.RollFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
@@ -85,7 +93,6 @@
     <classEntry path="ghostcat.display.game.Light"/>
     <classEntry path="ghostcat.display.game.Separate45Util"/>
     <classEntry path="ghostcat.display.game.SpinGravitationItem"/>
-    <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.game.ViewportCamera"/>
     <classEntry path="ghostcat.display.game.Wall"/>
     <classEntry path="ghostcat.display.graphics.ControlRect"/>
@@ -212,13 +219,6 @@
     <classEntry path="ghostcat.fileformat.zip.ZipEvent"/>
     <classEntry path="ghostcat.fileformat.zip.ZipFile"/>
     <classEntry path="ghostcat.fileformat.zip.ZipOutput"/>
-    <classEntry path="ghostcat.filter.ColorMatrixFilterProxy"/>
-    <classEntry path="ghostcat.filter.ConvolutionFilterProxy"/>
-    <classEntry path="ghostcat.filter.DisplacementMapFilterProxy"/>
-    <classEntry path="ghostcat.filter.FilterProxy"/>
-    <classEntry path="ghostcat.filter.PerlinNoiseCacher"/>
-    <classEntry path="ghostcat.filter.RollFilterProxy"/>
-    <classEntry path="ghostcat.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.game.BitmapGameViewport"/>
     <classEntry path="ghostcat.game.GameViewport"/>
     <classEntry path="ghostcat.game.item.BitmapAvatarItem"/>
@@ -290,7 +290,6 @@
     <classEntry path="ghostcat.operation.IOper"/>
     <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.operation.IfOper"/>
-    <classEntry path="ghostcat.operation.load.LoadGIFOper"/>
     <classEntry path="ghostcat.operation.LoadOper"/>
     <classEntry path="ghostcat.operation.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
@@ -325,6 +324,7 @@
     <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
     <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
+    <classEntry path="ghostcat.operation.load.LoadGIFOper"/>
     <classEntry path="ghostcat.operation.load.QueueLoadOper"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
@@ -377,14 +377,6 @@
     <classEntry path="ghostcat.skin.BoxSkin"/>
     <classEntry path="ghostcat.skin.PointSkin"/>
     <classEntry path="ghostcat.skin.ProgressSkin"/>
-    <classEntry path="ghostcat.text.FilePath"/>
-    <classEntry path="ghostcat.text.HTMLUtil"/>
-    <classEntry path="ghostcat.text.NumberUtil"/>
-    <classEntry path="ghostcat.text.TextFieldUtil"/>
-    <classEntry path="ghostcat.text.TextTweenUtil"/>
-    <classEntry path="ghostcat.text.TextUtil"/>
-    <classEntry path="ghostcat.text.URL"/>
-    <classEntry path="ghostcat.text.controls.GTweenText"/>
     <classEntry path="ghostcat.ui.CenterMode"/>
     <classEntry path="ghostcat.ui.CursorSprite"/>
     <classEntry path="ghostcat.ui.Focus"/>
@@ -408,7 +400,6 @@
     <classEntry path="ghostcat.ui.containers.GMovieClipPanel"/>
     <classEntry path="ghostcat.ui.containers.GRepeater"/>
     <classEntry path="ghostcat.ui.containers.GResizePanel"/>
-    <classEntry path="ghostcat.ui.scroll.GScrollPanel"/>
     <classEntry path="ghostcat.ui.containers.GTileBox"/>
     <classEntry path="ghostcat.ui.containers.GTileListBase"/>
     <classEntry path="ghostcat.ui.containers.GToggleButtonBar"/>
@@ -421,7 +412,6 @@
     <classEntry path="ghostcat.ui.containers.SelectGroup"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GBitmapText"/>
-    <classEntry path="ghostcat.ui.controls.GBuilderBase"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
     <classEntry path="ghostcat.ui.controls.GButtonBase"/>
     <classEntry path="ghostcat.ui.controls.GButtonLite"/>
@@ -434,8 +424,6 @@
     <classEntry path="ghostcat.ui.controls.GHScrollBar"/>
     <classEntry path="ghostcat.ui.controls.GHSilder"/>
     <classEntry path="ghostcat.ui.controls.GImage"/>
-    <classEntry path="ghostcat.ui.controls.GListBase"/>
-    <classEntry path="ghostcat.ui.controls.GListGroupBase"/>
     <classEntry path="ghostcat.ui.controls.GNumberic"/>
     <classEntry path="ghostcat.ui.controls.GNumbericStepper"/>
     <classEntry path="ghostcat.ui.controls.GPercentBar"/>
@@ -466,6 +454,7 @@
     <classEntry path="ghostcat.ui.layout.LinearLayout"/>
     <classEntry path="ghostcat.ui.layout.Padding"/>
     <classEntry path="ghostcat.ui.layout.PaddingLayout"/>
+    <classEntry path="ghostcat.ui.scroll.GScrollPanel"/>
     <classEntry path="ghostcat.ui.scroll.IScrollContent"/>
     <classEntry path="ghostcat.ui.scroll.RollContent"/>
     <classEntry path="ghostcat.ui.scroll.ScrollTextContent"/>
@@ -481,7 +470,6 @@
     <classEntry path="ghostcat.util.CountDown"/>
     <classEntry path="ghostcat.util.EventUtil"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
-    <classEntry path="ghostcat.util.core.Iterator"/>
     <classEntry path="ghostcat.util.MathUtil"/>
     <classEntry path="ghostcat.util.NetStatusEventHelper"/>
     <classEntry path="ghostcat.util.OperatorUtil"/>
@@ -502,6 +490,7 @@
     <classEntry path="ghostcat.util.core.ClassFactory"/>
     <classEntry path="ghostcat.util.core.EventHandler"/>
     <classEntry path="ghostcat.util.core.Handler"/>
+    <classEntry path="ghostcat.util.core.Iterator"/>
     <classEntry path="ghostcat.util.core.Singleton"/>
     <classEntry path="ghostcat.util.core.UniqueCall"/>
     <classEntry path="ghostcat.util.core.WeakReference"/>
@@ -537,7 +526,6 @@
     <classEntry path="ghostcat.util.display.PaletteUtil"/>
     <classEntry path="ghostcat.util.display.RotationUtil"/>
     <classEntry path="ghostcat.util.display.SearchUtil"/>
-    <classEntry path="ghostcat.util.display.SelectGroup"/>
     <classEntry path="ghostcat.util.display.SeparateUtil"/>
     <classEntry path="ghostcat.util.display.TransformUtil"/>
     <classEntry path="ghostcat.util.easing.Back"/>

@@ -1,4 +1,4 @@
-package ghostcat.filter
+package ghostcat.display.filter
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

@@ -1,11 +1,6 @@
 package ghostcat.ui.containers
 {
-	import flash.display.DisplayObject;
 	import flash.events.Event;
-	
-	import ghostcat.display.GBase;
-	import ghostcat.events.ItemClickEvent;
-	import ghostcat.util.display.SelectGroup;
 
 	[Event(name="change",type="flash.events.Event")]
 	/**

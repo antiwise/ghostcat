@@ -3,10 +3,7 @@ package ghostcat.ui.containers
 	import flash.display.DisplayObject;
 	
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.containers.GRepeater;
 	import ghostcat.util.core.ClassFactory;
-	
-	import mx.core.Repeater;
 
 	/**
 	 * 提供多项分页列表

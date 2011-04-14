@@ -2,7 +2,6 @@ package ghostcat.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -18,7 +17,6 @@ package ghostcat.ui
 	import ghostcat.operation.Queue;
 	import ghostcat.operation.effect.IEffect;
 	import ghostcat.util.Util;
-	import ghostcat.util.core.Singleton;
 	import ghostcat.util.display.Geom;
 	
 	/**

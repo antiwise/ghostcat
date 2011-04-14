@@ -1,8 +1,6 @@
 package ghostcat.ui.containers
 {
 	import ghostcat.ui.UIConst;
-	import ghostcat.ui.layout.AbsoluteLayout;
-	import ghostcat.ui.layout.LinearLayout;
 
 	/**
 	 * 横向Box

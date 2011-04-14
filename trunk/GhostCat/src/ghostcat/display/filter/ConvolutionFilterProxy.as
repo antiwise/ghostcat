@@ -1,4 +1,4 @@
-package ghostcat.filter
+package ghostcat.display.filter
 {
 	import flash.filters.ConvolutionFilter;
 	

@@ -4,7 +4,7 @@ package ghostcat.operation
 	import flash.filters.BitmapFilter;
 	import flash.geom.ColorTransform;
 	
-	import ghostcat.filter.FilterProxy;
+	import ghostcat.display.filter.FilterProxy;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.easing.TweenEvent;
 

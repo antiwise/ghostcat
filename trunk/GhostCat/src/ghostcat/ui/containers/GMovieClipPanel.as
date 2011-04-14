@@ -1,10 +1,7 @@
 package ghostcat.ui.containers
 {
-	import flash.geom.Rectangle;
-	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.events.MovieEvent;
-	import ghostcat.util.display.Geom;
 	
 	/**
 	 * 动画窗口
