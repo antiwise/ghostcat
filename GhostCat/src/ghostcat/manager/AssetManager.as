@@ -9,10 +9,10 @@ package ghostcat.manager
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.load.LoadOper;
-	import ghostcat.operation.load.LoadTextOper;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.Queue;
+	import ghostcat.operation.load.LoadOper;
+	import ghostcat.operation.load.LoadTextOper;
 	import ghostcat.operation.load.QueueLoadOper;
 	import ghostcat.ui.controls.GProgressBar;
 	import ghostcat.util.core.Singleton;
@@ -347,6 +347,18 @@ package ghostcat.manager
 		{
 			var cls:Class = this.getAssetByName(ref) as Class;
 			return new cls(width,height) as BitmapData;
+		}
+		
+		/**
+		 * 获得加载的非SWF资源
+		 * 
+		 * @param id	加载时指定的id
+		 * @return 
+		 * 
+		 */
+		public function getOperData(id:String):*
+		{
+			return getOper(id).data;
 		}
 	}
 }

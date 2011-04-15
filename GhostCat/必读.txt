@@ -1,6 +1,5 @@
 µ¼Èë¹¤³Ì·½·¨
 
-
 ÒÔÏÂ3Ñ¡1
 1.¼ÓÔØGhostCat\bin\GhostCat.swc
 2.µ¼ÈëGhostCatÏÂËùÓĞÔ´Âë£¬ÒÔ¼°¼ÓÔØGhostCat\asset\GhostCatAsset.swc
@@ -40,3 +39,45 @@ PopupManager.instance.autoDisibledBackgroundPopup = true;//ÔÚµ¯³öĞÂ´°¿Úºó£¬×Ô¶¯Ë
 LoadOper.postfix = "?ct=" + this.version;//ÉèÖÃÏÂÔØÎÄ¼şºó×º£¬±ÜÃâ»º´æÓ°Ïìµ¼ÖÂ²»¸üĞÂ
 LoadOper.sharedObjectCacheVersion = "v1.0";//¿ªÆôSharedObject»º´æÎÄ¼ş»úÖÆ£¬¼ÓÔØµÄ»áÈ«²¿»º´æµ½SharedObject
 LoadOper.LOADER_TYPE = ["swf"];//Ö¸¶¨ÄÄĞ©ÎÄ¼şÓÃLoader¼ÓÔØ£¬²»ÔÚÊı×é·¶Î§ÄÚµÄÎÄ¼ş»áÏÈÓÃ¶ş½øÖÆ·½Ê½¼ÓÔØ
+
+
+
+°ü½á¹¹
+
+
+
+algorithm	Ëã·¨
+	bezier	±´¶û·¨ÇúÏßÏà¹Ø
+	maze	ÃÔ¹¬Éú³ÉÏà¹Ø
+	traversal	±éÀúÑ°Â·Ïà¹Ø
+community	´óÁ¿ÎïÆ·ÈºÌåĞĞÎª
+debug µ÷ÊÔ
+display	ÏÔÊ¾
+	bitmap	Î»Í¼Ïà¹Ø
+	filter	ÂË¾µÌØĞ§Ïà¹Ø
+	game	ÓÎÏ·Ïà¹Ø
+	graphics	±à¼­Í¼Ôª¹¤¾ß
+	loader ¼ÓÔØÆ÷
+	movieclip	¶¯»­Ïà¹Ø
+	media	Ã½ÌåÏà¹Ø
+	other	ÆäËû
+	residulal	²ĞÓ°ÌØĞ§£¬»ğÑæ
+	screenshot	½ØÆÁ¹¤¾ß
+	transfer	¸÷ÖÖÌØĞ§£¬±¬Õ¨£¬·­Ò³£¬Ë®²¨£¬µ¹Ó°µÈµÈ
+	transition	Í¼Ïñ¹ı¶ÉĞ§¹û
+events	ÊÂ¼ş
+extend	JSÍ¨ĞÅÏà¹Ø
+fileformat	ÎÄ¼ş¸ñÊ½¶ÁÈ¡Ïà¹Ø
+game	ÓÎÏ·Ïà¹Ø
+gxml	½«XMLºÍJSON×ª»»Îª×Ô¶¨Òå¶ÔÏó×é£¨ÀàËÆMXML£©
+manager	¹ÜÀíÀà
+operation	¸÷ÖÖÃüÁîÄ£Ê½¹¦ÄÜµÄÊµÏÖ
+	effect	Ò»°ãÓÃÓÚUIµÄ»º¶¯Ğ§¹û
+	load	ÌØÊâ¼ÓÔØÆ÷
+	quest	ÈÎÎñ
+	server	·şÎñÆ÷ÇëÇó
+other	ÆäËû
+parse	»æÍ¼Àà
+skin	Æ¤·ô°ü
+ui	UIÏà¹Ø
+util	¹¤¾ßÀà
