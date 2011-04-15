@@ -21,6 +21,9 @@ package ghostcat.operation.server
 	 * 
 	 * 收到的消息会先读取一个32位的长度值，根据长度值读取一节数据。数据中第一部分是16位的ID，剩下的为实际数据。
 	 * 之后会根据opers对象的值，执行相应的命令，将数据发布出去。
+	 * 
+	 * 数据为ByteArray，可以用readObject/writeObject使用AMF序列化数据，也可以用JSON配合writeUTF,reandUTF，也可以传输完全自定义的二进制数据
+	 * SocketDataCreater是我写的一个将任意对象序列化成二进制的类
 	 * @author flashyiyi
 	 * 
 	 */
