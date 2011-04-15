@@ -1,6 +1,7 @@
 package ghostcat.ui.controls
 {
 	import flash.display.FrameLabel;
+	import flash.display.MovieClip;
 	
 	import ghostcat.display.movieclip.GMovieClip;
 	import ghostcat.skin.ButtonSkin;
@@ -29,9 +30,9 @@ package ghostcat.ui.controls
 		];
 		
 		/**
-		 * 是否使用默认Labels覆盖设置 
+		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
 		 */
-		public var useDefaultLabels:Boolean = false;
+		public var useDefaultLabels:Boolean = true;
 		
 		/**
 		 * 
@@ -57,7 +58,7 @@ package ghostcat.ui.controls
 			
 			movie = new GMovieClip(content,false,!enabledLabelMovie);
 			
-			if (useDefaultLabels)
+			if (useDefaultLabels && (content is MovieClip && (content as MovieClip).totalFrames > 1) && !(movie.labels && movie.labels.length))
 				movie.labels = defaultLabels;
 		}
 	}

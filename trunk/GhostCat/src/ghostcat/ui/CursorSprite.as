@@ -22,6 +22,7 @@ package ghostcat.ui
 	 * 光标类，需要手动加载到某个容器内，将一直处于最高层。
 	 * 此类会一直检测鼠标下的物体，实现ICursorManagerClient就会根据其cursor自动变化。
 	 * 
+	 * 皮肤用CursorSprite.defaultSkin来设置
 	 */		
 		
 	public class CursorSprite extends GBase

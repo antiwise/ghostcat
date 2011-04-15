@@ -17,11 +17,16 @@ package ghostcat.ui
 	 * 提示类，需要手动加载到某个容器内，将一直处于最高层。
 	 * 此类会一直检测鼠标下的物体，实现IToolTipManagerClient就会根据其toolTipObj自动弹出。
 	 * 
+	 * 皮肤用ToolTipSprite.defaultSkin来设置
+	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class ToolTipSprite extends GBase
 	{
+		/**
+		 * 默认光标皮肤 
+		 */
 		public static var defaultSkin:* = ToolTipSkin;
 		/**
 		 * 延迟显示的毫秒数 

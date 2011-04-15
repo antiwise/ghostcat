@@ -40,13 +40,13 @@ package ghostcat.ui.controls
 			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
 		];
 		/**
-		 * 是否使用默认Labels覆盖设置 
+		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
 		 */
 		public var useDefaultLabels:Boolean = false;
 		
 		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
 		{
-			if (useDefaultLabels)
+			if (useDefaultLabels && (bitmaps && bitmaps.length > 1) && !(labels && labels.length))
 				labels = defaultLabels;
 			
 			movie = new GBitmapMovieClip(bitmaps,labels);
