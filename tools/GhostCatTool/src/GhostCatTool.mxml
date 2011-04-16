@@ -19,7 +19,6 @@
 			import mx.controls.Alert;
 			import mx.containers.TitleWindow;
 			import mx.controls.TabBar;
-			import ghostcat.text.ANSI;
 			
 			private var file:FileReference = new FileReference()
 			protected function loadBN_clickHandler(event:MouseEvent):void
