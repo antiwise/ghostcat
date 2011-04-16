@@ -10,10 +10,10 @@ package ghostcat.operation.load
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.ParallelOper;
 	import ghostcat.operation.Queue;
-	import ghostcat.util.text.URL;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.Util;
 	import ghostcat.util.load.GroupLoaderHelper;
+	import ghostcat.util.text.URL;
 	
 	/**
 	 * 队列加载 
@@ -115,6 +115,7 @@ package ghostcat.operation.load
 		 * 批量载入资源
 		 * 
 		 * @param res	资源路径列表
+		 * @param ids 资源的ID
 		 * @param names 资源的名称，用于在进度条中显示
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
@@ -130,9 +131,13 @@ package ghostcat.operation.load
 				
 				if (ids && ids[i])
 					oper.id = ids[i];
+				else
+					oper.id = res[i];
 				
 				if (names && names[i])
 					oper.name = names[i];
+				else
+					oper.name = oper.id;
 			
 				this.opers.push(oper);
 				this.commitChild(oper);
@@ -147,7 +152,7 @@ package ghostcat.operation.load
 		
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
-		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，资源名称是@tip属性。
+		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，资源名称是@tip或者@name属性。
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
@@ -172,7 +177,10 @@ package ghostcat.operation.load
 			{
 				res.push(child.@url.toString());
 				ids.push(child.@id.toString());
-				names.push(child.@tip.toString())
+				var name:String = child.@name.toString();
+				if (!name)
+					name = child.@tip.toString()
+				names.push(name)
 			}
 			
 			resConfigOper = null;
