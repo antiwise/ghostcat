@@ -9,15 +9,12 @@ package ghostcat.display.bitmap
 	import flash.utils.Dictionary;
 
 	/**
-	 * 位图切换缓存静态类。
-	 * 
-	 * 这个类缓存的是静态图形，动画缓存可使用MovieClipCacher类
-	 * @see ghostcat.display.movieclip.MovieClipCacher
+	 * 将容器暂时转换为位图的类，可以在缓存后进行缩放
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public final class BitmapCacher
+	public final class BitmapTemporaryCacher
 	{
 		private static var cacheDict:Dictionary = new Dictionary(true);
 		
@@ -36,7 +33,7 @@ package ghostcat.display.bitmap
          * 
          * @return	返回生成的位图
          */        
-        public function swapContentForBitmap(content:DisplayObjectContainer,rect:Rectangle=null,precision:Number=1.0):Bitmap
+        public static function swapContentForBitmap(content:DisplayObjectContainer,rect:Rectangle=null,precision:Number=1.0):Bitmap
         {
         	if (!rect)
         		rect = content.getBounds(content);
@@ -69,7 +66,7 @@ package ghostcat.display.bitmap
          * @param content	容器
          * 
          */        
-        public function swapBackToContent(content:DisplayObjectContainer):void
+        public static function swapBackToContent(content:DisplayObjectContainer):void
         {
         	var bitmap:Bitmap = cacheDict[content];
         	if (!bitmap)
@@ -92,7 +89,7 @@ package ghostcat.display.bitmap
          * 位图的内存泄露是非常严重的事情，如果使用了此类缓存位图，结束时务必执行此方法确保能够全部回收
          * 
          */
-        public function swapBackAllToContent():void
+        public static function swapBackAllToContent():void
         {
         	for (var content:* in cacheDict)
         		swapBackToContent(content as DisplayObjectContainer);

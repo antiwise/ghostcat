@@ -11,12 +11,11 @@ package ghostcat.display.bitmap
 
 	/**
 	 * 将一个图形即时显示在位图上，并可进行中心缩放。
-	 * 用来解决矢量图缩放的性能问题。
 	 * 
 	 * @author flashyiyi
 	 * 
 	 */
-	public class BitmapZoomScreen extends GNoScale
+	public class BitmapDrawScreen extends GNoScale
 	{
 		/**
 		 * 源
@@ -62,7 +61,7 @@ package ghostcat.display.bitmap
 		}
 
 		
-		public function BitmapZoomScreen(source:DisplayObject,width:int, height:int, pixelSnapping:String="auto", smoothing:Boolean=false)
+		public function BitmapDrawScreen(source:DisplayObject,width:int, height:int, pixelSnapping:String="auto", smoothing:Boolean=false)
 		{
 			super();
 			

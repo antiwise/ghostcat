@@ -9,6 +9,11 @@ package ghostcat.operation.effect
 	import ghostcat.operation.Oper;
 	import ghostcat.util.Tick;
 	
+	/**
+	 * 根据一个MovieClip里物体的移动来同步移动目标
+	 * @author flashyiyi
+	 * 
+	 */
 	public class MoviePathEffect extends Oper implements IEffect
 	{
 		private var _target:*;
