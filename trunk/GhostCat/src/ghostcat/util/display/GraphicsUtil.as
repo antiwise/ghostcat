@@ -5,6 +5,7 @@ package ghostcat.util.display
 	import flash.geom.Point;
 	
 	import ghostcat.algorithm.bezier.Bezier;
+	import ghostcat.parse.graphics.GraphicsBezier;
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.parse.graphics.GraphicsLine;
 	import ghostcat.parse.graphics.GraphicsRect;
@@ -43,7 +44,7 @@ package ghostcat.util.display
 		 */
 		public static function curveTo(target:Graphics, start:Point = null, control:Point = null, end:Point = null, dash:Number = NaN, dashStart:Number = NaN):void
 		{
-			new Bezier(start,control,end).parse(target,dash,dashStart);
+			GraphicsBezier.drawBezier(target,start,control,end,dash,dashStart);
 		}
 		
 		/**

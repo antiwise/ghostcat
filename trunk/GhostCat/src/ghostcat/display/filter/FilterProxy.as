@@ -12,7 +12,7 @@ package ghostcat.display.filter
 	
 	/**
 	 * 对滤镜的代理类，可以直接设置此对象的属性改变滤镜的值，并立即更新。
-	 * 必须用applyFilter方法来给对象应用滤镜，用以前的方法添加将无法被管理。
+	 * 必须用applyFilter方法来给对象应用滤镜
 	 * 
 	 * @author flashyiyi
 	 * 
