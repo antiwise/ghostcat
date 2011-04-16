@@ -569,6 +569,7 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
+    <classEntry path="ghostcat.util.DateUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
