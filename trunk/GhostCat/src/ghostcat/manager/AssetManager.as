@@ -1,5 +1,6 @@
 package ghostcat.manager
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -101,6 +102,7 @@ package ghostcat.manager
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
 		 * @param res	资源路径
+		 * @param id	资源id
 		 * @param name	资源的名称，用于在进度条中显示
 		 * @return 
 		 * 
@@ -111,9 +113,13 @@ package ghostcat.manager
 			
 			if (id)
 				oper.id = id;
+			else
+				oper.id = res;
 			
 			if (name)
 				oper.name = name;
+			else
+				oper.name = oper.id;
 			
 			if (progressBar)
 				progressBar.commitTarget(oper);
@@ -153,6 +159,7 @@ package ghostcat.manager
 		 * 批量载入资源
 		 * 
 		 * @param res	资源路径列表
+		 * @param ids 资源的ID
 		 * @param names 资源的名称，用于在进度条中显示
 		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度
 		 * @param queueLimit 同时加载的文件数量
@@ -188,7 +195,7 @@ package ghostcat.manager
 		
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
-		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，资源名称是@tip属性。
+		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
@@ -337,26 +344,39 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 创建一个Bitmap
+		 * 
+		 * @param ref
+		 * @return 
+		 * 
+		 */
+		public function getBitmap(ref:String):Bitmap
+		{
+			var cls:Class = this.getAssetByName(ref) as Class;
+			return new cls() as Bitmap;
+		}
+		
+		/**
 		 * 创建一个BitmapData
 		 * 
 		 * @param ref
 		 * @return 
 		 * 
 		 */
-		public function getBitmapData(ref:String,width:int = 0,height:int = 0):BitmapData
+		public function getBitmapData(ref:String):BitmapData
 		{
 			var cls:Class = this.getAssetByName(ref) as Class;
-			return new cls(width,height) as BitmapData;
+			return new cls(0,0) as BitmapData;
 		}
 		
 		/**
 		 * 获得加载的非SWF资源
 		 * 
-		 * @param id	加载时指定的id
+		 * @param id	加载时指定的id，未指定则是文件路径
 		 * @return 
 		 * 
 		 */
-		public function getOperData(id:String):*
+		public function getDataById(id:String):*
 		{
 			return getOper(id).data;
 		}
