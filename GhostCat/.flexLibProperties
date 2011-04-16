@@ -69,13 +69,12 @@
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
     <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapTemporaryCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
@@ -572,6 +571,7 @@
     <classEntry path="ghostcat.util.DateUtil"/>
     <classEntry path="ghostcat.display.filter.BubbleFilterProxy"/>
     <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
+    <classEntry path="ghostcat.util.easing.TweenCacher"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

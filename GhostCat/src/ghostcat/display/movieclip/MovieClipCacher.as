@@ -51,12 +51,6 @@ package ghostcat.display.movieclip
 			return _readComplete;
 		}
 		
-		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1)
-		{
-			if (mc)
-				read(mc,rect,start,len);
-		}
-		
 		/**
 		 * 缓存动画
 		 *  
@@ -64,9 +58,9 @@ package ghostcat.display.movieclip
 		 * @param rect		绘制范围
 		 * @param start		起始帧
 		 * @param len		长度
-		 * 
+		 * @param readWhenPlaying	每帧只渲染一次
 		 */
-		public function read(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false):void
+		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false)
 		{
 			this.mc = mc;
 			this.readWhenPlaying = readWhenPlaying;
