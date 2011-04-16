@@ -2,10 +2,13 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.display.filter.DisplacementMapFilterProxy;
+	import ghostcat.display.filter.WaveFilterProxy;
 	
 	[SWF(width="1000",height="1000")]
 	public class WaveExample extends Sprite
@@ -13,21 +16,21 @@ package
 		[Embed(source="p1.jpg")]
 		public var cls:Class;
 
-		private var f:DisplacementMapFilterProxy;
+		private var f:WaveFilterProxy;
 		public function WaveExample()
 		{
 			addChild(new cls());
 			
-			f = new DisplacementMapFilterProxy(DisplacementMapFilterProxy.BUBBLE);
-			f.pos = new Point(100,100);
+			f = new WaveFilterProxy(0);
 			f.applyFilter(this);
 			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler)
+			addEventListener(Event.ENTER_FRAME,tickHandler);
 		}
 		
-		protected function mouseMoveHandler(event:MouseEvent):void
+		protected function tickHandler(event:Event):void
 		{
-			f.pos = new Point(mouseX - 128,mouseY - 128);
+			f.rect = new Rectangle(mouseX - 200,mouseY - 100,400,200);
+			f.cycleStart = f.cycleStart + 0.05 - int(f.cycleStart + 0.05);
 		}
 		
 	}

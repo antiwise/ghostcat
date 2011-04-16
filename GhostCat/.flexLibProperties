@@ -83,7 +83,7 @@
     <classEntry path="ghostcat.display.filter.ConvolutionFilterProxy"/>
     <classEntry path="ghostcat.display.filter.DisplacementMapFilterProxy"/>
     <classEntry path="ghostcat.display.filter.FilterProxy"/>
-    <classEntry path="ghostcat.display.filter.PerlinNoiseCacher"/>
+    <classEntry path="ghostcat.display.bitmap.PerlinNoiseCacher"/>
     <classEntry path="ghostcat.display.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.display.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
@@ -570,6 +570,8 @@
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.util.DateUtil"/>
+    <classEntry path="ghostcat.display.filter.BubbleFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

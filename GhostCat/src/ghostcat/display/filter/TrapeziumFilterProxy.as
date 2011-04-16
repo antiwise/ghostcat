@@ -12,6 +12,7 @@ package ghostcat.display.filter
 	
 	/**
 	 * 梯形翻转滤镜
+	 * 必须用applyFilter方法来给对象应用滤镜
 	 * 
 	 * @author flashyiyi
 	 * 

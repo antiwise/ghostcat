@@ -10,6 +10,7 @@ package ghostcat.display.filter
 	
 	/**
 	 * 循环滚动滤镜，可以用来做滚动背景或者滚动文本
+	 * 必须用applyFilter方法来给对象应用滤镜
 	 * 
 	 * @author flashyiyi
 	 * 

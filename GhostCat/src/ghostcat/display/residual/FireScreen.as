@@ -10,7 +10,7 @@ package ghostcat.display.residual
 	import flash.utils.getTimer;
 	
 	import ghostcat.debug.FPS;
-	import ghostcat.display.filter.PerlinNoiseCacher;
+	import ghostcat.display.bitmap.PerlinNoiseCacher;
 
 	/**
 	 * 火焰效果
