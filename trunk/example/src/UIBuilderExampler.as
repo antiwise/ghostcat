@@ -2,7 +2,7 @@ package
 {
 	import ghostcat.debug.DebugRect;
 	import ghostcat.display.GSprite;
-	import ghostcat.other.BubbleCreater;
+	import ghostcat.display.particle.LightBallCreater;
 	import ghostcat.manager.RootManager;
 	import ghostcat.ui.PopupManager;
 	import ghostcat.ui.containers.GAlert;
@@ -16,7 +16,7 @@ package
 			RootManager.register(this);
 			
 			addChild(new DebugRect(500,400,0x8888FF));
-			addChild(new BubbleCreater(500,400,250));
+			addChild(new LightBallCreater(500,400,0.5,50));
 			
 			PopupManager.instance.applicationDisabledOper = null;
 			PopupManager.instance.applicationEnabledOper = null;
