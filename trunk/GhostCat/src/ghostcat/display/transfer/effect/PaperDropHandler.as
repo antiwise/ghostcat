@@ -8,6 +8,11 @@ package ghostcat.display.transfer.effect
 	
 	import ghostcat.util.core.Handler;
 	
+	/**
+	 * 百页窗落下效果 
+	 * @author flashyiyi
+	 * 
+	 */
 	public class PaperDropHandler extends Handler
 	{
 		public var rowHeight:int;

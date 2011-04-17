@@ -17,7 +17,7 @@ package ghostcat.display.transition
 	import ghostcat.util.core.Handler;
 
 	/**
-	 * 显示一个动画对象作为Mask的过渡
+	 * 使用一个动画对象作为遮罩的过渡
 	 * 
 	 * 当设置了wait属性后，将会暂停，此时只能用continueFadeOut方法继续
 	 *

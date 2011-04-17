@@ -8,7 +8,7 @@ package ghostcat.display.transition.maskmovie
 	import ghostcat.util.core.Handler;
 	
 	/**
-	 * 百叶窗
+	 * 方格百叶窗
 	 * 
 	 * @author flashyiyi
 	 * 
