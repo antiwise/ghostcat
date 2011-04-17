@@ -8,6 +8,7 @@ package ghostcat.display.transition
 	import flash.utils.getTimer;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.display.game.BackgroundLayer;
 	import ghostcat.display.movieclip.GScriptMovieClip;
 	import ghostcat.display.transfer.GBitmapEffect;
 	import ghostcat.display.transfer.effect.DissolveHandler;
@@ -18,7 +19,6 @@ package ghostcat.display.transition
 	import ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
-	import ghostcat.display.game.BackgroundLayer;
 	import ghostcat.ui.controls.GImage;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.easing.Circ;
@@ -64,22 +64,22 @@ package ghostcat.display.transition
 		/**方格渐变 */
 		public static function dissolveMask(switchHandler:*,target:DisplayObject):TransitionMaskLayer
 		{
-			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new DissolveMaskHandler(20),target.getBounds(target.parent)));
+			return new TransitionScriptMaskLayer(switchHandler,target,new DissolveMaskHandler(20));
 		}
 		/**百叶窗渐变 */
 		public static function shutterMask(switchHandler:*,target:DisplayObject):TransitionMaskLayer
 		{
-			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new ShutterMaskHandler(),target.getBounds(target.parent)));
+			return new TransitionScriptMaskLayer(switchHandler,target,new ShutterMaskHandler());
 		}
 		/**百叶窗打开渐变 */
 		public static function shutterMask2(switchHandler:*,target:DisplayObject,direction:int = 0):TransitionMaskLayer
 		{
-			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new ShutterDirectMaskHandler(50,direction),target.getBounds(target.parent),40));
+			return new TransitionScriptMaskLayer(switchHandler,target,new ShutterDirectMaskHandler(50,direction),null,40);
 		}
 		/**方向性过度渐变 */
 		public static function gradientAlphaMask(switchHandler:*,target:DisplayObject,angle:Number = 0):TransitionMaskLayer
 		{
-			return new TransitionMaskLayer(switchHandler,target,new GScriptMovieClip(new GradientAlphaMaskHandler(angle),target.getBounds(target.parent)));
+			return new TransitionScriptMaskLayer(switchHandler,target,new GradientAlphaMaskHandler(angle));
 		}
 		/**白屏过渡渐变 */
 		public static function simple(switchHandler:*,target:DisplayObject):TransitionSimpleLayer

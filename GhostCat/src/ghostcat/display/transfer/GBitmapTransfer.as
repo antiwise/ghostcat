@@ -101,7 +101,7 @@ package ghostcat.display.transfer
 		}
                 
 		/**
-		 * 创建位图 
+		 * 根据目标大小创建空白位图 
 		 * 
 		 */
 		public function createBitmapData():void

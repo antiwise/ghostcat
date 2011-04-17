@@ -145,7 +145,6 @@
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
-    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.PaperDropHandler"/>
@@ -337,7 +336,7 @@
     <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
     <classEntry path="ghostcat.operation.server.SocketOper"/>
     <classEntry path="ghostcat.operation.server.SocketProxy"/>
-    <classEntry path="ghostcat.other.BubbleCreater"/>
+    <classEntry path="ghostcat.display.particle.LightBallCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
     <classEntry path="ghostcat.parse.Parse"/>
@@ -572,6 +571,10 @@
     <classEntry path="ghostcat.display.filter.BubbleFilterProxy"/>
     <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
     <classEntry path="ghostcat.util.easing.TweenCacher"/>
+    <classEntry path="ghostcat.display.particle.SnowCreater"/>
+    <classEntry path="ghostcat.display.particle.CloudCreater"/>
+    <classEntry path="ghostcat.display.particle.SakuraCreater"/>
+    <classEntry path="ghostcat.display.transition.TransitionScriptMaskLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

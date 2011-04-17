@@ -2,7 +2,6 @@ package ghostcat.community.physics
 {
 	import flash.geom.Point;
 	
-	import ghostcat.display.transfer.effect.BombHandler;
 	
 	/**
 	 * 弹性绳物理

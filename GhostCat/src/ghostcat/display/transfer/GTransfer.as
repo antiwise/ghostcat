@@ -77,7 +77,7 @@ package ghostcat.display.transfer
 		}
                 
 		/**
-		 * 根据目标创建位图（目标大小变化时执行）
+		 * 根据目标大小创建空白位图
 		 * 
 		 */
 		protected function createBitmapData():void
@@ -112,17 +112,13 @@ package ghostcat.display.transfer
 			showBitmapData();
 		}
 		
-		/**
-		 * 之后更新显示位图
-		 * 
-		 */
 		public function invalidateRenderBitmap():void
 		{
 			renderBitmapCall.invalidate();
 		}
 		
 		/**
-		 * 重绘时显示位图
+		 * 将位图显示出来
 		 * 
 		 */
 		protected function showBitmapData():void

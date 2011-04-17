@@ -11,9 +11,8 @@ package ghostcat.display.transfer
 
 	/**
 	 * 缓存原始位图，用于处理位图实时特效
-	 * 
+	 * 通过设置deep属性来控制特效动画播放
 	 * 特效方法都在ghostcat.display.transfer.effect包内
-	 * start方法将开启逐帧事件renderTickHandler
 	 *  
 	 * @author flashyiyi
 	 * 

@@ -8,7 +8,7 @@ package ghostcat.display.transfer.effect
 	import ghostcat.util.core.Handler;
 
 	/**
-	 * 分割效果
+	 * 百叶窗两侧分割效果
 	 *  
 	 * @author flashyiyi
 	 * 
