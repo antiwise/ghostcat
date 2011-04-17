@@ -8,6 +8,7 @@ package
 	
 	import ghostcat.debug.EnabledSWFScreen;
 	import ghostcat.display.GBase;
+	import ghostcat.display.game.BackgroundLayer;
 	import ghostcat.display.movieclip.GScriptMovieClip;
 	import ghostcat.display.transfer.GBitmapEffect;
 	import ghostcat.display.transfer.effect.DissolveHandler;
@@ -18,13 +19,13 @@ package
 	import ghostcat.display.transition.TransitionLayerBase;
 	import ghostcat.display.transition.TransitionMaskLayer;
 	import ghostcat.display.transition.TransitionObjectLayer;
+	import ghostcat.display.transition.TransitionScriptMaskLayer;
 	import ghostcat.display.transition.TransitionSimpleLayer;
 	import ghostcat.display.transition.TransitionTransferLayer;
 	import ghostcat.display.transition.maskmovie.DissolveMaskHandler;
 	import ghostcat.display.transition.maskmovie.GradientAlphaMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterDirectMaskHandler;
 	import ghostcat.display.transition.maskmovie.ShutterMaskHandler;
-	import ghostcat.display.game.BackgroundLayer;
 	import ghostcat.ui.controls.GImage;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.easing.Circ;
@@ -92,16 +93,16 @@ package
 					new TransitionCacheLayer(f,s,1000,{x:600 * ((Math.random() < 0.5)? 1 : -1),y:450 * ((Math.random() < 0.5)? 1 : -1),ease:Circ.easeIn}).createTo(this);
 					break;
 				case 7://方格渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new DissolveMaskHandler(20),s.getBounds(s.parent))).createTo(this);
+					new TransitionScriptMaskLayer(f,s,new DissolveMaskHandler(20)).createTo(this);
 					break;
 				case 8://百叶窗渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterMaskHandler(),s.getBounds(s.parent))).createTo(this);
+					new TransitionScriptMaskLayer(f,s,new ShutterMaskHandler()).createTo(this);
 					break;
 				case 9://百叶窗打开渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new ShutterDirectMaskHandler(50,Math.random() * 4),s.getBounds(s.parent))).createTo(this);
+					new TransitionScriptMaskLayer(f,s,new ShutterDirectMaskHandler(50,Math.random() * 4)).createTo(this);
 					break;
 				case 10://方向性过度渐变
-					new TransitionMaskLayer(f,s,new GScriptMovieClip(new GradientAlphaMaskHandler(Math.random() * 360),s.getBounds(s.parent))).createTo(this);
+					new TransitionScriptMaskLayer(f,s,new GradientAlphaMaskHandler(Math.random() * 360)).createTo(this);
 					break;
 				case 11://白屏过渡渐变
 					new TransitionSimpleLayer(f,600,450,0xFFFFFF,RandomUtil.choose(BlendMode.NORMAL,BlendMode.ADD,BlendMode.SUBTRACT)).createTo(this);
