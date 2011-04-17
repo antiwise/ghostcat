@@ -124,7 +124,7 @@ package ghostcat.display.particle
 		{
 			super.destory();
 			for each (var bmd:BitmapData in bitmapDatas)
-			bmd.dispose();
+				bmd.dispose();
 		}
 		
 	}
