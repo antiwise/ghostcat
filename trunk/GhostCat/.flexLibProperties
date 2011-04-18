@@ -69,12 +69,13 @@
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
     <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapTemporaryCacher"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
@@ -82,7 +83,7 @@
     <classEntry path="ghostcat.display.filter.ConvolutionFilterProxy"/>
     <classEntry path="ghostcat.display.filter.DisplacementMapFilterProxy"/>
     <classEntry path="ghostcat.display.filter.FilterProxy"/>
-    <classEntry path="ghostcat.display.bitmap.PerlinNoiseCacher"/>
+    <classEntry path="ghostcat.display.filter.PerlinNoiseCacher"/>
     <classEntry path="ghostcat.display.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.display.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
@@ -145,6 +146,7 @@
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
+    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.PaperDropHandler"/>
@@ -288,8 +290,6 @@
     <classEntry path="ghostcat.operation.IOper"/>
     <classEntry path="ghostcat.operation.IQueue"/>
     <classEntry path="ghostcat.operation.IfOper"/>
-    <classEntry path="ghostcat.operation.load.LoadOper"/>
-    <classEntry path="ghostcat.operation.load.LoadTextOper"/>
     <classEntry path="ghostcat.operation.MovieOper"/>
     <classEntry path="ghostcat.operation.Oper"/>
     <classEntry path="ghostcat.operation.ParallelOper"/>
@@ -323,6 +323,8 @@
     <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
     <classEntry path="ghostcat.operation.effect.ZoomFromRectEffect"/>
     <classEntry path="ghostcat.operation.load.LoadGIFOper"/>
+    <classEntry path="ghostcat.operation.load.LoadOper"/>
+    <classEntry path="ghostcat.operation.load.LoadTextOper"/>
     <classEntry path="ghostcat.operation.load.QueueLoadOper"/>
     <classEntry path="ghostcat.operation.quest.Quest"/>
     <classEntry path="ghostcat.operation.quest.QuestEvent"/>
@@ -336,7 +338,7 @@
     <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
     <classEntry path="ghostcat.operation.server.SocketOper"/>
     <classEntry path="ghostcat.operation.server.SocketProxy"/>
-    <classEntry path="ghostcat.display.particle.LightBallCreater"/>
+    <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
     <classEntry path="ghostcat.parse.Parse"/>
@@ -567,14 +569,6 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
-    <classEntry path="ghostcat.util.DateUtil"/>
-    <classEntry path="ghostcat.display.filter.BubbleFilterProxy"/>
-    <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
-    <classEntry path="ghostcat.util.easing.TweenCacher"/>
-    <classEntry path="ghostcat.display.particle.SnowCreater"/>
-    <classEntry path="ghostcat.display.particle.CloudCreater"/>
-    <classEntry path="ghostcat.display.particle.SakuraCreater"/>
-    <classEntry path="ghostcat.display.transition.TransitionScriptMaskLayer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

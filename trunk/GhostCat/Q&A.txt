@@ -30,6 +30,9 @@ A.你需要给它的皮肤设置任意名称的链接类
 Q.继承GButton对象，并在内部增加新的按钮，内部的按钮无法接受鼠标事件
 A.将GButton的mouseChildren设置为true，或者放弃使用GButton作为基类。
 
+Q.GButton对象里放置的文本框有多个状态，在状态切换时不正常
+A.文本框在时间线上应该只有一个实例，因此你可以将文本框放入一个元件，再对这个元件做颜色变换。或者用downstate.textFormat来动态修改字体样式
+
 Q.使用GListBase，并把它放在另一个容器中，将这个容器从屏幕外移入时，GListBase会消失
 A.调用GListBase的render方法，或者使用不会出现这种现象的GRepeater,GButtonBar
 

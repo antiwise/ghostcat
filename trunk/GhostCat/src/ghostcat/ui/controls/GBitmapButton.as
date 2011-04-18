@@ -16,6 +16,7 @@ package ghostcat.ui.controls
 	import ghostcat.display.movieclip.GBitmapMovieClip;
 	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.ui.layout.Padding;
+	import ghostcat.util.display.BitmapSeparateUtil;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
@@ -42,7 +43,7 @@ package ghostcat.ui.controls
 		/**
 		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
 		 */
-		public var useDefaultLabels:Boolean = false;
+		public var useDefaultLabels:Boolean = true;
 		
 		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
 		{
@@ -59,6 +60,33 @@ package ghostcat.ui.controls
 		{
 			(movie as GBitmapMovieClip).bitmapMouseChecker = new BitmapMouseChecker(content as Bitmap);
 			super.init();
+		}
+		
+		/**
+		 * 是否在销毁的时候自动回收位图
+		 */
+		public function set disposeWhenDestory(v:Boolean):void
+		{
+			(movie as GBitmapMovieClip).disposeWhenDestory = v;
+		}
+		
+		public function get disposeWhenDestory():Boolean
+		{
+			return (movie as GBitmapMovieClip).disposeWhenDestory;
+		}
+		
+		/**
+		 * 设置一张整图来并切分到多个状态来设置皮肤
+		 * 
+		 * @param source	源图
+		 * @param width	横向图片数量
+		 * @param height	纵向图片数量
+		 * 
+		 */
+		public function setWholeBitmapDataSkin(source:BitmapData,width:int = 1,height:int = 4):void
+		{
+			GBitmapMovieClip(this.movie).bitmaps = BitmapSeparateUtil.separateBitmapData(source,width,height);
+			GBitmapMovieClip(this.movie).labels = defaultLabels;
 		}
 		
 		/**
