@@ -69,23 +69,25 @@
     <classEntry path="ghostcat.display.IToolTipManagerClient"/>
     <classEntry path="ghostcat.display.Tile"/>
     <classEntry path="ghostcat.display.bitmap.BitmapByteArrayCacher"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapCacher"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataContainer"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapDrawScreen"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapZoomScreen"/>
+    <classEntry path="ghostcat.display.bitmap.BitmapTemporaryCacher"/>
     <classEntry path="ghostcat.display.bitmap.GBitmap"/>
     <classEntry path="ghostcat.display.bitmap.IBitmapDataDrawer"/>
+    <classEntry path="ghostcat.display.bitmap.PerlinNoiseCacher"/>
     <classEntry path="ghostcat.display.bitmap.PixelItem"/>
+    <classEntry path="ghostcat.display.filter.BubbleFilterProxy"/>
     <classEntry path="ghostcat.display.filter.ColorMatrixFilterProxy"/>
     <classEntry path="ghostcat.display.filter.ConvolutionFilterProxy"/>
     <classEntry path="ghostcat.display.filter.DisplacementMapFilterProxy"/>
     <classEntry path="ghostcat.display.filter.FilterProxy"/>
-    <classEntry path="ghostcat.display.filter.PerlinNoiseCacher"/>
     <classEntry path="ghostcat.display.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.display.filter.TrapeziumFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
@@ -124,6 +126,11 @@
     <classEntry path="ghostcat.display.movieclip.MovieClipCacher"/>
     <classEntry path="ghostcat.display.movieclip.TimeLine"/>
     <classEntry path="ghostcat.display.other.GContextMenu"/>
+    <classEntry path="ghostcat.display.particle.CloudCreater"/>
+    <classEntry path="ghostcat.display.particle.LightBallCreater"/>
+    <classEntry path="ghostcat.display.particle.ParticleCreaterBase"/>
+    <classEntry path="ghostcat.display.particle.SakuraCreater"/>
+    <classEntry path="ghostcat.display.particle.SnowCreater"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.MotionBlurScreen"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
@@ -146,7 +153,6 @@
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
-    <classEntry path="ghostcat.display.transfer.effect.BombHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.PaperDropHandler"/>
@@ -158,6 +164,7 @@
     <classEntry path="ghostcat.display.transition.TransitionMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionMovieClipLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionObjectLayer"/>
+    <classEntry path="ghostcat.display.transition.TransitionScriptMaskLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionSimpleLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionTransferLayer"/>
     <classEntry path="ghostcat.display.transition.maskmovie.AlphaMaskHandler"/>
@@ -338,7 +345,6 @@
     <classEntry path="ghostcat.operation.server.SocketDataEvent"/>
     <classEntry path="ghostcat.operation.server.SocketOper"/>
     <classEntry path="ghostcat.operation.server.SocketProxy"/>
-    <classEntry path="ghostcat.other.BubbleCreater"/>
     <classEntry path="ghostcat.parse.DisplayParse"/>
     <classEntry path="ghostcat.parse.IParse"/>
     <classEntry path="ghostcat.parse.Parse"/>
@@ -356,6 +362,7 @@
     <classEntry path="ghostcat.parse.display.SimpleEllipseParse"/>
     <classEntry path="ghostcat.parse.display.SimpleRectParse"/>
     <classEntry path="ghostcat.parse.display.TextFieldParse"/>
+    <classEntry path="ghostcat.parse.graphics.GraphicsBezier"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsBitmapFill"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsClear"/>
     <classEntry path="ghostcat.parse.graphics.GraphicsEllipse"/>
@@ -468,6 +475,7 @@
     <classEntry path="ghostcat.ui.validators.GValidator"/>
     <classEntry path="ghostcat.util.ArrayUtil"/>
     <classEntry path="ghostcat.util.CountDown"/>
+    <classEntry path="ghostcat.util.DateUtil"/>
     <classEntry path="ghostcat.util.EventUtil"/>
     <classEntry path="ghostcat.util.FontEmbedHelper"/>
     <classEntry path="ghostcat.util.MathUtil"/>
@@ -506,6 +514,7 @@
     <classEntry path="ghostcat.util.data.LocalStorage"/>
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
+    <classEntry path="ghostcat.util.code.VOCreater"/>
     <classEntry path="ghostcat.util.data.XMLUtil"/>
     <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
@@ -540,6 +549,7 @@
     <classEntry path="ghostcat.util.easing.Quint"/>
     <classEntry path="ghostcat.util.easing.Sine"/>
     <classEntry path="ghostcat.util.easing.Strong"/>
+    <classEntry path="ghostcat.util.easing.TweenCacher"/>
     <classEntry path="ghostcat.util.easing.TweenEvent"/>
     <classEntry path="ghostcat.util.easing.TweenUtil"/>
     <classEntry path="ghostcat.util.encrypt.AES"/>
@@ -569,6 +579,7 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
+    <classEntry path="ghostcat.util.code.CodeTextRender"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
