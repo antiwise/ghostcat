@@ -84,15 +84,15 @@ package ghostcat.display.transfer
 		 * @param p
 		 * 
 		 */
-		public function bomb(p:Point = null):void
+		public function bomb(pos:Point = null,power:Number = 5,spin:Number = 10):void
 		{
-			if (!p)
-				p = new Point(bitmapData.width / 2,bitmapData.height / 2);
+			if (!pos)
+				pos = new Point(bitmapData.width / 2,bitmapData.height / 2);
 			
 			physics.addAll(tris);
 			physics.gravity = new Point(0,1000);
 			
-			PhysicsUtil.bomb(physics,p);	
+			PhysicsUtil.bomb(physics,pos,power,spin);	
 		}
 		
 		protected override function showBitmapData() : void
