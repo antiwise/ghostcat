@@ -73,7 +73,7 @@ package ghostcat.display.movieclip
 		/** @inheritDoc*/
 		public override function get labels():Array
 		{
-			return timeLine ? timeLine.labels : null;
+			return timeLine && enabledLabelMovie ? timeLine.labels : null;
 		}
 		/** @inheritDoc*/
 		public override function set labels(value:Array):void
