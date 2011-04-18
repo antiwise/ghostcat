@@ -29,7 +29,7 @@ package ghostcat.util.display
 			var rect:Rectangle = displayObj.getBounds(displayObj);
 			var m:Matrix = new Matrix();
 			m.translate(-rect.x,-rect.y);
-			var bitmap:BitmapData = new BitmapData(rect.width,rect.height,true,0);
+			var bitmap:BitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
 			bitmap.draw(displayObj,m);
 			return bitmap;
 		}
