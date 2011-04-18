@@ -89,6 +89,11 @@ package ghostcat.display.movieclip
 		 */
 		public var resetLabel:Boolean = true;
 		
+		/**
+		 * 是否使用标签动画
+		 */
+		public var enabledLabelMovie:Boolean = true;
+		
 		public function GMovieClipBase(skin:*=null, replace:Boolean=true, paused:Boolean=false)
 		{
 			AbstractUtil.preventConstructor(this,GMovieClipBase);
@@ -353,7 +358,7 @@ package ghostcat.display.movieclip
 		 */
 		public function get labels():Array
 		{
-			return _labels;
+			return enabledLabelMovie ? _labels : null;
 		}
 		
 		public function set labels(value:Array):void

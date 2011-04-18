@@ -67,7 +67,7 @@ package ghostcat.display.transfer
 			
 			updateTargetMove();
 			createBitmapData();
-			invalidateDisplayList();
+			vaildDisplayList();
 		}
 		
 		protected override function init():void

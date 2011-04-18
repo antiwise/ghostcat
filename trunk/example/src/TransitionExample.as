@@ -51,14 +51,11 @@ package
 		
 		protected override function init() : void
 		{
-			new EnabledSWFScreen(stage,function ():void{refreshInterval = 3000},function ():void{refreshInterval = 0});
-			
 			s = new GImage();
 			addChild(s);
 			s.source = p1;
 			
 			this.refreshInterval = 3000;
-			invalidateDisplayList();
 		}
 		
 		protected override function updateDisplayList() : void
