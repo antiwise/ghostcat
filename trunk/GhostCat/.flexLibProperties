@@ -579,7 +579,9 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
-    <classEntry path="ghostcat.util.code.CodeTextRender"/>
+    <classEntry path="ghostcat.util.code.CodeColor"/>
+    <classEntry path="ghostcat.util.code.CodeCreater"/>
+    <classEntry path="ghostcat.util.code.UICreater"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
