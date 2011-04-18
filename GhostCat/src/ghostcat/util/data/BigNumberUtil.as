@@ -208,6 +208,9 @@ package ghostcat.util.data
 				carry = int((bit1 + carry) / 10);
 				answer = String.fromCharCode(0x30 + bit3) + answer;
 			}
+			if (carry)
+				answer = String.fromCharCode(0x30 + carry) + answer;
+			
 			answer = (bool ? "-" : "") + trim(answer);
 			return answer;
 		}

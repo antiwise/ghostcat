@@ -3,9 +3,9 @@ package ghostcat.util.code
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
-	public class CodeTextRender extends EventDispatcher
+	public class CodeColor extends EventDispatcher
 	{
-		public function CodeTextRender(target:IEventDispatcher=null)
+		public function CodeColor(target:IEventDispatcher=null)
 		{
 			super(target);
 		}
