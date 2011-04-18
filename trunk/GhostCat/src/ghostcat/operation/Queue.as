@@ -89,7 +89,7 @@ package ghostcat.operation
 				return;
 			
 			if (index == 0)//如果正在加载，而跳到下一个
-				nexthandler();
+				nexthandler(null);
 			else
 				children.splice(index,1);
 		}
@@ -121,7 +121,7 @@ package ghostcat.operation
 			dispatchEvent(e);
 		}
 		
-		private function nexthandler(event:OperationEvent=null):void
+		private function nexthandler(event:OperationEvent):void
 		{
 			var oper:Oper = children[0] as Oper;
 			oper.removeEventListener(OperationEvent.OPERATION_START,starthandler);
@@ -130,16 +130,19 @@ package ghostcat.operation
 			
 			children.shift();
 		
-			if (oper.continueWhenFail || event.type == OperationEvent.OPERATION_COMPLETE)
+			if (oper.continueWhenFail || !event || event.type == OperationEvent.OPERATION_COMPLETE)
 				doLoad();
 			else
 				fault(event);
 		
-			var e:OperationEvent = new OperationEvent(event.type == OperationEvent.OPERATION_COMPLETE ? OperationEvent.CHILD_OPERATION_COMPLETE : OperationEvent.CHILD_OPERATION_ERROR);
-			e.oper = this;
-			e.childOper = oper;
-			e.result = event.result;
-			dispatchEvent(e);
+			if (event)
+			{
+				var e:OperationEvent = new OperationEvent(event.type == OperationEvent.OPERATION_COMPLETE ? OperationEvent.CHILD_OPERATION_COMPLETE : OperationEvent.CHILD_OPERATION_ERROR);
+				e.oper = this;
+				e.childOper = oper;
+				e.result = event.result;
+				dispatchEvent(e);
+			}
 		}
 		/** @inheritDoc*/
 		public override function commit(queue:Queue=null) : void
