@@ -1,6 +1,10 @@
 package ghostcat.util.code
 {
+	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.utils.getQualifiedClassName;
+	
+	import ghostcat.util.display.SearchUtil;
 
 	public final class CodeCreater
 	{
@@ -81,7 +85,7 @@ package ghostcat.util.code
 			return body;
 		}
 		
-		static public function getClassName(obj:*):QName
+		static private function getClassName(obj:*):QName
 		{
 			if (!(obj is String))
 				obj = getQualifiedClassName(obj);
@@ -93,6 +97,57 @@ package ghostcat.util.code
 				return new QName(null,names[0]);
 			
 			return null;
+		}
+		
+		public static function createByObject(v:Object,classPath:String):String
+		{
+			var index:int;
+			var result:String = "";
+			var importDict:Object = {};
+			for (var p:String in v)
+			{
+				var className:QName = CodeCreater.getClassName(v[p]);
+				importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+				result += "public var " + p + ":" + className.localName + ";";
+			}
+			result += "public function " + CodeCreater.getClassName(classPath).localName + "(v:Object){setData(v)}";
+			result += "public function setData(v:Object):void{if (v){"
+			for (p in v)
+			{
+				result += "this." + p + " = " + "v." + p + ";";
+			}
+			result += "}}";
+			
+			result = CodeCreater.pack(classPath,result,importDict);
+			return CodeCreater.format(result);
+		}
+		
+		public static function createBySkin(v:DisplayObject,classPath:String,skinName:String = "content"):String
+		{
+			var vars:String = "";
+			var creates:String = "";
+			var objs:Array = SearchUtil.findChildrenByClass(v,InteractiveObject);
+			var importDict:Object = {"flash.display.Sprite":null};
+			
+			for each (var child:InteractiveObject in objs)
+			{
+				if (child.name && child.name.slice(0,8) != "instance")
+				{
+					var className:QName = CodeCreater.getClassName(child);
+					importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+					vars += "public var " + child.name + ":" + className.localName + ";"
+					creates += "this." + child.name + " = " + skinName;
+					var path:String = "[\"" + child.name + "\"]";
+					while (child.parent != v)
+					{
+						child = child.parent;
+						path = "[\"" + child.name + "\"]" + path;
+					}
+					creates += path + " as " + className.localName + ";";
+				}
+			}
+			var result:String = CodeCreater.pack(classPath,vars + "public function " + CodeCreater.getClassName(classPath) + "("+ skinName + ":Sprite){" + creates + "}",importDict);
+			return CodeCreater.format(result);
 		}
 	}
 }
