@@ -4,6 +4,7 @@ package ghostcat.display.loader
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	
@@ -30,6 +31,7 @@ package ghostcat.display.loader
 			loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 			loader.load(request, context);
 		}
 		
@@ -37,6 +39,7 @@ package ghostcat.display.loader
 		{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+			loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			loader = null;
 		}
 		
@@ -49,7 +52,12 @@ package ghostcat.display.loader
 		private function ioErrorHandler(event:IOErrorEvent):void
 		{
 			removeHandler();
-			contentLoaderInfo.dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR));
+			this.dispatchEvent(event);
+		}
+		
+		private function progressHandler(event:ProgressEvent):void
+		{
+			this.dispatchEvent(event);
 		}
 	}
 }
