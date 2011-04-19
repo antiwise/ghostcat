@@ -28,6 +28,11 @@ package ghostcat.operation.load
 		public var assetBase:String = "";
 		
 		/**
+		 * 是否加载到同域 
+		 */
+		public var useCurrentDomain:Boolean = true;
+		
+		/**
 		 * 资源列表 
 		 */
 		public var opers:Array = [];
@@ -127,6 +132,7 @@ package ghostcat.operation.load
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(getFullUrl(res[i]));
+				oper.useCurrentDomain = this.useCurrentDomain;
 				oper.addEventListener(OperationEvent.OPERATION_START,operStartHandler);
 				
 				if (ids && ids[i])

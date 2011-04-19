@@ -58,6 +58,11 @@ package ghostcat.manager
 		 */
 		public var opers:Dictionary;
 		
+		/**
+		 * 资源加载的基本地址
+		 */
+		public var useCurrentDomain:Boolean = true;
+		
 		public function AssetManager():void
 		{
 			super();
@@ -110,6 +115,7 @@ package ghostcat.manager
 		public function loadResource(res:String,id:String=null,name:String = null):Oper
 		{
 			var oper:LoadOper = new LoadOper(getFullUrl(res));
+			oper.useCurrentDomain = this.useCurrentDomain;
 			
 			if (id)
 				oper.id = id;
@@ -171,6 +177,7 @@ package ghostcat.manager
 		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
+			loader.useCurrentDomain = this.useCurrentDomain;
 			loader.loadResources(res,ids,names);
 			loader.queueLimit = queueLimit;
 			
@@ -206,6 +213,7 @@ package ghostcat.manager
 		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
+			loader.useCurrentDomain = this.useCurrentDomain;
 			loader.loadResourcesFromXMLFile(filePath);
 			loader.queueLimit = queueLimit;
 			

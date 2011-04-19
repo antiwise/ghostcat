@@ -40,7 +40,7 @@ Q.使用Tile类型的GListBase，不显示内容。设置成其他类型可以显示。
 A.必须明确设置Tile类型的GListBase的width,或者columnCount
 
 Q.GListBase怎么设置列表项的间距
-A.只有GRepeater才能设置列表项的间距(.linearLayout.verticalGap),但你可以在皮肤里创建一个透明的放块来放大列表框的高，或者直接设置其rowHeight属性
+A.只有GRepeater才能设置列表项的间距(.linearLayout.verticalGap),但你可以在皮肤里创建一个透明的方块来放大列表框的高，或者直接设置其rowHeight属性
 
 Q.AssetManager如何获得加载完的资源
 A.SWF里标记链接名的资源使用getAssetByName方法，其他的加载的文件使用getOper(id).data/getOper(id).bytes来获得。
@@ -53,3 +53,15 @@ A.可以用Util.createObject(new Sprite(),{x:1,y:1})来快速设置对象属性。
 
 Q.有没有类似FLEX的state一类的功能？
 A.你可以用Group来控制一组对象的共同行为，然后用SelectGroup在一组对象中进行选择显示。
+
+Q.GText使用enabledTruncateToFit,autoFontSize时，没有效果或者效果不正常
+A.首先文本不能设置autoSize，必须有固定的大小，必须是单行文本，也就是说不设置属性文本应该会显示不完整。此外，文本旋转时可能会出问题。
+
+Q.GText使用enabledVerticalCenter将文本竖直居中时，文本没有变化
+A.文本下应该有一个皮肤（或者透明方块），文本会按这个皮肤来进行居中布局。
+
+Q.GText使用enabledAutoLayout激活自适应时，元件位置会变化
+A.enabledAutoLayout是采用文本不动，皮肤根据文本位置变化的方式，所以视觉上皮肤会移动位置。也可以用一个布局容器（诸如GHBox）来包裹一组对象来保证它们在自适应后能够整齐对齐
+
+Q.GText调用width,height无法设置其宽高
+A.GText会包含一个背景皮肤，设置宽高会被认为是设置皮肤的宽高。设置文本框的宽高要使用setTextFieldSize方法，或者设置它textField属性的宽高
