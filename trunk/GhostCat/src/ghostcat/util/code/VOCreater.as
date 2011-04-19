@@ -18,17 +18,11 @@ package ghostcat.util.code
 			var importDict:Object = {};
 			for (var p:String in v)
 			{
-				var className:String = getQualifiedClassName(v[p]);
-				index = className.indexOf("::");
-				if (index != -1)
-				{
-					className = className.replace("::",".");
-					importDict[className] = null;
-					className = className.slice(index + 1);
-				}
-				result += "public var " + p + ":" + className + ";";
+				var className:QName = CodeCreater.getClassName(v[p]);
+				importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+				result += "public var " + p + ":" + className.localName + ";";
 			}
-			result += "public function " + CodeCreater.getClassName(classPath) + "(v:Object){setData(v)}";
+			result += "public function " + CodeCreater.getClassName(classPath).localName + "(v:Object){setData(v)}";
 			result += "public function setData(v:Object):void{if (v){"
 			for (p in v)
 			{
