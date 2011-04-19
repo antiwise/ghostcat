@@ -1,5 +1,7 @@
 package ghostcat.util.code
 {
+	import flash.utils.getQualifiedClassName;
+
 	public final class CodeCreater
 	{
 		static public function format(str:String):String
@@ -79,13 +81,18 @@ package ghostcat.util.code
 			return body;
 		}
 		
-		static public function getClassName(classPath:String):String
+		static public function getClassName(obj:*):QName
 		{
-			var index:int = classPath.lastIndexOf(".");
-			if (index == -1)
-				return classPath;
+			if (!(obj is String))
+				obj = getQualifiedClassName(obj);
+			
+			var names:Array = obj.split("::");
+			if (names.length == 2)
+				return new QName(names[0],names[1]);
 			else
-				return classPath.slice(index + 1);
+				return new QName(null,names[0]);
+			
+			return null;
 		}
 	}
 }

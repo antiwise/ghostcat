@@ -19,16 +19,9 @@ package ghostcat.util.code
 			{
 				if (child.name && child.name.slice(0,8) != "instance")
 				{
-					var className:String = getQualifiedClassName(child);
-					var index:int = className.indexOf("::");
-					if (index != -1)
-					{
-						className = className.replace("::",".");
-						importDict[className] = null;
-						className = className.slice(index + 1);
-					}
-					
-					vars += "public var " + child.name + ":" + className + ";"
+					var className:QName = CodeCreater.getClassName(child);
+					importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+					vars += "public var " + child.name + ":" + className.localName + ";"
 					creates += "this." + child.name + " = " + skinName;
 					var path:String = "[\"" + child.name + "\"]";
 					while (child.parent != v)
@@ -36,7 +29,7 @@ package ghostcat.util.code
 						child = child.parent;
 						path = "[\"" + child.name + "\"]" + path;
 					}
-					creates += path + " as " + className + ";";
+					creates += path + " as " + className.localName + ";";
 				}
 			}
 			var result:String = CodeCreater.pack(classPath,vars + "public function " + CodeCreater.getClassName(classPath) + "("+ skinName + ":Sprite){" + creates + "}",importDict);
