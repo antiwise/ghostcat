@@ -1,23 +1,25 @@
 package ghostcat.util.collision
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import ghostcat.util.display.BitmapUtil;
+	
 	/**
 	 * 缓存位图边缘进行碰撞检测
-	 * 
-	 * 这种做法在直角重叠的时候最快，在斜角重叠时最慢。图形的凹边越多则越慢，凸边无影响。
-	 * 
 	 * @author flashyiyi
 	 * 
 	 */
 	public class BitmapCollision extends EventDispatcher
 	{
-		public var x:int = 0;
-		public var y:int = 0;
+		public var target:DisplayObject;
+		public var bitmapData:BitmapData;
 		public var width:int;
 		public var height:int;
 		
@@ -31,18 +33,51 @@ package ghostcat.util.collision
 		 */
 		public var vP:Array;
 		
-		/**
-		 * 透明颜色
-		 */
-		public var transparenceColor:uint;
-		public function BitmapCollision(bmd:BitmapData,transparenceColor:uint = 0)
+		public var offestX:Number = 0.0;
+		public var offestY:Number = 0.0;
+		
+		public function get x():Number
 		{
-			this.transparenceColor = transparenceColor;
-			if (bmd)
-				createFromBitmapData(bmd);
+			return target.x + offestX;
 		}
 		
-		public function createFromBitmapData(bmd:BitmapData):void
+		public function get y():Number
+		{
+			return target.y + offestY;
+		}
+		
+		public function BitmapCollision(target:DisplayObject)
+		{
+			this.target = target;
+			if (target)
+				createFromTarget(target);
+		}
+		
+		public function createFromTarget(target:DisplayObject):void
+		{
+			if (this.bitmapData)
+				this.bitmapData.dispose();
+			
+			if (target is Bitmap)
+			{
+				this.bitmapData = (target as Bitmap).bitmapData;
+				this.offestX = this.offestY = 0.0;
+			}
+			else
+			{
+				var rect:Rectangle = target.getBounds(target);
+				var m:Matrix = new Matrix();
+				m.translate(-rect.x,-rect.y);
+				bitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
+				bitmapData.draw(target,m);
+				
+				this.offestX = rect.x;
+				this.offestY = rect.y;
+			}
+			createFromBitmapData(bitmapData);
+		}
+		
+		private function createFromBitmapData(bmd:BitmapData):void
 		{
 			var i:int;
 			var j:int;
@@ -60,12 +95,12 @@ package ghostcat.util.collision
 				p = [];
 				while (i < width)
 				{
-					while (bmd.getPixel32(i,j) == transparenceColor && i < width)
+					while (bmd.getPixel32(i,j) == 0 && i < width)
 						i++;
 					if (i == width)
 						break;
 					p[p.length] = i;
-					while (bmd.getPixel32(i,j) != transparenceColor && i < width)
+					while (bmd.getPixel32(i,j) != 0 && i < width)
 						i++;
 					p[p.length] = i;
 				}
@@ -80,12 +115,12 @@ package ghostcat.util.collision
 				p = [];
 				while (i < height)
 				{
-					while (bmd.getPixel32(j,i) == transparenceColor && i < height)
+					while (bmd.getPixel32(j,i) == 0 && i < height)
 						i++;
 					if (i == height)
 						break;
 					p[p.length] = i;
-					while (bmd.getPixel32(j,i) != transparenceColor && i < height)
+					while (bmd.getPixel32(j,i) != 0 && i < height)
 						i++;
 					p[p.length] = i;
 				}
@@ -107,18 +142,20 @@ package ghostcat.util.collision
 			if (dx < 0 || dx >= width || dy < 0 || dy >= height)
 				return false;
 			
-			var ps:Array = hP[y];
-			var l:int = ps.length;
-			for (var i:int = 0;i < l; i += 2)
-			{
-				if (ps[i] < x && x < ps[i + 1])
-					return true;
-			}
-			return false;
+//			var ps:Array = hP[y];
+//			var l:int = ps.length;
+//			for (var i:int = 0;i < l; i += 2)
+//			{
+//				if (ps[i] < x && x < ps[i + 1])
+//					return true;
+//			}
+			return this.bitmapData.getPixel32(dx,dy) != 0;
 		}
 		
 		/**
-		 * 两个道具间碰撞 
+		 * 两个道具间碰撞，不支持旋转
+	 	 * 这种做法在直角重叠的时候最快，在斜角重叠时最慢。图形的凹边越多则越慢，凸边无影响。
+		 * 
 		 * @param obj
 		 * @return 
 		 * 
@@ -129,8 +166,8 @@ package ghostcat.util.collision
 			var j:int;
 			var a:Array;
 			var b:Array;
-			var dx:int = obj.x - x;
-			var dy:int = obj.y - y;
+			var dx:int = obj.x - this.x;
+			var dy:int = obj.y - this.y;
 			var k:int;
 			var k2:int;
 			var startX:int;
@@ -198,6 +235,45 @@ package ghostcat.util.collision
 								}
 							}
 						}
+					}
+				}
+			}
+			return false;
+		}
+		
+		/**
+		 * 用边缘上的点来检查另一个图形的像素，可以支持旋转，但是处于包含关系的时候无法检测碰撞
+		 * 比上个方法慢很多
+		 *  
+		 * @param obj
+		 * @return 
+		 * 
+		 */
+		public function hitTestObjectRotation(obj:BitmapCollision):Boolean
+		{
+			var i:int;
+			var a:Array;
+			var dx:int = obj.x - this.x;
+			var dy:int = obj.y - this.y;
+			var k:int;
+			
+			if (!this.target.hitTestObject(obj.target))
+				return false;
+			
+			
+			for (k = 0;k < this.height; k++)
+			{
+				a = hP[k];
+				for (i = 0;i < a.length;i ++)
+				{
+					var p:Point = new Point(a[i] - offestX,k - offestY);
+					var p2:Point = obj.target.globalToLocal(this.target.localToGlobal(p));
+					p2.x += obj.offestX;
+					p2.y += obj.offestY;
+					if (p2.x >= 0 && p2.y >= 0 && p2.x < obj.width && p2.y < obj.height)
+					{
+						if (obj.bitmapData.getPixel32(p2.x,p2.y) != 0)
+							return true;
 					}
 				}
 			}

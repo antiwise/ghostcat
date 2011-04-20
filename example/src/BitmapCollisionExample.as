@@ -35,8 +35,8 @@ package
 			this.b2 = new Bitmap(bitmapData.clone());
 			this.addChild(b2);
 			
-			collision1 = new BitmapCollision(this.b1.bitmapData);
-			collision2 = new BitmapCollision(this.b2.bitmapData);
+			collision1 = new BitmapCollision(this.b1);
+			collision2 = new BitmapCollision(this.b2);
 			
 			addEventListener(Event.ENTER_FRAME,tickHandler);
 			
@@ -49,8 +49,6 @@ package
 		{
 			this.b2.x = mouseX - 200;
 			this.b2.y = mouseY - 200;
-			this.collision2.x = mouseX - 200;
-			this.collision2.y = mouseY - 200;
 			
 			var t:int = getTimer();
 			var b:Boolean;
