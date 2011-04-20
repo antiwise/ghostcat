@@ -137,8 +137,8 @@ package ghostcat.util.collision
 		 */
 		public function hitTestPoint(x:int,y:int):Boolean
 		{
-			var dx:int = x - this.x;
-			var dy:int = y - this.y;
+			var dx:int = x - this.x + offestX;
+			var dy:int = y - this.y + offestY;
 			if (dx < 0 || dx >= width || dy < 0 || dy >= height)
 				return false;
 			
@@ -157,10 +157,11 @@ package ghostcat.util.collision
 	 	 * 这种做法在直角重叠的时候最快，在斜角重叠时最慢。图形的凹边越多则越慢，凸边无影响。
 		 * 
 		 * @param obj
+		 * @param rough	检测粗略程度，越高效率越高，但可能会漏掉碰撞
 		 * @return 
 		 * 
 		 */
-		public function hitTestObject(obj:BitmapCollision):Boolean
+		public function hitTestObject(obj:BitmapCollision,rough:int = 1):Boolean
 		{
 			var i:int;
 			var j:int;
@@ -190,7 +191,7 @@ package ghostcat.util.collision
 			
 			if (intersetRect.width > intersetRect.height)
 			{
-				for (k = startY;k < endY; k++)
+				for (k = startY;k < endY; k+=rough)
 				{
 					a = hP[k];
 					k2 = k - dy;
@@ -215,7 +216,7 @@ package ghostcat.util.collision
 			}
 			else
 			{
-				for (k = startX;k < endX; k++)
+				for (k = startX;k < endX; k+=rough)
 				{
 					a = vP[k];
 					k2 = k - dx;
@@ -246,10 +247,11 @@ package ghostcat.util.collision
 		 * 比上个方法慢很多
 		 *  
 		 * @param obj
+		 * @param rough	检测粗略程度，越高效率越高，但可能会漏掉碰撞
 		 * @return 
 		 * 
 		 */
-		public function hitTestObjectRotation(obj:BitmapCollision):Boolean
+		public function hitTestObjectRotation(obj:BitmapCollision,rough:int = 1):Boolean
 		{
 			var i:int;
 			var a:Array;
@@ -261,7 +263,7 @@ package ghostcat.util.collision
 				return false;
 			
 			
-			for (k = 0;k < this.height; k++)
+			for (k = 0;k < this.height; k+=rough)
 			{
 				a = hP[k];
 				for (i = 0;i < a.length;i ++)
