@@ -14,7 +14,7 @@ package
 	import flash.text.TextField;
 	
 	import ghostcat.display.game.SpinGravitationItem;
-	import ghostcat.filter.ColorMatrixFilterProxy;
+	import ghostcat.display.filter.ColorMatrixFilterProxy;
 	
 	[SWF(width = "500",height = "400")]
 	public class SpinGravitatinoItemExample extends Sprite

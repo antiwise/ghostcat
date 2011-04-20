@@ -31,7 +31,7 @@ package ghostcat.util.collision
 		/**
 		 * 碰撞区域源数据
 		 */		
-		public var base:DisplayObject;
+		public var target:DisplayObject;
 		
 		/**
 		 * 
@@ -44,7 +44,7 @@ package ghostcat.util.collision
 		 */		
 		public function Collision(base:DisplayObject)
 		{
-			this.base = base;
+			this.target = base;
 			refresh();
 		}
 		
@@ -56,8 +56,8 @@ package ghostcat.util.collision
 		public function get globalPosition():Point
 		{
 			var pos:Point;
-			Geom.copyPosition(base,pos);
-			return base.localToGlobal(pos);
+			Geom.copyPosition(target,pos);
+			return target.localToGlobal(pos);
 		}
 		
 		/**
@@ -66,14 +66,14 @@ package ghostcat.util.collision
 		 */		
 		public function refresh():void
 		{
-			if (!base.stage)	//未加入显示列表，将无法计算碰撞区域
+			if (!target.stage)	//未加入显示列表，将无法计算碰撞区域
 				return;
 			
 			rects = [];
 			unrects = [];
 			
-			var collision:Sprite = SearchUtil.findChildByProperty(base,"name","collision") as Sprite;
-			var uncollision:Sprite = SearchUtil.findChildByProperty(base,"name","uncollision") as Sprite;
+			var collision:Sprite = SearchUtil.findChildByProperty(target,"name","collision") as Sprite;
+			var uncollision:Sprite = SearchUtil.findChildByProperty(target,"name","uncollision") as Sprite;
 			
 			var i:int;
 			
@@ -93,7 +93,7 @@ package ghostcat.util.collision
 			}
 			else
 			{	
-				rects.push(new CollisionItem(RECT,base.getBounds(base),base));
+				rects.push(new CollisionItem(RECT,target.getBounds(target),target));
 			}
 			
 			if (uncollision)
