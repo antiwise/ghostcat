@@ -74,7 +74,7 @@ package ghostcat.util.display
 			var currentFrame:int = 0;
 			bitmap.bitmapData = bitmapDatas[0];
 			
-			var timer:Timer = new Timer(1000 / frameRate,uint.MAX_VALUE);
+			var timer:Timer = new Timer(1000 / frameRate,int.MAX_VALUE);
 			timer.addEventListener(TimerEvent.TIMER,tickHandler);
 			timer.start();
 			

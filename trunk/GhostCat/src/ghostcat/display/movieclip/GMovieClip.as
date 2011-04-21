@@ -123,7 +123,7 @@ package ghostcat.display.movieclip
          * @return 
          * 
          */
-        public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 0):GBitmapMovieClip
+        public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 10):GBitmapMovieClip
         {
 			var v:GBitmapMovieClip = new GBitmapMovieClip();
 			v.createFromMovieClip(mc,rect,start,len,readWhenPlaying,limitTimeInFrame);

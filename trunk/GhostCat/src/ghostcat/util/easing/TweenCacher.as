@@ -60,7 +60,7 @@ package ghostcat.util.easing
 			return _readComplete;
 		}
 		
-		public function TweenCacher(target:DisplayObject,duration:Number,params:Object,frameRate:Number,rect:Rectangle=null,limitTimeInFrame:int = 0)
+		public function TweenCacher(target:DisplayObject,duration:Number,params:Object,frameRate:Number,rect:Rectangle=null,limitTimeInFrame:int = 10)
 		{
 			this.target = target;
 			this.frameRate = frameRate;

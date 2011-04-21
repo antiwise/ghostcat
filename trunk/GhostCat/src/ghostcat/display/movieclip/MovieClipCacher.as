@@ -92,7 +92,7 @@ package ghostcat.display.movieclip
 		 * @param readWhenPlaying	是否在播放时顺便缓存
 		 * @param limitTimeInFrame	每次缓存允许的最高时间
 		 */
-		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 0)
+		public function MovieClipCacher(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 10)
 		{
 			this.mc = mc;
 			this.readWhenPlaying = readWhenPlaying;

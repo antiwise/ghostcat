@@ -34,7 +34,7 @@ package ghostcat.display.loader
 		/**
 		 * 每次缓存允许的最高时间
 		 */
-		public var limitTimeInFrame:int = 0;
+		public var limitTimeInFrame:int = 10;
 		
 		public var loader:URLLoader;
 		public var swf:SWFDecoder;
