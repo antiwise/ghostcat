@@ -230,11 +230,20 @@ package ghostcat.ui.controls
 							loaderContext.securityDomain = SecurityDomain.currentDomain;
 					}
 				}
-				loader = useTempLoader ? new ImageLoader() : new Loader();
-				loader.load(v as URLRequest,loaderContext);
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
-				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
-				
+				if (useTempLoader)
+				{
+					loader = new ImageLoader();
+					loader.load(v as URLRequest,loaderContext);
+					loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
+					loader.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
+				}
+				else
+				{
+					loader = new Loader();
+					loader.load(v as URLRequest,loaderContext);
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
+					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
+				}
 				v = loader;
 			}
 			
