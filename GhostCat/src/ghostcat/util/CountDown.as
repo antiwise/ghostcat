@@ -6,7 +6,6 @@ package ghostcat.util
 
 	/**
 	 * 此类是一个增强功能的Timer。用来解决Timer使用步骤繁琐的问题。
-	 * 为了简化代码，它对事件采用了弱引用，因此不能像Timer那样保持对象的引用，这点需要特别注意。
 	 * 
 	 * @author flashyiyi
 	 * 
