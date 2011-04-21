@@ -10,7 +10,3 @@ GhostCatTool
 SWFBrower
 
 浏览多SWF的AIR程序，另外附加一些特殊功能
-
-FlexLite
-
-库工程，提供绑定功能
