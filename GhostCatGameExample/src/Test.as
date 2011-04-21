@@ -1,31 +1,41 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.utils.ByteArray;
+	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.operation.LoadOper;
-	import ghostcat.operation.server.SocketDataCreater;
+	import ghostcat.display.particle.CloudCreater;
+	import ghostcat.display.particle.SakuraCreater;
+	import ghostcat.display.particle.SnowCreater;
+	import ghostcat.display.transfer.GBitmapEffect;
+	import ghostcat.skin.AlertSkin;
+	import ghostcat.skin.cursor.CursorGroup;
+	import ghostcat.util.code.CodeColor;
+	import ghostcat.util.code.CodeCreater;
+	import ghostcat.util.data.BigNumberUtil;
+	import ghostcat.util.display.ColorContant;
+	import ghostcat.util.easing.TweenUtil;
 	
-	[SWF(frameRate="25",width="1000",height="1000")]
+	[SWF(frameRate="30",width="1000",height="1000")]
 	public class Test extends Sprite 
 	{
+		[Embed(source="p6.jpg")]
+		public var cls:Class;
 		
+		public var p:flash.geom.Point;
 		public function Test()
 		{
-			trace(0xEF,0xBB,0xBF);
-			var loader:URLLoader = new URLLoader();
-			loader.dataFormat = URLLoaderDataFormat.BINARY;
-			loader.addEventListener(Event.COMPLETE,h);
-			loader.load(new URLRequest("ui.lang"));
-			function h(e:Event):void
-			{
-				var str:String = loader.data;
-				trace(str.charCodeAt(0));
-			}
+			var t:String = CodeCreater.createByObject({x:1},"UI");
+			ColorContant
+			var text:TextField = new TextField();
+			text.autoSize = TextFieldAutoSize.LEFT;
+			addChild(text);
+			
+			text.text = t;
+			
+			new CodeColor().parse(text);
 		}
 		
 	}
