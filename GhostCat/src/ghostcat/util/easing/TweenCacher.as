@@ -10,6 +10,7 @@ package ghostcat.util.easing
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
+	import flash.utils.getTimer;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	
@@ -49,6 +50,7 @@ package ghostcat.util.easing
 		
 		private var timer:Timer;
 		private var canvas:Sprite;
+		private var limitTimeInFrame:int;//每帧限时
 		
 		/**
 		 * 是否已经绘制完成
@@ -58,10 +60,11 @@ package ghostcat.util.easing
 			return _readComplete;
 		}
 		
-		public function TweenCacher(target:DisplayObject,duration:Number,params:Object,frameRate:Number,rect:Rectangle=null)
+		public function TweenCacher(target:DisplayObject,duration:Number,params:Object,frameRate:Number,rect:Rectangle=null,limitTimeInFrame:int = 0)
 		{
 			this.target = target;
 			this.frameRate = frameRate;
+			this.limitTimeInFrame = limitTimeInFrame;
 			
 			this.canvas = new Sprite();
 			this.canvas.addChild(target);
@@ -77,26 +80,42 @@ package ghostcat.util.easing
 			this.timer.start();
 		}
 		
+		/**
+		 * 立即渲染完所有帧
+		 * 
+		 */
+		public function renderAllFrames():void
+		{
+			this.limitTimeInFrame = int.MAX_VALUE;
+			timeHandler(null);
+		}
+		
 		private function timeHandler(event:Event):void
 		{
-			if (tween.currentTime < tween.duration)
+			var t:int = getTimer();
+			do
 			{
-				var bitmapData:BitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
-				var m:Matrix;
-				if (rect)
+				if (tween.currentTime < tween.duration)
 				{
-					m = new Matrix();
-					m.translate(-rect.x,-rect.y);
+					var bitmapData:BitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
+					var m:Matrix;
+					if (rect)
+					{
+						m = new Matrix();
+						m.translate(-rect.x,-rect.y);
+					}
+					bitmapData.draw(canvas,m);
+					result.push(bitmapData);
+					
+					tween.update(1000 / frameRate);
 				}
-				bitmapData.draw(canvas,m);
-				result.push(bitmapData);
-				
-				tween.update(1000 / frameRate);
+				else
+				{
+					readCompleteHandler();
+					break;
+				}
 			}
-			else
-			{
-				readCompleteHandler();
-			}
+			while (getTimer() - t < limitTimeInFrame)
 		}
 		
 		private function readCompleteHandler():void

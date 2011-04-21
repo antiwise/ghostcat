@@ -65,3 +65,6 @@ A.enabledAutoLayoutÊÇ²ÉÓÃÎÄ±¾²»¶¯£¬Æ¤·ô¸ù¾ÝÎÄ±¾Î»ÖÃ±ä»¯µÄ·½Ê½£¬ËùÒÔÊÓ¾õÉÏÆ¤·ô»áÒ
 
 Q.GTextµ÷ÓÃwidth,heightÎÞ·¨ÉèÖÃÆä¿í¸ß
 A.GText»á°üº¬Ò»¸ö±³¾°Æ¤·ô£¬ÉèÖÃ¿í¸ß»á±»ÈÏÎªÊÇÉèÖÃÆ¤·ôµÄ¿í¸ß¡£ÉèÖÃÎÄ±¾¿òµÄ¿í¸ßÒªÊ¹ÓÃsetTextFieldSize·½·¨£¬»òÕßÉèÖÃËütextFieldÊôÐÔµÄ¿í¸ß
+
+Q.Ê¹ÓÃMovieClipCacher,GBitmapMovieClipµÄcreateFromMovieClip·½·¨½øÐÐÎ»Í¼»º´æÊ±£¬ºÜ³¤Ê±¼ä²ÅÄÜ»ñµÃ½á¹û
+A.ÒòÎª¶¯»­»º´æÓÐ¿ÉÄÜ·Ç³£ÏûºÄCPU×ÊÔ´£¬Ä¬ÈÏÖ»ÓÃ×îÐ¡µÄÏûºÄäÖÈ¾¡£Äã¿ÉÒÔÌá¸ßlimitTimeInFrameÊôÐÔµÄÖµÈÃÃ¿´ÎäÖÈ¾µÄÊ±¼äÌá¸ß£¨¹ý¸ßÓÐ¿ÉÄÜ»á¿¨£©£¬Ò²¿ÉÒÔÓÃrenderAllFrames·½·¨Á¢¼´äÖÈ¾ÍêÈ«²¿ÄÚÈÝ¡£

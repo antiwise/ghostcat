@@ -21,7 +21,20 @@ package ghostcat.display.loader
 	 */
 	public class GBitmapMovieClipLoader extends GBitmapMovieClip
 	{
+		/**
+		 * 渲染区域 
+		 */
 		public var renderRect:Rectangle;
+		
+		/**
+		 * 是否在播放时顺便缓存
+		 */
+		public var readWhenPlaying:Boolean = false;
+		
+		/**
+		 * 每次缓存允许的最高时间
+		 */
+		public var limitTimeInFrame:int = 0;
 		
 		public var loader:URLLoader;
 		public var swf:SWFDecoder;
@@ -71,7 +84,7 @@ package ghostcat.display.loader
 		{
 			var loadInfo:LoaderInfo = event.currentTarget as LoaderInfo;
 			loadInfo.removeEventListener(Event.COMPLETE,swfLoadCompleteHandler);
-			createFromMovieClip(loadInfo.loader.content as MovieClip,renderRect);
+			createFromMovieClip(loadInfo.loader.content as MovieClip,renderRect,1,-1,readWhenPlaying,limitTimeInFrame);
 		}
 	}
 }
