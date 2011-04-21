@@ -162,7 +162,7 @@ package ghostcat.display.movieclip
 		 * @return 
 		 * 
 		 */
-		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 0):void
+		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 10):void
 		{
 			movieClipCacher = new MovieClipCacher(mc,rect,start,len,readWhenPlaying,limitTimeInFrame);
 			
