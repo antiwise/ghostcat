@@ -580,6 +580,8 @@
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.util.code.CodeCreater"/>
     <classEntry path="ghostcat.util.code.CodeColor"/>
+    <classEntry path="ghostcat.util.display.UIUtil"/>
+    <classEntry path="ghostcat.util.display.BitmapMovieUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

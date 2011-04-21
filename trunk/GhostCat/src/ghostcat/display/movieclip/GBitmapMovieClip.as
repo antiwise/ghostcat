@@ -37,6 +37,11 @@ package ghostcat.display.movieclip
 		 */
 		public var bitmapMouseChecker:BitmapMouseChecker;
 		
+		/**
+		 * 进行位图缓存时，可以用它来控制缓存过程
+		 */
+		public var movieClipCacher:MovieClipCacher
+		
 		private var _enableMouseEvent:Boolean;
 		
 		/**
@@ -144,7 +149,6 @@ package ghostcat.display.movieclip
 			super.destory();
 		}
 		
-		
 		/**
 		 * 从一个MovieClip生成
 		 * 注意这个缓存是需要时间的，如果要在完全生成GBitmapMovieClip对象后进行一些操作，可监听GBitmapMovieClip的complete事件
@@ -153,26 +157,40 @@ package ghostcat.display.movieclip
 		 * @param rect	绘制范围
 		 * @param start	起始帧
 		 * @param len	长度
-		 * @param immediately 是否立即显示
+		 * @param readWhenPlaying 是否在播放时顺便缓存
+		 * @param limitTimeInFrame	每次缓存允许的最高时间
 		 * @return 
 		 * 
 		 */
-		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,immediately:Boolean = false):void
+		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 0):void
 		{
-			var cacher:MovieClipCacher = new MovieClipCacher(mc,rect,start,len);
-			if (immediately)
-				cacher.result = bitmaps;
-			cacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
+			movieClipCacher = new MovieClipCacher(mc,rect,start,len,readWhenPlaying,limitTimeInFrame);
+			
+			if (readWhenPlaying)
+				movieClipCacher.result = bitmaps;
+			
+			movieClipCacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
+		}
+		
+		/**
+		 * 当createFromMovieClip执行后，立即缓存完所有的帧 
+		 * 
+		 */
+		public function renderAllFrames():void
+		{
+			if (movieClipCacher)
+				movieClipCacher.renderAllFrames();
 		}
 		
 		private function cacherCompleteHandler(event:Event):void
 		{
-			var cacher:MovieClipCacher = event.currentTarget as MovieClipCacher;
-			cacher.removeEventListener(Event.COMPLETE,cacherCompleteHandler);
+			movieClipCacher.removeEventListener(Event.COMPLETE,cacherCompleteHandler);
 			
-			this.bitmaps = cacher.result;
-			this.labels = cacher.mc.currentLabels;
+			this.bitmaps = movieClipCacher.result;
+			this.labels = movieClipCacher.mc.currentLabels;
 			this.dispatchEvent(new Event(Event.COMPLETE));
+			
+			movieClipCacher = null;
 		}
 		
 		/** @inheritDoc*/

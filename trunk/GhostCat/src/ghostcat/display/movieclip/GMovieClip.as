@@ -117,15 +117,16 @@ package ghostcat.display.movieclip
          * @param rect		绘制范围
 		 * @param start		起始帧
 		 * @param len		长度
-		 * @param immediately	是否立即显示
-         * 
+		 * @param readWhenPlaying	是否立即显示
+         * @param limitTimeInFrame	每次缓存允许的最高时间
+		 * 
          * @return 
          * 
          */
-        public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1,immediately:Boolean = false):GBitmapMovieClip
+        public function toGBitmapMovieClip(rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 0):GBitmapMovieClip
         {
 			var v:GBitmapMovieClip = new GBitmapMovieClip();
-			v.createFromMovieClip(mc,rect,start,len,immediately);
+			v.createFromMovieClip(mc,rect,start,len,readWhenPlaying,limitTimeInFrame);
 			return v;
         }
 	}
