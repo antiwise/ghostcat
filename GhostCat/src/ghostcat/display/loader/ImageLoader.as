@@ -47,6 +47,13 @@ package ghostcat.display.loader
 		{
 			removeHandler();
 			loadBytes((event.currentTarget as LoaderInfo).bytes);
+			this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
+		}
+		
+		private function loadBytesCompleteHandler(event:Event):void
+		{
+			this.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadBytesCompleteHandler);
+			this.dispatchEvent(event);
 		}
 		
 		private function ioErrorHandler(event:IOErrorEvent):void
