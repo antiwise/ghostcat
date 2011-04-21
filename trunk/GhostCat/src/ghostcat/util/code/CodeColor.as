@@ -8,8 +8,11 @@ package ghostcat.util.code
 	public class CodeColor extends EventDispatcher
 	{
 		public var colors:Object = {
-			0xFF0000:/(package|class)/g,
-			0x0000FF:/import|public|private|protected|in/g
+			"#FF00FF":/\b(package|class)\b/g,
+			"#0000FF":/\b(import|public|private|protected|extends|in)\b/g,
+			"#00FF00":/\b(function)\b/g,
+			"#000080":/\b(var)\b/g,
+			"#FF0000":/'[^'].*?'/g
 		}
 		public function CodeColor()
 		{
@@ -17,11 +20,12 @@ package ghostcat.util.code
 		
 		public function parse(textField:TextField):void
 		{
+			var html:String = textField.text;
 			for (var p:String in colors)
 			{
-				var result:Array = RegExp(colors[p]).exec(textField.text);
-			
+				html = html.replace(RegExp(colors[p]),"<font color=\"" + p + "\">$1</font>");
 			}
+			textField.htmlText = html;
 		}
 	}
 }
