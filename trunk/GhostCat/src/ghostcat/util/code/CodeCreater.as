@@ -107,7 +107,8 @@ package ghostcat.util.code
 			for (var p:String in v)
 			{
 				var className:QName = CodeCreater.getClassName(v[p]);
-				importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+				if (className.uri)
+					importDict[className.uri + "." + className.localName] = null;
 				result += "public var " + p + ":" + className.localName + ";";
 			}
 			result += "public function " + CodeCreater.getClassName(classPath).localName + "(v:Object){setData(v)}";
@@ -134,7 +135,8 @@ package ghostcat.util.code
 				if (child.name && child.name.slice(0,8) != "instance")
 				{
 					var className:QName = CodeCreater.getClassName(child);
-					importDict[(className.uri ? className.uri + ".": "") + className.localName] = null;
+					if (className.uri)
+						importDict[className.uri + "." + className.localName] = null;
 					vars += "public var " + child.name + ":" + className.localName + ";"
 					creates += "this." + child.name + " = " + skinName;
 					var path:String = "[\"" + child.name + "\"]";
