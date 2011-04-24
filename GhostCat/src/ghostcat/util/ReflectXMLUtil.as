@@ -123,7 +123,7 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function getChildXML(v:DisplayObject):XML
+		public static function getChildXML(v:DisplayObject,filterClass:Class = null):XML
 		{
 			var result:XML = <xml/>;
 			result.setName(ReflectUtil.getQName(v));
@@ -135,8 +135,12 @@ package ghostcat.util
             {
                 var contain:DisplayObjectContainer = DisplayObjectContainer(v);
                 for (var i:int=0;i < contain.numChildren;i++) 
-                    result.appendChild(getChildXML(contain.getChildAt(i)));
-            }
+				{
+					var child:DisplayObject = contain.getChildAt(i);
+					if (!filterClass || (child is filterClass))
+						result.appendChild(getChildXML(child,filterClass));
+				}
+			}
             return result;
         }
 	}

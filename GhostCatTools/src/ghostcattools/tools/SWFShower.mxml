@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  currentState="base" showStatusBar="false" title="SWF浏览"
+		  width="555" height="425" creationComplete="window1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.fileformat.swf.SWFDecoder;
+			import ghostcat.fileformat.swf.tag.SymbolClassTag;
+			import ghostcat.manager.DragManager;
+			import ghostcat.util.ReflectXMLUtil;
+			import ghostcat.util.display.DisplayUtil;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.mediaClasses.VolumeBar;
+			
+			private var loader:Loader;
+			
+			[Bindable]
+			private var urlText:String = "点击“浏览”或者拖动文件到本窗口打开SWF文件";
+			
+			[Bindable]
+			private var symbolList:ArrayCollection;
+			
+			[Bindable]
+			private var treeData:XML;
+			
+			private var currentObject:Object;
+			
+			public function loadFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				this.urlText = file.nativePath;
+				var v:ByteArray = FileControl.readFile(file);
+				
+				this.loader = new Loader();
+				var loaderContext:LoaderContext = new LoaderContext();
+				loaderContext.allowCodeImport = true;
+				this.loader.loadBytes(v,loaderContext);
+				
+				var swf:SWFDecoder = new SWFDecoder();
+				swf.read(v);
+				
+				var tag:SymbolClassTag = SymbolClassTag(swf.getTags(SymbolClassTag)[0]);
+				this.symbolList = new ArrayCollection(tag.symbolClasses);
+				
+				this.currentState = "opened";
+			}
+			
+			protected function list_changeHandler(event:ListEvent):void
+			{
+				var itemName:String = list.selectedItem.toString();
+				
+				var c:Class;
+				if (loader.content)
+					c = loader.contentLoaderInfo.applicationDomain.getDefinition(itemName) as Class
+				else
+					return;
+				
+				try
+				{
+					this.currentObject = new c();
+				}
+				catch (e:Error){};
+					
+				SoundMixer.stopAll();
+				
+				if (currentObject is DisplayObject || currentObject is BitmapData)
+				{
+					this.currentState = "picture";
+					
+					var displayObj:DisplayObject;
+					if (currentObject is BitmapData)
+						displayObj = new Bitmap(currentObject as BitmapData)
+					else
+						displayObj = currentObject as DisplayObject;
+					
+					DisplayUtil.removeAllChildren(image);
+					image.addChild(displayObj);
+				
+					var rect:Rectangle = displayObj.getRect(displayObj);
+					displayObj.x = -rect.x;
+					displayObj.y = -rect.y;
+					
+					imageCanvas.validateSize();
+					image.x = Math.max(0,(imageCanvas.width - rect.width)/2);
+					image.y = Math.max(0,(imageCanvas.height - rect.height)/2);
+					image.width = rect.width;
+					image.height = rect.height;
+					
+					var sh:Shape = new Shape();
+					sh.x = -rect.x;
+					sh.y = -rect.y;
+					sh.graphics.lineStyle(0,0);
+					sh.graphics.moveTo(-5,0);
+					sh.graphics.lineTo(5,0);
+					sh.graphics.moveTo(0,-5);
+					sh.graphics.lineTo(0,5);
+					sh.graphics.endFill();
+					sh.blendMode = BlendMode.INVERT;
+					
+					image.addChild(sh);
+					
+					if (currentObject is BitmapData)
+					{
+						tree.dataProvider = null;
+					}
+					else
+					{
+						treeData = ReflectXMLUtil.getChildXML(displayObj,InteractiveObject);
+						tree.validateNow();
+						tree.expandChildrenOf(tree.firstVisibleItem,true);
+					}
+				}
+				else if (currentObject is Sound)
+				{
+					this.currentState = "sound";
+				}
+				else if (currentObject is ByteArray)
+				{
+					this.currentState = "bytes";
+				}
+				else
+				{
+					this.currentState = "opened";
+				}
+			}
+			
+			private function treeLabelFuntion(item:Object):String
+			{
+				var xml:XML = (item as XML).copy();
+				delete xml.*;
+				return xml.toXMLString();
+			}
+			
+			private function listLabelFunction(item:Object,index:int):String
+			{
+				var names:Array = item.split(".");
+				return names[names.length - 1];
+			}
+
+			protected function image_mouseDownHandler(event:MouseEvent):void
+			{
+				DragManager.startDrag(image);
+			}
+
+
+			protected function image_resizeHandler(event:ResizeEvent):void
+			{
+				image.x *= event.target.width / event.oldWidth;
+				image.y *= event.target.height / event.oldHeight;
+			}
+
+
+			protected function browseBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(loadFileHandler,"打开一个SWF文件",[new FileFilter("SWF 影片","*.swf")]);
+			}
+
+			protected function window1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(loadFileHandler,this,["swf"]);
+			}
+
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				if (currentObject is Sound)
+					(currentObject as Sound).play();
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				if (currentObject is ByteArray)
+				{
+					FileControl.browseForSave(rHandler,"保存二进制文件");
+					function rHandler(files:Array):void
+					{
+						var file:File = files[0] as File;
+						FileControl.writeFile(file,currentObject as ByteArray);
+					}
+				}
+			}
+
+
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				System.setClipboard(treeData.toXMLString());
+			}
+			
+			
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				var xmlList:XMLList = treeData..*.@name;
+				var list:Array = [];
+				for each (var child:XML in xmlList)
+				{
+					var str:String = child.toString();
+					if (str.slice(0,7) == "instance")
+						list.push(str);
+				}
+				System.setClipboard(list.join(" "));
+			}
+
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="base"/>
+		<s:State name="opened"/>
+		<s:State name="picture" basedOn="opened"/>
+		<s:State name="sound" basedOn="opened"/>
+		<s:State name="bytes" basedOn="opened"/>
+	</s:states>
+	<s:Button id="browseBN" x="10" y="10" label="浏览"
+			  click="browseBN_clickHandler(event)"/>
+	<s:Label id="browseText" y="14" left="92" right="10" text="{urlText}"/>
+	<mx:HDividedBox top="39" bottom="0" width="100%">
+		<mx:DataGrid id="list" width="150" height="100%" dataProvider="{symbolList}" change="list_changeHandler(event)">
+			<mx:columns>
+				<mx:DataGridColumn headerText="类名"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
+			<mx:Canvas clipContent="true" id="imageCanvas" includeIn="picture" label="图象" width="100%" height="100%" resize="image_resizeHandler(event)">
+				<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
+			</mx:Canvas>
+			<mx:Canvas id="treeCanvas" includeIn="picture" label="结构" width="100%" height="100%">
+				<s:Button x="6" y="4" label="复制到剪贴板" click="button3_clickHandler(event)"/>
+				<s:Button x="106" y="4" label="复制所有名称到剪贴板" click="button4_clickHandler(event)"/>
+				<mx:Tree id="tree" width="100%" top="30" height="100%" dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
+			</mx:Canvas>
+			<mx:Canvas id="soundCanvas" includeIn="sound" label="声音" width="100%" height="100%">
+				<s:Button width="100" height="100" label="播放声音" horizontalCenter="0" verticalCenter="0"
+						  click="button1_clickHandler(event)"/>
+			</mx:Canvas>
+			<mx:Canvas id="bytesCanvas" includeIn="bytes" label="二进制数据" width="100%" height="100%">
+				<s:Button width="100" height="100" label="提取文件" horizontalCenter="0" verticalCenter="0"
+						  click="button2_clickHandler(event)"/>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:HDividedBox>
+</s:Window>
