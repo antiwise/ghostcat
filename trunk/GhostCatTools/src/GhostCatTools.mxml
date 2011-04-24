@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="372" height="212"
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
+					   showStatusBar="false" useHandCursor="true" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合">
+	<fx:Style source="GhostCatTools.css"/>
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.tools.GCNotepad;
+			import ghostcattools.tools.SWFShower;
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Window;
+			import spark.events.TextOperationEvent;
+
+			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
+			{
+				Config.load();
+				
+				FileControl.dragFileIn(bn1_dragInHandler,this.bn1);
+				FileControl.dragFileIn(bn2_dragInHandler,this.bn2,["swf"]);
+			}
+			
+			private function bn1_dragInHandler(files:Array):void
+			{
+				var window:GCNotepad = new GCNotepad();
+				window.open();
+				window.openFileHandler(files);
+			}
+			
+			private function bn2_dragInHandler(files:Array):void
+			{
+				var window:SWFShower = new SWFShower();
+				window.open();
+				window.loadFileHandler(files);
+			}
+
+			protected function sdkSelectBN_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File();
+				file.browseForDirectory("选择一个目录");
+				file.addEventListener(Event.SELECT,handler);
+				function handler(event:Event):void
+				{
+					if (file.resolvePath("bin/asdoc.exe").exists && file.resolvePath("bin/mxmlc.exe").exists)
+					{
+						Config.FLEXSDK_PATH = file.nativePath;
+						Config.save();
+					}
+					else
+					{
+						Alert.show("请选择正确的Flex SDK目录","错误");
+					}
+				}
+			}
+			
+			protected function notepadSelectBN_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File();
+				file.browseForOpen("选择一个应用程序",[new FileFilter("应用程序","*.exe")]);
+				file.addEventListener(Event.SELECT,handler);
+				function handler(event:Event):void
+				{
+					Config.NOTEPAD_PATH = file.nativePath;
+					Config.save();
+				}
+			}
+
+
+			protected function bn1_clickHandler(event:MouseEvent):void
+			{
+				var window:GCNotepad = new GCNotepad();
+				window.open();
+			}
+			
+			protected function bn2_clickHandler(event:MouseEvent):void
+			{
+				var window:SWFShower = new SWFShower();
+				window.open();
+			}
+
+
+			protected function windowedapplication1_closeHandler(event:Event):void
+			{
+				this.nativeApplication.exit();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:TabNavigator left="0" right="0" top="0" bottom="0" paddingTop="0">
+		<s:NavigatorContent width="100%" height="100%" label="工具">
+			<s:Button id="bn1" x="10" y="10" width="80" height="80" label="文本压缩"
+					  click="bn1_clickHandler(event)" iconPlacement="top"/>
+			<s:Button id="bn2" x="100" y="10" width="80" height="80" label="SWF浏览"
+					  click="bn2_clickHandler(event)" iconPlacement="top"/>
+			<s:Button id="bn3" x="190" y="10" width="80" height="80" label="压缩工具" iconPlacement="top"/>
+			<s:Button id="bn4" x="280" y="10" width="80" height="80" label="多语言对比" iconPlacement="top"/>
+			<s:Button id="bn5" x="10" y="100" width="80" height="80" label="正则工具" iconPlacement="top"/>
+			<s:Button id="bn6" x="100" y="100" width="80" height="80" label="编程工具" iconPlacement="top"/>
+			<s:Button id="bn7" x="190" y="100" width="80" height="80" label="字体生成" iconPlacement="top"/>
+			<s:Button id="bn8" x="280" y="100" width="80" height="80" label="ASDoc生成" iconPlacement="top"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="配置">
+			<s:Label x="10" y="10" text="Flex SDK 路径："/>
+			<s:Label x="10" y="72" text="文本编辑器路径："/>
+			<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="{Config.FLEXSDK_PATH}"/>
+			<s:Button id="sdkSelectBN" x="383" y="31" right="10" width="23" height="21"
+					  click="sdkSelectBN_clickHandler(event)"
+					  toolTip="打开文件"/>
+			<s:TextInput id="notepadUrlText" y="91" left="10" right="40" editable="false"
+						 text="{Config.NOTEPAD_PATH}"/>
+			<s:Button id="notepadSelectBN" y="91" right="10" width="23" height="21"
+					  click="notepadSelectBN_clickHandler(event)" toolTip="打开文件"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="关于">
+			<s:Rect x="13" y="50" width="346" height="130" radiusX="5" radiusY="5">
+				<s:fill>
+					<s:SolidColor color="#CCCCCC"/>
+				</s:fill>
+			</s:Rect>
+			<s:Label x="10" y="10" text="作者: flashyiyi&#xd;项目地址: http://ghostcat.googlecode.com/"/>
+			<s:Label x="27" y="58" text="此工具支持完整的拖拽操作，所有功能都能通过拖拽执行"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	<s:Label x="255" y="-19" right="5" top="5" text="当前版本：0.0.0"/>
+</s:WindowedApplication>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="323" height="87" currentState="start" showStatusBar="false"
+		  creationComplete="window1_creationCompleteHandler(event)" title="文本压缩">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			
+			public var file:File;
+			public var tempFile:File;
+			
+			[Bindable]
+			public var fileUrlText:String;
+			[Bindable]
+			public var isCompress:Boolean;
+			
+			private var bytesSize:uint
+			private var bytesCompressSize:uint;
+			
+			public function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				this.file = files[0] as File;
+				var bytes:ByteArray = FileControl.readFile(file);
+				this.bytesCompressSize = bytes.length;
+				this.isCompress = false;
+				try
+				{
+					bytes.uncompress();
+					isCompress = true;
+				}
+				catch (e:Error){};
+				
+				this.bytesSize = bytes.length;
+				this.tempFile = File.createTempFile();
+				FileControl.writeFile(tempFile,bytes);
+					
+				this.openNotepad();
+				
+				this.currentState = "opened";
+				
+				this.refeshUrlText();
+			}
+			
+			private function openNotepad():void
+			{
+				FileControl.run(Config.NOTEPAD_PATH,[this.tempFile.nativePath],saveFileHandler);
+			}
+
+			private function saveFileHandler(event:NativeProcessExitEvent):void
+			{
+				saveTempFile();
+			}
+	
+			private function saveTempFile():void
+			{
+				var bytes:ByteArray = FileControl.readFile(this.tempFile);
+				bytes.position = 0;
+				this.bytesSize = bytes.length;
+				
+				if (isCompress)
+					bytes.compress();
+				
+				this.bytesCompressSize = bytes.length;
+				FileControl.writeFile(this.file,bytes);
+				this.refeshUrlText();
+			}
+
+			private function refeshUrlText():void
+			{
+				this.fileUrlText = this.file.nativePath + (isCompress ? "(压缩率: " + (this.bytesCompressSize / this.bytesSize * 100).toFixed(2) + "%)" : "");
+			}
+
+			protected function window1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openFileHandler,this);
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"打开一个文本文件");
+			}
+			
+			protected function editButton_clickHandler(event:MouseEvent):void
+			{
+				openNotepad();
+			}
+			
+			protected function compressButton_clickHandler(event:MouseEvent):void
+			{
+				this.isCompress = compressButton.selected;
+				saveTempFile();
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:states>
+		<s:State name="start"/>
+		<s:State name="opened"/>
+	</s:states>
+	<s:Button id="openBN" x="9" y="10" height="67" label="浏览"
+			  click ="openBN_clickHandler(event)"/>
+	<s:Label includeIn="start" x="111" y="26" width="187" height="29" text="点击“浏览“按钮&#xd;或者拖动文件到此窗口"/>
+	
+	<s:Label includeIn="opened" x="88" y="10" width="222" height="45" text="{fileUrlText}"/>
+	<s:CheckBox id="compressButton" includeIn="opened" x="91" y="58" label="是否压缩文件"
+				click="compressButton_clickHandler(event)" selected="{isCompress}"/>
+	<s:Button id="editButton" includeIn="opened" x="255" y="56" width="58" label="打开"
+			  click="editButton_clickHandler(event)"/>
+</s:Window>

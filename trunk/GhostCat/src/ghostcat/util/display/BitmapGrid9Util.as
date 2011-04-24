@@ -20,13 +20,12 @@ package ghostcat.util.display
 	{
 		/**
 		 * 通过Grid9算法获得新的位图
-		 * 
 		 * @see ghostcat.display.bitmap.GBitmap
 		 * 
-		 * @param source
-		 * @param width
-		 * @param height
-		 * @param scale9Grid
+		 * @param source	位图源
+		 * @param width	新的宽度
+		 * @param height	新的高度
+		 * @param scale9Grid	Grid9缩放范围
 		 * @param isTile	采用平铺模式伸展
 		 * @return 
 		 * 
@@ -41,6 +40,13 @@ package ghostcat.util.display
 		/**
 		 * 通过Grid9算法将位图绘制到一个元件上
 		 * @see ghostcat.display.bitmap.BitmapGrid9Shape
+		 * 
+		 * @param graphics	绘制目标
+		 * @param source	位图源
+		 * @param width	新的宽度
+		 * @param height	新的高度
+		 * @param scale9Grid	Grid9缩放范围
+		 * @param isTile	采用平铺模式伸展
 		 * 
 		 */
 		public static function renderGrid9Shape(graphics:Graphics,source:BitmapData,width:Number,height:Number,scale9Grid:Rectangle,isTile:Boolean = false):void
