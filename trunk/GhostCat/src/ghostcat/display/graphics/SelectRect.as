@@ -1,5 +1,6 @@
 package ghostcat.display.graphics
 {
+	import flash.display.BlendMode;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -42,7 +43,7 @@ package ghostcat.display.graphics
 		 */
 		public var rHandler:Function;
 		
-		public function SelectRect(rHandler:Function = null,lineStyle:IGraphicsLineStyle = null,fill:IGraphicsFill = null)
+		public function SelectRect(rHandler:Function = null,lineStyle:IGraphicsLineStyle = null,fill:IGraphicsFill = null,blendMode:String = "normal")
 		{
 			mouseEnabled = mouseChildren = false;
 			
@@ -54,6 +55,7 @@ package ghostcat.display.graphics
 			
 			this.fill = fill;
 			this.lineStyle = lineStyle;
+			this.blendMode = blendMode;
 			
 			this.rHandler = rHandler;
 		}

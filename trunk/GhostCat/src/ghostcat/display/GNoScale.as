@@ -48,6 +48,11 @@ package ghostcat.display
 				_width = content.width;
 				_height = content.height;
 			}
+			else
+			{
+				_width = 0;
+				_height = 0;
+			}
 		}
 		/** @inheritDoc*/
 		public override function get width():Number

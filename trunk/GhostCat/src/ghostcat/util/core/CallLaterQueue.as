@@ -6,6 +6,7 @@ package ghostcat.util.core
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
+	import ghostcat.util.Util;
 
 	/**
 	 * 延迟调用函数集中管理器 
@@ -64,6 +65,36 @@ package ghostcat.util.core
 		{
 			tickQueue[tickQueue.length] = f;
 			tickQueuePara[tickQueuePara.length] = para;
+		}
+		
+		/**
+		 * 移除延迟调用 
+		 * @param f
+		 * 
+		 */
+		public function removeCallLaterByTime(f:Function):void
+		{
+			var index:int = timeQueue.indexOf(f);
+			if (index != -1)
+			{
+				timeQueue.splice(index, 1);
+				timeQueuePara.splice(index, 1);
+			}
+		}
+			
+		/**
+		 * 移除下一帧延迟调用 
+		 * @param f
+		 * 
+		 */
+		public function removeCallLaterByTick(f:Function):void
+		{
+			var index:int  = tickQueue.indexOf(f);
+			if (index != -1)
+			{
+				tickQueue.splice(index, 1);
+				tickQueuePara.splice(index, 1);
+			}
 		}
 		
 		private function timerHandler(event:TimerEvent):void

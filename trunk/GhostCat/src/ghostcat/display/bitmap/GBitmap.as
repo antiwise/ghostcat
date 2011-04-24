@@ -10,6 +10,7 @@ package ghostcat.display.bitmap
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	import flash.utils.getDefinitionByName;
 	
@@ -23,6 +24,7 @@ package ghostcat.display.bitmap
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.core.UniqueCall;
+	import ghostcat.util.display.BitmapGrid9Util;
 	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="update_complete",type="ghostcat.events.GEvent")]
@@ -90,6 +92,11 @@ package ghostcat.display.bitmap
 		public var enabledScale:Boolean = false;
 		
 		/**
+		 * 进行Grid9缩放时是否以平铺方式展开
+		 */
+		public var isTileGrid9:Boolean = false;
+		
+		/**
 		 * 是否在第一次设置content时接受content的坐标 
 		 */		
 		public var acceptContentPosition:Boolean = true;
@@ -108,6 +115,11 @@ package ghostcat.display.bitmap
 		private var _height:Number;
 		
 		private var _bitmapData:BitmapData;
+		/**
+		 * Grid9缩放时的临时位图 
+		 */
+		protected var grid9BitmapData:BitmapData;
+		private var _scale9Grid:Rectangle;
 		
 		/**
 		 * 鼠标事件对象
@@ -186,6 +198,9 @@ package ghostcat.display.bitmap
 				}
 			}
 			
+			if (disposeWhenDestory)
+				this.dispose();
+			
 			if (skin is Bitmap)
 				bitmapData = (skin as Bitmap).bitmapData;
 			else if (skin is DisplayObject)
@@ -197,6 +212,33 @@ package ghostcat.display.bitmap
 				oldParent.addChildAt(this,oldIndex);
 			
 			this.contentInited = true;
+			invalidateSize();
+		}
+		
+		/**
+		 * 替换一个元件并放置在原来的位置
+		 * @param target
+		 * 
+		 */
+		public function replaceTarget(target:DisplayObject):void
+		{
+			if (target && target.parent)
+			{
+				this.transform.colorTransform = target.transform.colorTransform;
+				this.transform.matrix = target.transform.matrix;
+				this.filters = target.filters;
+				this.blendMode = target.blendMode;
+				this.visible = target.visible;
+				this.name = target.name;
+				this.scrollRect = target.scrollRect;
+				this.scale9Grid = target.scale9Grid;
+				
+				var oldIndex:int = target.parent.getChildIndex(target);
+				var oldParent:DisplayObjectContainer = target.parent;
+				
+				oldParent.removeChild(target);
+				oldParent.addChildAt(this,oldIndex);
+			}
 		}
 		
 		/**
@@ -215,20 +257,56 @@ package ghostcat.display.bitmap
 			if (bitmapMouseChecker)
 				bitmapMouseChecker.enabled = value;
 		}
-
+		
 		/** @inheritDoc*/
+		public override function get bitmapData():BitmapData
+		{
+			return _bitmapData;
+		}
+		
 		public override function set bitmapData(value:BitmapData) : void
 		{
-			_bitmapData = super.bitmapData = value;
-			
+			_bitmapData = value;
 			if (bitmapData)
 			{
 				_width = bitmapData.width;
 				_height = bitmapData.height;
-				
-				if (bitmapByteArrayCacher)
-					cache();
 			}
+			else
+			{
+				_width = 0;
+				_height = 0;
+			}
+			if (bitmapByteArrayCacher)
+			{
+				if (bitmapData)
+					cache();
+				else
+					uncache();
+			}
+			if (scale9Grid)
+			{
+				if (grid9BitmapData)
+					grid9BitmapData.dispose();
+				
+				vaildSize();
+			}
+			else
+			{
+				super.bitmapData = bitmapData;
+			}
+		}
+		
+		public override function get scale9Grid():Rectangle
+		{
+			return _scale9Grid;
+		}
+		
+		public override function set scale9Grid(innerRectangle:Rectangle):void
+		{
+			_scale9Grid = innerRectangle;
+			if (scale9Grid && bitmapData)
+				vaildSize();
 		}
 		
 		/** @inheritDoc */
@@ -465,8 +543,8 @@ package ghostcat.display.bitmap
 				sizeCall.invalidate();
 		}
 		
-		protected var positionCall:UniqueCall = new UniqueCall(vaildPosition,true);
-		protected var sizeCall:UniqueCall = new UniqueCall(vaildSize,true);
+		protected var positionCall:UniqueCall = new UniqueCall(vaildPosition);
+		protected var sizeCall:UniqueCall = new UniqueCall(vaildSize);
 		protected var displayListCall:UniqueCall = new UniqueCall(vaildDisplayList);
 		
 		/**
@@ -549,10 +627,10 @@ package ghostcat.display.bitmap
 		 */
 		public function vaildDisplayList(noEvent:Boolean = false):void
 		{
-			if (!noEvent)
-				updateDisplayList();
+			updateDisplayList();
 			
-			dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
+			if (!noEvent)
+				dispatchEvent(new GEvent(GEvent.UPDATE_COMPLETE));
 		}
 		
 		/**
@@ -565,20 +643,31 @@ package ghostcat.display.bitmap
 		
 		protected function updateSize():void
 		{
-			if (enabledScale)
+			if (enabledScale && !scale9Grid)
 			{
 				super.width = width;
 				super.height = height;
 			}
 			else
 			{
-				var newBitmapData:BitmapData = new BitmapData(_width,_height,true,0);
-				if (bitmapData)
+				if (_bitmapData)
 				{
-					newBitmapData.copyPixels(bitmapData,bitmapData.rect,new Point());
-					bitmapData.dispose();
+					if (scale9Grid)
+					{
+						if (grid9BitmapData)
+							grid9BitmapData.dispose();
+						grid9BitmapData = BitmapGrid9Util.grid9(_bitmapData,_width,_height,scale9Grid,isTileGrid9);
+						super.bitmapData = grid9BitmapData;
+					}
+					else
+					{
+						var newBitmapData:BitmapData = new BitmapData(_width,_height,_bitmapData.transparent,0);
+						newBitmapData.copyPixels(_bitmapData,_bitmapData.rect,new Point());
+						_bitmapData.dispose();
+						_bitmapData = newBitmapData;
+						super.bitmapData = _bitmapData;
+					}
 				}
-				bitmapData = newBitmapData;
 			}
 		}
 		
@@ -675,7 +764,7 @@ package ghostcat.display.bitmap
 		 */
 		public function cache():void
 		{
-			bitmapByteArrayCacher = new BitmapByteArrayCacher(_bitmapData);
+			bitmapByteArrayCacher = new BitmapByteArrayCacher(bitmapData);
 		}
 		
 		/**
@@ -717,11 +806,11 @@ package ghostcat.display.bitmap
 			if (bitmapMouseChecker)
 				bitmapMouseChecker.destory();
 			
-			if (bitmapData && disposeWhenDestory)
-			{
-				bitmapData.dispose();
-				bitmapData = null;
-			}
+			if (grid9BitmapData)
+				grid9BitmapData.dispose();
+			
+			if (disposeWhenDestory)
+				this.dispose();
 			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
@@ -732,5 +821,17 @@ package ghostcat.display.bitmap
 			destoryed = true;
 		}
 		
+		/**
+		 * 回收位图内存 
+		 * 
+		 */
+		public function dispose():void
+		{
+			if (bitmapData)
+			{
+				bitmapData.dispose();
+				bitmapData = null;
+			}
+		}
 	}
 }

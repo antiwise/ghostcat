@@ -18,7 +18,7 @@ package ghostcat.display.graphics
 	import ghostcat.util.display.DisplayUtil;
 
 	/**
-	 * 图像变形控制器，点击自动选中，并可调整大小和旋转
+	 * 图像变形控制器，点击自动选中，并可调整大小
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -78,6 +78,7 @@ package ghostcat.display.graphics
 		{
 			_lockX = value;
 			leftLineControl.visible = rightLineControl.visible = !value;
+			topLeftControl.visible = topRightControl.visible = bottomLeftControl.visible = bottomRightControl.visible = !_lockY || !_lockY
 		}
 
 		private var _lockY:Boolean = false;
@@ -91,19 +92,7 @@ package ghostcat.display.graphics
 		{
 			_lockY = value;
 			topLineControl.visible = bottomLineControl.visible = !value;
-		}
-
-		private var _lockRotation:Boolean = false;
-
-		public function get lockRotation():Boolean
-		{
-			return _lockRotation;
-		}
-
-		public function set lockRotation(value:Boolean):void
-		{
-			_lockRotation = value;
-			topLeftControl.visible = topRightControl.visible = bottomLeftControl.visible = bottomRightControl.visible = !value
+			topLeftControl.visible = topRightControl.visible = bottomLeftControl.visible = bottomRightControl.visible = !_lockY || !_lockY
 		}
 
 		
@@ -161,55 +150,51 @@ package ghostcat.display.graphics
 			
 			fillControl = new GBase();
 			fillControl.cursor = CursorSprite.CURSOR_DRAG;
-			fillControl.addEventListener(MouseEvent.MOUSE_DOWN,fillMouseDownHandler,false,0,true);
+			fillControl.addEventListener(MouseEvent.MOUSE_DOWN,fillMouseDownHandler);
 			controlCotainer.addChild(fillControl);
 			
 			topLeftControl = new DragPoint(pointSkin);
-			topLeftControl.cursor = CursorSprite.CURSOR_ROTATE_TOPLEFT;
-			topLeftControl.addEventListener(MoveEvent.MOVE,topLeftControlHandler,false,0,true);
-			topLeftControl.delayUpatePosition = true;
+			topLeftControl.cursor = CursorSprite.CURSOR_HV_DRAG;
+			topLeftControl.addEventListener(MoveEvent.MOVE,topLeftControlHandler);
 			controlCotainer.addChild(topLeftControl);
 			
 			topRightControl = new DragPoint(pointSkin);	
-			topRightControl.cursor = CursorSprite.CURSOR_ROTATE_TOPRIGHT;
-			topRightControl.addEventListener(MoveEvent.MOVE,topRightControlHandler,false,0,true);
-			topRightControl.delayUpatePosition = true;
+			topRightControl.cursor = CursorSprite.CURSOR_VH_DRAG;
+			topRightControl.addEventListener(MoveEvent.MOVE,topRightControlHandler);
 			controlCotainer.addChild(topRightControl);
 			
 			bottomLeftControl = new DragPoint(pointSkin);	
-			bottomLeftControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMLEFT;
-			bottomLeftControl.addEventListener(MoveEvent.MOVE,bottomLeftControlHandler,false,0,true);
-			bottomLeftControl.delayUpatePosition = true;
+			bottomLeftControl.cursor = CursorSprite.CURSOR_VH_DRAG;
+			bottomLeftControl.addEventListener(MoveEvent.MOVE,bottomLeftControlHandler);
 			controlCotainer.addChild(bottomLeftControl);
 			
 			bottomRightControl = new DragPoint(pointSkin);	
-			bottomRightControl.cursor = CursorSprite.CURSOR_ROTATE_BOTTOMRIGHT;
-			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler,false,0,true);
-			bottomRightControl.delayUpatePosition = true;
+			bottomRightControl.cursor = CursorSprite.CURSOR_HV_DRAG;
+			bottomRightControl.addEventListener(MoveEvent.MOVE,bottomRightControlHandler);
 			controlCotainer.addChild(bottomRightControl);
 			
 			topLineControl = new DragPoint(pointSkin);	
 			topLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			topLineControl.lockX = true;
-			topLineControl.addEventListener(MoveEvent.MOVE,topLineControlHandler,false,0,true);
+			topLineControl.addEventListener(MoveEvent.MOVE,topLineControlHandler);
 			controlCotainer.addChild(topLineControl);
 			
 			bottomLineControl = new DragPoint(pointSkin);	
 			bottomLineControl.cursor = CursorSprite.CURSOR_V_DRAG;
 			bottomLineControl.lockX = true;
-			bottomLineControl.addEventListener(MoveEvent.MOVE,bottomLineControlHandler,false,0,true);
+			bottomLineControl.addEventListener(MoveEvent.MOVE,bottomLineControlHandler);
 			controlCotainer.addChild(bottomLineControl);
 			
 			leftLineControl = new DragPoint(pointSkin);	
 			leftLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			leftLineControl.lockY = true;
-			leftLineControl.addEventListener(MoveEvent.MOVE,leftLineControlHandler,false,0,true);
+			leftLineControl.addEventListener(MoveEvent.MOVE,leftLineControlHandler);
 			controlCotainer.addChild(leftLineControl);
 			
 			rightLineControl = new DragPoint(pointSkin);	
 			rightLineControl.cursor = CursorSprite.CURSOR_H_DRAG;
 			rightLineControl.lockY = true;
-			rightLineControl.addEventListener(MoveEvent.MOVE,rightLineControlHandler,false,0,true);
+			rightLineControl.addEventListener(MoveEvent.MOVE,rightLineControlHandler);
 			controlCotainer.addChild(rightLineControl);
 		}
 		
@@ -235,14 +220,30 @@ package ghostcat.display.graphics
 			rightLineControl.setPosition(new Point(rect.right,rect.y + rect.height/2),true);
 		}
 		
+		private function setContentRect(x:Number = NaN,y:Number = NaN,width:Number = NaN ,height:Number = NaN):void
+		{
+			if (!isNaN(x))
+				content.x = x > content.x + content.width ? content.x + content.width : x;
+			if (!isNaN(y))
+				content.y = y > content.y + content.height ? content.y + content.height : y;
+			if (!isNaN(width))
+				content.width = width > 0 ? width : 0;
+			if (!isNaN(height))
+				content.height = height > 0 ? height : 0;
+		}
+		
 		private function topLeftControlHandler(event:MoveEvent):void
-		{	
+		{
 			if (!topLeftControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content);
-			var baseRotate:Number = Math.atan2(rect.y,rect.x)/Math.PI * 180;
-			this.rotation += Math.atan2(topLeftControl.position.y,topLeftControl.position.x)/Math.PI * 180 - baseRotate;
+			var rect:Rectangle = content.getBounds(content.parent);
+			setContentRect(
+				content.x + topLeftControl.position.x - rect.x - content.x,
+				content.y + topLeftControl.position.y - rect.y - content.y,
+				rightLineControl.position.x - topLeftControl.position.x,
+				bottomLineControl.position.y - topLeftControl.position.y
+			)
 			updateControls();
 		}
 		
@@ -251,9 +252,14 @@ package ghostcat.display.graphics
 			if (!topRightControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content);
-			var baseRotate:Number = Math.atan2(rect.y,rect.right)/Math.PI * 180;
-			this.rotation += Math.atan2(topRightControl.position.y,topRightControl.position.x)/Math.PI * 180 - baseRotate;
+			var rect:Rectangle = content.getBounds(content.parent);
+			setContentRect(
+				NaN,
+				content.y + topRightControl.position.y - rect.y - content.y,
+				topRightControl.position.x - leftLineControl.position.x,
+				bottomLineControl.position.y - topRightControl.position.y
+			)
+			
 			updateControls();
 		}
 		
@@ -262,9 +268,14 @@ package ghostcat.display.graphics
 			if (!bottomLeftControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content);
-			var baseRotate:Number = Math.atan2(rect.bottom,rect.x)/Math.PI * 180;
-			this.rotation += Math.atan2(bottomLeftControl.position.y,bottomLeftControl.position.x)/Math.PI * 180 - baseRotate;
+			var rect:Rectangle = content.getBounds(content.parent);
+			setContentRect(
+				content.x + bottomLeftControl.position.x - rect.x - content.x,
+				NaN,
+				rightLineControl.position.x - bottomLeftControl.position.x,
+				bottomLeftControl.position.y - topLineControl.position.y
+			)
+			
 			updateControls();
 		}
 		
@@ -273,9 +284,28 @@ package ghostcat.display.graphics
 			if (!bottomRightControl.mouseDown)
 				return;
 			
+			setContentRect(
+				NaN,
+				NaN,
+				bottomRightControl.position.x - leftLineControl.position.x,
+				bottomRightControl.position.y - topLineControl.position.y
+			)
+			
+			updateControls();
+		}
+		private function leftLineControlHandler(event:MoveEvent):void
+		{
+			if (!leftLineControl.mouseDown)
+				return;
+			
 			var rect:Rectangle = content.getBounds(content);
-			var baseRotate:Number = Math.atan2(rect.bottom,rect.right)/Math.PI * 180;
-			this.rotation += Math.atan2(bottomRightControl.position.y,bottomRightControl.position.x)/Math.PI * 180 - baseRotate;
+			setContentRect(
+				content.x + leftLineControl.position.x - rect.x - content.x,
+				NaN,
+				rightLineControl.position.x - leftLineControl.position.x,
+				NaN
+			)
+			
 			updateControls();
 		}
 		
@@ -285,35 +315,12 @@ package ghostcat.display.graphics
 				return;
 			
 			var rect:Rectangle = content.getBounds(content);
-			var dy:Number = topLineControl.position.y - rect.y;
-			y = y + dy;
-			content.height -= dy;
-			
-			updateControls();
-		}
-		
-		private function bottomLineControlHandler(event:MoveEvent):void
-		{
-			if (!bottomLineControl.mouseDown)
-				return;
-			
-			var rect:Rectangle = content.getBounds(this);
-			var dy:Number = bottomLineControl.position.y - rect.bottom;
-//			y = y + dy;
-			content.height += dy;
-			
-			updateControls();
-		}
-		
-		private function leftLineControlHandler(event:MoveEvent):void
-		{
-			if (!leftLineControl.mouseDown)
-				return;
-			
-			var rect:Rectangle = content.getBounds(content);
-			var dx:Number = leftLineControl.position.x - rect.x;
-			x = x + dx;
-			content.width -= dx;
+			setContentRect(
+				NaN,
+				content.y + topLineControl.position.y - rect.y - content.y,
+				NaN,
+				bottomLineControl.position.y - topLineControl.position.y
+			)
 			
 			updateControls();
 		}
@@ -323,10 +330,27 @@ package ghostcat.display.graphics
 			if (!rightLineControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(this);
-			var dx:Number = rightLineControl.position.x - rect.right;
-//			x = x + dx;
-			content.width += dx;
+			setContentRect(
+				NaN,
+				NaN,
+				rightLineControl.position.x - leftLineControl.position.x,
+				NaN
+			)
+			
+			updateControls();
+		}
+		
+		private function bottomLineControlHandler(event:MoveEvent):void
+		{
+			if (!bottomLineControl.mouseDown)
+				return;
+			
+			setContentRect(
+				NaN,
+				NaN,
+				NaN,
+				bottomLineControl.position.y - topLineControl.position.y
+			)
 			
 			updateControls();
 		}

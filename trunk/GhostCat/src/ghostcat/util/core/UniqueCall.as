@@ -69,5 +69,15 @@ package ghostcat.util.core
 			dirty = false;
 			para = null;
 		}
+		
+		public function halt():void
+		{
+			dirty = false;
+			
+			if (frame)
+				CallLaterQueue.instance.removeCallLaterByTick(vaildNow);	
+			else
+				CallLaterQueue.instance.removeCallLaterByTime(vaildNow);	
+		}
 	}
 }

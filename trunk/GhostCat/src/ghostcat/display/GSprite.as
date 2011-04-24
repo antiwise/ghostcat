@@ -277,6 +277,32 @@ package ghostcat.display
 		}
 		
 		/**
+		 * 替换一个元件并放置在原来的位置
+		 * @param target
+		 * 
+		 */
+		public function replaceTarget(target:DisplayObject):void
+		{
+			if (target && target.parent)
+			{
+				this.transform.colorTransform = target.transform.colorTransform;
+				this.transform.matrix = target.transform.matrix;
+				this.filters = target.filters;
+				this.blendMode = target.blendMode;
+				this.visible = target.visible;
+				this.name = target.name;
+				this.scrollRect = target.scrollRect;
+				this.scale9Grid = target.scale9Grid;
+				
+				var oldIndex:int = target.parent.getChildIndex(target);
+				var oldParent:DisplayObjectContainer = target.parent;
+				
+				oldParent.removeChild(target);
+				oldParent.addChildAt(this,oldIndex);
+			}
+		}
+		
+		/**
 		 * 将皮肤的属性转移到对象本身 
 		 * 
 		 */
