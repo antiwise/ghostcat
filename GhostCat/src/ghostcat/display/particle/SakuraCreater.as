@@ -49,18 +49,13 @@ package ghostcat.display.particle
 			
 			var cacher:TweenCacher;
 			var cacher2:TweenCacher;
-			cacher = new TweenCacher(s,2000,{rotation:360,scaleX:0.1},frameRate,new Rectangle(0,0,150,150));
-			cacher.addEventListener(Event.COMPLETE,cacherCompleteHandler);
-			function cacherCompleteHandler(e:Event):void
-			{
-				cacher2 = new TweenCacher(s,2000,{rotation:360,scaleX:1.0},frameRate,new Rectangle(0,0,150,150));
-				cacher2.addEventListener(Event.COMPLETE,cacherCompleteHandler2);
-			}
+			cacher = new TweenCacher(s,2000,{rotation:360,scaleX:0.1},frameRate,new Rectangle(0,0,100,100));
+			cacher.renderAllFrames();
 			
-			function cacherCompleteHandler2(e:Event):void
-			{
-				bitmapDatas = cacher.result.concat(cacher2.result);
-			}
+			cacher2 = new TweenCacher(s,2000,{rotation:360,scaleX:1.0},frameRate,new Rectangle(0,0,100,100));
+			cacher2.renderAllFrames();
+			
+			bitmapDatas = cacher.result.concat(cacher2.result);
 		}
 		
 		

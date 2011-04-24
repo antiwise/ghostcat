@@ -15,7 +15,7 @@ package ghostcat.display.graphics
 	import ghostcat.ui.CursorSprite;
 
 	/**
-	 * 缩放盒子（不干涉原图元，但不支持旋转）
+	 * 缩放盒子（不干涉原图元）
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -116,7 +116,6 @@ package ghostcat.display.graphics
 			fillControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(2,2,rect.width - 4,rect.height - 4),lineStyle,fill,null,true).parse(fillControl.content);
 			
-			
 			topLeftControl.setPosition(new Point(rect.x,rect.y),true);
 			new RectParse(new GraphicsRect(-2,-2,4,4),lineStyle,fill,null,true).parse(topLeftControl.content);
 			
@@ -194,51 +193,16 @@ package ghostcat.display.graphics
 			rightLineControl.addEventListener(MoveEvent.MOVE,rightLineControlHandler,false,0,true);
 			addChild(rightLineControl);
 		}
-		
-		private function topLineControlHandler(event:MoveEvent):void
+		private function setContentRect(x:Number = NaN,y:Number = NaN,width:Number = NaN ,height:Number = NaN):void
 		{
-			if (!topLineControl.mouseDown)
-				return;
-			
-			var rect:Rectangle = content.getBounds(content.parent);
-			var dy:Number = topLineControl.position.y - rect.y;
-			content.y += dy;
-			content.height -= dy;
-			
-			updateControls();
-		}
-		
-		private function bottomLineControlHandler(event:MoveEvent):void
-		{
-			if (!bottomLineControl.mouseDown)
-				return;
-			
-			content.height = bottomLineControl.position.y - topLineControl.position.y;
-			
-			updateControls();
-		}
-		
-		private function leftLineControlHandler(event:MoveEvent):void
-		{
-			if (!leftLineControl.mouseDown)
-				return;
-			
-			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = leftLineControl.position.x - rect.x;
-			content.x += dx;
-			content.width -= dx;
-			
-			updateControls();
-		}
-		
-		private function rightLineControlHandler(event:MoveEvent):void
-		{
-			if (!rightLineControl.mouseDown)
-				return;
-			
-			content.width = rightLineControl.position.x - leftLineControl.x;
-			
-			updateControls();
+			if (!isNaN(x))
+				content.x = x > content.x + content.width ? content.x + content.width : x;
+			if (!isNaN(y))
+				content.y = y > content.y + content.height ? content.y + content.height : y;
+			if (!isNaN(width))
+				content.width = width > 0 ? width : 0;
+			if (!isNaN(height))
+				content.height = height > 0 ? height : 0;
 		}
 		
 		private function topLeftControlHandler(event:MoveEvent):void
@@ -246,14 +210,13 @@ package ghostcat.display.graphics
 			if (!topLeftControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = topLeftControl.position.x - rect.x;
-			content.x += dx;
-			content.width -= dx;
-			var dy:Number = topLeftControl.position.y - rect.y;
-			content.y += dy;
-			content.height -= dy;
-			
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				content.x + topLeftControl.position.x - rect.x - content.x,
+				content.y + topLeftControl.position.y - rect.y - content.y,
+				rightLineControl.position.x - topLeftControl.position.x,
+				bottomLineControl.position.y - topLeftControl.position.y
+			)
 			updateControls();
 		}
 		
@@ -262,27 +225,29 @@ package ghostcat.display.graphics
 			if (!topRightControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content.parent);
-			var dy:Number = topRightControl.position.y - rect.y;
-			content.y += dy;
-			content.height -= dy;
-			
-			content.width = topRightControl.position.x - leftLineControl.x;
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				NaN,
+				content.y + topRightControl.position.y - rect.y - content.y,
+				topRightControl.position.x - leftLineControl.position.x,
+				bottomLineControl.position.y - topRightControl.position.y
+			)
 			
 			updateControls();
 		}
-
+		
 		private function bottomLeftControlHandler(event:MoveEvent):void
 		{
 			if (!bottomLeftControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content.parent);
-			var dx:Number = bottomLeftControl.position.x - rect.x;
-			content.x += dx;
-			content.width -= dx;
-			
-			content.height = bottomLeftControl.position.y - topLineControl.position.y;
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				content.x + bottomLeftControl.position.x - rect.x - content.x,
+				NaN,
+				rightLineControl.position.x - bottomLeftControl.position.x,
+				bottomLeftControl.position.y - topLineControl.position.y
+			)
 			
 			updateControls();
 		}
@@ -292,8 +257,73 @@ package ghostcat.display.graphics
 			if (!bottomRightControl.mouseDown)
 				return;
 			
-			content.height = bottomRightControl.position.y - topLineControl.position.y;
-			content.width = bottomRightControl.position.x - leftLineControl.x;
+			setContentRect(
+				NaN,
+				NaN,
+				bottomRightControl.position.x - leftLineControl.position.x,
+				bottomRightControl.position.y - topLineControl.position.y
+			)
+			
+			updateControls();
+		}
+		private function leftLineControlHandler(event:MoveEvent):void
+		{
+			if (!leftLineControl.mouseDown)
+				return;
+			
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				content.x + leftLineControl.position.x - rect.x - content.x,
+				NaN,
+				rightLineControl.position.x - leftLineControl.position.x,
+				NaN
+			)
+			
+			updateControls();
+		}
+		
+		private function topLineControlHandler(event:MoveEvent):void
+		{
+			if (!topLineControl.mouseDown)
+				return;
+			
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				NaN,
+				content.y + topLineControl.position.y - rect.y - content.y,
+				NaN,
+				bottomLineControl.position.y - topLineControl.position.y
+			)
+			
+			updateControls();
+		}
+		
+		private function rightLineControlHandler(event:MoveEvent):void
+		{
+			if (!rightLineControl.mouseDown)
+				return;
+			
+			setContentRect(
+				NaN,
+				NaN,
+				rightLineControl.position.x - leftLineControl.position.x,
+				NaN
+			)
+			
+			updateControls();
+		}
+		
+		private function bottomLineControlHandler(event:MoveEvent):void
+		{
+			if (!bottomLineControl.mouseDown)
+				return;
+			
+			setContentRect(
+				NaN,
+				NaN,
+				NaN,
+				bottomLineControl.position.y - topLineControl.position.y
+			)
 			
 			updateControls();
 		}
@@ -302,9 +332,13 @@ package ghostcat.display.graphics
 			if (!fillControl.mouseDown)
 				return;
 			
-			var rect:Rectangle = content.getBounds(content.parent);
-			content.x += fillControl.x - rect.x;
-			content.y += fillControl.y - rect.y;
+			var rect:Rectangle = content.getBounds(content);
+			setContentRect(
+				content.x + fillControl.position.x - rect.x - content.x,
+				content.y + fillControl.position.y - rect.y - content.y,
+				NaN,
+				NaN
+			)
 			
 			updateControls()
 		}

@@ -71,6 +71,7 @@ package ghostcat.display.graphics
 			enabled = enabled;
 			
 			this.positionCall.frame = false;
+			this.sizeCall.frame = false;
 		}
 
 		private function onMouseDownHandler(event : MouseEvent) : void
