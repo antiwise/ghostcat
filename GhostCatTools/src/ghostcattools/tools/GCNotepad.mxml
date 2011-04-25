@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009"
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  width="323" height="87" currentState="start" showStatusBar="false"
-		  creationComplete="window1_creationCompleteHandler(event)" title="文本压缩">
-	<s:layout>
-		<s:BasicLayout/>
-	</s:layout>
-
+		  creationComplete="window1_creationCompleteHandler(event)" title="文本压缩" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
 	<fx:Script>
 		<![CDATA[
+			import flashx.textLayout.elements.TextFlow;
+			
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
 			import mx.events.FlexEvent;
+			
+			import spark.utils.TextFlowUtil;
 			
 			public var file:File;
 			public var tempFile:File;
@@ -26,7 +26,7 @@
 			private var bytesSize:uint
 			private var bytesCompressSize:uint;
 			
-			public function openFileHandler(files:Array):void
+			public override function openFileHandler(files:Array):void
 			{
 				if (!files)
 					return;
@@ -79,12 +79,7 @@
 
 			private function refeshUrlText():void
 			{
-				this.fileUrlText = this.file.nativePath + (isCompress ? "(压缩率: " + (this.bytesCompressSize / this.bytesSize * 100).toFixed(2) + "%)" : "");
-			}
-
-			protected function window1_creationCompleteHandler(event:FlexEvent):void
-			{
-				FileControl.dragFileIn(openFileHandler,this);
+				this.fileUrlText = this.file.nativePath + (isCompress ? "<span color='#FF0000'>(压缩率: " + (this.bytesCompressSize / this.bytesSize * 100).toFixed(2) + "%)</span>" : "");
 			}
 			
 			protected function openBN_clickHandler(event:MouseEvent):void
@@ -110,17 +105,16 @@
 		
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:states>
+	<components:states>
 		<s:State name="start"/>
 		<s:State name="opened"/>
-	</s:states>
+	</components:states>
 	<s:Button id="openBN" x="9" y="10" height="67" label="浏览"
 			  click ="openBN_clickHandler(event)"/>
 	<s:Label includeIn="start" x="111" y="26" width="187" height="29" text="点击“浏览“按钮&#xd;或者拖动文件到此窗口"/>
-	
-	<s:Label includeIn="opened" x="88" y="10" width="222" height="45" text="{fileUrlText}"/>
+	<s:RichText includeIn="opened" x="88" y="10" width="222" height="45"  content="{TextFlowUtil.importFromString(fileUrlText)}"/>
 	<s:CheckBox id="compressButton" includeIn="opened" x="91" y="58" label="是否压缩文件"
 				click="compressButton_clickHandler(event)" selected="{isCompress}"/>
 	<s:Button id="editButton" includeIn="opened" x="255" y="56" width="58" label="打开"
 			  click="editButton_clickHandler(event)"/>
-</s:Window>
+</components:GCToolWindow>

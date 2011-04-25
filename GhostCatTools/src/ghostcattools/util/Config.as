@@ -8,7 +8,7 @@ package ghostcattools.util
 	public class Config
 	{
 		[Bindable]
-		static public var NOTEPAD_PATH:String = "C:\WINDOWS\NOTEPAD.EXE";
+		static public var NOTEPAD_PATH:String = "C:\\WINDOWS\\NOTEPAD.EXE";
 		
 		[Bindable]
 		static public var FLEXSDK_PATH:String = "";
