@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009"
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  currentState="base" showStatusBar="false" title="SWF浏览"
-		  width="555" height="425" creationComplete="window1_creationCompleteHandler(event)">
-
+		  width="555" height="425" creationComplete="window1_creationCompleteHandler(event)" xmlns:ghostcattools="ghostcattools.*" fileFilter="swf" xmlns:components="ghostcattools.components.*">
 	<fx:Script>
 		<![CDATA[
 			import ghostcat.fileformat.swf.SWFDecoder;
@@ -28,14 +27,14 @@
 			private var urlText:String = "点击“浏览”或者拖动文件到本窗口打开SWF文件";
 			
 			[Bindable]
-			private var symbolList:ArrayCollection;
+			private var symbolList:XMLList;
 			
 			[Bindable]
 			private var treeData:XML;
 			
 			private var currentObject:Object;
 			
-			public function loadFileHandler(files:Array):void
+			public override function openFileHandler(files:Array):void
 			{
 				if (!files)
 					return;
@@ -53,14 +52,38 @@
 				swf.read(v);
 				
 				var tag:SymbolClassTag = SymbolClassTag(swf.getTags(SymbolClassTag)[0]);
-				this.symbolList = new ArrayCollection(tag.symbolClasses);
-				
+				var list:Array = tag.symbolClasses;
+				var xml:XML = <xml/>;
+				for each (var item:String in list)
+				{
+					var names:Array = item.split(".");
+					var cur:XML = xml;
+					for (var i:int = 0;i < names.length;i++)
+					{
+						var label:String = names[i];
+						var newXml:XML = cur.*.(@label == label)[0];
+						if (!newXml)
+						{
+							newXml = <xml/>;
+							cur.appendChild(newXml);
+						}
+						newXml.@label = label;
+						cur = newXml;
+					}
+					cur.@data = item;
+				}
+				this.symbolList = new XMLList(xml);
 				this.currentState = "opened";
 			}
 			
-			protected function list_changeHandler(event:ListEvent):void
+			protected function list_changeHandler(event:Event):void
 			{
-				var itemName:String = list.selectedItem.toString();
+				var itemName:String = list.selectedItem.@data.toString();
+				if (!itemName)
+				{
+					this.currentState = "opened";
+					return;
+				}
 				
 				var c:Class;
 				if (loader.content)
@@ -93,7 +116,7 @@
 					displayObj.x = -rect.x;
 					displayObj.y = -rect.y;
 					
-					imageCanvas.validateSize();
+					imageCanvas.validateNow();
 					image.x = Math.max(0,(imageCanvas.width - rect.width)/2);
 					image.y = Math.max(0,(imageCanvas.height - rect.height)/2);
 					image.width = rect.width;
@@ -165,12 +188,7 @@
 
 			protected function browseBN_clickHandler(event:MouseEvent):void
 			{
-				FileControl.browseForOpen(loadFileHandler,"打开一个SWF文件",[new FileFilter("SWF 影片","*.swf")]);
-			}
-
-			protected function window1_creationCompleteHandler(event:FlexEvent):void
-			{
-				FileControl.dragFileIn(loadFileHandler,this,["swf"]);
+				FileControl.browseForOpen(openFileHandler,"打开一个SWF文件",[new FileFilter("SWF 影片","*.swf")]);
 			}
 
 
@@ -216,22 +234,18 @@
 
 		]]>
 	</fx:Script>
-	<s:states>
+	<components:states>
 		<s:State name="base"/>
 		<s:State name="opened"/>
 		<s:State name="picture" basedOn="opened"/>
 		<s:State name="sound" basedOn="opened"/>
 		<s:State name="bytes" basedOn="opened"/>
-	</s:states>
+	</components:states>
 	<s:Button id="browseBN" x="10" y="10" label="浏览"
 			  click="browseBN_clickHandler(event)"/>
 	<s:Label id="browseText" y="14" left="92" right="10" text="{urlText}"/>
-	<mx:HDividedBox top="39" bottom="0" width="100%">
-		<mx:DataGrid id="list" width="150" height="100%" dataProvider="{symbolList}" change="list_changeHandler(event)">
-			<mx:columns>
-				<mx:DataGridColumn headerText="类名"/>
-			</mx:columns>
-		</mx:DataGrid>
+	<mx:HDividedBox top="39" bottom="10" left="10" right="10">
+		<mx:Tree id="list" width="200" height="100%" labelField="@label" dataProvider="{symbolList}" showRoot="false" change="list_changeHandler(event)"/>
 		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
 			<mx:Canvas clipContent="true" id="imageCanvas" includeIn="picture" label="图象" width="100%" height="100%" resize="image_resizeHandler(event)">
 				<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
@@ -239,7 +253,8 @@
 			<mx:Canvas id="treeCanvas" includeIn="picture" label="结构" width="100%" height="100%">
 				<s:Button x="6" y="4" label="复制到剪贴板" click="button3_clickHandler(event)"/>
 				<s:Button x="106" y="4" label="复制所有名称到剪贴板" click="button4_clickHandler(event)"/>
-				<mx:Tree id="tree" width="100%" top="30" height="100%" dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
+				<mx:Tree id="tree" left="5" right="5" top="30" bottom="5" width="100%" height="100%"
+						 dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
 			</mx:Canvas>
 			<mx:Canvas id="soundCanvas" includeIn="sound" label="声音" width="100%" height="100%">
 				<s:Button width="100" height="100" label="播放声音" horizontalCenter="0" verticalCenter="0"
@@ -251,4 +266,4 @@
 			</mx:Canvas>
 		</mx:TabNavigator>
 	</mx:HDividedBox>
-</s:Window>
+</components:GCToolWindow>

@@ -13,6 +13,7 @@ package ghostcattools.util
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 
 	public final class FileControl
@@ -30,7 +31,7 @@ package ghostcattools.util
 					var files:Array = transferable.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
 					if (files)
 					{
-						if (!extension || extension.indexOf(File(files[0]).nativePath.split(".")[1].toLowerCase()) != -1)
+						if (!extension || extension.length == 0 || extension.indexOf(File(files[0]).nativePath.split(".")[1].toLowerCase()) != -1)
 							NativeDragManager.acceptDragDrop(target);
 					}
 				}
@@ -55,9 +56,9 @@ package ghostcattools.util
 			}
 		}
 		
-		static public function browseForSave(rHandler:Function,title:String):void
+		static public function browseForSave(rHandler:Function,title:String,path:String = null):void
 		{
-			var file:File = File.documentsDirectory;
+			var file:File = File.documentsDirectory.resolvePath(path);
 			file.browseForSave(title);
 			if (rHandler != null)
 				file.addEventListener(Event.SELECT,selectHandler);
@@ -87,6 +88,13 @@ package ghostcattools.util
 			fs.open(file,FileMode.WRITE);
 			fs.writeBytes(bytes);
 			fs.close();
+		}
+		
+		static public function createLoadContext():LoaderContext
+		{
+			var context:LoaderContext = new LoaderContext();
+			context.allowCodeImport = true;
+			return context;
 		}
 		
 		static public function run(url:String,arg:Array = null,exitHandler:Function = null):void
