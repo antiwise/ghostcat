@@ -9,7 +9,7 @@ package ghostcat.util.code
 	import ghostcat.util.text.UBB;
 	
 	/**
-	 * 
+	 * 代码着色
 	 * @author Administrator
 	 * 
 	 */
@@ -34,15 +34,18 @@ package ghostcat.util.code
 			textField.setTextFormat(new TextFormat(null,null,0));
 			for (var p:String in colors)
 			{
-				html = html.replace(new RegExp(colors[p],"gm"),relpFunction);
-			}
-			
-			function relpFunction():String
-			{
-				var len:int = arguments[0].length;
-				var index:int = arguments[arguments.length - 2];
-				textField.setTextFormat(new TextFormat(null,null,parseInt(p,16)),index,index + len);
-				return arguments[0];
+				var regExp:RegExp = new RegExp(colors[p],"gm");
+				do
+				{
+					var result:Object = regExp.exec(html);
+					if (result)
+					{
+						var index:int = result.index;
+						var len:int = result[0].length;
+						textField.setTextFormat(new TextFormat(null,null,parseInt(p,16)),index,index + len);
+					}
+				}
+				while (result);
 			}
 		}
 		
