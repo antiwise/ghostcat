@@ -14,6 +14,7 @@
 			
 			import ghostcattools.util.FileControl;
 			
+			import mx.controls.Button;
 			import mx.events.FlexEvent;
 			
 			import spark.events.IndexChangeEvent;
@@ -47,16 +48,17 @@
 				"(exp)	捕获至组",
 				"(?<a>exp) 捕获至组a",
 				"(?:exp) 跳过组",
-				"(?=exp) 之前匹配",
-				"(?<=exp) 之后匹配",
-				"(?!=exp) 之前不匹配",
-				"(?<!=exp) 之后不匹配",
+				"\\num	匹配组",
+				"(?=exp) 后方匹配",
+				"(?<=exp) 前方匹配",
+				"(?!=exp) 后方不匹配",
+				"(?<!=exp) 前方不匹配",
 				"(?#comment) 注释",
-				"$$ 一个$",
-				"$& 匹配的字符",
-				"$` 匹配之前的字符",
-				"$' 匹配之后的字符",
-				"$n 匹配的第n个组"	
+				"$$ 替换一个$",
+				"$& 替换匹配的字符",
+				"$` 替换之前的字符",
+				"$' 替换之后的字符",
+				"$n 用第n个组替换"	
 			]);
 			
 			public override function openFileHandler(files:Array):void
@@ -109,12 +111,9 @@
 				if (this.currentState == "replace")
 					this.targetText.text = this.sourceText.text.replace(regExp,this.replaceText.text);
 				
-				
-				var textLayoutFormat:TextLayoutFormat = new TextLayoutFormat(this.sourceText.textFlow.computedFormat);
-				this.sourceText.setFormatOfRange(textLayoutFormat,0,this.sourceText.text.length);
+				this.sourceText.resetColor();
 				
 				regExp.lastIndex = 0;
-				textLayoutFormat.color = 0xFF0000;
 				do
 				{
 					var execResult:Object = regExp.exec(this.sourceText.text);
@@ -122,7 +121,7 @@
 					{
 						var index:int = execResult.index;
 						var len:int = execResult[0].length;
-						this.sourceText.setFormatOfRange(textLayoutFormat,index,index + len);
+						this.sourceText.setTextColor(0xFF0000,index,index + len);
 					}
 				}
 				while (execResult && regExp.global);
@@ -169,12 +168,12 @@
 	<s:TabBar x="10" y="7" selectedIndex.match="0" selectedIndex.replace="1"
 			  change="tabbar1_changeHandler(event)">
 		<s:ArrayList>
-			<fx:String>match</fx:String>
-			<fx:String>replace</fx:String>
+			<fx:String>匹配</fx:String>
+			<fx:String>替换</fx:String>
 		</s:ArrayList>
 	</s:TabBar>
 	<s:BorderContainer left="10" right="10" top="30" bottom="10">
-		<s:TextInput id="regExpText" left="10" right="178" top="10" text="[\d]"
+		<s:TextInput id="regExpText" left="10" right="178" top="10" text="\d"
 					 change="regExp_changeHandler(event)"/>
 		<s:TextInput id="replaceText" includeIn="replace" left="10" right="178" top="69" text="用于替换的文本"
 					 change="regExp_changeHandler(event)"/>
@@ -184,7 +183,7 @@
 		<s:CheckBox id="params" x="250" y="40" label=".多行有效" toolTip="参数：s" change="regExp_changeHandler(event)"/>
 		<s:CheckBox id="paramm" x="328" y="40" label="$^多行有效" toolTip="参数：m" change="regExp_changeHandler(event)"/>
 		<s:List id="helpList" right="10" top="10" bottom="10" width="159" dataProvider="{helpDatas}" doubleClickEnabled="true" doubleClick="helpList_doubleClickHandler(event)"/>
-		<s:TextArea id="sourceText" left="10" right="178" top="69" bottom="210" text="这是一段测试文本[0]" change="regExp_changeHandler(event)"
+		<components:CodeTextArea id="sourceText" left="10" right="178" top="69" bottom="210" text="这是1段测试文本" change="regExp_changeHandler(event)"
 					left.match="10" right.match="178" top.match="69" bottom.match="100"
 					left.replace="10" right.replace="178" top.replace="99" bottom.replace="210"/>
 		<s:TextArea id="targetText" includeIn="replace" left="10" right="178" bottom="101" 

@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="462" height="212" 
+					   width="552" height="212" 
 					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
 					   showStatusBar="false" useHandCursor="true" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
 	<fx:Style source="GhostCatTools.css"/>
@@ -13,6 +13,7 @@
 			import flashx.textLayout.compose.TextFlowLineLocation;
 			import flashx.textLayout.factory.TextFlowTextLineFactory;
 			
+			import ghostcattools.tools.AS3Tester;
 			import ghostcattools.tools.GCNotepad;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.SWFDumper;
@@ -45,7 +46,7 @@
 				file.addEventListener(Event.SELECT,handler);
 				function handler(event:Event):void
 				{
-					if (file.resolvePath("bin/asdoc.exe").exists && file.resolvePath("bin/mxmlc.exe").exists)
+					if (file.resolvePath(Config.ASDOC).exists && file.resolvePath(Config.MXMLC).exists)
 					{
 						Config.FLEXSDK_PATH = file.nativePath;
 						Config.save();
@@ -82,31 +83,31 @@
 	</fx:Declarations>
 	<mx:TabNavigator left="0" right="0" top="0" bottom="0" paddingTop="0">
 		<s:NavigatorContent width="100%" height="100%" label="工具">
-			<components:GCToolButton x="10" y="10" width="80" height="80" label="文本压缩"
-					  cmd="{GCNotepad}" iconPlacement="top" windowResizable="false" windowMaximizable="false"/>
-			<components:GCToolButton x="100" y="10" width="80" height="80" label="文本转义" iconPlacement="top"
-					  cmd="{TextTransferred}"/>
-			<components:GCToolButton x="190" y="10" width="80" height="80" label="正则工具" iconPlacement="top"
-					  cmd="{RegExr}"/>
-			<components:GCToolButton x="280" y="10" width="80" height="80" label="多语言对比" iconPlacement="top"/>
-			<components:GCToolButton x="370" y="10" width="80" height="80" label="压缩工具" iconPlacement="top"/>
-			<components:GCToolButton x="10" y="100" width="80" height="80" label="SWF浏览"
-					  cmd="{SWFShower}" fileFilter="swf" iconPlacement="top"/>
-			<components:GCToolButton x="100" y="100" width="80" height="80" label="SWF抓取" iconPlacement="top"
-					  cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
-			<components:GCToolButton x="190" y="100" width="80" height="80" label="测试代码" iconPlacement="top"/>
-			<components:GCToolButton x="280" y="100" width="80" height="80" label="字体生成" iconPlacement="top"/>
-			<components:GCToolButton x="370" y="100" width="80" height="80" label="ASDoc生成" iconPlacement="top"/>
+			<s:TileGroup  left="10" right="10" top="10" bottom="10" horizontalGap="10" verticalGap="10">
+				<components:GCToolButton label="文本压缩" cmd="{GCNotepad}" windowMaximizable="false" windowResizable="false"/>
+				<components:GCToolButton label="文本转义" cmd="{TextTransferred}"/>
+				<components:GCToolButton label="正则工具" cmd="{RegExr}"/>
+				<components:GCToolButton label="多语言对比"/>
+				<components:GCToolButton label="压缩工具"/>
+				<components:GCToolButton label="代码统计"/>
+				<components:GCToolButton label="SWF浏览" cmd="{SWFShower}" fileFilter="swf"/>
+				<components:GCToolButton label="SWF抓取" cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="测试代码" cmd="{AS3Tester}" fileFilter="as"/>
+				<components:GCToolButton label="字体生成"/>
+				<components:GCToolButton label="ASDoc生成"/>
+			</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
 			<s:Label x="10" y="10" text="Flex SDK 路径："/>
 			<s:Label x="10" y="72" text="文本编辑器路径："/>
 			<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="{Config.FLEXSDK_PATH}"/>
-			<s:Button id="sdkSelectBN" x="383" y="31" right="10" width="23" height="21" label="..." skinClass="ghostcattools.skin.SmallButtonSkin"
+			<s:Button id="sdkSelectBN" x="383" y="31" right="10" width="23" height="21"
+					  skinClass="ghostcattools.skin.IconButtonSkin" icon="@Embed(source='../asset/folder.png')"
 					  click="sdkSelectBN_clickHandler(event)"/>
 			<s:TextInput id="notepadUrlText" y="91" left="10" right="40" editable="false"
 						 text="{Config.NOTEPAD_PATH}"/>
-			<s:Button id="notepadSelectBN" y="91" right="10" width="23" height="21" label="..." skinClass="ghostcattools.skin.SmallButtonSkin"
+			<s:Button id="notepadSelectBN" y="91" right="10" width="23" height="21" 
+					  skinClass="ghostcattools.skin.IconButtonSkin" icon="@Embed(source='../asset/folder.png')"
 					  click="notepadSelectBN_clickHandler(event)"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="关于">

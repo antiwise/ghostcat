@@ -1,16 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
-		  xmlns:s="library://ns.adobe.com/flex/spark"
-		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  width="323" height="87" currentState="start" showStatusBar="false"
-		  creationComplete="window1_creationCompleteHandler(event)" title="文本压缩" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
+						 xmlns:s="library://ns.adobe.com/flex/spark"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 width="323" height="87" currentState="start" showStatusBar="false"
+						 creationComplete="window1_creationCompleteHandler(event)" title="文本压缩" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
 	<fx:Script>
 		<![CDATA[
 			import flashx.textLayout.elements.TextFlow;
 			
+			import ghostcattools.components.GCAlert;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
 			import spark.utils.TextFlowUtil;
@@ -45,7 +47,7 @@
 				this.bytesSize = bytes.length;
 				this.tempFile = File.createTempFile();
 				FileControl.writeFile(tempFile,bytes);
-					
+				
 				this.openNotepad();
 				
 				this.currentState = "opened";
@@ -55,14 +57,18 @@
 			
 			private function openNotepad():void
 			{
-				FileControl.run(Config.NOTEPAD_PATH,[this.tempFile.nativePath],saveFileHandler);
+				var file:File = new File(Config.NOTEPAD_PATH);
+				if (file.exists)
+					FileControl.run(file,[this.tempFile.nativePath],saveFileHandler);
+				else
+					new GCAlert().show("文本编辑器地址设置错误",this);
 			}
-
+			
 			private function saveFileHandler(event:NativeProcessExitEvent):void
 			{
 				saveTempFile();
 			}
-	
+			
 			private function saveTempFile():void
 			{
 				var bytes:ByteArray = FileControl.readFile(this.tempFile);
@@ -76,7 +82,7 @@
 				FileControl.writeFile(this.file,bytes);
 				this.refeshUrlText();
 			}
-
+			
 			private function refeshUrlText():void
 			{
 				this.fileUrlText = this.file.nativePath + (isCompress ? "<span color='#FF0000'>(压缩率: " + (this.bytesCompressSize / this.bytesSize * 100).toFixed(2) + "%)</span>" : "");
@@ -97,10 +103,10 @@
 				this.isCompress = compressButton.selected;
 				saveTempFile();
 			}
-
+			
 		]]>
 	</fx:Script>
-
+	
 	<fx:Declarations>
 		
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->

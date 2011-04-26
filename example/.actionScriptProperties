@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="BitmapCollisionExample.as" projectUUID="cf561cc4-1991-4d24-a9e7-0523e4c2a068" version="7">
+<actionScriptProperties analytics="false" mainApplicationPath="GXMLExample2.as" projectUUID="cf561cc4-1991-4d24-a9e7-0523e4c2a068" version="7">
   <compiler additionalCompilerArguments="" autoRSLOrdering="false" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="1">

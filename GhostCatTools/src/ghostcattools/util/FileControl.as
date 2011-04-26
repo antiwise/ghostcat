@@ -10,11 +10,14 @@ package ghostcattools.util
 	import flash.events.IEventDispatcher;
 	import flash.events.NativeDragEvent;
 	import flash.events.NativeProcessExitEvent;
+	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+	
+	import mx.controls.Alert;
 
 	public final class FileControl
 	{
@@ -58,7 +61,9 @@ package ghostcattools.util
 		
 		static public function browseForSave(rHandler:Function,title:String,path:String = null):void
 		{
-			var file:File = File.documentsDirectory.resolvePath(path);
+			var file:File = File.documentsDirectory;
+			if (path)
+				file.resolvePath(path);
 			file.browseForSave(title);
 			if (rHandler != null)
 				file.addEventListener(Event.SELECT,selectHandler);
@@ -97,12 +102,14 @@ package ghostcattools.util
 			return context;
 		}
 		
-		static public function run(url:String,arg:Array = null,exitHandler:Function = null):void
+		static public function run(file:File,arg:Array = null,exitHandler:Function = null,dataHandler:Function =  null):Boolean
 		{
-			var file:File = File.documentsDirectory.resolvePath(url);
+			if (!file.exists)
+				return false;
 			
 			var nativeProcessStartupInfo:NativeProcessStartupInfo = new NativeProcessStartupInfo();
 			nativeProcessStartupInfo.executable = file;
+			
 			if (arg)
 			{
 				var arguments:Vector.<String> = new Vector.<String>();
@@ -111,9 +118,54 @@ package ghostcattools.util
 			}
 			
 			var process:NativeProcess = new NativeProcess();
+			
+			if (dataHandler != null)
+			{
+				process.addEventListener(ProgressEvent.STANDARD_OUTPUT_DATA,dataHandler);
+				process.addEventListener(ProgressEvent.STANDARD_ERROR_DATA,dataHandler);
+			}
+			
 			if (exitHandler != null)
 				process.addEventListener(NativeProcessExitEvent.EXIT,exitHandler);
+			
 			process.start(nativeProcessStartupInfo);
+			
+			return true;
+		}
+		
+		static public function runMXMLC(text:String,completeHandler:Function = null,traceHandler:Function = null):void
+		{
+			var mxmls:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
+			if (!mxmls.exists)
+				return;
+			
+			var bytes:ByteArray = new ByteArray();
+			bytes.writeUTFBytes(text);
+			var temp:File = File.createTempDirectory();
+			var asFile:File = temp.resolvePath("Test.as");
+			var swfFile:File = temp.resolvePath("Test.swf");
+			FileControl.writeFile(asFile,bytes);
+			FileControl.run(mxmls,[asFile.nativePath],exitHandler,dataHandler)
+			function exitHandler(event:Event):void
+			{
+				var swfBytes:ByteArray = swfFile.exists ? FileControl.readFile(swfFile) : null;
+				if (completeHandler != null)
+					completeHandler(swfBytes);
+				temp.deleteDirectory(true);
+			}
+			
+			function dataHandler(event:Event):void
+			{
+				var process:NativeProcess = event.currentTarget as NativeProcess;
+				var str:String;
+				if (event.type == ProgressEvent.STANDARD_OUTPUT_DATA)
+					str = process.standardOutput.readUTFBytes(process.standardOutput.bytesAvailable).toString();
+				else
+					str = process.standardError.readUTFBytes(process.standardError.bytesAvailable).toString();
+				
+				if (traceHandler != null)
+					traceHandler(str);
+			}
 		}
 	}
 }

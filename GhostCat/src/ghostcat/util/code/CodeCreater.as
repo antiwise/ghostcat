@@ -56,7 +56,7 @@ package ghostcat.util.code
 			return result;
 		}
 		
-		static public function pack(classPath:String,body:String = "",importObj:Object = null):String
+		static public function pack(classPath:String,body:String = "",importObj:Object = null,extendClass:Class = null):String
 		{
 			var pack:String;
 			var name:String;
@@ -73,13 +73,23 @@ package ghostcat.util.code
 				name = classPath.slice(index + 1);
 			}
 			
+			if (extendClass)
+			{
+				var extendName:QName = getClassName(extendClass);
+				if (!importObj)
+					importObj = {};
+				
+				if (extendName.uri)
+					importObj[extendName.uri + "." + extendName.localName] = null;
+			}
+			
 			var imports:String = "";
 			for (var p:String in importObj)
 			{
 				imports += "import " + p + ";"
 			}
 			
-			body = "public class " + name + "{" + body + "}";
+			body = "public class " + name + (extendClass ? " extends " + extendName.localName : "") + "{" + body + "}";
 			body = "package " + pack + "{" + imports + body + "}";
 			
 			return body;

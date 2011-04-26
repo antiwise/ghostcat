@@ -17,14 +17,16 @@ package ghostcat.util.code
 	{
 		static public var colors:Object = {
 			"9900cc":"\\b(package|interface|class)\\b",
-			"0033ff":"\\b(import|public|private|protected|extends|const|for|do|while|if|else|new|in|this|void|null)\\b",
+			"0033ff":"\\b(import|static|public|private|protected|extends|const|for|do|while|if|else|new|in|this|void|null)\\b",
 			"339966":"\\b(function)\\b",
 			"cc6666":"\\b(trace)\\b",
 			"6699cc":"\\b(var)\\b",
+			"0033ff":"(?<=\\[)\\w*?(?=(\\(.*?\\))?\\])",
 			"990000":"(['\"]).*?(?<!\\\\)\\1",
 			"3f5fbf":"/\\*.*?\\*/",
 			"009900":"//.*\\r"
 		}
+		
 		static public function parse(textField:TextField,colors:Object = null):void
 		{
 			if (!colors)
