@@ -40,12 +40,7 @@
 				CodeColor.parse(this.textField as TextField);
 			}
 			
-			public function resetColor():void
-			{
-				textField.setTextFormat(textField.defaultTextFormat);
-			}
-			
-			public function setTextColor(color:uint,beginIndex:int = -1,endIndex:int = -1):void
+			public function setTextColor(color:uint = 0,beginIndex:int = -1,endIndex:int = -1):void
 			{
 				var tf:TextFormat = new TextFormat();
 				tf.color = color;

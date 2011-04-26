@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" showStatusBar="false"
+						 xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)" 
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="214">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+
+//			-source-path src
+//				-doc-sources src
+//				-library-path "D:\workspace\ghostcat\GhostCat\asset\GhostCatAsset.swc"
+//				-library-path "D:\Program Files\Adobe\Flex Builder 3 Plug-in\sdks\3.1.0\frameworks\libs\framework.swc"
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+
+
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+			}
+
+		]]>
+	</fx:Script>
+	<components:layout>
+		<s:BasicLayout/>
+	</components:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label x="10" y="15" text="项目地址："/>
+	<s:TextInput x="76" y="10" width="284"/>
+	<s:Button id="sdkSelectBN" y="10" right="10" width="23" height="21"
+			  icon="@Embed(source='../asset/folder.png')"
+			  skinClass="ghostcattools.skin.IconButtonSkin"/>
+	<s:Label x="10" y="45" text="生成位置："/>
+	<s:Label x="10" y="79" text="相关类库："/>
+	<s:TextInput x="76" y="40" width="284"/>
+	<s:Button id="sdkSelectBN0" y="40" right="10" width="23" height="21"
+			  icon="@Embed(source='../asset/folder.png')"
+			  skinClass="ghostcattools.skin.IconButtonSkin"/>
+	<s:DataGroup x="76" y="76" width="324" height="94"/>
+	<s:Button x="77" y="179" width="103" height="24" label="生成"/>
+</components:GCToolWindow>

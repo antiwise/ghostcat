@@ -32,7 +32,14 @@
 			private function dragInHandler(files:Array):void
 			{
 				if (cmd)
-					openWindow().openFileHandler(files);
+				{
+					var w:GCToolWindow = openWindow();
+					w.addEventListener(FlexEvent.CREATION_COMPLETE,h);
+					function h(e:FlexEvent):void
+					{
+						w.openFileHandler(files);
+					}
+				}
 			}
 			
 			private function openWindow():GCToolWindow

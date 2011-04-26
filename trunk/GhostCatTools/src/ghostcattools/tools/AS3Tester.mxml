@@ -4,27 +4,30 @@
 						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="628" height="456">
 	<fx:Script>
 		<![CDATA[
-			
-
-			
+			import flashx.textLayout.formats.TextLayoutFormat;
 			
 			import ghostcat.util.code.CodeCreater;
+			import ghostcat.util.data.LocalStorage;
 			import ghostcat.util.text.TextUtil;
 			
 			import ghostcattools.components.GCAlert;
 			import ghostcattools.util.Config;
-			import ghostcattools.util.FPECodeColor;
 			import ghostcattools.util.FileControl;
 			
 			import mx.controls.Alert;
+			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			
+			import spark.components.Window;
 			import spark.events.TextOperationEvent;
 
 			static public const EXCODE:String = "import flash.net.LocalConnection;class Fl{public static function trace(...params):void{new LocalConnection().send('GCTestLink','traceExt',params)}}";
 			
+			private var shareObject:LocalStorage = new LocalStorage("gctools_as3tester");
 			private var loader:Loader;
-
+			private var lc:LocalConnection;
+			private var swfWindow:Window;
+			
 			public override function openFileHandler(files:Array):void
 			{
 				if (!files)
@@ -69,20 +72,28 @@
 				}
 				else
 				{
+					this.runBN.enabled = false;
+					
 					if (this.loader)
 					{
 						this.loader.unloadAndStop();
-						this.swfContainer.removeChild(this.loader);
+						this.swfWindow.close();
+						this.swfWindow = null;
 					}
 					
-					traceExt(["【正在编译AS文件...】"]);
+					traceExt(["【正在编译AS文件...】"],0x0000FF);
 					
-					var text:String = sourceText.text;
+					var text:String;
+					if (sourceText.selectionBeginIndex == sourceText.selectionEndIndex)
+						text = sourceText.text;
+					else
+						text= sourceText.text.substring(sourceText.selectionBeginIndex,sourceText.selectionEndIndex);
+					
 					text = text.replace(/\btrace\(/g,"Fl.trace(");
 					text = "public function Test():void{" + text + "}";
 					text = CodeCreater.pack("Test",text,null,Sprite);
 					text += EXCODE;
-					FileControl.runMXMLC(text,getSwfHandler,traceHandler);
+					FileControl.runMXMLC(text,getSwfHandler,traceHandler,errorHandler);
 				}
 			}
 			
@@ -90,44 +101,75 @@
 			{
 				if (!bytes)
 				{
-					traceExt(["【编译失败！】"]);
+					traceExt(["【编译失败！】"],0xFF0000);
 				}
 				else
 				{
-					traceExt(["【编译完成！】"]);
+					traceExt(["【编译完成！】"],0x0000FF);
 					bytes.position = 0;
 					
+					this.swfWindow = new Window();
+					this.swfWindow.width = 500;
+					this.swfWindow.height = 400;
+					this.swfWindow.title = "SWF浏览";
+					this.swfWindow.showStatusBar = false;
+					this.swfWindow.maximizable = this.swfWindow.resizable = false;
+					if (swfWindowCheckBox.selected)
+						this.swfWindow.open();
+					
+					var uiLayer:UIComponent = new UIComponent();
+					this.swfWindow.addElement(uiLayer);
 					this.loader = new Loader();
-					this.swfContainer.addChild(loader);
+					uiLayer.addChild(this.loader);
 					var context:LoaderContext = new LoaderContext(false,new ApplicationDomain());
 					context.allowCodeImport = true;
 					this.loader.loadBytes(bytes,context);
 				}
+				
+				this.runBN.enabled = true;
 			}
 			
 			private function traceHandler(str:String):void
 			{
-//				traceText.appendText(str + "\n");
+				traceExt([str],0x0000FF);
+			}
+			
+			private function errorHandler(str:String):void
+			{
+				traceExt([str],0xFF0000);
 			}
 
-
-			private var lc:LocalConnection;
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
+				var v:String = shareObject.getValue();
+				if (v)
+				{
+					sourceText.text = v;
+					sourceText.validateNow();
+					sourceText.refreshCodeColor();
+				}
+				
 				lc = new LocalConnection();
 				lc.connect("GCTestLink");
 				lc.client = {traceExt:this.traceExt};
 			}
 			
-			public function traceExt(params:Array):void
+			public function traceExt(params:Array,color:uint = 0x0):void
 			{
-				traceText.appendText(params.join(",") + "\n");
+				var text:String = params.join(",") + "\n";
+				traceText.appendText(text);
+			
+				var tf:TextLayoutFormat = new TextLayoutFormat();
+				tf.color = color;
+				traceText.setFormatOfRange(tf,traceText.text.length - text.length,traceText.text.length);
 			}
-
 
 			protected function gctoolwindow1_closeHandler(event:Event):void
 			{
 				lc.close();
+				shareObject.setValue(sourceText.text);
+				if (swfWindow)
+					swfWindow.close();
 			}
 
 		]]>
@@ -137,9 +179,9 @@
 	</fx:Declarations>
 	<components:CodeTextArea id="sourceText" left="5" right="5" top="31" bottom="133" codeMode="true" text="trace('测试文本')"/>
 	<s:TextArea id="traceText" left="5" right="5" bottom="5" height="123" editable="false"/>
-	<s:Button x="5" y="5" width="126" label="运行" click="button3_clickHandler(event)"/>
+	<s:Button id="runBN" x="5" y="5" width="126" label="运行" click="button3_clickHandler(event)"/>
 	<s:Button y="5" right="79" label="保存" click="button1_clickHandler(event)"/>
 	<s:Button y="5" right="5" label="载入" click="button2_clickHandler(event)"/>
-	<mx:UIComponent id="swfContainer"/>
+	<s:CheckBox id="swfWindowCheckBox" right="163" y="6" label="显示SWF窗口"/>
 </components:GCToolWindow>
 

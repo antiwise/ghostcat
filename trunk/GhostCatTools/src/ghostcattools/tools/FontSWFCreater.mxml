@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="392"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			public var datas:ArrayList = new ArrayList([{fontName:'宋体'}]);
+			
+			[Bindable]
+			public var fontNames:ArrayList;
+			
+			[Bindable]
+			public var useFontFile:Boolean;
+
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				var list:Array = Font.enumerateFonts(true);
+				for (var i:int = 0;i < list.length;i++)
+					list[i] = Font(list[i]).fontName;
+				
+				list.unshift("选择外部字体");
+				
+				this.fontNames = new ArrayList(list);
+			}
+
+
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+			}
+
+
+			protected function fontList_changeHandler(event:IndexChangeEvent):void
+			{
+				this.useFontFile = (fontList.selectedIndex == 0)	
+			}
+
+		]]>
+	</fx:Script>
+	<components:layout>
+		<s:BasicLayout/>
+	</components:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:TabBar id="fontTabs" x="5" y="10" dataProvider="{datas}" labelField="fontName"/>
+	<s:BorderContainer top="31" left="5" right="5" bottom="5">
+		<s:Label x="10" y="10" text="字体："/>
+		<s:DropDownList id="fontList" x="59" y="5" width="179" dataProvider="{fontNames}" change="fontList_changeHandler(event)"/>
+		<s:TextInput x="59" y="32" width="153" visible="{useFontFile}"/>
+		<s:Button id="sdkSelectBN0" y="32" right="149" width="23" height="21" visible="{useFontFile}"
+				  icon="@Embed(source='../asset/folder.png')"
+				  skinClass="ghostcattools.skin.IconButtonSkin"/>
+		<s:CheckBox x="61" y="58" label="粗体"/>
+		<s:CheckBox x="111" y="58" label="斜体"/>
+		<s:Label id="fontExampleText" x="245" y="4" width="133" height="74" backgroundColor="#E8E8E8" text="示例文本"
+				 textAlign="center" verticalAlign="middle"/>
+		<s:TextInput x="9" y="112" width="339"/>
+		<s:Button id="sdkSelectBN1" y="112" right="10" width="23" height="21"
+				  icon="@Embed(source='../asset/folder.png')"
+				  skinClass="ghostcattools.skin.IconButtonSkin"/>
+		<s:Label x="10" y="91" text="外部文本："/>
+		<s:Label x="10" y="204" text="附加文本："/>
+		<s:CheckBox x="201" y="199" label="英文"/>
+		<s:CheckBox x="251" y="199" label="全角字符"/>
+		<s:CheckBox x="325" y="199" label="标点"/>
+		<s:TextArea x="10" y="221" width="368" height="87"/>
+		<s:Button x="10" y="321" width="103" height="24" label="查看AS文件"/>
+		<s:Button x="122" y="321" width="103" height="24" label="生成SWF"/>
+		
+	</s:BorderContainer>
+</components:GCToolWindow>
