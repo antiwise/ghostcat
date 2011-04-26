@@ -376,7 +376,7 @@ package ghostcat.ui.controls
 				else
 					thumb.x += thumb.mouseX;
 					
-				thumb.x = Math.max(Math.min(thumbAreaStart + thumbAreaLength - thumb.width,thumb.x),thumbAreaStart)
+				thumb.x = Math.max(Math.min(thumbAreaStart + thumbAreaLength,thumb.x),thumbAreaStart)
 //				thumb.x = Math.max(Math.min(downArrow.x - thumb.width,thumb.x),upArrow.x + upArrow.width)
 			}
 			else
@@ -388,7 +388,7 @@ package ghostcat.ui.controls
 				else
 					thumb.y += thumb.mouseY;
 				
-				thumb.y = Math.max(Math.min(thumbAreaStart + thumbAreaLength - thumb.height,thumb.y),thumbAreaStart)
+				thumb.y = Math.max(Math.min(thumbAreaStart + thumbAreaLength,thumb.y),thumbAreaStart)
 //				thumb.y = Math.max(Math.min(downArrow.y - thumb.height,thumb.y),upArrow.y + upArrow.height)
 			}
 			thumbMouseMoveHandler();

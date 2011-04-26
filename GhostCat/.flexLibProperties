@@ -582,7 +582,7 @@
     <classEntry path="ghostcat.util.code.CodeColor"/>
     <classEntry path="ghostcat.util.display.ButtonUtil"/>
     <classEntry path="ghostcat.util.display.BitmapMovieUtil"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapGrid9Shape"/>
+    <classEntry path="ghostcat.util.text.TextTransferUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
