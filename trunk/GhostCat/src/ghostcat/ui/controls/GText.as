@@ -854,7 +854,7 @@ package ghostcat.ui.controls
 		}
 		
 		/**
-		 * 确认输入框的文本 
+		 * 确认输入框的文本，使data获得新的值，并触发Change
 		 * 
 		 */
 		public function accaptText():void

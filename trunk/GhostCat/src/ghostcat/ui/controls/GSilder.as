@@ -23,9 +23,9 @@ package ghostcat.ui.controls
 	 */
 	public class GSilder extends GNoScale
 	{
-		public var upArrow:GButtonBase;
-		public var downArrow:GButtonBase;
-		public var thumb:GButtonBase;
+		public var upArrow:GButtonLite;
+		public var downArrow:GButtonLite;
+		public var thumb:GButtonLite;
 		public var background:DisplayObject;
 		
 		/**
@@ -39,7 +39,7 @@ package ghostcat.ui.controls
 		protected var buttonRef:Class;
 		
 		/**
-		 * 激活滚动条按钮自适应
+		 * 激活滚动条按钮自适应滚动容器
 		 */
 		public var enabledArrowResize:Boolean = false;
 		
@@ -213,21 +213,11 @@ package ghostcat.ui.controls
 				this.upArrow.incessancyClick = true;
 				this.upArrow.addEventListener(MouseEvent.CLICK,upArrowClickHandler);
 			}
-			else
-			{
-				this.upArrow = new ref(new Shape())
-				this.upArrow.y = getBounds(this).y;
-			}	
 			if (content.hasOwnProperty(downArrowField))
 			{
 				this.downArrow = new ref(content[downArrowField]);
 				this.downArrow.incessancyClick = true;
 				this.downArrow.addEventListener(MouseEvent.CLICK,downArrowClickHandler);
-			}
-			else
-			{
-				this.downArrow = new ref(new Shape());
-				this.downArrow.y = getBounds(this).bottom;
 			}
 			
 			if (content.hasOwnProperty(thumbField))
@@ -254,7 +244,7 @@ package ghostcat.ui.controls
 				if (this.downArrow && enabledArrowResize)
 					this.downArrow.x = this.width - this.downArrow.width;
 				
-				thumbAreaStart = upArrow.x + upArrow.width;
+				thumbAreaStart = upArrow ? upArrow.x + upArrow.width : 0;
 				thumbAreaLength = (downArrow ? downArrow.x : this.width) - (thumb ? thumb.width : 0) - thumbAreaStart;
 				if (background)
 					background.width = width;
@@ -264,7 +254,7 @@ package ghostcat.ui.controls
 				if (this.downArrow && enabledArrowResize)
 					this.downArrow.y = this.height - this.downArrow.height;
 				
-				thumbAreaStart = upArrow.y + upArrow.height;
+				thumbAreaStart = upArrow ? upArrow.y + upArrow.height : 0;
 				thumbAreaLength = (downArrow ? downArrow.y : this.height) - (thumb ? thumb.height : 0) - thumbAreaStart;
 				if (background)
 					background.height = height;
@@ -374,7 +364,7 @@ package ghostcat.ui.controls
 		 */
 		protected function backgroundHandler(event:MouseEvent):void
 		{
-			if (isNaN(percent) || !enabled)
+			if (isNaN(percent) || !enabled || !thumb)
 				return;
 			
 			if (direction == UIConst.HORIZONTAL)
@@ -386,7 +376,8 @@ package ghostcat.ui.controls
 				else
 					thumb.x += thumb.mouseX;
 					
-				thumb.x = Math.max(Math.min(downArrow.x - thumb.width,thumb.x),upArrow.x + upArrow.width)
+				thumb.x = Math.max(Math.min(thumbAreaStart + thumbAreaLength - thumb.width,thumb.x),thumbAreaStart)
+//				thumb.x = Math.max(Math.min(downArrow.x - thumb.width,thumb.x),upArrow.x + upArrow.width)
 			}
 			else
 			{
@@ -396,8 +387,9 @@ package ghostcat.ui.controls
 					thumb.y -= pageDetra;
 				else
 					thumb.y += thumb.mouseY;
-					
-				thumb.y = Math.max(Math.min(downArrow.y - thumb.height,thumb.y),upArrow.y + upArrow.height)
+				
+				thumb.y = Math.max(Math.min(thumbAreaStart + thumbAreaLength - thumb.height,thumb.y),thumbAreaStart)
+//				thumb.y = Math.max(Math.min(downArrow.y - thumb.height,thumb.y),upArrow.y + upArrow.height)
 			}
 			thumbMouseMoveHandler();
 		}
