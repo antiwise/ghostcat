@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Button xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  width="80" height="80" 
+		  creationComplete="creationCompleteHandler(event)" click="mouseClickHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			public var cmd:Class;
+			public var fileFilter:Array = null;
+			
+			public var windowResizable:Boolean = true;
+			public var windowMaximizable:Boolean = true;
+			
+			private function mouseClickHandler(event:MouseEvent):void
+			{
+				if (cmd)
+					openWindow();
+			}
+			
+			private function creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(dragInHandler,this,fileFilter);
+			}
+			
+			private function dragInHandler(files:Array):void
+			{
+				if (cmd)
+					openWindow().openFileHandler(files);
+			}
+			
+			private function openWindow():GCToolWindow
+			{
+				var window:GCToolWindow;
+				if (GCToolWindow.openDict[cmd])
+				{
+					window = GCToolWindow.openDict[cmd];
+					window.orderToFront();
+					GhostCatTools.instance.minimize();
+				}
+				else
+				{
+					window = new cmd() as GCToolWindow;
+					window.resizable = windowResizable;
+					window.maximizable = windowMaximizable;
+					window.open();
+					window.addEventListener(FlexEvent.CREATION_COMPLETE,h);
+					function h(e:Event):void
+					{
+						GhostCatTools.instance.minimize();
+					}
+				}
+				return window;
+			}
+		]]>
+	</fx:Script>
+</s:Button>

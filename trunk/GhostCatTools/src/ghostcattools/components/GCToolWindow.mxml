@@ -12,6 +12,7 @@
 			import ghostcattools.util.FileControl;
 			
 			import mx.events.FlexEvent;
+			import mx.managers.WindowedSystemManager;
 			
 			static public var openDict:Dictionary = new Dictionary();
 			
@@ -32,7 +33,7 @@
 			{
 				//处理打开文件的代码
 			}
-
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>

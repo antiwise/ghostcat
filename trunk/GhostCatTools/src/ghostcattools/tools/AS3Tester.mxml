@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark"  title="代码测试" creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="628" height="456">
+	<fx:Script>
+		<![CDATA[
+			
+
+			
+			
+			import ghostcat.util.code.CodeCreater;
+			import ghostcat.util.text.TextUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FPECodeColor;
+			import ghostcattools.util.FileControl;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			import spark.events.TextOperationEvent;
+
+			static public const EXCODE:String = "import flash.net.LocalConnection;class Fl{public static function trace(...params):void{new LocalConnection().send('GCTestLink','traceExt',params)}}";
+			
+			private var loader:Loader;
+
+			public override function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				sourceText.text = TextUtil.removeR(FileControl.readFile(file).toString());
+				sourceText.validateNow();
+				sourceText.refreshCodeColor();
+			}
+
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveHandler,"保存");
+				function saveHandler(files:Array):void
+				{
+					if (!files)
+						return;
+					
+					var bytes:ByteArray = new ByteArray();
+					var text:String = this.sourceText.text;
+					bytes.writeUTFBytes(text);
+					
+					FileControl.writeFile(files[0],bytes);
+				}
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"加载一个AS文件",[new FileFilter("AS文件","*.as")]);
+			}
+
+
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
+				if (!file.exists)
+				{
+					new GCAlert().show("Flex SDK路径设置错误",this);
+				}
+				else
+				{
+					if (this.loader)
+					{
+						this.loader.unloadAndStop();
+						this.swfContainer.removeChild(this.loader);
+					}
+					
+					traceExt(["【正在编译AS文件...】"]);
+					
+					var text:String = sourceText.text;
+					text = text.replace(/\btrace\(/g,"Fl.trace(");
+					text = "public function Test():void{" + text + "}";
+					text = CodeCreater.pack("Test",text,null,Sprite);
+					text += EXCODE;
+					FileControl.runMXMLC(text,getSwfHandler,traceHandler);
+				}
+			}
+			
+			private function getSwfHandler(bytes:ByteArray):void
+			{
+				if (!bytes)
+				{
+					traceExt(["【编译失败！】"]);
+				}
+				else
+				{
+					traceExt(["【编译完成！】"]);
+					bytes.position = 0;
+					
+					this.loader = new Loader();
+					this.swfContainer.addChild(loader);
+					var context:LoaderContext = new LoaderContext(false,new ApplicationDomain());
+					context.allowCodeImport = true;
+					this.loader.loadBytes(bytes,context);
+				}
+			}
+			
+			private function traceHandler(str:String):void
+			{
+//				traceText.appendText(str + "\n");
+			}
+
+
+			private var lc:LocalConnection;
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				lc = new LocalConnection();
+				lc.connect("GCTestLink");
+				lc.client = {traceExt:this.traceExt};
+			}
+			
+			public function traceExt(params:Array):void
+			{
+				traceText.appendText(params.join(",") + "\n");
+			}
+
+
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				lc.close();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<components:CodeTextArea id="sourceText" left="5" right="5" top="31" bottom="133" codeMode="true" text="trace('测试文本')"/>
+	<s:TextArea id="traceText" left="5" right="5" bottom="5" height="123" editable="false"/>
+	<s:Button x="5" y="5" width="126" label="运行" click="button3_clickHandler(event)"/>
+	<s:Button y="5" right="79" label="保存" click="button1_clickHandler(event)"/>
+	<s:Button y="5" right="5" label="载入" click="button2_clickHandler(event)"/>
+	<mx:UIComponent id="swfContainer"/>
+</components:GCToolWindow>
+

@@ -13,6 +13,9 @@ package ghostcattools.util
 		[Bindable]
 		static public var FLEXSDK_PATH:String = "";
 		
+		static public const ASDOC:String = "bin/asdoc.exe";
+		static public const MXMLC:String = "bin/mxmlc.exe";
+		
 		static public function save():void
 		{
 			var xml:XML = <GhostCatTools/>;

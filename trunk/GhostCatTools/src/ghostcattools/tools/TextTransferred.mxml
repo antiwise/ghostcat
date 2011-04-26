@@ -5,7 +5,7 @@
 	<fx:Script>
 		<![CDATA[
 			import ghostcat.util.text.ANSI;
-//			import ghostcat.util.text.TextTransferUtil;
+			import ghostcat.util.text.TextTransferUtil;
 			
 			import ghostcattools.util.FileControl;
 			
@@ -86,13 +86,13 @@
 					return str;
 				}
 				
-//				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringEncode];
-//				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringDecode];
-//				
-//				if (transferDown)
-//					output.text = encodeFuns[outputBox.selectedIndex](decodeFuns[inputBox.selectedIndex](input.text));
-//				else
-//					input.text = encodeFuns[inputBox.selectedIndex](decodeFuns[outputBox.selectedIndex](output.text));
+				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringEncode];
+				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringDecode];
+				
+				if (transferDown)
+					output.text = encodeFuns[outputBox.selectedIndex](decodeFuns[inputBox.selectedIndex](input.text));
+				else
+					input.text = encodeFuns[inputBox.selectedIndex](decodeFuns[outputBox.selectedIndex](output.text));
 			}
 			
 		]]>

@@ -277,5 +277,18 @@ package ghostcat.util.text
 			textField.defaultTextFormat = f;
 			textField.setTextFormat(f,0,textField.length);
 		}
+		
+		/**
+		 * 在当前光标位置插入文本 
+		 * @param textField
+		 * @param str
+		 * 
+		 */
+		public static function insertText(textField:TextField,str:String):void
+		{
+			var index:int = textField.caretIndex;
+			textField.text = textField.text.slice(0,index) + str + textField.text.slice(index);
+			textField.setSelection(index + str.length,index + str.length);
+		}
 	}
 }
