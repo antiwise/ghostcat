@@ -4,13 +4,17 @@
 						 xmlns:mx="library://ns.adobe.com/flex/mx"
 						 xmlns:components="ghostcattools.components.*"
 						 width="620" height="488" minWidth="600" minHeight="350"
-						 currentState="match" showStatusBar="false" title="正则工具" creationComplete="gctoolwindow1_creationCompleteHandler(event)">
+						 currentState="match" showStatusBar="false" title="正则工具" 
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
+			import flash.utils.getQualifiedClassName;
+			
 			import flashx.textLayout.events.FlowElementMouseEvent;
 			import flashx.textLayout.formats.TextLayoutFormat;
 			
 			import ghostcat.ui.controls.GText;
+			import ghostcat.util.data.LocalStorage;
 			
 			import ghostcattools.util.FileControl;
 			
@@ -19,6 +23,10 @@
 			
 			import spark.events.IndexChangeEvent;
 			import spark.events.TextOperationEvent;
+			import spark.utils.TextFlowUtil;
+			
+			public var sharedObject:LocalStorage = new LocalStorage("gctools_regexr");
+			
 			[Bindable]
 			public var helpDatas:ArrayList = new ArrayList([
 				". 任意字符",
@@ -111,7 +119,7 @@
 				if (this.currentState == "replace")
 					this.targetText.text = this.sourceText.text.replace(regExp,this.replaceText.text);
 				
-				this.sourceText.resetColor();
+				this.sourceText.setTextColor();
 				
 				regExp.lastIndex = 0;
 				do
@@ -126,20 +134,20 @@
 				}
 				while (execResult && regExp.global);
 				
-				var testResult:String = "表达式写法：/" + regExp.source.replace(/\//g,"\\/") + "/" + params +"\n" +
-					"字符串写法：new RegExp(\"" + regExp.source.replace(/\"|\\/g,"\\$&") + "\",\""+ params +"\")\n"
+				var testResult:String = "表达式写法：<span color='#0000FF'>/" + regExp.source.replace(/\//g,"\\/") + "/" + params +"</span><br/>" +
+					"字符串写法：<span color='#0000FF'>new RegExp(\"" + regExp.source.replace(/\"|\\/g,"\\$&") + "\",\""+ params +"\")</span><br/>"
 				
 				var result:Array = regExp.exec(this.sourceText.text);
 				if (result)
 				{
-					testResult += "匹配了" + result.length + "个组：";
+					testResult += "匹配了<span color='#0000FF'>" + result.length + "</span>个组：";
 					for (var i:int = 0;i < result.length;i++)
 					{
-						testResult += "\n(" + (i + 1).toString() + ")" + result[i];
+						testResult += "<br/>(" + (i + 1).toString() + ")<span color='#0000FF'>" + result[i] + "</span>";
 					}
 				}
 				
-				this.execText.text = testResult;
+				this.execText.textFlow = TextFlowUtil.importFromString(testResult);
 			}
 
 
@@ -152,8 +160,36 @@
 
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
+				var v:Object = sharedObject.getValue()
+				if (v)
+				{
+					regExpText.text = v.regExpText;
+					sourceText.text = v.sourceText;
+					replaceText.text = v.replaceText;
+					paramg.selected = v.paramg;
+					parami.selected = v.parami;
+					paramx.selected = v.paramx;
+					params.selected = v.params;
+					paramm.selected = v.paramm;
+				}
+				
 				regExpText.setFocus();
 				doExp();
+			}
+
+
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				sharedObject.setValue({
+					regExpText:regExpText.text,
+					sourceText:sourceText.text,
+					replaceText:replaceText.text,
+					paramg:paramg.selected,
+					parami:parami.selected,
+					paramx:paramx.selected,
+					params:params.selected,
+					paramm:paramm.selected
+				})
 			}
 
 		]]>
@@ -175,7 +211,7 @@
 	<s:BorderContainer left="10" right="10" top="30" bottom="10">
 		<s:TextInput id="regExpText" left="10" right="178" top="10" text="\d"
 					 change="regExp_changeHandler(event)"/>
-		<s:TextInput id="replaceText" includeIn="replace" left="10" right="178" top="69" text="用于替换的文本"
+		<s:TextInput id="replaceText" left="10" right="178" top="69" text="用于替换的文本"
 					 change="regExp_changeHandler(event)"/>
 		<s:CheckBox id="paramg" x="10" y="40" width="85" label="多次匹配" toolTip="参数：g" change="regExp_changeHandler(event)"/>
 		<s:CheckBox id="parami" x="84" y="40" label="忽略大小写" toolTip="参数：i" change="regExp_changeHandler(event)"/>

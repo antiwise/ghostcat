@@ -17,6 +17,8 @@ package ghostcattools.util
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
+	import ghostcat.util.text.ANSI;
+	
 	import mx.controls.Alert;
 
 	public final class FileControl
@@ -133,7 +135,7 @@ package ghostcattools.util
 			return true;
 		}
 		
-		static public function runMXMLC(text:String,completeHandler:Function = null,traceHandler:Function = null):void
+		static public function runMXMLC(text:String,completeHandler:Function = null,traceHandler:Function = null,errorHandler:Function = null):void
 		{
 			var mxmls:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
 			if (!mxmls.exists)
@@ -159,12 +161,18 @@ package ghostcattools.util
 				var process:NativeProcess = event.currentTarget as NativeProcess;
 				var str:String;
 				if (event.type == ProgressEvent.STANDARD_OUTPUT_DATA)
-					str = process.standardOutput.readUTFBytes(process.standardOutput.bytesAvailable).toString();
+				{
+					str = process.standardOutput.readMultiByte(process.standardOutput.bytesAvailable,"gb2312").toString();
+					if (traceHandler != null)
+						traceHandler(str);
+				}
 				else
-					str = process.standardError.readUTFBytes(process.standardError.bytesAvailable).toString();
+				{
+					str = process.standardError.readMultiByte(process.standardError.bytesAvailable,"gb2312").toString();
+					if (errorHandler != null)
+						errorHandler(str);
+				}
 				
-				if (traceHandler != null)
-					traceHandler(str);
 			}
 		}
 	}

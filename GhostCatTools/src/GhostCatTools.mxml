@@ -14,6 +14,8 @@
 			import flashx.textLayout.factory.TextFlowTextLineFactory;
 			
 			import ghostcattools.tools.AS3Tester;
+			import ghostcattools.tools.ASDocCreater;
+			import ghostcattools.tools.FontSWFCreater;
 			import ghostcattools.tools.GCNotepad;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.SWFDumper;
@@ -87,14 +89,14 @@
 				<components:GCToolButton label="文本压缩" cmd="{GCNotepad}" windowMaximizable="false" windowResizable="false"/>
 				<components:GCToolButton label="文本转义" cmd="{TextTransferred}"/>
 				<components:GCToolButton label="正则工具" cmd="{RegExr}"/>
-				<components:GCToolButton label="多语言对比"/>
-				<components:GCToolButton label="压缩工具"/>
-				<components:GCToolButton label="代码统计"/>
+				<components:GCToolButton label="多语言对比" enabled="false"/>
+				<components:GCToolButton label="压缩工具" enabled="false"/>
+				<components:GCToolButton label="代码统计" enabled="false"/>
 				<components:GCToolButton label="SWF浏览" cmd="{SWFShower}" fileFilter="swf"/>
 				<components:GCToolButton label="SWF抓取" cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
-				<components:GCToolButton label="测试代码" cmd="{AS3Tester}" fileFilter="as"/>
-				<components:GCToolButton label="字体生成"/>
-				<components:GCToolButton label="ASDoc生成"/>
+				<components:GCToolButton label="测试代码" cmd="{AS3Tester}"/>
+				<components:GCToolButton label="字体生成" cmd="{FontSWFCreater}" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="ASDoc生成" cmd="{ASDocCreater}" windowResizable="false" windowMaximizable="false"/>
 			</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
