@@ -1,45 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" showStatusBar="false"
 						 xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)" 
-						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="214">
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="214" enabledDragOpen="false">
 	<fx:Script>
 		<![CDATA[
+			import ghostcat.util.data.LocalStorage;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.util.AutoLengthArrayList;
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
 			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
+			
+			import spark.events.TextOperationEvent;
+			
+			[Bindable]
+			public var libs:AutoLengthArrayList = new AutoLengthArrayList(null,ObjectProxy,"text");
 
-//			-source-path src
-//				-doc-sources src
-//				-library-path "D:\workspace\ghostcat\GhostCat\asset\GhostCatAsset.swc"
-//				-library-path "D:\Program Files\Adobe\Flex Builder 3 Plug-in\sdks\3.1.0\frameworks\libs\framework.swc"
+			public var so:LocalStorage = new LocalStorage("gctools_asdoccreater");
+			
+			private var alert:GCAlert;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				if (file.exists && file.isDirectory)
+				{
+					sourceText.text = file.nativePath;
+					sourceText.dispatchEvent(new TextOperationEvent(TextOperationEvent.CHANGE));
+				}
+			}
+			
+			public function getShareObjectUrl():String
+			{
+				var text:String = sourceText.text;
+				text = text.replace(/\W/g,"");
+				return "gctools_asdoccreater_" + text;
+			}
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
-				// TODO Auto-generated method stub
+				if (!isDragOpen)
+				{
+					var source:String = so.getValue();
+					if (source)
+					{
+						sourceText.text = source;
+						sourceText.dispatchEvent(new TextOperationEvent(TextOperationEvent.CHANGE));
+					}
+				}
 			}
-
 
 			protected function gctoolwindow1_closeHandler(event:Event):void
 			{
-				// TODO Auto-generated method stub
+				saveToShareObject();
+			}
+
+			protected function sourceText_changeHandler(event:TextOperationEvent):void
+			{
+				var obj:Object = new LocalStorage(getShareObjectUrl()).getValue();
+				if (obj)
+				{
+					if (!targetText.text)
+						targetText.text = obj.target;
+					
+					if (libs.length <= 1 && obj.libs)
+					{
+						this.libs.removeAll();
+						for (var i:int = 0;i < obj.libs.length;i++)
+							this.libs.addItem(new ObjectProxy({text:obj.libs[i]}));
+						
+						this.libs.createEmptyObject();
+					}
+				}
+			}
+			
+			private function saveToShareObject():void
+			{
+				if (!sourceText.text)
+					return;
+				
+				this.so.setValue(sourceText.text);
+				
+				var obj:Object = {};
+				obj.target = targetText.text;
+					
+				if (libs.length > 1)
+				{
+					var list:Array = [];
+					for (var i:int = 0;i < libs.length - 1;i++)
+						list[i] = libs.getItemAt(i).text;
+				}
+				obj.libs = list;
+				
+				new LocalStorage(getShareObjectUrl()).setValue(obj);
+			}
+			
+			protected function runBN_clickHandler(event:MouseEvent):void
+			{
+				saveToShareObject();
+				
+				var file:File = new File(Config.FLEXSDK_PATH + "\\" + Config.ASDOC);
+				if (!file.exists)
+					return;
+				
+				var reg:Array = [];
+				reg.push("-source-path+=" + sourceText.text);
+				reg.push("-doc-sources+=" + sourceText.text);
+				for (var i:int = 0;i < libs.length;i++)
+				{
+					var obj:Object = libs.getItemAt(i);
+					if (obj && obj.text)
+						reg.push("-library-path+=" + obj.text)
+				}
+				
+				FileControl.run(file,reg,runEndHandler,null,dataHandler,new File(targetText.text));
+			
+				this.alert = new GCAlert();
+				this.alert.showButton = false;
+				this.alert.show("正在生成文件……",this);
+					
+			}
+			
+			private function dataHandler(str:String):void
+			{
+				new GCAlert().show(str,this);
+			}
+			
+			protected function runEndHandler(event:Event):void
+			{
+				saveToShareObject();
+				this.alert.close();
 			}
 
 		]]>
 	</fx:Script>
-	<components:layout>
-		<s:BasicLayout/>
-	</components:layout>
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<s:Label x="10" y="15" text="项目地址："/>
-	<s:TextInput x="76" y="10" width="284"/>
-	<s:Button id="sdkSelectBN" y="10" right="10" width="23" height="21"
-			  icon="@Embed(source='../asset/folder.png')"
-			  skinClass="ghostcattools.skin.IconButtonSkin"/>
+	<s:TextInput id="sourceText" x="76" y="10" width="265" change="sourceText_changeHandler(event)"/>
+	<components:BrowseButton id="sdkSelectBN" x="347" y="10" target="{sourceText}" isDirectory="true" browseTitle="选择一个目录"/>
 	<s:Label x="10" y="45" text="生成位置："/>
+	<s:TextInput id="targetText" x="76" y="40" width="265"/>
+	<components:BrowseButton id="sdkSelectBN0" x="347" y="40" target="{targetText}" isDirectory="true" browseTitle="选择一个目录"/>
 	<s:Label x="10" y="79" text="相关类库："/>
-	<s:TextInput x="76" y="40" width="284"/>
-	<s:Button id="sdkSelectBN0" y="40" right="10" width="23" height="21"
-			  icon="@Embed(source='../asset/folder.png')"
-			  skinClass="ghostcattools.skin.IconButtonSkin"/>
-	<s:DataGroup x="76" y="76" width="324" height="94"/>
-	<s:Button x="77" y="179" width="103" height="24" label="生成"/>
+	<s:Scroller x="73" y="70" width="320" height="90">
+		<s:DataGroup dataProvider="{libs}">
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+			<s:itemRenderer>
+				<fx:Component>
+					<s:DataRenderer>
+						<s:Group width="300">
+							<s:TextInput id="libInput" y="3" x="3" width="265" text="{data ? data.text : ''}" change="if (data) data.text = libInput.text"/>
+							<components:BrowseButton y="3" x="274" target="{libInput}" browseTitle="选择一个SWC文件" 
+													 browseExtension="{new FileFilter('SWC 文件','*.swc')}" dragExtension="swc"/>
+						</s:Group>
+					</s:DataRenderer>
+				</fx:Component>
+			</s:itemRenderer>
+		</s:DataGroup>	
+	</s:Scroller>
+	<s:Button id="runBN" x="77" y="179" width="103" height="24" label="生成"  click="runBN_clickHandler(event)"/>
 </components:GCToolWindow>

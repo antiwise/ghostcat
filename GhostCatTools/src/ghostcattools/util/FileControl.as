@@ -23,10 +23,19 @@ package ghostcattools.util
 
 	public final class FileControl
 	{
-		static public function dragFileIn(rHandler:Function,target:InteractiveObject,extension:Array = null):void
+		static public function dragFileIn(rHandler:Function,target:*,extension:Array = null,isDirectory:Boolean = false):void
 		{
-			target.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragIn);		
-			target.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
+			if (!(target is Array))
+				target = [target];
+			
+			for each (var child:IEventDispatcher in target)
+			{
+				if (child)
+				{
+					child.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragIn);		
+					child.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
+				}
+			}
 			
 			function onDragIn(event:NativeDragEvent):void
 			{
@@ -36,8 +45,17 @@ package ghostcattools.util
 					var files:Array = transferable.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
 					if (files)
 					{
-						if (!extension || extension.length == 0 || extension.indexOf(File(files[0]).nativePath.split(".")[1].toLowerCase()) != -1)
-							NativeDragManager.acceptDragDrop(target);
+						var file:File = File(files[0]);
+						if (isDirectory)
+						{ 
+							if (file.isDirectory)
+								NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
+						}
+						else						
+						{
+							if (!file.isDirectory && (!extension || extension.length == 0 || extension.lastIndexOf(file.extension.toLowerCase()) != -1))
+								NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
+						}
 					}
 				}
 			}
@@ -48,7 +66,7 @@ package ghostcattools.util
 			}
 		}
 		
-		static public function browseForOpen(rHandler:Function,title:String,extension:Array = null):void
+		static public function browseForOpen(rHandler:Function,title:String = "选择一个文件",extension:Array = null):void
 		{
 			var file:File = File.documentsDirectory;
 			file.browseForOpen(title,extension);
@@ -67,6 +85,19 @@ package ghostcattools.util
 			if (path)
 				file.resolvePath(path);
 			file.browseForSave(title);
+			if (rHandler != null)
+				file.addEventListener(Event.SELECT,selectHandler);
+			
+			function selectHandler(event:Event):void
+			{
+				rHandler([file]);
+			}
+		}
+		
+		static public function browseForDirectory(rHandler:Function,title:String = "选择一个目录"):void
+		{
+			var file:File = File.documentsDirectory;
+			file.browseForDirectory(title);
 			if (rHandler != null)
 				file.addEventListener(Event.SELECT,selectHandler);
 			
@@ -104,19 +135,20 @@ package ghostcattools.util
 			return context;
 		}
 		
-		static public function run(file:File,arg:Array = null,exitHandler:Function = null,dataHandler:Function =  null):Boolean
+		static public function run(file:File,arg:Array = null,exitHandler:Function = null,traceHandler:Function =  null,errorHandler:Function =  null,workingDirectory:File = null):Boolean
 		{
 			if (!file.exists)
 				return false;
 			
 			var nativeProcessStartupInfo:NativeProcessStartupInfo = new NativeProcessStartupInfo();
 			nativeProcessStartupInfo.executable = file;
+			nativeProcessStartupInfo.workingDirectory = workingDirectory;
 			
 			if (arg)
 			{
-				var arguments:Vector.<String> = new Vector.<String>();
-				arguments.push.apply(null,arg);
-				nativeProcessStartupInfo.arguments = arguments;
+				var vector:Vector.<String> = new Vector.<String>();
+				vector.push.apply(null,arg);
+				nativeProcessStartupInfo.arguments = vector;
 			}
 			
 			var process:NativeProcess = new NativeProcess();
@@ -131,30 +163,7 @@ package ghostcattools.util
 				process.addEventListener(NativeProcessExitEvent.EXIT,exitHandler);
 			
 			process.start(nativeProcessStartupInfo);
-			
 			return true;
-		}
-		
-		static public function runMXMLC(text:String,completeHandler:Function = null,traceHandler:Function = null,errorHandler:Function = null):void
-		{
-			var mxmls:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
-			if (!mxmls.exists)
-				return;
-			
-			var bytes:ByteArray = new ByteArray();
-			bytes.writeUTFBytes(text);
-			var temp:File = File.createTempDirectory();
-			var asFile:File = temp.resolvePath("Test.as");
-			var swfFile:File = temp.resolvePath("Test.swf");
-			FileControl.writeFile(asFile,bytes);
-			FileControl.run(mxmls,[asFile.nativePath],exitHandler,dataHandler)
-			function exitHandler(event:Event):void
-			{
-				var swfBytes:ByteArray = swfFile.exists ? FileControl.readFile(swfFile) : null;
-				if (completeHandler != null)
-					completeHandler(swfBytes);
-				temp.deleteDirectory(true);
-			}
 			
 			function dataHandler(event:Event):void
 			{
@@ -173,6 +182,28 @@ package ghostcattools.util
 						errorHandler(str);
 				}
 				
+			}
+		}
+		
+		static public function runMXMLC(text:String,completeHandler:Function = null,traceHandler:Function = null,errorHandler:Function = null):void
+		{
+			var mxmls:File = new File(Config.MXMLC_PATH);
+			if (!mxmls.exists)
+				return;
+			
+			var bytes:ByteArray = new ByteArray();
+			bytes.writeUTFBytes(text);
+			var temp:File = File.createTempDirectory();
+			var asFile:File = temp.resolvePath("Test.as");
+			var swfFile:File = temp.resolvePath("Test.swf");
+			FileControl.writeFile(asFile,bytes);
+			FileControl.run(mxmls,[asFile.nativePath],exitHandler,traceHandler,errorHandler)
+			function exitHandler(event:Event):void
+			{
+				var swfBytes:ByteArray = swfFile.exists ? FileControl.readFile(swfFile) : null;
+				if (completeHandler != null)
+					completeHandler(swfBytes);
+				temp.deleteDirectory(true);
 			}
 		}
 	}

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false"
+						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false" fileFilter="xml"
 						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="392"
 						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
+			import ghostcattools.util.AutoLengthArrayList;
+			
 			import mx.collections.ArrayList;
 			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
 			
 			import spark.events.IndexChangeEvent;
 			[Bindable]
-			public var datas:ArrayList = new ArrayList([{fontName:'宋体'}]);
+			public var datas:ArrayList = new AutoLengthArrayList(null,ObjectProxy,"name");
 			
 			[Bindable]
-			public var fontNames:ArrayList;
+			public var fontNames:ArrayList = new ArrayList(["无","选择外部字体"]);
 			
 			[Bindable]
 			public var useFontFile:Boolean;
@@ -22,11 +25,7 @@
 			{
 				var list:Array = Font.enumerateFonts(true);
 				for (var i:int = 0;i < list.length;i++)
-					list[i] = Font(list[i]).fontName;
-				
-				list.unshift("选择外部字体");
-				
-				this.fontNames = new ArrayList(list);
+					fontNames.addItem(Font(list[i]).fontName);
 			}
 
 
@@ -37,7 +36,25 @@
 
 			protected function fontList_changeHandler(event:IndexChangeEvent):void
 			{
-				this.useFontFile = (fontList.selectedIndex == 0)	
+				this.useFontFile = fontList.selectedIndex == 1;
+				
+				var item:ObjectProxy = fontTabs.selectedItem;
+				if (fontList.selectedIndex == 0)
+				{
+					item.name = null;
+				}
+				else
+				{
+					if (fontList.selectedIndex == 1)
+						item.name = fontFileName.text ? fontFileName.text : "外部文件";
+					else
+						item.name = fontList.selectedItem;
+				}
+			}
+			
+			private function fontLabelFunction(item:Object):String
+			{
+				return item ? item.name : "";
 			}
 
 		]]>
@@ -48,20 +65,22 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:TabBar id="fontTabs" x="5" y="10" dataProvider="{datas}" labelField="fontName"/>
+	<s:TabBar id="fontTabs" x="5" y="10" maxWidth="390" dataProvider="{datas}"
+			  labelFunction="fontLabelFunction"/>
 	<s:BorderContainer top="31" left="5" right="5" bottom="5">
 		<s:Label x="10" y="10" text="字体："/>
-		<s:DropDownList id="fontList" x="59" y="5" width="179" dataProvider="{fontNames}" change="fontList_changeHandler(event)"/>
-		<s:TextInput x="59" y="32" width="153" visible="{useFontFile}"/>
-		<s:Button id="sdkSelectBN0" y="32" right="149" width="23" height="21" visible="{useFontFile}"
+		<s:DropDownList id="fontList" x="59" y="5" width="179" change="fontList_changeHandler(event)"
+						dataProvider="{fontNames}" selectedIndex="0"/>
+		<s:TextInput id="fontFileName" x="59" y="32" width="153" visible="{useFontFile}"/>
+		<s:Button id="sdkSelectBN0" visible="{useFontFile}" x="216" y="32" width="23" height="21"
 				  icon="@Embed(source='../asset/folder.png')"
 				  skinClass="ghostcattools.skin.IconButtonSkin"/>
 		<s:CheckBox x="61" y="58" label="粗体"/>
 		<s:CheckBox x="111" y="58" label="斜体"/>
-		<s:Label id="fontExampleText" x="245" y="4" width="133" height="74" backgroundColor="#E8E8E8" text="示例文本"
-				 textAlign="center" verticalAlign="middle"/>
+		<s:Label id="fontExampleText" x="245" y="4" width="133" height="74" backgroundColor="#E8E8E8" visible="{fontList.selectedIndex > 1}"
+				 text="示例文本&#xa;Example Text" fontLookup="auto" fontSize="16" textAlign="center" verticalAlign="middle" fontFamily="{fontList.selectedItem}"/>
 		<s:TextInput x="9" y="112" width="339"/>
-		<s:Button id="sdkSelectBN1" y="112" right="10" width="23" height="21"
+		<s:Button id="sdkSelectBN1" x="355" y="112" width="23" height="21"
 				  icon="@Embed(source='../asset/folder.png')"
 				  skinClass="ghostcattools.skin.IconButtonSkin"/>
 		<s:Label x="10" y="91" text="外部文本："/>

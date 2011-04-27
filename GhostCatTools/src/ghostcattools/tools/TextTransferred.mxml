@@ -18,7 +18,7 @@
 			import spark.events.TextOperationEvent;
 			
 			[Bindable]
-			public var typeList:ArrayCollection = new ArrayCollection(["UTF8文本","ANSI文本","UTF8 URL转义","ANSI URL转义","XML转义","字符串转义"]);
+			public var typeList:ArrayCollection = new ArrayCollection(["UTF8文本","ANSI文本","UTF8 URL转义","ANSI URL转义","XML转义","字符串转义","删除空白换行"]);
 			
 			[Bindable]
 			public var transferDown:Boolean = true;
@@ -86,8 +86,13 @@
 					return str;
 				}
 				
-				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringEncode];
-				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringDecode];
+				function removeSpace(str:String):String
+				{
+					return str.replace(/^\s*|\s*$|[\t\n\r]/g,"");
+				}
+				
+				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringEncode,emptyFun];
+				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringDecode,removeSpace];
 				
 				if (transferDown)
 					output.text = encodeFuns[outputBox.selectedIndex](decodeFuns[inputBox.selectedIndex](input.text));

@@ -4,7 +4,8 @@
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   width="552" height="212" 
 					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
-					   showStatusBar="false" useHandCursor="true" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
+					   showStatusBar="false" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合"
+					   xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*" xmlns:local="*">
 	<fx:Style source="GhostCatTools.css"/>
 	<fx:Script>
 		<![CDATA[
@@ -15,8 +16,8 @@
 			
 			import ghostcattools.tools.AS3Tester;
 			import ghostcattools.tools.ASDocCreater;
+			import ghostcattools.tools.CompressNotepad;
 			import ghostcattools.tools.FontSWFCreater;
-			import ghostcattools.tools.GCNotepad;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.SWFDumper;
 			import ghostcattools.tools.SWFShower;
@@ -41,38 +42,7 @@
 				Config.load();
 			}
 
-			protected function sdkSelectBN_clickHandler(event:MouseEvent):void
-			{
-				var file:File = new File();
-				file.browseForDirectory("选择一个目录");
-				file.addEventListener(Event.SELECT,handler);
-				function handler(event:Event):void
-				{
-					if (file.resolvePath(Config.ASDOC).exists && file.resolvePath(Config.MXMLC).exists)
-					{
-						Config.FLEXSDK_PATH = file.nativePath;
-						Config.save();
-					}
-					else
-					{
-						Alert.show("请选择正确的Flex SDK目录","错误");
-					}
-				}
-			}
 			
-			protected function notepadSelectBN_clickHandler(event:MouseEvent):void
-			{
-				var file:File = new File();
-				file.browseForOpen("选择一个应用程序",[new FileFilter("应用程序","*.exe")]);
-				file.addEventListener(Event.SELECT,handler);
-				function handler(event:Event):void
-				{
-					Config.NOTEPAD_PATH = file.nativePath;
-					Config.save();
-				}
-			}
-
-
 			protected function windowedapplication1_closeHandler(event:Event):void
 			{
 				this.nativeApplication.exit();
@@ -86,7 +56,7 @@
 	<mx:TabNavigator left="0" right="0" top="0" bottom="0" paddingTop="0">
 		<s:NavigatorContent width="100%" height="100%" label="工具">
 			<s:TileGroup  left="10" right="10" top="10" bottom="10" horizontalGap="10" verticalGap="10">
-				<components:GCToolButton label="文本压缩" cmd="{GCNotepad}" windowMaximizable="false" windowResizable="false"/>
+				<components:GCToolButton label="文本压缩" cmd="{CompressNotepad}" windowMaximizable="false" windowResizable="false"/>
 				<components:GCToolButton label="文本转义" cmd="{TextTransferred}"/>
 				<components:GCToolButton label="正则工具" cmd="{RegExr}"/>
 				<components:GCToolButton label="多语言对比" enabled="false"/>
@@ -95,29 +65,20 @@
 				<components:GCToolButton label="SWF浏览" cmd="{SWFShower}" fileFilter="swf"/>
 				<components:GCToolButton label="SWF抓取" cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
 				<components:GCToolButton label="测试代码" cmd="{AS3Tester}"/>
-				<components:GCToolButton label="字体生成" cmd="{FontSWFCreater}" windowResizable="false" windowMaximizable="false"/>
-				<components:GCToolButton label="ASDoc生成" cmd="{ASDocCreater}" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="字体生成" cmd="{FontSWFCreater}" fileFilter="xml" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="ASDoc生成" cmd="{ASDocCreater}" isDirectory="true" windowResizable="false" windowMaximizable="false"/>
 			</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
-			<s:Label x="10" y="10" text="Flex SDK 路径："/>
-			<s:Label x="10" y="72" text="文本编辑器路径："/>
-			<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="{Config.FLEXSDK_PATH}"/>
-			<s:Button id="sdkSelectBN" x="383" y="31" right="10" width="23" height="21"
-					  skinClass="ghostcattools.skin.IconButtonSkin" icon="@Embed(source='../asset/folder.png')"
-					  click="sdkSelectBN_clickHandler(event)"/>
-			<s:TextInput id="notepadUrlText" y="91" left="10" right="40" editable="false"
-						 text="{Config.NOTEPAD_PATH}"/>
-			<s:Button id="notepadSelectBN" y="91" right="10" width="23" height="21" 
-					  skinClass="ghostcattools.skin.IconButtonSkin" icon="@Embed(source='../asset/folder.png')"
-					  click="notepadSelectBN_clickHandler(event)"/>
+			<local:ConfigPanel width="100%" height="100%"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="关于">
-			<s:RichEditableText x="10" y="10" width="440" height="170" editable="false" selectable="false">
+			<s:RichEditableText y="10" left="10" right="10" height="170" editable="false" selectable="false">
 				<s:p>作者: flashyiyi</s:p>
 				<s:p>项目地址: <s:a href='http://ghostcat.googlecode.com/'>http://ghostcat.googlecode.com</s:a></s:p>
 				<s:p/>
-				<s:p>此工具支持完整的拖拽操作，所有功能都能通过拖拽执行</s:p>
+				<s:p>此工具支持完整的拖拽操作，你可以将文件拖动到功能按钮或者窗体上打开，也可以将文件拖动到打开按钮和文本框上设置文件路径。</s:p>
+				<s:p>会即时保存操作状态，在下次进入的时候仍可从中断的地点继续。</s:p>
 			</s:RichEditableText>																						 
 		</s:NavigatorContent>
 	</mx:TabNavigator>

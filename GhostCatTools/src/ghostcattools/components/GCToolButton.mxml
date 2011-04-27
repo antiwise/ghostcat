@@ -9,14 +9,18 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			public var cmd:Class;
 			public var fileFilter:Array = null;
 			
 			public var windowResizable:Boolean = true;
 			public var windowMaximizable:Boolean = true;
+			public var checkMXMLC:Boolean = false;
+			public var isDirectory:Boolean;
 			
 			private function mouseClickHandler(event:MouseEvent):void
 			{
@@ -26,7 +30,7 @@
 			
 			private function creationCompleteHandler(event:FlexEvent):void
 			{
-				FileControl.dragFileIn(dragInHandler,this,fileFilter);
+				FileControl.dragFileIn(dragInHandler,this,fileFilter,isDirectory);
 			}
 			
 			private function dragInHandler(files:Array):void
@@ -34,7 +38,11 @@
 				if (cmd)
 				{
 					var w:GCToolWindow = openWindow();
-					w.addEventListener(FlexEvent.CREATION_COMPLETE,h);
+					if (w)
+					{
+						w.isDragOpen = true;
+						w.addEventListener(FlexEvent.CREATION_COMPLETE,h);
+					}
 					function h(e:FlexEvent):void
 					{
 						w.openFileHandler(files);
@@ -44,6 +52,12 @@
 			
 			private function openWindow():GCToolWindow
 			{
+				if (checkMXMLC && !new File(Config.MXMLC_PATH).exists)
+				{
+					Alert.show("FLEX SDK设置错误，无法打开！");
+					return null;
+				}
+				
 				var window:GCToolWindow;
 				if (GCToolWindow.openDict[cmd])
 				{
