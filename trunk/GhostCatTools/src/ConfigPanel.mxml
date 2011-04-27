@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" xmlns:components="ghostcattools.components.*" creationComplete="group1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openSdkHandler,[sdkUrlText,sdkSelectBN],null,true);
+				FileControl.dragFileIn(openNotePadHandler,[notepadUrlText,notepadSelectBN],["exe"]);
+			}
+			
+			protected function sdkSelectBN_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File();
+				file.browseForDirectory("选择一个目录");
+				file.addEventListener(Event.SELECT,handler);
+				function handler(event:Event):void
+				{
+					openSdkHandler([file]);
+				}
+			}
+			
+			private function openSdkHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				if (file.resolvePath(Config.ASDOC).exists && file.resolvePath(Config.MXMLC).exists)
+				{
+					Config.FLEXSDK_PATH = file.nativePath;
+					Config.save();
+				}
+				else
+				{
+					Alert.show("请选择正确的Flex SDK目录","错误");
+				}
+			}
+			
+			protected function notepadSelectBN_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File();
+				file.browseForOpen("选择一个应用程序",[new FileFilter("应用程序","*.exe")]);
+				file.addEventListener(Event.SELECT,handler);
+				function handler(event:Event):void
+				{
+					openNotePadHandler([file]);
+				}
+			}
+			
+			private function openNotePadHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				Config.NOTEPAD_PATH = file.nativePath;
+				Config.save();
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Label x="10" y="10" text="Flex SDK 路径："/>
+	<s:Label x="10" y="72" text="文本编辑器路径："/>
+	<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="{Config.FLEXSDK_PATH}"/>
+	<components:BrowseButton id="sdkSelectBN" x="383" y="31" right="10" click="sdkSelectBN_clickHandler(event)"/>
+	<s:TextInput id="notepadUrlText" y="91" left="10" right="40" editable="false" text="{Config.NOTEPAD_PATH}"/>
+	<components:BrowseButton id="notepadSelectBN" y="91" right="10" click="notepadSelectBN_clickHandler(event)"/>
+</s:Group>

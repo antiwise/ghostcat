@@ -16,6 +16,10 @@
 			
 			static public var openDict:Dictionary = new Dictionary();
 			
+			public var fileFilter:Array;
+			public var enabledDragOpen:Boolean = true;
+			public var isDragOpen:Boolean;
+			
 			protected function window1_creationCompleteHandler(event:FlexEvent):void
 			{
 				openDict[ReflectUtil.getClass(this)] = this;
@@ -36,8 +40,4 @@
 			
 		]]>
 	</fx:Script>
-	<fx:Declarations>
-		<fx:Boolean id="enabledDragOpen">true</fx:Boolean>
-		<fx:Array id="fileFilter"/>
-	</fx:Declarations>
 </s:Window>

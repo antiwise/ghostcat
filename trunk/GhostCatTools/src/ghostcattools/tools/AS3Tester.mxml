@@ -22,6 +22,8 @@
 			import spark.events.TextOperationEvent;
 
 			static public const EXCODE:String = "import flash.net.LocalConnection;class Fl{public static function trace(...params):void{new LocalConnection().send('GCTestLink','traceExt',params)}}";
+			static public const IMPORT:Object = {"flash.accessibility.*":null,"flash.display.*":null,	"flash.errors.*":null,"flash.events.*":null,"flash.external.*":null,"flash.filters.*":null,
+				"flash.geom.*":null,"flash.media.*":null,"flash.net.*":null,"flash.system.*":null,"flash.text.*":null,"flash.ui.*":null,"flash.utils.*":null,"flash.xml.*":null}
 			
 			private var shareObject:LocalStorage = new LocalStorage("gctools_as3tester");
 			private var loader:Loader;
@@ -141,14 +143,16 @@
 
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var v:String = shareObject.getValue();
-				if (v)
+				if (!isDragOpen)
 				{
-					sourceText.text = v;
-					sourceText.validateNow();
-					sourceText.refreshCodeColor();
+					var v:String = shareObject.getValue();
+					if (v)
+					{
+						sourceText.text = v;
+						sourceText.validateNow();
+						sourceText.refreshCodeColor();
+					}
 				}
-				
 				lc = new LocalConnection();
 				lc.connect("GCTestLink");
 				lc.client = {traceExt:this.traceExt};

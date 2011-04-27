@@ -16,6 +16,11 @@ package ghostcattools.util
 		static public const ASDOC:String = "bin/asdoc.exe";
 		static public const MXMLC:String = "bin/mxmlc.exe";
 		
+		static public function get MXMLC_PATH():String
+		{
+			return Config.FLEXSDK_PATH + "\\" + Config.MXMLC;
+		}
+		
 		static public function save():void
 		{
 			var xml:XML = <GhostCatTools/>;

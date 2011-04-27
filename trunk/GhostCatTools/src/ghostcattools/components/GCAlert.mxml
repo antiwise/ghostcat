@@ -19,9 +19,12 @@
 			[Bindable]
 			public var text:String;
 			
+			[Bindable]
+			public var showButton:Boolean = true;
+			
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				PopUpManager.removePopUp(this);
+				close();
 			}
 			
 			public function show(text:String,parent:* = null,modal:Boolean = true):void
@@ -30,12 +33,17 @@
 				PopUpManager.addPopUp(this,parent,modal);
 				PopUpManager.centerPopUp(this);
 			}
+			
+			public function close():void
+			{
+				PopUpManager.removePopUp(this);
+			}
 		]]>
 	</fx:Script>
 
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="67" y="75" label="确定" click="button1_clickHandler(event)"/>
+	<s:Button x="67" y="75" label="确定" click="button1_clickHandler(event)" visible="{showButton}"/>
 	<s:RichText x="10" y="10" width="185" height="56" text="{text}" textAlign="center" verticalAlign="middle"/>
 </s:BorderContainer>
