@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" showStatusBar="false"
 						 xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)" 
-						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="214" enabledDragOpen="false">
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="224" fileFilter="bat">
 	<fx:Script>
 		<![CDATA[
+			import flashx.textLayout.formats.TextLayoutFormat;
+			
 			import ghostcat.util.data.LocalStorage;
 			
 			import ghostcattools.components.GCAlert;
+			import ghostcattools.components.TraceTitleWindow;
 			import ghostcattools.util.AutoLengthArrayList;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			import mx.utils.ObjectProxy;
+			import mx.validators.ValidationResult;
 			
+			import spark.components.TextArea;
+			import spark.components.TitleWindow;
 			import spark.events.TextOperationEvent;
 			
 			[Bindable]
@@ -21,20 +28,7 @@
 
 			public var so:LocalStorage = new LocalStorage("gctools_asdoccreater");
 			
-			private var alert:GCAlert;
-			
-			public override function openFileHandler(files:Array):void
-			{
-				if (!files)
-					return;
-				
-				var file:File = files[0] as File;
-				if (file.exists && file.isDirectory)
-				{
-					sourceText.text = file.nativePath;
-					sourceText.dispatchEvent(new TextOperationEvent(TextOperationEvent.CHANGE));
-				}
-			}
+			private var outputTitleWindow:TraceTitleWindow;
 			
 			public function getShareObjectUrl():String
 			{
@@ -59,6 +53,29 @@
 			{
 				saveToShareObject();
 			}
+			
+			
+			
+			private function saveToShareObject():void
+			{
+				if (!sourceText.text)
+					return;
+				
+				this.so.setValue(sourceText.text);
+				
+				var obj:Object = {};
+				obj.target = targetText.text;
+				
+				if (libs.length > 1)
+				{
+					var list:Array = [];
+					for (var i:int = 0;i < libs.length - 1;i++)
+						list[i] = libs.getItemAt(i).text;
+				}
+				obj.libs = list;
+				
+				new LocalStorage(getShareObjectUrl()).setValue(obj);
+			}
 
 			protected function sourceText_changeHandler(event:TextOperationEvent):void
 			{
@@ -79,25 +96,18 @@
 				}
 			}
 			
-			private function saveToShareObject():void
+			protected function createRunParams():Array
 			{
-				if (!sourceText.text)
-					return;
-				
-				this.so.setValue(sourceText.text);
-				
-				var obj:Object = {};
-				obj.target = targetText.text;
-					
-				if (libs.length > 1)
+				var reg:Array = [];
+				reg.push("-source-path+=" + sourceText.text);
+				reg.push("-doc-sources+=" + sourceText.text);
+				for (var i:int = 0;i < libs.length;i++)
 				{
-					var list:Array = [];
-					for (var i:int = 0;i < libs.length - 1;i++)
-						list[i] = libs.getItemAt(i).text;
+					var obj:Object = libs.getItemAt(i);
+					if (obj && obj.text)
+						reg.push("-library-path+=" + obj.text)
 				}
-				obj.libs = list;
-				
-				new LocalStorage(getShareObjectUrl()).setValue(obj);
+				return reg;
 			}
 			
 			protected function runBN_clickHandler(event:MouseEvent):void
@@ -108,33 +118,75 @@
 				if (!file.exists)
 					return;
 				
-				var reg:Array = [];
-				reg.push("-source-path+=" + sourceText.text);
-				reg.push("-doc-sources+=" + sourceText.text);
-				for (var i:int = 0;i < libs.length;i++)
-				{
-					var obj:Object = libs.getItemAt(i);
-					if (obj && obj.text)
-						reg.push("-library-path+=" + obj.text)
-				}
-				
-				FileControl.run(file,reg,runEndHandler,null,dataHandler,new File(targetText.text));
+				FileControl.run(file,createRunParams(),runEndHandler,dataHandler,errorHandler,new File(targetText.text));
 			
-				this.alert = new GCAlert();
-				this.alert.showButton = false;
-				this.alert.show("正在生成文件……",this);
-					
-			}
-			
-			private function dataHandler(str:String):void
-			{
-				new GCAlert().show(str,this);
+				this.outputTitleWindow = new TraceTitleWindow();
+				this.outputTitleWindow.title = "正在生成ASDoc文档"
+				this.outputTitleWindow.width = 380;
+				this.outputTitleWindow.height = 200;
+				this.outputTitleWindow.enabledCloseButton = false;
+				this.outputTitleWindow.show(this,true);
 			}
 			
 			protected function runEndHandler(event:Event):void
 			{
 				saveToShareObject();
-				this.alert.close();
+				this.outputTitleWindow.enabledCloseButton = true;
+			}
+			
+			private function dataHandler(str:String):void
+			{
+				this.outputTitleWindow.traceExt(str);
+			}
+			
+			private function errorHandler(str:String):void
+			{
+				this.outputTitleWindow.traceExt(str,0xFF0000);
+			}
+			
+			public override function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				var bytes:ByteArray = FileControl.readFile(file);
+				var str:String = bytes.toString();
+				var result:Array = str.match(/(?<=cd ).*?$/m);
+				this.targetText.text = result ? result[0] : "";
+				result = str.match(/(?<=-source-path\+=).*?(?= -|$)/g);
+				this.sourceText.text = result ? result[0] : "";
+				result = str.match(/(?<=-library-path\+=).*?(?= -|$)/g);
+				
+				this.libs.removeAll();
+				for each (var param:String in result)
+					this.libs.addItem(new ObjectProxy({text:param}))
+				
+				this.libs.createEmptyObject();
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				var str:String = "cd " + targetText.text + "\r\n" + new File(Config.FLEXSDK_PATH + "\\" + Config.ASDOC).nativePath + " " + createRunParams().join(" ");
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(str);
+				FileControl.writeFile(file,bytes);
+			}
+			
+
+			protected function outBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler,"保存为BAT","asdoc.bat");
+			}
+
+
+			protected function inBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"选择一个BAT文件",[new FileFilter("BAT 文件","*.bat")])
 			}
 
 		]]>
@@ -167,5 +219,7 @@
 			</s:itemRenderer>
 		</s:DataGroup>	
 	</s:Scroller>
-	<s:Button id="runBN" x="77" y="179" width="103" height="24" label="生成"  click="runBN_clickHandler(event)"/>
+	<s:Button id="runBN" x="75" y="165" enabled="{!(!sourceText.text || !targetText.text)}" width="216" height="53" label="生成"  click="runBN_clickHandler(event)"/>
+	<s:Button id="outBN" x="296" y="193" enabled="{!(!sourceText.text || !targetText.text)}" width="74" height="24" label="导出BAT" click="outBN_clickHandler(event)" />
+	<s:Button id="inBN" x="296" y="165" width="74" height="24" label="导入BAT" click="inBN_clickHandler(event)" />
 </components:GCToolWindow>

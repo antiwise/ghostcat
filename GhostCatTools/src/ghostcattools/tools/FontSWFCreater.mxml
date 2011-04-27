@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false" fileFilter="xml"
-						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="392"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="434"
 						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -46,9 +46,17 @@
 				else
 				{
 					if (fontList.selectedIndex == 1)
-						item.name = fontFileName.text ? fontFileName.text : "外部文件";
+					{
+						var localName:String = fontFileName.text;
+						var index:int = localName.lastIndexOf("/");
+						if (index != -1)
+							localName = localName.slice(index + 1);
+						item.name = "[" + localName + "]";
+					}
 					else
+					{
 						item.name = fontList.selectedItem;
+					}
 				}
 			}
 			
@@ -89,8 +97,10 @@
 		<s:CheckBox x="251" y="199" label="全角字符"/>
 		<s:CheckBox x="325" y="199" label="标点"/>
 		<s:TextArea x="10" y="221" width="368" height="87"/>
-		<s:Button x="10" y="321" width="103" height="24" label="查看AS文件"/>
-		<s:Button x="122" y="321" width="103" height="24" label="生成SWF"/>
-		
+		<s:Button x="157" y="320" width="143" height="52" label="查看AS文件"/>
+		<s:Button x="10" y="320" width="143" height="52" label="生成SWF"/>
+		<s:Button id="outBN" x="304" y="347" width="74" height="24" label="导出配置"/>
+		<s:Button id="inBN" x="304" y="320" width="74" height="24" label="导入配置"/>
+	
 	</s:BorderContainer>
 </components:GCToolWindow>
