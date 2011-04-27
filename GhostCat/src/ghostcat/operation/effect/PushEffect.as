@@ -25,7 +25,7 @@ package ghostcat.operation.effect
 		public var applyScrollRect:Boolean;
 		
 		private var cacheBitmap:Bitmap;
-		public function PushEffect(target:*=null,duration:int=100,direct:String = "left", ease:Function=null,applyScrollRect:Boolean = false)
+		public function PushEffect(target:*=null,duration:int=1000,direct:String = "left", ease:Function=null,applyScrollRect:Boolean = false)
 		{
 			super(target,duration);
 			
@@ -36,6 +36,16 @@ package ghostcat.operation.effect
 			this.applyScrollRect = applyScrollRect;
 		}
 		
+		/**
+		 * 预先缓存屏幕，可以等待一段时间在执行缓动 
+		 * 
+		 */
+		public function cacheTarget():void
+		{
+			cacheBitmap = new DrawParse(this.target).createBitmap();
+			target.parent.addChild(cacheBitmap);
+		}
+		
 		/** @inheritDoc*/
 		public override function execute() : void
 		{
@@ -43,8 +53,8 @@ package ghostcat.operation.effect
 				params = new Object();
 			params.ease = ease;
 			
-			cacheBitmap = new DrawParse(this.target).createBitmap()
-			target.parent.addChild(cacheBitmap);
+			if (!cacheBitmap)
+				cacheTarget();
 			
 			if (applyScrollRect)
 				target.parent.scrollRect = Geom.getRect(target);
