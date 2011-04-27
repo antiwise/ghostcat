@@ -47,6 +47,9 @@
 				"[^x] 非字符x",
 				"^ 行首",
 				"$ 行尾",
+				"\\A 行首",
+				"\\z 行尾",
+				"\\Z 行首或行尾",
 				"* 重复零或更多次",
 				"+ 重复一或更多次",
 				"? 重复零或一次",
@@ -109,6 +112,8 @@
 					return;
 				}
 				
+				this.sourceText.validateNow();
+				
 				var params:String = (paramg.selected ? "g" : "") + 
 					(parami.selected ? "i" : "") + 
 					(paramx.selected ? "x" : "") + 
@@ -134,20 +139,23 @@
 				}
 				while (execResult && regExp.global);
 				
-				var testResult:String = "表达式写法：<span color='#0000FF'>/" + regExp.source.replace(/\//g,"\\/") + "/" + params +"</span><br/>" +
-					"字符串写法：<span color='#0000FF'>new RegExp(\"" + regExp.source.replace(/\"|\\/g,"\\$&") + "\",\""+ params +"\")</span><br/>"
+				this.execText.text = ""
+				this.execText.appendText("表达式写法：/" + regExp.source.replace(/\//g,"\\/") + "/" + params +"\n" +
+					"字符串写法：new RegExp(\"" + regExp.source.replace(/\"|\\/g,"\\$&") + "\",\""+ params +"\")\n\n");
+				var tf:TextLayoutFormat = new TextLayoutFormat();
+				tf.backgroundColor = 0xBBBBFF;
+				tf.color = 0x0000FF;
+				this.execText.setFormatOfRange(tf,this.execText.text.length - 1,this.execText.text.length);
 				
 				var result:Array = regExp.exec(this.sourceText.text);
 				if (result)
 				{
-					testResult += "匹配了<span color='#0000FF'>" + result.length + "</span>个组：";
+					this.execText.appendText("匹配了" + result.length + "个组：");
 					for (var i:int = 0;i < result.length;i++)
 					{
-						testResult += "<br/>(" + (i + 1).toString() + ")<span color='#0000FF'>" + result[i] + "</span>";
+						this.execText.appendText("\n(" + (i + 1).toString() + ")" + result[i]);
 					}
 				}
-				
-				this.execText.textFlow = TextFlowUtil.importFromString(testResult);
 			}
 
 
@@ -216,8 +224,8 @@
 		<s:CheckBox id="paramg" x="10" y="40" width="85" label="多次匹配" toolTip="参数：g" change="regExp_changeHandler(event)"/>
 		<s:CheckBox id="parami" x="84" y="40" label="忽略大小写" toolTip="参数：i" change="regExp_changeHandler(event)"/>
 		<s:CheckBox id="paramx" x="172" y="40" label="忽略空格" toolTip="参数：x" change="regExp_changeHandler(event)"/>
-		<s:CheckBox id="params" x="250" y="40" label=".多行有效" toolTip="参数：s" change="regExp_changeHandler(event)"/>
-		<s:CheckBox id="paramm" x="328" y="40" label="$^多行有效" toolTip="参数：m" change="regExp_changeHandler(event)"/>
+		<s:CheckBox id="params" x="250" y="40" label=".可跨行" toolTip="参数：s" change="regExp_changeHandler(event)"/>
+		<s:CheckBox id="paramm" x="328" y="40" label="$^不跨行" toolTip="参数：m" change="regExp_changeHandler(event)"/>
 		<s:List id="helpList" right="10" top="10" bottom="10" width="159" dataProvider="{helpDatas}" doubleClickEnabled="true" doubleClick="helpList_doubleClickHandler(event)"/>
 		<components:CodeTextArea id="sourceText" left="10" right="178" top="69" bottom="210" text="这是1段测试文本" change="regExp_changeHandler(event)"
 					left.match="10" right.match="178" top.match="69" bottom.match="100"

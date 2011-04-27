@@ -83,7 +83,7 @@ package ghostcattools.util
 		{
 			var file:File = File.documentsDirectory;
 			if (path)
-				file.resolvePath(path);
+				file = file.resolvePath(path);
 			file.browseForSave(title);
 			if (rHandler != null)
 				file.addEventListener(Event.SELECT,selectHandler);

@@ -157,16 +157,6 @@
 				lc.connect("GCTestLink");
 				lc.client = {traceExt:this.traceExt};
 			}
-			
-			public function traceExt(params:Array,color:uint = 0x0):void
-			{
-				var text:String = params.join(",") + "\n";
-				traceText.appendText(text);
-			
-				var tf:TextLayoutFormat = new TextLayoutFormat();
-				tf.color = color;
-				traceText.setFormatOfRange(tf,traceText.text.length - text.length,traceText.text.length);
-			}
 
 			protected function gctoolwindow1_closeHandler(event:Event):void
 			{
@@ -174,6 +164,15 @@
 				shareObject.setValue(sourceText.text);
 				if (swfWindow)
 					swfWindow.close();
+			}
+			
+			public function traceExt(params:Array,color:uint = 0x0):void
+			{
+				var tf:TextLayoutFormat = new TextLayoutFormat();
+				tf.color = color;
+				this.traceText.setFormatOfRange(tf,this.traceText.text.length - 1,this.traceText.text.length);
+				
+				traceText.appendText(params.join(",") + "\n");
 			}
 
 		]]>
