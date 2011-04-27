@@ -60,6 +60,7 @@ package ghostcat.operation.effect
 			if (applyScrollRect)
 				target.parent.scrollRect = Geom.getRect(target);
 			
+			//设置target当前的位置和缓动的坐标
 			switch (direct)
 			{
 				case UIConst.LEFT:
@@ -87,6 +88,7 @@ package ghostcat.operation.effect
 		
 		private function tweenUpdate(event:TweenEvent):void
 		{
+			//让缓存图片同步移动
 			var rect:Rectangle = Geom.getRect(tween.target);
 			switch (direct)
 			{
