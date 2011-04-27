@@ -15,6 +15,7 @@ package ghostcat.operation.effect
 	
 	/**
 	 * 用自己将缓存的原对象推开的效果，用来处理单元件的内容切换
+	 * 需要先执行效果再修改目标状态
 	 * @author flashyiyi
 	 * 
 	 */
@@ -37,7 +38,7 @@ package ghostcat.operation.effect
 		}
 		
 		/**
-		 * 预先缓存屏幕，可以等待一段时间在执行缓动 
+		 * 预先缓存屏幕，执行它后可以先修改状态，然后调用execute
 		 * 
 		 */
 		public function cacheTarget():void
