@@ -46,6 +46,27 @@
 				textTransfer()
 			}
 			
+			private function textTransfer():void
+			{
+				function emptyFun(str:String):String
+				{
+					return str;
+				}
+				
+				function removeSpace(str:String):String
+				{
+					return str.replace(/^\s*|\s*$|[\t\n\r]/g,"");
+				}
+				
+				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringDecode,emptyFun];
+				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringEncode,removeSpace];
+				
+				if (transferDown)
+					output.text = encodeFuns[outputBox.selectedIndex](decodeFuns[inputBox.selectedIndex](input.text));
+				else
+					input.text = encodeFuns[inputBox.selectedIndex](decodeFuns[outputBox.selectedIndex](output.text));
+			}
+			
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
 				FileControl.dragFileIn(openFileHandler,input);
@@ -77,27 +98,6 @@
 			protected function transferDownHandler(event:MouseEvent):void
 			{
 				this.transferDown = !this.transferDown;
-			}
-			
-			private function textTransfer():void
-			{
-				function emptyFun(str:String):String
-				{
-					return str;
-				}
-				
-				function removeSpace(str:String):String
-				{
-					return str.replace(/^\s*|\s*$|[\t\n\r]/g,"");
-				}
-				
-				const decodeFuns:Array = [emptyFun,ANSI.ANSIToUnicode,unescape,ANSI.unescapeFromANSI,TextTransferUtil.XMLDecode,TextTransferUtil.stringEncode,emptyFun];
-				const encodeFuns:Array = [emptyFun,ANSI.unicodeToANSI,escape,ANSI.escapeByANSI,TextTransferUtil.XMLEncode,TextTransferUtil.stringDecode,removeSpace];
-				
-				if (transferDown)
-					output.text = encodeFuns[outputBox.selectedIndex](decodeFuns[inputBox.selectedIndex](input.text));
-				else
-					input.text = encodeFuns[inputBox.selectedIndex](decodeFuns[outputBox.selectedIndex](output.text));
 			}
 			
 		]]>

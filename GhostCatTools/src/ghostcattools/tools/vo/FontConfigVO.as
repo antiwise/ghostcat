@@ -1,9 +1,15 @@
 package ghostcattools.tools.vo
 {
+	import flash.display.DisplayObject;
+	import flash.filesystem.File;
+	
+	import ghostcat.util.FontEmbedHelper;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.ReflectXMLUtil;
 	
+	import ghostcattools.components.GCAlert;
 	import ghostcattools.util.AutoLengthArrayList;
+	import ghostcattools.util.FileControl;
 	import ghostcattools.util.ValueObject;
 	
 	import mx.utils.ObjectProxy;
@@ -51,6 +57,33 @@ package ghostcattools.tools.vo
 			}
 			xml.appendChild(files);
 			return xml;
+		}
+		
+		public function getRange():Array
+		{
+			var range:Array = [];
+			if (this.template1)
+				range.push(FontEmbedHelper.LETTER);
+			if (this.template2)
+				range.push(FontEmbedHelper.SBC_LETTER);
+			if (this.template3)
+				range.push(FontEmbedHelper.CHINESE_INTERPUNCTION);
+			
+			return range;
+		}
+		
+		public function getText(alertContainer:DisplayObject):String
+		{
+			var text:String = "";
+			for each (var child:ValueObject in this.textFiles.toArrayWithoutEmpty())
+			{
+				var file:File = new File(child.value);
+				if (file.exists)
+					text += FileControl.readFile(file).toString();
+				else
+					new GCAlert().show("文件" + child.value + "不存在！",alertContainer)
+			}
+			return text;
 		}
 	}
 }

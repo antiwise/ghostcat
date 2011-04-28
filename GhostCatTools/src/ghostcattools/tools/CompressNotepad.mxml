@@ -3,7 +3,7 @@
 						 xmlns:s="library://ns.adobe.com/flex/spark"
 						 xmlns:mx="library://ns.adobe.com/flex/mx"
 						 width="323" height="87" currentState="start" showStatusBar="false"
-						 creationComplete="window1_creationCompleteHandler(event)" title="文本压缩" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
+						 title="文本压缩" xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*">
 	<fx:Script>
 		<![CDATA[
 			import flashx.textLayout.elements.TextFlow;
@@ -118,7 +118,7 @@
 	<s:Button id="openBN" x="9" y="10" height="67" label="浏览"
 			  click ="openBN_clickHandler(event)"/>
 	<s:Label includeIn="start" x="111" y="26" width="187" height="29" text="点击“浏览“按钮&#xd;或者拖动文件到此窗口"/>
-	<s:RichText includeIn="opened" x="88" y="10" width="222" height="45"  content="{TextFlowUtil.importFromString(fileUrlText)}"/>
+	<s:RichText includeIn="opened" x="88" y="10" width="222" height="45" content="{TextFlowUtil.importFromString(fileUrlText)}"/>
 	<s:CheckBox id="compressButton" includeIn="opened" x="91" y="58" label="是否压缩文件"
 				click="compressButton_clickHandler(event)" selected="{isCompress}"/>
 	<s:Button id="editButton" includeIn="opened" x="255" y="56" width="58" label="打开"

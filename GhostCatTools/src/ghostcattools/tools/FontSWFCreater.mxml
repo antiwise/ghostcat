@@ -5,10 +5,15 @@
 						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
+			import ghostcat.util.FontEmbedHelper;
+			import ghostcat.util.code.CodeCreater;
 			import ghostcat.util.data.LocalStorage;
 			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.components.TraceTitleWindow;
 			import ghostcattools.tools.vo.FontConfigVO;
 			import ghostcattools.util.AutoLengthArrayList;
+			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			import ghostcattools.util.ValueObject;
 			
@@ -28,31 +33,9 @@
 			[Bindable]
 			public var fontNames:ArrayList = new ArrayList(["无","选择外部字体"]);
 			
-			private var lc:LocalStorage = new LocalStorage("gctool_fontswfcreater")
+			private var lc:LocalStorage = new LocalStorage("gctool_fontswfcreater");
+			private var outputTitleWindow:TraceTitleWindow;
 			
-			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
-			{
-				FileControl.dragFileIn(openFileHandler,inBN,["xml"]);
-				
-				var list:Array = Font.enumerateFonts(true);
-				for (var i:int = 0;i < list.length;i++)
-					fontNames.addItem(Font(list[i]).fontName);
-				
-				if (!isDragOpen)
-				{
-					var xml:XML = lc.getValue();
-					if (xml)
-						setXML(xml);
-				}
-				
-				selectedFontConfig = datas.getItemAt(0) as FontConfigVO;
-			}
-
-
-			protected function gctoolwindow1_closeHandler(event:Event):void
-			{
-				lc.setValue(getXML());
-			}
 			
 			public function setXML(xml:XML):void
 			{
@@ -99,6 +82,99 @@
 				FileControl.writeFile(file,bytes);
 			}
 			
+			private function getfontNameCurrentIndex(systemFont:String):int
+			{
+				var index:int = fontNames.getItemIndex(systemFont);
+				return index != -1 ? index : selectedFontConfig.useFontFile ? 1 : 0;
+			}
+			
+			private function createASText():String
+			{
+				var embedText:String = "";
+				var varText:String = "";
+				for (var i:int = 0;i < datas.source.length - 1;i++)
+				{
+					var child:FontConfigVO = datas.source[i];
+					
+					embedText += FontEmbedHelper.getEmbedFontCode(child.fontName,
+						child.systemFont ? child.systemFont : "",
+						child.systemFont ? "" : child.source,
+						child.italic,
+						child.bold,
+						child.getText(this) + child.extext,
+						child.getRange(),
+						false);
+					
+					embedText += '\r\npublic var font' + i +':Class;';
+					varText += 'Font.registerFont(font'+ i +');';
+				}
+				var bodyText:String = embedText + "public function FontLibrary():void{"+ varText+"}";
+				return CodeCreater.format(CodeCreater.pack("FontLibrary",bodyText,["flash.text.Font"],Sprite),"\r\n");
+			}
+			
+			private function createSWFHandler(files:Array):void
+			{
+				var swfFile:File = files[0] as File;
+				var asFile:File = swfFile.parent.resolvePath(swfFile.name.split(".")[0] + ".as");
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(createASText());
+				
+				FileControl.writeFile(asFile,bytes);
+				
+				var mxmls:File = new File(Config.MXMLC_PATH);
+				if (!mxmls.exists)
+					return;
+				
+				this.outputTitleWindow = new TraceTitleWindow();
+				this.outputTitleWindow.title = "正在生成字体SWF文件..."
+				this.outputTitleWindow.width = 380;
+				this.outputTitleWindow.height = 400;
+				this.outputTitleWindow.enabledCloseButton = false;
+				this.outputTitleWindow.show(this,true);
+				
+				FileControl.run(mxmls,[asFile.nativePath],exitHandler,traceHandler,errorHandler)
+				function exitHandler(event:Event):void
+				{
+					outputTitleWindow.traceExt(swfFile.exists ? "创建成功！":"创建失败！");
+					outputTitleWindow.enabledCloseButton = true;
+					
+					if (swfFile.exists)
+						FileControl.openExplorer(swfFile.parent.nativePath);
+				}
+				
+				function traceHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str);
+				}
+				
+				function errorHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str,0xFF0000);
+				}
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openFileHandler,inBN,["xml"]);
+				
+				var list:Array = Font.enumerateFonts(true);
+				for (var i:int = 0;i < list.length;i++)
+					fontNames.addItem(Font(list[i]).fontName);
+				
+				if (!isDragOpen)
+				{
+					var xml:XML = lc.getValue();
+					if (xml)
+						setXML(xml);
+				}
+				selectedFontConfig = datas.getItemAt(0) as FontConfigVO;
+			}
+			
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				lc.setValue(getXML());
+			}
 			
 			protected function outBN_clickHandler(event:MouseEvent):void
 			{
@@ -137,34 +213,40 @@
 						item.name = "[" + localName + "]";
 						item.source = fontFileNameText.text;
 						item.systemFont = "";
-						if (!item.fontName)
-							item.fontName = localName;
 					}
 					else
 					{
 						item.useFontFile = false;
 						item.systemFont = item.name = fontList.selectedItem;
 						item.source = "";
-						if (!item.fontName)
-							item.fontName = fontList.selectedItem;
 					}
+					
+					if (!item.fontName)
+						item.fontName = "FontName" + (datas.getItemIndex(selectedFontConfig) + 1).toString();
 				}
 			}
-			
-			private function getfontNameCurrentIndex(systemFont:String):int
+			protected function testBN_clickHandler(event:MouseEvent):void
 			{
-				var index:int = fontNames.getItemIndex(systemFont);
-				return index != -1 ? index : selectedFontConfig.useFontFile ? 1 : 0;
+				var tempFile:File = File.createTempFile();
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(createASText());
+				
+				FileControl.writeFile(tempFile,bytes);
+				
+				var file:File = new File(Config.NOTEPAD_PATH);
+				if (file.exists)
+					FileControl.run(file,[tempFile.nativePath]);
+				else
+					new GCAlert().show("文本编辑器地址设置错误",this);
 			}
-
+			
+			protected function runBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(createSWFHandler,"生成SWF文件","FontLibrary.swf");
+			}
+		
 		]]>
 	</fx:Script>
-	<components:layout>
-		<s:BasicLayout/>
-	</components:layout>
-	<fx:Declarations>
-		
-	</fx:Declarations>
 	
 	<s:TabBar id="fontTabs" x="5" y="10" maxWidth="390" dataProvider="{datas}" labelField="name" selectedItem="@{selectedFontConfig}"/>
 	<s:BorderContainer top="31" left="5" right="5" bottom="5">
@@ -199,8 +281,8 @@
 		<s:CheckBox id="template2BN" x="251" y="217" label="全角字符" selected="@{selectedFontConfig.template2}"/>
 		<s:CheckBox id="template3BN" x="325" y="217" label="标点" selected="@{selectedFontConfig.template3}"/>
 		<s:TextArea id="extextText" x="10" y="239" width="368" height="87" text="@{selectedFontConfig.extext}"/>
-		<s:Button x="157" y="338" width="143" height="52" label="查看AS文件"/>
-		<s:Button x="10" y="338" width="143" height="52" label="生成SWF"/>
+		<s:Button x="157" y="338" width="143" height="52" label="查看AS文件" click="testBN_clickHandler(event)"/>
+		<s:Button x="10" y="338" width="143" height="52" label="生成SWF" click="runBN_clickHandler(event)"/>
 		<s:Button id="outBN" x="304" y="365" width="74" height="24" label="导出配置" click="outBN_clickHandler(event)"/>
 		<s:Button id="inBN" x="304" y="338" width="74" height="24" label="导入配置" click="inBN_clickHandler(event)"/>
 	</s:BorderContainer>

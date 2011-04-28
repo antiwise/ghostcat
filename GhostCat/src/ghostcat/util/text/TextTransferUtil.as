@@ -24,12 +24,12 @@ package ghostcat.util.text
 		
 		static public function stringEncode(str:String):String
 		{
-			return str.replace(/\\(.)/g,"$1");
+			return str.replace(/\"|\\/g,"\\$&");
 		}
 		
 		static public function stringDecode(str:String):String
 		{
-			return str.replace(/\"|\\/g,"\\$&");
+			return str.replace(/\\(.)/g,"$1");
 		}
 	}
 }

@@ -23,11 +23,6 @@
 			
 			private var bytesDict:Dictionary;
 			
-			protected function button1_clickHandler(event:MouseEvent):void
-			{
-				FileControl.browseForOpen(openFileHandler,"打开加密的SWF文件");
-			}
-			
 			public override function openFileHandler(files:Array):void
 			{
 				if (!files)
@@ -54,15 +49,6 @@
 				t.start();
 			}
 			
-			protected function gctoolwindow1_closeHandler(event:Event):void
-			{
-				if (t)
-				{
-					t.stop()
-					t = null;
-				}
-			}
-			
 			private function timeHandler(e:TimerEvent):void
 			{
 				var result:Array = SearchUtil.findChildrenByClass(loader.content,Sprite);
@@ -84,10 +70,25 @@
 				FileControl.browseForSave(rHandler,"保存文件",name + ".swf");
 				function rHandler(files:Array):void
 				{
-					FileControl.writeFile(files[0] as File,bytes);
+					var file:File = files[0] as File;
+					FileControl.writeFile(file,bytes);
+					FileControl.openExplorer(file.parent.nativePath);
 				}
 			}
-
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"打开加密的SWF文件");
+			}
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				if (t)
+				{
+					t.stop()
+					t = null;
+				}
+			}
 		]]>
 	</fx:Script>
 	<components:states>

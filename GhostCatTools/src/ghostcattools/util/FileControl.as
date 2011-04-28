@@ -206,5 +206,14 @@ package ghostcattools.util
 				temp.deleteDirectory(true);
 			}
 		}
+		
+		static public function openExplorer(path:String):void
+		{
+			var explorer:File = new File(Config.EXPLORER_PATH);
+			if (!explorer.exists)
+				return;
+			
+			FileControl.run(explorer,[path])
+		}
 	}
 }

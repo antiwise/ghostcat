@@ -58,5 +58,10 @@ package ghostcattools.util
 		{
 			return !item || (labelField && !item[labelField])
 		}
+		
+		public function toArrayWithoutEmpty():Array
+		{
+			return this.source.slice(0,this.source.length - 1)
+		}
 	}
 }

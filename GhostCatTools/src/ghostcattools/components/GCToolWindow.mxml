@@ -2,9 +2,6 @@
 <s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" title="ASDoc生成"
 		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" showStatusBar="false" creationComplete="window1_creationCompleteHandler(event)" close="window1_closeHandler(event)">
-	<s:layout>
-		<s:BasicLayout/>
-	</s:layout>
 	<fx:Script>
 		<![CDATA[
 			import ghostcat.util.ReflectUtil;

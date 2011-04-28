@@ -13,7 +13,6 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				FileControl.dragFileIn(openSdkHandler,[sdkUrlText,sdkSelectBN],null,true);
-				FileControl.dragFileIn(openNotePadHandler,[notepadUrlText,notepadSelectBN],["exe"]);
 			}
 			
 			protected function sdkSelectBN_clickHandler(event:MouseEvent):void
@@ -41,30 +40,20 @@
 				}
 			}
 			
-			protected function notepadSelectBN_clickHandler(event:MouseEvent):void
+			private function saveHandler(event:Event):void
 			{
-				var file:File = new File();
-				file.browseForOpen("选择一个应用程序",[new FileFilter("应用程序","*.exe")]);
-				file.addEventListener(Event.SELECT,handler);
-				function handler(event:Event):void
-				{
-					openNotePadHandler([file]);
-				}
-			}
-			
-			private function openNotePadHandler(files:Array):void
-			{
-				var file:File = files[0] as File;
-				Config.NOTEPAD_PATH = file.nativePath;
 				Config.save();
 			}
 			
 		]]>
 	</fx:Script>
 	<s:Label x="10" y="10" text="Flex SDK 路径："/>
-	<s:Label x="10" y="72" text="文本编辑器路径："/>
-	<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="{Config.FLEXSDK_PATH}"/>
+	<s:Label x="10" y="70" text="文本编辑器路径："/>
+	<s:Label x="10" y="130" text="资源管理器路径："/>
+	<s:TextInput id="sdkUrlText" x="10" y="31" left="10" right="40" width="220" editable="false" text="@{Config.FLEXSDK_PATH}"/>
 	<components:BrowseButton id="sdkSelectBN" x="383" y="31" right="10" click="sdkSelectBN_clickHandler(event)"/>
-	<s:TextInput id="notepadUrlText" y="91" left="10" right="40" editable="false" text="{Config.NOTEPAD_PATH}"/>
-	<components:BrowseButton id="notepadSelectBN" y="91" right="10" click="notepadSelectBN_clickHandler(event)"/>
+	<s:TextInput id="notepadUrlText" y="90" left="10" right="40" editable="false" text="@{Config.NOTEPAD_PATH}" change="saveHandler(event)"/>
+	<components:BrowseButton id="notepadSelectBN" y="90" right="10" target="{notepadUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
+	<s:TextInput id="explorerUrlText" y="150" left="10" right="40" editable="false" text="@{Config.EXPLORER_PATH}" change="saveHandler(event)"/>
+	<components:BrowseButton id="explorerSelectBN" y="150" right="10" target="{explorerUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
 </s:Group>
