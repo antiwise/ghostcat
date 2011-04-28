@@ -99,7 +99,7 @@
 				var reg:Array = [];
 				reg.push("-source-path+=" + sourceText.text);
 				reg.push("-doc-sources+=" + sourceText.text);
-				for (var i:int = 0;i < libs.length;i++)
+				for (var i:int = 0;i < libs.length - 1;i++)
 				{
 					var obj:String = ValueObject(libs.getItemAt(i)).value.toString();
 					if (obj)
@@ -116,7 +116,8 @@
 				if (!file.exists)
 					return;
 				
-				FileControl.run(file,createRunParams(),runEndHandler,dataHandler,errorHandler,new File(targetText.text));
+				var workingDirectory:File = new File(targetText.text); 
+				FileControl.run(file,createRunParams(),runEndHandler,dataHandler,errorHandler, workingDirectory);
 			
 				this.outputTitleWindow = new TraceTitleWindow();
 				this.outputTitleWindow.title = "正在生成ASDoc文档"
@@ -124,22 +125,22 @@
 				this.outputTitleWindow.height = 200;
 				this.outputTitleWindow.enabledCloseButton = false;
 				this.outputTitleWindow.show(this,true);
-			}
 			
-			protected function runEndHandler(event:Event):void
-			{
-				saveToShareObject();
-				this.outputTitleWindow.enabledCloseButton = true;
-			}
-			
-			private function dataHandler(str:String):void
-			{
-				this.outputTitleWindow.traceExt(str);
-			}
-			
-			private function errorHandler(str:String):void
-			{
-				this.outputTitleWindow.traceExt(str,0xFF0000);
+				function runEndHandler(event:Event):void
+				{
+					FileControl.openExplorer(workingDirectory.nativePath);
+					outputTitleWindow.enabledCloseButton = true;
+				}
+				
+				function dataHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str);
+				}
+				
+				function errorHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str,0xFF0000);
+				}
 			}
 			
 			public override function openFileHandler(files:Array):void
@@ -171,6 +172,7 @@
 				var bytes:ByteArray = new ByteArray();
 				bytes.writeUTFBytes(str);
 				FileControl.writeFile(file,bytes);
+				FileControl.openExplorer(file.parent.nativePath);
 			}
 			
 

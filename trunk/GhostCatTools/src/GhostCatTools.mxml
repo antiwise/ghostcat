@@ -78,7 +78,9 @@
 				<s:p>作者: flashyiyi</s:p>
 				<s:p>项目地址: <s:a href='http://ghostcat.googlecode.com/'>http://ghostcat.googlecode.com</s:a></s:p>
 				<s:p/>
-				<s:p>此工具支持完整的拖拽操作，你可以将文件拖动到功能按钮或者窗体上打开，也可以将文件拖动到打开按钮和文本框上设置文件路径。</s:p>
+				<s:p>此工具支持完整的拖拽操作，你可以将文件拖动到功能按钮或者窗体上打开，</s:p>
+				<s:p>也可以将文件拖动到打开按钮和文本框上设置文件路径。</s:p>
+				<s:p/>
 				<s:p>会即时保存操作状态，在下次进入的时候仍可从中断的地点继续。</s:p>
 			</s:RichEditableText>																						 
 		</s:NavigatorContent>

@@ -8,7 +8,7 @@ package ghostcat.util.code
 
 	public final class CodeCreater
 	{
-		static public function format(str:String):String
+		static public function format(str:String,linebreak:String = "\n"):String
 		{
 			var p:int = 0;
 			var i:int;
@@ -22,10 +22,10 @@ package ghostcat.util.code
 				ch = str.charAt(p);
 				if (ch == "{")
 				{
-					result += "\n"
+					result += linebreak
 					for (i = 0;i < tab;i++)
 						result += "\t";
-					result += ch + "\n";
+					result += ch + linebreak;
 					tab++;
 					for (i = 0;i < tab;i++)
 						result += "\t";
@@ -33,16 +33,16 @@ package ghostcat.util.code
 				else if (ch == "}")
 				{
 					tab--;
-					result += "\n"
+					result += linebreak
 					for (i = 0;i < tab;i++)
 						result += "\t";
-					result +=  ch + "\n";
+					result +=  ch + linebreak;
 					for (i = 0;i < tab;i++)
 						result += "\t";
 				}
 				else if (prev == ";")
 				{
-					result += "\n";
+					result += linebreak;
 					for (i = 0;i < tab;i++)
 						result += "\t";
 					result += ch;
@@ -60,6 +60,18 @@ package ghostcat.util.code
 		{
 			var pack:String;
 			var name:String;
+			
+			if (importObj is String)
+				importObj = [importObj];
+			
+			if (importObj is Array)
+			{
+				var o:Object = {};
+				for each (var p:String in importObj)
+					o[p] = null;
+				
+				importObj = o;
+			}
 			
 			var index:int = classPath.lastIndexOf(".");
 			if (index == -1)
@@ -84,7 +96,7 @@ package ghostcat.util.code
 			}
 			
 			var imports:String = "";
-			for (var p:String in importObj)
+			for (p in importObj)
 			{
 				imports += "import " + p + ";"
 			}

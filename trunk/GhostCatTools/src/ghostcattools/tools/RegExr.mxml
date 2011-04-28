@@ -83,28 +83,6 @@
 				var bytes:ByteArray = FileControl.readFile(file);
 				this.sourceText.text = bytes.toString();
 			}
-				
-			protected function helpList_doubleClickHandler(e:Event):void
-			{
-				var mark:String = helpList.selectedItem.toString().split(" ")[0];
-				if (mark.charAt(0) == "$" && mark.length > 1)
-				{
-					if (replaceText)
-					{
-						replaceText.insertText(mark);
-					}
-				}
-				else
-				{
-					regExpText.insertText(mark);
-				}
-				doExp();
-			}
-
-			protected function regExp_changeHandler(event:Event):void
-			{
-				doExp();
-			}
 			
 			private function doExp():void
 			{
@@ -161,7 +139,30 @@
 					}
 				}
 			}
-
+			
+			
+			
+			protected function helpList_doubleClickHandler(e:Event):void
+			{
+				var mark:String = helpList.selectedItem.toString().split(" ")[0];
+				if (mark.charAt(0) == "$" && mark.length > 1)
+				{
+					if (replaceText)
+					{
+						replaceText.insertText(mark);
+					}
+				}
+				else
+				{
+					regExpText.insertText(mark);
+				}
+				doExp();
+			}
+			
+			protected function regExp_changeHandler(event:Event):void
+			{
+				doExp();
+			}
 
 			protected function tabbar1_changeHandler(event:IndexChangeEvent):void
 			{

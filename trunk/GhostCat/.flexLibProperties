@@ -583,7 +583,7 @@
     <classEntry path="ghostcat.util.display.ButtonUtil"/>
     <classEntry path="ghostcat.util.display.BitmapMovieUtil"/>
     <classEntry path="ghostcat.util.text.TextTransferUtil"/>
-    <classEntry path="ghostcat.manager.BindingManager"/>
+    <classEntry path="ghostcat.manager.GBindingManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

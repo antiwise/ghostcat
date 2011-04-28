@@ -40,64 +40,6 @@
 				sourceText.validateNow();
 				sourceText.refreshCodeColor();
 			}
-
-			
-			protected function button1_clickHandler(event:MouseEvent):void
-			{
-				FileControl.browseForSave(saveHandler,"保存");
-				function saveHandler(files:Array):void
-				{
-					if (!files)
-						return;
-					
-					var bytes:ByteArray = new ByteArray();
-					var text:String = this.sourceText.text;
-					bytes.writeUTFBytes(text);
-					
-					FileControl.writeFile(files[0],bytes);
-				}
-			}
-
-
-			protected function button2_clickHandler(event:MouseEvent):void
-			{
-				FileControl.browseForOpen(openFileHandler,"加载一个AS文件",[new FileFilter("AS文件","*.as")]);
-			}
-
-
-			protected function button3_clickHandler(event:MouseEvent):void
-			{
-				var file:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
-				if (!file.exists)
-				{
-					new GCAlert().show("Flex SDK路径设置错误",this);
-				}
-				else
-				{
-					this.runBN.enabled = false;
-					
-					if (this.loader)
-					{
-						this.loader.unloadAndStop();
-						this.swfWindow.close();
-						this.swfWindow = null;
-					}
-					
-					traceExt(["【正在编译AS文件...】"],0x0000FF);
-					
-					var text:String;
-					if (sourceText.selectionBeginIndex == sourceText.selectionEndIndex)
-						text = sourceText.text;
-					else
-						text= sourceText.text.substring(sourceText.selectionBeginIndex,sourceText.selectionEndIndex);
-					
-					text = text.replace(/\btrace\(/g,"Fl.trace(");
-					text = "public function Test():void{" + text + "}";
-					text = CodeCreater.pack("Test",text,null,Sprite);
-					text += EXCODE;
-					FileControl.runMXMLC(text,getSwfHandler,traceHandler,errorHandler);
-				}
-			}
 			
 			private function getSwfHandler(bytes:ByteArray):void
 			{
@@ -131,14 +73,82 @@
 				this.runBN.enabled = true;
 			}
 			
-			private function traceHandler(str:String):void
+			public function traceExt(params:Array,color:uint = 0x0):void
 			{
-				traceExt([str],0x0000FF);
+				var tf:TextLayoutFormat = new TextLayoutFormat();
+				tf.color = color;
+				this.traceText.setFormatOfRange(tf,this.traceText.text.length - 1,this.traceText.text.length);
+				
+				traceText.appendText(params.join(",") + "\n");
 			}
 			
-			private function errorHandler(str:String):void
+			protected function outBN_clickHandler(event:MouseEvent):void
 			{
-				traceExt([str],0xFF0000);
+				FileControl.browseForSave(saveHandler,"保存");
+				function saveHandler(files:Array):void
+				{
+					if (!files)
+						return;
+					
+					var bytes:ByteArray = new ByteArray();
+					var text:String = this.sourceText.text;
+					bytes.writeUTFBytes(text);
+					
+					var file:File = files[0] as File;
+					FileControl.writeFile(file,bytes);
+					FileControl.openExplorer(file.parent.nativePath);
+				}
+			}
+
+
+			protected function inBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"加载一个AS文件",[new FileFilter("AS文件","*.as")]);
+			}
+
+
+			protected function runBN_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File(Config.FLEXSDK_PATH + "\\" + Config.MXMLC);
+				if (!file.exists)
+				{
+					new GCAlert().show("Flex SDK路径设置错误",this);
+				}
+				else
+				{
+					this.runBN.enabled = false;
+					
+					if (this.loader)
+					{
+						this.loader.unloadAndStop();
+						this.swfWindow.close();
+						this.swfWindow = null;
+					}
+					
+					traceExt(["【正在编译AS文件...】"],0x0000FF);
+					
+					var text:String;
+					if (sourceText.selectionBeginIndex == sourceText.selectionEndIndex)
+						text = sourceText.text;
+					else
+						text= sourceText.text.substring(sourceText.selectionBeginIndex,sourceText.selectionEndIndex);
+					
+					text = text.replace(/\btrace\(/g,"Fl.trace(");
+					text = "public function Test():void{" + text + "}";
+					text = CodeCreater.pack("Test",text,null,Sprite);
+					text += EXCODE;
+					FileControl.runMXMLC(text,getSwfHandler,traceHandler,errorHandler);
+					
+					function traceHandler(str:String):void
+					{
+						traceExt([str],0x0000FF);
+					}
+					
+					function errorHandler(str:String):void
+					{
+						traceExt([str],0xFF0000);
+					}
+				}
 			}
 
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
@@ -165,15 +175,6 @@
 				if (swfWindow)
 					swfWindow.close();
 			}
-			
-			public function traceExt(params:Array,color:uint = 0x0):void
-			{
-				var tf:TextLayoutFormat = new TextLayoutFormat();
-				tf.color = color;
-				this.traceText.setFormatOfRange(tf,this.traceText.text.length - 1,this.traceText.text.length);
-				
-				traceText.appendText(params.join(",") + "\n");
-			}
 
 		]]>
 	</fx:Script>
@@ -182,9 +183,9 @@
 	</fx:Declarations>
 	<components:CodeTextArea id="sourceText" left="5" right="5" top="31" bottom="133" codeMode="true" text="trace('测试文本')"/>
 	<s:TextArea id="traceText" left="5" right="5" bottom="5" height="123" editable="false"/>
-	<s:Button id="runBN" x="5" y="5" width="126" label="运行" click="button3_clickHandler(event)"/>
-	<s:Button y="5" right="79" label="保存" click="button1_clickHandler(event)"/>
-	<s:Button y="5" right="5" label="载入" click="button2_clickHandler(event)"/>
+	<s:Button id="runBN" x="5" y="5" width="126" label="运行" click="runBN_clickHandler(event)"/>
+	<s:Button y="5" right="79" label="保存" click="outBN_clickHandler(event)"/>
+	<s:Button y="5" right="5" label="载入" click="inBN_clickHandler(event)"/>
 	<s:CheckBox id="swfWindowCheckBox" right="163" y="6" label="显示SWF窗口"/>
 </components:GCToolWindow>
 

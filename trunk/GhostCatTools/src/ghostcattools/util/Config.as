@@ -13,6 +13,9 @@ package ghostcattools.util
 		[Bindable]
 		static public var FLEXSDK_PATH:String = "";
 		
+		[Bindable]
+		static public var EXPLORER_PATH:String = "C:\\WINDOWS\\EXPLORER.EXE"
+		
 		static public const ASDOC:String = "bin/asdoc.exe";
 		static public const MXMLC:String = "bin/mxmlc.exe";
 		
@@ -26,6 +29,7 @@ package ghostcattools.util
 			var xml:XML = <GhostCatTools/>;
 			xml.config.NOTEPAD_PATH = NOTEPAD_PATH;
 			xml.config.FLEXSDK_PATH = FLEXSDK_PATH;
+			xml.config.EXPLORER_PATH = EXPLORER_PATH;
 			var bytes:ByteArray = new ByteArray();
 			bytes.writeUTFBytes(xml.toXMLString());
 			
@@ -43,6 +47,7 @@ package ghostcattools.util
 					
 				NOTEPAD_PATH = xml.config.NOTEPAD_PATH;
 				FLEXSDK_PATH = xml.config.FLEXSDK_PATH;
+				EXPLORER_PATH = xml.config.EXPLORER_PATH;
 			}
 		}
 	}
