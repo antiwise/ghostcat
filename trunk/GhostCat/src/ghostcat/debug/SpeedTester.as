@@ -23,7 +23,7 @@ package ghostcat.debug
 			var t1:int,t2:int,t3:int,t4:int;
 			
 			t1 = getTimer();
-			for (i = 0;i < repeat;i++);
+			for (i = 0;i < repeat;i++){};
 			t2 = getTimer();
 			for (i = 0;i < repeat;i++)
 				emptyHandler();

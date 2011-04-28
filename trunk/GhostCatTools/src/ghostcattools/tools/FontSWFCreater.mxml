@@ -1,68 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false" fileFilter="xml"
+						 xmlns:s="library://ns.adobe.com/flex/spark" title="字体生成" showStatusBar="false" fileFilter="xml" enabledDragOpen="false"
 						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="434"
 						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import ghostcattools.util.AutoLengthArrayList;
+			import ghostcat.util.data.LocalStorage;
 			
+			import ghostcattools.tools.vo.FontConfigVO;
+			import ghostcattools.util.AutoLengthArrayList;
+			import ghostcattools.util.FileControl;
+			import ghostcattools.util.ValueObject;
+			
+			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayList;
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectProxy;
 			
 			import spark.events.IndexChangeEvent;
+			
 			[Bindable]
-			public var datas:ArrayList = new AutoLengthArrayList(null,ObjectProxy,"name");
+			public var datas:AutoLengthArrayList = new AutoLengthArrayList(null,FontConfigVO,"name");
+			
+			[Bindable]
+			public var selectedFontConfig:FontConfigVO;
 			
 			[Bindable]
 			public var fontNames:ArrayList = new ArrayList(["无","选择外部字体"]);
 			
-			[Bindable]
-			public var useFontFile:Boolean;
-
+			private var lc:LocalStorage = new LocalStorage("gctool_fontswfcreater")
+			
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
+				FileControl.dragFileIn(openFileHandler,inBN,["xml"]);
+				
 				var list:Array = Font.enumerateFonts(true);
 				for (var i:int = 0;i < list.length;i++)
 					fontNames.addItem(Font(list[i]).fontName);
+				
+				if (!isDragOpen)
+				{
+					var xml:XML = lc.getValue();
+					if (xml)
+						setXML(xml);
+				}
+				
+				selectedFontConfig = datas.getItemAt(0) as FontConfigVO;
 			}
 
 
 			protected function gctoolwindow1_closeHandler(event:Event):void
 			{
+				lc.setValue(getXML());
 			}
-
-
-			protected function fontList_changeHandler(event:IndexChangeEvent):void
+			
+			public function setXML(xml:XML):void
 			{
-				this.useFontFile = fontList.selectedIndex == 1;
+				this.datas.removeAll();
+				for each (var child:XML in xml.*)
+				{
+					var item:FontConfigVO = new FontConfigVO();
+					item.setXML(child);
+					this.datas.addItem(item);
+				}
+				this.datas.createEmptyObject();
+			}
+			
+			public function getXML():XML
+			{
+				var xml:XML = <Config/>
+				for (var i:int = 0; i < datas.source.length - 1;i++)
+				{
+					var child:FontConfigVO = datas.source[i] as FontConfigVO;
+					xml.appendChild(child.getXML());
+				}
+				return xml;
+			}
+			
+			
+			public override function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
 				
-				var item:ObjectProxy = fontTabs.selectedItem;
+				var file:File = files[0] as File;
+				var bytes:ByteArray = FileControl.readFile(file);
+				setXML(new XML(bytes.toString()))
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(getXML().toXMLString());
+				FileControl.writeFile(file,bytes);
+			}
+			
+			
+			protected function outBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler,"保存为XML","font.xml");
+			}
+			
+			
+			protected function inBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"选择一个XML文件",[new FileFilter("XML 文件","*.xml")])
+			}
+			
+			protected function fontList_changeHandler(event:Event):void
+			{
+				var item:FontConfigVO = selectedFontConfig;
+				item.useFontFile = fontList.selectedIndex == 1;
+				
 				if (fontList.selectedIndex == 0)
 				{
 					item.name = null;
+					item.systemFont = "";
+					item.source = "";
+					item.textFiles = null;
+					item.useFontFile = false;
 				}
 				else
 				{
 					if (fontList.selectedIndex == 1)
 					{
-						var localName:String = fontFileName.text;
-						var index:int = localName.lastIndexOf("/");
+						item.useFontFile = true;
+						var localName:String = fontFileNameText.text;
+						var index:int = localName.lastIndexOf("\\");
+						var index2:int = localName.lastIndexOf(".");
 						if (index != -1)
-							localName = localName.slice(index + 1);
+							localName = localName.slice(index + 1,index2);
 						item.name = "[" + localName + "]";
+						item.source = fontFileNameText.text;
+						item.systemFont = "";
+						if (!item.fontName)
+							item.fontName = localName;
 					}
 					else
 					{
-						item.name = fontList.selectedItem;
+						item.useFontFile = false;
+						item.systemFont = item.name = fontList.selectedItem;
+						item.source = "";
+						if (!item.fontName)
+							item.fontName = fontList.selectedItem;
 					}
 				}
 			}
 			
-			private function fontLabelFunction(item:Object):String
+			private function getfontNameCurrentIndex(systemFont:String):int
 			{
-				return item ? item.name : "";
+				var index:int = fontNames.getItemIndex(systemFont);
+				return index != -1 ? index : selectedFontConfig.useFontFile ? 1 : 0;
 			}
 
 		]]>
@@ -71,36 +163,45 @@
 		<s:BasicLayout/>
 	</components:layout>
 	<fx:Declarations>
-		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
 	</fx:Declarations>
-	<s:TabBar id="fontTabs" x="5" y="10" maxWidth="390" dataProvider="{datas}"
-			  labelFunction="fontLabelFunction"/>
-	<s:BorderContainer top="31" left="5" right="5" bottom="5">
-		<s:Label x="10" y="10" text="字体："/>
-		<s:DropDownList id="fontList" x="59" y="5" width="179" change="fontList_changeHandler(event)"
-						dataProvider="{fontNames}" selectedIndex="0"/>
-		<s:TextInput id="fontFileName" x="59" y="32" width="153" visible="{useFontFile}"/>
-		<s:Button id="sdkSelectBN0" visible="{useFontFile}" x="216" y="32" width="23" height="21"
-				  icon="@Embed(source='../asset/folder.png')"
-				  skinClass="ghostcattools.skin.IconButtonSkin"/>
-		<s:CheckBox x="61" y="58" label="粗体"/>
-		<s:CheckBox x="111" y="58" label="斜体"/>
-		<s:Label id="fontExampleText" x="245" y="4" width="133" height="74" backgroundColor="#E8E8E8" visible="{fontList.selectedIndex > 1}"
-				 text="示例文本&#xa;Example Text" fontLookup="auto" fontSize="16" textAlign="center" verticalAlign="middle" fontFamily="{fontList.selectedItem}"/>
-		<s:TextInput x="9" y="112" width="339"/>
-		<s:Button id="sdkSelectBN1" x="355" y="112" width="23" height="21"
-				  icon="@Embed(source='../asset/folder.png')"
-				  skinClass="ghostcattools.skin.IconButtonSkin"/>
-		<s:Label x="10" y="91" text="外部文本："/>
-		<s:Label x="10" y="204" text="附加文本："/>
-		<s:CheckBox x="201" y="199" label="英文"/>
-		<s:CheckBox x="251" y="199" label="全角字符"/>
-		<s:CheckBox x="325" y="199" label="标点"/>
-		<s:TextArea x="10" y="221" width="368" height="87"/>
-		<s:Button x="157" y="320" width="143" height="52" label="查看AS文件"/>
-		<s:Button x="10" y="320" width="143" height="52" label="生成SWF"/>
-		<s:Button id="outBN" x="304" y="347" width="74" height="24" label="导出配置"/>
-		<s:Button id="inBN" x="304" y="320" width="74" height="24" label="导入配置"/>
 	
+	<s:TabBar id="fontTabs" x="5" y="10" maxWidth="390" dataProvider="{datas}" labelField="name" selectedItem="@{selectedFontConfig}"/>
+	<s:BorderContainer top="31" left="5" right="5" bottom="5">
+		<s:Label x="10" y="9" text="选择字体："/>
+		<s:DropDownList id="fontList" x="80" y="5" width="159" selectedIndex="{getfontNameCurrentIndex(selectedFontConfig.systemFont)}" dataProvider="{fontNames}" change="fontList_changeHandler(event)" />
+		<s:TextInput id="fontFileNameText" x="80" y="32" width="132" visible="{selectedFontConfig.useFontFile}" text="@{selectedFontConfig.source}" change="fontList_changeHandler(event)"/>
+		<components:BrowseButton id="sdkSelectBN0" visible="{selectedFontConfig.useFontFile}" x="216" y="32" target="{fontFileNameText}" browseTitle="选择一个字体文件" browseExtension="{new FileFilter('字体文件','*.ttf;*.otf;*.fon;*.ttc')}" dragExtension="ttf,otf,fon,ttc"/>
+		<s:CheckBox id="boldBN" x="80" y="58" label="粗体" selected="@{selectedFontConfig.bold}"/>
+		<s:CheckBox id="italicBN" x="130" y="58" label="斜体" selected="@{selectedFontConfig.italic}"/>
+		<s:Label id="fontExampleText" x="245" y="5" width="133" height="99" backgroundColor="#E8E8E8" visible="{fontList.selectedIndex > 1}"
+				 text="示例文本&#xa;Example Text" fontLookup="auto" fontSize="16" textAlign="center" verticalAlign="middle" fontFamily="{fontList.selectedItem}"/>
+		<s:Label x="10" y="86" text="字体名称："/>
+		<s:TextInput id="fontNameText" x="79" y="81" width="160" text="@{selectedFontConfig.fontName}"/>
+		<s:Scroller x="7" y="125" width="369" height="90">
+			<s:DataGroup id="textFileList" width="100%" dataProvider="{selectedFontConfig.textFiles}" x="11" y="126">
+				<s:layout>
+					<s:VerticalLayout/>
+				</s:layout>
+				<s:itemRenderer>
+					<fx:Component>
+						<s:DataRenderer>
+							<s:TextInput id="textFileText" x="3" y="3" width="315" text="@{data.value}"/>
+							<components:BrowseButton id="sdkSelectBN1" x="325" y="3" target="{textFileText}" browseTitle="选择外部文本文件"/>
+						</s:DataRenderer>
+					</fx:Component>
+				</s:itemRenderer>
+			</s:DataGroup>
+		</s:Scroller>
+		<s:Label x="10" y="109" text="外部文本："/>
+		<s:Label x="10" y="222" text="附加文本："/>
+		<s:CheckBox id="template1BN" x="201" y="217" label="英文" selected="@{selectedFontConfig.template1}"/>
+		<s:CheckBox id="template2BN" x="251" y="217" label="全角字符" selected="@{selectedFontConfig.template2}"/>
+		<s:CheckBox id="template3BN" x="325" y="217" label="标点" selected="@{selectedFontConfig.template3}"/>
+		<s:TextArea id="extextText" x="10" y="239" width="368" height="87" text="@{selectedFontConfig.extext}"/>
+		<s:Button x="157" y="338" width="143" height="52" label="查看AS文件"/>
+		<s:Button x="10" y="338" width="143" height="52" label="生成SWF"/>
+		<s:Button id="outBN" x="304" y="365" width="74" height="24" label="导出配置" click="outBN_clickHandler(event)"/>
+		<s:Button id="inBN" x="304" y="338" width="74" height="24" label="导入配置" click="inBN_clickHandler(event)"/>
 	</s:BorderContainer>
 </components:GCToolWindow>

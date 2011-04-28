@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" showStatusBar="false"
 						 xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)" 
-						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="224" fileFilter="bat">
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="224" enabledDragOpen="false">
 	<fx:Script>
 		<![CDATA[
 			import flashx.textLayout.formats.TextLayoutFormat;
@@ -13,6 +13,7 @@
 			import ghostcattools.util.AutoLengthArrayList;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
+			import ghostcattools.util.ValueObject;
 			
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
@@ -24,7 +25,7 @@
 			import spark.events.TextOperationEvent;
 			
 			[Bindable]
-			public var libs:AutoLengthArrayList = new AutoLengthArrayList(null,ObjectProxy,"text");
+			public var libs:AutoLengthArrayList = new AutoLengthArrayList(null,ValueObject,"value");
 
 			public var so:LocalStorage = new LocalStorage("gctools_asdoccreater");
 			
@@ -38,6 +39,7 @@
 			}
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
+				FileControl.dragFileIn(openFileHandler,inBN,["bat"]);
 				if (!isDragOpen)
 				{
 					var source:String = so.getValue();
@@ -54,8 +56,6 @@
 				saveToShareObject();
 			}
 			
-			
-			
 			private function saveToShareObject():void
 			{
 				if (!sourceText.text)
@@ -68,9 +68,9 @@
 				
 				if (libs.length > 1)
 				{
-					var list:Array = [];
-					for (var i:int = 0;i < libs.length - 1;i++)
-						list[i] = libs.getItemAt(i).text;
+					var list:Array = []; 
+					for each (var child:ValueObject in libs.toArray())
+						list.push(child.value);
 				}
 				obj.libs = list;
 				
@@ -88,10 +88,8 @@
 					if (libs.length <= 1 && obj.libs)
 					{
 						this.libs.removeAll();
-						for (var i:int = 0;i < obj.libs.length;i++)
-							this.libs.addItem(new ObjectProxy({text:obj.libs[i]}));
-						
-						this.libs.createEmptyObject();
+						for each (var child:String in obj.libs)
+							this.libs.addItem(new ValueObject(child));
 					}
 				}
 			}
@@ -103,9 +101,9 @@
 				reg.push("-doc-sources+=" + sourceText.text);
 				for (var i:int = 0;i < libs.length;i++)
 				{
-					var obj:Object = libs.getItemAt(i);
-					if (obj && obj.text)
-						reg.push("-library-path+=" + obj.text)
+					var obj:String = ValueObject(libs.getItemAt(i)).value.toString();
+					if (obj)
+						reg.push("-library-path+=" + obj)
 				}
 				return reg;
 			}
@@ -159,10 +157,8 @@
 				result = str.match(/(?<=-library-path\+=).*?(?= -|$)/g);
 				
 				this.libs.removeAll();
-				for each (var param:String in result)
-					this.libs.addItem(new ObjectProxy({text:param}))
-				
-				this.libs.createEmptyObject();
+				for each (var child:String in result)
+					this.libs.addItem(new ValueObject(child));
 			}
 			
 			private function saveFileHandler(files:Array):void
@@ -208,12 +204,15 @@
 			</s:layout>
 			<s:itemRenderer>
 				<fx:Component>
-					<s:DataRenderer>
-						<s:Group width="300">
-							<s:TextInput id="libInput" y="3" x="3" width="265" text="{data ? data.text : ''}" change="if (data) data.text = libInput.text"/>
-							<components:BrowseButton y="3" x="274" target="{libInput}" browseTitle="选择一个SWC文件" 
-													 browseExtension="{new FileFilter('SWC 文件','*.swc')}" dragExtension="swc"/>
-						</s:Group>
+					<s:DataRenderer width="300">
+						<fx:Script>
+							<![CDATA[
+								import ghostcattools.util.ValueObject;
+							]]>
+						</fx:Script>
+						<s:TextInput id="libInput" y="3" x="3" width="265" text="@{data.value}"/>
+						<components:BrowseButton y="3" x="274" target="{libInput}" browseTitle="选择一个SWC文件" 
+												 browseExtension="{new FileFilter('SWC 文件','*.swc')}" dragExtension="swc"/>
 					</s:DataRenderer>
 				</fx:Component>
 			</s:itemRenderer>
