@@ -9,6 +9,7 @@
 	<fx:Script>
 		<![CDATA[
 			import flash.utils.getQualifiedClassName;
+			import flash.utils.setTimeout;
 			
 			import flashx.textLayout.events.FlowElementMouseEvent;
 			import flashx.textLayout.formats.TextLayoutFormat;
@@ -17,9 +18,11 @@
 			import ghostcat.util.data.LocalStorage;
 			
 			import ghostcattools.util.FileControl;
+			import ghostcattools.util.TextControl;
 			
 			import mx.controls.Button;
 			import mx.events.FlexEvent;
+			import mx.events.StateChangeEvent;
 			
 			import spark.events.IndexChangeEvent;
 			import spark.events.TextOperationEvent;
@@ -47,9 +50,8 @@
 				"[^x] 非字符x",
 				"^ 行首",
 				"$ 行尾",
-				"\\A 行首",
-				"\\z 行尾",
-				"\\Z 行首或行尾",
+				"\\A 字符串开头",
+				"\\Z 字符串结尾",
 				"* 重复零或更多次",
 				"+ 重复一或更多次",
 				"? 重复零或一次",
@@ -127,14 +129,18 @@
 				this.sourceText.setTextColor();
 				
 				regExp.lastIndex = 0;
+				var text:String = this.sourceText.text;
 				do
 				{
-					var execResult:Object = regExp.exec(this.sourceText.text);
+					var execResult:Object = regExp.exec(text);
 					if (execResult)
 					{
 						var index:int = execResult.index;
 						var len:int = execResult[0].length;
-						this.sourceText.setTextColor(0xFF0000,index,index + len);
+						if (len)
+							this.sourceText.setTextColor(0xFF0000,index,index + len);
+						else
+							regExp.lastIndex++;
 					}
 				}
 				while (execResult && regExp.global);
@@ -142,10 +148,8 @@
 				this.execText.text = ""
 				this.execText.appendText("表达式写法：/" + regExp.source.replace(/\//g,"\\/") + "/" + params +"\n" +
 					"字符串写法：new RegExp(\"" + regExp.source.replace(/\"|\\/g,"\\$&") + "\",\""+ params +"\")\n\n");
-				var tf:TextLayoutFormat = new TextLayoutFormat();
-				tf.backgroundColor = 0xBBBBFF;
-				tf.color = 0x0000FF;
-				this.execText.setFormatOfRange(tf,this.execText.text.length - 1,this.execText.text.length);
+				
+				TextControl.setTextAreaDefaultFromat(this.execText,{color:0x0000FF,backgroundColor:0xCCCCFF});
 				
 				var result:Array = regExp.exec(this.sourceText.text);
 				if (result)
@@ -162,7 +166,7 @@
 			protected function tabbar1_changeHandler(event:IndexChangeEvent):void
 			{
 				this.currentState = event.newIndex == 1 ? "replace" : "match";
-				doExp();
+				setTimeout(doExp,100);
 			}
 
 
