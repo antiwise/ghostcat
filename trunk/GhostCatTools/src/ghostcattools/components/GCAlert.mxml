@@ -6,7 +6,11 @@
 		<s:BasicLayout/>
 	</s:layout>
 	<s:creationCompleteEffect>
-		<s:Rotate3D angleXFrom="90" angleXTo="0" angleYFrom="90" angleYTo="0" angleZFrom="90" angleZTo="0" autoCenterProjection="true" autoCenterTransform="true" duration="500"/>
+		<s:Rotate3D angleXFrom="360" angleXTo="0" projectionX="300" projectionY="100" autoCenterProjection="false" autoCenterTransform="true" duration="500">
+			<s:easer>
+				<s:Sine easeInFraction="0"/>
+			</s:easer>
+		</s:Rotate3D>
 	</s:creationCompleteEffect>
 	<s:filters>
 		<s:DropShadowFilter alpha="0.5" blurX="9" blurY="9" distance="1"/>
@@ -14,7 +18,12 @@
 
 	<fx:Script>
 		<![CDATA[
+			import ghostcat.util.easing.Sine;
+			
+			import mx.effects.easing.Circular;
 			import mx.managers.PopUpManager;
+			
+			import spark.effects.easing.Sine;
 			
 			[Bindable]
 			public var text:String;

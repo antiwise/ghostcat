@@ -209,11 +209,15 @@ package ghostcattools.util
 		
 		static public function openExplorer(path:String):void
 		{
-			var explorer:File = new File(Config.EXPLORER_PATH);
-			if (!explorer.exists)
-				return;
-			
-			FileControl.run(explorer,[path])
+			try
+			{
+				var explorer:File = new File(Config.EXPLORER_PATH);
+				if (!explorer.exists)
+					return;
+				
+				FileControl.run(explorer,[path])
+			}
+			catch (e:Error){};
 		}
 	}
 }

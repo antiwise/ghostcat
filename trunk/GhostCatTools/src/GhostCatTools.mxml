@@ -22,6 +22,7 @@
 			import ghostcattools.tools.SWFDumper;
 			import ghostcattools.tools.SWFShower;
 			import ghostcattools.tools.TextTransferred;
+			import ghostcattools.tools.ZipManager;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
@@ -64,7 +65,7 @@
 				<components:GCToolButton label="代码统计" enabled="false"/>
 				<components:GCToolButton label="SWF浏览" cmd="{SWFShower}" fileFilter="swf"/>
 				<components:GCToolButton label="SWF抓取" cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
-				<components:GCToolButton label="压缩工具" enabled="false"/>
+				<components:GCToolButton label="压缩工具" cmd="{ZipManager}" fileFilter="{['zip','swc']}"/>
 				<components:GCToolButton label="测试代码" cmd="{AS3Tester}"/>
 				<components:GCToolButton label="字体生成" cmd="{FontSWFCreater}" fileFilter="xml" windowResizable="false" windowMaximizable="false"/>
 				<components:GCToolButton label="ASDoc生成" cmd="{ASDocCreater}" fileFilter="bat" windowResizable="false" windowMaximizable="false"/>

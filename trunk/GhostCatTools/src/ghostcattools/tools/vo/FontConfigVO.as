@@ -77,8 +77,13 @@ package ghostcattools.tools.vo
 			var text:String = "";
 			for each (var child:ValueObject in this.textFiles.toArrayWithoutEmpty())
 			{
-				var file:File = new File(child.value);
-				if (file.exists)
+				try
+				{
+					var file:File = new File(child.value);
+				}
+				catch (e:Error){};
+				
+				if (file && file.exists)
 					text += FileControl.readFile(file).toString();
 				else
 					new GCAlert().show("文件" + child.value + "不存在！",alertContainer)
