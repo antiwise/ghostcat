@@ -61,12 +61,12 @@ package ghostcat.util
 			var unicodeRangeText:String = exUnicodeRange.join(",");
 			if (unicodeRangeText)
 				result += ', unicodeRange="'+ unicodeRangeText +'"';
-			result += ')]\n';
+			result += ')]';
 			
 			if (createRegisterCode)
 			{
-				result += 'var '+ fontName +':Class;\n'
-				result += 'Font.registerFont('+ fontName +');\n'
+				result += '\r\nvar '+ fontName +':Class;'
+				result += '\r\nFont.registerFont('+ fontName +');'
 			}
 			return result;
 		}

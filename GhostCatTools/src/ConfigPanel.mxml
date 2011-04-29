@@ -9,6 +9,8 @@
 			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
+			
+			import spark.components.Button;
 
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{

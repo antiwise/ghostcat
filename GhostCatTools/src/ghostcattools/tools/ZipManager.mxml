@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" enabledDragOpen="false" title="压缩工具"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="538" height="300" creationComplete="gctoolwindow1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.fileformat.zip.CRC32;
+			import ghostcat.fileformat.zip.ZipEntry;
+			import ghostcat.fileformat.zip.ZipFile;
+			import ghostcat.util.text.ANSI;
+			import ghostcat.util.text.NumberUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.util.FileControl;
+			
+			import mx.charts.AreaChart;
+			import mx.events.FlexEvent;
+			
+			import spark.events.GridEvent;
+			
+			[Bindable]
+			public var zipFile:ZipFile;
+			
+			[Bindable]
+			public var curList:ArrayList;
+			
+			[Bindable]
+			public var selectedEntry:ZipEntry;
+			
+			[Bindable]
+			public var curPath:String = "";
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = file.exists ? FileControl.readFile(file) : null;
+				
+				this.zipFile = new ZipFile(bytes);
+				this.curList = new ArrayList(this.zipFile.entries); 
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+			}
+			
+			private function lookFile(item:ZipEntry):void
+			{
+				if (item.isDirectory())
+					return;
+				
+				var bytes:ByteArray = zipFile.getInput(item);
+				var paths:Array = ZipEntry(item).name.split("/");
+				var temp:File = File.createTempFile().parent.resolvePath(paths[paths.length - 1]);
+				FileControl.writeFile(temp,bytes);
+				temp.openWithDefaultApplication();
+			}
+			
+			private function getCurList(curList:ArrayList,curPath:String):ArrayList
+			{
+				var list:Array = curList.source.filter(filterFunction);
+				if (curPath)
+					list.unshift(new ZipEntry(curPath + "/../"))
+				list.sort(sortFunction);
+				
+				function filterFunction(element:*, index:int, arr:Array):Boolean
+				{
+					var paths:Array = ZipEntry(element).name.split("/");
+					paths = ZipEntry(element).isDirectory() ? paths.slice(0,paths.length - 2)  : paths.slice(0,paths.length - 1);
+					return paths.join("/") == curPath;
+				}
+				
+				function sortFunction(element1:*, element2:*):int
+				{
+					var entry1:ZipEntry = ZipEntry(element1);
+					var entry2:ZipEntry = ZipEntry(element2);
+					
+					if (entry1.isDirectory() && !entry2.isDirectory())
+						return -1;
+					else if (!entry1.isDirectory() && entry2.isDirectory())
+						return 1;
+					else if (entry1.name < entry2.name)
+						return -1;
+					else if (entry1.name > entry2.name)
+						return 1;
+					else
+						return 0;
+				}
+				
+				return new ArrayList(list);
+			}
+			
+			private function compressePerentlabelFunction(item:Object, column:GridColumn):String
+			{
+				return ZipEntry(item).isDirectory() ? "" : (ZipEntry(item).compressedSize /  ZipEntry(item).size * 100).toFixed(2) + "%";
+			}
+			
+			private function nameLabelFunction(item:Object, column:GridColumn):String
+			{
+				var paths:Array = ZipEntry(item).name.split("/");
+				return ZipEntry(item).isDirectory() ? "[" + paths[paths.length - 2] + "]" : paths[paths.length - 1];
+			}
+			
+			private function sizeLabelFunction(item:Object, column:GridColumn):String
+			{
+				return ZipEntry(item).isDirectory() ? "" : NumberUtil.addNumberSeparator(ZipEntry(item).size);
+			}
+			
+			private function compresseSizeLabelFunction(item:Object, column:GridColumn):String
+			{
+				return ZipEntry(item).isDirectory() ? "" : NumberUtil.addNumberSeparator(ZipEntry(item).compressedSize);
+			}
+			private function dateLabelFunction(item:Object, column:GridColumn):String
+			{
+				var d:Date = new Date(ZipEntry(item).time);
+				return ZipEntry(item).isDirectory() ? "" : d.fullYear + "-" + (d.month + 1).toString() + "-" + d.day + " " + d.hours + ":" + d.minutes + ":" + d.seconds;
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openFileHandler,this.openBN,["zip","swc"]);
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"选择一个文件",[new FileFilter("压缩文档","*.zip;*.swc")])
+			}
+			
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler,"新建一个文件","新建文件.zip")
+			}
+			
+			protected function addBN_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+
+
+			protected function releaseBN_clickHandler(event:MouseEvent):void
+			{
+				
+			}
+
+
+			protected function lookBN_clickHandler(event:MouseEvent):void
+			{
+				if (!this.fileList.selectedItem)
+					return;
+				
+				lookFile(this.fileList.selectedItem as ZipEntry);
+			}
+
+
+			protected function delBN_clickHandler(event:MouseEvent):void
+			{
+				if (!this.fileList.selectedItem)
+					return;
+				
+				var delItem:ZipEntry = this.fileList.selectedItem as ZipEntry;
+				if (ZipEntry(delItem).isDirectory())
+				{
+					for (var i:int = this.curList.source.length - 1;i >= 0;i--)
+					{
+						var item:ZipEntry = ZipEntry(this.curList.source[i])
+						if (item.name.slice(0,delItem.name.length) == delItem.name)
+							this.curList.removeItem(item);
+					}
+				}
+				this.curList.removeItem(delItem);
+				this.dispatchPropertyChangeEvent("curList",this.curList,this.curList);
+			}
+			
+			protected function testBN_clickHandler(event:MouseEvent):void
+			{
+				if (!this.fileList.selectedItem)
+					return;
+				
+				var crc:CRC32 = new CRC32();
+				crc.update(this.zipFile.getInput(this.fileList.selectedItem as ZipEntry));
+				if (crc.getValue() == (this.fileList.selectedItem as ZipEntry).crc)
+					new GCAlert().show("在测试操作中没有发现任何错误！",this);
+				else
+					new GCAlert().show("CRC校验失败！文件可能已损坏！",this);
+			}
+
+			protected function fileList_gridDoubleClickHandler(event:GridEvent):void
+			{
+				if (!event.item)
+					return;
+				
+				if (ZipEntry(event.item).isDirectory())
+				{
+					var name:String = ZipEntry(event.item).name;
+					if (name.slice(name.length - 3,name.length) == "../")
+					{
+						var paths:Array = this.curPath.split("/");
+						this.curPath = paths.slice(0,paths.length - 1).join("/");
+					}
+					else
+					{
+						this.curPath = name.slice(0,name.length - 1);
+					}
+				}
+				else
+				{
+					lookFile(event.item as ZipEntry);
+				}
+			}
+
+
+			protected function prevLv_clickHandler(event:MouseEvent):void
+			{
+				var paths:Array = this.curPath.split("/");
+				this.curPath = paths.slice(0,paths.length - 1).join("/");
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup left="5" right="5" top="5" height="70">
+		<s:Button id="openBN" width="70" height="70" label="打开" click="openBN_clickHandler(event)"/>
+		<s:Button id="saveBN" width="70" height="70" label="保存" click="saveBN_clickHandler(event)"/>
+		<s:Button id="releaseBN" width="70" height="70" label="解压到" click="releaseBN_clickHandler(event)"/>
+		<s:Button id="addBN" width="70" height="70" label="添加" click="addBN_clickHandler(event)"/>
+		<s:Button id="delBN" width="70" height="70" label="删除" click="delBN_clickHandler(event)" enabled="{fileList.selectedItem}"/>
+		<s:Button id="addBN0" width="70" height="70" label="测试" click="testBN_clickHandler(event)" enabled="{fileList.selectedItem &amp;&amp; !ZipEntry(fileList.selectedItem).isDirectory()}"/>
+		<s:Button id="lookBN" width="70" height="70" label="查看" click="lookBN_clickHandler(event)" enabled="{fileList.selectedItem &amp;&amp; !ZipEntry(fileList.selectedItem).isDirectory()}"/>
+	</s:HGroup>
+	<s:Button id="prevLv" left="5" top="79" width="22" icon="@Embed(source='../asset/prevLv.png')" skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级" enabled="{curPath}" click="prevLv_clickHandler(event)"/>
+	<s:TextInput y="79" left="30" right="5" editable="false" text="{curPath}"/>
+	<s:DataGrid id="fileList" left="5" right="5" top="105" bottom="5" requestedRowCount="4" dataProvider="{getCurList(curList,curPath)}" 
+				gridDoubleClick="fileList_gridDoubleClickHandler(event)" doubleClickEnabled="true" selectionMode="multipleRows">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn labelFunction="nameLabelFunction" headerText="名称" sortable="true" resizable="true"></s:GridColumn>
+				<s:GridColumn labelFunction="sizeLabelFunction" headerText="大小" sortable="true" resizable="true" width="80"></s:GridColumn>
+				<s:GridColumn labelFunction="compresseSizeLabelFunction" headerText="压缩大小" sortable="true" resizable="true" width="80"></s:GridColumn>
+				<s:GridColumn labelFunction="compressePerentlabelFunction" headerText="压缩率" sortable="true" resizable="true" width="60"></s:GridColumn>
+				<s:GridColumn labelFunction="dateLabelFunction" headerText="修改时间" sortable="true" resizable="true" width="120"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+</components:GCToolWindow>

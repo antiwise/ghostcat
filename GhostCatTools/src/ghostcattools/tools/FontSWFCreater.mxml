@@ -105,7 +105,7 @@
 						child.getRange(),
 						false);
 					
-					embedText += '\r\npublic var font' + i +':Class;';
+					embedText += '\r\n\t\tpublic var font' + i +':Class;';
 					varText += 'Font.registerFont(font'+ i +');';
 				}
 				var bodyText:String = embedText + "public function FontLibrary():void{"+ varText+"}";
@@ -276,7 +276,7 @@
 			</s:DataGroup>
 		</s:Scroller>
 		<s:Label x="10" y="109" text="外部文本："/>
-		<s:Label x="10" y="222" text="附加文本："/>
+		<s:Label x="10" y="222" text="包含文本："/>
 		<s:CheckBox id="template1BN" x="201" y="217" label="英文" selected="@{selectedFontConfig.template1}"/>
 		<s:CheckBox id="template2BN" x="251" y="217" label="全角字符" selected="@{selectedFontConfig.template2}"/>
 		<s:CheckBox id="template3BN" x="325" y="217" label="标点" selected="@{selectedFontConfig.template3}"/>
