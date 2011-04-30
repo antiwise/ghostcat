@@ -13,6 +13,28 @@ package ghostcat.util.text
         {
         	return str.match(/[\x00-\xFF]*/g);
         }
+		
+		/**
+		 * 匹配中文
+		 * @param str
+		 * @return 
+		 * 
+		 */
+		public static function matchChinese(str:String):Array
+		{
+			return str.match(/[\u4e00-\u9fa5]*/g);
+		}
+		
+		/**
+		 * 匹配日文 
+		 * @param str
+		 * @return 
+		 * 
+		 */
+		public static function matchJanpese(str:String):Array
+		{
+			return str.match(/[\u0081-\u009f\u00e0-\u00fc]*/g);
+		}
         
         /**
          * 将文件路径字符串切分为数组。最后两个将会是文件名和扩展名。
