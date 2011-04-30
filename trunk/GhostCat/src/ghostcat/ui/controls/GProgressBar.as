@@ -7,9 +7,7 @@ package ghostcat.ui.controls
 	import flash.events.ProgressEvent;
 	
 	import ghostcat.events.OperationEvent;
-	import ghostcat.operation.Oper;
 	import ghostcat.skin.ProgressSkin;
-	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.load.LoadHelper;
 	
 	[Event(name="complete",type="flash.events.Event")]
@@ -56,6 +54,18 @@ package ghostcat.ui.controls
 		 * 资源对应的Oper 
 		 */
 		public var oper:IProgressTargetClient;
+		
+		/**
+		 * 进度条文本格式，下面的特殊字符会被转换
+		 * 
+		 * %name	资源名称
+		 * %percent	进度百分比
+		 * %loaded	加载字节
+		 * %total	总字节
+		 * %time	已用时间
+		 * %needtime	预计剩余时间
+		 */
+		public var progresslabelFormat:String = "%name %percent (%loaded/%total)\n已用时：%time\n预计剩余时间：%needtime";
 		
 		/**
 		 * 进度条更新方法（参数为进度条）
@@ -181,11 +191,16 @@ package ghostcat.ui.controls
 		public static function defaultProgressFunction(progress:GProgressBar):void
 		{
 			progress.percent = progress.loadHelper.loadPercent;
-			progress.label = (progress.resName ? progress.resName + "\n" : "") +
-				(progress.loadHelper.loadPercent * 100).toFixed(1) + "%" + 
-				"(" + progress.loadHelper.bytesLoaded + "/" + progress.loadHelper.bytesTotal + ")" + 
-				"\n已用时：" + progress.loadHelper.progressTimeString +
-				"\n预计剩余时间：" + progress.loadHelper.progressNeedTimeString;
+			
+			var text:String = progress.progresslabelFormat;
+			text = text.replace(/%name/g,progress.resName ? progress.resName : "");
+			text = text.replace(/%percent/g,(progress.loadHelper.loadPercent * 100).toFixed(1) + "%");
+			text = text.replace(/%loaded/g,progress.loadHelper.bytesLoaded);
+			text = text.replace(/%total/g,progress.loadHelper.bytesTotal);
+			text = text.replace(/%time/g,progress.loadHelper.progressTimeString);
+			text = text.replace(/%needtime/g,progress.loadHelper.progressNeedTimeString);
+			text = text.replace(/^\s+/,"").replace(/\s+$/,"");
+			progress.label = text;
 		}
 		
 		/**
