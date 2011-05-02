@@ -16,12 +16,14 @@
 			public var fileFilter:Array;
 			public var enabledDragOpen:Boolean = true;
 			public var isDragOpen:Boolean;
+			public var isDirectory:Boolean;
+			public var isAll:Boolean;
 			
 			protected function window1_creationCompleteHandler(event:FlexEvent):void
 			{
 				openDict[ReflectUtil.getClass(this)] = this;
 				if (enabledDragOpen)
-					FileControl.dragFileIn(openFileHandler,this,fileFilter);
+					FileControl.dragFileIn(openFileHandler,this,fileFilter,isDirectory,isAll);
 			}
 			
 			protected function window1_closeHandler(event:Event):void

@@ -3,11 +3,14 @@ package ghostcattools.util
 	import flash.desktop.Clipboard;
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeDragManager;
+	import flash.desktop.NativeDragOptions;
 	import flash.desktop.NativeProcess;
 	import flash.desktop.NativeProcessStartupInfo;
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
+	import flash.events.FileListEvent;
 	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
 	import flash.events.NativeProcessExitEvent;
 	import flash.events.ProgressEvent;
@@ -23,7 +26,7 @@ package ghostcattools.util
 
 	public final class FileControl
 	{
-		static public function dragFileIn(rHandler:Function,target:*,extension:Array = null,isDirectory:Boolean = false):void
+		static public function dragFileIn(rHandler:Function,target:*,extension:Array = null,isDirectory:Boolean = false,isAll:Boolean = false):void
 		{
 			if (!(target is Array))
 				target = [target];
@@ -46,7 +49,11 @@ package ghostcattools.util
 					if (files)
 					{
 						var file:File = File(files[0]);
-						if (isDirectory)
+						if (isAll)
+						{
+							NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
+						}
+						else if (isDirectory)
 						{ 
 							if (file.isDirectory)
 								NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
@@ -66,6 +73,25 @@ package ghostcattools.util
 			}
 		}
 		
+		static public function dragTextFileOut(target:InteractiveObject,data:*,relativePath:String):void
+		{
+			var transfer:Clipboard = new Clipboard();
+			transfer.setDataHandler(ClipboardFormats.FILE_PROMISE_LIST_FORMAT,getDataHandler);
+			NativeDragManager.doDrag(target,transfer);
+			
+			function getDataHandler():Array
+			{
+				var bytes:ByteArray = new ByteArray();
+				var text:* = data is Function ? data() : data;
+				if (text is String)
+					bytes.writeUTFBytes(text as String);
+				else if (text is ByteArray)
+ 					bytes = text as ByteArray;
+				
+				return [new CreateFilePromise(relativePath,bytes)];
+			}
+		}
+		
 		static public function browseForOpen(rHandler:Function,title:String = "选择一个文件",extension:Array = null):void
 		{
 			var file:File = File.documentsDirectory;
@@ -79,7 +105,20 @@ package ghostcattools.util
 			}
 		}
 		
-		static public function browseForSave(rHandler:Function,title:String,path:String = null):void
+		static public function browseForOpenMultiple(rHandler:Function,title:String = "选择多个文件",extension:Array = null):void
+		{
+			var file:File = File.documentsDirectory;
+			file.browseForOpenMultiple(title,extension);
+			if (rHandler != null)
+				file.addEventListener(FileListEvent.SELECT_MULTIPLE,selectHandler);
+			
+			function selectHandler(event:FileListEvent):void
+			{
+				rHandler(event.files);
+			}
+		}
+		
+		static public function browseForSave(rHandler:Function,title:String = "保存文件",path:String = null):void
 		{
 			var file:File = File.documentsDirectory;
 			if (path)

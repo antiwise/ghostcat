@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" title="数据编辑"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="300">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.util.data.Json;
+			
+			import ghostcattools.util.FileControl;
+			
+			public var data:Object;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = new ByteArray();
+				switch (radiogroup.selectedValue)
+				{
+					case "XML":
+						bytes.writeUTFBytes((data as XML).toXMLString())
+						break;
+					case "JSON":
+						bytes.writeUTFBytes(Json.encode(data));
+						break;
+					case "AMF3":
+						bytes.writeObject(data);
+						break;
+				}
+				FileControl.writeFile(file,bytes);
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler);
+			}
+
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler);
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup" selectedValue="XML"/>
+	</fx:Declarations>
+	<s:Button id="openBN" x="5" y="5" label="载入" click="openBN_clickHandler(event)"/>
+	<s:Button id="saveBN" x="79" y="5" label="保存" click="saveBN_clickHandler(event)"/>
+	<mx:TabNavigator left="5" right="5" top="30" bottom="5" paddingTop="0">
+		<s:NavigatorContent width="100%" height="100%" label="列表模式">
+			<mx:Tree left="5" top="5" bottom="5"></mx:Tree>
+			<s:DataGrid left="173" right="5" top="5" bottom="5" requestedRowCount="4">
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn dataField="dataField1" headerText="1"></s:GridColumn>
+						<s:GridColumn dataField="dataField2" headerText="2"></s:GridColumn>
+						<s:GridColumn dataField="dataField3" headerText="3"></s:GridColumn>
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="源代码">
+			<s:TextArea left="5" right="5" top="30" bottom="5"/>
+			<s:RadioButton x="5" y="5" label="XML" groupName="radiogroup" value="XML"/>
+			<s:RadioButton x="54" y="5" label="JSON" groupName="radiogroup" value="JSON"/>
+			<s:RadioButton x="110" y="5" label="AMF3" groupName="radiogroup" value="AMF3"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	
+</components:GCToolWindow>

@@ -12,6 +12,7 @@
 			
 			import ghostcattools.components.GCAlert;
 			import ghostcattools.util.Config;
+			import ghostcattools.util.CreateFilePromise;
 			import ghostcattools.util.FileControl;
 			
 			import mx.controls.Alert;
@@ -84,7 +85,7 @@
 			
 			protected function outBN_clickHandler(event:MouseEvent):void
 			{
-				FileControl.browseForSave(saveHandler,"保存");
+				FileControl.browseForSave(saveHandler,"保存","Test.as");
 				function saveHandler(files:Array):void
 				{
 					if (!files)
@@ -176,6 +177,12 @@
 					swfWindow.close();
 			}
 
+
+			protected function button1_mouseDownHandler(event:MouseEvent):void
+			{
+				FileControl.dragTextFileOut(button1,this.sourceText.text,"Test.as");
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -184,8 +191,8 @@
 	<components:CodeTextArea id="sourceText" left="5" right="5" top="31" bottom="133" codeMode="true" text="trace('测试文本')"/>
 	<s:TextArea id="traceText" left="5" right="5" bottom="5" height="123" editable="false"/>
 	<s:Button id="runBN" x="5" y="5" width="126" label="运行" click="runBN_clickHandler(event)"/>
-	<s:Button y="5" right="79" label="保存" click="outBN_clickHandler(event)"/>
-	<s:Button y="5" right="5" label="载入" click="inBN_clickHandler(event)"/>
+	<s:Button id="button1" y="5" right="79" label="保存" click="outBN_clickHandler(event)" mouseDown="button1_mouseDownHandler(event)"/>
+	<s:Button id="button2" y="5" right="5" label="载入" click="inBN_clickHandler(event)"/>
 	<s:CheckBox id="swfWindowCheckBox" right="163" y="6" label="显示SWF窗口"/>
 </components:GCToolWindow>
 

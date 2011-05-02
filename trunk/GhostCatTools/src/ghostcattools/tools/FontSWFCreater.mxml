@@ -14,6 +14,7 @@
 			import ghostcattools.tools.vo.FontConfigVO;
 			import ghostcattools.util.AutoLengthArrayList;
 			import ghostcattools.util.Config;
+			import ghostcattools.util.CreateFilePromise;
 			import ghostcattools.util.FileControl;
 			import ghostcattools.util.ValueObject;
 			
@@ -245,6 +246,23 @@
 				FileControl.browseForSave(createSWFHandler,"生成SWF文件","FontLibrary.swf");
 			}
 		
+
+			protected function outBN_mouseDownHandler(event:MouseEvent):void
+			{
+				FileControl.dragTextFileOut(this.outBN,getXML().toXMLString(),"font.xml")
+			}
+
+
+			protected function asBN_mouseDownHandler(event:MouseEvent):void
+			{
+				FileControl.dragTextFileOut(this.outBN,createASText,"FontLibrary.as")
+			}
+
+
+			protected function runBN_mouseDownHandler(event:MouseEvent):void
+			{
+			}
+
 		]]>
 	</fx:Script>
 	
@@ -261,15 +279,15 @@
 		<s:Label x="10" y="86" text="字体名称："/>
 		<s:TextInput id="fontNameText" x="79" y="81" width="160" text="@{selectedFontConfig.fontName}"/>
 		<s:Scroller x="7" y="125" width="369" height="90">
-			<s:DataGroup id="textFileList" width="100%" dataProvider="{selectedFontConfig.textFiles}" x="11" y="126">
+			<s:DataGroup id="textFileList" width="100%" dataProvider="{selectedFontConfig.textFiles}">
 				<s:layout>
 					<s:VerticalLayout/>
 				</s:layout>
 				<s:itemRenderer>
 					<fx:Component>
-						<s:DataRenderer>
-							<s:TextInput id="textFileText" x="3" y="3" width="315" text="@{data.value}"/>
-							<components:BrowseButton id="sdkSelectBN1" x="325" y="3" target="{textFileText}" browseTitle="选择外部文本文件"/>
+						<s:DataRenderer width="100%">
+							<s:TextInput id="textFileText" left="3" right="32" y="3" text="@{data.value}"/>
+							<components:BrowseButton id="sdkSelectBN1" right="3" y="3" target="{textFileText}" browseTitle="选择外部文本文件"/>
 						</s:DataRenderer>
 					</fx:Component>
 				</s:itemRenderer>
@@ -281,9 +299,9 @@
 		<s:CheckBox id="template2BN" x="251" y="217" label="全角字符" selected="@{selectedFontConfig.template2}"/>
 		<s:CheckBox id="template3BN" x="325" y="217" label="标点" selected="@{selectedFontConfig.template3}"/>
 		<s:TextArea id="extextText" x="10" y="239" width="368" height="87" text="@{selectedFontConfig.extext}"/>
-		<s:Button x="157" y="338" width="143" height="52" label="查看AS文件" click="testBN_clickHandler(event)"/>
-		<s:Button x="10" y="338" width="143" height="52" label="生成SWF" click="runBN_clickHandler(event)"/>
-		<s:Button id="outBN" x="304" y="365" width="74" height="24" label="导出配置" click="outBN_clickHandler(event)"/>
+		<s:Button id="asBN" x="157" y="338" width="143" height="52" label="查看AS文件" click="testBN_clickHandler(event)" mouseDown="asBN_mouseDownHandler(event)"/>
+		<s:Button id="runBN" x="10" y="338" width="143" height="52" label="生成SWF" click="runBN_clickHandler(event)" mouseDown="runBN_mouseDownHandler(event)"/>
+		<s:Button id="outBN" x="304" y="365" width="74" height="24" label="导出配置" click="outBN_clickHandler(event)" mouseDown="outBN_mouseDownHandler(event)"/>
 		<s:Button id="inBN" x="304" y="338" width="74" height="24" label="导入配置" click="inBN_clickHandler(event)"/>
 	</s:BorderContainer>
 </components:GCToolWindow>
