@@ -153,7 +153,7 @@ package ghostcat.manager
 				var textLine:String = texts[i] as String;
 				if (textLine && textLine.substr(0,2)!="//")
 				{
-					if (/^\w+=.*/.test(textLine))
+					if (/^\S+=.*/.test(textLine))
 					{
 						var pos:int = textLine.indexOf("=");
 						

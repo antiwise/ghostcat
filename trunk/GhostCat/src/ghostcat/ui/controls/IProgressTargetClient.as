@@ -5,7 +5,7 @@ package ghostcat.ui.controls
 	import ghostcat.operation.IOper;
 	
 	/**
-	 * 能够被GProgress处理需要实现的接口
+	 * 能够被GProgress当做source处理需要实现的接口
 	 * @author flashyiyi
 	 * 
 	 */
