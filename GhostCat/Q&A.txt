@@ -15,6 +15,9 @@ A.½¨ÒéÏÈÊ¹ÓÃGhostCatApp´´½¨»ù±¾×é¼þ²ã´Î£¬ÓÃAssetManager¼ÓÔØÍâ²¿×ÊÔ´£¬È»ºó¿ÉÒÔ³¢Ê
 Q.ÈçºÎÊ¹ÓÃÌáÊ¾£¿ÈçºÎÉèÖÃÌáÊ¾Æ¤·ô£¿
 A.´´½¨Ò»¸öToolTipSprite¶ÔÏó£¬²¢¼ÓÔØµ½ÄãÏë·ÅÖÃµÄ²ãÄÚ£¬Êó±êÒÆ¶¯µ½ÉèÖÃÁËtoolTipµÄ×é¼þÉÏ£¬ÌáÊ¾¾ÍÄÜÉúÐ§¡£ÌáÊ¾Æ¤·ôÓÃToolTipSprite.defaultSkinÀ´ÐÞ¸Ä£¬ÕâÊÇÒ»¸öÊµÏÖÁËIToolTipSkinµÄÏÔÊ¾¶ÔÏó£¬Ò²¿ÉÒÔÉèÖÃ×é¼þµÄtoolTipObjÀ´Ö¸¶¨Ò»¸öÁÙÊ±µÄÌáÊ¾¡£
 
+Q.½ø¶ÈÌõÎÄ±¾ÈçºÎÌæ»»
+A.¿ÉÒÔÍ¨¹ý¸³ÖµprogressFunctionÀ´ÐÞ¸Ä¾ßÌå¸üÐÂ½ø¶ÈÂß¼­£¬ÏÖÔÚÒ²¿ÉÒÔÐÞ¸ÄprogresslabelFormatÀ´ÊµÏÖÎÄ±¾¸ñÊ½µÄ±ä»¯
+
 Q.Ç¶ÈëÎÄ±¾²»ÏÔÊ¾
 A.µ±GText.autoRebuildEmbedText=trueÊ±£¬ËµÃ÷Ö÷ÎÄµµÃ»ÓÐÇ¶Èë×ÖÌå£¬µ±GText.autoRebuildEmbedText=falseÊ±£¬ËµÃ÷ÎÄ±¾¿òËùÔÚµÄSWF×ÊÔ´Ã»ÓÐÇ¶Èë×ÖÌå¡£ÒªÑ¡ÔñÕýÈ·µÄ¶ÔÏóÇ¶Èë×ÖÌå¡£
 
