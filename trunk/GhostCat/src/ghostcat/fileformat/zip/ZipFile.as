@@ -1,35 +1,33 @@
 /*
 nochump.util.zip.ZipFile
-Copyright (C) 2007 David Chang (dchang@nochump.com)
+Copyright (c) 2008 David Chang (dchang@nochump.com)
 
-This file is part of nochump.util.zip.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-nochump.util.zip is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-nochump.util.zip is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 package ghostcat.fileformat.zip {
 
-	import flash.events.EventDispatcher;
-	import flash.events.ProgressEvent;
-	import flash.utils.ByteArray;
+	import flash.system.Security;
 	import flash.utils.Dictionary;
 	import flash.utils.Endian;
 	import flash.utils.IDataInput;
-
-	[Event(name="entryParsed",		type="nochump.util.zip.ZipEvent")]
-	[Event(name="entryParseError",	type="nochump.util.zip.ZipErrorEvent")]
-	[Event(name="progress",			type="flash.events.ProgressEvent")]
-
+	import flash.utils.ByteArray;
+	
 	/**
 	 * This class represents a Zip archive.  You can ask for the contained
 	 * entries, or get an input stream for a file entry.  The entry is
@@ -37,7 +35,7 @@ package ghostcat.fileformat.zip {
 	 * 
 	 * @author David Chang
 	 */
-	public class ZipFile extends EventDispatcher {
+	public class ZipFile {
 		
 		private var buf:ByteArray; // data from which zip entries are read.
 		private var entryList:Array;
@@ -113,7 +111,6 @@ package ghostcat.fileformat.zip {
 					var inflater:Inflater = new Inflater();
 					inflater.setInput(b1);
 					inflater.inflate(b2);
-					dispatchEvent( new ZipEvent(ZipEvent.ENTRY_PARSED, false, false, b2) );
 					return b2;
 					break;
 				default:
@@ -121,40 +118,7 @@ package ghostcat.fileformat.zip {
 			}
 			return null;
 		}
-
-		public function parseInput(entry:ZipEntry):void {
-			// extra field for local file header may not match one in central directory header
-			buf.position = locOffsetTable[entry.name] + ZipConstants.LOCHDR - 2;
-			var len:uint = buf.readShort(); // extra length
-			buf.position += entry.name.length + len;
-			var b1:ByteArray = new ByteArray();
-			// read compressed data
-			if(entry.compressedSize > 0) buf.readBytes(b1, 0, entry.compressedSize);
-			switch(entry.method) {
-				case ZipConstants.STORED:
-					dispatchEvent( new ZipEvent(ZipEvent.ENTRY_PARSED, false, false, b1) );
-					break;
-				case ZipConstants.DEFLATED:
-					var inflater:Inflater = new Inflater();
-					inflater.addEventListener(ZipEvent.ENTRY_PARSED, onZipEntryParsed);
-					inflater.addEventListener(ProgressEvent.PROGRESS, onZipEntryProgress);
-					var b2:ByteArray = new ByteArray();
-					inflater.setInput(b1);
-					inflater.queuedInflate(b2);
-					break;
-				default:
-					throw new ZipError("invalid compression method");
-			}
-		}
-
-		private function onZipEntryParsed(event:ZipEvent):void {
-			dispatchEvent( new ZipEvent(ZipEvent.ENTRY_PARSED, false, false, event.entry) );
-		}
-
-		private function onZipEntryProgress(event:ProgressEvent):void {
-			dispatchEvent( new ProgressEvent(ProgressEvent.PROGRESS, false, false, event.bytesLoaded, event.bytesTotal ) );
-		}
-
+		
 		/**
 		 * Read the central directory of a zip file and fill the entries
 		 * array.  This is called exactly once when first needed.

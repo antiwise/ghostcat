@@ -1,36 +1,30 @@
 /*
 nochump.util.zip.Inflater
-Copyright (C) 2007 David Chang (dchang@nochump.com)
+Copyright (c) 2008 David Chang (dchang@nochump.com)
 
-This file is part of nochump.util.zip.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-nochump.util.zip is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-nochump.util.zip is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
-package  ghostcat.fileformat.zip{
+package ghostcat.fileformat.zip {
 	
-	import flash.events.EventDispatcher;
-	import flash.events.TimerEvent;
-	import flash.events.ProgressEvent;
-
-	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import flash.utils.Timer;
-
-	[Event(name="entryParseError",	type="nochump.util.zip.ZipErrorEvent")]
-	[Event(name="entryParsed",		type="nochump.util.zip.ZipEvent")]
-	[Event(name="progress",			type="flash.events.ProgressEvent")]
-
+	import flash.utils.ByteArray;
+	
 	/**
 	 * Inflater is used to decompress data that has been compressed according 
 	 * to the "deflate" standard described in rfc1950.
@@ -48,11 +42,12 @@ package  ghostcat.fileformat.zip{
 	 * 
 	 * @author dchang
 	 */
-	public class Inflater extends EventDispatcher {
-
+	public class Inflater {
+		
 		private static const MAXBITS:int = 15; // maximum bits in a code
 		private static const MAXLCODES:int = 286; // maximum number of literal/length codes
 		private static const MAXDCODES:int = 30; // maximum number of distance codes
+		private static const MAXCODES:int = MAXLCODES + MAXDCODES; // maximum codes lengths to read
 		private static const FIXLCODES:int = 288; // number of fixed literal/length codes
 		// Size base for length codes 257..285
 		private static const LENS:Array = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258];
@@ -62,22 +57,15 @@ package  ghostcat.fileformat.zip{
 		private static const DISTS:Array = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577];
 		// Extra bits for distance codes 0..29
 		private static const DEXT:Array = [ 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13];
-		
-		// Duration between parsing of each chunk of data
-		private const TIMER_INTERVAL:int = 20;
 
 		private var inbuf:ByteArray; // input buffer
-		private var currentBuf:ByteArray; // current buffer being decoded
-
 		private var incnt:uint; // bytes read so far
 		private var bitbuf:int; // bit buffer
 		private var bitcnt:int; // number of bits in bit buffer
-
 		// Huffman code decoding tables
 		private var lencode:Object;
 		private var distcode:Object;
-		private var inflateTimer:Timer;
-
+		
 		/**
 		 * Sets the input.
 		 * 
@@ -86,12 +74,6 @@ package  ghostcat.fileformat.zip{
 		public function setInput(buf:ByteArray):void {
 			inbuf = buf;
 			inbuf.endian = Endian.LITTLE_ENDIAN;
-			if (inflateTimer) {
-				inflateTimer.stop();
-				inflateTimer.removeEventListener(TimerEvent.TIMER, inflateNextChunk);
-			}
-			inflateTimer = new Timer(TIMER_INTERVAL);
-            inflateTimer.addEventListener(TimerEvent.TIMER, inflateNextChunk);
 		}
 		
 		/**
@@ -120,42 +102,7 @@ package  ghostcat.fileformat.zip{
 			} while(!last);
 			return err;
 		}
-
-		public function queuedInflate(buf:ByteArray):void {
-			incnt = bitbuf = bitcnt = 0;
-			currentBuf = buf;
-			inflateTimer.start();
-		}
-
-		private function inflateNextChunk(event:TimerEvent):void {
-			var err:int = 0;
-			var last:int = bits(1); // one if last block
-			var type:int = bits(2); // block type 0..3
-			//trace('	block type ' + type);
-			if(type == 0) stored(currentBuf); // uncompressed block
-			else if(type == 3) throw new Error('invalid block type (type == 3)', -1);
-			else { // compressed block
-				lencode = {count:[], symbol:[]};
-				distcode = {count:[], symbol:[]};
-				if(type == 1) constructFixedTables();
-				else if(type == 2) err = constructDynamicTables();
-				if(err != 0) {
-					inflateTimer.stop();
-					dispatchEvent( new ZipErrorEvent(ZipErrorEvent.PARSE_ERROR, false, false, err) );
-				}
-				err = codes(currentBuf); // decode data until end-of-block code
-			}
-			if(err != 0) {
-				inflateTimer.stop();
-				dispatchEvent( new ZipErrorEvent(ZipErrorEvent.PARSE_ERROR, false, false, err) );
-			}
-			if (last) {
-				inflateTimer.stop();
-				dispatchEvent( new ZipEvent(ZipEvent.ENTRY_PARSED, false, false, currentBuf) );
-			}
-			dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, incnt, currentBuf.length) );
-		}
-
+		
 		private function bits(need:int):int {
 			// bit accumulator (can use up to 20 bits)
 			// load at least need bits into val
@@ -171,28 +118,28 @@ package  ghostcat.fileformat.zip{
 			// return need bits, zeroing the bits above that
 			return val & ((1 << need) - 1);
 		}
-
+		
 		private function construct(h:Object, length:Array, n:int):int {
 			var offs:Array = []; // offsets in symbol table for each length
 			// count number of codes of each length
-			for(var len:int = 0; len <= MAXBITS; len++) h["count"][len] = 0;
+			for(var len:int = 0; len <= MAXBITS; len++) h.count[len] = 0;
 			// assumes lengths are within bounds
-			for(var symbol:int = 0; symbol < n; symbol++) h["count"][length[symbol]]++;
+			for(var symbol:int = 0; symbol < n; symbol++) h.count[length[symbol]]++;
 			// no codes! complete, but decode() will fail
-			if(h["count"][0] == n) return 0;
+			if(h.count[0] == n) return 0;
 			// check for an over-subscribed or incomplete set of lengths
 			var left:int = 1; // one possible code of zero length
 			for(len = 1; len <= MAXBITS; len++) {
 				left <<= 1; // one more bit, double codes left
-				left -= h["count"][len]; // deduct count from possible codes
+				left -= h.count[len]; // deduct count from possible codes
 				if(left < 0) return left; // over-subscribed--return negative
 			} // left > 0 means incomplete
 			// generate offsets into symbol table for each length for sorting
 			offs[1] = 0;
-			for(len = 1; len < MAXBITS; len++) offs[len + 1] = offs[len] + h["count"][len];
+			for(len = 1; len < MAXBITS; len++) offs[len + 1] = offs[len] + h.count[len];
 			// put symbols in table sorted by length, by symbol order within each length
 			for(symbol = 0; symbol < n; symbol++)
-				if(length[symbol] != 0) h["symbol"][offs[length[symbol]]++] = symbol;
+				if(length[symbol] != 0) h.symbol[offs[length[symbol]]++] = symbol;
 			// return zero for complete set, positive for incomplete set
 			return left;
 		}
@@ -203,9 +150,9 @@ package  ghostcat.fileformat.zip{
 			var index:int = 0; // index of first code of length len in symbol table
 			for(var len:int = 1; len <= MAXBITS; len++) { // current number of bits in code
 				code |= bits(1); // get next bit
-				var count:int = h["count"][len]; // number of codes of length len
+				var count:int = h.count[len]; // number of codes of length len
 				// if length len, return symbol
-				if(code < first + count) return h["symbol"][index + (code - first)];
+				if(code < first + count) return h.symbol[index + (code - first)];
 				index += count; // else update for next length
 				first += count;
 				first <<= 1;
@@ -303,12 +250,12 @@ package  ghostcat.fileformat.zip{
 			// build huffman table for literal/length codes
 			err = construct(lencode, lengths, nlen);
 			// only allow incomplete codes if just one code
-			if(err < 0 || (err > 0 && nlen - lencode["count"][0] != 1))
+			if(err < 0 || (err > 0 && nlen - lencode.count[0] != 1))
 				throw new Error("dynamic block code description: invalid literal/length code lengths", -7);
 			// build huffman table for distance codes
 			err = construct(distcode, lengths.slice(nlen), ndist);
 			// only allow incomplete codes if just one code
-			if(err < 0 || (err > 0 && ndist - distcode["count"][0] != 1))
+			if(err < 0 || (err > 0 && ndist - distcode.count[0] != 1))
 				throw new Error("dynamic block code description: invalid distance code lengths", -8);
 			return err;
 		}
