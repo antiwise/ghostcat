@@ -2,8 +2,8 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="552" height="212" 
-					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
+					   width="538" height="446" 
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)" invoke="windowedapplication1_invokeHandler(event)"
 					   showStatusBar="false" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合"
 					   xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*" xmlns:local="*">
 	<fx:Style source="GhostCatTools.css"/>
@@ -17,10 +17,13 @@
 			import ghostcattools.tools.AS3Tester;
 			import ghostcattools.tools.ASDocCreater;
 			import ghostcattools.tools.CompressNotepad;
+			import ghostcattools.tools.DataEditor;
 			import ghostcattools.tools.FontSWFCreater;
+			import ghostcattools.tools.LocaleEditor;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.SWFDumper;
 			import ghostcattools.tools.SWFShower;
+			import ghostcattools.tools.SourceCounter;
 			import ghostcattools.tools.TextTransferred;
 			import ghostcattools.tools.ZipManager;
 			import ghostcattools.util.Config;
@@ -49,6 +52,12 @@
 				this.nativeApplication.exit();
 			}
 
+
+			protected function windowedapplication1_invokeHandler(event:InvokeEvent):void
+			{
+				event.arguments
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -56,19 +65,31 @@
 	</fx:Declarations>
 	<mx:TabNavigator left="0" right="0" top="0" bottom="0" paddingTop="0">
 		<s:NavigatorContent width="100%" height="100%" label="工具">
-			<s:TileGroup  left="10" right="10" top="10" bottom="10" horizontalGap="10" verticalGap="10">
-				<components:GCToolButton label="文本压缩" cmd="{CompressNotepad}" windowMaximizable="false" windowResizable="false"/>
-				<components:GCToolButton label="文本转义" cmd="{TextTransferred}"/>
-				<components:GCToolButton label="正则工具" cmd="{RegExr}"/>
-				<components:GCToolButton label="XML编辑" enabled="false"/>
-				<components:GCToolButton label="多语言对比" enabled="false"/>
-				<components:GCToolButton label="代码统计" enabled="false"/>
-				<components:GCToolButton label="SWF浏览" cmd="{SWFShower}" fileFilter="swf"/>
-				<components:GCToolButton label="SWF抓取" cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
-				<components:GCToolButton label="压缩工具" cmd="{ZipManager}" fileFilter="{['zip','swc']}"/>
-				<components:GCToolButton label="测试代码" cmd="{AS3Tester}"/>
-				<components:GCToolButton label="字体生成" cmd="{FontSWFCreater}" fileFilter="xml" windowResizable="false" windowMaximizable="false"/>
-				<components:GCToolButton label="ASDoc生成" cmd="{ASDocCreater}" fileFilter="bat" windowResizable="false" windowMaximizable="false"/>
+			<s:TileGroup  left="5" right="5" top="5" bottom="5" horizontalGap="5" verticalGap="5">
+				<components:GCToolButton label="文本压缩" desc="将文本文件用ByteArray的compress方法压缩。生成的文件可以用二进制方式读取并调用uncompress还原" 
+										 cmd="{CompressNotepad}" windowMaximizable="false" windowResizable="false"/>
+				<components:GCToolButton label="文本转义" desc="提供在URL，XML，字符串代码段里的字符串转义" 
+										 cmd="{TextTransferred}"/>
+				<components:GCToolButton label="正则工具" desc="用于测试正则表达式，提供标识符参考" 
+										 cmd="{RegExr}"/>
+				<components:GCToolButton label="数据编辑" desc="用于编辑XML,JSON,AMF3形式的数据文件，并可在三者间转换"  
+										 cmd="{DataEditor}"/>
+				<components:GCToolButton label="多语言对比" desc="将多个语言文件载入并对比修改" 
+										 cmd="{LocaleEditor}"/>
+				<components:GCToolButton label="代码统计" desc="统计一个目录中代码的类别分布和行数分布"
+										 cmd="{SourceCounter}" isDirectory="true"/>
+				<components:GCToolButton label="SWF浏览" desc="浏览一个SWF文件中所有的链接类，并可导出元件中子元件的结构和名称" 
+										 cmd="{SWFShower}" fileFilter="swf"/>
+				<components:GCToolButton label="SWF抓取" desc="试图抓取SWF运行过程中产生的SWF实例内存" 
+										 cmd="{SWFDumper}" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="压缩工具" desc="压缩管理多个文件，生成的文件可以通过AS3的三方ZIP类库读取，也可以兼容其他压缩软件" 
+										 cmd="{ZipManager}" fileFilter="{['zip','swc']}"/>
+				<components:GCToolButton label="测试代码" desc="可编写简单代码并立即编译测试结果" 
+										 cmd="{AS3Tester}"/>
+				<components:GCToolButton label="字体生成" desc="可以根据文本文件内容生成相应的字体SWF供嵌入字体使用" 
+										 cmd="{FontSWFCreater}" fileFilter="xml" windowResizable="false" windowMaximizable="false"/>
+				<components:GCToolButton label="ASDoc生成" desc="可以生成工程代码的ASDoc参考" 
+										 cmd="{ASDocCreater}" fileFilter="bat" windowResizable="false" windowMaximizable="false"/>
 			</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
@@ -79,12 +100,12 @@
 				<s:p>作者: flashyiyi</s:p>
 				<s:p>项目地址: <s:a href='http://ghostcat.googlecode.com/'>http://ghostcat.googlecode.com</s:a></s:p>
 				<s:p/>
-				<s:p>此工具支持完整的拖拽操作，你可以将文件拖动到功能按钮或者窗体上打开，</s:p>
-				<s:p>也可以将文件拖动到打开按钮和文本框上设置文件路径。</s:p>
+				<s:p>此工具支持完整的拖拽操作，你可以将文件拖动到导入按钮或者窗体上打开，</s:p>
+				<s:p>或者从导出按钮拖拽出窗体将文件输出，也可以将文件拖动到文本框上设置文件路径。</s:p>
 				<s:p/>
 				<s:p>会即时保存操作状态，在下次进入的时候仍可从中断的地点继续。</s:p>
 			</s:RichEditableText>																						 
 		</s:NavigatorContent>
 	</mx:TabNavigator>
-	<s:Label x="255" y="-19" right="5" top="5" text="当前版本：0.0.0"/>
+	<local:UpdatePanel y="4" right="5"/>
 </s:WindowedApplication>

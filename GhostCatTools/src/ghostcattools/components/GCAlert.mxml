@@ -6,7 +6,7 @@
 		<s:BasicLayout/>
 	</s:layout>
 	<s:creationCompleteEffect>
-		<s:Rotate3D angleXFrom="360" angleXTo="0" projectionX="300" projectionY="100" autoCenterProjection="false" autoCenterTransform="true" duration="500">
+		<s:Rotate3D angleXFrom="450" angleXTo="0" projectionX="300" projectionY="100" autoCenterProjection="false" autoCenterTransform="true" duration="500">
 			<s:easer>
 				<s:Sine easeInFraction="0"/>
 			</s:easer>
