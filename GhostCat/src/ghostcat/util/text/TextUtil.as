@@ -93,14 +93,24 @@ package ghostcat.util.text
 		}
 		
 		/**
+		 * 在将换行回车转换为标准的\r\n以便文本编辑器可以正常读取 
+		 * @param text
+		 * 
+		 */
+		public static function turnToRN(text:String):String
+		{
+			return text.replace(/(?<=[^\r])\n|\r(?=[^\n])/g,"\r\n");
+		}
+		
+		/**
 		 * 删除所有换行
 		 * @param text
 		 * @return 
 		 * 
 		 */
-		public static function removeBR(text:String):String
+		public static function removeBR(text:String,includeBR:Boolean = true):String
 		{
-			return text.replace(/\r|\n|<br>/g,"");
+			return includeBR ? text.replace(/\r|\n|<br>/g,"") : text.replace(/\r|\n/g,"");
 		}
 		
 		/**
