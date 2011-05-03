@@ -73,7 +73,6 @@
     <classEntry path="ghostcat.display.bitmap.BitmapDataGroup"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDataSource"/>
     <classEntry path="ghostcat.display.bitmap.BitmapDrawScreen"/>
-    <classEntry path="ghostcat.display.bitmap.BitmapGrid9Shape"/>
     <classEntry path="ghostcat.display.bitmap.BitmapMouseChecker"/>
     <classEntry path="ghostcat.display.bitmap.BitmapScreen"/>
     <classEntry path="ghostcat.display.bitmap.BitmapTemporaryCacher"/>
@@ -279,7 +278,6 @@
     <classEntry path="ghostcat.manager.EventManager"/>
     <classEntry path="ghostcat.manager.FileCacherManager"/>
     <classEntry path="ghostcat.manager.FontManager"/>
-    <classEntry path="ghostcat.manager.GBindingManager"/>
     <classEntry path="ghostcat.manager.InjectManager"/>
     <classEntry path="ghostcat.manager.InputManager"/>
     <classEntry path="ghostcat.manager.LanguageManager"/>
@@ -488,8 +486,6 @@
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.util.Tick"/>
     <classEntry path="ghostcat.util.Util"/>
-    <classEntry path="ghostcat.util.code.CodeColor"/>
-    <classEntry path="ghostcat.util.code.CodeCreater"/>
     <classEntry path="ghostcat.util.collision.BitmapCollision"/>
     <classEntry path="ghostcat.util.collision.Collision"/>
     <classEntry path="ghostcat.util.collision.HitTest"/>
@@ -520,11 +516,9 @@
     <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
     <classEntry path="ghostcat.util.display.BitmapGrid9Util"/>
-    <classEntry path="ghostcat.util.display.BitmapMovieUtil"/>
     <classEntry path="ghostcat.util.display.BitmapScrollController"/>
     <classEntry path="ghostcat.util.display.BitmapSeparateUtil"/>
     <classEntry path="ghostcat.util.display.BitmapUtil"/>
-    <classEntry path="ghostcat.util.display.ButtonUtil"/>
     <classEntry path="ghostcat.util.display.ColorContant"/>
     <classEntry path="ghostcat.util.display.ColorConvertUtil"/>
     <classEntry path="ghostcat.util.display.ColorUtil"/>
@@ -577,12 +571,17 @@
     <classEntry path="ghostcat.util.text.RegExpUtil"/>
     <classEntry path="ghostcat.util.text.StringCompareUtil"/>
     <classEntry path="ghostcat.util.text.TextFieldUtil"/>
-    <classEntry path="ghostcat.util.text.TextTransferUtil"/>
     <classEntry path="ghostcat.util.text.TextTweenUtil"/>
     <classEntry path="ghostcat.util.text.TextUtil"/>
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
+    <classEntry path="ghostcat.util.code.CodeCreater"/>
+    <classEntry path="ghostcat.util.code.CodeColor"/>
+    <classEntry path="ghostcat.util.display.ButtonUtil"/>
+    <classEntry path="ghostcat.util.display.BitmapMovieUtil"/>
+    <classEntry path="ghostcat.util.text.TextTransferUtil"/>
+    <classEntry path="ghostcat.manager.GBindingManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
