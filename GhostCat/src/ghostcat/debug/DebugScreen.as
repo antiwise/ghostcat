@@ -1,8 +1,10 @@
 package ghostcat.debug
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
@@ -19,11 +21,11 @@ package ghostcat.debug
 	import ghostcat.parse.graphics.GraphicsFill;
 	import ghostcat.parse.graphics.GraphicsLineStyle;
 	import ghostcat.parse.graphics.GraphicsRect;
-	import ghostcat.util.text.TextFieldUtil;
 	import ghostcat.util.RandomUtil;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
+	import ghostcat.util.text.TextFieldUtil;
 
 	/**
 	 * 调试用，查看显示对象的属性。
@@ -38,6 +40,8 @@ package ghostcat.debug
 		private var currentObj:DisplayObject;
 		private var global:Boolean;
 		
+		public var target:DisplayObject;
+		
 		/**
 		 * 显示到舞台上
 		 * @param root
@@ -45,7 +49,7 @@ package ghostcat.debug
 		 */
 		public static function show(root:DisplayObject):void
 		{
-			root.stage.addChild(new DebugScreen());
+			root.stage.addChild(new DebugScreen(root.stage));
 		}
 		/**
 		 * 获得显示对象的具体属性
@@ -75,8 +79,10 @@ package ghostcat.debug
 			
 			return result;
 		}
-		public function DebugScreen()
+		public function DebugScreen(target:DisplayObject = null)
 		{
+			this.target = target;
+			
 			DisplayUtil.setMouseEnabled(this,false);
 			
 			pointTextField = Util.createObject(TextField,{selectable:false,defaultTextFormat:new TextFormat("宋体",12),mouseEnabled:false,filters:[new GlowFilter(0xFFFFFF,1,2,2,100)]}) as TextField;
@@ -89,10 +95,14 @@ package ghostcat.debug
 		{
 			removeEventListener(Event.ADDED_TO_STAGE,initHandler);
 			
-			stage.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
-			stage.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
-			stage.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
-			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
+			var dispatcher:EventDispatcher = target ? target : stage;
+			if (dispatcher)
+			{
+				dispatcher.addEventListener(Event.ENTER_FRAME,enterFrameHandler);
+				dispatcher.addEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
+				dispatcher.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
+				dispatcher.addEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
+			}
 		}
 		
 		private function enterFrameHandler(event:Event):void
@@ -107,7 +117,9 @@ package ghostcat.debug
 			pointTextField.y = pos.y + 5;
 			pointTextField.text = getdisplayObjectDetail(currentObj,global);
 			pointTextField.autoSize = TextFieldAutoSize.LEFT;
-			Geom.forceRectInside(pointTextField,stage);
+			
+			if (stage)
+				Geom.forceRectInside(pointTextField,stage);
 			
 			graphics.clear();
 			DisplayParse.create([new GraphicsLineStyle(2,RandomUtil.integer(0,0xFFFFFF),0.5),new GraphicsFill(0x0,0),new GraphicsRect(rect.x,rect.y,rect.width,rect.height)]).parse(this);
@@ -136,11 +148,14 @@ package ghostcat.debug
 		 */
 		public function destory():void
 		{
-			stage.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
-			stage.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
-			stage.removeEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
-			stage.removeEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
-			
+			var dispatcher:EventDispatcher = target ? target : stage;
+			if (dispatcher)
+			{
+				dispatcher.removeEventListener(Event.ENTER_FRAME,enterFrameHandler);
+				dispatcher.removeEventListener(MouseEvent.MOUSE_OVER,mouseOverHandler);
+				dispatcher.removeEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
+				dispatcher.removeEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
+			}
 			parent.removeChild(this);
 		}
 	}
