@@ -18,15 +18,16 @@
 	import flash.system.Security;
 	import flash.system.SecurityDomain;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
+	import ghostcat.operation.RetryOper;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.data.LocalStorage;
 	import ghostcat.util.text.URL;
 	
 	import mx.utils.object_proxy;
-	import ghostcat.operation.RetryOper;
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]
@@ -55,14 +56,29 @@
 		public static var LOADER_TYPE:Array = ["swf","gif","png","jpg"];
 		
 		/**
-		 * 始终使用嵌入资源 
+		 * 在request和embedClass同时存在时依然优先使用嵌入资源 
 		 */
-		public static var alawayUseEmbedClass:Boolean = false;
+		public static var alawayUseEmbedClass:Boolean;
 		
 		/**
-		 * SharedObject缓存版本号(为空则禁用)
+		 * SharedObject缓存版本号(为空则禁用，设置值后会前从永久的SharedObject中查找资源缓存)
 		 */
 		public static var sharedObjectCacheVersion:String;
+		
+		/**
+		 * 临时ByteArray缓存
+		 */
+		public static var byteArrayCache:Dictionary = new Dictionary();
+		
+		/**
+		 * 清除一个临时ByteArray缓存 
+		 * @param url
+		 * 
+		 */
+		public static function clearByteArrayCache(url:String):void
+		{
+			delete byteArrayCache[url];
+		}
 		
 		/**
 		 * 原始地址
@@ -75,9 +91,14 @@
 		public var request:URLRequest;
 		
 		/**
-		 * 是否禁用SharedObject缓存
+		 * 是否在sharedObjectCacheVersion生效时临时禁用永久SharedObject缓存
 		 */
 		public var disibledCache:Boolean;
+		
+		/**
+		 * 是否激活临时ByteArray缓存，这个操作会占用额外的内存
+		 */
+		public var enabledByteArrayCache:Boolean;
 		
 		
 		private var _name:String;
@@ -147,12 +168,6 @@
 		 * @param embedClass	包含数据的Class，它只会在loader为空或者loader加载失败的时候载入。
 		 * 可以用[Embed(source="xxx.swf",mimeType="application/octet-stream")]将资源以类的形式嵌入SWF。
 		 * 
-		 * 这样做是出于一个综合考虑。资源文件加入的方式，无非是编译期间的SWC，以及运行期间的SWF。SWC虽然可以集中管理资源，避免将SWF打散成块。
-		 * 但比起SWF，就会有一个很麻烦的问题：美工和策划无法在修改资源文件后立即看到效果，因为它必须编译！这会在协作上造成很大的不便。
-		 * 
-		 * 这种方式是则是一个中间产物。如果两个参数都有值，在开发期间，可以提供外部资源文件，供美工测试用，嵌入的资源会被忽略，
-		 * 而发布时，删除所有资源文件即可。这样可以解决很多问题。
-		 * 
 		 */		
 		public function LoadOper(url:*=null,embedClass:Class=null,rhandler:Function=null,fhandler:Function=null)
 		{
@@ -212,6 +227,10 @@
 			{
 				bytes = new embedClass();
 				embedClass = null;
+			}
+			else if (enabledByteArrayCache && byteArrayCache[url])
+			{
+				bytes = byteArrayCache[url];
 			}
 			else if (sharedObjectCacheVersion && url && !disibledCache)
 			{
@@ -278,6 +297,9 @@
 			evt.removeEventListener(Event.INIT,initHandler);
 			evt.removeEventListener(ProgressEvent.PROGRESS,progressHandler);
 			evt.removeEventListener(IOErrorEvent.IO_ERROR,fault);
+			
+			if (enabledByteArrayCache)
+				byteArrayCache[url] = this.bytes;
 			
 			if (sharedObjectCacheVersion && url && !disibledCache)
 				saveToShareObject();

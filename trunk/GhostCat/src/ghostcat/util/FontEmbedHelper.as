@@ -46,11 +46,14 @@ package ghostcat.util
 			else
 				result += 'source="'+ source.replace(/\"|\\/g,"\\$&") +'"';
 			
-			result += ', fontName="'+ fontName +'", mimeType="application/x-font"';
+			if (fontName)
+				result += ', fontName="'+ fontName +'"' 
 			if (italic) 
 				result+= ', fontStyle="italic"';
 			if (weight) 
 				result+= ', fontWeight="bold"';
+			
+			result += ', mimeType="application/x-font"';
 				
 			if (!exUnicodeRange)
 				exUnicodeRange = [];
