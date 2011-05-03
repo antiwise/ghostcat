@@ -93,16 +93,6 @@ package ghostcat.util.text
 		}
 		
 		/**
-		 * 在将换行回车转换为标准的\r\n以便文本编辑器可以正常读取 
-		 * @param text
-		 * 
-		 */
-		public static function turnToRN(text:String):String
-		{
-			return text.replace(/(?<=[^\r])\n|\r(?=[^\n])/g,"\r\n");
-		}
-		
-		/**
 		 * 删除所有换行
 		 * @param text
 		 * @return 
@@ -126,6 +116,28 @@ package ghostcat.util.text
 			
 			return text;
 		}
+		
+		/**
+		 * 在将换行回车转换为标准的\r\n以便文本编辑器可以正常读取 
+		 * @param text
+		 * 
+		 */
+		public static function turnToRN(text:String):String
+		{
+			return text.replace(/(?<=[^\r])\n|\r(?=[^\n])/g,"\r\n");
+		}
+		
+		/**
+		 * 在将换行回车转换为\n避免TextField显示为两行 
+		 * @param text
+		 * 
+		 */
+		public static function turnToN(text:String):String
+		{
+			return text.replace(/\r\n/g,"\n");;
+		}
+		
+		
 		
 		/**
 		 * 插入换行符使得字体可以竖排
