@@ -1,11 +1,31 @@
 package ghostcat.fileformat.csv
 {
-	public final class CSVDecoder
+	public final class CSV
 	{
-		public static function decode():Array
+		public static function encode(data:Array):String
 		{
+			if (data == null)
+				return null;
 			
-			var text:String = '"12321321321"",31\r12312,3123213123123""","""123adfda",asdas"df,123,123\r\n123,,123,123,123\r\n';
+			var newData:Array = [];
+			for each (var line:Array in data)
+			{
+				var newLine:Array = [];
+				for each (var v:String in line)
+				{
+					var newValue:String = v;
+					if (newValue.search(/[\,\"\r\n]/) != -1)
+						newValue = "\"" + newValue.replace(/\"/g,"\"\"") + "\"";
+					
+					newLine.push(newValue);
+				}
+				newData.push(newLine.join(","))
+			}
+			return newData.join("\r\n");
+			
+		}
+		public static function decode(text:String):Array
+		{
 			if (text == null)
 				return null;
 			
