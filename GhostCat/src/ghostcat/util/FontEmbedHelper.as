@@ -37,8 +37,9 @@ package ghostcat.util
 		 * @param text	需要嵌入的文字
 		 * @param exUnicodeRange 附加的嵌入文本范围（类似U+ff01-U+ff65）
 		 * @param createRegisterCode 是否创建注册代码
+		 * @param disabledEmbedAsCFF 是否取消掉CFF字体
 		 */
-		public static function getEmbedFontCode(fontName:String, systemFont:String, source:String, italic:Boolean = false, weight:Boolean = false,text:String=null,exUnicodeRange:Array = null,createRegisterCode:Boolean = true):String
+		public static function getEmbedFontCode(fontName:String, systemFont:String, source:String, italic:Boolean = false, weight:Boolean = false,text:String=null,exUnicodeRange:Array = null,createRegisterCode:Boolean = true,disabledEmbedAsCFF:Boolean = false):String
 		{
 			var result:String = "[Embed(";
 			if (systemFont)
@@ -52,6 +53,8 @@ package ghostcat.util
 				result+= ', fontStyle="italic"';
 			if (weight) 
 				result+= ', fontWeight="bold"';
+			if (disabledEmbedAsCFF)
+				result+= ', embedAsCFF="false"';
 			
 			result += ', mimeType="application/x-font"';
 				
