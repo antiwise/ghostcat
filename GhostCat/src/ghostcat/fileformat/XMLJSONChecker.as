@@ -10,7 +10,7 @@ package ghostcat.fileformat
 		 * @return 
 		 * 
 		 */
-		public function check(bytes:IDataInput):String
+		static public function check(bytes:IDataInput):String
 		{
 			try
 			{
