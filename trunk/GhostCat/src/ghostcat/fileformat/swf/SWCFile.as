@@ -13,10 +13,12 @@ package ghostcat.fileformat.swf
 	
 	public class SWCFile extends EventDispatcher
 	{
-		public var zip:ZipFile;
 		public var catalog:XML;
 		public var swf:Loader;
 		public var classes:Object;
+		public var context:LoaderContext;
+		
+		private var zip:ZipFile;
 		
 		public function SWCFile(data:IDataInput = null)
 		{
@@ -24,27 +26,38 @@ package ghostcat.fileformat.swf
 				read(data);
 		}
 		
-		public function read(data:IDataInput):void
+		public function read(data:IDataInput,autoReadSWF:Boolean = true):void
 		{		
 			this.zip = new ZipFile(data);
 			this.catalog = new XML(zip.getInput(zip.getEntry("catalog.xml")).toString());
-			this.swf = new Loader();
-			this.swf.contentLoaderInfo.addEventListener(Event.COMPLETE,swfCompleteHandler);
-			this.swf.loadBytes(zip.getInput(zip.getEntry("library.swf")),new LoaderContext(false,ApplicationDomain.currentDomain))
-		}
-		
-		private function swfCompleteHandler(event:Event):void
-		{
-			this.swf.contentLoaderInfo.removeEventListener(Event.COMPLETE,swfCompleteHandler);
+			
 			var space:Namespace = this.catalog.namespace();
-			var types:* = this.catalog.space::libraries.space::library.space::script
+			var types:* = this.catalog.space::libraries.space::library.space::script;
 			this.classes = {};
 			for each(var p:XML in types)
 			{
 				var key:String = p.@name.toString();
 				key = key.replace(/\//g,".");
-				this.classes[key] = getDefinition(key);
+				this.classes[key] = null;
 			}
+			
+			if (autoReadSWF)
+				readSWF()
+		}
+		
+		public function readSWF():void
+		{
+			this.swf = new Loader();
+			this.swf.contentLoaderInfo.addEventListener(Event.COMPLETE,swfCompleteHandler);
+			this.swf.loadBytes(zip.getInput(zip.getEntry("library.swf")),this.context)	
+		}
+		
+		private function swfCompleteHandler(event:Event):void
+		{
+			this.swf.contentLoaderInfo.removeEventListener(Event.COMPLETE,swfCompleteHandler);
+			for (var key:String in this.classes)
+				this.classes[key] = getDefinition(key);
+			
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		

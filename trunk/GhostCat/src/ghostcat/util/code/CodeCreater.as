@@ -56,7 +56,7 @@ package ghostcat.util.code
 			return result;
 		}
 		
-		static public function pack(classPath:String,body:String = "",importObj:Object = null,extendClass:Class = null):String
+		static public function pack(classPath:String,body:String = "",importObj:Object = null,extendClass:* = null):String
 		{
 			var pack:String;
 			var name:String;
