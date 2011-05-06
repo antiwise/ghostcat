@@ -4,7 +4,7 @@ Q.导入工程后，找不到文档类
 A.GhostCat是使用库工程结构的，没有文档类。你可以自己创建一个文档类。
 
 Q.导入工程后，报错说找不到ghostcat.skin.xxxxxx
-A.你需要加载GhostCat/asset下的任意一个swc文件来提供默认皮肤
+A.你需要加载GhostCat/asset下的任意一个swc文件来提供默认皮肤（也可以用-external-library-path编译参数忽略皮肤的连接）
 
 Q.示例运行报错，说找不到stage
 A.不要在非文档类的构造函数部分调用RootManager一类需要注册舞台的方法，请将代码移动到addToStage的监听函数上
@@ -13,7 +13,7 @@ Q.如何开始一个项目？
 A.建议先使用GhostCatApp创建基本组件层次，用AssetManager加载外部资源，然后可以尝试用GBuildbase来利用自动组件生成来创建界面，可参考本目录压缩包的PPT。
 
 Q.如何使用提示？如何设置提示皮肤？
-A.创建一个ToolTipSprite对象，并加载到你想放置的层内，鼠标移动到设置了toolTip的组件上，提示就能生效。提示皮肤用ToolTipSprite.defaultSkin来修改，这是一个实现了IToolTipSkin的显示对象，也可以设置组件的toolTipObj来指定一个临时的提示。
+A.创建一个ToolTipSprite对象，并加载到你想放置的层内，鼠标移动到设置了toolTip的组件上，提示就能生效。提示皮肤用ToolTipSprite.defaultSkin来修改，这是一个实现了IToolTipSkin的任意显示对象，可以参考ghostcat.ui.toolTip下的类。设置组件的toolTipObj则可以指定一个临时的提示皮肤。
 
 Q.进度条文本如何替换
 A.可以通过赋值progressFunction来修改具体更新进度逻辑，现在也可以修改progresslabelFormat来实现文本格式的变化
@@ -38,6 +38,9 @@ A.文本框在时间线上应该只有一个实例，因此你可以将文本框放入一个元件，再对这个元件
 
 Q.使用GListBase，并把它放在另一个容器中，将这个容器从屏幕外移入时，GListBase会消失
 A.调用GListBase的render方法，或者使用不会出现这种现象的GRepeater,GButtonBar
+
+Q.GButtonBar里的按钮如何设置文本截断
+A.GButtonBar包含的是默认GButton，所以你需要扩展GButton然后设置enabledTruncateToFit=true使得可以支持文本截断，再设置GButtonBar的itemRender来指定这个新的Button。相关问题同理。此外，你也可以设置ItemRender为类工厂new ClassFactory(GButton,{enabledTruncateToFit:true})实现同样的效果。
 
 Q.使用Tile类型的GListBase，不显示内容。设置成其他类型可以显示。
 A.必须明确设置Tile类型的GListBase的width,或者columnCount
