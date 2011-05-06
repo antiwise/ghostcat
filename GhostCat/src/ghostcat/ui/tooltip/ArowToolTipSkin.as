@@ -27,7 +27,7 @@ package ghostcat.ui.tooltip
 		/** @inheritDoc*/
 		public function show(target:DisplayObject):void
 		{
-			
+			positionTo(target)
 		}
 		/** @inheritDoc*/
 		public function positionTo(target:DisplayObject):void

@@ -19,7 +19,7 @@ package ghostcat.util.display
 	public class BitmapGrid9Util
 	{
 		/**
-		 * 通过Grid9算法获得新的位图
+		 * 通过Grid9算法获得新的位图，具体实现类为GBitmap
 		 * @see ghostcat.display.bitmap.GBitmap
 		 * 
 		 * @param source	位图源
@@ -38,7 +38,7 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * 通过Grid9算法将位图绘制到一个元件上
+		 * 通过Grid9算法将位图绘制到一个元件上，具体实现类为BitmapGrid9Shape
 		 * @see ghostcat.display.bitmap.BitmapGrid9Shape
 		 * 
 		 * @param graphics	绘制目标
