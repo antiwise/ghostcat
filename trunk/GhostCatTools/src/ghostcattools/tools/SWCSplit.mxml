@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						 xmlns:s="library://ns.adobe.com/flex/spark"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 xmlns:components="ghostcattools.components.*"
+						 close="gctoolwindow1_closeHandler(event)"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)"
+						 currentState="base" enabledDragOpen="false" showStatusBar="false"
+						 title="SWC拆分"
+						 height="100" >
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getDefinitionByName;
+			import flash.utils.getQualifiedClassName;
+			
+			import ghostcat.fileformat.swf.SWCFile;
+			import ghostcat.util.code.CodeCreater;
+			import ghostcat.util.core.Asyn;
+			import ghostcat.util.data.LocalStorage;
+			import ghostcat.util.text.ANSI;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
+			import mx.charts.AreaChart;
+			import mx.events.FlexEvent;
+			public var so:LocalStorage = new LocalStorage("gctools_swcsplit");
+
+			private var swc:SWCFile;
+
+			private var targetDirectory:File;
+			private var list:Array;
+			private var createIndex:int;
+			[Bindable]
+			public var source:String;
+			[Bindable]
+			public var target:String;
+			[Bindable]
+			public var currentClassName:String;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				source = file.nativePath;
+			}
+			
+			private function createSWFs():void
+			{
+				try
+				{
+					var file:File = new File(source);
+					if (!file.exists)
+						return;
+				
+					this.targetDirectory = new File(target);
+					if (!this.targetDirectory.isDirectory)
+						return;
+				}
+				catch (e:Error){return};
+				
+				var bytes:ByteArray = FileControl.readFile(file);
+				bytes.position = 0;
+				swc = new SWCFile();
+				swc.read(bytes,false);
+			
+				list = [];
+				createIndex = 0;
+				for (var key:String in swc.classes)
+					list.push(key);
+				
+				this.currentState = "creating";
+				this.progressBar.setProgress(0,list.length);
+				
+				this.createSWFHandler();
+			}
+			
+			private function createSWFHandler():void
+			{
+				this.progressBar.setProgress(createIndex,list.length);
+				
+				this.currentClassName = list[createIndex];
+				
+				var classArr:Array = this.currentClassName.split(".");
+				var localName:String =classArr.pop();
+				var packageName:String = classArr.join(".");
+				
+				var text:String;
+//				var extendsName:String;
+//				if (showInsBox.selected)
+//					extendsName = packageName ? packageName + "::" + localName : localName;
+//				else
+//					extendsName = getQualifiedClassName(Sprite);
+//				
+//				text = CodeCreater.pack(localName + "_Main","",[currentClassName],extendsName);
+				
+				if (showInsBox.selected)
+					text = CodeCreater.pack(localName + "_Main","function "+localName+"_Main():void{addChild(new "+currentClassName+"())}",[currentClassName],Sprite);
+				else
+					text = CodeCreater.pack(localName + "_Main","",null,Sprite);
+				
+				var file:File = File.createTempFile().parent.resolvePath(localName + "_Main.as");
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(text);
+				FileControl.writeFile(file,bytes);
+				
+				var mxmls:File = new File(Config.MXMLC_PATH);
+				if (!mxmls.exists)
+					return;
+				
+				var params:Array = [file.nativePath];
+				params.push("-library-path=" + source);
+				params.push("-includes=" + currentClassName);
+				params.push("-output=" + targetDirectory.resolvePath(currentClassName.replace(/\./g,"//") + ".swf").nativePath);
+				params.push("-debug=false");
+				if (Config.FLEXSDK_4_0)
+					params.push("-static-link-runtime-shared-libraries=true");
+				FileControl.run(mxmls,params,exitHandler,traceHandler,traceHandler)
+				function exitHandler(event:Event):void
+				{
+					file.deleteFile();
+					if (createIndex < list.length - 1 && !closed)
+					{
+						createIndex++;
+						createSWFHandler();
+					}
+					else
+					{
+						FileControl.openExplorer(targetDirectory.nativePath);
+						currentState = "base";
+					}
+				}
+				
+				function traceHandler(str:String):void
+				{
+					trace(str);
+				}
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				if (!isDragOpen)
+				{
+					var o:Object = so.getValue();
+					if (o)
+					{
+						source = o.source;
+						target = o.target;
+					}
+				}
+			}
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				so.setValue({source:this.source,target:this.target});
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				createSWFs();
+			}
+			
+		]]>
+	</fx:Script>
+	<components:states>
+		<s:State name="base"/>
+		<s:State name="creating"/>
+	</components:states>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label x="10" y="15" text="SWC文件："/>
+	<s:TextInput id="sourceUrl" left="67" right="45" y="10" text="@{source}"/>
+	<components:BrowseButton id="sourceBN" right="10" y="10" target="{sourceUrl}" browseExtension="{new FileFilter('SWC 文件','*.swc')}" dragExtension="swc"/>
+	<s:Label x="10" y="45" text="输出目录："/>
+	<s:TextInput id="targetUrl" left="67" right="45" y="40" text="@{target}"/>
+	<components:BrowseButton id="targetBN" right="10" y="40" target="{targetUrl}" isDirectory="true"/>
+	<s:CheckBox id="showInsBox" x="67" y="70" label="将元件显示在舞台上"/>
+	<s:Button x="214" y="70" width="89" label="输出" click="button1_clickHandler(event)"
+			  chromeColor="#C6E2FF"/>
+	
+	<mx:ProgressBar id="progressBar" includeIn="creating" left="8" right="8" top="8" bottom="8"
+					label="" labelPlacement="center" mode="manual"/>
+	<s:Label includeIn="creating" horizontalCenter="0" verticalCenter="0" textAlign="center" 
+			 text="生成中：{int(progressBar.percentComplete)}% ({progressBar.value}/{progressBar.maximum})&#xa;当前类：{this.currentClassName}"/>
+</components:GCToolWindow>

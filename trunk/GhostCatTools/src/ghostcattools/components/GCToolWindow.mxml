@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" showStatusBar="false"
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" creationComplete="window1_creationCompleteHandler(event)" close="window1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.util.ReflectUtil;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			import mx.managers.WindowedSystemManager;
+			
+			static public var openDict:Dictionary = new Dictionary();
+			
+			public var fileFilter:Array;
+			public var enabledDragOpen:Boolean = true;
+			public var isDragOpen:Boolean;
+			public var isDirectory:Boolean;
+			public var isAll:Boolean;
+			
+			protected function window1_creationCompleteHandler(event:FlexEvent):void
+			{
+				openDict[ReflectUtil.getClass(this)] = this;
+				if (enabledDragOpen)
+					FileControl.dragFileIn(openFileHandler,this,fileFilter,isDirectory,isAll);
+			}
+			
+			protected function window1_closeHandler(event:Event):void
+			{
+				delete openDict[ReflectUtil.getClass(this)];
+			}
+			
+			public function openFileHandler(files:Array):void
+			{
+				//处理打开文件的代码
+			}
+			
+		]]>
+	</fx:Script>
+</s:Window>

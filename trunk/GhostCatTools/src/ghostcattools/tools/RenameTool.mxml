@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" title="正则改名"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="352" height="300">
+	
+	<fx:Script>
+		<![CDATA[
+			import asset.file;
+			
+			import ghostcattools.util.FileControl;
+			
+			[Bindable]
+			public var fileList:Array;
+			
+			[Bindable]
+			public var regValue:String = "(.*)(\\..*)";
+			
+			[Bindable]
+			public var paramsValue:String = "g";
+			
+			[Bindable]
+			public var replaceValue:String = "$1_$n$2";
+			
+			[Bindable]
+			public var replaceTypeValue:Boolean;
+			
+			[Bindable]
+			public var resultValue:ArrayList;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				this.fileList = [];
+				this.searchFileAndAdd(files);
+				
+				this.dispatchPropertyChangeEvent("fileList",this.fileList,this.fileList);
+			}
+			
+			private function searchFileAndAdd(files:Array):void
+			{
+				for each (var file:File in files)
+				{
+					if (file.isDirectory)
+					{
+						searchFileAndAdd(file.getDirectoryListing());
+					}
+					else
+					{
+						fileList.push(file);
+					}
+				}
+			}
+			
+			private function fileFilterFunction(fileList:Array,regValue:String,paramsValue:String,replaceValue:String,replaceTypeValue:Boolean):ArrayList
+			{
+				var result:Array = [];
+				for (var i:int = 0;i < fileList.length;i++)
+				{
+					try
+					{
+						var file:File = fileList[i];
+						var reg:RegExp = new RegExp(regValue,paramsValue);
+						var url:String = file.nativePath;
+						
+						var oldName:String = replaceTypeValue ? url : file.name;
+						var newName:String = oldName.replace(reg,replaceValue.replace(/\$n/g,i + 1));
+						var newUrl:String = replaceTypeValue ? newName : file.parent.resolvePath(newName).nativePath; 	
+						
+						if (url != newUrl)
+						{
+							var exists:Boolean = new File(newUrl).exists;
+							var o:Object = {"file":file,
+									"old":(exists ? "(重复)" : "") + oldName,
+									"new":newName,
+									"oldPath":url,
+									"newPath":newUrl,
+									"exists":new File(newUrl).exists
+							}
+							result.push(o);
+						}
+					} 
+					catch(error:Error) 
+					{
+						break;
+					}
+				}
+				
+				return new ArrayList(result);
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForDirectory(openFileHandler);
+			}
+			
+			protected function helpBN_clickHandler(event:MouseEvent):void
+			{
+				new RegExr().open();
+			}
+			
+			protected function runBN_clickHandler(event:MouseEvent):void
+			{
+				for each (var child:Object in resultValue.source)
+				{
+					var file:File = child.file as File;
+					file.moveTo(new File(child.newPath),true);
+				}
+				this.fileList = null;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Binding destination="resultValue" source="fileFilterFunction(fileList,regValue,paramsValue,replaceValue,replaceTypeValue)"/>
+	
+	<s:Button id="openBN" x="5" y="5" label="浏览目录" click="openBN_clickHandler(event)"/>
+	<s:Label id="urlText" x="89" y="9" text="点击“浏览”按钮或者拖动目录到此窗口"/>
+	<s:Group width="100%" height="100%" enabled="{fileList}">
+		<s:Label x="10" y="38" text="正则表达式"/>
+		<s:TextInput x="89" y="31" width="144" text="@{regValue}"/>
+		<s:TextInput x="239" y="31" width="50" text="@{paramsValue}"/>
+		<s:Label x="10" y="64" text="替换文本"/>
+		<s:TextInput x="89" y="59" width="127" text="@{replaceValue}"/>
+		<s:CheckBox x="224" y="61" label="匹配路径" selected="@{replaceTypeValue}"/>
+		<s:Button id="helpBN" x="295" y="31" width="51" height="49" label="参考"
+				  click="helpBN_clickHandler(event)"/>
+		<s:DataGrid id="dataGrid" left="5" right="5" top="89" bottom="34" showDataTips="true" variableRowHeight="true"
+					dataProvider="{resultValue}">
+			<s:columns>
+				<s:ArrayList>
+					<s:GridColumn headerText="原始文件名" dataField="old" dataTipField="oldPath"/>
+					<s:GridColumn headerText="新文件名" dataField="new" dataTipField="newPath"/>
+				</s:ArrayList>
+			</s:columns>
+			<s:itemRenderer>
+				<fx:Component>
+					<s:UITextFieldGridItemRenderer color="{data.exists ? 0xFF0000 : 0x0}"/>
+				</fx:Component>
+			</s:itemRenderer>
+		</s:DataGrid>
+		<s:Button id="runBN" left="5" right="5" bottom="5" height="25" label="确认修改" chromeColor="#C6E2FF" click="runBN_clickHandler(event)"/>
+	</s:Group>
+</components:GCToolWindow>

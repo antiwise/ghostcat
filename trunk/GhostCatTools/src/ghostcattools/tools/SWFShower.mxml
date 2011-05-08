@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  currentState="base" showStatusBar="false" title="SWF浏览"
+		  width="555" height="425" creationComplete="window1_creationCompleteHandler(event)" xmlns:ghostcattools="ghostcattools.*" fileFilter="{['swf','swc']}" xmlns:components="ghostcattools.components.*">
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.debug.DebugScreen;
+			import ghostcat.fileformat.swf.SWFDecoder;
+			import ghostcat.fileformat.swf.tag.SymbolClassTag;
+			import ghostcat.manager.DragManager;
+			import ghostcat.util.ReflectXMLUtil;
+			import ghostcat.util.text.TextUtil;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.ResizeEvent;
+			
+			private var loader:Loader;
+			
+			[Bindable]
+			private var urlText:String = "点击“浏览”或者拖动文件到本窗口打开SWF文件";
+			
+			[Bindable]
+			private var symbolList:XMLList;
+			
+			[Bindable]
+			private var treeData:XML;
+			
+			private var currentObject:Object;
+
+			private var ds:DebugScreen;
+			private var displayObj:DisplayObject;
+			private var sh:Shape;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				var file:File = files[0] as File;
+				this.urlText = file.nativePath;
+				var v:ByteArray = FileControl.readFile(file);
+				
+				if (file.extension == "swc")
+					v = FileControl.getSWFFromSWC(v);
+				
+				this.loader = new Loader();
+				var loaderContext:LoaderContext = new LoaderContext();
+				loaderContext.allowCodeImport = true;
+				this.loader.loadBytes(v,loaderContext);
+				
+				var swf:SWFDecoder = new SWFDecoder();
+				swf.read(v);
+				
+				var tag:SymbolClassTag = SymbolClassTag(swf.getTags(SymbolClassTag)[0]);
+				var list:Array = tag.symbolClasses;
+				var xml:XML = <xml/>;
+				for each (var item:String in list)
+				{
+					var names:Array = item.split(".");
+					var cur:XML = xml;
+					for (var i:int = 0;i < names.length;i++)
+					{
+						var label:String = names[i];
+						var newXml:XML = cur.*.(@label == label)[0];
+						if (!newXml)
+						{
+							newXml = <xml/>;
+							cur.appendChild(newXml);
+						}
+						newXml.@label = label;
+						cur = newXml;
+					}
+					cur.@data = item;
+				}
+				this.symbolList = new XMLList(xml);
+				this.currentState = "opened";
+			}
+			
+			protected function list_changeHandler(event:Event):void
+			{
+				var itemName:String = list.selectedItem.@data.toString();
+				if (!itemName)
+				{
+					this.currentState = "opened";
+					return;
+				}
+				
+				var c:Class;
+				if (loader.content)
+					c = loader.contentLoaderInfo.applicationDomain.getDefinition(itemName) as Class
+				else
+					return;
+				
+				try
+				{
+					this.currentObject = new c();
+				}
+				catch (e:Error){};
+					
+				SoundMixer.stopAll();
+				if (ds)
+				{
+					ds.destory();
+					ds = null;
+				}
+				if (displayObj)
+				{
+					displayObj.parent.removeChild(displayObj);
+					displayObj = null;
+				}
+				if (sh)
+				{
+					sh.parent.removeChild(sh);
+					sh = null;
+				}
+				
+				if (currentObject is DisplayObject || currentObject is BitmapData)
+				{
+					this.currentState = "picture";
+					
+					
+					if (currentObject is BitmapData)
+						displayObj = new Bitmap(currentObject as BitmapData)
+					else
+						displayObj = currentObject as DisplayObject;
+					
+					image.addChild(displayObj);
+				
+					var rect:Rectangle = displayObj.getRect(displayObj);
+					displayObj.x = -rect.x;
+					displayObj.y = -rect.y;
+					
+					image.x = Math.max(0,(imageCanvas.width - rect.width)/2);
+					image.y = Math.max(0,(imageCanvas.height - rect.height)/2);
+					image.width = rect.width;
+					image.height = rect.height;
+					
+					sh = new Shape();
+					sh.x = -rect.x;
+					sh.y = -rect.y;
+					sh.graphics.lineStyle(0,0);
+					sh.graphics.moveTo(-5,0);
+					sh.graphics.lineTo(5,0);
+					sh.graphics.moveTo(0,-5);
+					sh.graphics.lineTo(0,5);
+					sh.graphics.endFill();
+					sh.blendMode = BlendMode.INVERT;
+					image.addChild(sh);
+					
+					if (dsShowedBox.selected)
+					{
+						ds = new DebugScreen(image);
+						image.addChild(ds);
+					}
+					
+					
+					if (currentObject is BitmapData)
+					{
+						tree.dataProvider = null;
+					}
+					else
+					{
+						treeData = ReflectXMLUtil.getChildXML(displayObj,InteractiveObject);
+						tree.validateNow();
+						tree.expandChildrenOf(tree.firstVisibleItem,true);
+					}
+				}
+				else if (currentObject is Sound)
+				{
+					this.currentState = "sound";
+				}
+				else if (currentObject is ByteArray)
+				{
+					this.currentState = "bytes";
+				}
+				else
+				{
+					this.currentState = "opened";
+				}
+			}
+			
+			private function treeLabelFuntion(item:Object):String
+			{
+				var xml:XML = (item as XML).copy();
+				delete xml.*;
+				return xml.toXMLString();
+			}
+			
+			private function listLabelFunction(item:Object,index:int):String
+			{
+				var names:Array = item.split(".");
+				return names[names.length - 1];
+			}
+
+			protected function image_mouseDownHandler(event:MouseEvent):void
+			{
+				DragManager.startDrag(image);
+			}
+			
+			
+			protected function image_resizeHandler(event:ResizeEvent):void
+			{
+				image.x *= event.target.width / event.oldWidth;
+				image.y *= event.target.height / event.oldHeight;
+			}
+
+			protected function browseBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"打开一个SWF文件",[new FileFilter("SWF 影片","*.swf;*.swc")]);
+			}
+
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				if (currentObject is Sound)
+					(currentObject as Sound).play();
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				if (currentObject is ByteArray)
+				{
+					FileControl.browseForSave(rHandler,"保存二进制文件");
+					function rHandler(files:Array):void
+					{
+						var file:File = files[0] as File;
+						FileControl.writeFile(file,currentObject as ByteArray);
+					}
+				}
+			}
+
+
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				System.setClipboard(TextUtil.turnToRN(treeData.toXMLString()));
+			}
+			
+			
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				var xmlList:XMLList = treeData..*.@name;
+				var list:Array = [];
+				for each (var child:XML in xmlList)
+				{
+					var str:String = child.toString();
+					if (str.slice(0,7) != "instance")
+						list.push(str);
+				}
+				System.setClipboard(TextUtil.turnToRN(list.join("\n")));
+			}
+
+
+			protected function dsShowedBox_clickHandler(event:MouseEvent):void
+			{
+				if (ds)
+				{
+					ds.destory();
+					ds = null;
+				}
+				
+				if (this.dsShowedBox.selected)
+				{
+					ds = new DebugScreen(this.displayObj);
+					image.addChild(ds);
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<components:states>
+		<s:State name="base"/>
+		<s:State name="opened"/>
+		<s:State name="picture" basedOn="opened"/>
+		<s:State name="sound" basedOn="opened"/>
+		<s:State name="bytes" basedOn="opened"/>
+	</components:states>
+	<s:Button id="browseBN" label="浏览" click="browseBN_clickHandler(event)"
+			  x="5" y="5"/>
+	<s:Label id="browseText" text="{urlText}"
+			 y="10" left="85" right="5"/>
+	<mx:HDividedBox left="5" right="5" top="30" bottom="5">
+		<mx:Tree id="list" width="200" height="100%" labelField="@label" dataProvider="{symbolList}" showRoot="false" change="list_changeHandler(event)"/>
+		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
+			<s:NavigatorContent includeIn="picture" label="图象">
+				<mx:Canvas id="imageCanvas" y="1" width="100%" height="100%" clipContent="true"
+						   resize="image_resizeHandler(event)">
+					<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
+				</mx:Canvas>
+				<s:CheckBox id="dsShowedBox" x="6" y="5" label="显示内部元件选取框" click="dsShowedBox_clickHandler(event)"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent id="treeCanvas" includeIn="picture" label="结构">
+				<s:Button x="6" y="4" label="复制到剪贴板" click="button3_clickHandler(event)"/>
+				<s:Button x="106" y="4" label="复制所有名称到剪贴板" click="button4_clickHandler(event)"/>
+				<mx:Tree id="tree" left="5" right="5" top="30" bottom="5" width="100%" height="100%"
+						 dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent id="soundCanvas" includeIn="sound" label="声音">
+				<s:Button width="100" height="100" label="播放声音" horizontalCenter="0" verticalCenter="0"
+						  click="button1_clickHandler(event)"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent id="bytesCanvas" includeIn="bytes" label="二进制数据">
+				<s:Button width="100" height="100" label="提取文件" horizontalCenter="0" verticalCenter="0"
+						  click="button2_clickHandler(event)"/>
+			</s:NavigatorContent>
+		</mx:TabNavigator>
+	</mx:HDividedBox>
+</components:GCToolWindow>

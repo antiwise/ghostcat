@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" title="九宫格工具"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="322" height="312" close="titlewindow1_closeHandler(event)" xmlns:components="ghostcattools.components.*" xmlns:components1="ghostcattools.tools.components.*">
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.manager.DragManager;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			public var source:Object;
+			
+			[Bindable]
+			public var scaleGridTop:Number;
+			[Bindable]
+			public var scaleGridBottom:Number;
+			[Bindable]
+			public var scaleGridLeft:Number;
+			[Bindable]
+			public var scaleGridRight:Number;
+			
+			[Bindable]
+			public var imgWidth:Number;
+			[Bindable]
+			public var imgHeight:Number;
+			
+			[Bindable]
+			private function get vRule2Value():Number
+			{
+				return scaleGridRight * loader.contentWidth / imgWidth;
+			}
+
+			private function set vRule2Value(value:Number):void
+			{
+				scaleGridRight = vRule2.x * imgWidth / loader.contentWidth
+			}
+
+			[Bindable]
+			private function get vRule1Value():Number
+			{
+				return scaleGridLeft * loader.contentWidth / imgWidth;
+			}
+
+			private function set vRule1Value(value:Number):void
+			{
+				scaleGridLeft = vRule1.x * imgWidth / loader.contentWidth
+			}
+
+			[Bindable]
+			private function get hRule2Value():Number
+			{
+				return scaleGridBottom * loader.contentHeight / imgHeight;
+			}
+
+			private function set hRule2Value(value:Number):void
+			{
+				scaleGridBottom = hRule2.y * imgHeight / loader.contentHeight
+			}
+
+			[Bindable]
+			private function get hRule1Value():Number
+			{
+				return scaleGridTop * loader.contentHeight / imgHeight;
+			}
+
+			private function set hRule1Value(value:Number):void
+			{
+				scaleGridTop = hRule1.y * imgHeight / loader.contentHeight
+			}
+			
+			private var _grid9Value:String;
+			
+			[Bindable]
+			public function get grid9Value():String
+			{
+				return [int(scaleGridLeft),int(scaleGridTop),int(scaleGridRight),int(scaleGridBottom)].join(",");
+			}
+
+			public function set grid9Value(value:String):void
+			{
+				var list:Array = value.split(",");
+				if (list.length >= 4)
+				{
+					scaleGridLeft = list[0];
+					scaleGridTop = list[1];
+					scaleGridRight = list[2];
+					scaleGridBottom = list[3];
+				}
+			}
+			
+			public function show(parent:DisplayObject):void
+			{
+				PopUpManager.addPopUp(this,parent,true);
+				PopUpManager.centerPopUp(this);
+			}
+			
+			public function close():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function setImgSize(w:Number,h:Number):void
+			{
+				imgWidth = w;
+				imgHeight = h;
+				
+				if (!scaleGridTop)
+					scaleGridTop = 0;
+				if (!scaleGridLeft)
+					scaleGridLeft = 0;
+				if (!scaleGridRight)
+					scaleGridRight = imgWidth;
+				if (!scaleGridBottom)
+					scaleGridBottom = imgHeight;
+			}
+
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				close();
+			}
+			
+			protected function loader_completeHandler(event:Event):void
+			{
+				setImgSize(loader.contentWidth,loader.contentHeight);
+			}
+			
+			protected function refreshRuleHandler(event:Event):void
+			{	
+				hRule1.executeBindings();
+				hRule2.executeBindings();
+				vRule1.executeBindings();
+				vRule2.executeBindings();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Group x="10" y="10" width="230" height="230" id="group">
+		<s:SWFLoader id="loader" width="100%" height="100%" updateComplete="refreshRuleHandler(event)"
+					 complete="loader_completeHandler(event)" source="{source}"/>
+		<components:DragableGrid9Rule id="hRule1" type="0" y="@{hRule1Value}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
+		<components:DragableGrid9Rule id="hRule2" type="0" y="@{hRule2Value}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
+		<components:DragableGrid9Rule id="vRule1" type="1" x="@{vRule1Value}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
+		<components:DragableGrid9Rule id="vRule2" type="1" x="@{vRule2Value}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
+	</s:Group>
+	<s:NumericStepper x="11" y="248" width="60" change="refreshRuleHandler(event)"
+					  maximum="{imgWidth}" value="@{scaleGridLeft}"/>
+	<s:NumericStepper x="174" y="248" width="60" change="refreshRuleHandler(event)"
+					  maximum="{imgWidth}" value="@{scaleGridRight}"/>
+	<s:NumericStepper x="248" y="21" width="60" change="refreshRuleHandler(event)"
+					  maximum="{imgHeight}" value="@{scaleGridTop}"/>
+	<s:NumericStepper x="249" y="207" width="60" change="refreshRuleHandler(event)"
+					  maximum="{imgHeight}" value="@{scaleGridBottom}"/>
+</s:TitleWindow>

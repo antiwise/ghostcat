@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						 xmlns:s="library://ns.adobe.com/flex/spark"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 xmlns:components="ghostcattools.components.*"
+						 width="584" height="484" currentState="base" title="数据编辑">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.fileformat.XMLJSONChecker;
+			import ghostcat.util.data.Json;
+			
+			import ghostcattools.util.FileControl;
+			
+			import spark.components.mediaClasses.VolumeBar;
+			
+			public var data:Object;
+
+			private var bytes:ByteArray;
+			
+			[Bindable]
+			public var curPath:String = "";
+			
+			[Bindable]
+			public var propertyList:ArrayList;
+			[Bindable]
+			public var detailList:ArrayList;
+			[Bindable]
+			public var isCompress:Boolean;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				bytes = FileControl.readFile(file);
+				try
+				{
+					bytes.uncompress();
+					this.isCompress = true;
+				} 
+				catch(error:Error) 
+				{
+					this.isCompress = false;
+				}
+				var type:String = XMLJSONChecker.check(bytes);
+				bytes.position = 0;
+				if (!type)
+					type = "amf3";
+				radiogroup.selectedValue = type;
+				changeDataFormat();
+			}
+			
+			private function changeDataFormat():void
+			{
+				var text:String;
+				try
+				{
+					switch (radiogroup.selectedValue)
+					{
+						case "xml":
+							text = bytes.readUTFBytes(bytes.bytesAvailable)
+							if (text.charCodeAt(0) == 65279)
+								text = text.slice(1);
+							this.data = new XML(text);
+							this.sourceText.text = text;	
+							break;
+						case "json":
+							text = bytes.readUTFBytes(bytes.bytesAvailable);
+							if (text.charCodeAt(0) == 65279)
+								text = text.slice(1);
+							this.data = Json.decode(text);
+							this.sourceText.text = text;	
+							break;
+						case "amf3":
+							this.data = bytes.readObject();
+							this.sourceText.text = Json.encode(text);
+							break;
+					}
+				}
+				catch (e:Error)
+				{
+					this.data = null;
+					this.sourceText.text = "";
+				};
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = new ByteArray();
+				switch (radiogroup.selectedValue)
+				{
+					case "xml":
+						bytes.writeUTFBytes((data as XML).toXMLString())
+						break;
+					case "json":
+						bytes.writeUTFBytes(Json.encode(data));
+						break;
+					case "amf3":
+						bytes.writeObject(data);
+						break;
+				}
+				FileControl.writeFile(file,bytes);
+			}
+			
+			private function saveSourceData():void
+			{
+				
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler);
+			}
+
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler);
+			}
+
+			protected function radiogroup_changeHandler(event:Event):void
+			{
+				changeDataFormat();
+			}
+			
+			protected function sourceText_focusOutHandler(event:FocusEvent):void
+			{
+				saveSourceData();
+			}
+			
+			protected function startEdit_clickHandler(event:MouseEvent):void
+			{
+				this.currentState = "ready"
+			}
+			
+		]]>
+	</fx:Script>
+	<components:states>
+		<s:State name="base"/>
+		<s:State name="ready"/>
+	</components:states>
+
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup" selectedValue="XML" change="radiogroup_changeHandler(event)"/>
+	</fx:Declarations>
+	<s:Button id="openBN" x="5" y="5" label="载入" click="openBN_clickHandler(event)"/>
+	<s:Button id="saveBN" x="79" y="5" label="保存" click="saveBN_clickHandler(event)"/>
+	<s:CheckBox x="159" y="6" label="是否压缩" selected="@{isCompress}"/>
+	<mx:TabNavigator left="5" right="5" top="30" bottom="5" paddingTop="0">
+		<s:NavigatorContent width="100%" height="100%" label="原始文本">
+			<s:Label x="6" y="10" text="数据类型："/>
+			<s:RadioButton x="85" y="5" label="XML" groupName="radiogroup" value="xml" enabled.ready="false"/>
+			<s:RadioButton x="134" y="5" label="JSON" groupName="radiogroup" value="json" enabled.ready="false"/>
+			<s:RadioButton x="190" y="5" label="AMF3" groupName="radiogroup" value="amf3" enabled.ready="false"/>
+			<s:Button id="startEdit" right="5" y="5" label="开始编辑" excludeFrom="ready" click="startEdit_clickHandler(event)"/>
+			<s:TextArea id="sourceText" left="5" right="5" top="30" bottom="5" borderAlpha.base="0.5" editable.base="false" focusOut="sourceText_focusOutHandler(event)"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="编辑器" includeIn="ready">
+			<s:HGroup paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" width="100%">
+				<s:Button label="增加属性"/>
+				<s:Button label="删除属性"/>
+				<s:Button label="增加行"/>
+				<s:Button label="删除行"/>
+				<s:Button id="prevLv" width="22" enabled="{curPath}" icon="@Embed(source='../asset/prevLv.png')"
+						  skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级"/>
+				<s:TextInput editable="false" text="{curPath}" width="100%"/>
+			</s:HGroup>
+			<s:DataGrid x="5" width="188" top="30" bottom="5" dataProvider="{propertyList}">
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn dataField="label" headerText="属性"></s:GridColumn>
+						<s:GridColumn dataField="value" headerText="值"></s:GridColumn>
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+			<s:DataGrid left="201" right="5" top="30" bottom="5" dataProvider="{detailList}">
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn dataField="dataField1" headerText="1"></s:GridColumn>
+						<s:GridColumn dataField="dataField2" headerText="2"></s:GridColumn>
+						<s:GridColumn dataField="dataField3" headerText="3"></s:GridColumn>
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="转换器" includeIn="ready">
+			<s:VGroup paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5">
+				<s:Button label="转换为XML" width="100" enabled="{radiogroup.selectedValue != 'xml'}"/>
+				<s:Button label="转换为JSON" width="100" enabled="{radiogroup.selectedValue != 'json'}"/>
+				<s:Button label="转换为AMF3" width="100" enabled="{radiogroup.selectedValue != 'amf3'}"/>
+			</s:VGroup>
+			<s:TextArea left="110" right="5" top="5" bottom="5" editable="false"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	
+</components:GCToolWindow>

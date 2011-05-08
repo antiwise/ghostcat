@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="260" height="65" creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.util.Config;
+			import ghostcattools.util.FileControl;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			[Bindable]
+			public var label:String;
+			[Bindable]
+			public var desc:String;
+			[Bindable]
+			public var icon:Class;
+			public var cmd:Class;
+			public var fileFilter:Array = null;
+			
+			public var windowResizable:Boolean = true;
+			public var windowMaximizable:Boolean = true;
+			public var checkMXMLC:Boolean = false;
+			public var isDirectory:Boolean;
+			public var isAll:Boolean;
+			public var enabledDragOpen:Boolean = true;
+			
+			private function mouseClickHandler(event:MouseEvent):void
+			{
+				if (cmd)
+					openWindow();
+			}
+			
+			private function creationCompleteHandler(event:FlexEvent):void
+			{
+				if (enabledDragOpen)
+					FileControl.dragFileIn(dragInHandler,this,fileFilter,isDirectory,isAll);
+			}
+			
+			private function dragInHandler(files:Array):void
+			{
+				if (cmd)
+				{
+					var w:GCToolWindow = openWindow();
+					if (w)
+					{
+						w.isDragOpen = true;
+						w.addEventListener(FlexEvent.CREATION_COMPLETE,h);
+					}
+					function h(e:FlexEvent):void
+					{
+						w.openFileHandler(files);
+					}
+				}
+			}
+			
+			public function openWindow():GCToolWindow
+			{
+				if (checkMXMLC && !new File(Config.MXMLC_PATH).exists)
+				{
+					Alert.show("FLEX SDK设置错误，无法打开！");
+					return null;
+				}
+				
+				var window:GCToolWindow;
+				if (GCToolWindow.openDict[cmd])
+				{
+					window = GCToolWindow.openDict[cmd];
+					window.orderToFront();
+					GhostCatTools.instance.minimize();
+				}
+				else
+				{
+					window = new cmd() as GCToolWindow;
+					window.resizable = windowResizable;
+					window.maximizable = windowMaximizable;
+					window.open();
+					window.addEventListener(FlexEvent.CREATION_COMPLETE,createHandler);
+					window.addEventListener(Event.CLOSE,closeHandler);
+					function createHandler(e:Event):void
+					{
+						GhostCatTools.instance.minimize();
+					}
+					function closeHandler(e:Event):void
+					{
+						GhostCatTools.instance.restore();
+					}
+				}
+				return window;
+			}
+		]]>
+	</fx:Script>
+	<s:Button width="65" height="65" skinClass="ghostcattools.skin.GCButtonSkin" icon="{icon}" click="mouseClickHandler(event)"/>
+	<s:Label x="70" y="5" fontWeight="bold" text="{this.label}"/>
+	<s:Label x="70" y="20" width="190" height="41" text="{this.desc}"/>
+</s:Group>
