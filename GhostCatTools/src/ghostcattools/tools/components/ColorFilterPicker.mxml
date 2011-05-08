@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="112" gap="5">
+	<fx:Metadata>
+		[Event(name="change", type="flash.events.Event")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+			import flash.filters.ColorMatrixFilter;
+			import ghostcat.display.filter.MultiColorMatrixFilterProxy;
+			
+			[Bindable]
+			public var v1:int = 0;
+			[Bindable]
+			public var v2:int = 0;
+			[Bindable]
+			public var v3:int = 0;
+			[Bindable]
+			public var v4:int = 0;
+			
+			[Bindable]
+			public var result:ColorMatrixFilter;
+			
+			public function refreshCurrentColor(useColorPanelData:Boolean = false):void
+			{
+				var m:Array = [];
+				
+				this.result = new ColorMatrixFilter(MultiColorMatrixFilterProxy.createMultColorMatrix(v1,v2,v3,v4));
+				this.dispatchEvent(new Event(Event.CHANGE));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group>
+		<s:Label x="4" y="5" text="亮度:"/>
+		<s:HSlider x="50" y="6" width="95" value="@{v1}" minimum="-100" maximum="100" change="refreshCurrentColor()"/>
+		<s:NumericStepper x="149" y="0" width="50" minimum="-100" maximum="100" value="@{v1}" change="refreshCurrentColor()"/>
+	</s:Group>
+	<s:Group>
+		<s:Label x="4" y="5" text="对比度:"/>
+		<s:HSlider x="50" y="6" width="95" value="@{v2}" minimum="-100" maximum="100" change="refreshCurrentColor()"/>
+		<s:NumericStepper x="149" y="0" width="50" minimum="-100" maximum="100" value="@{v2}" change="refreshCurrentColor()"/>
+	</s:Group>
+	<s:Group>
+		<s:Label x="4" y="5" text="饱和度:"/>
+		<s:HSlider x="50" y="6" width="95" value="@{v3}" minimum="-100" maximum="100" change="refreshCurrentColor()"/>
+		<s:NumericStepper x="149" y="0" width="50" minimum="-100" maximum="100" value="@{v3}" change="refreshCurrentColor()"/>
+	</s:Group>
+	<s:Group>
+		<s:Label x="4" y="5" text="色相:"/>
+		<s:HSlider x="50" y="6" width="95" value="@{v4}" minimum="-180" maximum="180" change="refreshCurrentColor()"/>
+		<s:NumericStepper x="149" y="0" width="50" minimum="-180" maximum="180" value="@{v4}" change="refreshCurrentColor()"/>
+	</s:Group>
+</s:VGroup>

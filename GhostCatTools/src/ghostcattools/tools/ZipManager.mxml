@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" enabledDragOpen="false" title="压缩工具"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="538" height="300" creationComplete="gctoolwindow1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.fileformat.zip.CRC32;
+			import ghostcat.fileformat.zip.ZipEntry;
+			import ghostcat.fileformat.zip.ZipFile;
+			import ghostcat.fileformat.zip.ZipOutput;
+			import ghostcat.util.text.NumberUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.components.RenameTitleWindow;
+			import ghostcattools.tools.vo.FileEntryVO;
+			import ghostcattools.util.CreateFilePromise;
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.events.GridEvent;
+			
+			[Bindable]
+			public var fileEntrys:ArrayList = new ArrayList();
+			
+			[Bindable]
+			public var curPath:String = "";
+			
+			private var zipFilePath:String;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = file.exists ? FileControl.readFile(file) : null;
+				try
+				{
+					var zipFile:ZipFile = new ZipFile(bytes);
+					var list:Array = [];
+					for each (var child:ZipEntry in zipFile.entries)
+					{
+						var fileEntry:FileEntryVO = new FileEntryVO();
+						fileEntry.importFromZipEntry(child,zipFile);
+						
+						list.push(fileEntry);
+					}
+					
+					this.fileEntrys = new ArrayList(list);
+					this.zipFilePath = file.nativePath;
+				}
+				catch (e:Error)
+				{
+					new GCAlert().show("不支持的文件格式",this);
+				}
+				
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var output:ZipOutput = new ZipOutput();
+				for each (var child:FileEntryVO in this.fileEntrys.source)
+				{
+					output.putNextEntry(child.createZipEntry());
+					if (!child.isDirectory() && child.bytes.length)
+						output.write(child.bytes);
+					output.closeEntry();
+				}
+				output.finish();
+				
+				FileControl.writeFile(file,output.byteArray);
+				FileControl.openExplorer(file.parent.nativePath);
+			}
+			
+			private function lookFile(item:FileEntryVO):void
+			{
+				if (item.isDirectory())
+					return;
+				
+				var bytes:ByteArray = item.bytes;
+				bytes.position = 0;
+				var paths:Array = item.name.split("/");
+				var temp:File = File.createTempFile().parent.resolvePath(paths[paths.length - 1]);
+				FileControl.writeFile(temp,bytes);
+				temp.openWithDefaultApplication();
+			}
+			
+			private function addFiles(files:Array,baseUrl:String = ""):void
+			{
+				for each (var child:File in files)
+				{
+					var entry:FileEntryVO = new FileEntryVO();
+					if (child.isDirectory)
+					{
+						entry.name = baseUrl + child.name + "/";
+						this.fileEntrys.addItem(entry);
+						this.addFiles(child.getDirectoryListing(),entry.name);
+					}
+					else
+					{
+						entry.name = baseUrl + child.name;
+						entry.createData(FileControl.readFile(child));
+						this.fileEntrys.addItem(entry);
+					}
+				}
+				this.refreshFileEntrys();
+			}
+			
+			private function releaseFiles(files:Array,baseUrl:String):void
+			{
+				for each (var child:FileEntryVO in files)
+				{
+					var file:File = new File(baseUrl + "\\" + child.name)
+					if (child.isDirectory())
+						file.createDirectory();
+					else
+						FileControl.writeFile(file,child.bytes);
+				}
+			}
+			
+			private function removeFile(delItem:FileEntryVO):void
+			{
+				if (delItem.isDirectory())
+				{
+					for (var i:int = this.fileEntrys.source.length - 1;i >= 0;i--)
+					{
+						var item:FileEntryVO = FileEntryVO(this.fileEntrys.source[i])
+						if (item.isChild(delItem))
+							this.fileEntrys.removeItem(item);
+					}
+				}
+				this.fileEntrys.removeItem(delItem);
+			}
+			
+			private function getEntrysInDirectory(path:String):Array
+			{
+				var list:Array = [];
+				for each (var child:FileEntryVO in fileEntrys.source)
+				{
+					if (child.name != path && child.name.slice(0,path.length) == path)
+					{
+						if (child.isDirectory())
+						{
+							list.push.apply(null,getEntrysInDirectory(child.name));
+						}
+						else
+						{
+							list.push(child);
+						}
+					}
+				}
+				return list;
+			}
+			
+			private function getCurList(curList:ArrayList,curPath:String):ArrayList
+			{
+				var list:Array = curList.source.filter(filterFunction);
+				if (curPath)
+					list.unshift(new FileEntryVO(curPath + "/../"))
+				list.sort(sortFunction);
+				
+				function filterFunction(element:*, index:int, arr:Array):Boolean
+				{
+					var paths:Array = FileEntryVO(element).name.split("/");
+					paths = FileEntryVO(element).isDirectory() ? paths.slice(0,paths.length - 2)  : paths.slice(0,paths.length - 1);
+					return paths.join("/") == curPath;
+				}
+				
+				function sortFunction(element1:*, element2:*):int
+				{
+					var entry1:FileEntryVO = FileEntryVO(element1);
+					var entry2:FileEntryVO = FileEntryVO(element2);
+					
+					if (entry1.isDirectory() && !entry2.isDirectory())
+						return -1;
+					else if (!entry1.isDirectory() && entry2.isDirectory())
+						return 1;
+					else if (entry1.name < entry2.name)
+						return -1;
+					else if (entry1.name > entry2.name)
+						return 1;
+					else
+						return 0;
+				}
+				
+				return new ArrayList(list);
+			}
+			
+			private function compressePerentlabelFunction(item:Object, column:GridColumn):String
+			{
+				var entry:FileEntryVO = item as FileEntryVO;
+				var v:Number = entry.compressedPerent;
+				return v && entry.method != 0 ? (v * 100).toFixed(1) + "%" : "";
+			}
+			
+			private function nameLabelFunction(item:Object, column:GridColumn):String
+			{
+				var entry:FileEntryVO = item as FileEntryVO;
+				return entry.localName;
+			}
+			
+			private function sizeLabelFunction(item:Object, column:GridColumn):String
+			{
+				var entry:FileEntryVO = item as FileEntryVO;
+				return entry.isDirectory() ? "" : NumberUtil.addNumberSeparator(entry.size);
+			}
+			
+			private function compresseSizeLabelFunction(item:Object, column:GridColumn):String
+			{
+				var entry:FileEntryVO = item as FileEntryVO;
+				return entry.isDirectory() ? "": entry.method == 0 ? "不压缩" : entry.isNew ? "未知" : NumberUtil.addNumberSeparator(entry.compressedSize);
+			}
+			
+			private function dateLabelFunction(item:Object, column:GridColumn):String
+			{
+				var entry:FileEntryVO = item as FileEntryVO;
+				var d:Date = new Date(entry.time);
+				return entry.isDirectory() || entry.isNew ? "" : d.fullYear + "-" + (d.month + 1).toString() + "-" + d.day + " " + d.hours + ":" + d.minutes + ":" + d.seconds;
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(this.openFileHandler,this.openBN,["zip","swc"]);
+				FileControl.dragFileIn(this.addFiles,this.fileList,null,false,true);
+				
+			}
+			
+			protected function openBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"选择一个文件",[new FileFilter("压缩文档","*.zip;*.swc")])
+			}
+			
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				for each (var child:FileEntryVO in this.fileEntrys.source)
+				{
+					if (/[^\x00-\xff]/.test(child.name))
+					{
+						new GCAlert().show("不支持中文文件名！请重命名后保存！",this);
+						return;
+					}
+				}
+				FileControl.browseForSave(saveFileHandler,"保存文件",zipFilePath)
+			}
+			
+			protected function addBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpenMultiple(addFiles,"选择需要压缩的文件");
+			}
+
+			protected function releaseBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForDirectory(rHandler);
+				function rHandler(files:Array):void
+				{
+					var file:File = files[0] as File;
+					releaseFiles(fileEntrys.source,file.nativePath);
+					FileControl.openExplorer(file.nativePath);
+				}
+			}
+			
+			protected function fileList_mouseDownHandler(event:GridEvent):void
+			{
+				if (event.rowIndex == -1)
+					return;
+				
+				var transfer:Clipboard = new Clipboard();
+				transfer.setDataHandler(ClipboardFormats.FILE_PROMISE_LIST_FORMAT,getSelectedFilePromise);
+				NativeDragManager.doDrag(this.fileList,transfer);
+			}
+			
+			private function getSelectedFilePromise():Array
+			{
+				var promises:Array = [];
+				for each (var child:FileEntryVO in fileList.selectedItems)
+				{
+					if (child.isDirectory())
+					{
+						var list:Array = getEntrysInDirectory(child.name);
+						for each (var child2:FileEntryVO in list)
+						{
+							promises.push(new CreateFilePromise(child2.name.slice(curPath.length),child2.bytes))
+						}
+					}
+					else
+					{
+						promises.push(new CreateFilePromise(child.name.slice(curPath.length),child.bytes))
+					}
+				}
+				return promises;
+			}
+
+			protected function lookBN_clickHandler(event:MouseEvent):void
+			{
+				if (!this.fileList.selectedItem)
+					return;
+				
+				lookFile(this.fileList.selectedItem as FileEntryVO);
+			}
+
+
+			protected function delBN_clickHandler(event:MouseEvent):void
+			{
+				if (!this.fileList.selectedItem)
+					return;
+				
+				var index:int = this.fileList.selectedIndex;
+				var delItem:FileEntryVO = this.fileList.selectedItem as FileEntryVO;
+				removeFile(delItem);
+				this.fileList.selectedIndex = index;
+				
+				this.refreshFileEntrys();
+			}
+			
+			private function refreshFileEntrys():void
+			{
+				this.dispatchPropertyChangeEvent("fileEntrys",this.fileEntrys,this.fileEntrys);
+			}
+			
+			protected function rename_clickHandler(event:MouseEvent):void
+			{
+				var item:FileEntryVO = this.fileList.selectedItem as FileEntryVO;
+				if (!item)
+					return;
+				
+				var window:RenameTitleWindow = new RenameTitleWindow();
+				window.title = "重命名"
+				window.text = item.name;
+				window.show(this);
+				window.renameHandler = function (str:String):void
+				{
+					if (item.isDirectory())
+					{
+						for each (var child:FileEntryVO in fileEntrys.source)
+						{
+							if (child.isChild(item))
+								child.name = str + child.name.slice(item.name.length);
+						}
+					}
+					item.name = str;
+					refreshFileEntrys();
+				}
+			}
+
+			protected function fileList_gridDoubleClickHandler(event:GridEvent):void
+			{
+				if (!event.item)
+					return;
+				
+				if (FileEntryVO(event.item).isDirectory())
+				{
+					var name:String = FileEntryVO(event.item).name;
+					if (name.slice(name.length - 3,name.length) == "../")
+					{
+						var paths:Array = this.curPath.split("/");
+						this.curPath = paths.slice(0,paths.length - 1).join("/");
+					}
+					else
+					{
+						this.curPath = name.slice(0,name.length - 1);
+					}
+				}
+				else
+				{
+					lookFile(event.item as FileEntryVO);
+				}
+			}
+
+
+			protected function prevLv_clickHandler(event:MouseEvent):void
+			{
+				var paths:Array = this.curPath.split("/");
+				this.curPath = paths.slice(0,paths.length - 1).join("/");
+			}
+
+
+			protected function fileList_gridClickHandler(event:GridEvent):void
+			{
+				if (event.columnIndex == 2 || event.columnIndex == 3)
+				{
+					var entry:FileEntryVO = FileEntryVO(event.item);
+					if (entry && !entry.isDirectory())
+					{
+						entry.method = entry.method != 0 ? 0 : -1;
+					}
+				}
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup left="5" right="5" top="5" height="70">
+		<s:Button id="openBN" width="70" height="70" label="打开" click="openBN_clickHandler(event)"/>
+		<s:Button id="saveBN" width="70" height="70" label="保存" click="saveBN_clickHandler(event)" enabled="{fileEntrys.length > 0}"/>
+		<s:Button id="releaseBN" width="70" height="70" label="解压" click="releaseBN_clickHandler(event)" enabled="{fileEntrys.length > 0}"/>
+		<s:Button id="addBN" width="70" height="70" label="添加" click="addBN_clickHandler(event)"/>
+		<s:Button id="delBN" width="70" height="70" label="删除" click="delBN_clickHandler(event)" enabled="{fileList.selectedItem &amp;&amp; !FileEntryVO(fileList.selectedItem).isBackDirectory()}"/>
+		<s:Button id="renameBN" width="70" height="70" label="改名" click="rename_clickHandler(event)" enabled="{fileList.selectedItem &amp;&amp; !FileEntryVO(fileList.selectedItem).isBackDirectory()}"/>
+		<s:Button id="lookBN" width="70" height="70" label="查看" click="lookBN_clickHandler(event)" enabled="{fileList.selectedItem &amp;&amp; !FileEntryVO(fileList.selectedItem).isDirectory()}"/>
+	</s:HGroup>
+	<s:Button id="prevLv" left="5" top="79" width="22" icon="@Embed(source='../asset/prevLv.png')" skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级" enabled="{curPath}" click="prevLv_clickHandler(event)"/>
+	<s:TextInput y="79" left="30" right="5" editable="false" text="{curPath}"/>
+	<s:DataGrid id="fileList" left="5" right="5" top="105" bottom="5" requestedRowCount="4" dataProvider="{getCurList(fileEntrys,curPath)}"
+			 	gridDoubleClick="fileList_gridDoubleClickHandler(event)" gridClick="fileList_gridClickHandler(event)" gridMouseDown="fileList_mouseDownHandler(event)" doubleClickEnabled="true" selectionMode="multipleRows">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn labelFunction="nameLabelFunction" headerText="名称">
+					<s:itemRenderer>
+						<fx:Component>
+							<s:GridItemRenderer>
+								<fx:Script>
+									<![CDATA[
+										import ghostcattools.tools.vo.FileEntryVO;
+										
+										[Embed(source="../asset/file.png")]
+										[Bindable]
+										public var img1:Class;
+										[Embed(source="../asset/folder2.png")]
+										[Bindable]
+										public var img2:Class;
+									]]>
+								</fx:Script>
+								<s:BitmapImage x="3" y="5" source="{FileEntryVO(data).isDirectory() ? img2 : img1}"/>
+								<s:Label id="labelDisplay" paddingLeft="23" paddingRight="7" paddingBottom="5" paddingTop="9" width="100%" height="100%"/> 
+							</s:GridItemRenderer>
+						</fx:Component>
+					</s:itemRenderer>
+				</s:GridColumn>
+				<s:GridColumn labelFunction="sizeLabelFunction" headerText="大小" width="80"></s:GridColumn>
+				<s:GridColumn labelFunction="compresseSizeLabelFunction" headerText="压缩大小" width="80"></s:GridColumn>
+				<s:GridColumn labelFunction="compressePerentlabelFunction" headerText="压缩率" width="60"></s:GridColumn>
+				<s:GridColumn labelFunction="dateLabelFunction" headerText="修改时间" width="130"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+</components:GCToolWindow>

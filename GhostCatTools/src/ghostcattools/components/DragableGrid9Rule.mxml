@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:UIComponent xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx" blendMode="invert"
+		   mouseDown="uicomponent1_mouseDownHandler(event)"
+		   rollOver="uicomponent1_rollOverHandler(event)" rollOut="uicomponent1_rollOutHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.as3xls.biff.Record;
+			import flash.filters.GlowFilter;
+			import ghostcat.manager.DragManager;
+			protected override function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
+				
+				graphics.clear();
+				graphics.beginFill(0,0);
+				graphics.drawRect(-4,-4,unscaledWidth + 8,unscaledHeight + 8);
+				graphics.endFill();
+				graphics.lineStyle(1,0);
+				graphics.moveTo(0,0);
+				if (type == 0)
+					graphics.lineTo(unscaledWidth,0);
+				else
+					graphics.lineTo(0,unscaledHeight);
+			}
+			
+			protected function uicomponent1_mouseDownHandler(event:MouseEvent):void
+			{
+				DragManager.startDrag(this,type == 0 ? new Rectangle(0,minimum,0,maximum) : new Rectangle(minimum,0,maximum,0));
+			}
+			
+			protected function uicomponent1_rollOverHandler(event:MouseEvent):void
+			{
+				filters= [new GlowFilter()];
+			}
+			
+			protected function uicomponent1_rollOutHandler(event:MouseEvent):void
+			{
+				filters= [];
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<fx:int id="type">0</fx:int>
+		<fx:Number id="minimum">0</fx:Number>
+		<fx:Number id="maximum">0</fx:Number>
+	</fx:Declarations>
+</mx:UIComponent>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+		 creationComplete="gctoolwindow1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.util.display.ColorConvertUtil;
+			import ghostcat.util.display.ColorUtil;
+			import ghostcat.util.display.PaletteUtil;
+			
+			import mx.effects.Fade;
+			import mx.events.FlexEvent;
+			
+			[Bindable]
+			public var l:int = 0xFF;
+			[Bindable]
+			public var h:int = 0xFF;
+			[Bindable]
+			public var s:int = 0xFF;
+			[Bindable]
+			public var r:int = 0xFF;
+			[Bindable]
+			public var b:int = 0xFF;
+			[Bindable]
+			public var g:int = 0xFF;
+			[Bindable]
+			public var currentColor:uint = 0xFFFFFF;
+			
+			[Bindable]
+			private var palette1:BitmapData;
+			[Bindable]
+			private var palette2:BitmapData;
+			
+			private function refreshPalette():void
+			{
+				var bitmapData:BitmapData = PaletteUtil.getColorPaletter(l);
+				palette1.copyPixels(bitmapData,bitmapData.rect,new Point());
+				bitmapData.dispose();
+				
+				bitmapData = PaletteUtil.getLightPaletter(currentColor);
+				palette2.copyPixels(bitmapData,bitmapData.rect,new Point());
+				bitmapData.dispose();
+			}
+			
+			private function setCurrentColor(rgb:uint):void
+			{
+				currentColor = rgb;
+				b = rgb & 0xFF;
+				g = (rgb >> 8) & 0xFF;
+				r = (rgb >> 16) & 0xFF;
+				
+				var hsl:uint = ColorConvertUtil.toHSL(rgb);
+				l = hsl & 0xFF;
+				s = (hsl >> 8) & 0xFF;
+				h = (hsl >> 16) & 0xFF;
+				
+				refreshPalette();
+			}
+			
+			private function refreshCurrentColor(type:int):void
+			{
+				if (type == 0)
+				{
+					setCurrentColor((r << 16) | (g << 8) | b);
+				}
+				else if (type == 1)
+				{
+					setCurrentColor(ColorConvertUtil.fromHSL((h << 16) | (s << 8) | l));
+				}
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				palette1 = new BitmapData(255,255,false,0xFFFFFF);
+				palette2 = new BitmapData(1,255,false,0xFFFFFF);
+				
+				setCurrentColor(0xFF0000);
+			}
+			
+			public function dispose():void
+			{
+				palette1.dispose();
+				palette2.dispose();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Graphic click="h = event.localX;s = 255 - event.localY;refreshCurrentColor(1)">
+		<s:Rect width="256" height="256">
+			<s:stroke>
+				<s:SolidColorStroke/>
+			</s:stroke>
+			<s:fill>
+				<s:BitmapFill source="{palette1}"/>
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	<s:Graphic x="262" y="0" click="l = 255 - event.localY;refreshCurrentColor(1)">
+		<s:Rect width="20" height="256">
+			<s:stroke>
+				<s:SolidColorStroke/>
+			</s:stroke>
+			<s:fill>
+				<s:BitmapFill source="{palette2}"/>
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	<s:Rect x="0" y="260" width="76" height="49">
+		<s:stroke>
+			<s:SolidColorStroke/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="{currentColor}"/>
+		</s:fill>
+	</s:Rect>
+	<s:Path x="{h}" y="{255 - s}" data="M -2 0 L -5 0 M 2 0 L 5 0 M 0 -2 L 0 -5 M 0 2 L 0 5">
+		<s:stroke>
+			<s:SolidColorStroke/>
+		</s:stroke>
+	</s:Path>
+	<s:Path x="284" y="{255 - l}" data="M 0 0 L 10 -4 L 10 4">
+		<s:fill>
+			<s:SolidColor/>
+		</s:fill>
+	</s:Path>
+	<mx:ColorPicker id="colorPicker" showTextField="true" selectedColor="red" x="0" y="313" 
+					change="setCurrentColor(colorPicker.selectedColor)"/>
+	<s:TextInput id="colorText" x="25" y="313" width="52" text="{currentColor.toString(16)}" 
+				 change="setCurrentColor(parseInt(colorText.text,16))"/>
+	<s:Label x="83" y="266" width="60" text="色调(E)" textAlign="right"/>
+	<s:NumericStepper x="150" y="261" width="45" maximum="255" value="@{h}" change="refreshCurrentColor(1)"/>
+	<s:Label x="83" y="293" width="60" text="饱和度(S)" textAlign="right"/>
+	<s:NumericStepper x="150" y="286" width="45" maximum="255" value="@{s}" change="refreshCurrentColor(1)"/>
+	<s:Label x="83" y="317" width="60" text="亮度(L)" textAlign="right"/>
+	<s:NumericStepper x="150" y="311" width="45" maximum="255" value="@{l}" change="refreshCurrentColor(1)"/>
+	<s:Label x="198" y="267" width="45" text="红(R)" textAlign="right"/>
+	<s:NumericStepper x="250" y="260" width="45" maximum="255" value="@{r}" change="refreshCurrentColor(0)"/>
+	<s:Label x="198" y="293" width="45" text="绿(G)" textAlign="right"/>
+	<s:NumericStepper x="250" y="285" width="45" maximum="255" value="@{g}" change="refreshCurrentColor(0)"/>
+	<s:Label x="198" y="316" width="45" text="蓝(U)" textAlign="right"/>
+	<s:NumericStepper x="250" y="310" width="45" maximum="255" value="@{b}" change="refreshCurrentColor(0)"/>
+</s:Group>

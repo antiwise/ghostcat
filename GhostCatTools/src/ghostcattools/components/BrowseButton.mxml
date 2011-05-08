@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Button xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="23" height="21"
+		  icon="@Embed(source='../asset/folder.png')"
+		  skinClass="ghostcattools.skin.IconButtonSkin" click="button1_clickHandler(event)" creationComplete="button1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.components.TextInput;
+			import spark.events.TextOperationEvent;
+			
+			public var target:TextInput;
+			public var browseTitle:String = "选择一个文件";
+			public var browseExtension:Array;
+			public var dragExtension:Array;
+			public var isDirectory:Boolean;
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				if (target)
+				{
+					if (isDirectory)
+						FileControl.browseForDirectory(setTextHandler,browseTitle);
+					else
+						FileControl.browseForOpen(setTextHandler,browseTitle,browseExtension);
+				}
+			}
+
+			protected function button1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(setTextHandler,[this,target],dragExtension,isDirectory);
+			}
+			
+			protected function setTextHandler(files:Array):void
+			{
+				if (!files)
+					return;
+				
+				if (target)
+				{
+					target.text = (files[0] as File).nativePath;
+					target.dispatchEvent(new TextOperationEvent(TextOperationEvent.CHANGE));
+				}
+			}
+
+		]]>
+	</fx:Script>
+</s:Button>

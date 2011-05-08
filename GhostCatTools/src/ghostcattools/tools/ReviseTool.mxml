@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" enabledDragOpen="false" showStatusBar="false" title="批量修改"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="282" height="222"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.setTimeout;
+			
+			import ghostcat.util.core.Asyn;
+			import ghostcat.util.data.XMLUtil;
+			import ghostcat.util.text.TextUtil;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.collections.ArrayCollection;
+			import mx.effects.easing.Elastic;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
+			import mx.utils.StringUtil;
+			
+			[Bindable]
+			public var fileList:Array;
+			
+			[Bindable]
+			public var waiting:Boolean;
+			
+			[Bindable]
+			public var extension:ObjectProxy = new ObjectProxy({"$as":true,"$mxml":true,"$txt":true,"$xml":true,"all":false});
+			
+			private var cmd:String;
+			private var changeFileCount:int = 0;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				this.fileList = [];
+				
+				this.searchFileAndAdd(files);
+				this.waiting = true;
+				this.progressBar.setProgress(0,this.fileList.length);
+				
+				this.changeFileCount = 0;
+				Asyn.autoSetInv(stage);
+				Asyn.asynFor(readFileHandler,0,this.fileList.length,readFileCompleteHandler);
+			}
+			
+			private function searchFileAndAdd(files:Array):void
+			{
+				for each (var file:File in files)
+				{
+					if (file.isDirectory)
+					{
+						searchFileAndAdd(file.getDirectoryListing());
+					}
+					else
+					{
+						if (extension.all || extension["$" + file.extension])
+							fileList.push(file);
+					}
+				}
+			}
+			
+			
+			private function readFileHandler(i:int):void
+			{
+				var file:File = this.fileList[i] as File;
+				var text:String = FileControl.readFile(file).toString();
+				var newText:String;
+				if (cmd == "cmd0")
+					newText = text.replace(/^(\s*)(trace\(.*\);?)$/gm,"$1/*$2*/");
+				else if (cmd == "cmd1")
+					newText = text.replace(/^(\s*)\/\*(trace\(.*\);?)\*\/$/gm,"$1$2");
+				else if (cmd == "cmd2")
+					newText = TextUtil.turnToRN(text);
+				else if (cmd == "cmd3")
+					newText = TextUtil.turnToN(text);
+				else if (cmd == "cmd4")
+					newText = XMLUtil.compress(text);
+				else if (cmd == "cmd5")
+					newText = TextUtil.turnToRN(XMLUtil.format(text));
+				else
+					newText = text;
+				
+				if (newText != text)
+				{
+					changeFileCount++;
+					
+					var bytes:ByteArray = new ByteArray();
+					bytes.writeUTFBytes(newText);
+					FileControl.writeFile(file,bytes);
+				}
+				this.progressBar.setProgress(i,this.fileList.length);
+			}
+			
+			private function readFileCompleteHandler():void
+			{
+				this.waiting = false;
+				this.resultText.text = "[成功处理了" + this.changeFileCount + "个文件]"
+			}
+			
+			protected function cmd_handler(e:Event):void
+			{
+				this.cmd = (e.currentTarget as Button).id;
+				FileControl.browseForDirectory(openFileHandler,"选择一个目录");
+			}
+		
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				for each (var child:IEventDispatcher in [cmd0,cmd1,cmd2,cmd3,cmd4,cmd5])
+				{
+					child.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragIn);		
+					child.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
+				}
+			}
+			
+			private function onDragIn(event:NativeDragEvent):void
+			{
+				var transferable:Clipboard = event.clipboard;
+				if (transferable.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))
+				{
+					var files:Array = transferable.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+					if (files)
+					{
+						var file:File = File(files[0]);
+						if (file.isDirectory)
+							NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
+						else						
+						{
+							if (extension.all || extension["$"+file.extension.toLowerCase()])
+								NativeDragManager.acceptDragDrop(event.currentTarget as InteractiveObject);
+						}
+					}
+				}
+			}
+			
+			private function onDrop(event:NativeDragEvent):void
+			{
+				cmd = (event.currentTarget as Button).id;
+				openFileHandler(event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Label id="resultText" left="10" y="10" fontWeight="bold" text="点击按钮浏览，或者拖动文件或目录到按钮上" right="10"/>
+	<mx:ProgressBar id="progressBar" visible="{waiting}" y="6" left="10" right="10" label="处理中：%3%%(%1/%2)" labelPlacement="center" mode="manual"/>
+	<s:Label x="12" y="32" text="文件过滤："/>
+	<s:HGroup y="29" right="10">
+		<s:CheckBox label="as" selected="@{extension.$as}"/>
+		<s:CheckBox label="mxml" selected="@{extension.$mxml}"/>
+		<s:CheckBox label="txt" selected="@{extension.$txt}"/>
+		<s:CheckBox label="xml" selected="@{extension.$xml}"/>
+		<s:CheckBox label="所有" selected="@{extension.all}"/>
+	</s:HGroup>
+	<s:Group id="doBox" x="10" y="52" enabled="{!waiting}" width="100%">
+		<s:layout>
+			<s:TileLayout rowHeight="50"/>
+		</s:layout>
+		<s:Button id="cmd0" label="注释Trace" click="cmd_handler(event)"/>
+		<s:Button id="cmd1" label="恢复注释Trace" click="cmd_handler(event)"/>
+		<s:Button id="cmd2" label="将换行符更改为\r\n" click="cmd_handler(event)"/>
+		<s:Button id="cmd3" label="将换行符更改为\n" click="cmd_handler(event)"/>
+		<s:Button id="cmd4" label="删除XML注释和缩进" click="cmd_handler(event)"/>
+		<s:Button id="cmd5" label="格式化XML" click="cmd_handler(event)"/>
+	</s:Group>
+</components:GCToolWindow>

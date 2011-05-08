@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" enabledDragOpen="false" title="色彩工具"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 xmlns:components="ghostcattools.components.*" 
+						 xmlns:toolscomponents="ghostcattools.tools.components.*"
+						 xmlns:color="mx.controls.colorPickerClasses.*"
+						 width="316" height="378" showStatusBar="false" close="gctoolwindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			
+			import flash.filters.ColorMatrixFilter;
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				colorPicker.dispose();
+			}
+			
+			private function tranformString(v:ColorTransform):String
+			{
+				return v ? "new ColorTransform(" + [v.redMultiplier,v.greenMultiplier,v.blueMultiplier,v.alphaMultiplier,v.redOffset,v.greenOffset,v.blueOffset,v.alphaOffset].join(",") + ")": "";
+			}
+			
+			private function filterString(v:ColorMatrixFilter):String
+			{
+				if (!v)
+					return "";
+				
+				var result:Array = [];
+				for (var i:int = 0;i < v.matrix.length;i++)
+					result[i] = Number(v.matrix[i]).toFixed(2);
+				
+				return "new ColorMatrixFilter(" + result.join(",") + ")";
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:TabNavigator top="5" bottom="5" left="5" right="5" paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5">
+		<s:NavigatorContent label="色彩选择">
+			<components:ColorPicker id="colorPicker"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="色彩转换">
+			<s:Image id="colorImg" x="0" y="0" source="@Embed('../asset/picture.jpg')"/>
+			<s:TextArea x="0" y="166" width="200" height="36" editable="false"
+						text="{tranformString(colorTranformPicker.result)}"/>
+			<toolscomponents:ColorTranformPicker id="colorTranformPicker" x="0" y="207" change="colorImg.transform.colorTransform = colorTranformPicker.result"/>
+			<s:Rect x="204" y="0" width="92" height="334">
+				<s:fill>
+					<s:SolidColor/>
+				</s:fill>
+			</s:Rect>
+			<s:RichText x="295" y="5" fontSize="50" lineHeight="40" rotationZ="90" color="#FFFFFF"
+						text="COLOR&#xa;TRANSFORM"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="色彩滤镜">
+			<s:Image id="colorImg2" x="0" y="0" source="@Embed('../asset/picture.jpg')"/>
+			<s:TextArea x="0" y="166" width="200" height="55" editable="false"
+						text="{filterString(colorFilterPicker.result)}"/>
+			<toolscomponents:ColorFilterPicker id="colorFilterPicker" x="0" y="230" height="113"
+											   change="colorImg2.filters = [colorFilterPicker.result]"/>
+			<s:Rect x="204" y="0" width="92" height="334">
+				<s:fill>
+					<s:SolidColor/>
+				</s:fill>
+			</s:Rect>
+			<s:RichText x="295" y="5" color="#FFFFFF" fontSize="50" lineHeight="40" rotationZ="90"
+						text="COLOR&#xa;MATRIXFILTER"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+</components:GCToolWindow>

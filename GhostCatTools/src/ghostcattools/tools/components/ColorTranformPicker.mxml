@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" currentState="adv"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="130">
+	<fx:Metadata>
+		[Event(name="change", type="flash.events.Event")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.chartClasses.CartesianCanvasValue;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			public var a:int = 100;
+			[Bindable]
+			public var r:int = 100;
+			[Bindable]
+			public var g:int = 100;
+			[Bindable]
+			public var b:int = 100;
+			[Bindable]
+			public var aa:int;
+			[Bindable]
+			public var ar:int;
+			[Bindable]
+			public var ag:int;
+			[Bindable]
+			public var ab:int;
+			
+			[Bindable]
+			public function get l():int
+			{
+				return (ar + ag + ab) / 3;
+			}
+
+			public function set l(value:int):void
+			{
+				ar = ag = ab = value;
+			}
+			
+			[Bindable]
+			public var ca:int = 100;
+			
+			[Bindable]
+			public var cr:int
+			
+			[Bindable]
+			public var cg:int
+			
+			[Bindable]
+			public var cb:int
+			
+			[Bindable]
+			public var result:ColorTransform;
+			
+			public function reset():void
+			{
+				a = r = g = b = 100;
+				aa = ar = ag = ab = 0;
+			}
+			
+			public function refreshCurrentColor(useColorPanelData:Boolean = false):void
+			{
+				if (useColorPanelData)
+				{
+					this.r = 100 + cr *  ca / 255;
+					this.g = 100 + cg *  ca / 255;
+					this.b = 100 + cb *  ca / 255;
+				}
+				this.result = new ColorTransform(r / 100,g / 100,b / 100,a / 100,ar,ag,ab,aa);
+				this.dispatchEvent(new Event(Event.CHANGE));
+			}
+			
+			protected function dropdownlist1_changeHandler(event:IndexChangeEvent):void
+			{
+				this.currentState = ddl.selectedItem.value;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:states>
+		<s:State name="light"/>
+		<s:State name="color"/>
+		<s:State name="adv"/>
+	</s:states>
+	<s:DropDownList id="ddl" width="200" selectedIndex="2" labelField="label" change="dropdownlist1_changeHandler(event)">
+		<s:dataProvider>
+			<s:ArrayList>
+				<fx:Object label="亮度" value="light"/>
+				<fx:Object label="色调" value="color"/>
+				<fx:Object label="高级" value="adv"/>
+			</s:ArrayList>
+		</s:dataProvider>
+	</s:DropDownList>
+	<s:Group includeIn="light" x="0" y="23" width="100%">
+		<s:Label x="4" y="5" text="亮度:"/>
+		<s:HSlider x="36" y="6" width="95" value="@{l}" minimum="-255" maximum="255" change="refreshCurrentColor()"/>
+		<s:NumericStepper x="135" y="0" width="50" minimum="-255" maximum="255" value="@{l}" change="refreshCurrentColor()"/>
+		<s:Label x="188" y="5" text="%"/>
+	</s:Group>
+	<s:VGroup x="0" y="23" includeIn="color" gap="5">
+		<s:Group>
+			<s:Label x="4" y="5" text="色调:"/>
+			<s:HSlider x="36" y="6" width="95" value="@{ca}" minimum="0" maximum="100" change="refreshCurrentColor(true)"/>
+			<s:NumericStepper x="135" y="0" width="50" minimum="0" maximum="100" value="@{ca}" change="refreshCurrentColor(true)"/>
+			<s:Label x="188" y="5" text="%"/>
+		</s:Group>
+		<s:Group>
+			<s:Label x="4" y="5" text="红:"/>
+			<s:HSlider x="36" y="6" width="95" value="@{cr}" minimum="-255" maximum="255" change="refreshCurrentColor(true)"/>
+			<s:NumericStepper x="135" y="0" width="50" minimum="-255" maximum="255" value="@{cr}" change="refreshCurrentColor(true)"/>
+		</s:Group>
+		<s:Group>
+			<s:Label x="4" y="5" text="绿:"/>
+			<s:HSlider x="36" y="6" width="95" value="@{cg}" minimum="-255" maximum="255" change="refreshCurrentColor(true)"/>
+			<s:NumericStepper x="135" y="0" width="50" minimum="-255" maximum="255" value="@{cg}" change="refreshCurrentColor(true)"/>
+			</s:Group>
+		<s:Group>
+			<s:Label x="4" y="5" text="蓝:"/>
+			<s:HSlider x="36" y="6" width="95" value="@{cb}" minimum="-255" maximum="255" change="refreshCurrentColor(true)"/>
+			<s:NumericStepper x="135" y="0" width="50" minimum="-255" maximum="255" value="@{cb}" change="refreshCurrentColor(true)"/>
+		</s:Group>
+	</s:VGroup>
+	<s:Group x="0" y="23" includeIn="adv">
+		<s:Label x="0" y="7" width="45" text="Alpha:" textAlign="right"/>
+		<s:NumericStepper x="50" y="2" width="50" minimum="-100" maximum="100" value="@{a}" change="refreshCurrentColor()"/>
+		<s:Label x="0" y="34" width="45" text="红:" textAlign="right"/>
+		<s:NumericStepper x="50" y="27" width="50" minimum="-100" maximum="100" value="@{r}" change="refreshCurrentColor()"/>
+		<s:Label x="0" y="58" width="45" text="绿:" textAlign="right"/>
+		<s:NumericStepper x="50" y="52" width="50" minimum="-100" maximum="100" value="@{g}" change="refreshCurrentColor()"/>
+		<s:Label x="0" y="81" width="45" text="蓝:" textAlign="right"/>
+		<s:NumericStepper x="50" y="77" width="50" minimum="-100" maximum="100" value="@{b}" change="refreshCurrentColor()"/>
+		<s:Label x="102" y="8" width="40" text="xA +" textAlign="right"/>
+		<s:NumericStepper x="150" y="1" width="50" minimum="-255" maximum="255" value="@{aa}" change="refreshCurrentColor()"/>
+		<s:Label x="102" y="34" width="40" text="xR +" textAlign="right"/>
+		<s:NumericStepper x="150" y="26" width="50" minimum="-255" maximum="255" value="@{ar}" change="refreshCurrentColor()"/>
+		<s:Label x="102" y="57" width="40" text="xG +" textAlign="right"/>
+		<s:NumericStepper x="150" y="51" width="50" minimum="-255" maximum="255" value="@{ag}" change="refreshCurrentColor()"/>
+		<s:Label x="102" y="81" width="40" text="xB +" textAlign="right"/>
+		<s:NumericStepper x="150" y="76" width="50" minimum="-255" maximum="255" value="@{ab}" change="refreshCurrentColor()"/>
+	</s:Group>
+</s:Group>

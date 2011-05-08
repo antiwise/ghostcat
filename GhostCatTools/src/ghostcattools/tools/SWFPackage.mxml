@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						 xmlns:s="library://ns.adobe.com/flex/spark"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 xmlns:components="ghostcattools.components.*"
+						height="390" close="gctoolwindow1_closeHandler(event)"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)"
+						 currentState="base" enabledDragOpen="false" showStatusBar="false"
+						 title="SWF打包"
+						 width="537">
+	<fx:Script>
+		<![CDATA[
+			import asset.file;
+			
+			import ghostcat.util.ReflectXMLUtil;
+			import ghostcat.util.data.LocalStorage;
+			import ghostcat.util.data.XMLUtil;
+			import ghostcat.util.text.TextUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.components.Grid9Tool;
+			import ghostcattools.components.TraceTitleWindow;
+			import ghostcattools.tools.vo.EmbedVO;
+			import ghostcattools.util.Config;
+			import ghostcattools.util.EmbedControl;
+			import ghostcattools.util.FileControl;
+			
+			import mx.controls.List;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Image;
+			import spark.events.GridEvent;
+			import spark.events.GridSelectionEvent;
+			
+			private var so:LocalStorage = new LocalStorage("gctools_swfpackage");
+			private var outputTitleWindow:TraceTitleWindow;
+			
+			[Bindable]
+			public var classList:ArrayList = new ArrayList();
+			
+			[Bindable]
+			public var selectedItem:EmbedVO;
+			
+			public override function openFileHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = FileControl.readFile(file);
+				var xml:XML = new XML(bytes.toString());
+				
+				setXML(xml);
+			}
+			
+			private function setXML(xml:XML):void
+			{
+				var list:Array = [];
+				for each (var child:XML in xml.*)
+				{
+					var o:Object = XMLUtil.attributesToObject(child);
+					list.push(new EmbedVO(o));
+				}
+				this.classList = new ArrayList(list)
+			}
+			
+			private function getXML():XML
+			{
+				var xml:XML = <package/>;
+				for each (var child:EmbedVO in classList.source)
+				{
+					var childXml:XML = XMLUtil.objectToAttributes(child.toObject());
+					childXml.setName("item");
+					xml.appendChild(childXml);
+				}
+				return xml;
+			}
+			
+			private function saveFileHandler(files:Array):void
+			{
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(getXML().toXMLString());
+				
+				var file:File = files[0] as File;
+				FileControl.writeFile(file,bytes);
+			}
+			
+			
+			private function addFileHandler(files:Array,basePackage:String = ""):void
+			{
+				for each (var file:File in files)
+				{
+					if (file.isDirectory)
+					{
+						addFileHandler(file.getDirectoryListing(),basePackage + file.name + ".");
+					}
+					else
+					{
+						var item:EmbedVO = new EmbedVO();
+						item.source = file.nativePath;
+						item.className = (basePackage + file.name.split(".")[0]).toString().toLowerCase();
+						item.type = file.name.split(".")[1];
+						if (item.type == "jpeg")
+							item.type = "jpg";
+						
+						if (EmbedControl.png.indexOf(item.type) != -1)
+						{
+							item.compression = true;
+							item.quality = 80;
+						}
+						if (dataGrid.selectedIndex != -1)
+							classList.addItemAt(item,dataGrid.selectedIndex);
+						else
+							classList.addItem(item);
+					}
+				}
+			}
+			
+			private function createSWCHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				
+				this.outputTitleWindow = new TraceTitleWindow();
+				this.outputTitleWindow.title = "正在生成..."
+				this.outputTitleWindow.width = 500;
+				this.outputTitleWindow.height = 350;
+				this.outputTitleWindow.enabledCloseButton = false;
+				this.outputTitleWindow.show(this,true);
+				
+				if (!Config.FLEXSDK_4_0)
+				{
+					for each (var o:Object in this.classList.source)
+					{
+						if (o.compression)
+						{
+							this.outputTitleWindow.traceExt("警告：只有4.0以上版本的SDK才能支持图片压缩！",0xFF0000);
+							break;
+						}
+					}
+				}
+				
+				EmbedControl.createSWC(file,this.classList.source,exitHandler,traceHandler,errorHandler);
+				
+				function exitHandler(bytes:ByteArray):void
+				{
+					if (bytes && file.extension == "swf")
+					{
+						bytes = FileControl.getSWFFromSWC(bytes);
+						if (bytes)
+							FileControl.writeFile(file,bytes);
+					}
+					outputTitleWindow.traceExt(bytes ? "创建成功！":"创建失败！");
+					outputTitleWindow.enabledCloseButton = true;
+				}	
+				
+				function traceHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str);
+				}
+				
+				function errorHandler(str:String):void
+				{
+					outputTitleWindow.traceExt(str,0xFF0000);
+				}
+			}
+			
+			protected function outBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(saveFileHandler,"保存为XML","packge.xml");
+			}
+			
+			
+			protected function inBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openFileHandler,"选择一个XML文件",[new FileFilter("XML 文件","*.xml")])
+			}
+			
+			protected function outBN_mouseDownHandler(event:MouseEvent):void
+			{
+				FileControl.dragTextFileOut(this.outBN,TextUtil.turnToRN(getXML().toXMLString()),"packge.xml")
+			}
+
+			protected function removeBN_clickHandler(event:MouseEvent):void
+			{
+				if (dataGrid.selectedIndex != -1)
+				{
+					var oldIndex:int = dataGrid.selectedIndex;
+					classList.removeItemAt(dataGrid.selectedIndex);
+					dataGrid.selectedIndex = oldIndex;
+					
+					if (dataGrid.selectedIndex == -1)
+					{
+						selectedItem = null;
+						dataGrid_selectionChangeHandler(null);
+					}
+				}
+			}
+			
+			protected function addBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpenMultiple(addFileHandler,"选择多个素材文件")
+			}
+			protected function addDirBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForDirectory(addFileHandler,"选择一个目录");
+			}
+			
+			protected function dataGrid_selectionChangeHandler(event:GridSelectionEvent):void
+			{
+				if (!selectedItem)
+				{
+					this.currentState = "base";
+					return;
+				}
+				var type:String = selectedItem.type;
+				if (EmbedControl.swf.indexOf(type) != -1) 
+					this.currentState = "swf";
+				else if (EmbedControl.mp3.indexOf(type) != -1) 
+					this.currentState = "mp3";
+				else if (EmbedControl.jpg.indexOf(type) != -1) 
+					this.currentState = "jpg";
+				else if (EmbedControl.png.indexOf(type) != -1) 
+					this.currentState = "png";
+				else 
+					this.currentState = "base";
+			}
+			
+			protected function compressionBN_changeHandler(event:Event):void
+			{
+				if (compressionBN.selected && !selectedItem.quality)
+					selectedItem.quality = 80;
+				else
+					selectedItem.quality = 0;
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openFileHandler,this.inBN,["xml"]);
+				FileControl.dragFileIn(addFileHandler,[this.addBN,this.dataGrid],null,false,true);
+			
+				if (!isDragOpen)
+				{
+					var xml:XML = so.getValue();
+					if (xml)
+						setXML(xml);
+				}
+			}
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				so.setValue(getXML());
+			}
+			
+			
+			protected function runBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(createSWCHandler,"输出SWC","package.swc");
+			}
+			
+			protected function runBN2_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForSave(createSWCHandler,"输出SWF","package.swf");
+			}
+			
+			protected function editScaleGridBN_clickHandler(event:MouseEvent):void
+			{
+				var grid9Tool:Grid9Tool = new Grid9Tool();
+				grid9Tool.grid9Value = selectedItem.scaleGrid;
+				if (selectedItem.symbol)
+				{
+					var loader:Loader = new Loader();
+					loader.load(new URLRequest(selectedItem.source),FileControl.createLoadContext());
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+					
+					function completeHandler(e:Event):void
+					{
+						var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(selectedItem.symbol) as Class;
+						var displayObj:DisplayObject = new cls();
+						grid9Tool.source = displayObj;
+						grid9Tool.setImgSize(displayObj.width,displayObj.height);
+					}
+				}
+				else
+				{
+					grid9Tool.source = selectedItem.source;
+				}
+				grid9Tool.addEventListener(CloseEvent.CLOSE,closeHandler);
+				grid9Tool.show(this);
+				
+				function closeHandler(e:Event):void
+				{
+					selectedItem.scaleGrid = grid9Tool.grid9Value;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Binding destination="selectedItem" source="dataGrid.selectedItem as EmbedVO"/>
+	<components:states>
+		<s:State name="base"/>
+		<s:State name="swf"/>
+		<s:State name="mp3"/>
+		<s:State name="jpg"/>
+		<s:State name="png"/>
+	</components:states>
+	<s:HGroup paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5">
+		<s:Button id="inBN" label="载入配置" click="inBN_clickHandler(event)"/>
+		<s:Button id="outBN" label="保存配置" click="outBN_clickHandler(event)" mouseDown="outBN_mouseDownHandler(event)"/>
+		<s:Button id="addBN" label="添加" click="addBN_clickHandler(event)"/>
+		<s:Button id="addDirBN" label="添加目录" click="addDirBN_clickHandler(event)"/>
+		<s:Button id="removeBN" label="删除" click="removeBN_clickHandler(event)"/>
+		<s:Button id="runBN" label="输出SWC" chromeColor="#C6E2FF" click="runBN_clickHandler(event)"/>
+		<s:Button id="runBN2" label="输出SWF" chromeColor="#C6E2FF" click="runBN2_clickHandler(event)"/>
+	</s:HGroup>
+	<s:DataGrid id="dataGrid" left="5" right="5" top="30" bottom="34" dataProvider="{classList}"
+				editable="true" selectionChange="dataGrid_selectionChangeHandler(event)">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="className" headerText="类名" width="100"></s:GridColumn>
+				<s:GridColumn dataField="type" headerText="类型" width="40"></s:GridColumn>
+				<s:GridColumn dataField="source" headerText="资源地址"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+	<s:HGroup left="5" right="5" bottom="5">
+		<s:CheckBox includeIn="jpg,png" id="smoothingBN" x="5" y="0" label="平滑图像" selected="@{selectedItem.smoothing}"/>
+		<s:Group includeIn="png">
+			<s:CheckBox id="compressionBN" x="10" y="0" label="使用JPEG压缩" selected="@{selectedItem.compression}" change="compressionBN_changeHandler(event)"/>
+			<s:Label id="qualityLabel" x="112" y="5" text="压缩率：" visible="{selectedItem.compression}"/>
+			<s:NumericStepper id="qualityNum" visible="{selectedItem.compression}" x="161"
+							  y="-2" width="56" maximum="100"
+							  value="@{selectedItem.quality}"/>
+		</s:Group>
+		<s:Group includeIn="swf">
+			<s:Label x="5" y="7" text="元件名"/>
+			<s:TextInput x="54" y="0" width="235" text="@{selectedItem.symbol}"/>
+		</s:Group>
+		<s:Group includeIn="jpg,png,swf">
+			<s:Label text="九切片缩放" x="11" y="5"/>
+			<s:TextInput id="scaleGrid" x="83" y="0" width="93" text="@{selectedItem.scaleGrid}"/>
+			<s:Button id="editScaleGridBN" x="180" y="0" label="设置" width="52" click="editScaleGridBN_clickHandler(event)"/>
+		</s:Group>
+	</s:HGroup>
+</components:GCToolWindow>
