@@ -11,6 +11,12 @@ package ghostcat.util.data
 	 */
 	public final class XMLUtil
 	{
+		/**
+		 * 创建XML 
+		 * @param source
+		 * @return 
+		 * 
+		 */
 		public static function createFrom(source:*):XML
 		{
 			if (source is Class)
@@ -38,6 +44,13 @@ package ghostcat.util.data
 			return null;
 		}
 		
+		/**
+		 * 将@value转换为Object 
+		 * @param xml
+		 * @param result
+		 * @return 
+		 * 
+		 */
 		public static function attributesToObject(xml:XML,result:Object = null):Object
 		{
 			if (!result)
@@ -49,6 +62,13 @@ package ghostcat.util.data
 			return result;
 		}
 		
+		/**
+		 * 将Object转换为@value 
+		 * @param obj
+		 * @param result
+		 * @return 
+		 * 
+		 */
 		public static function objectToAttributes(obj:Object,result:XML = null):XML
 		{
 			if (!result)
@@ -60,6 +80,13 @@ package ghostcat.util.data
 			return result;
 		}
 		
+		/**
+		 * 将子节点转换为@value 
+		 * @param obj
+		 * @param result
+		 * @return 
+		 * 
+		 */
 		public static function childrenToAttributes(obj:XML,result:XML = null):XML
 		{
 			if (!result)
@@ -71,6 +98,13 @@ package ghostcat.util.data
 			return result;
 		}
 		
+		/**
+		 * 将@value转换为子节点 
+		 * @param obj
+		 * @param result
+		 * @return 
+		 * 
+		 */
 		public static function attributesToChildren(obj:XML,result:XML = null):XML
 		{
 			if (!result)
@@ -84,6 +118,41 @@ package ghostcat.util.data
 				result.appendChild(child);
 			}
 			return result;
+		}
+		
+		/**
+		 * 格式化XML格式 
+		 * @param str
+		 * @param isCompress
+		 * @return 
+		 * 
+		 */
+		public static function format(str:String):String
+		{
+			try
+			{
+				var ignoreComments:Boolean = XML.ignoreComments;
+				XML.ignoreComments = false;
+				
+				var xml:XML = new XML(str);
+				str = xml.toXMLString()
+				
+				XML.ignoreComments = ignoreComments;
+			} 
+			catch(e:Error){};
+			
+			return str;
+		}
+		
+		/**
+		 * 删除XML中的注释，换行和缩进
+		 * @param str
+		 * @return 
+		 * 
+		 */
+		public static function compress(str:String):String
+		{
+			return str.replace(/^\s+|\r|\n|<!--.*?-->/gsm,"");
 		}
 	}
 }
