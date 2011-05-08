@@ -6,8 +6,11 @@ package ghostcat.display.filter
 	import ghostcat.util.core.UniqueCall;
 	
 	/**
+	 * （建议使用MultColorMatrixFilterProxy类代替）
+	 * 
 	 * 色彩变换滤镜
 	 * 必须用applyFilter方法来给对象应用滤镜
+	 * 
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -140,7 +143,7 @@ package ghostcat.display.filter
 						 0,	0,	n,	0,	128*(1-n),
 						 0,	0,	0,	1,	0]);
         }
-        
+		
         /**
          * 亮度(N取值为-255到255)
          * 
@@ -202,5 +205,24 @@ package ghostcat.display.filter
 						 0.3086*256,	0.6094*256,	0.0820*256,	0,	-256*n,
 						 0, 0, 0, 1, 0]);
         }
+		
+		/**
+		 * 合并两个颜色矩阵 
+		 * @param m1
+		 * @param m2
+		 * 
+		 */
+		public static function concatMatrix(m1:Array,m2:Array):Array
+		{
+			var result:Array = [];
+			for (var i:int = 0;i < m1.length;i++)
+				result[i] = m1[i] + m2[i];
+			
+			m1[0]--;
+			m1[6]--;
+			m1[12]--;
+			m1[18]--;
+			return result;
+		}
 	}
 }

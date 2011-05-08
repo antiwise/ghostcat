@@ -19,7 +19,10 @@ package ghostcat.display.filter
 	 */
 	public dynamic class FilterProxy extends Proxy
 	{
-		protected var filter:BitmapFilter;
+		/**
+		 * 滤镜对象 
+		 */
+		public var filter:BitmapFilter;
 		
 		/**
 		 * 自动更新滤镜位置
@@ -167,7 +170,7 @@ package ghostcat.display.filter
 		
 		override flash_proxy function getProperty(name:*):*
 		{
-			return filter?filter[name]:null;
+			return filter ? filter[name]:null;
 		}
 		
 		override flash_proxy function setProperty(name:*, value:*):void
