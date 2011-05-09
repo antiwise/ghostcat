@@ -1,23 +1,20 @@
-﻿package ghostcat.util.data
-{
-	public class Json
-	{
-		private static var decoder:JsonDecoder = new JsonDecoder();
-		private static var encoder:JsonEncoder = new JsonEncoder();
+﻿package ghostcat.util.data {
+	public class Json {
+		private static var decoder:JsonDecoder=null;
+		private static var encoder:JsonEncoder=null;
 		
-		public static function decode(str:String):*
-		{
+		public static function decode(str:String):* {
+			if (decoder==null)decoder=new JsonDecoder();
 			return decoder.decode(str);
 		}
 		
-		public static function encode(obj:*):String 
-		{
+		public static function encode(obj:*):String {
+			if (encoder==null)encoder=new JsonEncoder();
 			return encoder.encode(obj);
 		}
 	}
 }
-class JsonDecoder
-{
+class JsonDecoder {
 	private var chr:int;
 	private var tok:int;
 	private var src:String;
@@ -26,16 +23,14 @@ class JsonDecoder
 	private var cachedChr:Boolean;
 	private var cachedTok:Boolean;
 	
-	public function decode(str:String):*
-	{
+	public function decode(str:String):* {
 		var val:*;
 		src=str;
 		nextPos=0;
 		cachedChr=false;
 		cachedTok=false;
 		val=nextValue();
-		if (nextToken()!=0xff)
-			error("More than one value");
+		if (nextToken()!=0xff)error("More than one value");
 		return val;
 	}
 	
@@ -52,7 +47,7 @@ class JsonDecoder
 			cachedTok=false;
 			return tok;
 		}
-		while(nextChar()==0x20||chr==0x09||isNewline(chr)){};
+		while(nextChar()==0x20||chr==0x09||isNewline(chr));
 		if(chr==0x2f){
 			if(nextChar()==0x2f){
 				while(!isNewline(nextChar())){
@@ -81,22 +76,16 @@ class JsonDecoder
 		if(chr==0x3a)return tok=0xf7;
 		if(chr==0x2d)return tok=0xf5;
 		if(chr==0x00)return tok=0xff;
-		if(chr==0x2e)
-		{
-			if(!isDigit(nextChar()))
-				error("Need digit after .");
+		if(chr==0x2e){
+			if(!isDigit(nextChar()))error("Need digit after .");
 			return nextFraction();
 		}
-		if(isDigit(chr))
-		{
-			if(chr==0x30)
-			{
-				if(nextChar()!=0x78)
-					cachedChr=true;
-				else
-				{
+		if(isDigit(chr)){
+			if(chr==0x30){
+				if(nextChar()!=0x78)cachedChr=true;
+				else{
 					if(!isHex(nextChar()))error("Need hexadecimal digit after 0x");
-					while(isHex(nextChar())){};
+					while(isHex(nextChar()));
 					return cache(0xfe);
 				}
 			}
@@ -109,12 +98,11 @@ class JsonDecoder
 		}
 		
 		if(!isIdentifier(chr))error("Unkown token "+flush());
-		while(isIdentifier(nextChar())){};
+		while(isIdentifier(nextChar()));
 		return cache(0xfd);
 	}
 	
-	private function nextValue():*
-	{
+	private function nextValue():* {
 		if(nextToken()==0xfd){
 			var str:String=flush(1);
 			if(str=="NaN")return NaN;
@@ -141,28 +129,20 @@ class JsonDecoder
 			}
 			return obj;
 		}
-		if(tok==0xfa)
-		{
+		if(tok==0xfa){
 			var arr:Array=[];
-			if(nextToken()!=0xfb)
-			{
+			if(nextToken()!=0xfb){
 				var needComma:Boolean=false;
 				var index:int=0;
 				cachedTok=true;
-				while(true)
-				{
+				while(true){
 					if(nextToken()==0xfb)break;
-					if(tok==0xf6)
-					{
+					if(tok==0xf6){
 						arr.length=++index;
 						needComma=false;
 					}
-					else if(needComma)
-					{
-						error("Expected token  ] or , found "+flush());
-					}
-					else
-					{
+					else if(needComma)error("Expected token  ] or , found "+flush());
+					else{
 						needComma=true;
 						cachedTok=true;
 						arr[index]=nextValue();
@@ -178,20 +158,16 @@ class JsonDecoder
 		return -nextValue();
 	}
 	
-	private function nextString():String
-	{
+	private function nextString():String {
 		lastPos=nextPos;
 		var str:String="";
 		var tag:int=chr;
-		while(nextChar()!=tag)
-		{
+		while(nextChar()!=tag){
 			if(chr==0x00||isNewline(chr))error("Unclosed string");
-			if(chr==0x5c)
-			{
+			if(chr==0x5c){
 				str+=flush(1);
 				lastPos+=2;
-				if(nextChar()==0x75||chr==0x78)
-				{
+				if(nextChar()==0x75||chr==0x78){
 					var n:int=chr==0x75?4:2;
 					while(n>0&&isHex(nextChar()))n--;
 					if(n==0)str+=String.fromCharCode(parseInt(flush(),16));
@@ -208,57 +184,47 @@ class JsonDecoder
 		return str+flush(1);
 	}
 	
-	private function nextFraction():int
-	{
-		while(true)
-		{
+	private function nextFraction():int {
+		while(true){
 			if(nextChar()==0x65||chr==0x45)return nextExponent();
 			if(!isDigit(chr))break;
 		}
 		return cache(0xfe);
 	}
 	
-	private function nextExponent():int
-	{
-		if(nextChar()!=0x2b&&chr!=0x2d)	cachedChr=true;
-		if(!isDigit(nextChar())) error("Need digit after exponent");
-		while (isDigit(nextChar())){};
+	private function nextExponent():int {
+		if(nextChar()!=0x2b&&chr!=0x2d)cachedChr=true;
+		if(!isDigit(nextChar()))error("Need digit after exponent");
+		while (isDigit(nextChar()));
 		return cache(0xfe);
 	}
 	
-	private function cache(token:int):int
-	{
+	private function cache(token:int):int {
 		cachedChr=true;
 		return tok=token;
 	}
 	
-	private function flush(back:int=0):String
-	{
+	private function flush(back:int=0):String {
 		return src.substring(lastPos,lastPos=nextPos-back);
 	}
 	
-	private function error(text:String):void
-	{
+	private function error(text:String):void {
 		throw new Error(text);
 	}
 	
-	private function isHex(c:int):Boolean
-	{
+	private function isHex(c:int):Boolean {
 		return isDigit(c)||(c>0x60&&c<0x67)||(c>0x40&&c<0x47);
 	}
 	
-	private function isDigit(c:int):Boolean
-	{
+	private function isDigit(c:int):Boolean {
 		return c>0x2f&&c<0x3a;
 	}
 	
-	private function isNewline(c:int):Boolean
-	{
+	private function isNewline(c:int):Boolean {
 		return c==0x0a||c==0x0d;
 	}
 	
-	private function isIdentifier(c:int):Boolean
-	{
+	private function isIdentifier(c:int):Boolean {
 		if(isDigit(c))return true;
 		if(c>0x60&&c<0x7b)return true;
 		if(c>0x40&&c<0x5b)return true;
@@ -275,34 +241,28 @@ class JsonDecoder
 		return true;
 	}
 }
-class JsonEncoder
-{
+class JsonEncoder {
 	private var unescapes:Object={"\b":"b","\f":"f","\n":"n","\r":"r","\t":"t"};
 	private var escapePtn:RegExp=/["\b\f\n\r\t\\]/g;//"
 	private var controlPtn:RegExp=/\x00-\x19/g;
 	
-	public function encode(obj:*):String
-	{
+	public function encode(obj:*):String {
 		var str:String=null;
 		var bool:Boolean=false;
 		if(obj===null)return "null";
 		if(obj===undefined)return "undefined";
 		if(obj is String)return encodeString(obj);
-		if(obj is Array)
-		{
+		if(obj is Array){
 			str="[";
-			for (var i:int=0,j:int=obj["length"];i<j;i++)
-			{
+			for (var i:int=0,j:int=obj["length"];i<j;i++){
 				bool?(str+=","):(bool=true);
 				str+=encode(obj[i]);
 			}
 			return str+"]";
 		}
-		if(obj["constructor"]==Object)
-		{
+		if(obj["constructor"]==Object){
 			str="{";
-			for (var k:String in obj)
-			{
+			for (var k:String in obj){
 				bool?(str+=","):(bool=true);
 				str+=encodeString(k)+":"+encode(obj[k]);
 			}
@@ -311,21 +271,17 @@ class JsonEncoder
 		return obj;
 	}
 	
-	private function escapeRepl(...args):String
-	{
+	private function escapeRepl(...args):String {
 		return "\\"+(unescapes[args[0]]||args[0]);
 	}
 	
-	private function controlRepl(...args):String
-	{
+	private function controlRepl(...args):String {
 		var hexCode:String=String(args[0]).charCodeAt(0).toString(16);
-		if (hexCode.length==1)
-			hexCode="0"+hexCode;
+		if (hexCode.length==1)hexCode="0"+hexCode;
 		return "\\x"+hexCode;
 	}
 	
-	private function encodeString(str:String):String
-	{
+	private function encodeString(str:String):String {
 		str=str.replace(escapePtn,escapeRepl);
 		str=str.replace(controlPtn,controlRepl);
 		return "\""+str+"\"";

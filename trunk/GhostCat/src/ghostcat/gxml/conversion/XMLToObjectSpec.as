@@ -97,9 +97,9 @@ package ghostcat.gxml.conversion
 		 */
 		public function addChild(source:*,child:*,xml:XML):void
 		{
-			var name:String = xml.localName().toString();
 			if (!isClass(xml))
 			{
+				var name:String = xml.localName().toString();
 				if (child is Array)
 				{	
 					//只有大于两个元素的才会被认为是数组
@@ -154,7 +154,7 @@ package ghostcat.gxml.conversion
 				return false;
 			
 			var name:String = xml.localName();
-			if (name)
+			if (name && !ReflectXMLUtil.isSimpleClass(name))
 			{
 				var firstCode:String = name.charAt(0);
 				return firstCode >= "A" && firstCode <= "Z";

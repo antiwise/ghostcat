@@ -40,19 +40,19 @@ package ghostcat.gxml.conversion
 				}
 				return source;
 			}
-			else if (isObject(obj))//是类
+			else if (isObject(obj))//是复杂类
 			{
 				var xml:XML = <xml/>;
 				xml.setName(getName(obj));
 				createChildren(xml,obj);//创建类的子对象
 				return xml;
 			}
-			else if (obj != null)//是属性
+			else if (obj != null)//是简单类
 			{
-				xml = <xml/>;
-				xml.setName(getName(obj));
-				xml.appendChild(obj);
-				return xml;
+//				xml = <xml/>;
+//				xml.setName(getName(obj));
+//				xml.appendChild(obj);
+				return obj.toString();
 			}
 			else
 			{
@@ -125,7 +125,7 @@ package ghostcat.gxml.conversion
 		 */
 		protected function isObject(obj:Object):Boolean
 		{
-			return obj != null && !(obj is Number || obj is String || obj is Array || obj is Boolean);
+			return obj != null && !ReflectXMLUtil.isSimpleClass(getQualifiedClassName(obj));
 		}
 		
 		protected function getName(obj:Object):*
