@@ -2,6 +2,7 @@ package ghostcat.util
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.util.core.ClassFactory;
 
@@ -143,5 +144,16 @@ package ghostcat.util
 			}
             return result;
         }
+		
+		/**
+		 * 是简单类型
+		 * @param v
+		 * @return 
+		 * 
+		 */
+		public static function isSimpleClass(name:String):Boolean
+		{
+			return name == "String" || name == "Number" || name == "Boolean" || name == "Array"
+		}
 	}
 }

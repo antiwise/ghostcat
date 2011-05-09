@@ -218,10 +218,10 @@ package ghostcat.display.filter
 			for (var i:int = 0;i < m1.length;i++)
 				result[i] = m1[i] + m2[i];
 			
-			m1[0]--;
-			m1[6]--;
-			m1[12]--;
-			m1[18]--;
+			result[0]--;
+			result[6]--;
+			result[12]--;
+			result[18]--;
 			return result;
 		}
 	}

@@ -215,11 +215,10 @@ package ghostcat.display.filter
          */
         public static function createContrastMatrix(n:Number):Array
         {
-			n = n / 100 + 1;
-        	return [n,	0,	0,	0,	128*(1-n),
-						 0,	n,	0,	0,	128*(1-n),
-						 0,	0,	n,	0,	128*(1-n),
-						 0,	0,	0,	1,	0];
+			return [n / 100 + 1,	0,	0,	0,	-128*(n / 100),
+					 0,	n / 100 + 1,	0,	0,	-128*(n / 100),
+					 0,	0,	n / 100 + 1,	0,	-128*(n / 100),
+					 0,	0,	0,	1,	0];
         }
         
         /**

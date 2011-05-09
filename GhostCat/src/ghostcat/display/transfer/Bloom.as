@@ -3,9 +3,11 @@ package ghostcat.display.transfer
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.filters.BlurFilter;
+	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	
 	import ghostcat.display.filter.ColorMatrixFilterProxy;
+	import ghostcat.display.filter.MultiColorMatrixFilterProxy;
 	import ghostcat.util.display.BitmapUtil;
 	
 
@@ -72,10 +74,9 @@ package ghostcat.display.transfer
 			super.renderTarget();
 			
 			this.filters = [
-				ColorMatrixFilterProxy.createBrightnessFilter(brightness),
-				ColorMatrixFilterProxy.createContrastFilter(contrast),
-				new BlurFilter(blur,blur),
-				ColorMatrixFilterProxy.createSaturationFilter(0)
+				new ColorMatrixFilter(MultiColorMatrixFilterProxy.createMultColorMatrix(brightness / 255 * 100)),
+				new ColorMatrixFilter(MultiColorMatrixFilterProxy.createMultColorMatrix(0,contrast * 100,-100)),
+				new BlurFilter(blur,blur)
 			];
 		}
 	}

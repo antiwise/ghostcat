@@ -211,7 +211,7 @@ package ghostcat.gxml.spec
 				return false;
 				
 			var name:String = xml.localName();
-			if (name)
+			if (name && !ReflectXMLUtil.isSimpleClass(name))
 			{
 				var firstCode:String = name.charAt(0);
 				return firstCode >= "A" && firstCode <= "Z";
