@@ -299,6 +299,8 @@ package ghostcat.display
 				
 				oldParent.removeChild(target);
 				oldParent.addChildAt(this,oldIndex);
+				
+				this.contentInited = true;
 			}
 		}
 		

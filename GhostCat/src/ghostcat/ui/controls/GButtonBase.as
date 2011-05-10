@@ -1,5 +1,6 @@
 package ghostcat.ui.controls
 {
+	import flash.display.FrameLabel;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -33,7 +34,18 @@ package ghostcat.ui.controls
 		public static const LABEL_SELECTED_OVER:String = "selectedOver";
 		public static const LABEL_SELECTED_DOWN:String = "selectedDown";
 		public static const LABEL_SELECTED_DISABLED:String = "selectedDisabled";
-		private var _autoRefreshLabelField:Boolean = true;
+		
+		public static var defaultLabels:Array = [
+			new FrameLabel("up",1),new FrameLabel("over",2),
+			new FrameLabel("down",3),new FrameLabel("disabled",4),
+			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
+			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
+		];
+		
+		/**
+		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
+		 */
+		public var useDefaultLabels:Boolean = true;
 		
 		/**
 		 * Label文本实例 
@@ -44,6 +56,8 @@ package ghostcat.ui.controls
 		 * data中显示成label的字段
 		 */
 		public var labelField:String;
+		
+		private var _autoRefreshLabelField:Boolean = true;
 		
 		/**
 		 * 是否创建Label文本框（此属性已取消，必须用GButtonBase构造函数的第5个参数来设置）

@@ -22,17 +22,6 @@ package ghostcat.ui.controls
 	public class GButton extends GButtonBase
 	{
 		static public var defaultSkin:* = ButtonSkin;
-		static public var defaultLabels:Array = [
-			new FrameLabel("up",1),new FrameLabel("over",2),
-			new FrameLabel("down",3),new FrameLabel("disabled",4),
-			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
-			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
-		];
-		
-		/**
-		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
-		 */
-		public var useDefaultLabels:Boolean = true;
 		
 		/**
 		 * 
