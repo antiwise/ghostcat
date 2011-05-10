@@ -2,8 +2,6 @@ package ghostcat.ui.controls
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.FrameLabel;
-	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -12,17 +10,14 @@ package ghostcat.ui.controls
 	
 	import ghostcat.display.bitmap.BitmapMouseChecker;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
-	import ghostcat.display.movieclip.FrameLabelUtil;
 	import ghostcat.display.movieclip.GBitmapMovieClip;
-	import ghostcat.parse.graphics.GraphicsBitmapFill;
 	import ghostcat.ui.layout.Padding;
 	import ghostcat.util.display.BitmapSeparateUtil;
-	import ghostcat.util.display.GraphicsUtil;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	
 	/**
-	 * 位图按钮
+	 * 位图按钮，skin可以传入BitmapData数组，也可以传入专门的BitmapButtonSkin对象，以便用于替换
 	 * 
 	 * 标签规则：为一整动画，up,over,down,disabled,selectedUp,selectedOver,selectedDown,selectedDisabled是按钮的八个状态，
 	 * 状态间的过滤为两个标签中间加-，末尾加:start。比如up和over的过滤即为up-over:start
@@ -34,23 +29,28 @@ package ghostcat.ui.controls
 	 */	
 	public class GBitmapButton extends GButtonBase implements IBitmapDataDrawer
 	{
-		static public var defaultLabels:Array = [
-			new FrameLabel("up",1),new FrameLabel("over",2),
-			new FrameLabel("down",3),new FrameLabel("disabled",4),
-			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
-			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
-		];
-		/**
-		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
-		 */
-		public var useDefaultLabels:Boolean = true;
-		
-		public function GBitmapButton(bitmaps:Array=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
+		public function GBitmapButton(skin:*=null,labels:Array=null,textPadding:Padding=null,enabledAdjustContextSize:Boolean = false)
 		{
-			if (useDefaultLabels && (bitmaps && bitmaps.length > 1) && !(labels && labels.length))
-				labels = defaultLabels;
+			var bitmaps:Array;
+			var currentLabels:Array;
+			if (skin is BitmapButtonSkin)
+			{
+				bitmaps = BitmapButtonSkin(skin).bitmapDatas;
+				currentLabels = BitmapButtonSkin(skin).labels;
+				this.replaceTarget(BitmapButtonSkin(skin));
+			}
+			else if (skin is Array)
+			{
+				bitmaps = skin as Array;
+			}
 			
-			movie = new GBitmapMovieClip(bitmaps,labels);
+			if (labels)
+				currentLabels = labels.concat();
+			
+			if (useDefaultLabels && (bitmaps && bitmaps.length > 1) && !(currentLabels && currentLabels.length))
+				currentLabels = defaultLabels;
+			
+			movie = new GBitmapMovieClip(bitmaps,currentLabels);
 			
 			super(movie.content, true, true,textPadding,enabledAdjustContextSize);
 		}
@@ -97,13 +97,15 @@ package ghostcat.ui.controls
 		 * @param rect	绘制范围
 		 * @param start	起始帧
 		 * @param len	长度
+		 * @param readWhenPlaying 	是否在播放时顺便缓存
+		 * @param readWhenPlaying	每次缓存允许占用的时间
 		 * @return 
 		 * 
 		 */
-		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1):void
+		public function createFromMovieClip(mc:MovieClip,rect:Rectangle=null,start:int = 1,len:int = -1,readWhenPlaying:Boolean = false,limitTimeInFrame:int = 10):void
 		{
 			movie.addEventListener(Event.COMPLETE,renderCompleteHandler);
-			(movie as GBitmapMovieClip).createFromMovieClip(mc,rect,start,len);
+			(movie as GBitmapMovieClip).createFromMovieClip(mc,rect,start,len,readWhenPlaying,limitTimeInFrame);
 		}
 		
 		private function renderCompleteHandler(event:Event):void
