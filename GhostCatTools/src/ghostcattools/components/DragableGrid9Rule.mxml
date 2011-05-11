@@ -7,8 +7,42 @@
 	<fx:Script>
 		<![CDATA[
 			import com.as3xls.biff.Record;
+			
 			import flash.filters.GlowFilter;
+			
 			import ghostcat.manager.DragManager;
+			
+			public var gridStep:Number = 1.0;
+			
+			public override function set x(value:Number):void
+			{
+				super.x = int(value / gridStep) * gridStep;
+			}
+			
+			public override function set y(value:Number):void
+			{
+				super.y = int(value / gridStep) * gridStep;
+			}
+			
+			private var _value:int;
+
+			[Bindable]
+			public function get value():int
+			{
+				return _value;
+			}
+
+			public function set value(value:int):void
+			{
+				_value = value;
+				
+				if (type == 0)
+					y = value;
+				else
+					x = value;
+			}
+
+			
 			protected override function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 			{
 				super.updateDisplayList(unscaledWidth,unscaledHeight);

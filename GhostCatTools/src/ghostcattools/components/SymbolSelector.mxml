@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" title="选择元件"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="304" height="300" close="titlewindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import ghostcat.fileformat.swf.SWFDecoder;
+			import ghostcat.fileformat.swf.tag.SymbolClassTag;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.collections.ArrayList;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			private var _source:String;
+
+			public function get source():String
+			{
+				return _source;
+			}
+
+			public function set source(value:String):void
+			{
+				_source = value;
+				
+				if (value)
+				{
+					var bytes:ByteArray = FileControl.readFile(new File(value))
+					var swf:SWFDecoder = new SWFDecoder(bytes);
+					var tags:Array = swf.getTags(SymbolClassTag);
+					if (tags && tags.length > 0)
+						listData = new ArrayList(SymbolClassTag(tags[0]).symbolClasses);
+				}
+			}
+			
+			public var selectedHandler:Function;
+			
+			[Bindable]
+			public var selectedItem:String;
+			
+			[Bindable]
+			public var listData:ArrayList;
+			
+			public function show(parent:DisplayObject,model:Boolean = true):void
+			{
+				PopUpManager.addPopUp(this,parent,model);
+				PopUpManager.centerPopUp(this);
+			}
+			
+			public function close():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			protected function titlewindow1_closeHandler(event:Event):void
+			{
+				close();
+			}
+			
+			protected function okBN_clickHandler(event:MouseEvent):void
+			{
+				close();
+				if (selectedHandler != null)
+					selectedHandler(selectedItem);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Binding destination="selectedItem" source="list.selectedItem"/>
+	<s:List id="list" left="10" right="10" top="10" bottom="39" dataProvider="{listData}"/>
+	<s:Button id="okBN" x="49" bottom="10" label="确定" click="okBN_clickHandler(event)"/>
+	<s:Button id="cancelBN" x="184" bottom="10" label="取消" click="titlewindow1_closeHandler(event)"/>
+</s:TitleWindow>

@@ -51,6 +51,8 @@
 					
 					if (isNew)
 						Alert.show("当前最新版本为：" + version + "，是否现在更新？","检查更新",Alert.YES|Alert.NO,null,closeHandler);
+					else
+						Alert.show("您现在的版本" + version + "已经是最新版本。","检查更新");
 					
 					function closeHandler(event:CloseEvent):void
 					{
@@ -68,6 +70,7 @@
 			
 			private function loadNewVersion(url:String,version:String):void
 			{
+				this.loadPerent = 0;
 				this.currentState = "loading";
 				
 				var file:File = File.applicationStorageDirectory.resolvePath("GhostCatTools_" + version.replace(/\./,"_") +".exe");
