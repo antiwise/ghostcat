@@ -587,6 +587,7 @@
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.ui.controls.BitmapButtonSkin"/>
+    <classEntry path="ghostcat.util.data.XMLListUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
