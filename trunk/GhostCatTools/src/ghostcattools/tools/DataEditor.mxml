@@ -2,36 +2,69 @@
 <components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 						 xmlns:s="library://ns.adobe.com/flex/spark"
 						 xmlns:mx="library://ns.adobe.com/flex/mx"
-						 xmlns:components="ghostcattools.components.*"
-						 width="584" height="484" currentState="base" title="数据编辑">
+						 xmlns:components="ghostcattools.components.*" enabledDragOpen="false"
+						 width="584" height="484" currentState="base" title="数据编辑" creationComplete="gctoolwindow1_creationCompleteHandler(event)">
 
 	<fx:Script>
 		<![CDATA[
-			import ghostcat.fileformat.XMLJSONChecker;
-			import ghostcat.util.data.Json;
+			import com.as3xls.xls.ExcelFile;
+			import com.as3xls.xls.Sheet;
 			
+			import ghostcat.fileformat.XMLJSONChecker;
+			import ghostcat.fileformat.csv.CSV;
+			import ghostcat.gxml.conversion.ObjectToXMLSpec;
+			import ghostcat.gxml.conversion.XMLToObjectSpec;
+			import ghostcat.util.data.Json;
+			import ghostcat.util.data.XMLListUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.components.RenameTitleWindow;
+			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
-			import spark.components.mediaClasses.VolumeBar;
+			import mx.collections.IList;
+			import mx.collections.XMLListCollection;
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.utils.ObjectProxy;
+			
+			import spark.components.gridClasses.CellPosition;
+			import spark.events.GridEvent;
+			import spark.events.GridItemEditorEvent;
 			
 			public var data:Object;
 
-			private var bytes:ByteArray;
+			private var bytes:ByteArray = new ByteArray();//读取完毕时暂存
+			private var fileUrl:String;
 			
 			[Bindable]
-			public var curPath:String = "";
-			
+			public var curPath:String = "";//属性栏地址
 			[Bindable]
-			public var propertyList:ArrayList;
+			public var propertyObject:Object;//属性原始数据
 			[Bindable]
-			public var detailList:ArrayList;
+			public var propertyList:ArrayList;//属性列表化后的数据
+			[Bindable]
+			public var curDetailPath:String = "";//列表栏地址
+			[Bindable]
+			public var detailList:IList;//列表数据
+			[Bindable]
+			public var columnList:ArrayList;//列表项
+			[Bindable]
+			public var isMultilineDetailList:Boolean;//是多行的列表项
 			[Bindable]
 			public var isCompress:Boolean;
+			[Bindable]
+			public var sourceChanged:Boolean;
+			[Bindable]
+			public var dataFormat:Object = "xml";
+			[Bindable]
+			public var classRefName:String = "";
 			
 			public override function openFileHandler(files:Array):void
 			{
 				var file:File = files[0] as File;
 				bytes = FileControl.readFile(file);
+				fileUrl = file.nativePath;
 				try
 				{
 					bytes.uncompress();
@@ -45,49 +78,114 @@
 				bytes.position = 0;
 				if (!type)
 					type = "amf3";
-				radiogroup.selectedValue = type;
-				changeDataFormat();
+				
+				this.dataFormat = type;
+				this.readDataFromBytes();
+				
+				this.currentState = "base";
 			}
 			
-			private function changeDataFormat():void
+			private function readDataFromBytes():void
 			{
+				bytes.position = 0;
 				var text:String;
 				try
 				{
-					switch (radiogroup.selectedValue)
+					switch (dataFormat)
 					{
 						case "xml":
 							text = bytes.readUTFBytes(bytes.bytesAvailable)
 							if (text.charCodeAt(0) == 65279)
 								text = text.slice(1);
 							this.data = new XML(text);
-							this.sourceText.text = text;	
 							break;
 						case "json":
 							text = bytes.readUTFBytes(bytes.bytesAvailable);
 							if (text.charCodeAt(0) == 65279)
 								text = text.slice(1);
 							this.data = Json.decode(text);
-							this.sourceText.text = text;	
 							break;
 						case "amf3":
 							this.data = bytes.readObject();
-							this.sourceText.text = Json.encode(text);
 							break;
 					}
 				}
 				catch (e:Error)
 				{
 					this.data = null;
-					this.sourceText.text = "";
 				};
+				this.getSourceFromData();
+				this.reset();
+				
+				sourceChanged = true;
+			}
+			
+			private function getSourceFromData():void
+			{
+				if (!data)
+				{
+					this.sourceText.text = null;
+					return;
+				}
+				
+				switch (dataFormat)
+				{
+					case "xml":
+						this.sourceText.text = XML(data).toXMLString();
+						break;
+					case "json":
+					case "amf3":
+						this.sourceText.text = Json.encode(data);
+						break;
+				}
+				
+				sourceChanged = false;
+			}
+			
+			private function getDataFromSource():Boolean
+			{
+				try
+				{
+					switch (dataFormat)
+					{
+						case "xml":
+							this.data = new XML(this.sourceText.text);
+							break;
+						case "json":
+						case "amf3":
+							this.data = Json.decode(this.sourceText.text);
+							break;
+					}
+					this.reset();
+					return true;
+					
+				}
+				catch (e:Error)
+				{
+					new GCAlert().show("文本格式错误！",this);
+				};
+				return false;
+			}
+			
+			private function reset():void
+			{
+				this.curPath = this.curDetailPath = "";
+				this.propertyList = null;
+				this.detailList = null;
+				this.tabNav.selectedIndex = 0;
 			}
 			
 			private function saveFileHandler(files:Array):void
 			{
 				var file:File = files[0] as File;
 				var bytes:ByteArray = new ByteArray();
-				switch (radiogroup.selectedValue)
+				
+				if (tabNav.selectedIndex == 0)
+				{
+					if (!this.getDataFromSource())
+						return;
+				}
+				switch (dataFormat)
 				{
 					case "xml":
 						bytes.writeUTFBytes((data as XML).toXMLString())
@@ -99,37 +197,702 @@
 						bytes.writeObject(data);
 						break;
 				}
-				FileControl.writeFile(file,bytes);
-			}
-			
-			private function saveSourceData():void
-			{
 				
+				if (isCompress)
+					bytes.compress();
+					
+				FileControl.writeFile(file,bytes);
 			}
 			
 			protected function openBN_clickHandler(event:MouseEvent):void
 			{
-				FileControl.browseForOpen(openFileHandler);
-			}
-
-			protected function saveBN_clickHandler(event:MouseEvent):void
-			{
-				FileControl.browseForSave(saveFileHandler);
-			}
-
-			protected function radiogroup_changeHandler(event:Event):void
-			{
-				changeDataFormat();
+				FileControl.browseForOpen(openFileHandler,"打开文件");
 			}
 			
-			protected function sourceText_focusOutHandler(event:FocusEvent):void
+			protected function saveBN_clickHandler(event:MouseEvent):void
 			{
-				saveSourceData();
+				FileControl.browseForSave(saveFileHandler,"保存文件",fileUrl);
 			}
 			
 			protected function startEdit_clickHandler(event:MouseEvent):void
 			{
-				this.currentState = "ready"
+				this.bytes = null;
+				this.currentState = "ready";
+				this.getDataFromSource();
+				this.refreshPropertyData();
+				this.tabNav.selectedIndex = 1;
+			}
+			
+			//编辑
+			
+			private function isComplexXML(value:Object):Boolean
+			{
+				return value is XML && ((value as XML).hasComplexContent() || (value as XML).attributes().length())
+			}
+			
+			private function isComplexObject(value:Object):Boolean
+			{
+				return value && value["constructor"] == Object;
+			}
+			
+			private function isComplexType(value:Object):Boolean
+			{
+				return value is XMLList || isComplexXML(value) || value is Array || isComplexObject(value);
+			}
+			
+			private function refreshPropertyData():void
+			{
+				var paths:Array = curPath.split(/\[|\]|\./);
+				var currentObj:Object = this.data;
+				for (var i:int = 0;i < paths.length;i++)
+				{
+					if (paths[i])
+						currentObj = currentObj[paths[i]];
+				}
+				
+				this.propertyObject = currentObj;
+				
+				var list:Array = [];
+				if (propertyObject is XML)
+				{
+					for each (var child:XML in (propertyObject as XML).attributes())
+						list.push({label:"@"+child.name(),value:child});
+					
+					var childDict:Dictionary = new Dictionary();
+					for each (child in (propertyObject as XML).children())
+					{
+						var childname:String = child.name();
+						childDict[childname ? childname : ""] = true;
+					}
+					
+					for (var p:String in childDict)
+					{
+						if (p)
+							list.push({label:p,value:(propertyObject as XML).child(p)});
+						else
+							list.push({label:p,value:(propertyObject as XML).child(0)});
+					}
+				}
+				else if (isComplexType(propertyObject))
+				{
+					for (p in propertyObject)
+						list.push({label:p,value:propertyObject[p]});
+				}
+				else
+				{
+					list.push({label:"",value:propertyObject[p]});
+				}
+				this.propertyList = new ArrayList(list);
+				if (this.propertyDataGrid && this.propertyList.length)
+				{
+					this.propertyDataGrid.selectedIndex = 0;
+					this.refreshDetailList();
+				}
+				else
+				{
+					if (this.detailDataGrid)
+						this.detailDataGrid.visible = false;
+				}
+			}
+			
+			private function refreshDetailList():void
+			{
+				if (!this.propertyDataGrid)
+					return;
+				
+				var selectedItem:Object = this.propertyDataGrid.selectedItem;
+				if (!selectedItem)
+				{
+					this.detailList = null;
+					this.columnList = null;
+					return;
+				}
+				
+				var selectedValue:Object = selectedItem.value;
+				if (selectedValue is Array)
+				{
+					this.isMultilineDetailList = true;
+					detailList = new ArrayList(selectedValue as Array)
+				}
+				else if (selectedValue is XMLList)
+				{
+					this.isMultilineDetailList = true;
+					detailList = new XMLListCollection(selectedValue as XMLList);
+				}
+				else if (isComplexXML(selectedValue) || isComplexObject(selectedValue))
+				{
+					this.isMultilineDetailList = false;
+					detailList = new ArrayList([selectedValue]);
+				}
+				else
+				{
+					this.isMultilineDetailList = false;
+					detailList = null;
+				}
+				
+				this.curDetailPath = this.curPath + "." + selectedItem.label;
+				
+				var keys:Array = [];
+				var keyDict:Dictionary = new Dictionary();
+				if (detailList)
+				{
+					for each (var currentObj:Object in detailList.toArray())
+					{
+						var list:Array = [];
+						if (currentObj is XML)
+						{
+							for each (var child:XML in (currentObj as XML).attributes())
+								list.push("@"+child.name());
+							
+							var childDict:Dictionary = new Dictionary();
+							for each (child in (currentObj as XML).children())
+							{
+								var childname:String = child.name();
+								childDict[childname ? childname : ""] = true;
+							}
+							for (var p:String in childDict)
+								list.push(p);
+						}
+						else
+						{
+							for (p in currentObj)
+								list.push(p);
+						}
+						
+						for each (p in list)
+						{
+							if (!keyDict[p])
+							{
+								keyDict[p] = true;
+								
+								var column:GridColumn = new GridColumn(p);
+								column.minWidth = 80;
+								column.labelFunction = getValueFunction;
+								column.dataField = p;
+								keys.push(column);
+							}
+						}
+					}
+				}
+				this.columnList = new ArrayList(keys);
+			}
+			
+			protected function getValueFunction(item:Object, column:GridColumn):String
+			{
+				var value:Object;
+				var dataField:String = column.dataField;
+				if (dataField)
+					value = item[dataField];
+				else if (item is XML)
+					value = (item as XML).child(0);
+				else
+					value = item;
+				
+				if (!value)
+					return "";
+				else if (!isComplexType(value))
+					return value.toString();
+				else if (value is XMLList && (value as XMLList).length() <= 1 && !isComplexType(value[0]))
+					return value.toString();
+				else	
+					return "..."
+			}
+			
+			protected function propertyDataGrid_gridDoubleClickHandler(event:GridEvent):void
+			{
+				if (event.rowIndex == -1 || event.columnIndex != 1)
+					return;
+				
+				var valueString:String = getValueFunction(event.item,event.column);
+				if (valueString == "...")
+				{
+					this.curPath = this.curPath + "." + event.item.label;
+					this.refreshPropertyData();
+				}
+			}
+			
+			protected function detailDataGrid_gridDoubleClickHandler(event:GridEvent):void
+			{
+				var selectedItem:Object = this.propertyDataGrid.selectedItem;
+				if (!selectedItem || event.columnIndex == -1 || event.rowIndex == -1)
+					return;
+				
+				var valueString:String = getValueFunction(event.item,event.column);
+				if (valueString == "...")
+				{
+					var label:String = event.column.dataField;
+					if (selectedItem.value is Array || selectedItem.value is XMLList)
+						this.curPath = this.curDetailPath + "." + event.rowIndex + "." + label;
+					else if (selectedItem.value is XML)
+						this.curPath = this.curDetailPath + "." + label + "." + event.rowIndex;
+					else
+						this.curPath = this.curDetailPath + "." + label;
+					
+					this.refreshPropertyData();
+				}
+			}
+			
+			protected function propertyDataGrid_gridClickHandler(event:GridEvent):void
+			{
+				if (event.rowIndex == -1 || event.columnIndex != 1)
+					return;
+				
+				var valueString:String = getValueFunction(event.item,event.column);
+				if (valueString != "...")
+				{
+					if (this.propertyDataGrid.editorRowIndex == -1)
+					{
+						this.propertyDataGrid.editable = true;
+						this.propertyDataGrid.startItemEditorSession(event.rowIndex,event.columnIndex);
+					}
+				}
+			}
+			protected function detailDataGrid_gridClickHandler(event:GridEvent):void
+			{
+				if (event.columnIndex == -1 || event.rowIndex == -1)
+					return;
+				
+				var valueString:String = getValueFunction(event.item,event.column);
+				if (valueString != "...")
+				{
+					if (this.detailDataGrid.editorRowIndex == -1)
+					{
+						this.detailDataGrid.editable = true;
+						this.detailDataGrid.startItemEditorSession(event.rowIndex,event.columnIndex);
+					}
+				}
+			}
+			
+			protected function prevLv_clickHandler(event:MouseEvent):void
+			{
+				var index:int = curPath.lastIndexOf(".");
+				if (index == -1)
+					curPath = "";
+				else
+					curPath = curPath.slice(0,index);
+				
+				this.refreshPropertyData();
+			}
+			
+			protected function propertyDataGrid_gridItemEditorSessionSaveHandler(event:GridItemEditorEvent):void
+			{
+				var dataGrid:DataGrid = event.currentTarget as DataGrid;
+				dataGrid.editable = false;
+				
+				var item:Object = propertyList.getItemAt(event.rowIndex);
+				propertyObject[item.label] = item.value;
+			}
+			
+			protected function gridItemEditorSessionEndHandler(event:GridItemEditorEvent):void
+			{
+				var dataGrid:DataGrid = event.currentTarget as DataGrid;
+				dataGrid.editable = false;
+			}
+			
+			protected function tabNav_changeHandler(event:IndexChangedEvent):void
+			{
+				if (event.oldIndex == event.newIndex)
+					return;
+				
+				if (event.newIndex == 0)
+					getSourceFromData();
+			}
+			
+			//转换
+			
+			private function transTo(type:String):void
+			{
+				try
+				{
+					if (this.dataFormat == "xml")
+					{
+						if (type != "xml")
+						{
+							var spec:XMLToObjectSpec = new XMLToObjectSpec();
+							spec.classRefName = classRefName;
+							this.data = spec.createObject(this.data as XML)
+						}
+					}
+					else
+					{
+						if (type == "xml")
+						{
+							var objSpec:ObjectToXMLSpec = new ObjectToXMLSpec();
+							objSpec.classRefName = classRefName;
+							this.data = objSpec.createObject(this.data);
+						}
+					}
+					
+					this.dataFormat = type;
+					this.reset();
+					this.getSourceFromData();
+					this.refreshPropertyData();
+				} 
+				catch(error:Error) 
+				{
+					new GCAlert().show("转换失败",this)
+				}
+			}
+			
+			//添加删除
+			
+			protected function addPropBN_clickHandler(event:MouseEvent):void
+			{
+				var selectedIndex:int = this.propertyDataGrid.selectedIndex;
+				if (propertyObject is Array)
+				{
+					if (selectedIndex != -1)
+						(propertyObject as Array).splice(selectedIndex,0,{});
+					else
+						(propertyObject as Array).push({});
+					
+					refreshPropertyData();
+				}
+				else if (propertyObject is XMLList)
+				{
+					if ((propertyObject as XMLList).length() > 0)
+					{
+						var child:XML = <xml/>
+						child.setName(((propertyObject as XMLList)[0] as XML).name())
+						if (selectedIndex != -1)
+							XMLListUtil.addItemAt(propertyObject as XMLList,child,selectedIndex)
+						else
+							XMLListUtil.addItem(propertyObject as XMLList,child);
+						
+						refreshPropertyData();
+					}
+					else
+					{
+						var window:RenameTitleWindow = new RenameTitleWindow();
+						window.title = "请输入属性名";
+						window.show(this);
+						window.renameHandler = function (str:String):void
+						{
+							var child:XML = <xml/>;
+							child.setName(str);
+							if (selectedIndex != -1)
+								XMLListUtil.addItemAt(propertyObject as XMLList,child,selectedIndex)
+							else
+								XMLListUtil.addItem(propertyObject as XMLList,child);
+							
+							refreshPropertyData();
+						}
+					}
+				}
+				else
+				{
+					window = new RenameTitleWindow();
+					window.title = "请输入属性名";
+					window.show(this);
+					window.renameHandler = function (str:String):void
+					{
+						propertyObject[str] = "";
+						refreshPropertyData();
+					}
+				}
+			}
+			
+			protected function removePropBN_clickHandler(event:MouseEvent):void
+			{
+				var selectedIndex:int = this.propertyDataGrid.selectedIndex;
+				if (selectedIndex == -1)
+					return;
+				
+				if (propertyObject is Array)
+					(propertyObject as Array).splice(selectedIndex,1);
+				else if (propertyObject is XMLList)
+					delete (propertyObject as XMLList)[selectedIndex];
+				else
+					delete propertyObject[this.propertyDataGrid.selectedItem.label];
+				
+				refreshPropertyData();
+			}
+			
+			protected function addDetailBN_clickHandler(event:MouseEvent):void
+			{
+				var selectedIndex:int = this.detailDataGrid.selectedCell ? this.detailDataGrid.selectedCell.rowIndex : -1;
+				
+				var selectedItem:Object = this.propertyDataGrid.selectedItem;
+				var selectedValue:Object = selectedItem.value;
+				if (selectedValue is Array)
+				{
+					if (selectedIndex != -1)
+						detailList.addItemAt({},selectedIndex);
+					else
+						detailList.addItem({});
+					
+					refreshDetailList();
+				}
+				else if (selectedValue is XMLList)
+				{
+					if ((selectedValue as XMLList).length() > 0)
+					{
+						var child:XML = <xml/>
+						child.setName(((selectedValue as XMLList)[0] as XML).name())
+						if (selectedIndex != -1)
+							detailList.addItemAt(child,selectedIndex);
+						else
+							detailList.addItem(child);
+						
+						refreshDetailList();
+					}
+					else
+					{
+						var window:RenameTitleWindow = new RenameTitleWindow();
+						window.title = "请输入属性名";
+						window.show(this);
+						window.renameHandler = function (str:String):void
+						{
+							var child:XML = <xml/>;
+							child.setName(str);
+							if (selectedIndex != -1)
+								detailList.addItemAt(child,selectedIndex)
+							else
+								detailList.addItem(child);
+							
+							refreshDetailList();
+						}
+					}
+				}
+				
+			}
+			
+			protected function removeDetailBN_clickHandler(event:MouseEvent):void
+			{
+				var selectedIndex:int = this.detailDataGrid.selectedCell ? this.detailDataGrid.selectedCell.rowIndex : -1;
+				if (selectedIndex == -1)
+					return;
+				
+				detailList.removeItemAt(selectedIndex);
+				refreshDetailList();
+			}
+			
+			//查询
+			
+			private var searchText:String;
+			
+			protected function findBN_clickHandler(event:MouseEvent):void
+			{
+				var win:RenameTitleWindow = new RenameTitleWindow();
+				win.title = "查询";
+				win.text = searchText;
+				win.show(this);
+				win.renameHandler = function (str:String):void
+				{
+					findText(str);
+					searchText = str;
+				}
+			}
+			
+			protected function findNextBN_clickHandler(event:MouseEvent):void
+			{
+				findText(searchText);
+			}
+			
+			private function findText(str:String):void
+			{
+				var selectedCell:CellPosition = detailDataGrid.selectedCell;
+				var startRow:int = selectedCell ? selectedCell.rowIndex : 0;
+				
+				detailDataGrid.selectedCell = null;
+				
+				for (var i:int = startRow;i < this.detailList.length;i++)
+				{
+					var o:Object = this.detailList.getItemAt(i);
+					for (var j:int = 0;j < this.columnList.source.length;j++)
+					{
+						var dataField:String = GridColumn(this.columnList.getItemAt(j)).dataField;
+						var v:String = o[dataField];
+						if (!str && !v || v && v.indexOf(str) != -1)
+						{
+							var cellPosition:CellPosition = new CellPosition(i,j);
+							if (!selectedCell || cellPosition.rowIndex > selectedCell.rowIndex || cellPosition.rowIndex == selectedCell.rowIndex && cellPosition.columnIndex > selectedCell.columnIndex)
+							{
+								detailDataGrid.selectedCell = cellPosition;
+								detailDataGrid.ensureCellIsVisible(cellPosition.rowIndex,cellPosition.columnIndex);
+								return;
+							}
+						}
+					}
+				}
+			}
+			
+			
+			//Excel
+			
+			protected function loadXLSBN_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(openXLSHandler,"打开一个Excel文件",[new FileFilter("Excel 文档","*.csv;*.xls")]);
+			}
+			
+			private function setDecodeColumnValue(o:Object,v:String,j:int):void
+			{
+				var column:GridColumn = this.columnList.getItemAt(j) as GridColumn;
+				var dataField:String = column.dataField;
+				try
+				{
+					if (dataFormat == "xml")
+						o[dataField] = new XML(v);
+					else
+						o[dataField] = Json.decode(v);
+				}
+				catch (e:Error)
+				{
+					o[dataField] = v;
+				}
+			}
+			
+			private function openXLSHandler(files:Array):void
+			{
+				var file:File = files[0] as File;
+				var bytes:ByteArray = FileControl.readFile(file);
+				bytes.position = 0;
+				
+				var selectedItem:Object = this.propertyDataGrid.selectedItem;
+				var selectedValue:Object = selectedItem.value;
+				if (selectedValue is XMLList)
+				{
+					if ((selectedValue as XMLList).length() > 0)
+						var xmlName:Object = ((selectedValue as XMLList)[0] as XML).name();
+				}
+					
+				this.detailList.removeAll();
+				if (file.extension == "xls")
+				{
+					var xls:ExcelFile = new ExcelFile();
+					xls.loadFromByteArray(bytes);
+					var sheet:Sheet = xls.sheets[0];
+					for (var i:int = 0;i < sheet.rows;i++)
+					{
+						var o:Object;
+						if (dataFormat == "xml")
+						{
+							o = <xml/>;
+							(o as XML).setName(xmlName);
+						}
+						else
+							o = {};
+						
+						for (var j:int = 0;j < sheet.cols;j++)
+							setDecodeColumnValue(o,sheet.getCell(i,j).value,j);
+						
+						detailList.addItem(o);
+					}
+				}
+				else if (file.extension == "csv")
+				{
+					var csv:String = bytes.readMultiByte(bytes.bytesAvailable,Config.CHARSET);
+					var data:Array = CSV.decode(csv);
+					for (i = 0;i < data.length;i++)
+					{
+						if (dataFormat == "xml")
+						{
+							o = <xml/>;
+							(o as XML).setName(xmlName);
+						}
+						else
+							o = {};
+						
+						var line:Array = data[i] as Array;
+						for (j = 0;j < line.length;j++)
+							setDecodeColumnValue(o,line[j],j);
+						
+						detailList.addItem(o);
+					}
+				}
+			}
+			
+			private function getEncodeColumnValue(i:int,j:int):String
+			{
+				var o:Object = this.detailList.getItemAt(i) as Object;
+				var column:GridColumn = this.columnList.getItemAt(j) as GridColumn;
+				var value:Object = getValueFunction(o,column);
+				if (value == "...")
+				{
+					value = o[column.dataField];
+					if (value is XML || value is XMLList)
+						value = value.toXMLString();
+					else
+						value = Json.encode(value)
+				}
+				
+				if (!value || value == " ")
+					value = "";
+				
+				return value.toString();
+			}
+			
+			private function getCSVData():ByteArray
+			{
+				var data:Array = [];
+				for (var i:int = 0;i < this.detailList.length;i++)
+				{
+					var line:Array = [];
+					for (var j:int = 0;j < this.columnList.source.length;j++)
+						line.push(getEncodeColumnValue(i,j));
+					
+					data.push(line);
+				}
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeMultiByte(CSV.encode(data),Config.CHARSET)
+				return bytes;
+			}
+			
+			private function getXLSData():ByteArray
+			{
+				var sheet:Sheet = new Sheet();
+				sheet.resize(this.detailList.length,this.columnList.length);
+				for (var i:int = 0;i < sheet.rows;i++)
+				{
+					for (var j:int = 0;j < sheet.cols;j++)
+						sheet.setCell(i,j,getEncodeColumnValue(i,j));
+				}
+				var xls:ExcelFile = new ExcelFile();
+				xls.sheets.addItem(sheet);
+				return xls.saveToByteArray();
+			}
+			
+			protected function saveCSVBN_clickHandler(event:MouseEvent):void
+			{
+				var fileName:String = fileUrl ? fileUrl : "data";
+				FileControl.browseForSave(rHandler,"保存为CSV文件",fileName.split(".")[0] + ".csv");
+				function rHandler(files:Array):void
+				{
+					var file:File = files[0] as File;
+					FileControl.writeFile(file,getCSVData());
+					file.openWithDefaultApplication();
+				}
+			}
+			
+			protected function saveCSVBN_mouseDownHandler(event:MouseEvent):void
+			{
+				var fileName:String = fileUrl ? fileUrl : "data";
+				FileControl.dragTextFileOut(this.saveCSVBN,getCSVData,fileName.split(".")[0] + ".csv")
+			}
+			
+			protected function saveXLSBN_clickHandler(event:MouseEvent):void
+			{
+				var fileName:String = fileUrl ? fileUrl : "data";
+				FileControl.browseForSave(rHandler,"保存为XLS文件",fileName.split(".")[0] + ".xls");
+				function rHandler(files:Array):void
+				{
+					var file:File = files[0] as File;
+					FileControl.writeFile(file,getXLSData());
+					file.openWithDefaultApplication();
+				}
+				
+			}
+			
+			protected function saveXLSBN_mouseDownHandler(event:MouseEvent):void
+			{
+				var fileName:String = fileUrl ? fileUrl : "data";
+				FileControl.dragTextFileOut(this.saveXLSBN,getXLSData,fileName.split(".")[0] + ".xls")
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openFileHandler,[this.openBN,this.sourceText]);
+				FileControl.dragFileIn(openXLSHandler,this.loadXLSBN,["csv","xls"]);
 			}
 			
 		]]>
@@ -140,56 +903,78 @@
 	</components:states>
 
 	<fx:Declarations>
-		<s:RadioButtonGroup id="radiogroup" selectedValue="XML" change="radiogroup_changeHandler(event)"/>
+		<s:RadioButtonGroup id="radiogroup" selectedValue="@{dataFormat}" change="readDataFromBytes()"/>
 	</fx:Declarations>
 	<s:Button id="openBN" x="5" y="5" label="载入" click="openBN_clickHandler(event)"/>
 	<s:Button id="saveBN" x="79" y="5" label="保存" click="saveBN_clickHandler(event)"/>
 	<s:CheckBox x="159" y="6" label="是否压缩" selected="@{isCompress}"/>
-	<mx:TabNavigator left="5" right="5" top="30" bottom="5" paddingTop="0">
+	<mx:TabNavigator id="tabNav" left="5" right="5" top="30" bottom="5" paddingTop="0" change="tabNav_changeHandler(event)">
 		<s:NavigatorContent width="100%" height="100%" label="原始文本">
 			<s:Label x="6" y="10" text="数据类型："/>
 			<s:RadioButton x="85" y="5" label="XML" groupName="radiogroup" value="xml" enabled.ready="false"/>
 			<s:RadioButton x="134" y="5" label="JSON" groupName="radiogroup" value="json" enabled.ready="false"/>
 			<s:RadioButton x="190" y="5" label="AMF3" groupName="radiogroup" value="amf3" enabled.ready="false"/>
-			<s:Button id="startEdit" right="5" y="5" label="开始编辑" excludeFrom="ready" click="startEdit_clickHandler(event)"/>
-			<s:TextArea id="sourceText" left="5" right="5" top="30" bottom="5" borderAlpha.base="0.5" editable.base="false" focusOut="sourceText_focusOutHandler(event)"/>
+			<s:Button id="startEdit" right="5" y="5" label="解析数据" enabled="{sourceChanged}" click="startEdit_clickHandler(event)"/>
+			<s:TextArea id="sourceText" left="5" right="5" top="30" bottom="5" change="sourceChanged = true"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="编辑器" includeIn="ready">
-			<s:HGroup paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" width="100%">
-				<s:Button label="增加属性"/>
-				<s:Button label="删除属性"/>
-				<s:Button label="增加行"/>
-				<s:Button label="删除行"/>
-				<s:Button id="prevLv" width="22" enabled="{curPath}" icon="@Embed(source='../asset/prevLv.png')"
-						  skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级"/>
-				<s:TextInput editable="false" text="{curPath}" width="100%"/>
+			<s:HGroup x="5" y="5">
+				<s:Button id="addPropBN" label="增加属性" click="addPropBN_clickHandler(event)"/>
+				<s:Button id="removePropBN" label="删除属性" click="removePropBN_clickHandler(event)"/>
 			</s:HGroup>
-			<s:DataGrid x="5" width="188" top="30" bottom="5" dataProvider="{propertyList}">
+			<s:Button id="prevLv" x="6" y="30" width="22" click="prevLv_clickHandler(event)"
+					  enabled="{curPath}" icon="@Embed(source='../asset/prevLv.png')"
+					  skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级"/>
+			<s:TextInput x="32" y="29" width="161" editable="false" text="{curPath}"/>
+			<s:DataGrid id="propertyDataGrid" x="5" width="188" top="55" bottom="5" dataProvider="{propertyList}"
+						doubleClickEnabled="true" variableRowHeight="true" 
+						gridClick="propertyDataGrid_gridClickHandler(event)" gridDoubleClick="propertyDataGrid_gridDoubleClickHandler(event)"
+						gridItemEditorSessionSave="propertyDataGrid_gridItemEditorSessionSaveHandler(event)" gridItemEditorSessionCancel="gridItemEditorSessionEndHandler(event)"
+						selectionChange="refreshDetailList()" >
 				<s:columns>
 					<s:ArrayList>
 						<s:GridColumn dataField="label" headerText="属性"></s:GridColumn>
-						<s:GridColumn dataField="value" headerText="值"></s:GridColumn>
+						<s:GridColumn labelFunction="getValueFunction" dataField="value" headerText="值"></s:GridColumn>
 					</s:ArrayList>
 				</s:columns>
 			</s:DataGrid>
-			<s:DataGrid left="201" right="5" top="30" bottom="5" dataProvider="{detailList}">
-				<s:columns>
-					<s:ArrayList>
-						<s:GridColumn dataField="dataField1" headerText="1"></s:GridColumn>
-						<s:GridColumn dataField="dataField2" headerText="2"></s:GridColumn>
-						<s:GridColumn dataField="dataField3" headerText="3"></s:GridColumn>
-					</s:ArrayList>
-				</s:columns>
-			</s:DataGrid>
+			<s:Group width="100%" height="100%" visible="{propertyDataGrid.selectedItem &amp;&amp; detailList}">
+				<s:Button id="addDetailBN" x="200" y="5" label="增加行" enabled="{isMultilineDetailList}"
+						  click="addDetailBN_clickHandler(event)"/>
+				<s:Button id="removeDetailBN" x="200" y="30" label="删除行" enabled="{isMultilineDetailList}"
+						  click="removeDetailBN_clickHandler(event)"/>
+				<s:Button id="findBN" x="275" y="5" width="80" label="查找"
+						  click="findBN_clickHandler(event)"/>
+				<s:Button id="findNextBN" x="275" y="30" width="80" label="查找下一个"
+						  click="findNextBN_clickHandler(event)"/>
+				<s:Button id="saveCSVBN" y="30" right="96" label="导出为CSV"
+						  click="saveCSVBN_clickHandler(event)"
+						  mouseDown="saveCSVBN_mouseDownHandler(event)"/>
+				<s:Button id="saveXLSBN" y="5" right="96" label="导出为XLS"
+						  click="saveXLSBN_clickHandler(event)"
+						  mouseDown="saveXLSBN_mouseDownHandler(event)"/>
+				<s:Button id="loadXLSBN" y="5" right="5" height="46" label="从Excel导入" enabled="{isMultilineDetailList}"
+						  click="loadXLSBN_clickHandler(event)"/>
+				<s:DataGrid id="detailDataGrid" left="201" right="5" top="55" bottom="5" variableRowHeight="true" 
+							doubleClickEnabled="true" 
+							dataProvider="{detailList}" columns="{columnList}" selectionMode="singleCell"
+							gridClick="detailDataGrid_gridClickHandler(event)" gridDoubleClick="detailDataGrid_gridDoubleClickHandler(event)"
+							gridItemEditorSessionSave="gridItemEditorSessionEndHandler(event)" gridItemEditorSessionCancel="gridItemEditorSessionEndHandler(event)">
+				</s:DataGrid>
+			</s:Group>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="转换器" includeIn="ready">
 			<s:VGroup paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5">
-				<s:Button label="转换为XML" width="100" enabled="{radiogroup.selectedValue != 'xml'}"/>
-				<s:Button label="转换为JSON" width="100" enabled="{radiogroup.selectedValue != 'json'}"/>
-				<s:Button label="转换为AMF3" width="100" enabled="{radiogroup.selectedValue != 'amf3'}"/>
+				<s:Button id="transXMLBN" label="转换为XML" width="100" enabled="{radiogroup.selectedValue != 'xml'}" click="transTo('xml')"/>
+				<s:Button id="transJSONBN" label="转换为JSON" width="100" enabled="{radiogroup.selectedValue != 'json'}" click="transTo('json')"/>
+				<s:Button id="transAMF3BN" label="转换为AMF3" width="100" enabled="{radiogroup.selectedValue != 'amf3'}" click="transTo('amf3')"/>
+				<s:Label width="99" text="XML标题字段转换" textAlign="center"/>
+				<s:TextInput width="100" text="@{classRefName}"/>
 			</s:VGroup>
-			<s:TextArea left="110" right="5" top="5" bottom="5" editable="false"/>
+			<s:TextArea left="110" right="5" top="5" bottom="5" editable="false" textIndent="26">
+				<s:p>XML转换为JSON/AMF3有严格的格式要求，对象名称必须使用大写字母开头，而属性名称必须使用小写字母开头，两个对象之间必须有一个属性定义。可以尝试将JSON转换为XML来推测转换规则。</s:p>
+				<s:p>JSON中的数组若只有一条数据，转换为XML并转换回来的时候将不再是数组，因为XML无法判断单个元素的子结点是否是数组</s:p>
+			</s:TextArea>
 		</s:NavigatorContent>
 	</mx:TabNavigator>
-	
 </components:GCToolWindow>

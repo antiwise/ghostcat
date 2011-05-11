@@ -24,7 +24,9 @@
   <buildTargets>
     <buildTarget buildTargetName="default">
       <airSettings airCertificatePath="" airTimestamp="true" version="1">
-        <airExcludes/>
+        <airExcludes>
+          <pathEntry path="asdoc-output"/>
+        </airExcludes>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

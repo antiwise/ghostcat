@@ -71,6 +71,7 @@
 							cur.appendChild(newXml);
 						}
 						newXml.@label = label;
+						newXml.@fullName = item;
 						cur = newXml;
 					}
 					cur.@data = item;
@@ -119,8 +120,12 @@
 				
 				if (currentObject is DisplayObject || currentObject is BitmapData)
 				{
-					this.currentState = "picture";
-					
+					if (this.currentState != "picture")
+					{
+						this.currentState = "picture";
+						this.tabnav.selectedIndex = 0;
+						this.tabnav.validateNow();
+					}
 					
 					if (currentObject is BitmapData)
 						displayObj = new Bitmap(currentObject as BitmapData)
@@ -284,28 +289,32 @@
 			 y="10" left="85" right="5"/>
 	<mx:HDividedBox left="5" right="5" top="30" bottom="5">
 		<mx:Tree id="list" width="200" height="100%" labelField="@label" dataProvider="{symbolList}" showRoot="false" change="list_changeHandler(event)"/>
-		<mx:TabNavigator historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
-			<s:NavigatorContent includeIn="picture" label="图象">
-				<mx:Canvas id="imageCanvas" y="1" width="100%" height="100%" clipContent="true"
-						   resize="image_resizeHandler(event)">
-					<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
-				</mx:Canvas>
-				<s:CheckBox id="dsShowedBox" x="6" y="5" label="显示内部元件选取框" click="dsShowedBox_clickHandler(event)"/>
-			</s:NavigatorContent>
-			<s:NavigatorContent id="treeCanvas" includeIn="picture" label="结构">
-				<s:Button x="6" y="4" label="复制到剪贴板" click="button3_clickHandler(event)"/>
-				<s:Button x="106" y="4" label="复制所有名称到剪贴板" click="button4_clickHandler(event)"/>
-				<mx:Tree id="tree" left="5" right="5" top="30" bottom="5" width="100%" height="100%"
-						 dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
-			</s:NavigatorContent>
-			<s:NavigatorContent id="soundCanvas" includeIn="sound" label="声音">
-				<s:Button width="100" height="100" label="播放声音" horizontalCenter="0" verticalCenter="0"
-						  click="button1_clickHandler(event)"/>
-			</s:NavigatorContent>
-			<s:NavigatorContent id="bytesCanvas" includeIn="bytes" label="二进制数据">
-				<s:Button width="100" height="100" label="提取文件" horizontalCenter="0" verticalCenter="0"
-						  click="button2_clickHandler(event)"/>
-			</s:NavigatorContent>
-		</mx:TabNavigator>
+		<s:Group width="100%" height="100%">
+			<s:TextInput editable="false" text="{list.selectedItem.@fullName}"
+						 left="90" right="0" borderVisible="false"/>
+			<mx:TabNavigator id="tabnav" historyManagementEnabled="false" width="100%" height="100%" paddingTop="0" creationPolicy="all">
+				<s:NavigatorContent includeIn="picture" label="图象">
+					<mx:Canvas id="imageCanvas" y="1" width="100%" height="100%" clipContent="true"
+							   resize="image_resizeHandler(event)">
+						<mx:UIComponent id="image" mouseDown="image_mouseDownHandler(event)"/>
+					</mx:Canvas>
+					<s:CheckBox id="dsShowedBox" x="6" y="5" label="显示内部元件选取框" click="dsShowedBox_clickHandler(event)"/>
+				</s:NavigatorContent>
+				<s:NavigatorContent id="treeCanvas" includeIn="picture" label="结构">
+					<s:Button x="6" y="4" label="复制到剪贴板" click="button3_clickHandler(event)"/>
+					<s:Button x="106" y="4" label="复制所有名称到剪贴板" click="button4_clickHandler(event)"/>
+					<mx:Tree id="tree" left="5" right="5" top="30" bottom="5" width="100%" height="100%"
+							 dataProvider="{treeData}" labelFunction="treeLabelFuntion"/>
+				</s:NavigatorContent>
+				<s:NavigatorContent id="soundCanvas" includeIn="sound" label="声音">
+					<s:Button width="100" height="100" label="播放声音" horizontalCenter="0" verticalCenter="0"
+							  click="button1_clickHandler(event)"/>
+				</s:NavigatorContent>
+				<s:NavigatorContent id="bytesCanvas" includeIn="bytes" label="二进制数据">
+					<s:Button width="100" height="100" label="提取文件" horizontalCenter="0" verticalCenter="0"
+							  click="button2_clickHandler(event)"/>
+				</s:NavigatorContent>
+			</mx:TabNavigator>
+		</s:Group>
 	</mx:HDividedBox>
 </components:GCToolWindow>

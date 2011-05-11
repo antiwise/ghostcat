@@ -207,21 +207,25 @@
              left="2" right="2" top="2" bottom="2">
     </s:Label>
 	
-	<s:BitmapImage id="iconDisplay" 
-				   horizontalCenter="0" 
-				   verticalCenter="0" 
+	<s:BitmapImage id="iconDisplay"
+				   x="25" y="25"
+				   x.over="10" y.over="10"
 				   scaleX="1" scaleY="1" 
-				   scaleX.over="3" scaleY.over="3"
-				   scaleX.down="3" scaleY.down="3"
-				   horizontalCenter.down="1" 
-				   verticalCenter.down="1" />
+				   scaleX.over="3" scaleY.over="3"/>
     <s:transitions>
 		<s:Transition>
-			<s:Scale target="{iconDisplay}">
-				<s:easer>
-					<s:Bounce/>
-				</s:easer>
-			</s:Scale>
+			<s:Parallel target="{iconDisplay}">
+				<s:Move>
+					<s:easer>
+						<s:Bounce/>
+					</s:easer>
+				</s:Move>
+				<s:Scale>
+					<s:easer>
+						<s:Bounce/>
+					</s:easer>
+				</s:Scale>
+			</s:Parallel>
 		</s:Transition>
 	</s:transitions>
 </s:SparkSkin>

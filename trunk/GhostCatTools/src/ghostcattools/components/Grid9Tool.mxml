@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" title="九宫格工具"
+		 xmlns:s="library://ns.adobe.com/flex/spark" title="九切片工具"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="322" height="312" close="titlewindow1_closeHandler(event)" xmlns:components="ghostcattools.components.*" xmlns:components1="ghostcattools.tools.components.*">
 	<fx:Script>
 		<![CDATA[
 			import ghostcat.manager.DragManager;
 			
+			import mx.events.CalendarLayoutChangeEvent;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
 			[Bindable]
-			public var source:Object;
+			private var _source:Object;
+			
+			public function set source(value:Object):void
+			{
+				if (value is Class)
+					value = new value();
+				
+				if (value is DisplayObject)
+					setImgSize(value.width,value.height)
+			
+				_source = value;
+			}
+
 			
 			[Bindable]
 			public var scaleGridTop:Number;
@@ -102,7 +115,7 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-			public function setImgSize(w:Number,h:Number):void
+			private function setImgSize(w:Number,h:Number):void
 			{
 				imgWidth = w;
 				imgHeight = h;
@@ -141,12 +154,12 @@
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<s:Group x="10" y="10" width="230" height="230" id="group">
-		<s:SWFLoader id="loader" width="100%" height="100%" updateComplete="refreshRuleHandler(event)"
-					 complete="loader_completeHandler(event)" source="{source}"/>
-		<components:DragableGrid9Rule id="hRule1" type="0" y="@{hRule1Value}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
-		<components:DragableGrid9Rule id="hRule2" type="0" y="@{hRule2Value}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
-		<components:DragableGrid9Rule id="vRule1" type="1" x="@{vRule1Value}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
-		<components:DragableGrid9Rule id="vRule2" type="1" x="@{vRule2Value}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
+		<s:SWFLoader id="loader" source="{_source}" width="100%" height="100%" updateComplete="refreshRuleHandler(event)"
+					 complete="loader_completeHandler(event)"/>
+		<components:DragableGrid9Rule id="hRule1" type="0" y="@{hRule1Value}" gridStep="{loader.contentWidth / imgWidth}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
+		<components:DragableGrid9Rule id="hRule2" type="0" y="@{hRule2Value}" gridStep="{loader.contentWidth / imgWidth}" width="{loader.contentWidth}" maximum="{loader.contentHeight}"/>
+		<components:DragableGrid9Rule id="vRule1" type="1" x="@{vRule1Value}" gridStep="{loader.contentHeight / imgHeight}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
+		<components:DragableGrid9Rule id="vRule2" type="1" x="@{vRule2Value}" gridStep="{loader.contentHeight / imgHeight}" height="{loader.contentHeight}" maximum="{loader.contentWidth}"/>
 	</s:Group>
 	<s:NumericStepper x="11" y="248" width="60" change="refreshRuleHandler(event)"
 					  maximum="{imgWidth}" value="@{scaleGridLeft}"/>

@@ -19,6 +19,7 @@
 			
 			import ghostcattools.components.GCAlert;
 			import ghostcattools.components.Grid9Tool;
+			import ghostcattools.components.SymbolSelector;
 			import ghostcattools.components.TraceTitleWindow;
 			import ghostcattools.tools.vo.EmbedVO;
 			import ghostcattools.util.Config;
@@ -273,9 +274,8 @@
 					function completeHandler(e:Event):void
 					{
 						var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(selectedItem.symbol) as Class;
-						var displayObj:DisplayObject = new cls();
-						grid9Tool.source = displayObj;
-						grid9Tool.setImgSize(displayObj.width,displayObj.height);
+						if (cls)
+							grid9Tool.source = cls;
 					}
 				}
 				else
@@ -288,6 +288,17 @@
 				function closeHandler(e:Event):void
 				{
 					selectedItem.scaleGrid = grid9Tool.grid9Value;
+				}
+			}
+			
+			protected function symbolSelectBN_clickHandler(event:MouseEvent):void
+			{
+				var symbolSelector:SymbolSelector = new SymbolSelector();
+				symbolSelector.source = selectedItem.source;
+				symbolSelector.show(this);
+				symbolSelector.selectedHandler = function (str:String):void
+				{
+					selectedItem.symbol = str;
 				}
 			}
 			
@@ -331,7 +342,8 @@
 		</s:Group>
 		<s:Group includeIn="swf">
 			<s:Label x="5" y="7" text="元件名"/>
-			<s:TextInput x="54" y="0" width="235" text="@{selectedItem.symbol}"/>
+			<s:TextInput  x="54" y="0" width="152" text="@{selectedItem.symbol}"/>
+			<s:Button id="symbolSelectBN" x="209" y="0" label="从库中选择" click="symbolSelectBN_clickHandler(event)"/>
 		</s:Group>
 		<s:Group includeIn="jpg,png,swf">
 			<s:Label text="九切片缩放" x="11" y="5"/>

@@ -23,7 +23,7 @@
 			[Bindable]
 			public var result:ColorMatrixFilter;
 			
-			public function refreshCurrentColor(useColorPanelData:Boolean = false):void
+			public function refreshCurrentColor():void
 			{
 				var m:Array = [];
 				

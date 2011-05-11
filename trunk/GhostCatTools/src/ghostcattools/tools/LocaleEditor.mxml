@@ -458,7 +458,7 @@
 			protected function saveCSVBN_mouseDownHandler(event:MouseEvent):void
 			{
 				var fileName:String = getFileName(getFileList()[0]);
-				FileControl.dragTextFileOut(this.saveCSVBN,getXLSData,fileName.split(".")[0] + ".csv")
+				FileControl.dragTextFileOut(this.saveCSVBN,getCSVData,fileName.split(".")[0] + ".csv")
 			}
 
 			protected function dataGrid_gridClickHandler(event:GridEvent):void
