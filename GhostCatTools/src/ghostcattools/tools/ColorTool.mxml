@@ -8,8 +8,11 @@
 						 width="316" height="378" showStatusBar="false" close="gctoolwindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			
 			import flash.filters.ColorMatrixFilter;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
 			
 			[Embed(source="../asset/picture1.jpg")]
 			[Bindable]
@@ -44,7 +47,7 @@
 				
 				var result:Array = [];
 				for (var i:int = 0;i < v.matrix.length;i++)
-					result[i] = Number(v.matrix[i]).toFixed(2);
+					result[i] = Number(Number(v.matrix[i]).toFixed(2));
 				
 				return "new ColorMatrixFilter([" + result.join(",") + "])";
 			}
@@ -52,7 +55,7 @@
 			protected function colorImg_clickHandler(event:MouseEvent):void
 			{
 				const images:Array = [p1,p2,p3,p4];
-				var image:Image = event.currentTarget as Image;
+				var image:SWFLoader = event.currentTarget as SWFLoader;
 				var index:int =  images.indexOf(image.source);
 				if (index == 3)
 					index = 0;
@@ -60,6 +63,28 @@
 					index++;
 				
 				image.source = images[index];
+			}
+			
+			
+			protected function colorImg_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openImageHandler,this.colorImg,["jpg","jpeg","gif","png","swf","svg","bmp"]);
+				function openImageHandler(files:Array):void
+				{
+					var file:File = files[0] as File;
+					colorImg.source = file.nativePath;
+				}
+				
+			}
+			
+			protected function colorImg2_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(openImageHandler,this.colorImg2,["jpg","jpeg","gif","png","swf","svg","bmp"]);
+				function openImageHandler(files:Array):void
+				{
+					var file:File = files[0] as File;
+					colorImg2.source = file.nativePath;
+				}
 			}
 			
 		]]>
@@ -72,10 +97,12 @@
 			<components:ColorPicker id="colorPicker"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent label="色彩转换">
-			<s:Image id="colorImg" x="0" y="0" source="{p1}" click="colorImg_clickHandler(event)"/>
+			<s:SWFLoader id="colorImg" x="0" y="0" width="200" height="160" source="{p1}" toolTip="点击或者拖动图片到此处可更换预览图"
+						 click="colorImg_clickHandler(event)" creationComplete="colorImg_creationCompleteHandler(event)"/>
 			<s:TextArea x="0" y="166" width="200" height="36" editable="false"
 						text="{tranformString(colorTranformPicker.result)}"/>
-			<toolscomponents:ColorTranformPicker id="colorTranformPicker" x="0" y="207" change="colorImg.transform.colorTransform = colorTranformPicker.result"/>
+			<toolscomponents:ColorTranformPicker id="colorTranformPicker" x="0" y="207" 
+												 change="colorImg.transform.colorTransform = colorTranformPicker.result"/>
 			<s:Rect x="204" y="0" width="92" height="334">
 				<s:fill>
 					<s:SolidColor/>
@@ -85,7 +112,8 @@
 						text="COLOR&#xa;TRANSFORM"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent label="色彩滤镜">
-			<s:Image id="colorImg2" x="0" y="0" source="{p2}" click="colorImg_clickHandler(event)"/>
+			<s:SWFLoader id="colorImg2" x="0" y="0" width="200" height="160" source="{p2}" toolTip="点击或者拖动图片到此处可更换预览图"
+					 click="colorImg_clickHandler(event)" creationComplete="colorImg2_creationCompleteHandler(event)"/>
 			<s:TextArea x="0" y="166" width="200" height="55" editable="false"
 						text="{filterString(colorFilterPicker.result)}"/>
 			<toolscomponents:ColorFilterPicker id="colorFilterPicker" x="0" y="230" height="113"
