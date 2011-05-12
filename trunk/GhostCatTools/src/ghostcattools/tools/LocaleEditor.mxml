@@ -12,7 +12,7 @@
 			import ghostcat.util.data.LocalStorage;
 			import ghostcat.util.text.TextUtil;
 			
-			import ghostcattools.components.RenameTitleWindow;
+			import ghostcattools.components.TextInputTitleWindow;
 			import ghostcattools.util.AutoLengthArrayList;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
@@ -373,11 +373,11 @@
 
 			protected function findBN_clickHandler(event:MouseEvent):void
 			{
-				var win:RenameTitleWindow = new RenameTitleWindow();
+				var win:TextInputTitleWindow = new TextInputTitleWindow();
 				win.title = "查询";
 				win.text = searchText;
 				win.show(this);
-				win.renameHandler = function (str:String):void
+				win.completeHandler = function (str:String):void
 				{
 					findText(str);
 					searchText = str;

@@ -10,8 +10,6 @@
 						 width="537">
 	<fx:Script>
 		<![CDATA[
-			import asset.file;
-			
 			import ghostcat.util.ReflectXMLUtil;
 			import ghostcat.util.data.LocalStorage;
 			import ghostcat.util.data.XMLUtil;

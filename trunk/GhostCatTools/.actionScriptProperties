@@ -23,10 +23,8 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default">
-      <airSettings airCertificatePath="" airTimestamp="true" version="1">
-        <airExcludes>
-          <pathEntry path="asdoc-output"/>
-        </airExcludes>
+      <airSettings airCertificatePath="D:/My Documents/tangling.p12" airTimestamp="false" version="1">
+        <airExcludes/>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

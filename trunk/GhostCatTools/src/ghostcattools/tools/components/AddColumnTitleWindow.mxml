@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" defaultButton="{okBN}"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="306" height="94" close="titlewindow1_closeHandler(event)">
+		 xmlns:s="library://ns.adobe.com/flex/spark" defaultButton="{okBN}" title="输入属性名"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="306" height="120" close="titlewindow1_closeHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.CloseEvent;
@@ -10,7 +10,7 @@
 			[Bindable]
 			public var text:String;
 			
-			public var renameHandler:Function;
+			public var completeHandler:Function;
 
 			public function show(parent:DisplayObject,model:Boolean = true):void
 			{
@@ -30,17 +30,24 @@
 				close();
 			}
 
-
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				if (renameHandler != null)
-					renameHandler(editText.text);
+				if (completeHandler != null)
+					completeHandler(editText.text,radiogroup.selectedValue == 'complex' ? childText.text : null);
 				
 				close();
 			}
 
 		]]>
 	</fx:Script>
-	<s:TextInput id="editText" left="5" right="5" top="5" bottom="30" text="@{text}"/>
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup" selectedValue="simple"/>
+	</fx:Declarations>
+	<s:TextInput id="editText" left="5" right="5" top="5" text="@{text}"/>
+	<s:HGroup x="10" y="35">
+		<s:RadioButton label="简单对象" value="simple" groupName="radiogroup"/>
+		<s:RadioButton label="复杂对象" value="complex" groupName="radiogroup"/>
+	</s:HGroup>
+	<s:TextInput id="childText" y="33" left="155" right="5" visible="{radiogroup.selectedValue == 'complex'}" text="label"/>
 	<s:Button id="okBN" bottom="5" width="96" label="确定" horizontalCenter="0" click="button1_clickHandler(event)"/>
 </s:TitleWindow>
