@@ -227,11 +227,13 @@
 			
 			protected function startEdit_clickHandler(event:MouseEvent):void
 			{
-				this.bytes = null;
-				this.currentState = "ready";
-				this.getDataFromSource();
-				this.refreshPropertyData();
-				this.tabNav.selectedIndex = 1;
+				if (this.getDataFromSource())
+				{
+					this.bytes = null;
+					this.currentState = "ready";
+					this.refreshPropertyData();
+					this.tabNav.selectedIndex = 1;
+				}
 			}
 			
 			//编辑
