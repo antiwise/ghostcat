@@ -12,7 +12,7 @@
 			import ghostcat.util.text.NumberUtil;
 			
 			import ghostcattools.components.GCAlert;
-			import ghostcattools.components.RenameTitleWindow;
+			import ghostcattools.components.TextInputTitleWindow;
 			import ghostcattools.tools.vo.FileEntryVO;
 			import ghostcattools.util.CreateFilePromise;
 			import ghostcattools.util.FileControl;
@@ -323,11 +323,11 @@
 				if (!item)
 					return;
 				
-				var window:RenameTitleWindow = new RenameTitleWindow();
+				var window:TextInputTitleWindow = new TextInputTitleWindow();
 				window.title = "重命名"
 				window.text = item.name;
 				window.show(this);
-				window.renameHandler = function (str:String):void
+				window.completeHandler = function (str:String):void
 				{
 					if (item.isDirectory())
 					{

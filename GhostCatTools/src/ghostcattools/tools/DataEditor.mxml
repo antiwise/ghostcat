@@ -18,7 +18,8 @@
 			import ghostcat.util.data.XMLListUtil;
 			
 			import ghostcattools.components.GCAlert;
-			import ghostcattools.components.RenameTitleWindow;
+			import ghostcattools.components.TextInputTitleWindow;
+			import ghostcattools.tools.components.AddColumnTitleWindow;
 			import ghostcattools.util.Config;
 			import ghostcattools.util.FileControl;
 			
@@ -32,10 +33,12 @@
 			import spark.events.GridEvent;
 			import spark.events.GridItemEditorEvent;
 			
-			public var data:Object;
+			private const ROOT_PATH:String = "[ROOT]"//根节点名称
+				
+			public var data:Object;//数据
 
 			private var bytes:ByteArray = new ByteArray();//读取完毕时暂存
-			private var fileUrl:String;
+			private var fileUrl:String;//打开文件的路径
 			
 			[Bindable]
 			public var curPath:String = "";//属性栏地址
@@ -204,6 +207,14 @@
 				FileControl.writeFile(file,bytes);
 			}
 			
+			protected function newBN_clickHandler(event:MouseEvent):void
+			{
+				this.currentState = "base";
+				this.sourceText.text = "";
+				this.bytes = new ByteArray();
+				this.reset();
+			}
+			
 			protected function openBN_clickHandler(event:MouseEvent):void
 			{
 				FileControl.browseForOpen(openFileHandler,"打开文件");
@@ -242,18 +253,30 @@
 			
 			private function refreshPropertyData():void
 			{
-				var paths:Array = curPath.split(/\[|\]|\./);
-				var currentObj:Object = this.data;
-				for (var i:int = 0;i < paths.length;i++)
+				if (curPath == ROOT_PATH)
 				{
-					if (paths[i])
-						currentObj = currentObj[paths[i]];
+					this.propertyObject = null;
+				}
+				else
+				{
+					var paths:Array = curPath.split(/\[|\]|\./);
+					var currentObj:Object = this.data;
+					for (var i:int = 0;i < paths.length;i++)
+					{
+						if (paths[i])
+							currentObj = currentObj[paths[i]];
+					}
+					
+					this.propertyObject = currentObj;
 				}
 				
-				this.propertyObject = currentObj;
-				
 				var list:Array = [];
-				if (propertyObject is XML)
+				
+				if (curPath == ROOT_PATH)
+				{
+					list.push({label:ROOT_PATH,value:this.data});
+				}
+				else if (propertyObject is XML)
 				{
 					for each (var child:XML in (propertyObject as XML).attributes())
 						list.push({label:"@"+child.name(),value:child});
@@ -278,10 +301,11 @@
 					for (p in propertyObject)
 						list.push({label:p,value:propertyObject[p]});
 				}
-				else
+				else if (propertyObject)
 				{
 					list.push({label:"",value:propertyObject[p]});
 				}
+				
 				this.propertyList = new ArrayList(list);
 				if (this.propertyDataGrid && this.propertyList.length)
 				{
@@ -330,7 +354,10 @@
 					detailList = null;
 				}
 				
-				this.curDetailPath = this.curPath + "." + selectedItem.label;
+				if (this.curPath == ROOT_PATH)
+					this.curDetailPath = "";
+				else
+					this.curDetailPath = this.curPath + "." + selectedItem.label;
 				
 				var keys:Array = [];
 				var keyDict:Dictionary = new Dictionary();
@@ -377,12 +404,15 @@
 				this.columnList = new ArrayList(keys);
 			}
 			
-			protected function getValueFunction(item:Object, column:GridColumn):String
+			protected function getValueFunction(item:Object, column:GridColumn):Object
 			{
 				var value:Object;
 				var dataField:String = column.dataField;
 				if (dataField)
-					value = item[dataField];
+				{
+					if (item.hasOwnProperty(dataField))
+						value = item[dataField];
+				}
 				else if (item is XML)
 					value = (item as XML).child(0);
 				else
@@ -391,9 +421,9 @@
 				if (!value)
 					return "";
 				else if (!isComplexType(value))
-					return value.toString();
+					return value;
 				else if (value is XMLList && (value as XMLList).length() <= 1 && !isComplexType(value[0]))
-					return value.toString();
+					return value;
 				else	
 					return "..."
 			}
@@ -403,10 +433,14 @@
 				if (event.rowIndex == -1 || event.columnIndex != 1)
 					return;
 				
-				var valueString:String = getValueFunction(event.item,event.column);
+				var valueString:Object = getValueFunction(event.item,event.column);
 				if (valueString == "...")
 				{
-					this.curPath = this.curPath + "." + event.item.label;
+					if (this.curPath == ROOT_PATH)
+						this.curPath = "";
+					else
+						this.curPath = this.curPath + "." + event.item.label;
+					
 					this.refreshPropertyData();
 				}
 			}
@@ -417,7 +451,7 @@
 				if (!selectedItem || event.columnIndex == -1 || event.rowIndex == -1)
 					return;
 				
-				var valueString:String = getValueFunction(event.item,event.column);
+				var valueString:Object = getValueFunction(event.item,event.column);
 				if (valueString == "...")
 				{
 					var label:String = event.column.dataField;
@@ -437,7 +471,7 @@
 				if (event.rowIndex == -1 || event.columnIndex != 1)
 					return;
 				
-				var valueString:String = getValueFunction(event.item,event.column);
+				var valueString:Object = getValueFunction(event.item,event.column);
 				if (valueString != "...")
 				{
 					if (this.propertyDataGrid.editorRowIndex == -1)
@@ -452,7 +486,7 @@
 				if (event.columnIndex == -1 || event.rowIndex == -1)
 					return;
 				
-				var valueString:String = getValueFunction(event.item,event.column);
+				var valueString:Object = getValueFunction(event.item,event.column);
 				if (valueString != "...")
 				{
 					if (this.detailDataGrid.editorRowIndex == -1)
@@ -465,12 +499,18 @@
 			
 			protected function prevLv_clickHandler(event:MouseEvent):void
 			{
-				var index:int = curPath.lastIndexOf(".");
-				if (index == -1)
-					curPath = "";
+				if (curPath == "")
+				{
+					curPath = ROOT_PATH;
+				}
 				else
-					curPath = curPath.slice(0,index);
-				
+				{
+					var index:int = curPath.lastIndexOf(".");
+					if (index == -1)
+						curPath = "";
+					else
+						curPath = curPath.slice(0,index);
+				}
 				this.refreshPropertyData();
 			}
 			
@@ -550,10 +590,21 @@
 				}
 				else if (propertyObject is XMLList)
 				{
+					var window:AddColumnTitleWindow = new AddColumnTitleWindow();
 					if ((propertyObject as XMLList).length() > 0)
+						window.text = ((propertyObject as XMLList)[0] as XML).name().toString();
+					
+					window.show(this);
+					window.completeHandler = function (name:String,childName:String):void
 					{
-						var child:XML = <xml/>
-						child.setName(((propertyObject as XMLList)[0] as XML).name())
+						var child:XML = <xml/>;
+						child.setName(name);
+						if (childName)
+						{
+							var child2:XML = <xml/>;
+							child2.setName(childName);
+							child.appendChild(child2);
+						}
 						if (selectedIndex != -1)
 							XMLListUtil.addItemAt(propertyObject as XMLList,child,selectedIndex)
 						else
@@ -561,32 +612,35 @@
 						
 						refreshPropertyData();
 					}
-					else
-					{
-						var window:RenameTitleWindow = new RenameTitleWindow();
-						window.title = "请输入属性名";
-						window.show(this);
-						window.renameHandler = function (str:String):void
-						{
-							var child:XML = <xml/>;
-							child.setName(str);
-							if (selectedIndex != -1)
-								XMLListUtil.addItemAt(propertyObject as XMLList,child,selectedIndex)
-							else
-								XMLListUtil.addItem(propertyObject as XMLList,child);
-							
-							refreshPropertyData();
-						}
-					}
 				}
 				else
 				{
-					window = new RenameTitleWindow();
-					window.title = "请输入属性名";
+					window = new AddColumnTitleWindow();
 					window.show(this);
-					window.renameHandler = function (str:String):void
+					window.completeHandler = function (str:String,childName:String):void
 					{
-						propertyObject[str] = "";
+						if (childName != null)
+						{
+							if (propertyObject is XML)
+							{
+								var child:XML = <xml/>;
+								child.setName(str);
+								if (childName)
+								{
+									var child2:XML = <xml/>;
+									child2.setName(childName);
+									child.appendChild(child2);
+								}
+								(propertyObject as XML).appendChild(child);
+							}
+							else
+							{
+								propertyObject[str] = childName == "" ? {childName:""} : {};
+							}
+						}
+						else
+							propertyObject[str] = "";
+							
 						refreshPropertyData();
 					}
 				}
@@ -638,10 +692,10 @@
 					}
 					else
 					{
-						var window:RenameTitleWindow = new RenameTitleWindow();
+						var window:TextInputTitleWindow = new TextInputTitleWindow();
 						window.title = "请输入属性名";
 						window.show(this);
-						window.renameHandler = function (str:String):void
+						window.completeHandler = function (str:String):void
 						{
 							var child:XML = <xml/>;
 							child.setName(str);
@@ -673,11 +727,11 @@
 			
 			protected function findBN_clickHandler(event:MouseEvent):void
 			{
-				var win:RenameTitleWindow = new RenameTitleWindow();
+				var win:TextInputTitleWindow = new TextInputTitleWindow();
 				win.title = "查询";
 				win.text = searchText;
 				win.show(this);
-				win.renameHandler = function (str:String):void
+				win.completeHandler = function (str:String):void
 				{
 					findText(str);
 					searchText = str;
@@ -905,10 +959,17 @@
 	<fx:Declarations>
 		<s:RadioButtonGroup id="radiogroup" selectedValue="@{dataFormat}" change="readDataFromBytes()"/>
 	</fx:Declarations>
-	<s:Button id="openBN" x="5" y="5" label="载入" click="openBN_clickHandler(event)"/>
-	<s:Button id="saveBN" x="79" y="5" label="保存" click="saveBN_clickHandler(event)"/>
-	<s:CheckBox x="159" y="6" label="是否压缩" selected="@{isCompress}"/>
-	<mx:TabNavigator id="tabNav" left="5" right="5" top="30" bottom="5" paddingTop="0" change="tabNav_changeHandler(event)">
+	<s:Group y="5"
+			 y.base="4" right.base="5"
+			 x.ready="5">
+		<s:Button id="openBN" label="载入" click="openBN_clickHandler(event)"/>
+		<s:Button id="newBN" x="75" label="新建" click="newBN_clickHandler(event)"/>
+		<s:Button id="saveBN" x="150" label="保存" click="saveBN_clickHandler(event)"/>
+		<s:CheckBox x="230" label="是否压缩" selected="@{isCompress}"/>
+	</s:Group>
+	<mx:TabNavigator id="tabNav" left="5" right="5" top="30" bottom="5"
+					 change="tabNav_changeHandler(event)" paddingTop="0"
+					 left.base="5" right.base="5" top.base="5" bottom.base="5">
 		<s:NavigatorContent width="100%" height="100%" label="原始文本">
 			<s:Label x="6" y="10" text="数据类型："/>
 			<s:RadioButton x="85" y="5" label="XML" groupName="radiogroup" value="xml" enabled.ready="false"/>
@@ -923,7 +984,7 @@
 				<s:Button id="removePropBN" label="删除属性" click="removePropBN_clickHandler(event)"/>
 			</s:HGroup>
 			<s:Button id="prevLv" x="6" y="30" width="22" click="prevLv_clickHandler(event)"
-					  enabled="{curPath}" icon="@Embed(source='../asset/prevLv.png')"
+					  enabled="{curPath !=ROOT_PATH}" icon="@Embed(source='../asset/prevLv.png')"
 					  skinClass="ghostcattools.skin.IconButtonSkin" toolTip="上一级"/>
 			<s:TextInput x="32" y="29" width="161" editable="false" text="{curPath}"/>
 			<s:DataGrid id="propertyDataGrid" x="5" width="188" top="55" bottom="5" dataProvider="{propertyList}"
