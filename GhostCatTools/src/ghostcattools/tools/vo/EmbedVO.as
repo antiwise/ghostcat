@@ -1,6 +1,7 @@
 package ghostcattools.tools.vo
 {
 	import ghostcat.util.ReflectUtil;
+	import ghostcat.util.ReflectXMLUtil;
 
 	[Bindable]
 	public class EmbedVO
@@ -18,7 +19,7 @@ package ghostcattools.tools.vo
 			if (v)
 			{
 				for (var p:String in v)
-					this[p] = v[p];
+					ReflectXMLUtil.setProperty(this,p,v[p]);
 			}
 		}
 		public function toObject():Object

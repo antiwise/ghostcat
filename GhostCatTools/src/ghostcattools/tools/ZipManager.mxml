@@ -89,18 +89,21 @@
 			{
 				for each (var child:File in files)
 				{
-					var entry:FileEntryVO = new FileEntryVO();
-					if (child.isDirectory)
+					if (!child.isHidden)
 					{
-						entry.name = baseUrl + child.name + "/";
-						this.fileEntrys.addItem(entry);
-						this.addFiles(child.getDirectoryListing(),entry.name);
-					}
-					else
-					{
-						entry.name = baseUrl + child.name;
-						entry.createData(FileControl.readFile(child));
-						this.fileEntrys.addItem(entry);
+						var entry:FileEntryVO = new FileEntryVO();
+						if (child.isDirectory)
+						{
+							entry.name = baseUrl + child.name + "/";
+							this.fileEntrys.addItem(entry);
+							this.addFiles(child.getDirectoryListing(),entry.name);
+						}
+						else
+						{
+							entry.name = baseUrl + child.name;
+							entry.createData(FileControl.readFile(child));
+							this.fileEntrys.addItem(entry);
+						}
 					}
 				}
 				this.refreshFileEntrys();

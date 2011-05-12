@@ -50,16 +50,19 @@
 			
 			private function searchFileAndAdd(file:File):void
 			{
-				if (file.isDirectory)
+				if (!file.isHidden)
 				{
-					directoryListerNum++;
-					file.getDirectoryListingAsync();
-					file.addEventListener(FileListEvent.DIRECTORY_LISTING,directoryListingHandler);
-				}
-				else
-				{
-					if (extensions.indexOf(file.extension) != -1)
-						fileList.push(file);
+					if (file.isDirectory)
+					{
+						directoryListerNum++;
+						file.getDirectoryListingAsync();
+						file.addEventListener(FileListEvent.DIRECTORY_LISTING,directoryListingHandler);
+					}
+					else
+					{
+						if (extensions.indexOf(file.extension) != -1)
+							fileList.push(file);
+					}
 				}
 			}
 			

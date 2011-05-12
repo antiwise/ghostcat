@@ -49,14 +49,17 @@
 			{
 				for each (var file:File in files)
 				{
-					if (file.isDirectory)
+					if (!file.isHidden)
 					{
-						searchFileAndAdd(file.getDirectoryListing());
-					}
-					else
-					{
-						if (extension.all || extension["$" + file.extension])
-							fileList.push(file);
+						if (file.isDirectory)
+						{
+							searchFileAndAdd(file.getDirectoryListing());
+						}
+						else
+						{
+							if (extension.all || extension["$" + file.extension])
+								fileList.push(file);
+						}
 					}
 				}
 			}
