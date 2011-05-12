@@ -16,12 +16,12 @@
 			
 			
 			public const UPDATE_URL:String = "http://ghostcat.googlecode.com/svn/trunk/GhostCatTools/version.xml"
-			public const VERISON:String ="1.0.0";
-			
 			public var updateCheckSO:LocalStorage = new LocalStorage("gctools_updatepanel");
 			
 			[Bindable]
 			public var loadPerent:Number;
+			[Bindable]
+			public var VERSION:String;
 			
 			private var loader:URLLoader;
 			
@@ -37,7 +37,7 @@
 					var version:String = xml.@version;
 					var url:String = xml.@url;
 					
-					var oldArr:Array = VERISON.split(".");
+					var oldArr:Array = VERSION.split(".");
 					var newArr:Array = version.split(".");
 					var isNew:Boolean = false;
 					for (var i:int = 0;i < oldArr.length;i++)
@@ -52,7 +52,7 @@
 					if (isNew)
 						Alert.show("当前最新版本为：" + version + "，是否现在更新？","检查更新",Alert.YES|Alert.NO,null,closeHandler);
 					else
-						Alert.show("您现在的版本" + version + "已经是最新版本。","检查更新");
+						Alert.show("您现在的版本" + VERSION + "已经是最新版本。","检查更新");
 					
 					function closeHandler(event:CloseEvent):void
 					{
@@ -126,6 +126,7 @@
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
+				this.VERSION = appxml.versionNumber;
 				var data:Date = updateCheckSO.getlastTime();
 				if (!data || new Date().getTime() - data.getTime() > 6 * 24 * 3600 * 1000)
 				{
@@ -144,6 +145,7 @@
 	</fx:Script>
 	
 	<fx:Declarations>
+		<fx:Model id="appxml" source="GhostCatTools-app.xml"/>
 		<s:HTTPService id="updateService" url="{UPDATE_URL}" resultFormat="e4x"/>
 	</fx:Declarations>
 	<s:layout>
@@ -155,5 +157,5 @@
 	</s:states>
 	<s:Label includeIn="base" text="检查更新" textDecoration="underline" color="#0000FF" buttonMode="true" click="label1_clickHandler(event)"/>
 	<s:Label includeIn="loading" text="下载进度：{(loadPerent * 100).toFixed(1)}%" color="#0000FF" />
-	<s:Label text="当前版本：{VERISON}"/>
+	<s:Label text="当前版本：{VERSION}"/>
 </s:Group>

@@ -46,7 +46,7 @@
 				for (var i:int = 0;i < v.matrix.length;i++)
 					result[i] = Number(v.matrix[i]).toFixed(2);
 				
-				return "new ColorMatrixFilter(" + result.join(",") + ")";
+				return "new ColorMatrixFilter([" + result.join(",") + "])";
 			}
 			
 			protected function colorImg_clickHandler(event:MouseEvent):void

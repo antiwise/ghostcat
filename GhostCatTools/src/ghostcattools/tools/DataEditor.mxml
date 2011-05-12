@@ -961,17 +961,15 @@
 	<fx:Declarations>
 		<s:RadioButtonGroup id="radiogroup" selectedValue="@{dataFormat}" change="readDataFromBytes()"/>
 	</fx:Declarations>
-	<s:Group y="5"
-			 y.base="4" right.base="5"
-			 x.ready="5">
+	<s:Group y="4" right="5">
 		<s:Button id="openBN" label="载入" click="openBN_clickHandler(event)"/>
 		<s:Button id="newBN" x="75" label="新建" click="newBN_clickHandler(event)"/>
 		<s:Button id="saveBN" x="150" label="保存" click="saveBN_clickHandler(event)"/>
 		<s:CheckBox x="230" label="是否压缩" selected="@{isCompress}"/>
 	</s:Group>
-	<mx:TabNavigator id="tabNav" left="5" right="5" top="30" bottom="5"
+	<mx:TabNavigator id="tabNav" 
 					 change="tabNav_changeHandler(event)" paddingTop="0"
-					 left.base="5" right.base="5" top.base="5" bottom.base="5">
+					 left="5" right="5" top="5" bottom="5">
 		<s:NavigatorContent width="100%" height="100%" label="原始文本">
 			<s:Label x="6" y="10" text="数据类型："/>
 			<s:RadioButton x="85" y="5" label="XML" groupName="radiogroup" value="xml" enabled.ready="false"/>
