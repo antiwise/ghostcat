@@ -387,13 +387,14 @@ package ghostcat.ui
 		/**
 		 * 删除一个窗口
 		 * @param obj
+		 * @param destoryGBase	是否自动销毁GBase对象
 		 * 
 		 */
-		public function removePopup(obj:DisplayObject):void
+		public function removePopup(obj:DisplayObject,destoryGBase:Boolean = true):void
 		{
 			if (obj.parent == popupLayer)
 			{
-				if (obj is GBase)
+				if (destoryGBase && obj is GBase)
 					(obj as GBase).destory();
 				else
 					popupLayer.removeChild(obj);
