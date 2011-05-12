@@ -115,7 +115,7 @@
 					if (event.detail == Alert.YES)
 					{
 						file.openWithDefaultApplication();
-						GhostCatTools.instance.nativeApplication.exit();
+//						GhostCatTools.instance.nativeApplication.exit();
 					}
 					else
 					{
