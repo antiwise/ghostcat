@@ -56,7 +56,7 @@
 				for each (var child:XML in xml.*)
 				{
 					var o:Object = XMLUtil.attributesToObject(child);
-					list.push(new EmbedVO(o));
+						list.push(new EmbedVO(o));
 				}
 				this.classList = new ArrayList(list)
 			}
@@ -87,28 +87,31 @@
 			{
 				for each (var file:File in files)
 				{
-					if (file.isDirectory)
+					if (!file.isHidden)
 					{
-						addFileHandler(file.getDirectoryListing(),basePackage + file.name + ".");
-					}
-					else
-					{
-						var item:EmbedVO = new EmbedVO();
-						item.source = file.nativePath;
-						item.className = (basePackage + file.name.split(".")[0]).toString().toLowerCase();
-						item.type = file.name.split(".")[1];
-						if (item.type == "jpeg")
-							item.type = "jpg";
-						
-						if (EmbedControl.png.indexOf(item.type) != -1)
+						if (file.isDirectory)
 						{
-							item.compression = true;
-							item.quality = 80;
+							addFileHandler(file.getDirectoryListing(),basePackage + file.name + ".");
 						}
-						if (dataGrid.selectedIndex != -1)
-							classList.addItemAt(item,dataGrid.selectedIndex);
 						else
-							classList.addItem(item);
+						{
+							var item:EmbedVO = new EmbedVO();
+							item.source = file.nativePath;
+							item.className = (basePackage + file.name.split(".")[0]).toString().toLowerCase();
+							item.type = file.name.split(".")[1];
+							if (item.type == "jpeg")
+								item.type = "jpg";
+							
+							if (EmbedControl.png.indexOf(item.type) != -1)
+							{
+								item.compression = true;
+								item.quality = 80;
+							}
+							if (dataGrid.selectedIndex != -1)
+								classList.addItemAt(item,dataGrid.selectedIndex);
+							else
+								classList.addItem(item);
+						}
 					}
 				}
 			}
