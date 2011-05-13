@@ -22,7 +22,7 @@ package ghostcattools.util
 	public final class EmbedControl
 	{
 		static public const swf:Array = ["swf","svg"];
-		static public const mp3:Array = ["mp3","wav"];
+		static public const mp3:Array = ["mp3","aac","m4a","mp4"];
 		static public const jpg:Array = ["jpg"];
 		static public const png:Array = ["png","gif"];
 		static public const all:Array = swf.concat(mp3).concat(jpg).concat(png);
