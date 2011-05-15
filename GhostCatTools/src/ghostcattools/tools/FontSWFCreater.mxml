@@ -140,6 +140,8 @@
 					outputTitleWindow.traceExt(swfFile.exists ? "创建成功！":"创建失败！");
 					outputTitleWindow.enabledCloseButton = true;
 					
+					asFile.deleteFile();
+					
 					if (swfFile.exists)
 						FileControl.openExplorer(swfFile.parent.nativePath);
 				}
