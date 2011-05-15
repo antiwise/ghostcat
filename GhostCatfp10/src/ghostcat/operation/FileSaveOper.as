@@ -37,14 +37,13 @@ package ghostcat.operation
 			
 			file.addEventListener(Event.SELECT,selectFileHandler);
 			file.addEventListener(Event.CANCEL,fault);
-			file.browse(typeFilter);
+			file.save(data);
 		}
 		
 		private function selectFileHandler(event:Event):void
 		{
 			file.removeEventListener(Event.SELECT,selectFileHandler);
 			file.addEventListener(Event.COMPLETE,result);
-			file.save(data);
 		}
 		
 		/** @inheritDoc*/
