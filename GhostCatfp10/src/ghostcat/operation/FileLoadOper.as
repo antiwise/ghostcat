@@ -54,7 +54,7 @@ package ghostcat.operation
 		
 		private function selectFileHandler(event:Event):void
 		{
-			file.removeEventListener(Event.COMPLETE,selectFileHandler);
+			file.removeEventListener(Event.SELECT,selectFileHandler);
 			file.addEventListener(Event.COMPLETE,result);
 			file.load();
 		}
