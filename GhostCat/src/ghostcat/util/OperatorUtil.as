@@ -21,7 +21,7 @@ package ghostcat.util
 				return false;
 			
 			var op:String = exp.charAt(i);
-			return op >= "0" && op <= "9" || op == "." || op == "-";
+			return op >= "0" && op <= "9" || op == ".";
 		}
 		
 		private static function getOperator(exp:String,i:int):String 
@@ -262,14 +262,15 @@ package ghostcat.util
 					operators.pop(); 
 					pos++; 
 				}
-				else if (isNumber(exp,pos))
+				else if (isNumber(exp,pos) || ch == "-")
 				{
 					var v:String = "";
-					while (isNumber(exp,pos) && pos < exp.length)
+					do
 					{
 						v = v + exp.charAt(pos);
 						pos++; 
 					}
+					while (isNumber(exp,pos) && pos < exp.length)
 					operands.push(Number(v));
 				}
 				else
