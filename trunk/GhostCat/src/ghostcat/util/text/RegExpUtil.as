@@ -97,5 +97,35 @@ package ghostcat.util.text
         	else
         		return (/^-?(\d|,)*[\.]?\d*$/).test(text);
         }
+		
+		/**
+		 * 匹配成对的括号
+		 *  
+		 * @param text
+		 * @param left
+		 * @param right
+		 * @return 
+		 * 
+		 */
+		public static function getBracketRegExp(text:String,left:String = "(",right:String = ")"):RegExp
+		{
+			if (left == "(") left = "\(";
+			if (right == ")") right = "\)"; 
+			return new RegExp(
+			left+
+			"	[^"+left + right+"]*"+
+			"	("+
+			"		("+
+			"			(?'Open'"+left+")"+
+			"			[^"+left + right+"]*"+
+			"		)+"+
+			"		("+
+			"			(?'-Open'"+right+")"+
+			"			[^"+left + right+"]*"+
+			"		)+"+
+			"	)*"+
+			"	(?(Open)(?!))"+
+			right,"x")
+		}
 	}
 }

@@ -13,9 +13,11 @@ package ghostcat.display.transfer.effect
 	 */
 	public class MosaicHandler extends Handler
 	{
-		public function MosaicHandler():void
+		public var center:Boolean = false;
+		public function MosaicHandler(center:Boolean = false):void
 		{
 			super();
+			this.center = center;
 		}
 		
 		/** @inheritDoc*/
@@ -25,8 +27,11 @@ package ghostcat.display.transfer.effect
 			var bitmapData:BitmapData = params[1];
 			var deep:Number = params[2];
 			
-			var v:int = normalBitmapData.width * deep / 4;
-			mosaic(normalBitmapData,bitmapData,v);
+			if (deep == 0)
+				deep = 0.01;
+			
+			var v:int = normalBitmapData.width * deep / 5;
+			mosaic(normalBitmapData,bitmapData,v,center);
 		}
 		
 		/**
@@ -39,7 +44,7 @@ package ghostcat.display.transfer.effect
 		 * @return 
 		 * 
 		 */
-		public static function mosaic(source:BitmapData,result:BitmapData=null,size:int = 1):BitmapData
+		public static function mosaic(source:BitmapData,result:BitmapData=null,size:int = 1,center:Boolean = false):BitmapData
 		{
 			if (size < 1)
 				size = 1;
@@ -49,14 +54,15 @@ package ghostcat.display.transfer.effect
 			
 			result.fillRect(result.rect,0);
 			
-			var temp:BitmapData = new BitmapData(Math.ceil(source.width / size),Math.ceil(source.height / size),source.transparent,0);
+			var temp:BitmapData = source.clone();
 			var m:Matrix;
 			m = new Matrix();
+			if (center) m.translate(-source.width / 2,-source.height / 2);
 			m.scale(1/size,1/size);
+			if (center) m.translate(source.width / 2,source.height / 2);
 			temp.draw(source,m);
 			
-			m = new Matrix();
-			m.scale(size,size);
+			m.invert();
 			result.draw(temp,m);
 			
 			temp.dispose();
