@@ -133,10 +133,28 @@ package ghostcat.display.filter
 			updateCall.invalidate();
 		}
 		
+		private var _monocro:uint;
+		
+		/**
+		 * 着色
+		 */
+		public function get monocro():uint
+		{
+			return _monocro;
+		}
+		
+		public function set monocro(value:uint):void
+		{
+			if (_monocro == value)
+				return;
+			
+			_monocro = value;
+			updateCall.invalidate();
+		}
 		
 		private var updateCall:UniqueCall = new UniqueCall(update);
 		
-		public function MultiColorMatrixFilterProxy(brightness:Number = 0,contrast:Number = 0,saturation:Number = 0,hue:Number = 0,threshold:Number = 0,inversion:Boolean = false)
+		public function MultiColorMatrixFilterProxy(brightness:Number = 0,contrast:Number = 0,saturation:Number = 0,hue:Number = 0,threshold:Number = 0,inversion:Boolean = false,monocro:uint = 0)
 		{
 			super(new ColorMatrixFilter());
 			
@@ -146,6 +164,7 @@ package ghostcat.display.filter
 			this.hue = hue;
 			this.threshold = threshold;
 			this.inversion = inversion;
+			this.monocro = monocro;
 		}
 		
 		private function update():void
@@ -153,7 +172,7 @@ package ghostcat.display.filter
 			changeFilter(new ColorMatrixFilter(createMultColorMatrix(brightness,contrast,saturation,hue,threshold,inversion)));
 		}
 		
-		public static function createMultColorMatrix(brightness:Number = 0,contrast:Number = 0,saturation:Number = 0,hue:Number = 0,threshold:Number = 0,inversion:Boolean = false):Array
+		public static function createMultColorMatrix(brightness:Number = 0,contrast:Number = 0,saturation:Number = 0,hue:Number = 0,threshold:Number = 0,inversion:Boolean = false,monocro:uint = 0):Array
 		{
 			var m:Array = [1,0,0,0,0,
 				0,1,0,0,0,
@@ -172,6 +191,8 @@ package ghostcat.display.filter
 				m = concatMatrix(m,createThresholdMatrix(threshold));
 			if (inversion)
 				m = concatMatrix(m,createInversionMatrix());
+			if (monocro)
+				m = concatMatrix(m,createMonocroMatrix(monocro));
 			
 			return m;
 		}
@@ -285,6 +306,25 @@ package ghostcat.display.filter
 						 0.3086*256,	0.6094*256,	0.0820*256,	0,	-256*n,
 						 0, 0, 0, 1, 0];
         }
+		
+		/**
+		 * 单色滤镜 
+		 * @param c 颜色值
+		 * @return 
+		 * 
+		 */
+		public static function createMonocroMatrix(c:uint):Array
+		{
+			var r:Number = ((c >> 16) & 0xFF) / 0xFF / 3;
+			var g:Number = ((c >> 8) & 0xFF) / 0xFF / 3;
+			var b:Number = (c & 0xFF) / 0xFF / 3;
+			return [
+				r,r,r,0,0,
+				g,g,g,0,0,
+				b,b,b,0,0,
+				0,0,0,1,0,
+			];
+		}
 		
 		/**
 		 * 合并两个颜色矩阵 
