@@ -48,7 +48,7 @@
 				this.tempFile = File.createTempFile();
 				FileControl.writeFile(tempFile,bytes);
 				
-				this.openNotepad();
+//				this.openNotepad();
 				
 				this.currentState = "opened";
 				
