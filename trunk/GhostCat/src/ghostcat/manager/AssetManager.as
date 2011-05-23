@@ -4,6 +4,7 @@ package ghostcat.manager
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
@@ -19,6 +20,7 @@ package ghostcat.manager
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.text.URL;
 
+	[Event(name="complete", type="flash.events.Event")]
 	/**
 	 * 资源管理类
 	 * 
@@ -159,6 +161,8 @@ package ghostcat.manager
 				if (oper.id)
 					opers[oper.id] = oper;
 			}
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		/**

@@ -12,6 +12,12 @@ A.²»ÒªÔÚ·ÇÎÄµµÀàµÄ¹¹Ôìº¯Êý²¿·Öµ÷ÓÃRootManagerÒ»ÀàÐèÒª×¢²áÎèÌ¨µÄ·½·¨£¬Çë½«´úÂëÒÆ¶
 Q.ÈçºÎ¿ªÊ¼Ò»¸öÏîÄ¿£¿
 A.½¨ÒéÏÈÊ¹ÓÃGhostCatApp´´½¨»ù±¾×é¼þ²ã´Î£¬ÓÃAssetManager¼ÓÔØÍâ²¿×ÊÔ´£¬È»ºó¿ÉÒÔ³¢ÊÔÓÃGBuildbaseÀ´ÀûÓÃ×Ô¶¯×é¼þÉú³ÉÀ´´´½¨½çÃæ£¬¿É²Î¿¼±¾Ä¿Â¼Ñ¹Ëõ°üµÄPPT¡£
 
+Q.AssetManagerÈçºÎµÃÖª×ÊÔ´ÏÂÔØ³É¹¦£¿
+¿ÉÒÔ¼àÌýCompleteÊÂ¼þ£¬¿ÉÒÔ¼àÌýqueueÊôÐÔµÄOPERATION_COMPLETEÊÂ¼þ£¬¿ÉÒÔÔÚ¼ÓÔØÊ±¼àÌý·µ»ØµÄ¼¯ºÏ¼ÓÔØÆ÷µÄOPERATION_COMPLETEÊÂ¼þ£¬Ò²¿ÉÒÔnew FuntionOper(completeHandler).commit()Í¨¹ýÈ«¾Ö¶ÓÁÐ¿ØÖÆ
+
+Q.AssetManagerÈçºÎ»ñµÃ¼ÓÔØÍêµÄ×ÊÔ´£¿
+A.SWFÄÚµÄ×ÊÔ´¿ÉÒÔÍ¨¹ýgetAssetByName»ñµÃ£¬ÆäËûµÄÔò¿ÉÒÔÓÃgetOperÍ¨¹ýÖ®Ç°ÉèÖÃµÄid»ñµÃÃ¿Ò»¸ö¼ÓÔØÆ÷£¬È»ºóÍ¨¹ýdata»òÕßbytesÊôÐÔµÃµ½¡£
+
 Q.ÈçºÎÊ¹ÓÃÌáÊ¾£¿ÈçºÎÉèÖÃÌáÊ¾Æ¤·ô£¿
 A.´´½¨Ò»¸öToolTipSprite¶ÔÏó£¬²¢¼ÓÔØµ½ÄãÏë·ÅÖÃµÄ²ãÄÚ£¬Êó±êÒÆ¶¯µ½ÉèÖÃÁËtoolTipµÄ×é¼þÉÏ£¬ÌáÊ¾¾ÍÄÜÉúÐ§¡£ÌáÊ¾Æ¤·ôÓÃToolTipSprite.defaultSkinÀ´ÐÞ¸Ä£¬ÕâÊÇÒ»¸öÊµÏÖÁËIToolTipSkinµÄÈÎÒâÏÔÊ¾¶ÔÏó£¬¿ÉÒÔ²Î¿¼ghostcat.ui.toolTipÏÂµÄÀà¡£ÉèÖÃ×é¼þµÄtoolTipObjÔò¿ÉÒÔÖ¸¶¨Ò»¸öÁÙÊ±µÄÌáÊ¾Æ¤·ô¡£
 
