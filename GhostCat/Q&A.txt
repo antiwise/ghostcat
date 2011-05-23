@@ -16,7 +16,7 @@ Q.AssetManager如何得知资源下载成功？
 可以监听Complete事件，可以监听queue属性的OPERATION_COMPLETE事件，可以在加载时监听返回的集合加载器的OPERATION_COMPLETE事件，也可以new FuntionOper(completeHandler).commit()通过全局队列控制
 
 Q.AssetManager如何获得加载完的资源？
-A.SWF内的资源可以通过getAssetByName获得，其他的则可以用getOper通过之前设置的id获得每一个加载器，然后通过data或者bytes属性得到。
+A.SWF内的资源可以通过getAssetByName获得，其他的则可以用getOper通过之前设置的id获得每一个加载器，然后通过data或者bytes属性得到，或者用getDataById方法。
 
 Q.如何使用提示？如何设置提示皮肤？
 A.创建一个ToolTipSprite对象，并加载到你想放置的层内，鼠标移动到设置了toolTip的组件上，提示就能生效。提示皮肤用ToolTipSprite.defaultSkin来修改，这是一个实现了IToolTipSkin的任意显示对象，可以参考ghostcat.ui.toolTip下的类。设置组件的toolTipObj则可以指定一个临时的提示皮肤。
