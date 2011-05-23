@@ -20,9 +20,10 @@ package ghostcat.manager
 	import ghostcat.util.core.Singleton;
 	import ghostcat.util.text.URL;
 
-	[Event(name="complete", type="flash.events.Event")]
 	/**
 	 * 资源管理类
+	 * 
+	 * 加载完成应该监听queue属性的OPERATION_COMPLETE方法
 	 * 
 	 * @author flashyiyi
 	 * 
