@@ -3,10 +3,12 @@ package ghostcat.game.item
 	import flash.events.Event;
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
+	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.Tick;
 
+	[Event(name="label_end", type="ghostcat.events.MovieEvent")]
 	/**
 	 * 动画对象 
 	 * @author flashyiyi
@@ -98,17 +100,18 @@ package ghostcat.game.item
 			{
 				if (currentFrame == bitmapDatas.length - 1)
 				{
-					if (loops != 0)
+					if (loops > 0)
+						loops--;
+					
+					if (loops == 0)
 					{
-						if (loops > 0)
-							loops--;
-						
-						this.currentFrame = 0;
+						this.frameTimer = 0;
+						this.dispatchEvent(new MovieEvent(MovieEvent.MOVIE_END))
+						return;
 					}
 					else
 					{
-						this.frameTimer = 0;
-						return;
+						this.currentFrame = 0;
 					}
 				}
 				else
