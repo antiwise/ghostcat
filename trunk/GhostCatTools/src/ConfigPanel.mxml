@@ -58,6 +58,7 @@
 					var version:String = Config.FLEXSDK_PATH.slice(index + 1);
 					Config.FLEXSDK_4_0 =  int(version.split(".")[0]) >= 4;
 				}
+				Config.save();
 			}
 			
 		]]>

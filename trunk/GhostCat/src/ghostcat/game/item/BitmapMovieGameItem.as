@@ -20,6 +20,7 @@ package ghostcat.game.item
 		private var _enabledTick:Boolean;
 		private var _currentFrame:int;
 		private var frameTimer:int;
+		public var loops:int = -1;
 		public function BitmapMovieGameItem(bitmapDatas:Array,frameRate:Number)
 		{
 			super(null);
@@ -89,16 +90,31 @@ package ghostcat.game.item
 		
 		public function tick(t:int):void
 		{
-			if (!bitmapDatas)
+			if (!bitmapDatas || loops == 0)
 				return;
 			
 			frameTimer -= t;
 			while (frameTimer < 0) 
 			{
 				if (currentFrame == bitmapDatas.length - 1)
-					currentFrame = 0;
+				{
+					if (loops != 0)
+					{
+						if (loops > 0)
+							loops--;
+						
+						this.currentFrame = 0;
+					}
+					else
+					{
+						this.frameTimer = 0;
+						return;
+					}
+				}
 				else
+				{
 					currentFrame++;
+				}
 				
 				frameTimer += 1000 / frameRate;
 			}
