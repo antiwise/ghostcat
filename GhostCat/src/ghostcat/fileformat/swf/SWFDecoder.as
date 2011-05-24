@@ -44,7 +44,7 @@ package ghostcat.fileformat.swf
 		/**
 		 * 帧频
 		 */
-		public var frameRate:int;
+		public var frameRate:Number;
 		
 		/**
 		 * 总帧数
@@ -150,7 +150,7 @@ package ghostcat.fileformat.swf
 				bytes.uncompress();
 			
 			frameSize = readRect(bytes);
-			frameRate  = int(bytes.readUnsignedShort() / 256);
+			frameRate  = Number(bytes.readUnsignedShort() / 256);
 			frameCount = bytes.readUnsignedShort();
 		}
 		
