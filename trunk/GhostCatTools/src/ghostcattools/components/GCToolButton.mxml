@@ -58,7 +58,7 @@
 			
 			public function openWindow():GCToolWindow
 			{
-				if (checkMXMLC && !new File(Config.MXMLC_PATH).exists)
+				if (checkMXMLC && !Config.checkMXMLC())
 				{
 					Alert.show("FLEX SDK设置错误，无法打开！");
 					return null;
