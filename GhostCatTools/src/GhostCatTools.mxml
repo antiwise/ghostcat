@@ -82,8 +82,8 @@
 										 cmd="{SWFShower}" fileFilter="{['swf','swc']}"/>
 				<components:GCToolButton label="SWC拆分" icon="@Embed('../asset/icon12.png')" desc="将一个SWC中的所有类分别编译成单独的SWF，用于拆分资源按需加载" 
 										 cmd="{SWCSplit}" fileFilter="swc" checkMXMLC="true"/>
-				<components:GCToolButton label="SWF打包" icon="@Embed('../asset/icon13.png')" desc="将PNG,JPG,SWF等图片打包成一个新的SWF" 
-										 cmd="{SWFPackage}" fileFilter="xml" checkMXMLC="true"/>
+				<components:GCToolButton label="SWF打包" icon="@Embed('../asset/icon13.png')" desc="将PNG,JPG,SWF等图片打包成一个新的SWF。也可以作为生成资源XML的工具，批量设置九宫格缩放定义" 
+										 cmd="{SWFPackage}" fileFilter="xml"/>
 				<components:GCToolButton label="测试代码" icon="@Embed('../asset/icon14.png')" desc="可编写简单代码并立即编译测试结果" 
 										 cmd="{AS3Tester}" checkMXMLC="true"/>
 				<components:GCToolButton label="字体生成" icon="@Embed('../asset/icon15.png')" desc="可以根据文本文件内容生成相应的字体SWF供嵌入字体使用" 

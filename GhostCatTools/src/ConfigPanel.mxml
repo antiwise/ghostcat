@@ -69,10 +69,14 @@
 	<components:BrowseButton id="sdkSelectBN" x="383" y="31" right="10" click="sdkSelectBN_clickHandler(event)"/>
 	<s:Label x="10" y="70" text="外部文本编码："/>
 	<s:TextInput id="charSetBN" y="90" left="10" right="40" text="@{Config.CHARSET}" change="saveHandler(event)"/>
-	<s:Label x="10" y="190" text="文本编辑器路径："/>
-	<s:TextInput id="notepadUrlText" y="210" left="10" right="40" text="@{Config.NOTEPAD_PATH}" change="saveHandler(event)"/>
-	<components:BrowseButton id="notepadSelectBN" y="210" right="10" target="{notepadUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
 	<s:Label x="10" y="130" text="资源管理器路径："/>
 	<s:TextInput id="explorerUrlText" y="150" left="10" right="40" text="@{Config.EXPLORER_PATH}" change="saveHandler(event)"/>
 	<components:BrowseButton id="explorerSelectBN" y="150" right="10" target="{explorerUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
+	<s:Label x="10" y="190" text="文本编辑器路径："/>
+	<s:TextInput id="notepadUrlText" y="210" left="10" right="40" text="@{Config.NOTEPAD_PATH}" change="saveHandler(event)"/>
+	<components:BrowseButton id="notepadSelectBN" y="210" right="10" target="{notepadUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
+	<s:Label x="10" y="250" text="java.exe路径："/>
+	<s:TextInput id="javaUrlText" y="270" left="10" right="40" text="@{Config.JAVA_PATH}" change="saveHandler(event)"/>
+	<components:BrowseButton id="javaSelectBN" y="270" right="10" target="{javaUrlText}" browseTitle="选择一个应用程序" browseExtension="{[new FileFilter('应用程序','*.exe')]}" dragExtension="exe"/>
+
 </s:Group>
