@@ -116,6 +116,12 @@ package ghostcat.display.filter
 			}
 		}
 		
+		public function dispose():void
+		{
+			if (mask)
+				mask.dispose();
+		}
+		
 		
 		public static function createHMask(width:Number,height:Number):BitmapData
 		{

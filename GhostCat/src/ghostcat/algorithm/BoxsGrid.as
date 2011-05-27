@@ -17,7 +17,7 @@ package ghostcat.algorithm
 		public var boxWidth:Number;
 		public var boxHeight:Number;
 		
-		protected var dict:Dictionary;
+		public var dict:Dictionary;
 		protected var boxs:Array;
 		
 		private var w:int;

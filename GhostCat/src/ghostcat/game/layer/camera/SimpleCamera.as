@@ -98,5 +98,17 @@ package ghostcat.game.layer.camera
 		{
 			//
 		}
+		
+		
+		
+		/**
+		 * 删除一个目标 
+		 * @param item
+		 * 
+		 */
+		public function removeItem(item:DisplayObject):void
+		{
+			//
+		}
 	}
 }

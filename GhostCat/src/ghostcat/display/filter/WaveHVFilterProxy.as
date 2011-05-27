@@ -22,21 +22,32 @@ package ghostcat.display.filter
 	 * @author flashyiyi
 	 * 
 	 */
-	public dynamic class WaveFilterProxy extends FilterProxy
+	public dynamic class WaveHVFilterProxy extends FilterProxy
 	{
+		/**
+		 * 横向波纹 
+		 */
+		public static const HWAVE:int = 1;
+		/**
+		 * 纵向波纹
+		 */
+		public static const VWAVE:int = 2;
+		
 		public var mask:BitmapData;
 		
+		private var _type:int;
 		private var _cycle:int = 5;
 		private var _cycleStart:Number = 0;
 		private var _rect:Rectangle = new Rectangle(0,0,100,100);
-		private var _deep:Number = 9;
+		private var _deep:Number = 5;
 		
 		private var updateCall:UniqueCall = new UniqueCall(update);
 		private var updateMaskCall:UniqueCall = new UniqueCall(updateMask);
 		
-		public function WaveFilterProxy()
+		public function WaveHVFilterProxy(type:int = 1)
 		{
 			super(new DisplacementMapFilter());
+			this.type = type;
 		}
 		
 		/**
@@ -106,6 +117,23 @@ package ghostcat.display.filter
 			updateCall.invalidate();
 		}
 
+		/**
+		 * 偏移类型
+		 * @return 
+		 * 
+		 */
+		public function get type():int
+		{
+			return _type;
+		}
+		
+		public function set type(v:int):void
+		{
+			_type = v;
+			updateMaskCall.invalidate();
+			updateCall.invalidate();
+		}
+		
 		private function update():void
 		{
 			if (!mask)
@@ -119,7 +147,7 @@ package ghostcat.display.filter
 			if (mask)
 				mask.dispose();
 				
-			mask = createWaveMask(rect,cycle,cycleStart);
+			mask = createWaveMask(type,rect,cycle,cycleStart);
 		}
 		
 		public function dispose():void
@@ -131,51 +159,48 @@ package ghostcat.display.filter
 		/**
 		 * 生成水波遮罩
 		 * 
-		 * @param shapeType	0.圆形，1.水平矩形，2.垂直矩形
+		 * @param shapeType	1.水平矩形，2.垂直矩形，3.水平矩形缩放，4.垂直矩形缩放
 		 * @param rect	范围
 		 * @param cycle	周期
 		 * @param cycleStart	周期起点
 		 * @return 
 		 * 
 		 */
-		public static function createWaveMask(rect:Rectangle,cycle:int, cycleStart:Number):BitmapData
+		public static function createWaveMask(shapeType:int,rect:Rectangle,cycle:int, cycleStart:Number):BitmapData
 		{
-			var shape:Shape = new Shape();
-			var colors:Array = [];
-			var alphas:Array = [];
-			var ratios:Array = [];
-			
-			colors.push(0x808080);
-			alphas.push(1.0);
-			ratios.push(0);
-			for (var i:int = 0;i < cycle;i++)
+			var data:BitmapData = new BitmapData(rect.width,rect.height,false,0x808080);
+			if (shapeType == 1)
 			{
-				var step1:Number = 255 / cycle * (i + cycleStart);
-				if (step1 >= 0 && step1 <= 255)
+				for (var i:int = 0;i < rect.width;i++)
 				{
-					colors.push(0x0);
-					alphas.push(1.0);
-					ratios.push(step1);
-				}
-				var step2:Number = step1 + 255/cycle * 0.5;
-				if (step2 >= 0 && step2 <= 255)
-				{
-					colors.push(0xFFFFFF);
-					alphas.push(1.0);
-					ratios.push(step2);
+					var c:uint = 0x80 + 0x7F * Math.sin((i / rect.width * cycle + cycleStart) * Math.PI * 2)
+					data.fillRect(new Rectangle(i,0,1,rect.height),(0x80 << 16) | (c << 8));
 				}
 			}
-			colors.push(0x808080);
-			alphas.push(1.0);
-			ratios.push(255);
-			
-			var m:Matrix = new Matrix();
-			m.createGradientBox(rect.width,rect.height);
-			shape.graphics.beginGradientFill(GradientType.RADIAL,colors,alphas,ratios,m,SpreadMethod.PAD,InterpolationMethod.RGB);
-			shape.graphics.drawEllipse(0,0,rect.width,rect.height);
-			
-			var data:BitmapData = new BitmapData(rect.width,rect.height,false,0x808080);
-			data.draw(shape);
+			else if (shapeType == 2)
+			{
+				for (i = 0;i < rect.height;i++)
+				{
+					c = 0x80 + 0x7F * Math.sin((i / rect.height * cycle + cycleStart) * Math.PI * 2)
+					data.fillRect(new Rectangle(0,i,rect.width,1),(c << 16) | (0x80 << 8));
+				}
+			}
+			else if (shapeType == 3)
+			{
+				for (i = 0;i < rect.width;i++)
+				{
+					c = 0x80 + 0x7F * Math.sin((i / rect.width * cycle + cycleStart) * Math.PI * 2)
+					data.fillRect(new Rectangle(i,0,1,rect.height),(c << 16) | (0x80 << 8));
+				}
+			}
+			else if (shapeType == 4)
+			{
+				for (i = 0;i < rect.height;i++)
+				{
+					c = 0x80 + 0x7F * Math.sin((i / rect.height * cycle + cycleStart) * Math.PI * 2)
+					data.fillRect(new Rectangle(0,i,rect.width,1),(0x80 << 16) | (c << 8));
+				}
+			}
 			return data;
 		}
 		
@@ -190,7 +215,7 @@ package ghostcat.display.filter
 		 */		
 		public static function createWaveFilter(bitmapData:BitmapData, pos:Point,deep:Number = 9):DisplacementMapFilter
 		{
-			return new DisplacementMapFilter(bitmapData,pos,BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep,DisplacementMapFilterMode.COLOR)
+			return new DisplacementMapFilter(bitmapData,pos,BitmapDataChannel.RED,BitmapDataChannel.GREEN,deep,deep,DisplacementMapFilterMode.IGNORE)
 		}
 	}
 }

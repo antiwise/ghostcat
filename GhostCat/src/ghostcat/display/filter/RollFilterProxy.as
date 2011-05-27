@@ -54,6 +54,12 @@ package ghostcat.display.filter
 			mask = new BitmapData(Math.ceil(owner.width),Math.ceil(owner.height));
 		}
 		
+		public function dispose():void
+		{
+			if (mask)
+				mask.dispose();
+		}
+		
 		
 		public static function createFilter(bitmapData:BitmapData, pos:Point):DisplacementMapFilter
 		{

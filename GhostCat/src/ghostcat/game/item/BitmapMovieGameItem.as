@@ -58,7 +58,8 @@ package ghostcat.game.item
 				value = totalFrame - 1;
 			
 			_currentFrame = value;
-			bitmapData = bitmapDatas[value];
+			if (bitmapData != bitmapDatas[value])
+				bitmapData = bitmapDatas[value];
 		}
 		
 		public function get totalFrame():int
