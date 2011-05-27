@@ -80,6 +80,12 @@ package ghostcat.game.item
 				updatePosition();
 		}
 		
+		public function applyRegPosition():void
+		{
+			super.x = x - regX;
+			super.y = y - regY;
+		}
+		
 		protected function updatePosition():void
 		{
 			if (sortCalculater)

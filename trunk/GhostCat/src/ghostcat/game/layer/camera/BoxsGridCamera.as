@@ -44,7 +44,7 @@ package ghostcat.game.layer.camera
 			this.boxs.reinsert(item);
 		}
 		
-		public function removeItem(item:DisplayObject):void
+		override public function removeItem(item:DisplayObject):void
 		{
 			this.boxs.remove(item);
 		}
@@ -83,7 +83,7 @@ package ghostcat.game.layer.camera
 			{
 				for (child in oldDict)
 				{
-					if (!newsDict[child])
+					if (!newsDict[child] && DisplayObject(child).parent == layer)
 						layer.removeChild(DisplayObject(child));
 		
 				}

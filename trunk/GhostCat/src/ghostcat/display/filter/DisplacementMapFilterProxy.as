@@ -14,7 +14,7 @@ package ghostcat.display.filter
 	import ghostcat.util.core.UniqueCall;
 
 	/**
-	 * 偏移滤镜
+	 * 偏移滤镜（建议用BubbleFitler和WaveFilterProxy代替）
 	 * 
 	 * @author flashyiyi
 	 * 
@@ -189,6 +189,12 @@ package ghostcat.display.filter
 					Debug.error("不允许的取值")
 					break;
 			}
+		}
+		
+		public function dispose():void
+		{
+			if (mask)
+				mask.dispose();
 		}
 		
 		/**

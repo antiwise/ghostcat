@@ -20,7 +20,14 @@ package ghostcat.game.layer
 	
 	public class GameLayer extends Sprite implements IBitmapDataDrawer
 	{
+		/**
+		 * 是否是位图引擎
+		 */
 		public var isBitmapEngine:Boolean;
+		/**
+		 * 是否禁止自身增删对象，在使用BoxGridCamera时需要设置为true，以便将屏幕对象管理交给摄像机
+		 */
+		public var disableAddChild:Boolean;
 		
 		public var children:Array = [];
 		public var childrenDict:Dictionary = new Dictionary(true);
@@ -44,18 +51,24 @@ package ghostcat.game.layer
 		
 		public function addObject(v:*):void
 		{
-			if (!isBitmapEngine && v is DisplayObject)
+			if (!isBitmapEngine && !disableAddChild && v is DisplayObject)
 				this.addChild(DisplayObject(v));
 			
 			children.push(v);
 			childrenDict[v] = true;
-			childrenInScreen.push(v);
-			childrenInScreenDict[v] = true;
+			if (!disableAddChild)
+			{
+				childrenInScreen.push(v);
+				childrenInScreenDict[v] = true;
+			}
+			
+			if (camera)
+				camera.refreshItem(v);
 		}
 		
 		public function removeObject(v:*):void
 		{
-			if (!isBitmapEngine && v is DisplayObject)
+			if (!isBitmapEngine && !disableAddChild && v is DisplayObject && (v as DisplayObject).parent == this)
 				this.removeChild(DisplayObject(v));
 			
 			var index:int = children.indexOf(v);
@@ -63,10 +76,15 @@ package ghostcat.game.layer
 				children.splice(index, 1);
 			delete childrenDict[v];
 			
-			index = childrenInScreen.indexOf(v);
-			if (index != -1)
-				childrenInScreen.splice(index, 1);
-			delete childrenInScreenDict[v];
+			if (!disableAddChild)
+			{
+				index = childrenInScreen.indexOf(v);
+				if (index != -1)
+					childrenInScreen.splice(index, 1);
+				delete childrenInScreenDict[v];
+			}
+			if (camera)
+				camera.removeItem(v);
 		}
 		
 		public function setObjectPosition(obj:DisplayObject,p:Point):void

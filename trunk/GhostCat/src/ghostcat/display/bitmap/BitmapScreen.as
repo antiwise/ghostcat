@@ -13,8 +13,8 @@ package ghostcat.display.bitmap
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
-	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.community.sort.DepthSortUtil;
+	import ghostcat.community.sort.SortAllManager;
 	import ghostcat.display.GNoScale;
 	import ghostcat.util.Util;
 	import ghostcat.util.display.MatrixUtil;
@@ -118,6 +118,11 @@ package ghostcat.display.bitmap
 		public function enabledSortY():void
 		{
 			sortFields = ["y"];
+		}
+		
+		public function get bitmapData():BitmapData
+		{
+			return (this.content as Bitmap).bitmapData;
 		}
 		
 		/**

@@ -103,6 +103,12 @@ package ghostcat.display.filter
 			mask = createBubbleMask(radius);
 		}
 		
+		public function dispose():void
+		{
+			if (mask)
+				mask.dispose();
+		}
+		
 		/**
 		 * 以红绿通道生成渐进变化的色圆。
 		 * 
