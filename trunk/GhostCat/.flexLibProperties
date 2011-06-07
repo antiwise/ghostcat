@@ -589,6 +589,7 @@
     <classEntry path="ghostcat.ui.controls.BitmapButtonSkin"/>
     <classEntry path="ghostcat.util.data.XMLListUtil"/>
     <classEntry path="ghostcat.display.filter.WaveHVFilterProxy"/>
+    <classEntry path="ghostcat.util.TickTimeout"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
