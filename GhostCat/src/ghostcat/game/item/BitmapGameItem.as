@@ -2,6 +2,7 @@ package ghostcat.game.item
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
@@ -39,6 +40,9 @@ package ghostcat.game.item
 		
 		public var regX:Number = 0.0;
 		public var regY:Number = 0.0;
+		private var _rotation:Number = 0.0;
+		
+		public var rotationCenter:Boolean;
 		
 		public override function set x(v:Number):void
 		{	
@@ -47,7 +51,7 @@ package ghostcat.game.item
 			
 			_oldX = _x;
 			_x = v;
-			super.x = v - regX;
+			applyRegPosition();
 			
 			updatePosition();
 		}
@@ -59,22 +63,38 @@ package ghostcat.game.item
 			
 			_oldY = _y;
 			_y = v;
-			super.y = v - regY;
+			applyRegPosition();
 			
 			updatePosition();
 		}
 		
+		public override function set rotation(value:Number):void
+		{
+			trace(value);
+			_rotation = value;
+			applyRegPosition();
+		}
+		
+		public override function get rotation():Number
+		{
+			return _rotation;
+		}
+		
+		public function set $rotation(value:Number):void
+		{
+			super.rotation = value;
+		}
+		
 		public function setPosition(x:Number,y:Number,updatePos:Boolean = true):void
 		{
-			if (this.x == x && this.y == y)
+			if (_x == x && _y == y)
 				return;
 			
 			_oldX = _x;
 			_oldY = _y;
 			_x = x;
 			_y = y;
-			super.x = x - regX;
-			super.y = y - regY;
+			applyRegPosition();
 						
 			if (updatePos)
 				updatePosition();
@@ -82,8 +102,29 @@ package ghostcat.game.item
 		
 		public function applyRegPosition():void
 		{
-			super.x = x - regX;
-			super.y = y - regY;
+			if (_rotation == 0)
+			{
+				super.x = _x - regX;
+				super.y = _y - regY;
+			}
+			else
+			{
+				var m:Matrix = new Matrix();
+				if (rotationCenter)
+				{
+					var hh:int = height / 2;
+					m.translate(-regX,-hh);
+					m.rotate(_rotation / 180 * Math.PI);
+					m.translate(_x,_y - regY +hh);
+				}
+				else
+				{
+					m.translate(-regX,-regY);
+					m.rotate(_rotation / 180 * Math.PI);
+					m.translate(_x,_y);
+				}
+				super.transform.matrix = m;
+			}
 		}
 		
 		protected function updatePosition():void
