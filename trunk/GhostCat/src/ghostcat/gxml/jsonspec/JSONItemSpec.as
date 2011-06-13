@@ -4,6 +4,7 @@ package ghostcat.gxml.jsonspec
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
+	import ghostcat.gxml.spec.ItemGroup;
 	import ghostcat.util.ReflectUtil;
 	
 	/**
