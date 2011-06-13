@@ -61,7 +61,7 @@ package ghostcat.util.data
 		 * @return 
 		 * 
 		 */
-		public static function titleArrayToObjectArray(source:Array):Array
+		public static function titleArrayToObjectArray(source:Array,itemClass:Class = null):Array
 		{
 			if (source.length <= 1)
 				return [];
@@ -69,7 +69,7 @@ package ghostcat.util.data
 			var result:Array = [];
 			for (var i:int = 1; i < source.length; i++)
 			{
-				var data:Object = new Object();
+				var data:Object = itemClass ? new itemClass() : new Object();
 				for (var j:int = 0;j < source[i].length;j++)
 					data[source[0][j]] = source[i][j];
 				result.push(data);	

@@ -1,11 +1,9 @@
-package ghostcat.gxml.spec
+package ghostcat.gxml.jsonspec
 {
 	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.gxml.spec.ItemSpec;
-	import ghostcat.util.ReflectUtil;
-	import ghostcat.util.ReflectXMLUtil;
-
+	import ghostcat.gxml.spec.ItemGroup;
+	
 	/**
 	 * 解析数据组
 	 * 
@@ -23,9 +21,9 @@ package ghostcat.gxml.spec
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ItemGroupSpec extends ItemSpec
+	public class JSONItemGroupSpec extends JSONItemSpec
 	{
-		public function ItemGroupSpec()
+		public function JSONItemGroupSpec()
 		{
 			super();
 		}
@@ -33,7 +31,7 @@ package ghostcat.gxml.spec
 		/** @inheritDoc */
 		public override function addChild(source:*,child:*,xml:XML):void
 		{
-			if (source is ItemGroup && isClass(xml))
+			if (source is ItemGroup)
 				(source as ItemGroup).add(child);
 			else
 				super.addChild(source,child,xml);
@@ -47,13 +45,13 @@ package ghostcat.gxml.spec
 		 * @return 
 		 * 
 		 */
-		public function createItemGroup(source:XMLList,type:Class):*
+		public function createItemGroup(source:Array,type:Class):*
 		{
 			var group:ItemGroup = new ItemGroup();
-			var typeName:QName = ReflectUtil.getQName(type);
-			for each (var v:XML in source)
+			var typeName:String = getQualifiedClassName(type);
+			for each (var v:Object in source)
 			{
-				v.setName(typeName);
+				v[classRefName] = typeName;
 				group.add(createObject(v));
 			}
 			return group;
