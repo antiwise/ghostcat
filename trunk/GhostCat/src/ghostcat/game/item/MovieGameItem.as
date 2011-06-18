@@ -28,6 +28,7 @@ package ghostcat.game.item
 			super();
 			
 			this.movieClip = movieClip;
+			addChild(this.movieClip);
 			this.frameRate = frameRate;
 			this.currentFrame = 0;
 			
