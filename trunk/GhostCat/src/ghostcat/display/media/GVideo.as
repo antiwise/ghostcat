@@ -74,16 +74,17 @@ package ghostcat.display.media
 		public function load(url:String):void
 		{
 			nc = new NetConnection();
-			nc.connect(url);
+			nc.connect(null);
 			
 			ns = new NetStream(nc);
 			ns.addEventListener(NetStatusEvent.NET_STATUS,netStatusHandler,false,0,true);
 			ns.client = this;
+			ns.play(url);
 			
 			this.attachNetStream(ns);
 		}
 		
-        protected function onMetaData(info:Object):void
+		public function onMetaData(info:Object):void
         {
             duration = info.duration;
             frameRate = info.framerate;
@@ -95,7 +96,7 @@ package ghostcat.display.media
             
         }
         
-        protected function onCuePoint(info:Object):void
+        public function onCuePoint(info:Object):void
         {
         	currentCuePoint = info;
         }
@@ -107,15 +108,6 @@ package ghostcat.display.media
 				dispatchEvent(new Event(Event.COMPLETE))
 		}
 		
-		/**
-		 * 播放 
-		 * 
-		 */
-		public function play():void
-		{
-			ns.play();
-		}
-		
 		public function destory():void
 		{
 			if (nc)
@@ -124,7 +116,6 @@ package ghostcat.display.media
 			if (ns)
 			{
 				ns.removeEventListener(NetStatusEvent.NET_STATUS,netStatusHandler);
-				ns.client = null;
 				ns.close();
 			}	
 			this.clear();
