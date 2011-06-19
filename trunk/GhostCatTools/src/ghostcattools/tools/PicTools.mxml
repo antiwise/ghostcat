@@ -8,6 +8,7 @@
 		<![CDATA[
 			import flash.filters.ColorMatrixFilter;
 			
+			import ghostcat.fileformat.jpg.JPGEncoder;
 			import ghostcat.fileformat.png.PNGEncoder;
 			import ghostcat.game.item.BitmapMovieGameItem;
 			import ghostcat.util.display.BitmapSeparateUtil;
@@ -17,6 +18,7 @@
 			
 			import mx.collections.ArrayList;
 			import mx.events.FlexEvent;
+			import mx.graphics.codec.JPEGEncoder;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -238,10 +240,21 @@
 					
 					var file:File = file3s[i] as File;
 					var baseName:String = file.name.split(".")[0];
-					var newFile:File = file.parent.resolvePath(baseName + "_alpha.png");
-					var newbmd:BitmapData = createBitmapData(bmd);
-					FileControl.writeFile(newFile,PNGEncoder.encode(newbmd));
-					bmd.dispose();
+					var newFile:File = file.parent.resolvePath(baseName + "_alpha.jpg");
+					
+					var newbmd:BitmapData;
+					if (checkbox1.selected)
+					{
+						newbmd = createBitmapData(bmd);
+						bmd.dispose();
+					}
+					else
+					{
+						newbmd = bmd;
+					}
+					
+					var jpgEncode:JPEGEncoder = new JPEGEncoder(qualityNum.value);
+					FileControl.writeFile(newFile,jpgEncode.encode(newbmd));
 					newbmd.dispose();
 					
 					if (i < file3s.length - 1)
@@ -249,15 +262,14 @@
 						i++;
 						loadImage();
 					}
-					else
-					{
-						//
-					}
 				}
 			}
 			
-			protected function imageList_changeHandler(event:IndexChangeEvent):void
+			protected function imageList_changeHandler(event:Event):void
 			{
+				if (imageList.selectedIndex == -1)
+					return;
+				
 				var loader:Loader = new Loader();
 				loader.loadBytes(FileControl.readFile(file3s[imageList.selectedIndex]));
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
@@ -269,8 +281,39 @@
 					if (image3.source)
 						(image3.source as BitmapData).dispose();
 					
-					image3.source = createBitmapData(bmd);
-					bmd.dispose();
+					var newbmd:BitmapData;
+					if (checkbox1.selected)
+					{
+						newbmd = createBitmapData(bmd);
+						bmd.dispose();
+					}
+					else
+					{
+						newbmd = bmd;
+					}
+					
+					if (checkbox2.selected)
+					{
+						var jpegencode:JPEGEncoder = new JPEGEncoder(qualityNum.value);
+						var bytes:ByteArray = jpegencode.encode(newbmd);
+						var loader2:Loader = new Loader();
+						loader2.loadBytes(bytes);
+						loader2.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler2);
+						newbmd.dispose();
+					}
+					else
+					{
+						image3.source = newbmd;
+					}
+				}
+				
+				function completeHandler2(event:Event):void
+				{
+					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+					var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					image3.source = bmd;
 				}
 			}
 			
@@ -302,7 +345,7 @@
 				
 				if (bmd2)
 					bmd2.dispose();
-						
+				
 				if (image3.source)
 					(image3.source as BitmapData).dispose();
 			}
@@ -330,9 +373,13 @@
 			<s:Image id="image2" left="81" right="0" top="0" bottom="0"/>
 			<s:Button id="saveBN2" x="0" bottom="0" width="73" label="保存" click="saveBN2_clickHandler(event)"/>
 		</s:NavigatorContent>
-		<s:NavigatorContent id="nav3" label="透明图" backgroundColor="0xFFFFFF">
+		<s:NavigatorContent id="nav3" label="压缩" backgroundColor="0xFFFFFF">
 			<s:Button id="browseBN3" width="73" label="浏览" click="browseBN3_clickHandler(event)"/>
-			<s:List id="imageList" left="0" top="25" bottom="25" width="72" change="imageList_changeHandler(event)">
+			<s:CheckBox id="checkbox1" x="83" y="0" label="生成透明图" selected="true"/>
+			<s:CheckBox id="checkbox2" x="190" y="0" label="测试压缩" selected="false"/>
+			<s:Button id="refreshBN3" x="280" y="0" width="73" label="刷新"
+					  click="imageList_changeHandler(event)"/>
+			<s:List id="imageList" left="0" top="25" bottom="50" width="72" change="imageList_changeHandler(event)">
 				<s:itemRenderer>
 					<fx:Component>
 						<s:DataRenderer width="100%">
@@ -341,7 +388,10 @@
 					</fx:Component>
 				</s:itemRenderer>
 			</s:List>
-			<s:Image id="image3" left="81" right="0" top="0" bottom="0"/>
+			<s:Image id="image3" left="81" right="0" top="25" bottom="0"/>
+			<s:Label x="0" bottom="30" text="质量"/>
+			<s:NumericStepper id="qualityNum" x="25" bottom="25" width="48" maximum="100"
+							  minimum="1" value="50"/>
 			<s:Button id="saveBN3" x="0" bottom="0" width="73" label="保存" click="saveBN3_clickHandler(event)"/>
 		</s:NavigatorContent>
 	</mx:TabNavigator>
