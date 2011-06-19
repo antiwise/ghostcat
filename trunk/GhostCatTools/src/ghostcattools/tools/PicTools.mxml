@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009" title="图片处理"
+						 xmlns:s="library://ns.adobe.com/flex/spark" showStatusBar="false" enabledDragOpen="false"
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="ghostcattools.components.*" width="400" height="300"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)" close="gctoolwindow1_closeHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.ColorMatrixFilter;
+			
+			import ghostcat.fileformat.png.PNGEncoder;
+			import ghostcat.game.item.BitmapMovieGameItem;
+			import ghostcat.util.display.BitmapSeparateUtil;
+			
+			import ghostcattools.components.GCAlert;
+			import ghostcattools.util.FileControl;
+			
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			private var bmd1:BitmapData;
+			private var file1:File;
+			private var bitmapAnim:BitmapMovieGameItem;
+			
+			private var bmd2s:Array;
+			private var bmd2:BitmapData;
+			private var file2s:Array;
+			
+			private var file3s:Array;
+			private var fileList3:Array;
+			
+			protected function browseBN1_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(browseBN1_rHandler);
+			}
+			
+			private function browseBN1_rHandler(files:Array):void
+			{
+				file1 = files[0] as File;
+				var loader:Loader = new Loader();
+				loader.loadBytes(FileControl.readFile(file1));
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+				
+				function completeHandler(event:Event):void
+				{
+					loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,completeHandler);
+					
+					if (bmd1)
+						bmd1.dispose();
+					
+					bmd1 = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					refreshImage1();
+				}
+			}
+			
+			private function refreshImage1():void
+			{
+				if (!bmd1)
+					return;
+				
+				if (bitmapAnim)
+				{
+					for each (var bmd:BitmapData in bitmapAnim.bitmapDatas)
+						bmd.dispose();
+						
+					bitmapAnim.destory();
+					bitmapAnim.parent.removeChild(bitmapAnim);
+				}
+				
+				var bitmaps:Array = BitmapSeparateUtil.separateBitmapData(bmd1,bmd1.width / wNum.value,bmd1.height/ hNum.value);
+				bitmapAnim = new BitmapMovieGameItem(bitmaps,5);
+				
+				image1.addChild(bitmapAnim);
+			}
+		
+			protected function saveBN1_clickHandler(event:MouseEvent):void
+			{
+				if (bitmapAnim)
+				{
+					var baseName:String = file1.name.split(".")[0];
+					for (var i:int = 0;i < bitmapAnim.bitmapDatas.length;i++)
+					{
+						var bmd:BitmapData = bitmapAnim.bitmapDatas[i];
+						var newFile:File = file1.parent.resolvePath(baseName + "_" + i + ".png");
+						FileControl.writeFile(newFile,PNGEncoder.encode(bmd));
+					}
+				}
+			}
+			
+			protected function browseBN2_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpenMultiple(browseBN2_rHandler);
+			}
+			
+			private function browseBN2_rHandler(files:Array):void
+			{
+				file2s = files;
+				file2s.sortOn("name")
+				
+				if (bmd2s)
+				{
+					for each (var bmd:BitmapData in bmd2s)
+						bmd.dispose();
+				}
+				bmd2s = [];
+				
+				var i:int = 0;
+				loadImage();
+				
+				function loadImage():void
+				{
+					var loader:Loader = new Loader();
+					loader.loadBytes(FileControl.readFile(file2s[i]));
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+				}
+				
+				function completeHandler(event:Event):void
+				{
+					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+					bmd = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					bmd2s.push(bmd);
+					
+					if (bmd2s.length < file2s.length)
+					{
+						i++;
+						loadImage();
+					}
+					else
+					{
+						refreshImage2();
+					}
+				}
+			}
+			private function refreshImage2():void
+			{
+				if (!bmd2s)
+					return;
+				
+				var width:Number = bmd2s[0].width;
+				var height:Number = bmd2s[0].height;
+				var w:int = wNum2.value;
+				var h:int = Math.ceil(bmd2s.length / w);
+				
+				if (bmd2)
+					bmd2.dispose();
+				bmd2 = new BitmapData(width * w,height * h,true,0);
+				
+				for (var j:int = 0;j < h;j++)
+				{
+					for (var i:int = 0;i < w; i++)
+					{
+						if (j * w + i < bmd2s.length)
+						{
+							var bitmap:BitmapData = bmd2s[j * w + i];
+							bmd2.copyPixels(bitmap,new Rectangle(0,0,bitmap.width,bitmap.height),new Point(i * width,j * height));
+						}
+					}
+				}
+				
+				image2.source = bmd2;
+			}
+			
+			protected function saveBN2_clickHandler(event:MouseEvent):void
+			{
+				if (bmd2)
+				{
+					var file:File = file2s[0] as File;
+					var baseName:String = file.name.split(".")[0];
+					var newFile:File = file.parent.resolvePath(baseName + "_concat.png");
+					
+					FileControl.writeFile(newFile,PNGEncoder.encode(bmd2));
+				}
+			}
+			
+			protected function browseBN3_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpenMultiple(browseBN3_rHandler);
+			}
+			
+			private function browseBN3_rHandler(files:Array):void
+			{
+				file3s = files;
+				
+				fileList3 = [];
+				if (file3s)
+				{
+					for (var i:int = 0;i < files.length;i++)
+					{
+						var file:File = file3s[i] as File;
+						fileList3[i] = file.nativePath;
+					}
+				}
+				imageList.dataProvider = new ArrayList(fileList3);
+			}
+			
+			private function createBitmapData(bmd:BitmapData):BitmapData
+			{
+				var result:BitmapData = new BitmapData(bmd.width * 2,bmd.height,false,0xFFFFFFFF);
+				result.copyPixels(bmd,bmd.rect,new Point());
+				var abmd:BitmapData = bmd.clone();
+				
+				abmd.applyFilter(abmd,abmd.rect,new Point(),new ColorMatrixFilter(
+					[0,0,0,-1,255,
+					0,0,0,-1,255,
+					0,0,0,-1,255,
+					0,0,0,1,0]))
+				result.copyPixels(abmd,abmd.rect,new Point(bmd.width,0));
+				abmd.dispose();
+				return result;
+			}
+			
+			protected function saveBN3_clickHandler(event:MouseEvent):void
+			{
+				if (!file3s)
+					return;
+				
+				var i:int = 0;
+				loadImage(); 
+				
+				function loadImage():void
+				{
+					var loader:Loader = new Loader();
+					loader.loadBytes(FileControl.readFile(file3s[i]));
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+				}
+				
+				function completeHandler(event:Event):void
+				{
+					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+					var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					var file:File = file3s[i] as File;
+					var baseName:String = file.name.split(".")[0];
+					var newFile:File = file.parent.resolvePath(baseName + "_alpha.png");
+					var newbmd:BitmapData = createBitmapData(bmd);
+					FileControl.writeFile(newFile,PNGEncoder.encode(newbmd));
+					bmd.dispose();
+					newbmd.dispose();
+					
+					if (i < file3s.length - 1)
+					{
+						i++;
+						loadImage();
+					}
+					else
+					{
+						//
+					}
+				}
+			}
+			
+			protected function imageList_changeHandler(event:IndexChangeEvent):void
+			{
+				var loader:Loader = new Loader();
+				loader.loadBytes(FileControl.readFile(file3s[imageList.selectedIndex]));
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+				function completeHandler(event:Event):void
+				{
+					var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					if (image3.source)
+						(image3.source as BitmapData).dispose();
+					
+					image3.source = createBitmapData(bmd);
+					bmd.dispose();
+				}
+			}
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(browseBN1_rHandler,nav1);
+				FileControl.dragFileIn(browseBN2_rHandler,nav2);
+				FileControl.dragFileIn(browseBN3_rHandler,nav3);
+			}
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				if (bmd1)
+					bmd1.dispose();
+				
+				if (bitmapAnim)
+				{
+					for each (var bmd:BitmapData in bitmapAnim.bitmapDatas)
+						bmd.dispose();
+						
+					bitmapAnim.destory();
+				}
+				
+				if (bmd2s)
+				{
+					for each (bmd in bmd2s)
+						bmd.dispose();
+				}
+				
+				if (bmd2)
+					bmd2.dispose();
+						
+				if (image3.source)
+					(image3.source as BitmapData).dispose();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:TabNavigator width="100%" height="100%" creationPolicy="all" paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5">
+		<s:NavigatorContent id="nav1" label="拆分" backgroundColor="0xFFFFFF">
+			<s:Button id="browseBN1" width="73" label="浏览" click="browseBN1_clickHandler(event)"/>
+			<s:Label x="0" y="30" text="宽"/>
+			<s:NumericStepper id="wNum" x="20" y="25" value="1" minimum="1" change="refreshImage1()"/>
+			<s:Label x="0" y="55" text="高"/>
+			<s:NumericStepper id="hNum" x="20" y="50" value="1" minimum="1" change="refreshImage1()"/>
+			<mx:UIComponent id="image1" left="81" right="0" top="0" bottom="0"/>
+			<s:Button id="saveBN1" x="0" bottom="0" width="73" label="保存" click="saveBN1_clickHandler(event)"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent id="nav2" label="合并" backgroundColor="0xFFFFFF">
+			<s:Button id="browseBN2" width="73" label="浏览" click="browseBN2_clickHandler(event)"/>
+			<s:Label x="0" y="30" text="宽"/>
+			<s:NumericStepper id="wNum2" x="20" y="25" value="1" minimum="1" change="refreshImage2()"/>
+			<s:Image id="image2" left="81" right="0" top="0" bottom="0"/>
+			<s:Button id="saveBN2" x="0" bottom="0" width="73" label="保存" click="saveBN2_clickHandler(event)"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent id="nav3" label="透明图" backgroundColor="0xFFFFFF">
+			<s:Button id="browseBN3" width="73" label="浏览" click="browseBN3_clickHandler(event)"/>
+			<s:List id="imageList" left="0" top="25" bottom="25" width="72" change="imageList_changeHandler(event)">
+				<s:itemRenderer>
+					<fx:Component>
+						<s:DataRenderer width="100%">
+							<s:Image source="{data}" width="100%" height="50"/>
+						</s:DataRenderer>
+					</fx:Component>
+				</s:itemRenderer>
+			</s:List>
+			<s:Image id="image3" left="81" right="0" top="0" bottom="0"/>
+			<s:Button id="saveBN3" x="0" bottom="0" width="73" label="保存" click="saveBN3_clickHandler(event)"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+</components:GCToolWindow>

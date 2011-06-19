@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="538" height="592" 
+					   width="538" height="658" 
 					   creationComplete="windowedapplication1_creationCompleteHandler(event)" invoke="windowedapplication1_invokeHandler(event)"
 					   showStatusBar="false" close="windowedapplication1_closeHandler(event)" title="GhostCat工具集合"
 					   xmlns:ghostcattools="ghostcattools.*" xmlns:components="ghostcattools.components.*" xmlns:local="*">
@@ -16,6 +16,7 @@
 			import ghostcattools.tools.DataEditor;
 			import ghostcattools.tools.FontSWFCreater;
 			import ghostcattools.tools.LocaleEditor;
+			import ghostcattools.tools.PicTools;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.RenameTool;
 			import ghostcattools.tools.ReviseTool;
@@ -55,7 +56,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<mx:TabNavigator left="0" right="0" top="0" bottom="-36" paddingTop="0">
+	<mx:TabNavigator left="0" right="0" top="0" bottom="0" paddingTop="0">
 		<s:NavigatorContent width="100%" height="100%" label="辅助工具">
 			<s:TileGroup  left="5" right="5" top="5" bottom="5" horizontalGap="5" verticalGap="5">
 				<components:GCToolButton label="文本压缩" icon="@Embed('../asset/icon1.png')" desc="将文本文件用ByteArray的compress方法压缩。生成的文件可以用二进制方式读取并调用uncompress还原" 
@@ -90,6 +91,8 @@
 										 cmd="{FontSWFCreater}" fileFilter="xml" windowResizable="false" windowMaximizable="false" checkMXMLC="true"/>
 				<components:GCToolButton label="ASDoc生成" icon="@Embed('../asset/icon16.png')" desc="可以生成工程代码的ASDoc参考" 
 										 cmd="{ASDocCreater}" fileFilter="bat" windowResizable="false" windowMaximizable="false" checkMXMLC="true"/>
+				<components:GCToolButton label="图片处理" icon="@Embed('../asset/icon17.png')" desc="拆分合并图片，生成图片的透明通道" 
+										 cmd="{PicTools}" enabledDragOpen="false"/>
 			</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
