@@ -46,7 +46,7 @@ package ghostcat.util
 			if (!root)
 				root = obj;
 				
-			if (enabledReflect && new RegExp("^{.*}$").test(value.toString()))
+			if (enabledReflect && value != null && new RegExp("^{.*}$").test(value.toString()))
 			{
 				var prop:String = value.toString().substring(1,value.toString().length - 1);
 				obj[key] = ReflectUtil.eval(prop,root);
@@ -57,7 +57,7 @@ package ghostcat.util
 				switch (propClass)
 				{
 					case Boolean:
-						obj[key] = (value == "true" || value == true);
+						obj[key] = (value == "true" || value == "TRUE" || value == "1" || value == true);
 						break;
 					case Class:
 						obj[key] = ReflectUtil.getDefinitionByName(value.toString()) as Class;

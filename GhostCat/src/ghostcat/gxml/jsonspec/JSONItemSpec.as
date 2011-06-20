@@ -1,11 +1,7 @@
 package ghostcat.gxml.jsonspec
 {
 	import flash.events.IEventDispatcher;
-	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
-	
-	import ghostcat.gxml.spec.ItemGroup;
-	import ghostcat.util.ReflectUtil;
 	
 	/**
 	 * 这个解析器在Spec的基础上增加了设置外部ID和自动监听事件的功能（事件都是弱引用）

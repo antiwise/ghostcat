@@ -590,6 +590,8 @@
     <classEntry path="ghostcat.util.data.XMLListUtil"/>
     <classEntry path="ghostcat.display.filter.WaveHVFilterProxy"/>
     <classEntry path="ghostcat.util.TickTimeout"/>
+    <classEntry path="ghostcat.gxml.jsonspec.JSONItemGroupSpec"/>
+    <classEntry path="ghostcat.game.item.MovieGameItem"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
