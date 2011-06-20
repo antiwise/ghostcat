@@ -1,15 +1,9 @@
 package ghostcat.gxml.jsonspec
 {
-	import flash.media.Sound;
 	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
 	
-	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.ReflectXMLUtil;
-	import ghostcat.util.Util;
 	import ghostcat.util.core.ClassFactory;
-	
-	import mx.events.CalendarLayoutChangeEvent;
 
 	/**
 	 * JSON对象转换为封闭类的转换器
@@ -27,6 +21,11 @@ package ghostcat.gxml.jsonspec
 		 * 构造函数参数 
 		 */
 		public var paramsName:String = "params";
+		
+		/**
+		 * 是否允许反射 
+		 */
+		public var enabledReflect:Boolean = true;
 		
 		private var _root:*;
 		
@@ -109,7 +108,10 @@ package ghostcat.gxml.jsonspec
 		 */
 		public function addChild(source:*,child:*,name:*):void
 		{
-			source[name] = child;
+			if (source is Array)
+				source[name] = child;
+			else
+				ReflectXMLUtil.setProperty(source,name,child,root,enabledReflect);
 		}
 		
 		/**

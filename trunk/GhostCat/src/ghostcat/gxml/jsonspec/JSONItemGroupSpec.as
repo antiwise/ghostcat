@@ -29,12 +29,12 @@ package ghostcat.gxml.jsonspec
 		}
 		
 		/** @inheritDoc */
-		public override function addChild(source:*,child:*,xml:XML):void
+		public override function addChild(source:*,child:*,name:*):void
 		{
 			if (source is ItemGroup)
 				(source as ItemGroup).add(child);
 			else
-				super.addChild(source,child,xml);
+				super.addChild(source,child,name);
 		}
 		
 		/**

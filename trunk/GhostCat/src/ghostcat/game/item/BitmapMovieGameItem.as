@@ -1,6 +1,7 @@
 package ghostcat.game.item
 {
 	import flash.events.Event;
+	import flash.utils.getTimer;
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.MovieEvent;
@@ -41,6 +42,11 @@ package ghostcat.game.item
 		public function randomFrameTimer():void
 		{
 			this.frameTimer += Math.random() * 1000 / frameRate;
+		}
+		
+		public function resetFrameTimer():void
+		{
+			this.frameTimer = 0;
 		}
 		
 		public function get currentFrame():int
