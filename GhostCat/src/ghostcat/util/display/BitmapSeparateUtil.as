@@ -23,9 +23,9 @@ package ghostcat.util.display
 		public static function separateBitmapData(source:BitmapData,width:int,height:int,toBitmap:Boolean = false):Array
 		{
 			var result:Array = [];
-			for (var j:int = 0;j < Math.ceil(source.height / height);j++)
+			for (var j:int = 0;j < Math.round(source.height / height);j++)
 			{
-				for (var i:int = 0;i < Math.ceil(source.width / width);i++)
+				for (var i:int = 0;i < Math.round(source.width / width);i++)
 				{
 					var bitmap:BitmapData = new BitmapData(width,height,true,0);
 					bitmap.copyPixels(source,new Rectangle(i*width,j*height,width,height),new Point());

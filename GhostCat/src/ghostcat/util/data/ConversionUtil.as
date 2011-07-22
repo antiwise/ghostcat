@@ -70,7 +70,7 @@ package ghostcat.util.data
 			for (var i:int = 1; i < source.length; i++)
 			{
 				var data:Object = itemClass ? new itemClass() : new Object();
-				for (var j:int = 0;j < source[i].length;j++)
+				for (var j:int = 0;j < source[0].length;j++)
 					data[source[0][j]] = source[i][j];
 				result.push(data);	
 			}
