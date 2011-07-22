@@ -29,8 +29,11 @@ package ghostcat.game.item
 		private var _oldX:Number;
 		private var _oldY:Number;
 		
-		private var _x:Number;
-		private var _y:Number;
+		private var _x:Number = 0.0;
+		private var _y:Number = 0.0;
+		private var _rotation:Number = 0.0;
+		private var _scaleX:Number = 1.0;
+		private var _scaleY:Number = 1.0;
 		
 		private var _collision:ICollision;
 		public function get collision():ICollision
@@ -40,9 +43,9 @@ package ghostcat.game.item
 		
 		public var regX:Number = 0.0;
 		public var regY:Number = 0.0;
-		private var _rotation:Number = 0.0;
 		
 		public var rotationCenter:Boolean;
+		public var enabledRotation:Boolean;
 		
 		public override function set x(v:Number):void
 		{	
@@ -68,73 +71,6 @@ package ghostcat.game.item
 			updatePosition();
 		}
 		
-		public override function set rotation(value:Number):void
-		{
-			trace(value);
-			_rotation = value;
-			applyRegPosition();
-		}
-		
-		public override function get rotation():Number
-		{
-			return _rotation;
-		}
-		
-		public function set $rotation(value:Number):void
-		{
-			super.rotation = value;
-		}
-		
-		public function setPosition(x:Number,y:Number,updatePos:Boolean = true):void
-		{
-			if (_x == x && _y == y)
-				return;
-			
-			_oldX = _x;
-			_oldY = _y;
-			_x = x;
-			_y = y;
-			applyRegPosition();
-						
-			if (updatePos)
-				updatePosition();
-		}
-		
-		public function applyRegPosition():void
-		{
-			if (_rotation == 0)
-			{
-				super.x = _x - regX;
-				super.y = _y - regY;
-			}
-			else
-			{
-				var m:Matrix = new Matrix();
-				if (rotationCenter)
-				{
-					var hh:int = height / 2;
-					m.translate(-regX,-hh);
-					m.rotate(_rotation / 180 * Math.PI);
-					m.translate(_x,_y - regY +hh);
-				}
-				else
-				{
-					m.translate(-regX,-regY);
-					m.rotate(_rotation / 180 * Math.PI);
-					m.translate(_x,_y);
-				}
-				super.transform.matrix = m;
-			}
-		}
-		
-		protected function updatePosition():void
-		{
-			if (sortCalculater)
-				priority = sortCalculater.calculate();
-		
-			if (camera)
-				camera.refreshItem(this);
-		}
 		
 		public override function get x():Number
 		{
@@ -154,6 +90,97 @@ package ghostcat.game.item
 		public function get oldY():Number
 		{
 			return _oldY;
+		}
+		
+		public override function set rotation(value:Number):void
+		{
+			_rotation = value;
+			applyRegPosition();
+		}
+		
+		public override function get rotation():Number
+		{
+			return _rotation;
+		}
+		
+		public function set $rotation(value:Number):void
+		{
+			super.rotation = value;
+		}
+		
+		public override function set scaleX(value:Number):void
+		{
+			_scaleX = value;
+			applyRegPosition();
+		}
+		
+		public override function get scaleX():Number
+		{
+			return _scaleX;
+		}
+		
+		public override function set scaleY(value:Number):void
+		{
+			_scaleY = value;
+			applyRegPosition();
+		}
+		
+		public override function get scaleY():Number
+		{
+			return _scaleY;
+		}
+		
+		public function setPosition(x:Number,y:Number,updatePos:Boolean = true):void
+		{
+			if (_x == x && _y == y)
+				return;
+			
+			_oldX = _x;
+			_oldY = _y;
+			_x = x;
+			_y = y;
+			applyRegPosition();
+						
+			if (updatePos)
+				updatePosition();
+		}
+		
+		public function applyRegPosition():void
+		{
+			if (!enabledRotation)
+			{
+				super.x = _x - regX;
+				super.y = _y - regY;
+			}
+			else
+			{
+				var m:Matrix = new Matrix();
+				if (rotationCenter)
+				{
+					var hh:int = height / 2;
+					m.translate(-regX,-hh);
+					m.scale(_scaleX,_scaleY);
+					m.rotate(_rotation / 180 * Math.PI);
+					m.translate(_x,_y - regY +hh);
+				}
+				else
+				{
+					m.translate(-regX,-regY);
+					m.scale(_scaleX,_scaleY);
+					m.rotate(_rotation / 180 * Math.PI);
+					m.translate(_x,_y);
+				}
+				super.transform.matrix = m;
+			}
+		}
+		
+		protected function updatePosition():void
+		{
+			if (sortCalculater)
+				priority = sortCalculater.calculate();
+		
+			if (camera)
+				camera.refreshItem(this);
 		}
 		
 		public function BitmapGameItem(bitmapData:BitmapData) 
