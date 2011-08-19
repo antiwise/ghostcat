@@ -592,6 +592,7 @@
     <classEntry path="ghostcat.util.TickTimeout"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONItemGroupSpec"/>
     <classEntry path="ghostcat.game.item.MovieGameItem"/>
+    <classEntry path="ghostcat.display.particle.StarCreater"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

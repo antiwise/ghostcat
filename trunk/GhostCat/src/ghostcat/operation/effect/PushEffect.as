@@ -9,6 +9,7 @@ package ghostcat.operation.effect
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.ReflectUtil;
+	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.easing.TweenEvent;
 	import ghostcat.util.easing.TweenUtil;
@@ -44,7 +45,7 @@ package ghostcat.operation.effect
 		public function cacheTarget():void
 		{
 			cacheBitmap = new DrawParse(this.target).createBitmap();
-			target.parent.addChild(cacheBitmap);
+			DisplayUtil.addChildBefore(cacheBitmap,this.target);
 		}
 		
 		/** @inheritDoc*/
