@@ -224,13 +224,15 @@ package ghostcat.ui.scroll
 		public override function set scrollRect(value:Rectangle) : void
 		{
 			super.scrollRect = value;
-			
 			if (createScrollArea)
 			{
 				graphics.clear();
-				graphics.beginFill(0,0);
-				graphics.drawRect(scrollRect.x,scrollRect.y,scrollRect.width,scrollRect.height);
-				graphics.endFill();
+				if (scrollRect)
+				{
+					graphics.beginFill(0,0);
+					graphics.drawRect(scrollRect.x,scrollRect.y,scrollRect.width,scrollRect.height);
+					graphics.endFill();
+				}
 			}
 		}
 		
