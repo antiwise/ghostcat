@@ -502,13 +502,17 @@ package ghostcat.util.easing
 		 */
 		public function remove(submitEffect:Boolean = true):void
 		{
-			var index:int = effects.indexOf(this);
-			if (index != -1)
+			if (submitEffect)
 			{
-				effects.splice(effects.indexOf(this), 1);
+				this.duration = 0;
+				this.update();
 				
-				if (submitEffect) 
-					update();
+			}
+			else
+			{
+				var index:int = effects.indexOf(this);
+				if (index != -1)
+					effects.splice(effects.indexOf(this), 1);
 			}
 		}
 		
