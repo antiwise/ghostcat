@@ -114,5 +114,15 @@ package ghostcat.operation
 			}
 			super.end(event);
 		}
+
+		/**
+		 * 让缓动立即到达最后一帧并结束
+		 * 
+		 */
+		public function submit():void
+		{
+			if (tween)
+				tween.remove(true);
+		}
 	}
 }
