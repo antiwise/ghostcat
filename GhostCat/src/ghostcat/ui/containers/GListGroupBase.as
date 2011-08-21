@@ -1,7 +1,10 @@
 package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	
+	import ghostcat.display.GBase;
+	import ghostcat.events.ItemClickEvent;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.core.ClassFactory;
 
@@ -13,9 +16,45 @@ package ghostcat.ui.containers
 	 */
 	public class GListGroupBase extends GListBase
 	{
+		private var _selectedPageData:*;
+
+		public function get selectedPageData():*
+		{
+			return _selectedPageData;
+		}
+
+		public function set selectedPageData(value:*):void
+		{
+			_selectedPageData = value;
+			if (selectedItem is GRepeater && selectedData is Array && (selectedData as Array).indexOf(_selectedPageData) != -1)
+				(selectedItem as GRepeater).selectedData = _selectedPageData;
+		}
+		
 		public function GListGroupBase(skin:*=null, replace:Boolean=true, type:String=UIConst.HORIZONTAL, itemRender:*=null)
 		{
 			super(skin, replace, type, itemRender);
+			
+			this.toggleOnClick = false;
+			this.addEventListener(ItemClickEvent.ITEM_CLICK,itemClickHandler);
+		}
+		
+		public override function refreshIndex(i:int,j:int):GBase
+		{
+			var item:GBase = getItemAt(i,j);
+			
+			if (toggle && item is GRepeater)
+				(item as GRepeater).selectedData = selectedPageData;
+			
+			return super.refreshIndex(i,j);
+		}
+		
+		private function itemClickHandler(event:Event):void
+		{
+			if (toggle && toggleOnClick)
+			{
+				if (selectedItem is GRepeater)
+					_selectedPageData = GRepeater(selectedItem).selectedData;
+			}
 		}
 		
 		/**
@@ -32,7 +71,7 @@ package ghostcat.ui.containers
 		{
 			var o:Object = {
 				type : type,
-				toggleOnClick : false,
+				toggleOnClick : this.toggleOnClick,
 				itemRender : itemRender,
 				width : w,
 				height : h
