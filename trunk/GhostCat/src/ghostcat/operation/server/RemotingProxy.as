@@ -108,6 +108,9 @@ package ghostcat.operation.server
 				case "NetConnection.Connect.Failed":
 					this.faultHander(event);
 					break;
+				default:
+					Debug.trace("Remote",event.info.code);
+					break;
 			}
 		}
 		

@@ -2,9 +2,11 @@ package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.events.ItemClickEvent;
+	import ghostcat.events.RepeatEvent;
 	import ghostcat.ui.UIConst;
 	import ghostcat.util.core.ClassFactory;
 
@@ -57,6 +59,31 @@ package ghostcat.ui.containers
 			}
 		}
 		
+		protected override function addRepeatItemHandler(event:RepeatEvent):void
+		{
+			super.addRepeatItemHandler(event);
+			var item:GBase = event.repeatObj as GBase;
+			if (item is GRepeater)
+			{
+				item.addEventListener(ItemClickEvent.ITEM_CLICK,repeaterItemClickHandler);
+			}
+		}
+		
+		protected override function removeRepeatItemHandler(event:RepeatEvent):void
+		{
+			super.removeRepeatItemHandler(event);
+			var item:GBase = event.repeatObj as GBase;
+			if (item is GRepeater)
+			{
+				item.removeEventListener(ItemClickEvent.ITEM_CLICK,repeaterItemClickHandler);
+			}
+		}
+		
+		protected function repeaterItemClickHandler(event:Event):void
+		{
+			dispatchEvent(event);
+		}
+		
 		/**
 		 * 建立一个分页Render，原本的itemRender属性失效
 		 * 
@@ -71,6 +98,7 @@ package ghostcat.ui.containers
 		{
 			var o:Object = {
 				type : type,
+				hideNullItem : this.hideNullItem,
 				toggleOnClick : this.toggleOnClick,
 				itemRender : itemRender,
 				width : w,
