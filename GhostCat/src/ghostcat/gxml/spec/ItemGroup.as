@@ -47,7 +47,8 @@ package ghostcat.gxml.spec
 		public function add(item:*):void
 		{
 			data.push(item);
-			map[item[idField]] = item;
+			if (item.hasOwnProperty(idField))
+				map[item[idField]] = item;
 		}
 		
 		/**
@@ -69,7 +70,8 @@ package ghostcat.gxml.spec
 		{
 			for each (var item:* in data)
 			{
-				map[item[idField]] = item;
+				if (item.hasOwnProperty(idField))
+					map[item[idField]] = item;
 			}
 		}
 	}
