@@ -1,6 +1,8 @@
 package ghostcat.gxml.spec
 {
 	import flash.utils.Dictionary;
+	
+	import ghostcat.util.Util;
 
 	/**
 	 * 物品组管理类（用于容纳数据组）
@@ -49,6 +51,16 @@ package ghostcat.gxml.spec
 			data.push(item);
 			if (item.hasOwnProperty(idField))
 				map[item[idField]] = item;
+		}
+		
+		public function remove(item:*):void
+		{
+			var index:int = this.data.indexOf(item);
+			if (index!=-1)
+				this.data.splice(index, 1);
+			
+			if (item.hasOwnProperty(idField))
+				delete map[item[idField]];
 		}
 		
 		/**

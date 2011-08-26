@@ -84,13 +84,13 @@ package ghostcat.display.transfer
 		 * @param p
 		 * 
 		 */
-		public function bomb(pos:Point = null,power:Number = 5,spin:Number = 10):void
+		public function bomb(pos:Point = null,power:Number = 5,spin:Number = 10,gravity:int = 1000):void
 		{
 			if (!pos)
 				pos = new Point(bitmapData.width / 2,bitmapData.height / 2);
 			
 			physics.addAll(tris);
-			physics.gravity = new Point(0,1000);
+			physics.gravity = new Point(0,gravity);
 			
 			PhysicsUtil.bomb(physics,pos,power,spin);	
 		}
