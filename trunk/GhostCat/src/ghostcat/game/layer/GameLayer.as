@@ -9,6 +9,7 @@ package ghostcat.game.layer
 	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.TickEvent;
+	import ghostcat.game.util.GameTick;
 	import ghostcat.game.layer.camera.ICamera;
 	import ghostcat.game.layer.collision.ICollisionManager;
 	import ghostcat.game.layer.position.IPositionManager;
@@ -41,12 +42,12 @@ package ghostcat.game.layer
 		public function GameLayer()
 		{
 			super();
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			GameTick.instance.addEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		public function destory():void
 		{
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+			GameTick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		public function addObject(v:*):void

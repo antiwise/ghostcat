@@ -8,7 +8,6 @@ package ghostcat.game.util
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.operation.Oper;
 	import ghostcat.operation.TweenOper;
-	import ghostcat.util.Tick;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.Linear;
 	import ghostcat.util.easing.TweenEvent;
@@ -95,7 +94,7 @@ package ghostcat.game.util
 		
 		override public function execute():void
 		{
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler,false,0,false);
+			GameTick.instance.addEventListener(TickEvent.TICK,tickHandler,false,0,false);
 			startTime = getTimer();
 						
 			this.stepLength = [];
@@ -115,7 +114,7 @@ package ghostcat.game.util
 		
 		override protected function end(event:*=null):void
 		{
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+			GameTick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 			super.end(event);
 		}		
 	}
