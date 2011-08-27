@@ -193,6 +193,11 @@ package ghostcat.display
 			_selected = v;
 		}
 		
+		protected function getTickInstance():Tick
+		{
+			return Tick.instance;
+		}
+		
 		/** @inheritDoc */	
 		public function get paused():Boolean
 		{
@@ -207,9 +212,9 @@ package ghostcat.display
 			_paused = v;
 			
 			if (!_paused && _enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+				getTickInstance().addEventListener(TickEvent.TICK,tickHandler);
 			else
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+				getTickInstance().removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		/** @inheritDoc */	
@@ -226,9 +231,9 @@ package ghostcat.display
 			_enabledTick = v;
 			
 			if (!_paused && _enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+				getTickInstance().addEventListener(TickEvent.TICK,tickHandler);
 			else
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+				getTickInstance().removeEventListener(TickEvent.TICK,tickHandler);
 		}
 
 		/** @inheritDoc */
