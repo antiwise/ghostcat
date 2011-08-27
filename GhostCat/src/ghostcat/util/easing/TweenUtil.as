@@ -248,7 +248,12 @@ package ghostcat.util.easing
 				this.ease = Linear.easeOut;
 			
 			if (autoStart)
-				effects.push(this);
+				this.effects.push(this);
+		}
+		
+		protected function get effects():Array
+		{
+			return TweenUtil.effects;
 		}
 		
 		private static function tickHandler(event:TickEvent):void
@@ -343,7 +348,7 @@ package ghostcat.util.easing
 				if (this.toValues.hasOwnProperty("motionBlur"))
 					(target as DisplayObject).filters = [];
 				
-				effects.splice(effects.indexOf(this), 1);
+				this.effects.splice(this.effects.indexOf(this), 1);
 				
 				if (this.onComplete!=null)
 					this.onComplete();
@@ -400,7 +405,7 @@ package ghostcat.util.easing
 			return ease(t, a, b -  a, duration)
 		}
 		
-		private function updateValue(key:String,value:*):void
+		protected function updateValue(key:String,value:*):void
 		{
 			var displayObj:DisplayObject = target as DisplayObject;
 			switch (key)
@@ -510,9 +515,9 @@ package ghostcat.util.easing
 			}
 			else
 			{
-				var index:int = effects.indexOf(this);
+				var index:int = this.effects.indexOf(this);
 				if (index != -1)
-					effects.splice(effects.indexOf(this), 1);
+					this.effects.splice(this.effects.indexOf(this), 1);
 			}
 		}
 		

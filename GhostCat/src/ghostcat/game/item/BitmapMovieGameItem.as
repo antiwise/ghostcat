@@ -6,8 +6,8 @@ package ghostcat.game.item
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
+	import ghostcat.game.util.GameTick;
 	import ghostcat.game.layer.GameLayer;
-	import ghostcat.util.Tick;
 
 	[Event(name="label_end", type="ghostcat.events.MovieEvent")]
 	/**
@@ -87,9 +87,9 @@ package ghostcat.game.item
 			_enabledTick = v;
 			
 			if (_enabledTick)
-				Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+				GameTick.instance.addEventListener(TickEvent.TICK,tickHandler);
 			else
-				Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+				GameTick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		protected function tickHandler(event:TickEvent):void

@@ -5,6 +5,7 @@ package ghostcat.game
 	import ghostcat.events.TickEvent;
 	import ghostcat.game.layer.GameLayer;
 	import ghostcat.util.Tick;
+	import ghostcat.game.util.GameTick;
 	
 	/**
 	 * 场景 
@@ -17,7 +18,7 @@ package ghostcat.game
 		public function GameViewport()
 		{
 			super();
-			Tick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			GameTick.instance.addEventListener(TickEvent.TICK,tickHandler);
 		}
 		
 		public function addLayer(layer:GameLayer):void
@@ -37,7 +38,7 @@ package ghostcat.game
 		
 		public function destory():void
 		{
-			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+			GameTick.instance.removeEventListener(TickEvent.TICK,tickHandler);
 			
 			for each (var layer:GameLayer in layers)
 				layer.destory();
