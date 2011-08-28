@@ -62,6 +62,11 @@ package ghostcat.ui.containers
 		 */
 		public var toggle:Boolean = true;
 		
+		/**
+		 * 是否允许重复选择同一项
+		 */
+		public var enabledDuplicateSelect:Boolean = true;
+		
 		private var _columnCount:int = -1;
 		
 		private var _selectedData:*;
@@ -227,6 +232,9 @@ package ghostcat.ui.containers
 
 		public function set selectedData(v:*):void
 		{
+			if (!enabledDuplicateSelect && _selectedData == v)
+				return;
+			
 			var oldSelectedItem:DisplayObject = getRender(_selectedData);
 			if (oldSelectedItem && oldSelectedItem is GBase)
 				(oldSelectedItem as GBase).selected = false;
