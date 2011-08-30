@@ -129,6 +129,8 @@ package ghostcat.ui
 			var displayObj:GBase = cls.newInstance();//创建
 			displayObj.owner = target;
 			
+			target[name] = displayObj;
+			
 			return displayObj; 
 		}
 		
