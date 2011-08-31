@@ -65,7 +65,7 @@ package ghostcat.ui.containers
 			var item:GBase = event.repeatObj as GBase;
 			if (item is GRepeater)
 			{
-				item.addEventListener(ItemClickEvent.ITEM_CLICK,repeaterItemClickHandler);
+				item.addEventListener(ItemClickEvent.ITEM_CLICK,repeaterItemClickHandler,false,0,true);
 			}
 		}
 		

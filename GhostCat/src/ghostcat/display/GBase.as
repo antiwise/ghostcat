@@ -818,6 +818,11 @@ package ghostcat.display
 			this.enabledTick = false;
 			this.refreshInterval = 0;
 			this.asBitmap = false;
+			this.owner = null;
+			
+			this.sizeCall.destory();
+			this.positionCall.destory();
+			this.displayListCall.destory();
 			
 			super.destory();
 		}

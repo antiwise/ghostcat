@@ -92,7 +92,10 @@ package ghostcat.ui.containers
 			if (skin)
 			{
 				if (skin is DisplayObject)
+				{
 					itemSkin = new ClassFactory(skin["constructor"]);
+					this.name = (skin as DisplayObject).name;
+				}
 				else if (skin is Class)
 					itemSkin = new ClassFactory(skin);
 				else if (skin is ClassFactory)
@@ -592,6 +595,25 @@ package ghostcat.ui.containers
 			}
 			render();
 		}
+		
+		public override function clear():void
+		{
+			var child:DisplayObject;
+			for each (child in contents)
+			{
+				if (child is IGBase)
+					(child as IGBase).destory();
+			}
+			
+			for each (child in unuseContents)
+			{
+				if (child is IGBase)
+					(child as IGBase).destory();
+			}
+			
+			super.clear();
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
@@ -601,12 +623,6 @@ package ghostcat.ui.containers
 			if (data && data is IEventDispatcher)
 				(data as IEventDispatcher).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE,dataChangeHandler);
 				
-			for (var i:int = 0; i < numChildren;i++)
-			{
-				if (getChildAt(i) is IGBase)
-					(getChildAt(i) as IGBase).destory();
-			}
-			
 			removeEventListener(MouseEvent.CLICK,clickHandler);
 			removeEventListener(RepeatEvent.ADD_REPEAT_ITEM,addRepeatItemHandler);
 			removeEventListener(RepeatEvent.REMOVE_REPEAT_ITEM,removeRepeatItemHandler);

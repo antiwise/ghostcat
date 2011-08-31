@@ -236,7 +236,7 @@ package ghostcat.display
 				
 			render();
 			
-			stage.addEventListener(Event.RESIZE,resizeHandler);
+			stage.addEventListener(Event.RESIZE,resizeHandler,false,0,true);
 		}
 		
 		private function resizeHandler(event:Event):void
@@ -539,6 +539,9 @@ package ghostcat.display
 			
 			clear();
 			ref = null;
+			
+			if (stage)
+				stage.removeEventListener(Event.RESIZE,resizeHandler);
 		
 			super.destory();
 		}
