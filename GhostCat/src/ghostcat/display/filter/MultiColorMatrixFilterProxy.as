@@ -172,6 +172,12 @@ package ghostcat.display.filter
 			changeFilter(new ColorMatrixFilter(createMultColorMatrix(brightness,contrast,saturation,hue,threshold,inversion)));
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			super.destory();
+		}
+		
 		public static function createMultColorMatrix(brightness:Number = 0,contrast:Number = 0,saturation:Number = 0,hue:Number = 0,threshold:Number = 0,inversion:Boolean = false,monocro:uint = 0):Array
 		{
 			var m:Array = [1,0,0,0,0,

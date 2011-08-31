@@ -178,6 +178,7 @@ package ghostcat.display.transfer
 			if (destoryed)
 				return;
 			
+			renderCaller.destory();
 			removeTargetEvents();
 			dispose();
 			

@@ -69,5 +69,11 @@ package ghostcat.operation
 			
 			super.execute();
 		}
+		
+		protected override function end(event:*=null):void
+		{
+			super.end(event);
+			(_target as FilterProxy).destory();
+		}
 	}
 }

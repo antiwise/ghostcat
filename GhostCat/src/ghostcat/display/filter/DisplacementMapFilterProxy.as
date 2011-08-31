@@ -197,6 +197,13 @@ package ghostcat.display.filter
 				mask.dispose();
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			updateMaskCall.destory();
+			super.destory();
+		}
+		
 		/**
 		 * 以红绿通道生成渐进变化的色圆。
 		 * 

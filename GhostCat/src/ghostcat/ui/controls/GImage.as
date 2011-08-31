@@ -347,6 +347,7 @@ package ghostcat.ui.controls
 				return;
 			
 			clearContent();
+			layoutChildrenCall.destory();
 			
 			super.destory();
 		}

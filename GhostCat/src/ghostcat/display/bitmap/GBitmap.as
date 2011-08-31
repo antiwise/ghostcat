@@ -812,6 +812,10 @@ package ghostcat.display.bitmap
 			if (disposeWhenDestory)
 				this.dispose();
 			
+			sizeCall.destory();
+			positionCall.destory();
+			displayListCall.destory();
+			
 			removeEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
 			removeEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
 		

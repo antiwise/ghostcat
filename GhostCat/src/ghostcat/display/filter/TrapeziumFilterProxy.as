@@ -122,6 +122,12 @@ package ghostcat.display.filter
 				mask.dispose();
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			updateMaskCall.destory();
+			super.destory();
+		}
 		
 		public static function createHMask(width:Number,height:Number):BitmapData
 		{

@@ -221,6 +221,12 @@
 				graphics.endFill();
 			}
 		}
+		
+		public override function destory():void
+		{
+			setTransformCall.destory();
+			super.destory();
+		}
 	}
 }
 import flash.geom.Point;
