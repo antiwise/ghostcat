@@ -151,7 +151,7 @@ package ghostcat.ui
 				if (obj is IGBase)
 				{
 					var name:String = obj.name;
-					if (all || types[name] == obj)
+					if (all || types[name])
 						(obj as IGBase).destory();
 				}
 			}
