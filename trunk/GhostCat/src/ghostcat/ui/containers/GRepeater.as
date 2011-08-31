@@ -53,8 +53,11 @@ package ghostcat.ui.containers
 			setLayout(layout);
 			
 			if (skin is DisplayObject)
+			{
+				this.name = (skin as DisplayObject).name;
 				skin = skin["constructor"];
-				
+			}
+			
 			if (skin is Class)
 				this.renderSkin = new ClassFactory(skin)
 			else if (skin is ClassFactory)
@@ -105,15 +108,9 @@ package ghostcat.ui.containers
 					ref.params = [renderSkin];
 			}
 			
+			clear();
 			var i:int;
-			for (i = contentPane.numChildren - 1;i >= 0;i--)
-			{
-				var display:DisplayObject = contentPane.getChildAt(i);
-				if (display is IGBase)
-					(display as IGBase).destory();
-				else
-					contentPane.removeChild(display);
-			}
+			
 			if (data && ref)
 			{
 				for (i = 0;i < data.length;i++)
@@ -182,6 +179,23 @@ package ghostcat.ui.containers
 			super.data = v;
 			render();
 		}
+		
+		/**
+		 * 清除子对象 
+		 * 
+		 */
+		public function clear():void
+		{
+			for (var i:int = contentPane.numChildren - 1;i >= 0;i--)
+			{
+				var display:DisplayObject = contentPane.getChildAt(i);
+				if (display is IGBase)
+					(display as IGBase).destory();
+				else
+					contentPane.removeChild(display);
+			}
+		}
+		
 		/** @inheritDoc*/
 		public override function destory() : void
 		{
@@ -191,11 +205,7 @@ package ghostcat.ui.containers
 			ref = null;
 			renderSkin = null;
 			
-			for (var i:int = 0; i < contentPane.numChildren;i++)
-			{
-				if (contentPane.getChildAt(i) is IGBase)
-					(contentPane.getChildAt(i) as IGBase).destory();
-			}
+			clear();
 			contentPane.removeEventListener(MouseEvent.CLICK,clickHandler);
 		
 			super.destory();

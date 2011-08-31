@@ -61,6 +61,9 @@ package ghostcat.util.core
 		
 		public function vaildNow():void
 		{
+			if (handler == null)
+				return;
+			
 			if (para)
 				handler.apply(null,para);
 			else
@@ -78,6 +81,12 @@ package ghostcat.util.core
 				CallLaterQueue.instance.removeCallLaterByTick(vaildNow);	
 			else
 				CallLaterQueue.instance.removeCallLaterByTime(vaildNow);	
+		}
+		
+		public function destory():void
+		{
+			this.handler = null;
+			this.para = null;
 		}
 	}
 }
