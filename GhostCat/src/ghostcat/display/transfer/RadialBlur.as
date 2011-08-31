@@ -44,6 +44,7 @@ package ghostcat.display.transfer
 			this.scaleSpeed = scaleSpeed;
 			this.rotationSpeed = rotationSpeed;
 			this.lightSpeed = lightSpeed;
+			this.byAlpha = false;
 			
 			this.start();
 		}
@@ -60,6 +61,9 @@ package ghostcat.display.transfer
 		
 		protected override function renderTickHandler(event:TickEvent):void
 		{
+			if (!parent)
+				return;
+			
 			r += rotationSpeed * event.interval / 1000;
 			s *= 1 + scaleSpeed * event.interval / 1000;
 			
