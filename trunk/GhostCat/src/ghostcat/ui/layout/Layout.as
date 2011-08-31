@@ -96,17 +96,17 @@ package ghostcat.ui.layout
 			
 			if (_target)
 			{
-				_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+				_target.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler,false,0,true);
 				if (_target is GBase && (_target as GBase).content)
-					(_target as GBase).content.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler);
+					(_target as GBase).content.addEventListener(ResizeEvent.CHILD_RESIZE,childResizeHandler,false,0,true);
 				
 				if (isRoot)
 				{
 					if (_target.stage)
-						_target.stage.addEventListener(Event.RESIZE,resizeHandler);
+						_target.stage.addEventListener(Event.RESIZE,resizeHandler,false,0,true);
 				}
 				else
-					_target.addEventListener(ResizeEvent.RESIZE,resizeHandler);
+					_target.addEventListener(ResizeEvent.RESIZE,resizeHandler,false,0,true);
 			}
 			
 		}
@@ -117,6 +117,7 @@ package ghostcat.ui.layout
 		 */
 		public function destory():void
 		{
+			vaildLayoutCall.destory();
 			setTarget(null);
 		}
 		

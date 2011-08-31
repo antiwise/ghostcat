@@ -114,6 +114,12 @@ package ghostcat.display.filter
 			}
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			super.destory();
+		}
+		
 		/**
          * 色彩饱和度
          * 

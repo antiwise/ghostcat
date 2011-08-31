@@ -171,6 +171,7 @@ package ghostcat.display.transfer
 		{
 			super.destory();
 			
+			renderBitmapCall.destory();
 			removeTargetEvents();
 			bitmapData && bitmapData.dispose();
 		}

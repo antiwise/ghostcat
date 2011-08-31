@@ -156,6 +156,13 @@ package ghostcat.display.filter
 				mask.dispose();
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			updateMaskCall.destory();
+			super.destory();
+		}
+		
 		/**
 		 * 生成水波遮罩
 		 * 

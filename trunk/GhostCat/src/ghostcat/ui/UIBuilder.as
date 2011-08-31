@@ -143,7 +143,6 @@ package ghostcat.ui
 		{
 			var skin:DisplayObject = target.content;
 			var children:Array = SearchUtil.findChildrenByClass(skin,IGBase);
-			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
 			
 			for (var i:int = children.length - 1;i >= 0;i--)
 			{
@@ -151,7 +150,7 @@ package ghostcat.ui
 				if (obj is IGBase)
 				{
 					var name:String = obj.name;
-					if (all || types[name])
+					if (all || (target.hasOwnProperty(name) && target[name] == obj))
 						(obj as IGBase).destory();
 				}
 			}

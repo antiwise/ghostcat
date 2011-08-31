@@ -252,5 +252,13 @@ package ghostcat.ui.containers
 		{
 			layout.vaildLayout();
 		}
+		
+		public override function destory():void
+		{
+			if (layout)
+				layout.destory();
+		
+			super.destory();
+		}
 	}
 }

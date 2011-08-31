@@ -72,6 +72,12 @@ package ghostcat.display.filter
 			}
 		}
 		
+		public override function destory():void
+		{
+			updateCall.destory();
+			super.destory();
+		}
+		
        /**
          * 高斯模糊滤镜
          *  

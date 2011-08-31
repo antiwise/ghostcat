@@ -147,6 +147,7 @@ package ghostcat.display.filter
 				arr.splice(index,1);
 				owner.filters = arr;
 			}
+			owner = null;
 		}
 		
 		/**
@@ -166,6 +167,13 @@ package ghostcat.display.filter
 					
 				owner.filters = arr;
 			}
+		}
+		
+		public function destory():void
+		{
+			owner = null;
+			if (caller)
+				caller.destory();
 		}
 		
 		override flash_proxy function getProperty(name:*):*
