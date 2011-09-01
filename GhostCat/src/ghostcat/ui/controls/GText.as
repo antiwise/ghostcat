@@ -23,6 +23,7 @@ package ghostcat.ui.controls
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.StageQuality;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
@@ -39,10 +40,8 @@ package ghostcat.ui.controls
 	import ghostcat.display.GBase;
 	import ghostcat.manager.FontManager;
 	import ghostcat.manager.LanguageManager;
+	import ghostcat.manager.RootManager;
 	import ghostcat.parse.display.TextFieldParse;
-	import ghostcat.util.text.TextFieldUtil;
-	import ghostcat.util.text.TextUtil;
-	import ghostcat.util.text.UBB;
 	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.layout.Layout;
 	import ghostcat.ui.layout.LinearLayout;
@@ -52,6 +51,9 @@ package ghostcat.ui.controls
 	import ghostcat.util.display.Geom;
 	import ghostcat.util.display.MatrixUtil;
 	import ghostcat.util.display.SearchUtil;
+	import ghostcat.util.text.TextFieldUtil;
+	import ghostcat.util.text.TextUtil;
+	import ghostcat.util.text.UBB;
 
 	[Event(name="change",type="flash.events.Event")]
 	
