@@ -11,11 +11,11 @@ package ghostcat.display.transfer.effect
 	 * @author flashyiyi
 	 * 
 	 */
-	public class ThresholdMaskHandler extends Handler
+	public class AlphaMaskHandler extends Handler
 	{
 		public var mask:BitmapData;
 	
-		public function ThresholdMaskHandler(mask:BitmapData)
+		public function AlphaMaskHandler(mask:BitmapData)
 		{
 			this.mask = mask;
 		}
