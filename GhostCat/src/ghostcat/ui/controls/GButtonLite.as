@@ -250,7 +250,7 @@ package ghostcat.ui.controls
 		{
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			if (stage)
-				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
 			addEventListener(MouseEvent.ROLL_OVER,rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT,rollOutHandler);
 			addEventListener(MouseEvent.CLICK,clickHandler);

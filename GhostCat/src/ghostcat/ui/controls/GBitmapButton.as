@@ -118,7 +118,7 @@ package ghostcat.ui.controls
 		protected override function addEvents():void
 		{
 			addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
+			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
 			addEventListener(MouseEvent.MOUSE_OVER,rollOverHandler);
 			addEventListener(MouseEvent.MOUSE_OUT,rollOutHandler);
 			addEventListener(MouseEvent.CLICK,clickHandler);

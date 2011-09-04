@@ -7,8 +7,9 @@ package ghostcat.ui.controls
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
-	import ghostcat.events.TickEvent;
+	import ghostcat.display.IGBase;
 	import ghostcat.display.filter.FilterProxy;
+	import ghostcat.events.TickEvent;
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.scroll.GScrollPanel;
 	import ghostcat.ui.scroll.IScrollContent;
@@ -472,6 +473,9 @@ package ghostcat.ui.controls
 		public override function destory() : void
 		{
 			target = null;
+			
+			if (_scrollContent is IGBase)
+				(_scrollContent as IGBase).destory();
 		
 			super.destory();
 		}
