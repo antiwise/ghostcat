@@ -57,6 +57,8 @@ package ghostcat.ui.controls
 		 */
 		public var labelField:String;
 		
+		private var _label:String;
+		
 		private var _autoRefreshLabelField:Boolean = true;
 		
 		/**
@@ -238,20 +240,15 @@ package ghostcat.ui.controls
 		 */
 		public function get label():String
 		{
-			return data && labelField ? data[labelField] : (data is String || data is Number) ? data : null;
+			return _label ? _label : (data && labelField) ? data[labelField] : (data is String || data is Number) ? data : null;
 		}
 
 		public function set label(v:String):void
 		{
-			if (labelField)
-			{
-				if (super.data == null)
-					super.data = new Object();
-					
-				super.data[labelField] = v;
-			}
-			else
-				data = v;
+			_label = v;
+			
+			if (_autoRefreshLabelField)
+				refreshLabelData();
 		}
 		/** @inheritDoc*/
 		public override function set data(v:*) : void

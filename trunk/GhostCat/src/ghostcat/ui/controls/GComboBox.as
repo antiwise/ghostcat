@@ -177,7 +177,7 @@ package ghostcat.ui.controls
 			if (!this.listContainer)
 				this.listContainer = this.root as DisplayObjectContainer;
 			
-			stage.addEventListener(MouseEvent.MOUSE_DOWN,stageMouseDownHandler);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN,stageMouseDownHandler,false,0,true);
 		}
 		
 		private function stageMouseDownHandler(event:Event):void

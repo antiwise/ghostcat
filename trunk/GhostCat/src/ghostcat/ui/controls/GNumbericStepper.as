@@ -125,8 +125,8 @@ package ghostcat.ui.controls
 		{
 			if (enabeldDragChange && stage)
 			{
-				stage.addEventListener(MouseEvent.MOUSE_MOVE,arrowMoveHandler);
-				stage.addEventListener(MouseEvent.MOUSE_UP,arrowUpHandler);
+				stage.addEventListener(MouseEvent.MOUSE_MOVE,arrowMoveHandler,false,0,true);
+				stage.addEventListener(MouseEvent.MOUSE_UP,arrowUpHandler,false,0,true);
 				
 				mouseDownPoint = new Point(mouseX,mouseY);
 			}
