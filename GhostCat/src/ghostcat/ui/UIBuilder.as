@@ -8,6 +8,8 @@ package ghostcat.ui
 	import ghostcat.display.GBase;
 	import ghostcat.display.IData;
 	import ghostcat.display.IGBase;
+	import ghostcat.ui.controls.GButton;
+	import ghostcat.ui.controls.GButtonLite;
 	import ghostcat.util.ReflectUtil;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.SearchUtil;
@@ -135,7 +137,8 @@ package ghostcat.ui
 		}
 		
 		/**
-		 * 销毁子对象
+		 * 销毁子对象（对象必须在显示列表内）
+		 * 
 		 * @param target	目标容器
 		 * @param all	是否销毁不在属性值里的对象
 		 */
@@ -153,6 +156,23 @@ package ghostcat.ui
 					if (all || (target.hasOwnProperty(name) && target[name] == obj))
 						(obj as IGBase).destory();
 				}
+			}
+		}
+		
+		/**
+		 * 销毁子对象（对象不必在显示列表内，但每次销毁对象都可能已经不在显示列表了（父对象已经被销毁），取不到stage可能导致问题）
+		 * 
+		 * @param target	目标容器
+		 * 
+		 */
+		public static function destory2(target:GBase):void
+		{
+			var types:Object = ReflectUtil.getPropertyTypeList(target,true);
+			for (var p:String in types)
+			{
+				var obj:IGBase = target[p] as IGBase;
+				if (obj)
+					(obj as IGBase).destory();
 			}
 		}
 		
@@ -185,7 +205,7 @@ package ghostcat.ui
 		}
 		
 		/**
-		 * 自动设置数据 
+		 * 从一个集合的数据根据键值自动设置数据 
 		 * @param target	目标容器
 		 * @param data	数据
 		 * @param names	数据名称和组件名称的对应（数据名:组件名），默认两者相同
@@ -209,6 +229,38 @@ package ghostcat.ui
 		}
 		
 		/**
+		 * 根据约定设置文本数据，主要用来设置GText和GButton的标签，诸如：
+		 * autoSetDataByType(target,GText,"@ui.","")，会将组件的名称前加上@ui.来当作文本内容
+		 * 
+		 * @param target	目标容器
+		 * @param filter	过滤器，可以是类或者对象，以及由其组成的数组
+		 * @param names	数据名称和组件名称的对应（数据名:组件名），默认两者相同
+		 * 
+		 */
+		public static function autoSetTextByType(target:DisplayObject,filter:*,prefix:String = "",postfix:String = ""):void
+		{
+			if (filter is Array)
+			{
+				for each (var childRef:* in filter)
+					autoSetTextByType(target,childRef,prefix,postfix);
+			}
+			else if (filter is Class)
+			{
+				var types:Object = ReflectUtil.getPropertyTypeList(target,false,true);
+				for (var p:String in types)
+				{
+					var obj:IData = target.hasOwnProperty(p) ? target[p] as IData : null;
+					if (obj && (obj is filter))
+						autoSetTextByType(target,obj,prefix,postfix);
+				}	
+			}
+			else if ((filter is IData) && (filter is DisplayObject))
+			{
+				(filter as IData).data = prefix + (filter as DisplayObject).name + postfix;
+			}
+		}
+		
+		/**
 		 * 获得被取名的皮肤的列表 
 		 * @param skin
 		 * @return 
@@ -224,6 +276,22 @@ package ghostcat.ui
 				if (child.name && child.name.slice(0,8) != "instance")
 					result[result.length] = child.name;
 			}
+			return result;
+		}
+		
+		/**
+		 * 获得被取名的皮肤产生的默认属性列表字符串 
+		 * @param skin
+		 * @return 
+		 * 
+		 */
+		public static function getSkinNameClassString(skin:DisplayObject):String
+		{
+			var list:Array = getSkinNameList(skin);
+			var result:String = "";
+			for each (var s:String in list)
+				result += "public var " + s + ":*;\n";
+			
 			return result;
 		}
 		

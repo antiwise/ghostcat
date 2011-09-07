@@ -213,7 +213,7 @@ package ghostcat.util
 		 * @return 
 		 * 
 		 */
-		public static function getPropertyTypeList(obj:*,onlyWriteable:Boolean=false):Object
+		public static function getPropertyTypeList(obj:*,onlyWriteable:Boolean=false,onlyReadable:Boolean=false):Object
 		{
 			var ins:ReflectUtil = getDescribeTypeCache(obj);
 			if (onlyWriteable)
@@ -222,6 +222,16 @@ package ghostcat.util
 				for (var k:* in ins.propertysType)
 				{
 					if (ins.propertysAccess[k] != "readonly")
+						result[k] = ins.propertysType[k];		
+				}
+				return result;
+			}
+			else if (onlyReadable)
+			{
+				result = {};
+				for (k in ins.propertysType)
+				{
+					if (ins.propertysAccess[k] != "writeonly")
 						result[k] = ins.propertysType[k];		
 				}
 				return result;
