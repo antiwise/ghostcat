@@ -90,6 +90,7 @@
     <classEntry path="ghostcat.display.filter.RollFilterProxy"/>
     <classEntry path="ghostcat.display.filter.TrapeziumFilterProxy"/>
     <classEntry path="ghostcat.display.filter.WaveFilterProxy"/>
+    <classEntry path="ghostcat.display.filter.WaveHVFilterProxy"/>
     <classEntry path="ghostcat.display.game.Avatar"/>
     <classEntry path="ghostcat.display.game.BackgroundLayer"/>
     <classEntry path="ghostcat.display.game.Clock"/>
@@ -133,6 +134,7 @@
     <classEntry path="ghostcat.display.particle.ParticleCreaterBase"/>
     <classEntry path="ghostcat.display.particle.SakuraCreater"/>
     <classEntry path="ghostcat.display.particle.SnowCreater"/>
+    <classEntry path="ghostcat.display.particle.StarCreater"/>
     <classEntry path="ghostcat.display.residual.FireScreen"/>
     <classEntry path="ghostcat.display.residual.MotionBlurScreen"/>
     <classEntry path="ghostcat.display.residual.ResidualScreen"/>
@@ -155,11 +157,13 @@
     <classEntry path="ghostcat.display.transfer.Reflector"/>
     <classEntry path="ghostcat.display.transfer.Ripple"/>
     <classEntry path="ghostcat.display.transfer.Skew"/>
+    <classEntry path="ghostcat.display.transfer.effect.AlphaMaskHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.DissolveHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.MosaicHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.PaperDropHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.SegmentHandler"/>
     <classEntry path="ghostcat.display.transfer.effect.ThresholdHandler"/>
+    <classEntry path="ghostcat.display.transfer.effect.ThresholdMaskHandler"/>
     <classEntry path="ghostcat.display.transition.TransitionCacheLayer"/>
     <classEntry path="ghostcat.display.transition.TransitionCreater"/>
     <classEntry path="ghostcat.display.transition.TransitionLayerBase"/>
@@ -234,6 +238,7 @@
     <classEntry path="ghostcat.game.item.BitmapGameItem"/>
     <classEntry path="ghostcat.game.item.BitmapMovieGameItem"/>
     <classEntry path="ghostcat.game.item.GameItem"/>
+    <classEntry path="ghostcat.game.item.MovieGameItem"/>
     <classEntry path="ghostcat.game.item.collision.ICollision"/>
     <classEntry path="ghostcat.game.item.sort.ISortCalculater"/>
     <classEntry path="ghostcat.game.item.sort.Sort45Calculater"/>
@@ -259,6 +264,10 @@
     <classEntry path="ghostcat.game.layer.sort.client.ISortHitTestClient"/>
     <classEntry path="ghostcat.game.layer.sort.client.ISortSizeClient"/>
     <classEntry path="ghostcat.game.util.GameMoveByPathOper"/>
+    <classEntry path="ghostcat.game.util.GameTick"/>
+    <classEntry path="ghostcat.game.util.GameTickTimeout"/>
+    <classEntry path="ghostcat.game.util.GameTweenOper"/>
+    <classEntry path="ghostcat.game.util.GameTweenUtil"/>
     <classEntry path="ghostcat.ghostcat_internal"/>
     <classEntry path="ghostcat.gxml.GJSONManager"/>
     <classEntry path="ghostcat.gxml.GXMLManager"/>
@@ -266,6 +275,7 @@
     <classEntry path="ghostcat.gxml.conversion.XMLToObjectSpec"/>
     <classEntry path="ghostcat.gxml.jsonspec.IJSONSpec"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONDisplaySpec"/>
+    <classEntry path="ghostcat.gxml.jsonspec.JSONItemGroupSpec"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONItemSpec"/>
     <classEntry path="ghostcat.gxml.jsonspec.JSONSpec"/>
     <classEntry path="ghostcat.gxml.spec.DisplaySpec"/>
@@ -328,6 +338,7 @@
     <classEntry path="ghostcat.operation.effect.PushEffect"/>
     <classEntry path="ghostcat.operation.effect.QueueEffect"/>
     <classEntry path="ghostcat.operation.effect.RepeatEffect"/>
+    <classEntry path="ghostcat.operation.effect.RotateEffect"/>
     <classEntry path="ghostcat.operation.effect.ShakeEffect"/>
     <classEntry path="ghostcat.operation.effect.WindowEffectGroup"/>
     <classEntry path="ghostcat.operation.effect.ZoomEffect"/>
@@ -420,6 +431,7 @@
     <classEntry path="ghostcat.ui.containers.GViewState"/>
     <classEntry path="ghostcat.ui.containers.Group"/>
     <classEntry path="ghostcat.ui.containers.SelectGroup"/>
+    <classEntry path="ghostcat.ui.controls.BitmapButtonSkin"/>
     <classEntry path="ghostcat.ui.controls.GBitmapButton"/>
     <classEntry path="ghostcat.ui.controls.GBitmapText"/>
     <classEntry path="ghostcat.ui.controls.GButton"/>
@@ -490,6 +502,7 @@
     <classEntry path="ghostcat.util.ReflectXMLUtil"/>
     <classEntry path="ghostcat.util.ServiceDate"/>
     <classEntry path="ghostcat.util.Tick"/>
+    <classEntry path="ghostcat.util.TickTimeout"/>
     <classEntry path="ghostcat.util.Util"/>
     <classEntry path="ghostcat.util.code.CodeColor"/>
     <classEntry path="ghostcat.util.code.CodeCreater"/>
@@ -519,6 +532,7 @@
     <classEntry path="ghostcat.util.data.LocalStorage"/>
     <classEntry path="ghostcat.util.data.ObjectProxy"/>
     <classEntry path="ghostcat.util.data.PropertyHistory"/>
+    <classEntry path="ghostcat.util.data.XMLListUtil"/>
     <classEntry path="ghostcat.util.data.XMLUtil"/>
     <classEntry path="ghostcat.util.display.BitmapCharUtil"/>
     <classEntry path="ghostcat.util.display.BitmapColorUtil"/>
@@ -586,17 +600,6 @@
     <classEntry path="ghostcat.util.text.UBB"/>
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
-    <classEntry path="ghostcat.ui.controls.BitmapButtonSkin"/>
-    <classEntry path="ghostcat.util.data.XMLListUtil"/>
-    <classEntry path="ghostcat.display.filter.WaveHVFilterProxy"/>
-    <classEntry path="ghostcat.util.TickTimeout"/>
-    <classEntry path="ghostcat.gxml.jsonspec.JSONItemGroupSpec"/>
-    <classEntry path="ghostcat.game.item.MovieGameItem"/>
-    <classEntry path="ghostcat.display.particle.StarCreater"/>
-    <classEntry path="ghostcat.game.util.GameTick"/>
-    <classEntry path="ghostcat.game.util.GameTickTimeout"/>
-    <classEntry path="ghostcat.game.util.GameTweenOper"/>
-    <classEntry path="ghostcat.game.util.GameTweenUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
