@@ -2,6 +2,7 @@ package ghostcat.ui.containers
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
@@ -48,6 +49,22 @@ package ghostcat.ui.containers
 				(item as GRepeater).selectedData = selectedPageData;
 			
 			return super.refreshIndex(i,j);
+		}
+		
+		protected override function clickHandler(event:MouseEvent):void
+		{
+			if (event.target == this)
+				return;
+			
+			var o:DisplayObject = event.target as DisplayObject;
+			while (o && o.parent != this)
+				o = o.parent;
+			
+			if (ref.isClass(o))
+			{
+				if (toggleOnClick)
+					selectedItem = o;
+			}
 		}
 		
 		private function itemClickHandler(event:Event):void
