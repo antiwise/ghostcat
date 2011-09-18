@@ -16,20 +16,26 @@ package ghostcat.display.transfer
 	 * @author flashyiyi
 	 * 
 	 */
-	public class MotionBlur extends GBitmapTransfer
+	public class FrontBlur extends GBitmapTransfer
 	{
 		public var fadeSpeed:Number;
+		public var offest:Point;
+		public var scale:Number = 1.0;
+		public var rotate:Number = 0.0;
 		public var contentWidth:int;
 		public var contentHeight:int;
 		public var applyFilters:Array;
 		
 		private var cacheBitmapData:BitmapData;
 		
-		public function MotionBlur(target:DisplayObject,contentWidth:int,contentHeight:int,fadeSpeed:Number = 0.5,applyFilters:Array = null)
+		public function FrontBlur(target:DisplayObject,contentWidth:int,contentHeight:int,fadeSpeed:Number = 0.5,scale:Number = 1.0,rotate:Number = 0.0,offest:Point = null,applyFilters:Array = null)
 		{
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
 			this.fadeSpeed = fadeSpeed;
+			this.scale = scale;
+			this.rotate = rotate;
+			this.offest = offest;
 			this.applyFilters = applyFilters;
 			
 			super(target);
@@ -58,16 +64,41 @@ package ghostcat.display.transfer
 			cacheBitmapData.fillRect(cacheBitmapData.rect,0);
 			cacheBitmapData.draw(_target);	
 			
+			doWithOldBitmap();
+			
 			bitmapData.colorTransform(bitmapData.rect,new ColorTransform(1,1,1,fadeSpeed));
 			if (applyFilters)
 			{
 				for each (var filter:BitmapFilter in applyFilters)
 					bitmapData.applyFilter(bitmapData,bitmapData.rect,new Point(),filter);
 			}
-			cacheBitmapData.copyPixels(bitmapData,bitmapData.rect,new Point(),null,null,true);
+			if (offest)
+			{
+				bitmapData.scroll(offest.x,offest.y);
+			}
+			if (scale != 1.0 || rotate != 0.0)
+			{
+				var m:Matrix = new Matrix();
+				var w:Number = bitmapData.width / 2;
+				var h:Number = bitmapData.height / 2;
+				
+				m.translate(-w,-h);
+				m.scale(scale,scale);
+				m.rotate(rotate);
+				m.translate(w,h);
+				cacheBitmapData.draw(bitmapData,m,null,null,null,true);
+			}
+			else
+			{
+				cacheBitmapData.copyPixels(bitmapData,bitmapData.rect,new Point(),null,null,true);
+			}
 			
-			bitmapData.fillRect(bitmapData.rect,0);
 			bitmapData.copyPixels(cacheBitmapData,cacheBitmapData.rect,new Point());
+		}
+		
+		protected function doWithOldBitmap():void
+		{
+			//
 		}
 		
 		public override function destory():void
