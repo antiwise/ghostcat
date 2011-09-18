@@ -73,7 +73,8 @@ package ghostcat.operation
 		protected override function end(event:*=null):void
 		{
 			super.end(event);
-			(_target as FilterProxy).destory();
+			if (_target)
+				(_target as FilterProxy).destory();
 		}
 	}
 }
