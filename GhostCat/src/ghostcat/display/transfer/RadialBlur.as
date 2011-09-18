@@ -12,7 +12,7 @@ package ghostcat.display.transfer
 	import ghostcat.util.Tick;
 	
 	/**
-	 * 径向旋转模糊 
+	 * 径向旋转加亮模糊 
 	 * @author flashyiyi
 	 * 
 	 */
