@@ -323,6 +323,8 @@ package ghostcat.ui.scroll
 			if (destoryed)
 				return;
 			
+			destoryed = true;
+			
 			if (hScrollBar)
 				hScrollBar.destory();
 			
