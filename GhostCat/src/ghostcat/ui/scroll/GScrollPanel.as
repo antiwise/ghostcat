@@ -140,6 +140,7 @@ package ghostcat.ui.scroll
 			$addChild(hScrollBar);
 			hScrollBar.target = this;
 			hScrollBar.enabledArrowResize = true;
+			hScrollBar.destoryScrollContent = false;
 			
 			invalidateSize();
 		}
@@ -160,6 +161,7 @@ package ghostcat.ui.scroll
 			$addChild(vScrollBar);
 			vScrollBar.target = this;
 			vScrollBar.enabledArrowResize = true;
+			vScrollBar.destoryScrollContent = false;
 			
 			invalidateSize();
 		}

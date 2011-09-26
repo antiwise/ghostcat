@@ -51,8 +51,12 @@ package ghostcat.ui.controls
 		/**
 		 * 滚动模糊
 		 */		
-		public var blur:Number = 0
+		public var blur:Number = 0;
 		
+		/**
+		 * 是否在删除自己时删除对应的target
+		 */
+		public var destoryScrollContent:Boolean = true;
 		
 		public function GScrollBar(skin:*=null, replace:Boolean=true,fields:Object=null)
 		{
@@ -474,7 +478,7 @@ package ghostcat.ui.controls
 		{
 			target = null;
 			
-			if (_scrollContent is IGBase)
+			if (destoryScrollContent && _scrollContent is IGBase)
 				(_scrollContent as IGBase).destory();
 		
 			super.destory();

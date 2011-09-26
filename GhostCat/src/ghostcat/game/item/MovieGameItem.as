@@ -21,7 +21,7 @@ package ghostcat.game.item
 		
 		private var _enabledTick:Boolean;
 		private var _currentFrame:int;
-		private var frameTimer:int;
+		public var frameTimer:int;
 		public var loops:int = -1;
 		public function MovieGameItem(movieClip:MovieClip,frameRate:Number)
 		{
