@@ -64,7 +64,7 @@ package ghostcat.operation
 			super.execute();
 			frame = currentCount = 0;
 			
-			Tick.instance.addEventListener(TickEvent.TICK, tickHandler);
+			Tick.instance.addEventListener(TickEvent.TICK, tickHandler,false,0,false);
 		}
 		/** @inheritDoc*/
 		protected override function end(event:* = null) : void
