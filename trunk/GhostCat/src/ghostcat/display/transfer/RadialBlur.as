@@ -33,6 +33,11 @@ package ghostcat.display.transfer
 		 */
 		public var lightSpeed:Number;
 		
+		/**
+		 * 固定变化间隔
+		 */
+		public var interval:Number;
+		
 		private var _enabledTickRender:Boolean;
 		private var r:Number = 0.0;
 		private var s:Number = 1.0;
@@ -64,8 +69,12 @@ package ghostcat.display.transfer
 			if (!parent)
 				return;
 			
-			r += rotationSpeed * event.interval / 1000;
-			s *= 1 + scaleSpeed * event.interval / 1000;
+			var inv:Number = interval;
+			if (!inv)
+				inv = event.interval;
+			
+			r += rotationSpeed * inv / 1000;
+			s *= 1 + scaleSpeed * inv / 1000;
 			
 			var m:Matrix = new Matrix();
 			var w:Number = normalBitmapData.width / 2;
