@@ -82,7 +82,7 @@ package ghostcat.display.residual
 			}
 			
 			for (var i:int = 0;i < numChildren;i++)
-				fadeChild(getChildAt(i));
+				fadeChild(getChildAt(i) as Bitmap);
 		
 		}
 		
@@ -91,8 +91,11 @@ package ghostcat.display.residual
 		 * @param child
 		 * 
 		 */
-		protected function fadeChild(child:DisplayObject):void
+		protected function fadeChild(child:Bitmap):void
 		{
+			if (!child)
+				return;
+			
 			child.alpha *= fadeSpeed;
 			
 			if (offest)
@@ -102,7 +105,10 @@ package ghostcat.display.residual
 			}
 			
 			if (child.alpha < 0.01)
+			{
 				removeChild(child);
+				child.bitmapData.dispose();
+			}
 		}
 	}
 } 
