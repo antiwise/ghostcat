@@ -10,6 +10,7 @@ package ghostcat.util.text
 	import flash.text.TextLineMetrics;
 	
 	import ghostcat.parse.display.DrawParse;
+	import ghostcat.util.display.BitmapUtil;
 	import ghostcat.util.display.MatrixUtil;
 
 	/**
@@ -95,8 +96,9 @@ package ghostcat.util.text
 		 * @param textField
 		 * @param cotainer
 		 * @param bitmap	是否转换为位图
+		 * @param extend	转换位图时的扩展面积
 		 */
-		public static function separate(textField:TextField,cotainer:DisplayObjectContainer = null,bitmap:Boolean = false):Array
+		public static function separate(textField:TextField,cotainer:DisplayObjectContainer = null,bitmap:Boolean = false,extend:int = 0):Array
 		{
 			if (!cotainer)
 				cotainer = textField.parent;
@@ -113,7 +115,7 @@ package ghostcat.util.text
 				
 				if (bitmap)
 				{
-					var b:Bitmap = DrawParse.createBitmap(t);
+					var b:Bitmap = BitmapUtil.replaceWithBitmap(t,"auto",false,extend);
 					cotainer.addChild(b);
 					result.push(b);
 				}

@@ -24,12 +24,12 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function drawToBitmap(displayObj:DisplayObject):BitmapData
+		public static function drawToBitmap(displayObj:DisplayObject,transparent:Boolean = true,fillColor:uint = 0x0,extend:int = 0):BitmapData
 		{
 			var rect:Rectangle = displayObj.getBounds(displayObj);
 			var m:Matrix = new Matrix();
-			m.translate(-rect.x,-rect.y);
-			var bitmap:BitmapData = new BitmapData(Math.ceil(rect.width),Math.ceil(rect.height),true,0);
+			m.translate(-rect.x+extend,-rect.y+extend);
+			var bitmap:BitmapData = new BitmapData(Math.ceil(rect.width) + extend + extend,Math.ceil(rect.height) + extend + extend,transparent,fillColor);
 			bitmap.draw(displayObj,m);
 			return bitmap;
 		}
@@ -40,12 +40,12 @@ package ghostcat.util.display
 		 * @return 
 		 * 
 		 */
-		public static function replaceWithBitmap(displayObj:DisplayObject,pixelSnapping:String = "auto",smoothing:Boolean = false):Bitmap
+		public static function replaceWithBitmap(displayObj:DisplayObject,pixelSnapping:String = "auto",smoothing:Boolean = false,extend:int = 0):Bitmap
 		{
-			var bitmap:Bitmap = new Bitmap(drawToBitmap(displayObj),pixelSnapping,smoothing);
+			var bitmap:Bitmap = new Bitmap(drawToBitmap(displayObj,true,0,extend),pixelSnapping,smoothing);
 			var rect:Rectangle = displayObj.getBounds(displayObj);
-			bitmap.x = displayObj.x + rect.x;
-			bitmap.y = displayObj.y + rect.y;
+			bitmap.x = displayObj.x + rect.x - extend;
+			bitmap.y = displayObj.y + rect.y - extend;
 			return bitmap;
 		}
 		
