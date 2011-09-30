@@ -48,10 +48,10 @@ package ghostcat.ui.controls
 		}
 		
 		//将文本打散成块
-		private function separateText(container:DisplayObjectContainer = null,bitmap:Boolean = false):void
+		private function separateText(container:DisplayObjectContainer = null,bitmap:Boolean = false,extend:int = 0):void
 		{
 			destoryAllTexts();
-			separateTexts = TextFieldUtil.separate(textField,container,bitmap);
+			separateTexts = TextFieldUtil.separate(textField,container,bitmap,extend);
 		
 			textField.visible = false;
 		}
@@ -86,9 +86,9 @@ package ghostcat.ui.controls
 		 * @param bitmap	是否转换为位图
 		 * 
 		 */
-		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = false,container:DisplayObjectContainer = null,bitmap:Boolean = true):void
+		public function tween(duration:int,params:Object,delay:int = 100,invert:Boolean = false,container:DisplayObjectContainer = null,bitmap:Boolean = true,extend:int = 0):void
 		{
-			separateText(container,bitmap);
+			separateText(container,bitmap,extend);
 			
 			this.completeCount = separateTexts.length;
 			var t:int = invert ? delay * separateTexts.length : 0;
