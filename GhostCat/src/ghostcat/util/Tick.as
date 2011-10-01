@@ -43,6 +43,7 @@ package ghostcat.util
 		 * 最大两帧间隔（防止待机后返回卡死） 
 		 */
 		static public var MAX_INTERVAL:int = 3000;
+		static public var MIN_INTERVAL:int = 0;
 		
 		/**
 		 * 速度系数
@@ -94,7 +95,7 @@ package ghostcat.util
 					interval = 0;
 				else
 				{
-					interval = Math.min(nextTime - prevTime,MAX_INTERVAL);
+					interval = Math.max(MIN_INTERVAL,Math.min(nextTime - prevTime,MAX_INTERVAL));
 					var e:TickEvent = new TickEvent(TickEvent.TICK);
 					e.interval = interval * speed;
 					dispatchEvent(e);
