@@ -3,19 +3,21 @@ package ghostcat.game.layer
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
 	import ghostcat.community.sort.DepthSortUtil;
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.TickEvent;
-	import ghostcat.game.util.GameTick;
 	import ghostcat.game.layer.camera.ICamera;
 	import ghostcat.game.layer.collision.ICollisionManager;
 	import ghostcat.game.layer.position.IPositionManager;
 	import ghostcat.game.layer.sort.ISortManager;
 	import ghostcat.game.layer.sort.SortPriorityManager;
 	import ghostcat.game.layer.sort.SortYManager;
+	import ghostcat.game.util.GameTick;
 	import ghostcat.util.Tick;
 	import ghostcat.util.Util;
 	
@@ -110,10 +112,24 @@ package ghostcat.game.layer
 		{
 			if (isBitmapEngine)
 			{
-				for each (var child:IBitmapDataDrawer in this.childrenInScreen)
+				for each (var child:* in this.childrenInScreen)
 				{
-					if (child)
-						child.drawToBitmapData(target,new Point(this.x + offest.x,this.y + offest.y));
+					if (child is IBitmapDataDrawer)
+					{
+						(child as IBitmapDataDrawer).drawToBitmapData(target,new Point(this.x + offest.x,this.y + offest.y));
+					}
+					else if (child is DisplayObject)
+					{
+						var disObj:DisplayObject = child as DisplayObject;
+						if (disObj.visible)
+						{
+							var m:Matrix = disObj.transform.matrix;
+							var c:ColorTransform = disObj.transform.colorTransform;
+							m.tx += this.x + offest.x;
+							m.ty += this.y + offest.y;
+							target.draw(disObj,m,c);
+						}
+					}
 				}
 			}
 		}
@@ -123,11 +139,11 @@ package ghostcat.game.layer
 			var result:Array = [];
 			if (isBitmapEngine)
 			{
-				for each (var child:IBitmapDataDrawer in this.childrenInScreen)
+				for each (var child:* in this.childrenInScreen)
 				{
-					if (child)
+					if (child is IBitmapDataDrawer)
 					{
-						var list:Array = child.getBitmapUnderMouse(mouseX,mouseY);
+						var list:Array = (child as IBitmapDataDrawer).getBitmapUnderMouse(mouseX,mouseY);
 						if (list)
 							result.push.apply(null,list);
 					}

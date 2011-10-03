@@ -76,9 +76,12 @@ package ghostcat.display.residual
 					bitmap.transform.colorTransform = this.colorTransform;
 				
 				var m:Matrix = MatrixUtil.getMatrixAt(child,this);
-				var rect:Rectangle = child.getBounds(child);
-				m.translate(rect.x,rect.y);
-				bitmap.transform.matrix = m;
+				if (m)
+				{
+					var rect:Rectangle = child.getBounds(child);
+					m.translate(rect.x,rect.y);
+					bitmap.transform.matrix = m;
+				}
 			}
 			
 			for (var i:int = 0;i < numChildren;i++)
