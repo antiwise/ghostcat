@@ -6,12 +6,15 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.as3xls.biff.Record;
+			
 			import flash.filters.ColorMatrixFilter;
 			
 			import ghostcat.fileformat.jpg.JPGEncoder;
 			import ghostcat.fileformat.png.PNGEncoder;
 			import ghostcat.game.item.BitmapMovieGameItem;
 			import ghostcat.util.display.BitmapSeparateUtil;
+			import ghostcat.util.text.NumberUtil;
 			
 			import ghostcattools.components.GCAlert;
 			import ghostcattools.util.FileControl;
@@ -87,7 +90,7 @@
 					for (var i:int = 0;i < bitmapAnim.bitmapDatas.length;i++)
 					{
 						var bmd:BitmapData = bitmapAnim.bitmapDatas[i];
-						var newFile:File = file1.parent.resolvePath(baseName + "_" + i + ".png");
+						var newFile:File = file1.parent.resolvePath(baseName + "_" + NumberUtil.fillZeros(i.toString(),3) + ".png");
 						FileControl.writeFile(newFile,PNGEncoder.encode(bmd));
 					}
 				}
@@ -146,21 +149,39 @@
 				
 				var width:Number = bmd2s[0].width;
 				var height:Number = bmd2s[0].height;
+				var imageRect:Rectangle = new Rectangle();
+				if (removeBlank.selected)
+				{
+					for (var i:int = 0;i < bmd2s.length;i++)
+					{
+						var bitmap:BitmapData = bmd2s[i];
+						var checkBitmap:BitmapData = bitmap.clone();
+						checkBitmap.threshold(checkBitmap,checkBitmap.rect,new Point(),">",0,0xFFFFFFFF,0xFFFFFFFF);
+						var newRect:Rectangle = checkBitmap.getColorBoundsRect(0xFFFFFFFF,0xFFFFFFFF,true);
+						imageRect = imageRect.union(newRect);
+					}
+					removeBlankResult.text = imageRect.toString();
+				}
+				else
+				{
+					imageRect = new Rectangle(0,0,width,height);
+				}
+				
 				var w:int = wNum2.value;
 				var h:int = Math.ceil(bmd2s.length / w);
 				
 				if (bmd2)
 					bmd2.dispose();
-				bmd2 = new BitmapData(width * w,height * h,true,0);
+				bmd2 = new BitmapData(imageRect.width * w,imageRect.height * h,true,0);
 				
 				for (var j:int = 0;j < h;j++)
 				{
-					for (var i:int = 0;i < w; i++)
+					for (i = 0;i < w; i++)
 					{
 						if (j * w + i < bmd2s.length)
 						{
-							var bitmap:BitmapData = bmd2s[j * w + i];
-							bmd2.copyPixels(bitmap,new Rectangle(0,0,bitmap.width,bitmap.height),new Point(i * width,j * height));
+							bitmap = bmd2s[j * w + i];
+							bmd2.copyPixels(bitmap,imageRect,new Point(i * imageRect.width,j * imageRect.height));
 						}
 					}
 				}
@@ -370,6 +391,8 @@
 			<s:Button id="browseBN2" width="73" label="浏览" click="browseBN2_clickHandler(event)"/>
 			<s:Label x="0" y="30" text="宽"/>
 			<s:NumericStepper id="wNum2" x="20" y="25" value="1" minimum="1" change="refreshImage2()"/>
+			<s:CheckBox id="removeBlank" x="2" y="52" label="去白边" selected="true"/>
+			<s:Label id="removeBlankResult" x="2" y="72" width="71" text=""/>
 			<s:Image id="image2" left="81" right="0" top="0" bottom="0"/>
 			<s:Button id="saveBN2" x="0" bottom="0" width="73" label="保存" click="saveBN2_clickHandler(event)"/>
 		</s:NavigatorContent>
