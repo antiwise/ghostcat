@@ -82,6 +82,16 @@ package ghostcat.game.item
 			return _y;
 		}
 		
+		public function get $x():Number
+		{
+			return super.x;
+		}
+		
+		public function get $y():Number
+		{
+			return super.y;
+		}
+		
 		public function get oldX():Number
 		{
 			return _oldX;

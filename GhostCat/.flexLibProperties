@@ -601,6 +601,7 @@
     <classEntry path="ghostcat.util.text.URL"/>
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.display.transfer.FrontBlur"/>
+    <classEntry path="ghostcat.util.core.GC"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
