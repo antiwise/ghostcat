@@ -109,7 +109,7 @@ package ghostcat.game.item
 			frameTimer -= t;
 			while (frameTimer < 0) 
 			{
-				if (currentFrame == totalFrame - 1)
+				if (currentFrame >= totalFrame - 1)
 				{
 					if (loops > 0)
 						loops--;

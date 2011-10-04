@@ -1,7 +1,9 @@
 package ghostcat.game.layer
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -117,6 +119,15 @@ package ghostcat.game.layer
 					if (child is IBitmapDataDrawer)
 					{
 						(child as IBitmapDataDrawer).drawToBitmapData(target,new Point(this.x + offest.x,this.y + offest.y));
+					}
+					else if (child is Bitmap)
+					{
+						if ((child as Bitmap).visible)
+						{
+							var bitmapData:BitmapData = (child as Bitmap).bitmapData;
+							if (bitmapData)
+								target.copyPixels(bitmapData,bitmapData.rect,new Point(child.x + this.x + offest.x,child.y  + this.y + offest.y),null,null,bitmapData.transparent);
+						}
 					}
 					else if (child is DisplayObject)
 					{
