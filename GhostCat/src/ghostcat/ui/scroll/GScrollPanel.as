@@ -24,6 +24,10 @@ package ghostcat.ui.scroll
 	public class GScrollPanel extends GNoScale implements IScrollContent
 	{
 		/**
+		 * 单次滚动行数 
+		 */
+		public static var scrollDelta:int = 1;
+		/**
 		 * 横向滚动条
 		 */
 		public var hScrollBar:GScrollBar;
@@ -310,10 +314,10 @@ package ghostcat.ui.scroll
 			if (wheelDirect)
 			{
 				if (wheelDirect == UIConst.HORIZONTAL)
-					tweenTargetH = scrollH = Math.min(maxScrollH,Math.max(0,scrollH - event.delta * wheelSpeed));	
+					tweenTargetH = scrollH = Math.min(maxScrollH,Math.max(0,scrollH - event.delta * wheelSpeed / scrollDelta));	
 				
 				if (wheelDirect == UIConst.VERTICAL)
-					tweenTargetV = scrollV = Math.min(maxScrollV,Math.max(0,scrollV - event.delta * wheelSpeed));
+					tweenTargetV = scrollV = Math.min(maxScrollV,Math.max(0,scrollV - event.delta * wheelSpeed / scrollDelta));
 				
 				dispatchEvent(new Event(Event.SCROLL));
 			}
