@@ -384,6 +384,11 @@
 				Loader(_loader).unload();
 		}
 		
+		public function get loader():EventDispatcher
+		{
+			return _loader;
+		}
+		
 		/**
 		 * 获取loaderInfo对象
 		 * 独立应用域的数据必须从这个属性的applicationDomain里取得。只当execute执行后才有值。
