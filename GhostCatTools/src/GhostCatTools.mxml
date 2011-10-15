@@ -16,6 +16,7 @@
 			import ghostcattools.tools.DataEditor;
 			import ghostcattools.tools.FontSWFCreater;
 			import ghostcattools.tools.LocaleEditor;
+			import ghostcattools.tools.PakCreater;
 			import ghostcattools.tools.PicTools;
 			import ghostcattools.tools.RegExr;
 			import ghostcattools.tools.RenameTool;
@@ -93,7 +94,9 @@
 										 cmd="{ASDocCreater}" fileFilter="bat" windowResizable="false" windowMaximizable="false" checkMXMLC="true"/>
 				<components:GCToolButton label="图片处理" icon="@Embed('../asset/icon17.png')" desc="拆分合并图片，生成图片的透明通道" 
 										 cmd="{PicTools}" enabledDragOpen="false"/>
-			</s:TileGroup>
+				<components:GCToolButton label="生成PAK" icon="@Embed('../asset/icon17.png')" desc="生成特殊的图片打包格式" 
+										 cmd="{PakCreater}" enabledDragOpen="false"/>
+				</s:TileGroup>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="配置">
 			<local:ConfigPanel width="100%" height="100%"/>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:GCToolWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						 xmlns:s="library://ns.adobe.com/flex/spark"
+						 xmlns:mx="library://ns.adobe.com/flex/mx"
+						 xmlns:components="ghostcattools.components.*"
+						 width="400" height="300" backgroundColor="#FFFFFF"
+						 close="gctoolwindow1_closeHandler(event)"
+						 creationComplete="gctoolwindow1_creationCompleteHandler(event)"
+						 enabledDragOpen="false" showStatusBar="false" title="生成PAK">
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getTimer;
+			
+			import ghostcat.fileformat.pak.PakDecoder;
+			import ghostcat.fileformat.pak.PakEncoder;
+			import ghostcat.game.item.BitmapMovieGameItem;
+			
+			import ghostcattools.util.FileControl;
+			
+			import mx.events.FlexEvent;
+			
+			private var bmds:Array;
+			private var files:Array;
+
+			private var bytes:ByteArray;
+			private var pak:PakDecoder;
+			
+			public var displayer:BitmapMovieGameItem;
+
+			private var t:int;
+			
+			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				FileControl.dragFileIn(browseBN1_rHandler,this);
+				
+				this.displayer = new BitmapMovieGameItem(null,8);
+				this.image1.addChild(this.displayer);
+			}
+			
+			protected function browseBN1_clickHandler(event:MouseEvent):void
+			{
+				FileControl.browseForOpen(browseBN1_rHandler);
+			}
+			
+			private function browseBN1_rHandler(files:Array):void
+			{
+				this.files = files;
+				files.sortOn("name")
+				
+				bmds = [];
+				
+				var i:int = 0;
+				loadImage();
+				
+				function loadImage():void
+				{
+					var loader:Loader = new Loader();
+					loader.loadBytes(FileControl.readFile(files[i]));
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+				}
+				
+				function completeHandler(event:Event):void
+				{
+					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+					var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
+					loader.unload();
+					
+					bmds.push(bmd);
+					
+					if (bmds.length < files.length)
+					{
+						i++;
+						loadImage();
+					}
+					else
+					{
+						createPack();
+					}
+				}
+			}
+			private function createPack():void
+			{
+				bytes = new PakEncoder(bmds,typeBox.selected ? 1 : 2,int(q1.text),int(q2.text)).bytes;
+				saveBN.visible = true;
+				
+				for each (var bmd:BitmapData in bmds)
+					bmd.dispose();
+				
+				bmds = null;
+				
+				if (pak)
+					pak.dispose();
+				
+				t = getTimer();
+				pak = new PakDecoder(bytes);
+				pak.addEventListener(Event.COMPLETE,loadCompleteHandler);
+				pak.decode();
+			}
+			
+			protected function gctoolwindow1_closeHandler(event:Event):void
+			{
+				if (pak)
+					pak.dispose();
+			}
+			
+			protected function loadCompleteHandler(event:Event):void
+			{
+				displayer.bitmapDatas = pak.result;
+				timeLabel.text = "耗时:" + (getTimer() - t).toString() + "\n大小:" + bytes.length ;
+			}
+			
+			protected function saveBN_clickHandler(event:MouseEvent):void
+			{
+				if (bytes)
+				{
+					var file:File = files[0] as File;
+					var baseName:String = file.name.split(".")[0];
+					var newFile:File = file.parent.resolvePath(baseName + ".pak");
+					
+					FileControl.writeFile(newFile,bytes);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button id="browseBN" left="5" top="5" width="73" label="浏览"
+			  click="browseBN1_clickHandler(event)"/>
+	<s:Button id="saveBN" visible="false" left="5" top="271" width="73" label="保存"
+			  click="saveBN_clickHandler(event)"/>
+	<s:CheckBox id="typeBox" x="5" y="33" label="拼合图像" selected="true"/>
+	<s:Label x="5" y="60" text="图像质量"/>
+	<s:Label x="5" y="103" text="透明质量"/>
+	<s:TextInput id="q1" x="5" y="73" width="74" text="50"/>
+	<s:TextInput id="q2" x="5" y="119" width="73" text="50"/>
+	<mx:UIComponent id="image1" left="86" right="0" top="0" bottom="0"/>
+	<s:Label id="timeLabel" x="5" y="165" text=""/>
+</components:GCToolWindow>

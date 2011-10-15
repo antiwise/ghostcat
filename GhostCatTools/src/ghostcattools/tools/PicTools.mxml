@@ -195,7 +195,7 @@
 				{
 					var file:File = file2s[0] as File;
 					var baseName:String = file.name.split(".")[0];
-					var newFile:File = file.parent.resolvePath(baseName + "_concat.png");
+					var newFile:File = file.parent.resolvePath("concat.png");
 					
 					FileControl.writeFile(newFile,PNGEncoder.encode(bmd2));
 				}
@@ -261,7 +261,7 @@
 					
 					var file:File = file3s[i] as File;
 					var baseName:String = file.name.split(".")[0];
-					var newFile:File = file.parent.resolvePath(baseName + "_alpha.jpg");
+					var newFile:File = file.parent.resolvePath(baseName + ".jpg");
 					
 					var newbmd:BitmapData;
 					if (checkbox1.selected)
