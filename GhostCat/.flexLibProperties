@@ -602,6 +602,8 @@
     <classEntry path="ghostcat.util.text.Utf8"/>
     <classEntry path="ghostcat.display.transfer.FrontBlur"/>
     <classEntry path="ghostcat.util.core.GC"/>
+    <classEntry path="ghostcat.fileformat.pak.PakEncoder"/>
+    <classEntry path="ghostcat.fileformat.pak.PakDecoder"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
