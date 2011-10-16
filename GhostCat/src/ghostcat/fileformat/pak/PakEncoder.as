@@ -16,15 +16,17 @@ package ghostcat.fileformat.pak
 		public var type:int;
 		public var quality:int;
 		public var alphaQuality:int;
+		public var alphaFilter:int;
 		
 		public var bytes:ByteArray;
 		
-		public function PakEncoder(list:Array,type:int = 1,quality:int = 50,alphaQuality:int = 50)
+		public function PakEncoder(list:Array,type:int = 1,quality:int = 50,alphaQuality:int = 50,alphaFilter:int = 50)
 		{
 			this.list = list;
 			this.type = type;
 			this.quality = quality;
 			this.alphaQuality = alphaQuality;
+			this.alphaFilter = alphaFilter;
 			
 			if (list)
 				this.encode();
@@ -44,6 +46,7 @@ package ghostcat.fileformat.pak
 			bytes.writeByte(type);
 			bytes.writeByte(quality);
 			bytes.writeByte(alphaQuality);
+			bytes.writeByte(alphaFilter);
 			bytes.writeShort(list.length);
 			
 			var mh:int = 0;
@@ -86,6 +89,8 @@ package ghostcat.fileformat.pak
 				var conBmd:BitmapData = new BitmapData(newBmb.width,newBmb.height * 2,false,0);
 				conBmd.copyPixels(newBmb,newBmb.rect,new Point());
 				conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.RED);
+				conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.GREEN);
+				conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.BLUE);
 				
 				var conData:ByteArray = quality == 100 ? PNGEncoder.encode(conBmd) : new JPGEncoder(quality).encode(conBmd);
 				bytes.writeUnsignedInt(conData.length);
@@ -103,6 +108,8 @@ package ghostcat.fileformat.pak
 				{
 					var alphaBmd:BitmapData = new BitmapData(newBmb.width,newBmb.height,false,0);
 					alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.RED);
+					alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.GREEN);
+					alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.BLUE);
 					var alphaData:ByteArray = alphaQuality == 100 ? PNGEncoder.encode(alphaBmd) : new JPGEncoder(alphaQuality).encode(alphaBmd);
 					alphaBmd.dispose();
 					
@@ -145,6 +152,8 @@ package ghostcat.fileformat.pak
 					var conBmd:BitmapData = new BitmapData(newBmb.width,newBmb.height * 2,false,0);
 					conBmd.copyPixels(newBmb,newBmb.rect,new Point());
 					conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.RED);
+					conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.GREEN);
+					conBmd.copyChannel(newBmb,newBmb.rect,new Point(0,newBmb.height),BitmapDataChannel.ALPHA,BitmapDataChannel.BLUE);
 					
 					var conData:ByteArray = quality == 100 ? PNGEncoder.encode(conBmd) : new JPGEncoder(quality).encode(conBmd);
 					bytes.writeUnsignedInt(conData.length);
@@ -162,6 +171,8 @@ package ghostcat.fileformat.pak
 					{
 						var alphaBmd:BitmapData = new BitmapData(newBmb.width,newBmb.height,false,0);
 						alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.RED);
+						alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.GREEN);
+						alphaBmd.copyChannel(newBmb,newBmb.rect,new Point(),BitmapDataChannel.ALPHA,BitmapDataChannel.BLUE);
 						var alphaData:ByteArray = alphaQuality == 100 ? PNGEncoder.encode(alphaBmd) :  new JPGEncoder(alphaQuality).encode(alphaBmd);
 						alphaBmd.dispose();
 						

@@ -25,6 +25,7 @@ package ghostcat.fileformat.pak
 		public var type:int;
 		public var quality:int;
 		public var alphaQuality:int;
+		public var alphaFilter:int;
 		
 		private var loadList:Array;
 		private var bmds:Array;
@@ -45,6 +46,7 @@ package ghostcat.fileformat.pak
 			type = allData.readByte();
 			quality = allData.readByte();
 			alphaQuality = allData.readByte();
+			alphaFilter = allData.readByte();
 			length = allData.readUnsignedShort();
 			
 			bmds = [];
@@ -136,25 +138,21 @@ package ghostcat.fileformat.pak
 			if (type == 1)
 			{
 				var dx:int = 0;
+				var bmd:BitmapData = bmds[0];
+				if (alphaQuality != 0 && quality != alphaQuality)
+					var alphaBmd:BitmapData = bmds[1];
 				for (var i:int = 0; i < length;i++)
 				{
 					var size:Point = sizes[i];
 					var newBmd:BitmapData = new BitmapData(size.x,size.y,true,0);
 					var bmdRect:Rectangle = new Rectangle(dx,0,size.x,size.y);
+					newBmd.copyPixels(bmd,bmdRect,new Point());
 					if (alphaQuality != 0 && quality != alphaQuality)
-					{
-						var bmd:BitmapData = bmds[0];
-						var alphaBmd:BitmapData = bmds[1];
-						newBmd.copyPixels(bmd,bmdRect,new Point());
 						newBmd.copyChannel(alphaBmd,bmdRect,new Point(),BitmapDataChannel.RED,BitmapDataChannel.ALPHA);
-					}
 					else
-					{
-						bmd = bmds[0];
-						newBmd.copyPixels(bmd,bmdRect,new Point());
 						newBmd.copyChannel(bmd,new Rectangle(dx,bmd.height / 2,size.x,size.y),new Point(),BitmapDataChannel.RED,BitmapDataChannel.ALPHA);
-					}
 					
+					doAlphaFilter(newBmd);
 					result.push(newBmd);
 					dx += size.x;
 				}
@@ -190,6 +188,7 @@ package ghostcat.fileformat.pak
 						bmd.dispose();
 					}
 					
+					doAlphaFilter(newBmd);
 					result.push(newBmd);
 				}
 			}
@@ -199,13 +198,18 @@ package ghostcat.fileformat.pak
 			
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
+		private function doAlphaFilter(bmd:BitmapData):void
+		{
+			if (alphaFilter)
+				bmd.threshold(bmd,bmd.rect,new Point(),"<", alphaFilter << 24, 0x00000000, 0xFF000000, true);
+		}
 		
 		public function dispose():void
 		{
 			if (result)
 			{
 				for each (var bmd:BitmapData in this.result)
-				bmd.dispose();	
+					bmd.dispose();	
 			}
 		}
 	}

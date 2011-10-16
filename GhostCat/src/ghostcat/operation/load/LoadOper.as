@@ -304,7 +304,7 @@
 			if (sharedObjectCacheVersion && url && !disibledCache)
 				saveToShareObject();
 			
-			super.result(event);		
+			super.result(event);
 		}
 		
 		public override function fault(event:*=null):void
