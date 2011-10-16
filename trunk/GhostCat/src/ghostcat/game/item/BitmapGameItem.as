@@ -10,6 +10,7 @@ package ghostcat.game.item
 	import ghostcat.game.item.sort.ISortCalculater;
 	import ghostcat.game.layer.camera.ICamera;
 	import ghostcat.game.layer.collision.client.ICollisionClient;
+	import ghostcat.util.display.MatrixUtil;
 
 	public class BitmapGameItem extends Bitmap implements ICollisionClient,IBitmapDataDrawer
 	{
@@ -44,8 +45,11 @@ package ghostcat.game.item
 		public var regX:Number = 0.0;
 		public var regY:Number = 0.0;
 		
-		public var rotationCenter:Boolean;
-		public var enabledRotation:Boolean;
+		public var rotateRegX:Number = NaN;
+		public var rotateRegY:Number = NaN;
+		
+		public var offestX:Number = 0.0;
+		public var offestY:Number = 0.0;
 		
 		public override function set x(v:Number):void
 		{	
@@ -157,31 +161,22 @@ package ghostcat.game.item
 		
 		public function applyRegPosition():void
 		{
-			if (!enabledRotation)
+			var m:Matrix;
+			if (_scaleX == 1.0 && _scaleY == 1.0 && _rotation == 0.0)
 			{
-				super.x = _x - regX;
-				super.y = _y - regY;
+				m = new Matrix(1,0,0,1,_x - regX + offestX, _y - regY + offestY);
 			}
 			else
 			{
-				var m:Matrix = new Matrix();
-				if (rotationCenter)
-				{
-					var hh:int = height / 2;
-					m.translate(-regX,-hh);
-					m.scale(_scaleX,_scaleY);
-					m.rotate(_rotation / 180 * Math.PI);
-					m.translate(_x,_y - regY +hh);
-				}
-				else
-				{
-					m.translate(-regX,-regY);
-					m.scale(_scaleX,_scaleY);
-					m.rotate(_rotation / 180 * Math.PI);
-					m.translate(_x,_y);
-				}
-				super.transform.matrix = m;
+				var dx:Number = isNaN(rotateRegX) ? regX - offestX : rotateRegX - offestX;
+				var dy:Number = isNaN(rotateRegY) ? regY - offestY : rotateRegY - offestY;
+				
+				m = new Matrix(_scaleX,0,0,_scaleY,-dx * _scaleX,-dy * _scaleY);
+				m.rotate(_rotation / 180 * Math.PI);
+				m.tx += dx - (regX - offestX) + _x;
+				m.ty += dy - (regY - offestY) + _y;
 			}
+			super.transform.matrix = m;
 		}
 		
 		protected function updatePosition():void
@@ -203,13 +198,13 @@ package ghostcat.game.item
 		public function drawToBitmapData(target:BitmapData,offest:Point):void
 		{
 			if (bitmapData)
-				target.copyPixels(bitmapData,bitmapData.rect,new Point(_x - regX + offest.x,_y - regY + offest.y),null,null,bitmapData.transparent);
+				target.copyPixels(bitmapData,bitmapData.rect,new Point(_x - regX + offestX + offest.x,_y - regY + offestY + offest.y),null,null,bitmapData.transparent);
 		}		
 		
 		/** @inheritDoc*/
 		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
-			return (uint(bitmapData.getPixel32(mouseX - x - regX,mouseY - y - regY) >> 24) > 0) ? [this] : null;
+			return (uint(bitmapData.getPixel32(mouseX - x - regX + offestX,mouseY - y - regY + offestX) >> 24) > 0) ? [this] : null;
 		}
 	}
 }

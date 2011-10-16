@@ -1,13 +1,14 @@
 package ghostcat.game.item
 {
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.utils.getTimer;
 	
 	import ghostcat.display.bitmap.IBitmapDataDrawer;
 	import ghostcat.events.MovieEvent;
 	import ghostcat.events.TickEvent;
-	import ghostcat.game.util.GameTick;
 	import ghostcat.game.layer.GameLayer;
+	import ghostcat.game.util.GameTick;
 
 	[Event(name="label_end", type="ghostcat.events.MovieEvent")]
 	/**
@@ -18,6 +19,7 @@ package ghostcat.game.item
 	public class BitmapMovieGameItem extends BitmapGameItem
 	{
 		public var bitmapDatas:Array;
+		public var bitmapOffests:Array;
 		public var frameRate:Number;
 		
 		private var _enabledTick:Boolean;
@@ -64,8 +66,19 @@ package ghostcat.game.item
 				value = totalFrame - 1;
 			
 			_currentFrame = value;
-			if (bitmapData != bitmapDatas[value])
-				bitmapData = bitmapDatas[value];
+			if (bitmapData == bitmapDatas[value])
+				return;
+			
+			bitmapData = bitmapDatas[value];
+			
+			if (bitmapOffests)
+			{
+				var offest:Point = bitmapOffests[value];
+				this.offestX = offest.x;
+				this.offestY = offest.y;
+				
+				this.applyRegPosition();
+			}
 		}
 		
 		public function get totalFrame():int
