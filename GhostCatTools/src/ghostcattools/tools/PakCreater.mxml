@@ -14,6 +14,7 @@
 			import ghostcat.fileformat.pak.PakDecoder;
 			import ghostcat.fileformat.pak.PakEncoder;
 			import ghostcat.game.item.BitmapMovieGameItem;
+			import ghostcat.util.data.LocalStorage;
 			
 			import ghostcattools.util.FileControl;
 			
@@ -28,6 +29,7 @@
 			public var displayer:BitmapMovieGameItem;
 
 			private var t:int;
+			private var lc:LocalStorage = new LocalStorage("gctool_pakcreater");
 			
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
@@ -35,6 +37,15 @@
 				
 				this.displayer = new BitmapMovieGameItem(null,8);
 				this.image1.addChild(this.displayer);
+				
+				var v:Object = lc.getValue();
+				if (v)
+				{
+					typeBox.selected = v.type;
+					q1.text = v.q1;
+					q2.text = v.q2;
+					q3.text = v.q3;
+				}
 			}
 			
 			protected function browseBN1_clickHandler(event:MouseEvent):void
@@ -44,43 +55,53 @@
 			
 			private function browseBN1_rHandler(files:Array):void
 			{
-				this.files = files;
-				files.sortOn("name")
-				
-				bmds = [];
-				
-				var i:int = 0;
-				loadImage();
-				
-				function loadImage():void
+				if (files.length == 1 && (files[0] as File).extension.toLowerCase() == "pak")
 				{
-					var loader:Loader = new Loader();
-					loader.loadBytes(FileControl.readFile(files[i]));
-					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+					pak = new PakDecoder(FileControl.readFile(files[0]));
+					t = getTimer();
+					pak.addEventListener(Event.COMPLETE,loadCompleteHandler);
+					pak.decode();
 				}
-				
-				function completeHandler(event:Event):void
+				else
 				{
-					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
-					var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
-					loader.unload();
+					this.files = files;
+					files.sortOn("name")
 					
-					bmds.push(bmd);
+					bmds = [];
 					
-					if (bmds.length < files.length)
+					var i:int = 0;
+					loadImage();
+					
+					function loadImage():void
 					{
-						i++;
-						loadImage();
+						var loader:Loader = new Loader();
+						loader.loadBytes(FileControl.readFile(files[i]));
+						loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
 					}
-					else
+					
+					function completeHandler(event:Event):void
 					{
-						createPack();
+						var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+						var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
+						loader.unload();
+						
+						bmds.push(bmd);
+						
+						if (bmds.length < files.length)
+						{
+							i++;
+							loadImage();
+						}
+						else
+						{
+							createPack();
+						}
 					}
 				}
 			}
 			private function createPack():void
 			{
-				bytes = new PakEncoder(bmds,typeBox.selected ? 1 : 2,int(q1.text),int(q2.text)).bytes;
+				bytes = new PakEncoder(bmds,typeBox.selected ? 1 : 2,int(q1.text),int(q2.text),int(q3.text)).bytes;
 				saveBN.visible = true;
 				
 				for each (var bmd:BitmapData in bmds)
@@ -101,12 +122,21 @@
 			{
 				if (pak)
 					pak.dispose();
+				
+				var local:Object = {type:typeBox.selected,q1:int(q1.text),q2:int(q2.text),q3:int(q3.text)}
+				lc.setValue(local);
 			}
 			
 			protected function loadCompleteHandler(event:Event):void
 			{
+				pak.removeEventListener(Event.COMPLETE,loadCompleteHandler);
+				
 				displayer.bitmapDatas = pak.result;
-				timeLabel.text = "耗时:" + (getTimer() - t).toString() + "\n大小:" + bytes.length ;
+				typeBox.selected = pak.type == 1;
+				q1.text = pak.quality.toString();
+				q2.text = pak.alphaQuality.toString();
+				q3.text = pak.alphaFilter.toString();
+				timeLabel.text = "耗时:" + (getTimer() - t).toString() + "\n大小:" + pak.bytes.length ;
 			}
 			
 			protected function saveBN_clickHandler(event:MouseEvent):void
@@ -132,9 +162,11 @@
 			  click="saveBN_clickHandler(event)"/>
 	<s:CheckBox id="typeBox" x="5" y="33" label="拼合图像" selected="true"/>
 	<s:Label x="5" y="60" text="图像质量"/>
+	<s:TextInput id="q1" x="5" y="73" width="73" text="50"/>
 	<s:Label x="5" y="103" text="透明质量"/>
-	<s:TextInput id="q1" x="5" y="73" width="74" text="50"/>
 	<s:TextInput id="q2" x="5" y="119" width="73" text="50"/>
+	<s:Label x="5" y="149" text="杂点过滤"/>
+	<s:TextInput id="q3" x="5" y="165" width="73" text="50"/>
 	<mx:UIComponent id="image1" left="86" right="0" top="0" bottom="0"/>
-	<s:Label id="timeLabel" x="5" y="165" text=""/>
+	<s:Label id="timeLabel" x="5" y="197" text=""/>
 </components:GCToolWindow>
