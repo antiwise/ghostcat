@@ -44,6 +44,8 @@ package ghostcat.fileformat.pak
 		{
 			bytes = new ByteArray();
 			bytes.writeByte(type);
+			bytes.writeShort(list[0].width);
+			bytes.writeShort(list[0].height);
 			bytes.writeByte(quality);
 			bytes.writeByte(alphaQuality);
 			bytes.writeByte(alphaFilter);
@@ -130,6 +132,8 @@ package ghostcat.fileformat.pak
 		{
 			bytes = new ByteArray();
 			bytes.writeByte(type);
+			bytes.writeShort(list[0].width);
+			bytes.writeShort(list[0].height);
 			bytes.writeByte(quality);
 			bytes.writeByte(alphaQuality);
 			bytes.writeShort(list.length);
