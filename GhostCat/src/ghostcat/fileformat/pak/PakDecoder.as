@@ -26,6 +26,8 @@ package ghostcat.fileformat.pak
 		public var quality:int;
 		public var alphaQuality:int;
 		public var alphaFilter:int;
+		public var width:int;
+		public var height:int;
 		
 		private var loadList:Array;
 		private var bmds:Array;
@@ -44,6 +46,8 @@ package ghostcat.fileformat.pak
 			allData.uncompress();
 			
 			type = allData.readByte();
+			width = allData.readUnsignedShort();
+			height = allData.readUnsignedShort();
 			quality = allData.readByte();
 			alphaQuality = allData.readByte();
 			alphaFilter = allData.readByte();
