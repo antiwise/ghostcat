@@ -136,6 +136,7 @@ package ghostcat.fileformat.pak
 			bytes.writeShort(list[0].height);
 			bytes.writeByte(quality);
 			bytes.writeByte(alphaQuality);
+			bytes.writeByte(alphaFilter);
 			bytes.writeShort(list.length);
 			for each (var bmd:BitmapData in list)
 			{
