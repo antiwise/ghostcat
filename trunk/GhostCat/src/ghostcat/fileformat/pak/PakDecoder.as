@@ -148,6 +148,8 @@ package ghostcat.fileformat.pak
 				for (var i:int = 0; i < length;i++)
 				{
 					var size:Point = sizes[i];
+					if (size.x == 0 || size.y == 0)
+						size = new Point(1,1);
 					var newBmd:BitmapData = new BitmapData(size.x,size.y,true,0);
 					var bmdRect:Rectangle = new Rectangle(dx,0,size.x,size.y);
 					newBmd.copyPixels(bmd,bmdRect,new Point());
