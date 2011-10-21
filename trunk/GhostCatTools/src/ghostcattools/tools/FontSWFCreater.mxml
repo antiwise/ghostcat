@@ -89,7 +89,7 @@
 				return index != -1 ? index : selectedFontConfig.useFontFile ? 1 : 0;
 			}
 			
-			private function createASText():String
+			private function createASText(className:String):String
 			{
 				var embedText:String = "";
 				var varText:String = "";
@@ -110,16 +110,17 @@
 					embedText += '\r\n\t\tpublic var font' + i +':Class;';
 					varText += 'Font.registerFont(font'+ i +');';
 				}
-				var bodyText:String = embedText + "public function FontLibrary():void{"+ varText+"}";
-				return CodeCreater.format(CodeCreater.pack("FontLibrary",bodyText,["flash.text.Font"],Sprite),"\r\n");
+				var bodyText:String = embedText + "public function "+className+"():void{"+ varText+"}";
+				return CodeCreater.format(CodeCreater.pack(className,bodyText,["flash.text.Font"],Sprite),"\r\n");
 			}
 			
 			private function createSWFHandler(files:Array):void
 			{
 				var swfFile:File = files[0] as File;
-				var asFile:File = swfFile.parent.resolvePath(swfFile.name.split(".")[0] + ".as");
+				var className:String = swfFile.name.split(".")[0];
+				var asFile:File = swfFile.parent.resolvePath(className + ".as");
 				var bytes:ByteArray = new ByteArray();
-				bytes.writeUTFBytes(createASText());
+				bytes.writeUTFBytes(createASText(className));
 				
 				FileControl.writeFile(asFile,bytes);
 				
@@ -233,7 +234,7 @@
 			{
 				var tempFile:File = File.createTempFile();
 				var bytes:ByteArray = new ByteArray();
-				bytes.writeUTFBytes(createASText());
+				bytes.writeUTFBytes(createASText("FontLibrary"));
 				
 				FileControl.writeFile(tempFile,bytes);
 				
