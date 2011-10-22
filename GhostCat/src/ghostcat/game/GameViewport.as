@@ -4,8 +4,8 @@ package ghostcat.game
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.game.layer.GameLayer;
-	import ghostcat.util.Tick;
 	import ghostcat.game.util.GameTick;
+	import ghostcat.util.Tick;
 	
 	/**
 	 * 场景 
@@ -15,10 +15,29 @@ package ghostcat.game
 	public class GameViewport extends Sprite
 	{
 		public var layers:Array = [];
+		private var _enabledTick:Boolean;
+
+		public function get enabledTick():Boolean
+		{
+			return _enabledTick;
+		}
+
+		public function set enabledTick(value:Boolean):void
+		{
+			if (_enabledTick == value)
+				return;
+			
+			_enabledTick = value;
+			if (value)
+				GameTick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			else
+				GameTick.instance.removeEventListener(TickEvent.TICK,tickHandler);
+		}
+
 		public function GameViewport()
 		{
 			super();
-			GameTick.instance.addEventListener(TickEvent.TICK,tickHandler);
+			this.enabledTick = true;
 		}
 		
 		public function addLayer(layer:GameLayer):void
@@ -45,6 +64,11 @@ package ghostcat.game
 		}
 		
 		protected function tickHandler(event:TickEvent):void
+		{
+			render();
+		}
+		
+		public function render():void
 		{
 			//
 		}

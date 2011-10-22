@@ -36,7 +36,7 @@ package ghostcat.game
 				layers.splice(index, 1);
 		}
 		
-		protected override function tickHandler(event:TickEvent):void
+		public override function render():void
 		{
 			this.screen.bitmapData.fillRect(this.screen.bitmapData.rect,0xFFFFFF);
 			for each (var layer:GameLayer in layers)
