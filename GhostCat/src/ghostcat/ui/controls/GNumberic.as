@@ -81,8 +81,8 @@ package ghostcat.ui.controls
 		 */
 		public var scaleOffestText:Boolean = false;
 		
-		private var offestTexts:Sprite;
-		private var offestValues:Array = [];
+		protected var offestTexts:Sprite;
+		protected var offestValues:Array = [];
 		
 		/**
 		 * 小数点位数
