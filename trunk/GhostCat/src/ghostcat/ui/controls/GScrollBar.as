@@ -323,7 +323,7 @@ package ghostcat.ui.controls
 		 * @param v
 		 * 
 		 */
-		protected function tweenToValue(v:Number,update:Boolean = false):void
+		public function tweenToValue(v:Number,update:Boolean = false):void
 		{
 			v = Math.max(Math.min(v,maxValue),minValue);
 			
