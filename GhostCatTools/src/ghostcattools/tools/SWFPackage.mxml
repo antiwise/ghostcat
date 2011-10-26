@@ -6,7 +6,8 @@
 						 width="556" height="390" close="gctoolwindow1_closeHandler(event)"
 						 creationComplete="gctoolwindow1_creationCompleteHandler(event)"
 						 currentState="base" enabledDragOpen="false" showStatusBar="false"
-						 title="SWF打包">
+						 title="SWF打包"
+						 width.base="638">
 	<fx:Script>
 		<![CDATA[
 			import ghostcat.util.ReflectXMLUtil;
@@ -229,6 +230,14 @@
 				}
 			}
 			
+			
+			
+			protected function removeAllBN_clickHandler(event:MouseEvent):void
+			{
+				classList.removeAll();
+				dataGrid_selectionChangeHandler(null);
+			}
+			
 			protected function addBN_clickHandler(event:MouseEvent):void
 			{
 				FileControl.browseForOpenMultiple(addFileHandler,"选择多个素材文件")
@@ -358,6 +367,7 @@
 		<s:Button id="addBN" label="添加" click="addBN_clickHandler(event)"/>
 		<s:Button id="addDirBN" label="添加目录" click="addDirBN_clickHandler(event)"/>
 		<s:Button id="removeBN" label="删除" click="removeBN_clickHandler(event)"/>
+		<s:Button id="removeAllBN" label="删除全部" click="removeAllBN_clickHandler(event)"/>
 		<s:Button id="runBN" label="用SDK输出" chromeColor="#C6E2FF" click="runBN_clickHandler(event)"/>
 		<s:Button id="runBN2" label="用Swift输出" chromeColor="#C6E2FF" click="runBN2_clickHandler(event)"/>
 	</s:HGroup>
