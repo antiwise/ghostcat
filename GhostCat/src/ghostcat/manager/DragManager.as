@@ -13,7 +13,9 @@ package ghostcat.manager
 	import ghostcat.parse.display.DrawParse;
 	import ghostcat.util.Tick;
 	import ghostcat.util.core.Handler;
+	import ghostcat.util.display.BitmapUtil;
 	import ghostcat.util.display.Geom;
+	import ghostcat.util.display.MatrixUtil;
 	
 	/**
 	 * FLASH自带的拖动功能缺乏扩展性，因此必要时只能重新实现。
@@ -174,9 +176,11 @@ package ghostcat.manager
 				
 			if (type == CLONE || type == ALPHA_CLONE)
 			{
-				image = DrawParse.createBitmap(obj);
-				dragMousePos.x -= image.x;
-				dragMousePos.y -= image.y;
+				image = BitmapUtil.replaceWithBitmap(obj);
+				dragMousePos.x -= image.x - obj.x;
+				dragMousePos.y -= image.y - obj.y;
+				dragMousePos = Geom.localToContent(dragMousePos,obj.stage,obj.parent);
+				
 				obj.stage.addChild(image);
 				
 				if (type == ALPHA_CLONE)
@@ -216,6 +220,7 @@ package ghostcat.manager
 			{
 				image.bitmapData.dispose();
 				image.parent.removeChild(image);
+				image = null;
 			}
 		}
 		
