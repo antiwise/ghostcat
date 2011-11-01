@@ -29,15 +29,18 @@ package ghostcat.display.particle
 		protected function createBitmapData():void
 		{
 			var shape:Shape = new Shape();
-			shape.graphics.beginFill(0xFFFFFF,0.2);
-			shape.graphics.drawCircle(2,2,2.5);
+			
+			var m:Matrix = new Matrix();
+			m.createGradientBox(8,8);
+			shape.graphics.beginGradientFill(GradientType.RADIAL,[0xFFFFFF,0xFFFFFF],[0.2,0.0],[0,255],m);
+			shape.graphics.drawCircle(4,4,4);
 			shape.graphics.endFill();
 			
 			shape.graphics.beginFill(0xFFFFFF,0.5);
-			shape.graphics.drawCircle(2,2,1);
+			shape.graphics.drawCircle(4,4,1);
 			shape.graphics.endFill();
 			
-			this.bitmapData = new BitmapData(6,6,true,0);
+			this.bitmapData = new BitmapData(8,8,true,0);
 			this.bitmapData.draw(shape);
 		}
 		
