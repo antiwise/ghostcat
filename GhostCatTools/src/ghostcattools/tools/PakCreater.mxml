@@ -22,6 +22,7 @@
 			
 			private var bmds:Array;
 			private var files:Array;
+			private var firstFile:File;
 
 			private var bytes:ByteArray;
 			private var pak:PakDecoder;
@@ -33,7 +34,7 @@
 			
 			protected function gctoolwindow1_creationCompleteHandler(event:FlexEvent):void
 			{
-				FileControl.dragFileIn(browseBN1_rHandler,this);
+				FileControl.dragFileIn(browseBN1_rHandler,this,null,false,true);
 				
 				this.displayer = new BitmapMovieGameItem(null,8);
 				this.image1.addChild(this.displayer);
@@ -53,18 +54,42 @@
 				FileControl.browseForOpen(browseBN1_rHandler);
 			}
 			
-			private function browseBN1_rHandler(files:Array):void
+			private function addFileHandler(files:Array):void
 			{
-				if (files.length == 1 && (files[0] as File).extension.toLowerCase() == "pak")
+				for each (var v:File in files)
 				{
-					pak = new PakDecoder(FileControl.readFile(files[0]));
+					if (!v.isHidden)
+					{
+						if (v.isDirectory)
+						{
+							addFileHandler(v.getDirectoryListing());
+						}
+						else
+						{
+							this.files.push(v);
+						}
+					}
+				}
+			}
+			
+			private function browseBN1_rHandler(v:Array):void
+			{
+				if (v.length == 0)
+					return;
+				
+				this.firstFile = v[0] as File;
+				if (!firstFile.isDirectory && firstFile.extension.toLowerCase() == "pak")
+				{
+					pak = new PakDecoder(FileControl.readFile(firstFile));
 					t = getTimer();
 					pak.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					pak.decode();
 				}
 				else
 				{
-					this.files = files;
+					this.files = [];
+					this.addFileHandler(v);
+					
 					files.sortOn("name")
 					
 					bmds = [];
@@ -143,7 +168,7 @@
 			{
 				if (bytes)
 				{
-					var file:File = files[0] as File;
+					var file:File = firstFile as File;
 					var baseName:String = file.name.split(".")[0];
 					var newFile:File = file.parent.resolvePath(baseName + ".pak");
 					

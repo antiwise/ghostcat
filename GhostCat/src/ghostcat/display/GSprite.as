@@ -370,10 +370,10 @@ package ghostcat.display
 			if (content is IGBase && autoDestoryContent)
 				(content as IGBase).destory();
 			
+			destoryed = true;
+			
 			if (parent)
 				parent.removeChild(this);
-			
-			destoryed = true;
 		}
 		
 		public function $addChild(v:DisplayObject):DisplayObject
