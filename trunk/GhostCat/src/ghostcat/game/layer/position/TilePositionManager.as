@@ -29,7 +29,7 @@ package ghostcat.game.layer.position
 		}
 		public override function untransform(p:Point):Point
 		{
-			return new Point(p.x / tileWidth - offestX, p.y / tileHeight - offestY);
+			return new Point((p.x - offestX)/ tileWidth, (p.y - offestY) / tileHeight);
 		}
 		
 		public override function transform(p:Point):Point
