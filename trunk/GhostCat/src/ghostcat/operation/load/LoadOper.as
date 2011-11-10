@@ -215,11 +215,7 @@
 			FileCacherManager.instance.saveBytes(url,this.bytes,version);
 		}
 		
-		/**
-		 * 立即加载，扩展名为swf,jpg,png,gif的将会使用Loader加载，可以用LOADER_TYPE修改规则。
-		 * 
-		 */		
-		public override function execute():void
+		public function getCacheBytes():ByteArray
 		{
 			var bytes:ByteArray;
 			if (embedClass && alawayUseEmbedClass || !request)
@@ -235,10 +231,19 @@
 			{
 				bytes = FileCacherManager.instance.load(url,sharedObjectCacheVersion);
 			}
-			
+			return bytes;
+		}
+		
+		/**
+		 * 立即加载，扩展名为swf,jpg,png,gif的将会使用Loader加载，可以用LOADER_TYPE修改规则。
+		 * 
+		 */		
+		public override function execute():void
+		{
 			_urlLoader = new URLLoader();
 			_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			
+			var bytes:ByteArray = getCacheBytes();
 			if (bytes)
 			{
 				_urlLoader.data = bytes;
