@@ -68,8 +68,10 @@ package ghostcat.fileformat.swf
 		 */
 		public function read(data:ByteArray,readTag:Boolean = true):void
 		{
-			this.bytes = data;
+			this.bytes = new ByteArray();
 			this.bytes.endian = Endian.LITTLE_ENDIAN;
+			this.bytes.writeBytes(data);
+			this.bytes.position = 0;
 			
 			readHead();	
 			if (readTag)
