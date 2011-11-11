@@ -355,7 +355,16 @@
 			super.halt();
 		
 			if (_urlLoader)
-				_urlLoader.close();
+			{
+				try
+				{
+					_urlLoader.close();
+				} 
+				catch(error:Error) 
+				{
+					
+				}
+			}
 		}
 		
 		/**
