@@ -348,7 +348,9 @@ package ghostcat.util.easing
 				if (this.toValues.hasOwnProperty("motionBlur"))
 					(target as DisplayObject).filters = [];
 				
-				this.effects.splice(this.effects.indexOf(this), 1);
+				var index:int = this.effects.indexOf(this);
+				if (index != -1)
+					this.effects.splice(this.effects.indexOf(this), 1);
 				
 				if (this.onComplete!=null)
 					this.onComplete();
@@ -511,7 +513,6 @@ package ghostcat.util.easing
 			{
 				this.duration = 0;
 				this.update();
-				
 			}
 			else
 			{

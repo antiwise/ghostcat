@@ -306,6 +306,7 @@ package ghostcat.ui
 			obj.addEventListener(Event.REMOVED_FROM_STAGE,popupCloseHandler);
 			if (modal)
 			{
+				Util.remove(popups,obj);
 				popups.push(obj);
 				if (popups.length > 0)
 					applicationEnabled = false;
