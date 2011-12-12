@@ -52,6 +52,7 @@ package ghostcat.operation.load
 		 */
 		public var readyHandler:Function;
 		
+		
 		/**
 		 * 名称
 		 */
@@ -127,13 +128,13 @@ package ghostcat.operation.load
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,ids:Array=null,names:Array = null):void
+		public function loadResources(res:Array,ids:Array=null,names:Array = null,sizes:Array = null):void
 		{
 			for (var i:int = 0;i < res.length;i++)
 			{
 				var oper:LoadOper = new LoadOper(getFullUrl(res[i]));
 				oper.useCurrentDomain = this.useCurrentDomain;
-				oper.addEventListener(OperationEvent.OPERATION_START,operStartHandler);
+				loadHelper.addLoader(oper);
 				
 				if (ids && ids[i])
 					oper.id = ids[i];
@@ -144,16 +145,14 @@ package ghostcat.operation.load
 					oper.name = names[i];
 				else
 					oper.name = oper.id;
-			
+				
+				if (sizes && sizes[i])
+					loadHelper.addBytesTotal(sizes[i]);
+				
 				this.opers.push(oper);
 				this.commitChild(oper);
+				
 			}
-		}
-		
-		private function operStartHandler(event:OperationEvent):void
-		{
-			event.oper.removeEventListener(OperationEvent.OPERATION_START,operStartHandler);
-			loadHelper.addLoader((event.oper as LoadOper).eventDispatcher);
 		}
 		
 		/**
@@ -179,10 +178,12 @@ package ghostcat.operation.load
 			var res:Array = [];
 			var ids:Array = [];
 			var names:Array = [];
+			var sizes:Array = [];
 			for each (var child:XML in xml.children())
 			{
 				res.push(child.@url.toString());
 				ids.push(child.@id.toString());
+				sizes.push(int(child.@size));
 				var name:String = child.@name.toString();
 				if (!name)
 					name = child.@tip.toString()
@@ -191,7 +192,7 @@ package ghostcat.operation.load
 			
 			resConfigOper = null;
 			
-			loadResources(res,ids,names);
+			loadResources(res,ids,names,sizes);
 			
 			if (readyHandler != null)
 				readyHandler();

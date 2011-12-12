@@ -104,9 +104,23 @@ package ghostcat.util.load
 			return v;
 		}
 		
+		
+		public function get useRealTotalBytes():Boolean
+		{
+			return _bytesTotal == -1;
+		}
+		
 		public function set bytesTotal(v:int):void
 		{
 			_bytesTotal = v;
+		}
+		
+		public function addBytesTotal(v:int):void
+		{
+			if (useRealTotalBytes)
+				_bytesTotal = 0;
+			
+			_bytesTotal += v;
 		}
 		
 		/**
