@@ -7,6 +7,8 @@ package ghostcat.ui.controls
 	import flash.events.ProgressEvent;
 	
 	import ghostcat.events.OperationEvent;
+	import ghostcat.operation.load.LoadOper;
+	import ghostcat.operation.load.QueueLoadOper;
 	import ghostcat.skin.ProgressSkin;
 	import ghostcat.util.load.LoadHelper;
 	
@@ -191,7 +193,6 @@ package ghostcat.ui.controls
 		public static function defaultProgressFunction(progress:GProgressBar):void
 		{
 			progress.percent = progress.loadHelper.loadPercent;
-			
 			var text:String = progress.progresslabelFormat;
 			text = text.replace(/%name/g,progress.resName ? progress.resName : "");
 			text = text.replace(/%percent/g,(progress.loadHelper.loadPercent * 100).toFixed(1) + "%");

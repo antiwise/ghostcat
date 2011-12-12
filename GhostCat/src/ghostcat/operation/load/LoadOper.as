@@ -186,7 +186,7 @@
 				this.request = url as URLRequest;
 				this.url = this.request.url
 			}
-			
+						
 			this.embedClass = embedClass;
 			
 			if (embedClass)
@@ -452,7 +452,7 @@
 		 */
 		public function get bytesLoaded():int
 		{
-			return _urlLoader.bytesLoaded;
+			return _urlLoader ? _urlLoader.bytesLoaded : 0;
 		}
 		
 		/**
@@ -462,7 +462,7 @@
 		 */
 		public function get bytesTotal():int
 		{
-			return _urlLoader.bytesTotal;
+			return _urlLoader ? _urlLoader.bytesTotal : 0;
 		}
 	}
 }

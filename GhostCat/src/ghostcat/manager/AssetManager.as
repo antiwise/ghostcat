@@ -174,27 +174,31 @@ package ghostcat.manager
 		 * @param names 资源的名称，用于在进度条中显示
 		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度
 		 * @param queueLimit 同时加载的文件数量
+		 * @param sizes 加载时各个文件分别的体积
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1,sizes:Array = null):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
-			loader.loadResources(res,ids,names);
 			loader.queueLimit = queueLimit;
+			
+			if (bytesTotal != -1)
+				loader.setBytesTotal(bytesTotal);
+			
+			loader.loadResources(res,ids,names,sizes);
 			
 			if (progressBar)
 			{
-				if (bytesTotal == -1)
+				if (loader.loadHelper.useRealTotalBytes)
 				{
 					progressBar.commitTargets(loader.children);
 				}
 				else
 				{
-					loader.setBytesTotal(bytesTotal);
 					progressBar.commitTarget(loader);
 				}
 			}
@@ -208,6 +212,7 @@ package ghostcat.manager
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
+		 * 可以增加@size属性来表示文件大小，但如果想统一加载进度必须设置bytesTotal为0
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
@@ -219,22 +224,24 @@ package ghostcat.manager
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
-			loader.loadResourcesFromXMLFile(filePath);
 			loader.queueLimit = queueLimit;
+			
+			if (bytesTotal != -1)
+				loader.setBytesTotal(bytesTotal);
+					
+			loader.loadResourcesFromXMLFile(filePath);
 			
 			if (progressBar)
 			{
-				if (bytesTotal == -1)
+				if (loader.loadHelper.useRealTotalBytes)
 				{
-					loader.readyHandler = resConfigHandler;
-					function resConfigHandler():void
+					loader.readyHandler = function ():void
 					{
 						progressBar.commitTargets(loader.children);
 					}	
 				}
 				else
 				{
-					loader.setBytesTotal(bytesTotal);
 					progressBar.commitTarget(loader);
 				}
 			}
