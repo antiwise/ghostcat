@@ -7,6 +7,8 @@ package ghostcat.display.loader
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
 	/**
 	 * 此方法加载的图片将无视沙箱 
@@ -15,6 +17,9 @@ package ghostcat.display.loader
 	 */
 	public class ImageLoader extends Loader
 	{
+		public static var enabledCache:Boolean = true;
+		private static var caches:Dictionary = new Dictionary();
+		
 		private var loader:Loader;
 		public function get imageLoadInfo():LoaderInfo
 		{
@@ -28,11 +33,19 @@ package ghostcat.display.loader
 		
 		public override function load(request:URLRequest, context:LoaderContext=null):void
 		{
-			loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
-			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
-			loader.load(request, context);
+			if (caches[request.url])
+			{
+				loadBytes(caches[request.url]);
+				this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
+			}
+			else
+			{
+				loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadCompleteHandler);
+				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,progressHandler);
+				loader.load(request, context);
+			}
 		}
 		
 		private function removeHandler():void
@@ -46,7 +59,13 @@ package ghostcat.display.loader
 		private function loadCompleteHandler(event:Event):void
 		{
 			removeHandler();
-			loadBytes((event.currentTarget as LoaderInfo).bytes);
+			
+			var info:LoaderInfo = event.currentTarget as LoaderInfo;
+			
+			if (enabledCache)
+				caches[info.url] = info.bytes;
+		
+			loadBytes(info.bytes);
 			this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
 		}
 		

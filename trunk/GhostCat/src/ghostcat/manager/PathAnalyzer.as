@@ -126,6 +126,27 @@ package ghostcat.manager
 		}
 		
 		/**
+		 * 判断是否是向上划
+		 * @return 
+		 * 
+		 */
+		public function isUp():Boolean
+		{
+			return (directs.length == 1 && directs[0] == UP)
+		}
+		
+		/**
+		 * 判断是否是向下划
+		 * @return 
+		 * 
+		 */
+		public function isDown():Boolean
+		{
+			return (directs.length == 1 && directs[0] == DOWN)
+		}
+		
+		
+		/**
 		 * 判断是否是向下-向右划（一般用于关闭指令）
 		 * 
 		 * @param source
