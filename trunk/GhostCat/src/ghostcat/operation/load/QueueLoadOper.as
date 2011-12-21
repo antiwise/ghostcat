@@ -151,8 +151,26 @@ package ghostcat.operation.load
 				
 				this.opers.push(oper);
 				this.commitChild(oper);
-				
 			}
+		}
+		
+		public function loadResourcesFromXML(xml:XML):void
+		{
+			var res:Array = [];
+			var ids:Array = [];
+			var names:Array = [];
+			var sizes:Array = [];
+			for each (var child:XML in xml.children())
+			{
+				res.push(child.@url.toString());
+				ids.push(child.@id.toString());
+				sizes.push(int(child.@size));
+				var name:String = child.@name.toString();
+				if (!name)
+					name = child.@tip.toString()
+				names.push(name)
+			}
+			loadResources(res,ids,names,sizes);
 		}
 		
 		/**
@@ -174,25 +192,10 @@ package ghostcat.operation.load
 		
 		protected	function resConfigHandler(event:OperationEvent):void
 		{
-			var xml:XML = new XML((event.oper as LoadTextOper).data);
-			var res:Array = [];
-			var ids:Array = [];
-			var names:Array = [];
-			var sizes:Array = [];
-			for each (var child:XML in xml.children())
-			{
-				res.push(child.@url.toString());
-				ids.push(child.@id.toString());
-				sizes.push(int(child.@size));
-				var name:String = child.@name.toString();
-				if (!name)
-					name = child.@tip.toString()
-				names.push(name)
-			}
-			
 			resConfigOper = null;
 			
-			loadResources(res,ids,names,sizes);
+			var xml:XML = new XML((event.oper as LoadTextOper).data);
+			loadResourcesFromXML(xml);
 			
 			if (readyHandler != null)
 				readyHandler();
