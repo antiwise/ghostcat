@@ -212,6 +212,7 @@ package ghostcat.ui.controls
 		protected function completeHandler(event:Event):void
 		{
 			percent = 1.0;
+			this.progressFunction(this);
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
