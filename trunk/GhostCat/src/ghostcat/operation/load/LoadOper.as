@@ -452,7 +452,7 @@
 		 */
 		public function get bytesLoaded():int
 		{
-			return _urlLoader ? _urlLoader.bytesLoaded : 0;
+			return bytes ? bytes.length : _urlLoader ? _urlLoader.bytesLoaded : 0;
 		}
 		
 		/**
@@ -462,7 +462,7 @@
 		 */
 		public function get bytesTotal():int
 		{
-			return _urlLoader ? _urlLoader.bytesTotal : 0;
+			return bytes ? bytes.length : _urlLoader ? _urlLoader.bytesTotal : 0;
 		}
 	}
 }
