@@ -275,7 +275,7 @@
 				_loader = new Loader();
 				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE,result);
 				_loader.contentLoaderInfo.addEventListener(Event.INIT,initHandler);
-				_loader.load(request,new LoaderContext(false,useCurrentDomain ? ApplicationDomain.currentDomain : null));
+				_loader.loadBytes(this.bytes,new LoaderContext(false,useCurrentDomain ? ApplicationDomain.currentDomain : null));
 			}
 			else
 			{
@@ -393,11 +393,10 @@
 		
 		/**
 		 * 获取加载事件发送器，可由此监听下载进度
-		 * Loader是其contentLoaderInfo,URLLoader则是其本身。只当execute执行后才有值。
 		 */
 		public function get eventDispatcher():IEventDispatcher
 		{
-			return _urlLoader;
+			return this;
 		}
 		
 		/**
