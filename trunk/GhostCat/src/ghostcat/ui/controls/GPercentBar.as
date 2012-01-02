@@ -142,6 +142,9 @@
 			if (_percent == v)
 				return;
 			
+			if (isNaN(_percent))
+				tween = false;
+			
 			_percent = v;
 			
 			if (duration > 0)
