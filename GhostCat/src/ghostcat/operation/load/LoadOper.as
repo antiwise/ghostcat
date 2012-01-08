@@ -19,11 +19,13 @@
 	import flash.system.SecurityDomain;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
 	import ghostcat.operation.RetryOper;
 	import ghostcat.ui.controls.IProgressTargetClient;
+	import ghostcat.util.Util;
 	import ghostcat.util.data.LocalStorage;
 	import ghostcat.util.text.URL;
 	
@@ -41,6 +43,7 @@
 	 */	
 	public class LoadOper extends RetryOper implements IProgressTargetClient
 	{
+		public static const loads:Array = [];
 		public static const AUTO:String = "auto";
 		public static const URLLOADER:String = "urlloader";
 		public static const LOADER:String = "loader";
@@ -247,7 +250,7 @@
 			if (bytes)
 			{
 				_urlLoader.data = bytes;
-				urlLoadCompleteHandler();
+				setTimeout(urlLoadCompleteHandler,0);
 			}
 			else
 			{
@@ -258,6 +261,10 @@
 			}
 			
 			super.execute();
+			
+			
+			loads.push(url);
+			trace(loads.length,"+",loads);
 		}
 		
 		protected function urlLoadCompleteHandler(event:Event = null):void
@@ -302,6 +309,9 @@
 		
 		public override function result(event:*=null):void
 		{
+			Util.remove(loads,url);
+			trace(loads.length,"-",loads);
+			
 			clearEvents();
 			
 			if (enabledByteArrayCache && !disibledByteArrayCache)
