@@ -4,6 +4,8 @@ package ghostcat.ui
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.IToolTipManagerClient;
@@ -136,7 +138,7 @@ package ghostcat.ui
 			if (newTarget != target)
 			{
 				target = newTarget;
-				
+					
 				if (target)
 					delayShow(delay);
 				else if (this.content)
@@ -233,7 +235,8 @@ package ghostcat.ui
 			if (target is IToolTipManagerClient)
 			{
 				var client:IToolTipManagerClient = target as IToolTipManagerClient;
-				(content as IToolTipSkin).data = client.toolTip;
+				if (content is IToolTipSkin)
+					(content as IToolTipSkin).data = client.toolTip;
 			}
 		}
 		
