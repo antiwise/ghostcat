@@ -1,5 +1,7 @@
 package ghostcat.util
 {
+	import flash.utils.getTimer;
+
 	/**
 	 * 服务器时间
 	 * @author flashyiyi
@@ -8,10 +10,19 @@ package ghostcat.util
 	public class ServiceDate
 	{
 		static private var _instance:ServiceDate;
+		
 		/**
-		 * 时间偏移量 
+		 * 获取时间模式 0:用Date计算偏移 1:用getTimer偏移
 		 */
-		public var offest:Number = 0;
+		public var mode:int;
+		
+		//时间偏移量 
+		private var offest:Number = 0;
+		
+		//上次的服务器时间与getTimer的偏移
+		private var prevServiceOffest:Number;
+		
+		
 		static public function get instance():ServiceDate
 		{
 			if (!_instance)
@@ -25,9 +36,12 @@ package ghostcat.util
 		 * @param serviceTime 服务器时间
 		 * 
 		 */
-		public function ServiceDate(serviceTime:Number = NaN)
+		public function ServiceDate(serviceTime:Number = NaN,mode:int = 0)
 		{
 			_instance = this;
+			
+			this.mode = mode;
+			
 			if (!isNaN(serviceTime))
 				this.setServiceTime(serviceTime);
 		}
@@ -40,6 +54,7 @@ package ghostcat.util
 		public function setServiceTime(serviceTime:Number):void
 		{
 			offest = new Date().getTime() - serviceTime;
+			prevServiceOffest = serviceTime - getTimer();
 		}
 		
 		/**
@@ -59,7 +74,10 @@ package ghostcat.util
 		 */
 		public function getTime():Number
 		{
-			return new Date().getTime() - offest;
+			if (mode == 0)
+				return new Date().getTime() - offest;
+			else
+				return isNaN(prevServiceOffest) ? new Date().getTime() : prevServiceOffest + getTimer();
 		}
 	}
 }
