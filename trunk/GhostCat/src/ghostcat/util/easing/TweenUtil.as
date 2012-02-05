@@ -202,7 +202,10 @@ package ghostcat.util.easing
 						break;
 					case "volume":
 					case "pan":
-						this.fromValues[key] = target["soundTransform"][key];
+						if (target.hasOwnProperty("soundTransform"))
+							this.fromValues[key] = target["soundTransform"][key];
+						else
+							this.fromValues[key] = target[key];
 						this.toValues[key] = params[key];
 						break;
 					case "frame":
@@ -414,9 +417,16 @@ package ghostcat.util.easing
 			{
 				case "volume": 
 				case "pan":
-					var soundTrans:SoundTransform = target["soundTransform"];
-					soundTrans[key] = value;
-					target["soundTransform"] = soundTrans;
+					if (target.hasOwnProperty("soundTransform"))
+					{
+						var soundTrans:SoundTransform = target["soundTransform"];
+						soundTrans[key] = value;
+						target["soundTransform"] = soundTrans;
+					}
+					else
+					{
+						target[key] = value;
+					}
 					break;
 				case "autoAlpha":
 					displayObj.alpha = value;
