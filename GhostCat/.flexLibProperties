@@ -604,6 +604,7 @@
     <classEntry path="ghostcat.util.core.GC"/>
     <classEntry path="ghostcat.fileformat.pak.PakEncoder"/>
     <classEntry path="ghostcat.fileformat.pak.PakDecoder"/>
+    <classEntry path="ghostcat.util.sound.BackgroundSound"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

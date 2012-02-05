@@ -83,6 +83,21 @@ package ghostcat.manager
             		TweenUtil.to(sc,len,{volume:volume});
             }
         }
+		
+		/**
+		 * 设置全部声音的大小
+		 * 
+         * @param volume	声音
+		 * @param len	变化需要的时间
+		 * 
+		 */
+		public function setAllVolume(volume:Number,len:Number = 0):void
+		{
+			for (var name:String in activeSound)
+			{
+				setVolume(name,volume,len)
+			}
+		}
         
         /**
          * 设置声音位置
