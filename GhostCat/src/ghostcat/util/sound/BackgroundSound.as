@@ -43,12 +43,12 @@ package ghostcat.util.sound
 			TweenUtil.to(this,len,{volume:volume});
 		}
 		
-		public function playBgSound(url:String,len:int = 1000):void
+		public function playBgSound(url:String,len:int = 1000,mute:Boolean = false):void
 		{
 			if (this.url == url)
 				return;
 			
-			this.url = url
+			this.url = url;
 			
 			stop();
 			
@@ -62,8 +62,11 @@ package ghostcat.util.sound
 			
 			this.volume = 0.0;
 			
-			TweenUtil.removeTween(this,false);
-			TweenUtil.to(this,len,{volume:1.0});
+			if (!mute)
+			{
+				TweenUtil.removeTween(this,false);
+				TweenUtil.to(this,len,{volume:1.0});
+			}
 		}
 		
 		private function soundCompleteListener(evt:Event):void
