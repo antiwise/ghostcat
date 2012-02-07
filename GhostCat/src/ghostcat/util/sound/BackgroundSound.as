@@ -27,6 +27,20 @@ package ghostcat.util.sound
 		public function set volume(value:Number):void
 		{
 			_volume = value;
+			setVolume(value);
+		}
+
+		
+		private var _curVolume:Number;
+
+		public function get curVolume():Number
+		{
+			return _curVolume;
+		}
+
+		public function set curVolume(value:Number):void
+		{
+			_curVolume = value;
 			
 			if (channel)
 				channel.soundTransform = new SoundTransform(value);
@@ -39,33 +53,44 @@ package ghostcat.util.sound
 		
 		public function setVolume(volume:Number,len:Number = 1000):void
 		{
+			_volume = volume;
+			
 			TweenUtil.removeTween(this,false);
-			TweenUtil.to(this,len,{volume:volume});
+			TweenUtil.to(this,len,{curVolume:volume});
 		}
 		
-		public function playBgSound(url:String,len:int = 1000,mute:Boolean = false):void
+		public function playBgSound(url:String,len:int = 1000,mute:Boolean = false,volume:int = 1.0, loopStart:int = 0):void
 		{
 			if (this.url == url)
 				return;
 			
+			
+			this._volume = volume;
+			this.loopStart = loopStart;
 			this.url = url;
 			
 			stop();
 			
-			sound = new Sound(new URLRequest(url),new SoundLoaderContext(1000,true));
-			
-			channel = sound.play(0,1);
-			if (!channel)
-				return;
-			
-			channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
-			
-			this.volume = 0.0;
-			
 			if (!mute)
+				start();
+		}
+		
+		public function start():void
+		{
+			if (this.url)
 			{
+				sound = new Sound(new URLRequest(url),new SoundLoaderContext(1000,true));
+				
+				channel = sound.play(0,1);
+				if (!channel)
+					return;
+				
+				channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
+				
+				this.curVolume = 0.0;
+				
 				TweenUtil.removeTween(this,false);
-				TweenUtil.to(this,len,{volume:1.0});
+				TweenUtil.to(this,1000,{curVolume:this.volume});
 			}
 		}
 		
