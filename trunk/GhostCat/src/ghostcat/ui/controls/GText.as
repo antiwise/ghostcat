@@ -791,6 +791,9 @@ package ghostcat.ui.controls
 		 */			
 		public function reRenderTextBitmap():void
 		{
+			if (destoryed)
+				return;
+			
 			if (textBitmap)
 			{
 				textBitmap.parent.removeChild(textBitmap);

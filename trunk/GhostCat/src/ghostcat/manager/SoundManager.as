@@ -212,8 +212,11 @@ package ghostcat.manager
 			
 			function soundCompleteListener(evt:Event):void
 			{
-				channel.removeEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
-				sound.removeEventListener(IOErrorEvent.IO_ERROR, soundCompleteListener);
+				if (channel)
+					channel.removeEventListener(Event.SOUND_COMPLETE, soundCompleteListener);
+				
+				if (sound)
+					sound.removeEventListener(IOErrorEvent.IO_ERROR, soundCompleteListener);
 				
 				delete activeSound[name];
 			}
