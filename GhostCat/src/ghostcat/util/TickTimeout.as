@@ -37,7 +37,7 @@ package ghostcat.util
 			}
 		}
 		
-		public static function getTimeoutId(h:Function):int
+		private static function getTimeoutId(h:Function):int
 		{
 			for (var p:* in timeoutDict)
 			{
@@ -47,7 +47,7 @@ package ghostcat.util
 			return -1;
 		}
 		
-		public static function clearTimeoutHandler(h:Function):void
+		private static function clearTimeoutHandler(h:Function):void
 		{
 			clearTimeout(getTimeoutId(h));
 		}

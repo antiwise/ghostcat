@@ -212,14 +212,14 @@ package ghostcat.manager
 		/**
 		 * 根据配置XML文件的内容批量载入资源。
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
-		 * 可以增加@size属性来表示文件大小，但如果想统一加载进度必须设置bytesTotal为0
+		 * 可以增加@size属性来表示文件大小，但必须设置bytesTotal为0
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXML(xml:XML,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		public function loadResourcesFromXMLList(xml:XMLList,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
@@ -228,7 +228,7 @@ package ghostcat.manager
 			if (bytesTotal != -1)
 				loader.setBytesTotal(bytesTotal);
 			
-			loader.loadResourcesFromXML(xml);
+			loader.loadResourcesFromXMLList(xml);
 			
 			if (progressBar)
 			{
@@ -248,10 +248,15 @@ package ghostcat.manager
 			return loader;
 		}
 		
+		public function loadResourcesFromXML(xml:XML,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		{
+			return loadResourcesFromXMLList(xml.children(),bytesTotal,queueLimit);
+		}
+		
 		/**
 		 * 先读取一个XML配置文件，再根据配置文件的内容批量载入资源。
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
-		 * 可以增加@size属性来表示文件大小，但如果想统一加载进度必须设置bytesTotal为0
+		 * 可以增加@size属性来表示文件大小，但必须设置bytesTotal为0
 		 * 
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 

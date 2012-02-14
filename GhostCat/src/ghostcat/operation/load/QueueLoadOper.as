@@ -154,13 +154,13 @@ package ghostcat.operation.load
 			}
 		}
 		
-		public function loadResourcesFromXML(xml:XML):void
+		public function loadResourcesFromXMLList(xml:XMLList):void
 		{
 			var res:Array = [];
 			var ids:Array = [];
 			var names:Array = [];
 			var sizes:Array = [];
-			for each (var child:XML in xml.children())
+			for each (var child:XML in xml)
 			{
 				res.push(child.@url.toString());
 				ids.push(child.@id.toString());
@@ -195,7 +195,7 @@ package ghostcat.operation.load
 			resConfigOper = null;
 			
 			var xml:XML = new XML((event.oper as LoadTextOper).data);
-			loadResourcesFromXML(xml);
+			loadResourcesFromXMLList(xml.children());
 			
 			if (readyHandler != null)
 				readyHandler();
