@@ -4,6 +4,7 @@ package ghostcat.util.easing
 	import flash.display.MovieClip;
 	import flash.events.EventDispatcher;
 	import flash.filters.BlurFilter;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.SoundTransform;
@@ -213,8 +214,12 @@ package ghostcat.util.easing
 						this.toValues[key] = params[key];
 						break;
 					case "tint":
-					case "tint2":
 						this.fromValues[key] = (target as DisplayObject).transform.colorTransform.color & 0xFFFFFF;
+						this.toValues[key] = params[key];
+						break;
+					case "tint2":
+						var cf:ColorTransform = (target as DisplayObject).transform.colorTransform;
+						this.fromValues[key] = (cf.redOffset << 16) | (cf.greenOffset << 8) | cf.blueOffset;
 						this.toValues[key] = params[key];
 						break;
 					case "autoAlpha":

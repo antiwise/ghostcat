@@ -74,7 +74,7 @@ package ghostcat.util.display
 		 */
 		public static function scale(source:BitmapData,scaleX:Number =1.0,scaleY:Number = 1.0,disposeSource:Boolean = true):BitmapData
 		{
-			var result:BitmapData = new BitmapData(source.width * scaleX,source.height * scaleY,source.transparent);
+			var result:BitmapData = new BitmapData(source.width * scaleX,source.height * scaleY,source.transparent,0xFFFFFF);
 			var m:Matrix = new Matrix();
 			m.scale(scaleX,scaleY);
 			result.draw(source,m);
@@ -123,7 +123,7 @@ package ghostcat.util.display
 		 */
 		public static function clip(source:BitmapData,clipRect:Rectangle,disposeSource:Boolean = true):BitmapData
 		{
-			var result:BitmapData = new BitmapData(clipRect.width,clipRect.height,source.transparent);
+			var result:BitmapData = new BitmapData(clipRect.width,clipRect.height,source.transparent,0xFFFFFF);
 			result.copyPixels(source,clipRect,new Point());
 			if (disposeSource)
 				source.dispose()
