@@ -472,6 +472,25 @@ package ghostcat.display
 			return new Point(width,height);
 		}
 		
+		/**
+		 * 查找特定类型的拥有者
+		 * @param cls
+		 * @return 
+		 * 
+		 */
+		public function findOwner(cls:Class = null):GBase
+		{
+			if (owner)
+			{
+				if (owner is cls || cls == null))
+					return owner;
+				else if (owner is GBase)
+					return (owner as GBase).findOwner(cls);
+			}
+			
+			return null;
+		}
+		
 //		/**
 //		 * 自动注册事件常量。
 //		 */		
