@@ -478,12 +478,12 @@ package ghostcat.display
 		 * @return 
 		 * 
 		 */
-		public function findOwner(cls:Class = null):GBase
+		public function findOwner(cls:Class = null):DisplayObject
 		{
 			if (owner)
 			{
-				if (owner is cls || cls == null))
-					return owner;
+				if (owner is cls || cls == null)
+					return owner
 				else if (owner is GBase)
 					return (owner as GBase).findOwner(cls);
 			}
