@@ -240,7 +240,7 @@ package ghostcat.ui.controls
 		 */
 		public function get label():String
 		{
-			return _label ? _label : (data && labelField) ? data[labelField] : (data is String || data is Number) ? data : null;
+			return _label != null ? _label : (data && labelField) ? data[labelField] : (data is String || data is Number) ? data : null;
 		}
 
 		public function set label(v:String):void

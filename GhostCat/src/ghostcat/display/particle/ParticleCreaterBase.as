@@ -2,6 +2,7 @@ package ghostcat.display.particle
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.events.TickEvent;
 	import ghostcat.util.Tick;
@@ -27,6 +28,7 @@ package ghostcat.display.particle
 			
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			this.scrollRect = new Rectangle(0,0,contentWidth,contentHeight);
 			
 			this.children = [];
 			this.childrenCache = [];
