@@ -218,7 +218,7 @@ package ghostcat.ui.controls
 			return Number(_data);
 		}
 		
-		private var _displayValue:Number;
+		protected var _displayValue:Number;
 		/** @inheritDoc*/
 		public function get displayValue():Number
 		{
