@@ -7,6 +7,7 @@ package ghostcat.display.particle
 	import flash.display.GradientType;
 	import flash.display.Shape;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
 	public class StarCreater extends ParticleCreaterBase
 	{
@@ -22,7 +23,7 @@ package ghostcat.display.particle
 			this.flash = flash;
 			
 			super(contentWidth, contentHeight);
-		
+			
 			createBitmapData();
 		}
 		
