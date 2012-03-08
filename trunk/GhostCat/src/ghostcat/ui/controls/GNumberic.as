@@ -7,8 +7,7 @@ package ghostcat.ui.controls
 	import flash.text.TextFormat;
 	import flash.utils.setTimeout;
 	
-	import ghostcat.util.text.NumberUtil;
-	import ghostcat.util.text.TextFieldUtil;
+	import ghostcat.ui.UIConst;
 	import ghostcat.ui.containers.GBox;
 	import ghostcat.ui.containers.GView;
 	import ghostcat.ui.layout.Padding;
@@ -16,6 +15,8 @@ package ghostcat.ui.controls
 	import ghostcat.util.display.DisplayUtil;
 	import ghostcat.util.easing.Circ;
 	import ghostcat.util.easing.TweenUtil;
+	import ghostcat.util.text.NumberUtil;
+	import ghostcat.util.text.TextFieldUtil;
 	
 	/**
 	 * 数值显示
@@ -77,9 +78,23 @@ package ghostcat.ui.controls
 		public var offestTextFormat:TextFormat;
 		
 		/**
+		 * 变化文本字体2
+		 */
+		public var offestTextFormat2:TextFormat;
+		
+		/**
+		 * 变化文本滤镜
+		 */
+		public var offestTextFilters:Array;
+		
+		/**
 		 * 是否缩放变化文本
 		 */
 		public var scaleOffestText:Boolean = false;
+		/**
+		 * 变化文本方向
+		 */
+		public var offestTextDirect:String = UIConst.DOWN;
 		
 		protected var offestTexts:Sprite;
 		protected var offestValues:Array = [];
@@ -182,19 +197,41 @@ package ghostcat.ui.controls
 			var prevText:TextField = textField;
 			for (var i:int = 0;i < offestValues.length;i++)
 			{
-				var n:TextField = TextFieldUtil.clone(prevText,false); 
-				n.text = (offestValues[i] >= 0 ? "+" : "") + offestValues[i].toString();
-				n.y = prevText.y + prevText.textHeight + offestTextGap;
-				
-				var tf:TextFormat = offestTextFormat ? offestTextFormat : n.defaultTextFormat;
-				if (scaleOffestText)
-					tf.size = Number(tf.size) * (1 - 1 / (showOffestTextNum + 1));
-				n.setTextFormat(tf,0,n.length);
-				n.defaultTextFormat = tf;
+				var n:TextField = createOffestTexts(prevText,offestValues[i]);
 				offestTexts.addChild(n);
 				
 				prevText = n;
 			}
+		}
+		
+		protected function createOffestTexts(prevText:TextField,v:int):TextField
+		{
+			var n:TextField = TextFieldUtil.clone(prevText,false); 
+			n.text = (v >= 0 ? "+" : "") + v.toString();
+			
+			if (offestTextDirect == UIConst.LEFT)
+				n.x = prevText.x - n.textWidth - offestTextGap;
+			else if (offestTextDirect == UIConst.RIGHT)
+				n.x = prevText.x - prevText.textWidth + offestTextGap;
+			else if (offestTextDirect == UIConst.UP)
+				n.y = prevText.y - n.textHeight - offestTextGap;
+			else 
+				n.y = prevText.y + prevText.textHeight + offestTextGap;
+				
+			var tf:TextFormat = n.defaultTextFormat;
+			if (v < 0 && offestTextFormat2)
+				tf = offestTextFormat2;
+			else if (offestTextFormat)
+				tf = offestTextFormat;
+			
+			if (scaleOffestText)
+				tf.size = Number(tf.size) * (1 - 1 / (showOffestTextNum + 1));
+			n.setTextFormat(tf,0,n.length);
+			n.defaultTextFormat = tf;
+			if (offestTextFilters)
+				n.filters = offestTextFilters;
+			n.cacheAsBitmap = true;
+			return n;
 		}
 		
 		/**
