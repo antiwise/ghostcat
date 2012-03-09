@@ -115,7 +115,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResource(res:String,id:String=null,name:String = null):Oper
+		public function loadResource(res:String,id:String=null,name:String = null,inQueue:Boolean = true):Oper
 		{
 			var oper:LoadOper = new LoadOper(getFullUrl(res));
 			oper.useCurrentDomain = this.useCurrentDomain;
@@ -134,7 +134,11 @@ package ghostcat.manager
 				progressBar.commitTarget(oper);
 			
 			oper.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-			oper.commit(queue);
+			if (inQueue)
+				oper.commit(queue);
+			else
+				oper.execute();
+			
 			return oper;
 		}
 		
@@ -180,7 +184,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1,sizes:Array = null):QueueLoadOper
+		public function loadResources(res:Array,ids:Array=null,names:Array = null,bytesTotal:int = -1,queueLimit:int = 1,sizes:Array = null,inQueue:Boolean = true):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
@@ -204,7 +208,10 @@ package ghostcat.manager
 			}
 			
 			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-			loader.commit(queue);
+			if (inQueue)
+				loader.commit(queue);
+			else
+				loader.execute();
 			
 			return loader;
 		}
@@ -219,7 +226,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXMLList(xml:XMLList,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		public function loadResourcesFromXMLList(xml:XMLList,bytesTotal:int = -1,queueLimit:int = 1,inQueue:Boolean = true):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
@@ -243,14 +250,17 @@ package ghostcat.manager
 			}
 			
 			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-			loader.commit(queue);
+			if (inQueue)
+				loader.commit(queue);
+			else
+				loader.execute();
 			
 			return loader;
 		}
 		
-		public function loadResourcesFromXML(xml:XML,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		public function loadResourcesFromXML(xml:XML,bytesTotal:int = -1,queueLimit:int = 1,inQueue:Boolean = true):QueueLoadOper
 		{
-			return loadResourcesFromXMLList(xml.children(),bytesTotal,queueLimit);
+			return loadResourcesFromXMLList(xml.children(),bytesTotal,queueLimit,inQueue);
 		}
 		
 		/**
@@ -264,7 +274,7 @@ package ghostcat.manager
 		 * @return 
 		 * 
 		 */
-		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1,queueLimit:int = 1):QueueLoadOper
+		public function loadResourcesFromXMLFile(filePath:String,bytesTotal:int = -1,queueLimit:int = 1,inQueue:Boolean = true):QueueLoadOper
 		{
 			var loader:QueueLoadOper = new QueueLoadOper(assetBase);
 			loader.useCurrentDomain = this.useCurrentDomain;
@@ -291,7 +301,10 @@ package ghostcat.manager
 			}
 			
 			loader.addEventListener(OperationEvent.OPERATION_COMPLETE,loadCompleteHandler);
-			loader.commit(queue);
+			if (inQueue)
+				loader.commit(queue);
+			else
+				loader.execute();
 			
 			return loader;
 		}
