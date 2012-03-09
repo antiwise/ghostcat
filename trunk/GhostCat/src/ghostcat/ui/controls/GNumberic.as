@@ -212,7 +212,7 @@ package ghostcat.ui.controls
 			if (offestTextDirect == UIConst.LEFT)
 				n.x = prevText.x - n.textWidth - offestTextGap;
 			else if (offestTextDirect == UIConst.RIGHT)
-				n.x = prevText.x - prevText.textWidth + offestTextGap;
+				n.x = prevText.x + prevText.textWidth + offestTextGap;
 			else if (offestTextDirect == UIConst.UP)
 				n.y = prevText.y - n.textHeight - offestTextGap;
 			else 
