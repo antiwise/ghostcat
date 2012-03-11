@@ -176,7 +176,7 @@ package ghostcat.manager
 		 * @param res	资源路径列表
 		 * @param ids 资源的ID
 		 * @param names 资源的名称，用于在进度条中显示
-		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度
+		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度，为-1时则分别加载
 		 * @param queueLimit 同时加载的文件数量
 		 * @param sizes 加载时各个文件分别的体积
 		 * 
@@ -220,7 +220,7 @@ package ghostcat.manager
 		 * 根据配置XML文件的内容批量载入资源。
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
 		 * 可以增加@size属性来表示文件大小，但必须设置bytesTotal为0
-		 * 
+		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度，为-1时则分别加载
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
 		 * @return 
@@ -268,6 +268,7 @@ package ghostcat.manager
 		 * Oper的名称将是配置文件的@id属性，地址则是@url属性，显示出的资源名称是@name或者@tip属性。
 		 * 可以增加@size属性来表示文件大小，但必须设置bytesTotal为0
 		 * 
+		 * @param byetsTotal 预估总加载数据量，设置这个数值后整个加载过程会使用统一的加载进度，为-1时则分别加载
 		 * 加载结束可监听返回值的operation_complete事件
 		 * 
 		 * @param filePath	资源配置文件名称

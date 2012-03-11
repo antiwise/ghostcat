@@ -605,6 +605,7 @@
     <classEntry path="ghostcat.fileformat.pak.PakEncoder"/>
     <classEntry path="ghostcat.fileformat.pak.PakDecoder"/>
     <classEntry path="ghostcat.util.sound.BackgroundSound"/>
+    <classEntry path="ghostcat.ui.containers.GPushPanel"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
