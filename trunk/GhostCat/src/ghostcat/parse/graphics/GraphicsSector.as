@@ -137,7 +137,7 @@ package ghostcat.parse.graphics
 				target.lineTo(x + wradius * Math.cos(start),y + hradius * Math.sin(start));
 		}
 		
-		private static function drawCurve(target:Graphics,x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number,toAngle:Number):void
+		public static function drawCurve(target:Graphics,x:Number,y:Number,wradius:Number,hradius:Number,fromAngle:Number,toAngle:Number):void
 		{
 			var start:Number = fromAngle / 180 * Math.PI;
 			var angle:Number = (toAngle - fromAngle) / 180 * Math.PI;
