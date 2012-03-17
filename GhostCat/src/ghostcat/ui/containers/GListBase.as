@@ -18,6 +18,7 @@ package ghostcat.ui.containers
 	import ghostcat.ui.UIConst;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.util.core.ClassFactory;
+	import ghostcat.util.display.Geom;
 	
 	import mx.events.PropertyChangeEvent;
 
@@ -393,6 +394,11 @@ package ghostcat.ui.containers
 				return data ? data.length : 0;
 			else
 				return data ? Math.ceil(data.length / columnCount) : 0;
+		}
+		
+		public override function get rect():Rectangle
+		{
+			return new Rectangle(0,0,width,height);
 		}
 
 		/**

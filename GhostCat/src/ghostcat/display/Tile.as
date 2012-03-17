@@ -106,20 +106,20 @@ package ghostcat.display
 		/** @inheritDoc*/
 		public override function set width(value:Number) : void
 		{
-			rect.width = value;
+			_rect.width = value;
 			invalidateSize();
 		}
 		
 		public override function get width() : Number
 		{
-			return rect.width;
+			return _rect.width;
 		}
 		/**
 		 * @inheritDoc
 		 */
 		public override function set height(value:Number) : void
 		{
-			rect.height = value;
+			_rect.height = value;
 			invalidateSize();
 		}
 		/**
@@ -127,7 +127,7 @@ package ghostcat.display
 		 */
 		public override function get height() : Number
 		{
-			return rect.height;
+			return _rect.height;
 		}
 		
 		/**
