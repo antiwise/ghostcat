@@ -71,6 +71,12 @@ package ghostcat.display
 		 */
 		protected var curRect:Rectangle;
 		
+		/**
+		 * 过滤屏幕
+		 */
+		public var filterByScreen:Boolean = true;
+		
+		
 		
 		/**
 		 * 全部内容的矩形
@@ -246,6 +252,9 @@ package ghostcat.display
 		
 		private function findScrollRectContainer():DisplayObject
 		{
+			if (scrollRect)
+				return this;
+			
 			var contain:DisplayObject = parent;
 			while (contain && contain.stage != contain)
 			{
@@ -315,16 +324,24 @@ package ghostcat.display
 		 */
 		protected function getItemRect(viewport:Rectangle):Rectangle
 		{
-			if (!viewport)
-				return null;
-			
-			var screen:Rectangle = new Rectangle();
-			screen.x = Math.floor(viewport.x / contentRect.width);
-			screen.y = Math.floor(viewport.y / contentRect.height);
-			screen.width = Math.ceil(viewport.right / contentRect.width) - screen.x;
-			screen.height = Math.ceil(viewport.bottom / contentRect.height) - screen.y;
-			
-			return screen;
+			var cRect:Rectangle = new Rectangle(0,0,Math.ceil(width/contentRect.width),Math.ceil(height/contentRect.height));
+			if (filterByScreen)
+			{	
+				if (!viewport)
+					return null;
+				
+				var screen:Rectangle = new Rectangle();
+				screen.x = Math.floor(viewport.x / contentRect.width);
+				screen.y = Math.floor(viewport.y / contentRect.height);
+				screen.width = Math.ceil(viewport.right / contentRect.width) - screen.x;
+				screen.height = Math.ceil(viewport.bottom / contentRect.height) - screen.y;
+				
+				return screen.intersection(cRect);
+			}
+			else
+			{
+				return cRect;
+			}
 		}
 		
 		/**
@@ -335,13 +352,8 @@ package ghostcat.display
 		{
 			//获得屏幕内应当显示的格子
 			var screen:Rectangle = getItemRect(getLocalScreen());
-			
 			if (!screen)
 				return;
-			
-			//过滤显示范围	
-			var cRect:Rectangle = new Rectangle(0,0,Math.ceil(width/contentRect.width),Math.ceil(height/contentRect.height));
-			screen = screen.intersection(cRect);
 			
 			//增删格子
 			if (curRect.x != screen.x)//左

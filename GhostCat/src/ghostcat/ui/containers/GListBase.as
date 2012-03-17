@@ -587,12 +587,13 @@ package ghostcat.ui.containers
 		public function refresh():void
 		{
 			var screen:Rectangle = getItemRect(getLocalScreen());
-			if (screen)
-			{
-				for (var j:int = screen.top;j < screen.bottom;j++)
-					for (var i:int = screen.left;i < screen.right;i++)
-						refreshIndex(i,j);	
-			}
+			if (!screen)
+				return;
+			
+			for (var j:int = screen.top;j < screen.bottom;j++)
+				for (var i:int = screen.left;i < screen.right;i++)
+					refreshIndex(i,j);	
+			
 			render();
 		}
 		
