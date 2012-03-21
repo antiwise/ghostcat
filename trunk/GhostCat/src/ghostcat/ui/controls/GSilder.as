@@ -232,7 +232,7 @@ package ghostcat.ui.controls
 				this.background.addEventListener(MouseEvent.MOUSE_DOWN,backgroundHandler);
 			}
 				
-			invalidateSize();
+			updateSize();
 		}
 		/** @inheritDoc*/
 		protected override function updateSize() : void
