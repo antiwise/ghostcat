@@ -41,7 +41,7 @@ package ghostcat.operation.effect
 		/**
 		 * 目标
 		 */
-		public var contentTarget:DisplayObject;
+		public var contentTarget:*;
 		
 		/**
 		 * 当前振幅
@@ -63,7 +63,7 @@ package ghostcat.operation.effect
 			contentTarget = v;
 		}
 		
-		public function ShakeEffect(target:DisplayObject=null, duration:Number = 1000, cycle:int = 100, fromValue:Number = 5.0, toValue:Number = 0.0,ease:Function = null,field:String = "y")
+		public function ShakeEffect(target:*=null, duration:Number = 1000, cycle:int = 100, fromValue:Number = 5.0, toValue:Number = 0.0,ease:Function = null,field:String = "y")
 		{
 			this.contentTarget = target;
 			this.cycle = cycle;
