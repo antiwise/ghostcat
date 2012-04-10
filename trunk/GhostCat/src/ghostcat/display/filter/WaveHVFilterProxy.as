@@ -134,7 +134,7 @@ package ghostcat.display.filter
 			updateCall.invalidate();
 		}
 		
-		private function update():void
+		public function update():void
 		{
 			if (!mask)
 				updateMask();
