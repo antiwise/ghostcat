@@ -94,8 +94,8 @@ package ghostcat.parse.display
 //				bounds.height *= matrix.d / Math.cos(rotate);
 //			}
 			
-			var width:int = Math.ceil(bounds.width);
-			var height:int = Math.ceil(bounds.height);
+			var width:int = Math.max(1,Math.min(8192,Math.ceil(bounds.width)));
+			var height:int = Math.max(1,Math.min(8192,Math.ceil(bounds.height)));
 			
 			
 			var bitmap:Bitmap;
