@@ -27,6 +27,27 @@ package ghostcat.ui.containers
 			return layout as LinearLayout;
 		}
 		
+		public function get columnWidth():Number
+		{
+			return linearLayout.columnWidth;
+		}
+
+		public function set columnWidth(value:Number):void
+		{
+			linearLayout.columnWidth = value;
+		}
+
+		public function get rowHeight():Number
+		{
+			return linearLayout.rowHeight;
+		}
+
+		public function set rowHeight(value:Number):void
+		{
+			linearLayout.rowHeight = value;
+		}
+
+		
 		/**
 		 * 布局方向 
 		 * @return 

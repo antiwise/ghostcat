@@ -31,6 +31,12 @@ package ghostcat.ui.layout
 		public var withoutHided:Boolean = true;
 		
 		/**
+		 * 固定元素大小 
+		 */
+		public var rowHeight:Number;
+		public var columnWidth:Number;
+		
+		/**
 		 * 横向对齐方式
 		 * @return 
 		 * 
@@ -131,6 +137,11 @@ package ghostcat.ui.layout
 					continue;
 				
 				var rect:Rectangle = Geom.getRect(obj);
+				if (!isNaN(columnWidth))
+					rect.width = columnWidth;
+				if (!isNaN(rowHeight))
+					rect.height = rowHeight;
+				
 				if (type == UIConst.HORIZONTAL)
 				{
 					if (i != 0)
@@ -173,27 +184,50 @@ package ghostcat.ui.layout
 				{
 					LayoutUtil.silder(obj,target,null,verticalAlign);
 					if (!prev)
+					{
 						LayoutUtil.silder(obj,target,UIConst.LEFT);
+					}
 					else
-						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
+					{
+						if (!isNaN(columnWidth))
+							obj.x = prev.x + columnWidth;	
+						else
+							LayoutUtil.horizontal(obj,prev,target,horizontalGap);
+					}
 				}
 				else if (type == UIConst.VERTICAL)
 				{
 					LayoutUtil.silder(obj,target,horizontalAlign);
 					if (!prev)
+					{
 						LayoutUtil.silder(obj,target,null,UIConst.TOP);
+					}
 					else
-						LayoutUtil.vertical(obj,prev,target,verticalGap);
-					
+					{
+						if (!isNaN(rowHeight))
+							obj.y = prev.y + rowHeight;	
+						else
+							LayoutUtil.vertical(obj,prev,target,verticalGap);
+					}
 				}
 				else if (type == UIConst.TILE)
 				{
-					maxH = Math.max(maxH,obj.height);
+					if (!isNaN(rowHeight))
+						maxH = rowHeight;
+					else
+						maxH = Math.max(maxH,obj.height);
+					
 					if (!prev)
+					{
 						Geom.moveTopLeftTo(obj,new Point());
+					}
 					else
 					{
-						LayoutUtil.horizontal(obj,prev,target,horizontalGap);
+						if (!isNaN(columnWidth))
+							obj.x = prev.x + columnWidth;	
+						else
+							LayoutUtil.horizontal(obj,prev,target,horizontalGap);
+						
 						var rect:Rectangle = Geom.getRect(obj);
 						if (rect.right > x + w)
 						{

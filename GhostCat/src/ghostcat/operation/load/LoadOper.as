@@ -264,7 +264,6 @@
 			
 			
 			loads.push(url);
-			trace(loads.length,"+",loads);
 		}
 		
 		protected function urlLoadCompleteHandler(event:Event = null):void
@@ -310,7 +309,6 @@
 		public override function result(event:*=null):void
 		{
 			Util.remove(loads,url);
-			trace(loads.length,"-",loads);
 			
 			clearEvents();
 			
