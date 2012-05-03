@@ -14,7 +14,7 @@ package ghostcat.util.text
 	{
 		public static function isHTTP(v:String):Boolean
 		{
-			return v.substr(0,7).toLowerCase() == "http://";
+			return v.substr(0,7).toLowerCase() == "http://" || v.substr(0,8).toLowerCase() == "https://";
 		}
 		
 		/**
