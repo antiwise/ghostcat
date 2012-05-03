@@ -61,9 +61,11 @@ package ghostcat.util.sound
 		
 		public function playBgSound(url:String,len:int = 1000,mute:Boolean = false,volume:int = 1.0, loopStart:int = 0):void
 		{
-			if (this.url == url)
+			if (this.sound && this.url == url)
+			{
+				setVolume(volume);
 				return;
-			
+			}
 			
 			this._volume = volume;
 			this.loopStart = loopStart;
