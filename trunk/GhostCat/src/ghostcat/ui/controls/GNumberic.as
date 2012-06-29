@@ -204,7 +204,7 @@ package ghostcat.ui.controls
 			}
 		}
 		
-		protected function createOffestTexts(prevText:TextField,v:int):TextField
+		protected function createOffestTexts(prevText:TextField,v:Number):TextField
 		{
 			var n:TextField = TextFieldUtil.clone(prevText,false); 
 			n.text = (v >= 0 ? "+" : "") + v.toString();
