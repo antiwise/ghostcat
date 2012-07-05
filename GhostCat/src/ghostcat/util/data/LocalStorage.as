@@ -23,9 +23,9 @@ package ghostcat.util.data
         
 		private var field:String;
 		
-		public function LocalStorage(name:String):void
+		public function LocalStorage(name:String,url:String = null):void
         {
-            sharedObject = SharedObject.getLocal(name);
+            sharedObject = SharedObject.getLocal(name,url);
         }
         
         /**
