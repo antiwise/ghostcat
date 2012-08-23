@@ -61,16 +61,15 @@ package ghostcat.display.loader
 			removeHandler();
 			
 			var info:LoaderInfo = event.currentTarget as LoaderInfo;
-			
-			if (info.bytes)
+			try
 			{
 				if (enabledCache)
 					caches[info.url] = info.bytes;
-		
-				loadBytes(info.bytes);
+				
+				this.loadBytes(info.bytes);
 				this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
 			}
-			else
+			catch(error:Error) 
 			{
 				loadBytesCompleteHandler(new Event(Event.COMPLETE));
 			}
