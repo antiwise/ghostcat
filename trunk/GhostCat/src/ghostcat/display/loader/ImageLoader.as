@@ -62,11 +62,18 @@ package ghostcat.display.loader
 			
 			var info:LoaderInfo = event.currentTarget as LoaderInfo;
 			
-			if (enabledCache)
-				caches[info.url] = info.bytes;
+			if (info.bytes)
+			{
+				if (enabledCache)
+					caches[info.url] = info.bytes;
 		
-			loadBytes(info.bytes);
-			this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
+				loadBytes(info.bytes);
+				this.contentLoaderInfo.addEventListener(Event.COMPLETE,loadBytesCompleteHandler);
+			}
+			else
+			{
+				loadBytesCompleteHandler(new Event(Event.COMPLETE));
+			}
 		}
 		
 		private function loadBytesCompleteHandler(event:Event):void
