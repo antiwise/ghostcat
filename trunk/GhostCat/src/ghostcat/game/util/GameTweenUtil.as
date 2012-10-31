@@ -200,5 +200,22 @@ package ghostcat.game.util
 			else 
 				effects = [];
 		}
+		
+		/**
+		 * 检查是否有某个值的缓动
+		 *  
+		 * @param target
+		 * @param key
+		 * @return 
+		 * 
+		 */
+		public static function hasKey(target:Object,key:String):Boolean
+		{
+			for each (var t:GameTweenUtil in getTween(target))
+			{
+				return t.toValues.hasOwnProperty(key);
+			}
+			return false;
+		}
 	}
 }
