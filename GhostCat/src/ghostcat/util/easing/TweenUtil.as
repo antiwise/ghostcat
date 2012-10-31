@@ -579,5 +579,22 @@ package ghostcat.util.easing
 			else 
 				effects = [];
 		}
+		
+		/**
+		 * 检查是否有某个值的缓动
+		 *  
+		 * @param target
+		 * @param key
+		 * @return 
+		 * 
+		 */
+		public static function hasKey(target:Object,key:String):Boolean
+		{
+			for each (var t:TweenUtil in getTween(target))
+			{
+				return t.toValues.hasOwnProperty(key);
+			}
+			return false;
+		}
 	}
 }

@@ -233,6 +233,7 @@ package ghostcat.ui.controls
 				if (useTempLoader)
 				{
 					loader = new ImageLoader();
+					loaderContext.checkPolicyFile = true;
 					loader.load(v as URLRequest,loaderContext);
 					loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					loader.addEventListener(IOErrorEvent.IO_ERROR,loadCompleteHandler);
