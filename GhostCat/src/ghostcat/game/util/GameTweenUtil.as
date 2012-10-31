@@ -202,14 +202,14 @@ package ghostcat.game.util
 		}
 		
 		/**
-		 * 检查是否有某个值的缓动
+		 * 检查缓动
 		 *  
 		 * @param target
 		 * @param key
 		 * @return 
 		 * 
 		 */
-		public static function hasKey(target:Object,key:String):Boolean
+		public static function hasTween(target:Object,key:String = null):Boolean
 		{
 			for each (var t:GameTweenUtil in getTween(target))
 			{
