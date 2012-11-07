@@ -213,7 +213,8 @@ package ghostcat.game.util
 		{
 			for each (var t:GameTweenUtil in getTween(target))
 			{
-				return t.toValues.hasOwnProperty(key);
+				if (t.toValues.hasOwnProperty(key))
+					return true;
 			}
 			return false;
 		}

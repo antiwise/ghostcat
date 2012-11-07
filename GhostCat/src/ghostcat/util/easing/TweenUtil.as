@@ -592,7 +592,8 @@ package ghostcat.util.easing
 		{
 			for each (var t:TweenUtil in getTween(target))
 			{
-				return t.toValues.hasOwnProperty(key);
+				if (t.toValues.hasOwnProperty(key))
+					return true;
 			}
 			return false;
 		}
