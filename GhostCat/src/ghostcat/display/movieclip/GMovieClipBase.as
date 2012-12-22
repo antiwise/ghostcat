@@ -163,6 +163,11 @@ package ghostcat.display.movieclip
 			this.numLoops = loop;
 		}
 		
+		public function getLoop():int
+		{
+			return this.numLoops;
+		}
+		
 		/**
 		 * 设置当前动画 
 		 * @param labelName		动画名称

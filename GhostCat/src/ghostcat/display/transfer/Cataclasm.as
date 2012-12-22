@@ -2,6 +2,7 @@ package ghostcat.display.transfer
 {
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.community.physics.PhysicsManager;
 	import ghostcat.community.physics.PhysicsUtil;
@@ -37,6 +38,8 @@ package ghostcat.display.transfer
 		{
 			removeTris();
 			
+			var rect: Rectangle = _target.getBounds(_target);
+			
 			var dx:Number = bitmapData.width / w;
 			var dy:Number = bitmapData.height / h;
 			
@@ -48,7 +51,7 @@ package ghostcat.display.transfer
 				{
 					var x:Number = (i == 0) ? 0 : (i == w - 1) ? bitmapData.width - 1 : dx * (i + Math.random());
 					var y:Number = (j == 0) ? 0 : (j == h - 1) ? bitmapData.height - 1 : dy * (j + Math.random());
-					points[j][i] = new Point(x,y);
+					points[j][i] = new Point(x + rect.x,y + rect.y);
 				}
 			}
 			
