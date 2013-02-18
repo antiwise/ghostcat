@@ -71,7 +71,7 @@ package ghostcat.game.item
 			
 			bitmapData = bitmapDatas[value];
 			
-			if (bitmapOffests)
+			if (bitmapOffests && bitmapOffests.length)
 			{
 				var offest:Point = bitmapOffests[value];
 				this.offestX = offest.x;
