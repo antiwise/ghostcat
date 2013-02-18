@@ -10,6 +10,7 @@ package ghostcat.fileformat.pak
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 	
 	import ghostcat.util.Util;
 	
@@ -139,6 +140,7 @@ package ghostcat.fileformat.pak
 		private function loadAllComplete():void
 		{
 			result = [];
+			var t:int = getTimer();
 			if (type == 1)
 			{
 				var dx:int = 0;
