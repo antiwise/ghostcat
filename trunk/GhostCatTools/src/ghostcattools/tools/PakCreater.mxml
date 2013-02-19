@@ -21,7 +21,7 @@
 			import mx.events.FlexEvent;
 			
 			private var bmds:Array;
-			private var files:Array;
+			private var fileGroups:Object;
 			private var firstFile:File;
 
 			private var bytes:ByteArray;
@@ -45,7 +45,8 @@
 					typeBox.selected = v.type;
 					q1.text = v.q1;
 					q2.text = v.q2;
-					q3.text = v.q3;
+					specBox.text = v.spec;
+					pathBox.selected = v.path;
 				}
 			}
 			
@@ -66,7 +67,21 @@
 						}
 						else
 						{
-							this.files.push(v);
+							var num:int;
+							var specNum:int = int(specBox.text);
+							if (!specNum)
+							{
+								num = 0;
+							}
+							else
+							{
+								num = int(v.name.slice(0,specNum));
+							}
+							
+							if (!this.fileGroups.hasOwnProperty(num))
+								this.fileGroups[num] = [];
+							
+							this.fileGroups[num].push(v);
 						}
 					}
 				}
@@ -87,47 +102,76 @@
 				}
 				else
 				{
-					this.files = [];
+					displayer.bitmapDatas = [];
+					
+					timeLabel.text = "转换中...";
+					this.fileGroups = {};
 					this.addFileHandler(v);
 					
+					this.doLoadFiles();
+				}
+			}
+			
+			private function doLoadFiles():void
+			{
+				var files:Array = null;
+				for (var num:* in this.fileGroups)
+				{
+					files = this.fileGroups[num];
+					delete this.fileGroups[num];
+					break;
+				}
+				if (!files)
+					return;
+				
+				if (pathBox.selected)
+					files.sortOn(["nativePath"])
+				else
 					files.sortOn("name")
+				
+				bmds = [];
+				
+				var i:int = 0;
+				loadImage();
+				
+				function loadImage():void
+				{
+					var loader:Loader = new Loader();
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
+					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,completeHandler);
+					loader.loadBytes(FileControl.readFile(files[i]));
+				}
+				
+				function completeHandler(event:Event):void
+				{
+					var loader:Loader = (event.currentTarget as LoaderInfo).loader;
+					var bmd:BitmapData = loader.content is Bitmap ? (loader.content as Bitmap).bitmapData : null;
+					loader.unload();
 					
-					bmds = [];
-					
-					var i:int = 0;
-					loadImage();
-					
-					function loadImage():void
-					{
-						var loader:Loader = new Loader();
-						loader.loadBytes(FileControl.readFile(files[i]));
-						loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
-					}
-					
-					function completeHandler(event:Event):void
-					{
-						var loader:Loader = (event.currentTarget as LoaderInfo).loader;
-						var bmd:BitmapData = (loader.content as Bitmap).bitmapData;
-						loader.unload();
-						
+					if (bmd)
 						bmds.push(bmd);
-						
-						if (bmds.length < files.length)
-						{
-							i++;
-							loadImage();
-						}
-						else
-						{
-							createPack();
-						}
+					
+					i++;
+					if (i < files.length)
+					{
+						loadImage();
+					}
+					else
+					{
+						createPack(num);
 					}
 				}
 			}
-			private function createPack():void
+			private function createPack(num:int):void
 			{
-				bytes = new PakEncoder(bmds,typeBox.selected ? 1 : 2,int(q1.text),int(q2.text),int(q3.text)).bytes;
-				saveBN.visible = true;
+				if (bmds.length == 0)
+				{
+					timeLabel.text = "转换失败";
+					return;
+				}
+				
+				bytes = new PakEncoder(bmds,typeBox.selected ? 1 : 2,int(q1.text),int(q2.text),0).bytes;
+				save(num);
 				
 				for each (var bmd:BitmapData in bmds)
 					bmd.dispose();
@@ -141,6 +185,8 @@
 				pak = new PakDecoder(bytes);
 				pak.addEventListener(Event.COMPLETE,loadCompleteHandler);
 				pak.decode();
+				
+				this.doLoadFiles();
 			}
 			
 			protected function gctoolwindow1_closeHandler(event:Event):void
@@ -148,7 +194,7 @@
 				if (pak)
 					pak.dispose();
 				
-				var local:Object = {type:typeBox.selected,q1:int(q1.text),q2:int(q2.text),q3:int(q3.text)}
+				var local:Object = {type:typeBox.selected,q1:int(q1.text),q2:int(q2.text),spec:int(specBox.text),path:pathBox.selected}
 				lc.setValue(local);
 			}
 			
@@ -160,20 +206,17 @@
 				typeBox.selected = pak.type == 1;
 				q1.text = pak.quality.toString();
 				q2.text = pak.alphaQuality.toString();
-				q3.text = pak.alphaFilter.toString();
 				timeLabel.text = "耗时:" + (getTimer() - t).toString() + "\n大小:" + pak.bytes.length ;
 			}
 			
-			protected function saveBN_clickHandler(event:MouseEvent):void
+			protected function save(num:int):void
 			{
-				if (bytes)
-				{
-					var file:File = firstFile as File;
-					var baseName:String = file.name.split(".")[0];
-					var newFile:File = file.parent.resolvePath(baseName + ".pak");
-					
-					FileControl.writeFile(newFile,bytes);
-				}
+				var file:File = firstFile as File;
+				var baseName:String = file.name.split(".")[0];
+				if (num != 0)
+					baseName = baseName + num.toString();
+				var newFile:File = file.parent.resolvePath(baseName + ".pak");
+				FileControl.writeFile(newFile,bytes);
 			}
 			
 		]]>
@@ -183,15 +226,14 @@
 	</fx:Declarations>
 	<s:Button id="browseBN" left="5" top="5" width="73" label="浏览"
 			  click="browseBN1_clickHandler(event)"/>
-	<s:Button id="saveBN" visible="false" left="5" top="271" width="73" label="保存"
-			  click="saveBN_clickHandler(event)"/>
 	<s:CheckBox id="typeBox" x="5" y="33" label="拼合图像" selected="true"/>
 	<s:Label x="5" y="60" text="图像质量"/>
 	<s:TextInput id="q1" x="5" y="73" width="73" text="50"/>
 	<s:Label x="5" y="103" text="透明质量"/>
 	<s:TextInput id="q2" x="5" y="119" width="73" text="50"/>
-	<s:Label x="5" y="149" text="杂点过滤"/>
-	<s:TextInput id="q3" x="5" y="165" width="73" text="50"/>
+	<s:Label x="5" y="149" text="分散输出"/>
+	<s:TextInput id="specBox" x="5" y="165" width="73" text="50"/>
+	<s:CheckBox id="pathBox" x="5" y="190" label="目录排序" selected="false"/>
 	<mx:UIComponent id="image1" left="86" right="0" top="0" bottom="0"/>
-	<s:Label id="timeLabel" x="5" y="197" text=""/>
+	<s:Label id="timeLabel" x="5" y="240" text=""/>
 </components:GCToolWindow>

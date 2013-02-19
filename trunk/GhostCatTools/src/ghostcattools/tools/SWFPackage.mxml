@@ -106,7 +106,7 @@
 							if (EmbedControl.png.indexOf(item.type) != -1)
 							{
 								item.compression = true;
-								item.quality = 80;
+								item.quality = 60;
 							}
 							if (dataGrid.selectedIndex != -1)
 								classList.addItemAt(item,dataGrid.selectedIndex);
@@ -270,7 +270,7 @@
 			protected function compressionBN_changeHandler(event:Event):void
 			{
 				if (compressionBN.selected && !selectedItem.quality)
-					selectedItem.quality = 80;
+					selectedItem.quality = 60;
 				else
 					selectedItem.quality = 0;
 			}
