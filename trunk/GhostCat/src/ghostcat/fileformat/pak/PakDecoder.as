@@ -30,14 +30,15 @@ package ghostcat.fileformat.pak
 		public var width:int;
 		public var height:int;
 		
-		private var loadList:Array;
+		public var loadList:Array;
+		
 		private var bmds:Array;
 		public function PakDecoder(bytes:ByteArray)
 		{
 			this.bytes = bytes;
 		}
 		
-		public function decode():void
+		public function decode(autoLoad:Boolean = true):void
 		{
 			var allData:ByteArray = new ByteArray();
 			
@@ -86,7 +87,8 @@ package ghostcat.fileformat.pak
 				}
 			}
 			
-			loadNext();
+			if (autoLoad)
+				this.loadImages();
 		}
 		
 		private function readData(allData:ByteArray):void
@@ -108,7 +110,7 @@ package ghostcat.fileformat.pak
 		
 		private var loadNum:int;
 		
-		private function loadNext():void
+		public function loadImages():void
 		{
 			loadNum = 0;
 			

@@ -40,7 +40,61 @@ package ghostcat.fileformat.pak
 				encode2();
 		}
 		
-		private function encode1():void
+		public function encodeByPak(pak:PakDecoder,start:int,len:int):void
+		{
+			if (pak.type != 2)
+				return;
+			
+			this.type = pak.type;
+			this.quality = pak.quality;
+			this.alphaQuality = pak.alphaQuality;
+			this.alphaFilter = pak.alphaFilter;
+			
+			bytes = new ByteArray();
+			bytes.writeByte(type);
+			bytes.writeShort(pak.width);
+			bytes.writeShort(pak.height);
+			bytes.writeByte(quality);
+			bytes.writeByte(alphaQuality);
+			bytes.writeByte(alphaFilter);
+			bytes.writeShort(len);
+			
+			var mh:int = 0;
+			var tw:int = 0;
+			var rects:Array = [];
+			for (var i:int = 0; i < len;i++)
+			{
+				var offest:Point = pak.offests[start+i];
+				var size:Point = pak.sizes[start+i];
+				bytes.writeShort(offest.x);
+				bytes.writeShort(offest.y);
+				bytes.writeShort(size.x);
+				bytes.writeShort(size.y);
+				
+				if (alphaQuality == 0 || quality == alphaQuality)
+				{
+					var data:ByteArray = pak.loadList[start+i];
+					bytes.writeUnsignedInt(data.length);
+					bytes.writeBytes(data);
+				}
+				else
+				{
+					var data:ByteArray = pak.loadList[(start+i)*2];
+					bytes.writeUnsignedInt(data.length);
+					bytes.writeBytes(data);
+					
+					if (alphaQuality)
+					{
+						var alphaData:ByteArray = pak.loadList[(start+i)*2+1];
+						bytes.writeUnsignedInt(alphaData.length);
+						bytes.writeBytes(alphaData);
+					}
+				}
+			}
+			bytes.compress();
+		}
+		
+		private function encode1():void //合并
 		{
 			bytes = new ByteArray();
 			bytes.writeByte(type);
