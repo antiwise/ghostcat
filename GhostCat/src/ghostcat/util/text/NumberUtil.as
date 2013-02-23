@@ -240,6 +240,8 @@ package ghostcat.util.text
 		 */		
 		public static function fillZeros(str:String, len:int, flag:String="0"):String
 		{
+			if (!str)
+				str = "";
 			while (str.length < len) 
 			{
 				str = flag + str;
