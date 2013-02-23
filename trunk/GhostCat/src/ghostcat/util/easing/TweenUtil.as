@@ -139,6 +139,10 @@ package ghostcat.util.easing
 		 */
 		public var ease:Function;
 		/**
+		 * 锁定时间间隔
+		 */
+		public var lockInv:int;
+		/**
 		 * 起始值
 		 */
 		public var fromValues:Object = new Object();
@@ -182,6 +186,7 @@ package ghostcat.util.easing
 				{
 					case "ease":
 					case "invert":
+					case "lockInv":
 					case "renderOnStart":
 					case "onStart":
 					case "onUpdate":
@@ -291,6 +296,9 @@ package ghostcat.util.easing
 		 */
 		public function update(interval:int=0):void
 		{
+			if (lockInv)
+				interval = lockInv;
+			
 			var key:String;
 				
 			//倒放时初值显示

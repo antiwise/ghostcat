@@ -204,7 +204,12 @@ package ghostcat.game.item
 		/** @inheritDoc*/
 		public function getBitmapUnderMouse(mouseX:Number,mouseY:Number):Array
 		{
-			return (uint(bitmapData.getPixel32(mouseX - x - regX + offestX,mouseY - y - regY + offestX) >> 24) > 0) ? [this] : null;
+			if (!bitmapData)
+				return null;
+			
+			var tx:int = mouseX - _x + regX - offestX;
+			var ty:int = mouseY - _y + regY - offestY;
+			return (tx >= 0 && ty >= 0 && tx < bitmapData.width && ty < bitmapData.height && uint(bitmapData.getPixel32(tx,ty) >> 24) > 0) ? [this] : null;
 		}
 	}
 }
