@@ -45,7 +45,7 @@ package ghostcat.operation.effect
 		public function cacheTarget():void
 		{
 			cacheBitmap = new DrawParse(this.target).createBitmap();
-			DisplayUtil.addChildBefore(cacheBitmap,this.target);
+			DisplayUtil.addChildAfter(cacheBitmap,this.target);
 		}
 		
 		/** @inheritDoc*/

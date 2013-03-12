@@ -48,7 +48,12 @@ package ghostcat.ui.controls
 			movie = new GMovieClip(content,false,!enabledLabelMovie);
 			
 			if (useDefaultLabels && (content is MovieClip && (content as MovieClip).totalFrames > 1) && !(movie.labels && movie.labels.length))
-				movie.labels = defaultLabels;
+			{
+				if ((content as MovieClip).totalFrames == 3)
+					movie.labels = defaultLabels_3frame;
+				else
+					movie.labels = defaultLabels;
+			}
 		}
 	}
 }

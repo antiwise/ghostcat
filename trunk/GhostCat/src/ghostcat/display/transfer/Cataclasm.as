@@ -147,7 +147,6 @@ class Tri extends Sprite
 		m.tx += offest.x;
 		m.ty += offest.y;
 		graphics.beginBitmapFill(texture,m);
-		graphics.lineStyle(0,0);
 		graphics.moveTo(p1.x,p1.y);
 		graphics.lineTo(p2.x,p2.y);
 		graphics.lineTo(p3.x,p3.y);
