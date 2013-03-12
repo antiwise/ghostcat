@@ -41,6 +41,12 @@ package ghostcat.ui.controls
 			new FrameLabel("selectedUp",5),new FrameLabel("selectedOver",6),
 			new FrameLabel("selectedDown",7),new FrameLabel("selectedDisabled",8)
 		];
+		public static var defaultLabels_3frame:Array = [
+			new FrameLabel("up",1),new FrameLabel("over",2),
+			new FrameLabel("down",3),new FrameLabel("disabled",1),
+			new FrameLabel("selectedUp",1),new FrameLabel("selectedOver",2),
+			new FrameLabel("selectedDown",3),new FrameLabel("selectedDisabled",1)
+		];
 		
 		/**
 		 * 是否在必要的时候（资源为多帧，但没有设置Labels）时使用默认Labels
