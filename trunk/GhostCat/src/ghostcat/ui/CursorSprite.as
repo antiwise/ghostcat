@@ -178,8 +178,6 @@ package ghostcat.ui
 		
 		private function enterFrameHandler(evt:Event):void
 		{
-			DisplayUtil.moveToHigh(this);
-			
 			if (!_lock)
 				setCurrentCursorClass(findCursorClass(this.target));
 			

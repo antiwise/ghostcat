@@ -132,7 +132,7 @@ package ghostcat.util.text
 					return h + ":" + m + ":" + s + ":" + ms.toFixed(1);
 					break;
 				case "h小时m分钟s秒":
-					return (h ? (h + "小时"):"") + (m ? (m + "分钟"):"") + (s ? s + "秒" : "");
+					return (h ? (h + "小时"):"") + (m ? (m + "分钟"):"") + (s || (!h && !m) ? s + "秒" : "");
 					break;
 				case "H小时M分钟S秒":
 					return (h ? (toChineseNumber(h) + "小时"):"") + (m ? (toChineseNumber(m) + "分钟"):"") + (s ? toChineseNumber(s) + "秒" : "");
