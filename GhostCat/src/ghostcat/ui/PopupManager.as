@@ -128,6 +128,16 @@ package ghostcat.ui
 		public var applicationDisabledOper:IEffect;
 		
 		/**
+		 * 定义进入窗口激活状态的Oper，用于显示过渡效果
+		 */
+		public var popupEnabledOper:IEffect;
+		
+		/**
+		 * 定义进入窗口非激活状态的Oper，用于显示过渡效果
+		 */
+		public var popupDisabledOper:IEffect;
+		
+		/**
 		 * 是否自動禁用非活动窗口
 		 */
 		public var autoDisibledBackgroundPopup:Boolean;
@@ -381,7 +391,29 @@ package ghostcat.ui
 			{
 				var w:Sprite = popups[i] as Sprite;
 				if (w)
-					w.mouseEnabled = w.mouseChildren = (i == popups.length - 1);
+				{
+					var isEnabled:Boolean = i == popups.length - 1;
+					if (isEnabled != w.mouseEnabled)
+					{
+						if (isEnabled)
+						{
+							if (popupEnabledOper)
+							{
+								popupEnabledOper.target = w;
+								popupEnabledOper.execute();
+							}
+						}		
+						else
+						{	
+							if (popupDisabledOper)
+							{
+								popupDisabledOper.target = w;
+								popupDisabledOper.execute();
+							}		
+						}
+					}
+					w.mouseEnabled = w.mouseChildren = isEnabled;
+				}
 			}
 		}
 		
