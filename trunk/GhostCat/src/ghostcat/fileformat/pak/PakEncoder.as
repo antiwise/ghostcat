@@ -79,7 +79,7 @@ package ghostcat.fileformat.pak
 				}
 				else
 				{
-					var data:ByteArray = pak.loadList[(start+i)*2];
+					data = pak.loadList[(start+i)*2];
 					bytes.writeUnsignedInt(data.length);
 					bytes.writeBytes(data);
 					

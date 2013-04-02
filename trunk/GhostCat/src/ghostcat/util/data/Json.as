@@ -47,7 +47,7 @@ class JsonDecoder {
 			cachedTok=false;
 			return tok;
 		}
-		while(nextChar()==0x20||chr==0x09||isNewline(chr));
+		while(nextChar()==0x20||chr==0x09||isNewline(chr)){};
 		if(chr==0x2f){
 			if(nextChar()==0x2f){
 				while(!isNewline(nextChar())){
@@ -85,7 +85,7 @@ class JsonDecoder {
 				if(nextChar()!=0x78)cachedChr=true;
 				else{
 					if(!isHex(nextChar()))error("Need hexadecimal digit after 0x");
-					while(isHex(nextChar()));
+					while(isHex(nextChar())){};
 					return cache(0xfe);
 				}
 			}
@@ -98,7 +98,7 @@ class JsonDecoder {
 		}
 		
 		if(!isIdentifier(chr))error("Unkown token "+flush());
-		while(isIdentifier(nextChar()));
+		while(isIdentifier(nextChar())){};
 		return cache(0xfd);
 	}
 	
@@ -195,7 +195,7 @@ class JsonDecoder {
 	private function nextExponent():int {
 		if(nextChar()!=0x2b&&chr!=0x2d)cachedChr=true;
 		if(!isDigit(nextChar()))error("Need digit after exponent");
-		while (isDigit(nextChar()));
+		while (isDigit(nextChar())){};
 		return cache(0xfe);
 	}
 	
