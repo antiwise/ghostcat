@@ -5,6 +5,7 @@ package ghostcat.manager
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.net.SharedObject;
+	import flash.net.SharedObjectFlushStatus;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -19,6 +20,7 @@ package ghostcat.manager
 	 */
 	public class FileCacherManager extends EventDispatcher
 	{
+		static public var localPath:String;
 		static private var _instance:FileCacherManager;
 		static public function get instance():FileCacherManager
 		{
@@ -38,13 +40,59 @@ package ghostcat.manager
 		
 		public function FileCacherManager()
 		{
-			sharedObject = SharedObject.getLocal("fileCacher");
+			sharedObject = SharedObject.getLocal("fileCacher",localPath);
 			sharedObject.addEventListener(NetStatusEvent.NET_STATUS,errorHandler);
 		}
 		
 		private function errorHandler(event:Event):void
 		{
 			//
+		}
+		
+		public function request(minDiskSpace:int,rHandler:Function = null,fHanlder:Function = null):void
+		{
+			try
+			{
+				if (sharedObject.flush(minDiskSpace) == SharedObjectFlushStatus.FLUSHED)
+				{
+					if (rHandler)
+						rHandler();
+				}
+				else
+				{
+					sharedObject.addEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+				}
+			}
+			catch(e:Error)
+			{
+				if (fHanlder)
+					fHanlder();
+			}
+			
+			function onFlushStatus(event:NetStatusEvent):void 
+			{
+				sharedObject.removeEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+				switch (event.info.code)
+				{
+					case "SharedObject.Flush.Success":
+						if (rHandler)
+							rHandler();
+						break;
+					case "SharedObject.Flush.Failed":
+						if (fHanlder)
+							fHanlder();
+						break;
+				}
+			}
+		}
+		
+		public function checkVersion(v:String):void
+		{
+			if (sharedObject.data.version == v)
+				return;
+			
+			sharedObject.clear();
+			sharedObject.data.version = v;
 		}
 		
 		public function clear():void
