@@ -320,6 +320,7 @@
 			
 			if (event)
 				dispatchEvent(event);
+			
 			super.result(event);
 		}
 		
