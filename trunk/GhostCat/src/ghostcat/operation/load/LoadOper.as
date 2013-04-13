@@ -318,7 +318,8 @@
 			if (sharedObjectCacheVersion && url && !disibledCache)
 				saveToShareObject();
 			
-			dispatchEvent(event);
+			if (event)
+				dispatchEvent(event);
 			super.result(event);
 		}
 		
