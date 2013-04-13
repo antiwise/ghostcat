@@ -721,9 +721,11 @@ package ghostcat.display
 		 */		
 		public function set asBitmap(v:Boolean):void
 		{
+			_asBitmap = v;
+			
 			if (!content)
 				return;
-				
+			
 			if (v)
 			{
 				content.visible = false;
@@ -752,6 +754,9 @@ package ghostcat.display
 		 */			
 		public function reRenderBitmap():void
 		{
+			if (!asBitmap)
+				return;
+			
 			var oldRect:Rectangle = _bitmap ? _bitmap.getBounds(this) : null;
 			var rect:Rectangle = content.getBounds(this);
 			if (!oldRect || !rect.equals(oldRect))
