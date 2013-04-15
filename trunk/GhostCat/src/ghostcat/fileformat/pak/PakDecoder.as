@@ -11,6 +11,7 @@ package ghostcat.fileformat.pak
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
+	import flash.utils.setTimeout;
 	
 	import ghostcat.util.Util;
 	
@@ -31,6 +32,7 @@ package ghostcat.fileformat.pak
 		public var height:int;
 		
 		public var loadList:Array;
+		public var loadInv:int = -1;
 		
 		private var bmds:Array;
 		public function PakDecoder(bytes:ByteArray)
@@ -114,9 +116,16 @@ package ghostcat.fileformat.pak
 		{
 			loadNum = 0;
 			
-			for each (var data:ByteArray in loadList)
+			if (loadInv == -1)
 			{
-				loadData(data);
+				for each (var data:ByteArray in loadList)
+				{
+					loadData(data);
+				}
+			}
+			else
+			{
+				loadData(loadList[loadNum]);
 			}
 		}
 		
@@ -136,6 +145,8 @@ package ghostcat.fileformat.pak
 				
 				if (loadNum >= loadList.length)
 					loadAllComplete();
+				else if (loadInv != -1)
+					setTimeout(loadData,loadInv,loadList[loadNum]);
 			}
 		}
 		
