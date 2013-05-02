@@ -236,6 +236,9 @@ package ghostcat.util.easing
 						this.fromValues[key] = new Point((target as DisplayObject).x, (target as DisplayObject).y)
 						this.toValues[key] = params[key];
 						break;
+					case "shortRotation":
+						this.fromValues[key] = (target as DisplayObject).rotation;
+						this.toValues[key] = (target as DisplayObject).rotation + MathUtil.shortRotation((target as DisplayObject).rotation,params[key],false);
 					case "startAt":
 						break;
 					default :
