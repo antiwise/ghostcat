@@ -1,5 +1,7 @@
 package ghostcat.util
 {
+	import flashx.textLayout.formats.Direction;
+
 	/**
 	 * 数学相关方法
 	 * 
@@ -104,6 +106,26 @@ package ghostcat.util
 					result = arr[i];
 			}
 			return result;
+		}
+		
+		
+		/**
+		 * 两个角的最小差
+		 *  
+		 * @param r1 起点
+		 * @param r1终点
+		 * @return 
+		 * 
+		 */
+		public static function shortRotation(r1:Number,r2:Number,useRadians:Boolean = true):Number
+		{
+			var cap:Number = useRadians ? Math.PI * 2 : 360;
+			var dif:Number = (r2 - r1) % cap;
+			if (dif != dif % (cap / 2)) 
+			{
+				dif = (dif < 0) ? dif + cap : dif - cap;
+			}
+			return dif;
 		}
 	}
 }
