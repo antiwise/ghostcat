@@ -145,6 +145,11 @@ package ghostcat.ui.controls
 		 */
 		public var isRebuild:Boolean;
 		
+		/**
+		 * 最大宽度（会重置wordWrap设置）
+		 */
+		public var maxWidth:Number;
+		
 		private var _textStartPoint:Point;
 		
 		/**
@@ -741,6 +746,16 @@ package ghostcat.ui.controls
 				else
 					textField.text = str;
 				
+				if (!isNaN(maxWidth))
+				{
+					textField.wordWrap = false;
+					if (textField.textWidth > maxWidth)
+					{
+						textField.wordWrap = true;	
+						textField.width = maxWidth;
+					}
+				}
+					
 				if (enabledTruncateToFit)
 					truncateToFit();
 				
