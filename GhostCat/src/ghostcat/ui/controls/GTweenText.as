@@ -26,7 +26,7 @@ package ghostcat.ui.controls
 		/**
 		 * 打散的文字实例 
 		 */
-		public var separateTexts:Array = [];
+		public var separateTexts:Array = null;
 		
 		private var completeCount:int = 0;//未完成的Tween数量
 		
@@ -59,6 +59,10 @@ package ghostcat.ui.controls
 		//销毁所有分散的文本
 		public function destoryAllTexts():void
 		{
+			if (separateTexts == null)
+				return;
+			
+			textField.visible = true;
 			for each (var child:DisplayObject in separateTexts)
 			{
 				child.removeEventListener(TweenEvent.TWEEN_END,tweenEndHandler);
@@ -70,9 +74,7 @@ package ghostcat.ui.controls
 				if (child.parent)
 					child.parent.removeChild(child);
 			}
-			separateTexts = [];
-			
-			textField.visible = true;
+			separateTexts = null;
 		}
 		
 		/**
@@ -122,14 +124,14 @@ package ghostcat.ui.controls
 			}
 		}
 		
-//		public override function destory() : void
-//		{
-//			if (destoryed)
-//				return;
-//			
-//			destoryAllTexts();
-//			
-//			super.destory();
-//		}
+		public override function destory() : void
+		{
+			if (destoryed)
+				return;
+			
+			destoryAllTexts();
+			
+			super.destory();
+		}
 	}
 }
