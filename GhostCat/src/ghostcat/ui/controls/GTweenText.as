@@ -48,7 +48,7 @@ package ghostcat.ui.controls
 		}
 		
 		//将文本打散成块
-		private function separateText(container:DisplayObjectContainer = null,bitmap:Boolean = false,extend:int = 0):void
+		public function separateText(container:DisplayObjectContainer = null,bitmap:Boolean = false,extend:int = 0):void
 		{
 			destoryAllTexts();
 			separateTexts = TextFieldUtil.separate(textField,container,bitmap,extend);
@@ -57,7 +57,7 @@ package ghostcat.ui.controls
 		}
 		
 		//销毁所有分散的文本
-		private function destoryAllTexts():void
+		public function destoryAllTexts():void
 		{
 			for each (var child:DisplayObject in separateTexts)
 			{
