@@ -25,9 +25,9 @@ package ghostcat.operation.effect
 		public var ease:Function;
 		public var direct:String;
 		public var applyScrollRect:Boolean;
-		
+		public var changeAlpha:Boolean;
 		private var cacheBitmap:Bitmap;
-		public function PushEffect(target:*=null,duration:int=1000,direct:String = "left", ease:Function=null,applyScrollRect:Boolean = false)
+		public function PushEffect(target:*=null,duration:int=1000,direct:String = "left", ease:Function=null,applyScrollRect:Boolean = false,changeAlpha:Boolean = false)
 		{
 			super(target,duration);
 			
@@ -36,6 +36,7 @@ package ghostcat.operation.effect
 			this.ease = ease;
 			this.direct = direct;
 			this.applyScrollRect = applyScrollRect;
+			this.changeAlpha = changeAlpha;
 		}
 		
 		/**
@@ -60,6 +61,13 @@ package ghostcat.operation.effect
 			
 			if (applyScrollRect)
 				target.parent.scrollRect = Geom.getRect(target);
+			
+			if (changeAlpha)
+			{
+				cacheBitmap.alpha = 1.0;
+				target.alpha = 0.0;
+				params.alpha = 1.0;
+			}
 			
 			//设置target当前的位置和缓动的坐标
 			switch (direct)
@@ -106,6 +114,9 @@ package ghostcat.operation.effect
 					cacheBitmap.y = rect.y + rect.height;
 					break;
 			}
+			
+			if (changeAlpha)
+				cacheBitmap.alpha = 1.0 - target.alpha;
 		}
 		
 		protected override function end(event:*=null):void
