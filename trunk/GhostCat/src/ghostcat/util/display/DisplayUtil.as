@@ -29,7 +29,7 @@ package ghostcat.util.display
         }
 		
 		/**
-		 * 添加到对象之后
+		 * 添加到对象之后，会挡住对象
 		 * @param container
 		 * @param child
 		 * @param target
@@ -41,7 +41,7 @@ package ghostcat.util.display
 		}
 		
 		/**
-		 * 添加到对象之前
+		 * 添加到对象之前，会被对象挡住
 		 * @param container
 		 * @param child
 		 * @param target

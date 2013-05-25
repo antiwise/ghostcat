@@ -271,7 +271,7 @@ package ghostcat.ui.controls
 				if (textFunction!=null)
 					textField.text = textFunction(v);
 				else
-					textField.text = prefix + (fix == 0 ? int(v).toString() : v.toFixed(fix)) + suffix;
+					textField.text = prefix + (fix == 0 ? Math.floor(v) : v.toFixed(fix)) + suffix;
 			}
 			
 			if (enabledTruncateToFit)

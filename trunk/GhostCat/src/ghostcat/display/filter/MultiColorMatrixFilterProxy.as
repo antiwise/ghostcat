@@ -4,6 +4,7 @@ package ghostcat.display.filter
 	
 	import ghostcat.debug.Debug;
 	import ghostcat.util.core.UniqueCall;
+	import ghostcat.util.display.ColorUtil;
 	
 	/**
 	 * 色彩变换滤镜，可以同时调整对比度，色相等参数
@@ -348,6 +349,21 @@ package ghostcat.display.filter
 			result[6]--;
 			result[12]--;
 			result[18]--;
+			return result;
+		}
+		
+		/**
+		 * 合并两个颜色矩阵 
+		 * @param m1
+		 * @param m2
+		 * 
+		 */
+		public static function getMatrixBetween(m1:Array,m2:Array,ratio:Number):Array
+		{
+			var result:Array = [];
+			for (var i:int = 0;i < m1.length;i++)
+				result[i] = m1[i] + (m2[i] - m1[i]) * ratio
+			
 			return result;
 		}
 	}
