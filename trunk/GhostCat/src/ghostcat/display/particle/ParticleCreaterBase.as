@@ -95,7 +95,8 @@ package ghostcat.display.particle
 				destoryChild(child);
 			
 			Tick.instance.removeEventListener(TickEvent.TICK,tickHandler);
-			parent.removeChild(this);
+			if (parent)
+				parent.removeChild(this);
 		}
 	}
 }

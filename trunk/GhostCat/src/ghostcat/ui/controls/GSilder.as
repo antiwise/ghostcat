@@ -367,29 +367,24 @@ package ghostcat.ui.controls
 			if (isNaN(percent) || !enabled || !thumb)
 				return;
 			
+			var pageDetra:Number = this.pageDetra / maxValue * thumbAreaLength;
 			if (direction == UIConst.HORIZONTAL)
 			{
-				if (thumb.mouseX > pageDetra + thumb.width)
+				if (thumb.mouseX > thumb.width)
 					thumb.x += pageDetra;
-				else if (thumb.mouseX < -pageDetra)
+				else if (thumb.mouseX < 0)
 					thumb.x -= pageDetra;
-				else
-					thumb.x += thumb.mouseX;
 					
 				thumb.x = Math.max(Math.min(thumbAreaStart + thumbAreaLength,thumb.x),thumbAreaStart)
-//				thumb.x = Math.max(Math.min(downArrow.x - thumb.width,thumb.x),upArrow.x + upArrow.width)
 			}
 			else
 			{
-				if (thumb.mouseY > pageDetra + thumb.height)
+				if (thumb.mouseY > thumb.height)
 					thumb.y += pageDetra;
-				else if (thumb.mouseY < -pageDetra)
+				else if (thumb.mouseY < 0)
 					thumb.y -= pageDetra;
-				else
-					thumb.y += thumb.mouseY;
 				
 				thumb.y = Math.max(Math.min(thumbAreaStart + thumbAreaLength,thumb.y),thumbAreaStart)
-//				thumb.y = Math.max(Math.min(downArrow.y - thumb.height,thumb.y),upArrow.y + upArrow.height)
 			}
 			thumbMouseMoveHandler();
 		}

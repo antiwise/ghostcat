@@ -440,6 +440,7 @@ package ghostcat.ui.controls
 			if (!isThumbDrag) //拖动Thumb不更新位置，否则会相互冲突
 				updateThumb();
 		}
+		
 		/** @inheritDoc*/
 		protected override function tickHandler(event:TickEvent):void
 		{
