@@ -6,6 +6,9 @@ package ghostcat.manager
 	import flash.display.StageScaleMode;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.events.SampleDataEvent;
+	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.ui.ContextMenu;
@@ -41,6 +44,11 @@ package ghostcat.manager
 		 * 无缩放模式
 		 */
 		public static const MODE_NOSCALE:int = 1;
+		
+		public static var activate:Boolean;
+		public static var mouseLeave:Boolean;
+		
+		private static var _sound:Sound;
 		
 		/**
 		 * 场景对象 
@@ -91,10 +99,35 @@ package ghostcat.manager
 		{
 			_root = root;
 			
+			_root.addEventListener(Event.ACTIVATE,activateHandler);
+			_root.addEventListener(Event.DEACTIVATE,deActivateHandler);
+			_root.stage.addEventListener(Event.MOUSE_LEAVE,mouseLeaveHandler);
+			_root.stage.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+			
 			setMode(mode);
 			setMenuMode(menuMode);
 			
 			Tick.frameRate = stage.frameRate;
+		}
+		
+		protected static function mouseMoveHandler(event:MouseEvent):void
+		{
+			mouseLeave = false;
+		}
+		
+		protected static function mouseLeaveHandler(event:Event):void
+		{
+			mouseLeave = true;
+		}
+		
+		protected static function deActivateHandler(event:Event):void
+		{
+			activate = false;
+		}
+		
+		protected static function activateHandler(event:Event):void
+		{
+			activate = true;
 		}
 		
 		/**
@@ -205,6 +238,34 @@ package ghostcat.manager
 		public static function setValue(key:String,value:*):void
 		{
 			_parameters[key] = value;
+		}
+		
+		/**
+		 * 开启强制保持原本设定的FPS
+		 * */
+		public static function keepThrottleFrameRate(FPS8:Boolean = true):void
+		{
+			if (!_sound)
+			{
+				_sound = new Sound(new URLRequest(""));
+				_sound.play();
+				_sound.close();
+			}
+			
+			if (!FPS8)
+			{
+				_sound.addEventListener("sampleData", onSampleDataHandler);
+				_sound.play();
+			}
+			else
+			{
+				_sound.removeEventListener("sampleData", onSampleDataHandler);
+			}
+		}
+		
+		private static function onSampleDataHandler(event:Event):void
+		{
+			event["data"].position = event["data"].length = 4096 * 4;
 		}
 	}
 }
