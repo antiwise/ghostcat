@@ -8,6 +8,8 @@ package ghostcat.manager
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.SampleDataEvent;
+	import flash.events.UncaughtErrorEvent;
+	import flash.events.UncaughtErrorEvents;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
@@ -162,8 +164,8 @@ package ghostcat.manager
 			if (onUncaughtError == null)
 				onUncaughtError = defaultUncaughtError;
 			
-			if (stage && stage.loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
-				stage.loaderInfo["uncaughtErrorEvents"].addEventListener("uncaughtError",onUncaughtError);
+			if (root && root.loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
+				root.loaderInfo["uncaughtErrorEvents"].addEventListener("uncaughtError",onUncaughtError);
 		}
 		
 		private static function defaultUncaughtError(e:Event):void
