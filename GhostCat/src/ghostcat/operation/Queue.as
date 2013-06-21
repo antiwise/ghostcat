@@ -69,6 +69,9 @@ package ghostcat.operation
 		{
 			obj.queue = this;
 			obj.step = Oper.WAIT;
+			this.children.length
+			if (this == defaultQueue)
+				trace("ADD QUEUE")
 			
 			children.push(obj);
 			if (autoStart && children.length == 1)

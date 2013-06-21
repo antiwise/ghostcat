@@ -20,6 +20,7 @@ package ghostcat.operation
 		 */
 		public function FunctionOper(handler:*=null,para:Array=null,caller:*=null)
 		{
+			
 			if (handler is Handler)
 				this.cmd =  handler as Handler;
 			else
