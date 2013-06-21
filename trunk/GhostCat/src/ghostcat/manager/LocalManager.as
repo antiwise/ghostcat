@@ -39,6 +39,8 @@ package ghostcat.manager
 		 */
 		static public function getLocalPath(obj:*,id:*=""):String
 		{
+			if (!obj)
+				obj = {};
 			return getQualifiedClassName(obj)+ id ? "(" + id + ")" : "";
 		} 
 		
