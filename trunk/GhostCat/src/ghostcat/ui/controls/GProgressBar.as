@@ -35,6 +35,14 @@ package ghostcat.ui.controls
 			this.progressFunction = defaultProgressFunction;
 			
 			super(skin, replace, mode, fields);
+			
+			this.addEventListener(IOErrorEvent.IO_ERROR,ioErrorDefaultHandler);
+		}
+		
+		protected function ioErrorDefaultHandler(event:IOErrorEvent):void
+		{
+			// TODO Auto-generated method stub
+			
 		}
 		
 		private var _target:IEventDispatcher;
@@ -121,6 +129,8 @@ package ghostcat.ui.controls
 			loadHelper.addEventListener(ProgressEvent.PROGRESS,progressHandler);
 			loadHelper.addEventListener(Event.COMPLETE,completeHandler);
 			loadHelper.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
+			
+			
 		}
 		
 		/**

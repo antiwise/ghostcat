@@ -21,6 +21,8 @@
 	import flash.utils.Dictionary;
 	import flash.utils.setTimeout;
 	
+	import mx.utils.object_proxy;
+	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
 	import ghostcat.operation.RetryOper;
@@ -28,8 +30,6 @@
 	import ghostcat.util.Util;
 	import ghostcat.util.data.LocalStorage;
 	import ghostcat.util.text.URL;
-	
-	import mx.utils.object_proxy;
 	
 	[Event(name="complete",type="flash.display.Event")]
 	[Event(name="ioError",type="flash.display.IOErrorEvent")]
@@ -200,6 +200,14 @@
 			
 			if (fhandler!=null)
 				this.addEventListener(OperationEvent.OPERATION_ERROR,fhandler);
+			
+			this.addEventListener(IOErrorEvent.IO_ERROR,ioErrorDefaultHandler);
+		}
+		
+		protected function ioErrorDefaultHandler(event:IOErrorEvent):void
+		{
+			// TODO Auto-generated method stub
+			
 		}
 		
 		/**
