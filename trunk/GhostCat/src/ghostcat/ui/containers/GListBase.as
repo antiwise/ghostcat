@@ -8,6 +8,9 @@ package ghostcat.ui.containers
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.getDefinitionByName;
+	
+	import mx.events.PropertyChangeEvent;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.display.IGBase;
@@ -19,8 +22,6 @@ package ghostcat.ui.containers
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.util.core.ClassFactory;
 	import ghostcat.util.display.Geom;
-	
-	import mx.events.PropertyChangeEvent;
 
 	[Event(name="change",type="flash.events.Event")]
 	[Event(name="item_click",type="ghostcat.events.ItemClickEvent")]
@@ -92,6 +93,9 @@ package ghostcat.ui.containers
 			
 			if (skin)
 			{
+				if (skin is String)
+					skin = getDefinitionByName(skin);
+				
 				if (skin is DisplayObject)
 				{
 					itemSkin = new ClassFactory(skin["constructor"]);

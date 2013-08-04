@@ -64,6 +64,8 @@ package ghostcat.game.item
 			var totalFrame:int = bitmapDatas.length;
 			if (value >= totalFrame)
 				value = totalFrame - 1;
+			if (value < 0)
+				value = 0;
 			
 			_currentFrame = value;
 			if (bitmapData == bitmapDatas[value])
