@@ -8,27 +8,21 @@
 	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
-	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import flash.system.Security;
-	import flash.system.SecurityDomain;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	import flash.utils.setTimeout;
-	
-	import mx.utils.object_proxy;
 	
 	import ghostcat.events.OperationEvent;
 	import ghostcat.manager.FileCacherManager;
 	import ghostcat.operation.RetryOper;
 	import ghostcat.ui.controls.IProgressTargetClient;
 	import ghostcat.util.Util;
-	import ghostcat.util.data.LocalStorage;
 	import ghostcat.util.text.URL;
 	
 	[Event(name="complete",type="flash.display.Event")]
