@@ -57,9 +57,18 @@
 	},
 	confirmClose:function (text) {
 		if (text != null)
-			window.onbeforeunload = function () {return text};
+			window.onbeforeunload = getText;
 		else
 			window.onbeforeunload = null;
+			
+		function getText(e)
+		{   
+			var evt = e ? e : (window.event ? window.event : null);
+    		if (evt)  
+				evt.returnValue = text;
+
+            return text;
+     	}   
 	},
 	disableScroll:function (objId) {
 		var obj = document;
@@ -67,9 +76,14 @@
 			obj = document.getElementById(objId);   
                
 		if (obj.addEventListener)
+		{
 			obj.addEventListener('DOMMouseScroll', preventDefault, true);   
+			obj.addEventListener('mousewheel', preventDefault, true);   
+		}
 		else if (obj.attachEvent)  
-			obj.attachEvent('onmousewheel', preventDefault, true);   
+		{
+			obj.attachEvent('onmousewheel', preventDefault);   
+		}
 		else  
 			obj['onmousewheel'] = preventDefault;
                 

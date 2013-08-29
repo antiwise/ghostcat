@@ -233,12 +233,15 @@ package ghostcat.manager
 		 * @param root
 		 * 
 		 */
-		public function setCapture(root:DisplayObject):void
+		public function setCapture(root:* = null):void
 		{
 			if (!ExternalInterface.available) 
 				return;
 			
-			ExternalInterface.call("BrowerManager.setCapture",getQualifiedClassName(root));
+			if (root is DisplayObject)
+				root = getQualifiedClassName(root);
+			
+			ExternalInterface.call("BrowerManager.setCapture",root);
 		}
 		
 		/**
