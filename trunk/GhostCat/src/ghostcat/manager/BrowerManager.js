@@ -97,6 +97,8 @@
 		}   
  	},
  	setCapture:function (name) {
- 		document.getElementById(name).setCapture();
+ 		var obj = document.getElementById(name);
+ 		if (obj != null) 
+			obj.setCapture();
  	}
 }
